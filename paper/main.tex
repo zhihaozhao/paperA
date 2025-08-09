@@ -1,0 +1,139 @@
+% !TEX program = pdflatex
+\documentclass[10pt,conference]{IEEEtran}
+\usepackage{times}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue}
+\sisetup{round-mode=places,round-precision=2}
+
+\newcommand{\model}{Enhanced}
+\newcommand{\dataset}{CSI-Fall}
+
+\begin{document}
+
+\title{Trustworthy WiFi CSI Fall Detection via Physics-Guided Evaluation: Breaking Synthetic Ceilings, Crossing Domains, and Reducing Labels}
+
+\author{
+\IEEEauthorblockN{Anon Author(s)}
+\IEEEauthorblockA{Affiliation \\
+Email: anon@inst.edu}
+}
+
+\maketitle
+
+\begin{abstract}
+We revisit WiFi CSI fall detection with ordinary sequence models but elevate evaluation: a physics-controllable synthetic generator, strict cross-domain protocols (LOSO/LORO), trust calibration, and Sim2Real label-efficiency analysis. Our framework breaks the synthetic ceiling, quantifies causal links between difficulty factors (overlap, harmonics, noise) and errors, improves reliability under domain shift, and achieves $\geq$90--95\% of full-supervision with 10--20\% labels. Code, seeds, and splits are released for full reproducibility.
+\end{abstract}
+
+\begin{IEEEkeywords}
+WiFi CSI, Fall Detection, Synthetic Data, Domain Shift, Calibration, Sim2Real
+\end{IEEEkeywords}
+
+\section{Introduction}
+CSI-based sensing promises privacy-preserving fall detection but often overclaims on synthetic data and underperforms across subjects, rooms, and devices. We propose a rigorous, physics-guided evaluation framework rather than yet another complex network. Our contributions:
+\begin{itemize}
+  \item Physics-controllable synthetic analysis that breaks the ceiling and exposes difficulty-error causality (Fig.~\ref{fig:synth-bars}, \ref{fig:overlap-scatter}).
+  \item Strict cross-domain protocols with statistical tests and trust calibration (Tab.~\ref{tab:main-real}, Fig.~\ref{fig:reliability}).
+  \item Cost-aware operating points and robust performance in low-FPR regimes (Fig.~\ref{fig:cost-sensitive}).
+  \item Sim2Real label-efficiency: with 10--20\% labels we reach $\geq$90--95\% of full supervision (Fig.~\ref{fig:sim2real-curve}).
+\end{itemize}
+We show our Enhanced model with a lightweight confidence prior (logit norm regularization) yields better calibration and robustness than matched-capacity baselines (LSTM/TCN/Tiny-Transformer).
+
+\section{Related Work}
+\subsection{CSI-based HAR and fall detection}
+Prior works mainly optimize accuracy on limited splits; few consider calibration or domain shift rigorously.
+\subsection{Synthetic evaluation and domain shift}
+We differ by using controllable physics-inspired factors and linking them to errors statistically.
+\subsection{Calibration and trustworthy ML}
+Beyond accuracy, we measure ECE, Brier, and reliability curves.
+
+\section{Method}
+\subsection{Model family and capacity matching}
+We compare LSTM, TCN, Tiny-Transformer, and \model{} with parameter budgets within $\pm$10\%.
+\subsection{Confidence prior}
+Given logits $z$, we use $\mathcal{L}=\mathrm{CE}(z,y)+\lambda \cdot \frac{1}{B}\sum_i \|z_i\|_2^2$. We tune $\lambda$ via sweep and report Pareto trade-offs between accuracy and calibration.
+
+\section{Evaluation Protocol}
+\subsection{Synthetic controllable analysis}
+We vary overlap, harmonics, noise, and channel dropout. We report: Macro-F1, class F1, mutual misclassification, and overlap-error regression with significance.
+\subsection{Real data: LOSO/LORO}
+We standardize splits, avoid leakage, compute 95\% CIs (bootstrap), paired $t$-tests, and effect size.
+\subsection{Calibration and operating points}
+We report ECE/Brier, reliability curves, and fixed-FPR TPR for deployment readiness.
+\subsection{Sim2Real}
+We pretrain on synthetic and fine-tune with $p\in\{1,5,10,25,100\}\%$ of labels. We also evaluate linear probes by freezing the encoder.
+
+\section{Experiments}
+\subsection{Datasets and implementation details}
+Synthetic generator v19.2; real dataset stats in Appx. We use batch=64, Adam lr=$10^{-3}$ cosine decay, early stopping, and 8 seeds unless noted.
+
+\subsection{Synthetic: Breaking the ceiling}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{../plots/fig_synth_bars.pdf}
+  \caption{Synthetic InD results: Falling/Macro F1 and mutual misclassification across models (mean$\pm$std).}
+  \label{fig:synth-bars}
+\end{figure}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{../plots/fig_overlap_scatter.pdf}
+  \caption{Overlap vs. mutual misclassification: regression slope and $p$-value indicate causal linkage.}
+  \label{fig:overlap-scatter}
+\end{figure}
+
+\subsection{Real-world LOSO/LORO main results}
+\input{../tables/tab_main_real.tex}
+%\label{tab:main-real}
+
+\subsection{Calibration and reliability}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{../plots/fig_reliability_enhanced_vs_baselines.pdf}
+  \caption{Reliability curves. \model{} is closer to the diagonal; ECE/Brier improve over baselines.}
+  \label{fig:reliability}
+\end{figure}
+\input{../tables/tab_calibration_real.tex}
+
+\subsection{Bucketed robustness and cost-sensitive analysis}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{../plots/fig_bucket_perf_curves.pdf}
+  \caption{Performance vs. difficulty buckets (overlap/noise/domain). \model{} degrades more gracefully.}
+  \label{fig:bucket}
+\end{figure}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{../plots/fig_cost_sensitive.pdf}
+  \caption{Fixed-FPR TPR and cost curves in low-FPR regimes.}
+  \label{fig:cost-sensitive}
+\end{figure}
+
+\subsection{Sim2Real label efficiency and linear probe}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{../plots/fig_sim2real_curve.pdf}
+  \caption{Label efficiency: pretraining on synthetic reduces labels to reach $\geq$90--95\% of full supervision.}
+  \label{fig:sim2real-curve}
+\end{figure}
+\input{../tables/tab_sim2real_gain.tex}
+\input{../tables/tab_linear_probe.tex}
+
+\subsection{Ablation and fairness}
+\input{../tables/tab_capacity_match.tex}
+
+\section{Discussion}
+We argue the innovation lies in physics-guided evaluation and trustworthy metrics. Even with ordinary models, the framework yields robust and calibrated performance under shift while reducing labels \cite{fernandez2024wavelet}.
+
+\section{Conclusion}
+We present a reproducible evaluation pipeline that breaks synthetic ceilings, improves calibration, and enables Sim2Real. Assets (code, seeds, splits) will be released.
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+\end{document}
