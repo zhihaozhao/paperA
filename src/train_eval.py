@@ -5,6 +5,88 @@ from src.models import build_model
 from src.data_synth import get_synth_loaders
 from src.metrics import compute_metrics
 from src.calibration import ece, brier
+from pathlib import Path
+from datetime import datetime
+from src.utils.logger import init_run
+from src.utils.exp_recorder import ExpRecorder
+from src.utils.registry import append_run_registry  # 如果暂时不需要 registry，可先不导入
+
+import math
+
+def softmax_logits(logits):
+    # logits: (N, C)
+    m = logits.max(dim=1, keepdim=True).values
+    ex = torch.exp(logits - m)
+    return ex / ex.sum(dim=1, keepdim=True)
+
+def compute_ece(probs, labels, n_bins=15):
+    # probs: (N, C), labels: (N,)
+    confidences, predictions = probs.max(dim=1)
+    accuracies = (predictions == labels).float()
+    ece = torch.zeros(1, device=probs.device)
+    bin_boundaries = torch.linspace(0, 1, steps=n_bins + 1, device=probs.device)
+    for i in range(n_bins):
+        lo, hi = bin_boundaries[i], bin_boundaries[i + 1]
+        in_bin = (confidences > lo) & (confidences <= hi)
+        prop = in_bin.float().mean()
+        if prop > 0:
+            acc_bin = accuracies[in_bin].mean()
+            conf_bin = confidences[in_bin].mean()
+            ece += torch.abs(conf_bin - acc_bin) * prop
+    return ece.item()
+
+def nll_from_logits(logits, labels):
+    # CrossEntropyLoss = NLL(LogSoftmax) on logits
+    return torch.nn.functional.cross_entropy(logits, labels).item()
+
+@torch.no_grad()
+def collect_logits(model, loader, device):
+    model.eval()
+    all_logits = []
+    all_labels = []
+    for x, y in loader:
+        x = x.to(device); y = y.to(device)
+        logits, _ = model(x, y=None) if hasattr(model, "__call__") else model(x)  # 兼容你的 forward 返回
+        if isinstance(logits, (tuple, list)):
+            logits = logits[0]
+        all_logits.append(logits.detach())
+        all_labels.append(y.detach())
+    return torch.cat(all_logits, dim=0), torch.cat(all_labels, dim=0)
+
+def calibrate_temperature(model, loader, device, max_iter=1000, lr=0.01):
+    # 在验证集上拟合温度 T（标量），最小化 NLL
+    logits, labels = collect_logits(model, loader, device)
+    T = torch.ones(1, device=device, requires_grad=True)
+    opt = torch.optim.LBFGS([T], lr=lr, max_iter=max_iter, line_search_fn="strong_wolfe")
+
+    def closure():
+        opt.zero_grad()
+        scaled = logits / T.clamp_min(1e-3)
+        loss = torch.nn.functional.cross_entropy(scaled, labels)
+        loss.backward()
+        return loss
+
+    opt.step(closure)
+    T_opt = T.detach().clamp_min(1e-3)
+    # 计算校准前后指标
+    with torch.no_grad():
+        probs_raw = softmax_logits(logits)
+        ece_raw = compute_ece(probs_raw, labels)
+        nll_raw = nll_from_logits(logits, labels)
+
+        probs_cal = softmax_logits(logits / T_opt)
+        ece_cal = compute_ece(probs_cal, labels)
+        nll_cal = nll_from_logits(logits / T_opt, labels)
+
+    return {
+        "T": T_opt.item(),
+        "ece_raw": ece_raw,
+        "ece_cal": ece_cal,
+        "nll_raw": nll_raw,
+        "nll_cal": nll_cal,
+    }
+
+
 def to_py(o):
     import numpy as np
     if isinstance(o, (np.floating, np.integer)):
@@ -51,22 +133,110 @@ def main():
     ap.add_argument("--epochs", type=int, default=20)
     ap.add_argument("--out", type=str, default="results/synth/out.json")
     args = ap.parse_args()
+    # 1) 初始化 run 与 logger
+    logger, meta = init_run(
+        phase="P1", exp="E1", ver="V1",
+        model=args.model, dataset=args.difficulty,
+        cli_args=vars(args)
+    )
+    rec = ExpRecorder(out_dir="results", run_id=meta["run_id"])
+
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     set_seed(args.seed)
     tr, te = get_synth_loaders(difficulty=args.difficulty, seed=args.seed)
     x, y = next(iter(tr))
-    model = build_model(args.model, input_dim=x.shape[-1], num_classes=4, logit_l2=args.logit_l2).to(device)
+    # Determine feature dimension C regardless of (B, T, C) or (B, C, T)
+    if x.dim() == 3:
+        B0, A, B1 = x.shape
+        if A < B1:
+            # 形状很可能是 (B, C, T)
+            input_dim = A  # C
+        else:
+            # 形状是 (B, T, C)
+            input_dim = B1  # C
+    else:
+        input_dim = x.shape[-1]
+
+    model = build_model(args.model, input_dim=input_dim, num_classes=4, logit_l2=args.logit_l2).to(device)
+    # model = build_model(args.model, input_dim=x.shape[-1], num_classes=4, logit_l2=args.logit_l2).to(device)
     opt = Adam(model.parameters(), lr=1e-3)
     best = None
+
     for ep in range(args.epochs):
-        train_one_epoch(model, tr, opt, device)
+        train_loss = train_one_epoch(model, tr, opt, device)
         metr = eval_model(model, te, device, num_classes=4)
+        # [BEGIN] 每epoch记录与打印
+        rec.log_epoch(ep, {
+            "train_loss": float(train_loss),
+            "macro_f1": float(metr.get("macro_f1", float("nan"))),
+            "falling_f1": float(metr.get("falling_f1", float("nan"))),
+            "ece": float(metr.get("ece", float("nan"))),
+            "brier": float(metr.get("brier", float("nan"))),
+        })
+        logger.info(
+            f"epoch={ep} loss={train_loss:.4f} f1={metr.get('macro_f1', 0.0):.4f} ece={metr.get('ece', float('nan')):.4f}")
+        # [END]
+
         if best is None or metr["macro_f1"] > best["macro_f1"]:
             best = metr
-    # with open(args.out, "w") as f: json.dump(dict(args=vars(args), metrics=best), f, indent=2)
-    payload = to_py(dict(args=vars(args), metrics=best))
+    # [BEGIN] 训练结束后保存历史与最终JSON（含meta）
+    from pathlib import Path
+    hist_path = Path(f"results/history/{args.model}_{args.difficulty}_s{args.seed}.csv")
+    rec.save_history_csv(hist_path)
+
+    # 校准评估（温度缩放），仅使用验证集，不影响训练
+    cal = calibrate_temperature(model, te, device)
+    print(f"[INFO] calib: T={cal['T']:.3f} ece_raw={cal['ece_raw']:.4f} -> ece_cal={cal['ece_cal']:.4f} "
+          f"nll_raw={cal['nll_raw']:.3f} -> nll_cal={cal['nll_cal']:.3f}")
+
+    # 最终指标（与评估脚本兼容）
+    final_metrics = {
+        "macro_f1": float(best.get("macro_f1", 0.0)),
+        "falling_f1": float(best.get("falling_f1", float("nan"))),
+        "mutual_misclass": float(best.get("mutual_misclass", float("nan"))),
+        "ece": float(best.get("ece", float("nan"))),
+        "brier": float(best.get("brier", float("nan"))),
+        "overlap_stat": best.get("overlap_stat", None),
+        # Calibration add-ons
+        "temperature": cal["T"],
+        "ece_raw": cal["ece_raw"],
+        "ece_cal": cal["ece_cal"],
+        "nll_raw": cal["nll_raw"],
+        "nll_cal": cal["nll_cal"],
+    }
+
+    # 保存最终 JSON 到 args.out，附带 meta 与 args
+    from datetime import datetime
+    payload = to_py({
+        "args": vars(args),
+        "metrics": final_metrics,
+        "meta": meta | {"time_end": datetime.now().isoformat(timespec="seconds")}
+    })
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
+    logger.info(f"Saved final JSON to {args.out}")
+
+    # 可选：登记索引，便于全局汇总
+    try:
+        append_run_registry({
+            "time": datetime.now().isoformat(timespec="seconds"),
+            "run_id": meta["run_id"],
+            "phase": meta["phase"], "exp": meta["exp"], "ver": meta["ver"],
+            "model": args.model, "dataset": args.difficulty, "seed": args.seed,
+            "difficulty": args.difficulty, "epochs": args.epochs,
+            "macro_f1": final_metrics["macro_f1"],
+            "falling_f1": final_metrics["falling_f1"],
+            "mutual_misclass": final_metrics["mutual_misclass"],
+            "ece": final_metrics["ece"],
+            "brier": final_metrics["brier"],
+            "overlap": (final_metrics["overlap_stat"].get("mean")
+                        if isinstance(final_metrics["overlap_stat"], dict)
+                        else final_metrics["overlap_stat"]),
+            "out_json": Path(args.out).as_posix()
+        })
+    except Exception as e:
+        logger.warning(f"append_run_registry failed: {e}")
+    # [END]
 if __name__ == "__main__":
     main()
