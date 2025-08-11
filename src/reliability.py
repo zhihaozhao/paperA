@@ -67,7 +67,7 @@ def main():
     plt.plot([0, 1], [0, 1], "k--", lw=1)
     for name, conf in [("raw", conf_raw), ("cal", conf_cal)]:
         bconf, bacc, _ = bin_stats(conf, correct, args.n_bins)
-        lab = f"{name.upper()} ECE={ece_raw:.3f}" if name == "raw" else f"{name.UPPER()} ECE={ece_cal:.3f}"
+        lab = f"{name.upper()} ECE={ece_raw:.3f}" if name == "raw" else f"{name.upper()} ECE={ece_cal:.3f}"
         # 修正：避免 name.UPPER() 的拼写错误
     plt.clf()
     plt.figure(figsize=(6, 5))
