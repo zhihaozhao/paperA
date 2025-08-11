@@ -1,0 +1,136 @@
+以下是本次改动的变更说明（change note），按文件分类，分别说明 What（改了什么）、Why（为什么改）、How（怎么实现）以及对使用方式的影响。
+
+总体目标
+- 在不破坏现有训练流程和参数命名的前提下，为合成数据集新增三类可控扰动（子载波相关噪声、环境突发、增益漂移），并将指标评估更健壮化；同时提供批量运行脚本，方便快速对比不同扰动场景。
+
+1) src/data_synth.py
+What
+- 扩展 SynthCSIDataset 构造函数与 get_synth_loaders 的签名，新增三个可选参数（默认关闭）：
+  - sc_corr_rho: 子载波相关性参数（Toeplitz 协方差的 rho）
+  - env_burst_rate: 环境突发事件的期望数量
+  - gain_drift_std: 缓慢乘性增益漂移的步进标准差
+- 在原有数据生成逻辑之后，按需叠加三类扰动，不改变默认数据生成结果。
+- 小幅调整注释与缩进，使“预计算子载波相关性”逻辑与注释一致。
+
+Why
+- 需要更贴近真实场景的合成数据干扰，以评估模型在相关噪声、突发干扰、增益漂移等条件下的鲁棒性。
+- 默认关闭扰动以保持现有实验的可复现性。
+
+How
+- sc_corr_rho:
+  - 基于 rho 构造 Toeplitz 协方差矩阵，做 Cholesky 分解得到 L_sc。
+  - 对每个时间步生成高斯噪声向量，经 L_sc 投影到子载波相关空间，并做时间平滑后叠加到样本上。
+- gain_drift_std:
+  - 对每个样本沿时间生成小幅随机游走的乘性曲线（累积高斯步长/平滑），剪裁到合适范围后点乘样本。
+- env_burst_rate:
+  - 泊松采样突发事件个数；每次事件随机选起止时间窗，生成汉宁窗凸起。
+  - 以一定概率选择“窄带”（单子载波抬升）或“宽带”（所有子载波共同抬升，并可注入相关的频率形状）。
+- get_synth_loaders:
+  - 新增同名参数，把参数透传给 SynthCSIDataset；其余数据集划分和 DataLoader 逻辑不变。
+
+影响
+- 默认参数下（sc_corr_rho=None, env_burst_rate=0.0, gain_drift_std=0.0），数据分布与旧版本一致。
+- 通过 CLI 或函数参数开启扰动后，可在不改训练代码的前提下测试鲁棒性。
+
+2) src/train_eval.py
+What
+- 新增 CLI 参数：
+  - --n_samples, --T, --F：控制样本数、时间长度、特征维
+  - --sc_corr_rho, --env_burst_rate, --gain_drift_std：三类扰动的开关/强度
+  - --positive_class：用于 AUPRC/F1 的正类索引（默认1），与脚本一致
+- 新增 _maybe_none_float 工具，用于将 "--sc_corr_rho None" 等字符串解析为 None。
+- 在构建数据加载器时，将上述参数传入 get_synth_loaders。
+- 在 eval_model 返回前增加 m["falling_f1"] = m.get("f1_fall", nan) 映射，保证下游 recorder 使用旧键名“falling_f1”也能取到值。
+- 其余训练流程、日志记录、校准（温度缩放）逻辑保持不变。
+
+Why
+- 与 run_main.sh 的传参保持一致，便于批量跑不同配置。
+- 支持通过 CLI 定制数据规模（n/T/F），对齐合成数据的灵活性需求。
+- falling_f1 键名与 recorder/日志预期一致，避免出现空值。
+
+How
+- 使用 argparse 新增参数，保持命名与脚本一致。
+- 用 _maybe_none_float 将 "None"/"null" 转成 None，避免传参歧义。
+- 在 eval_model 的返回 dict 中，补齐别名键 falling_f1。
+
+影响
+- 向后兼容：不传新参数时，训练流程与输出结构保持稳定。
+- 传入新参数可开启扰动和调整数据规模，且 recorder 可读取 “falling_f1”。
+
+3) src/metrics.py
+What
+- compute_metrics 增强而不破坏接口：
+  - f1_score 增加 zero_division=0，避免类别缺失时的警告/异常。
+  - AUPRC 在无正或全正样本时返回 NaN，而非报错。
+  - 返回键新增 f1_fall（positive_class 的 F1），保留 macro_f1、per_class_f1、cm、auprc。
+
+Why
+- 提升评估的稳健性与可解释性（特别是在类别极不平衡或极端情况下）。
+- 不改变既有键名的同时，为下游提供更直观的“跌倒类”F1（或其他指定正类）。
+
+How
+- 对 y_prob 做 argmax 得到 y_pred，按给定 positive_class 计算 AUPRC；异常场景返回 NaN。
+- 将 f1_fall 填入返回 dict。
+
+影响
+- 下游可直接使用 f1_fall 或通过 train_eval.py 的 falling_f1 别名读取；旧用法不受影响。
+
+4) scripts/run_main.sh
+What
+- 新增批量运行脚本，依次运行四种场景：
+  1) 无扰动
+  2) 仅子载波相关噪声
+  3) 仅环境突发
+  4) 仅增益漂移
+- 支持通过环境变量覆盖 ENTRY、N/T/F/DIFF/SEED/POS_CLS。
+- 传入 --positive_class，与 train_eval.py 对齐。
+- 建议在脚本开头 export PYTHONPATH=. 或改为模块运行方式 -m src.train_eval，解决包导入问题。
+
+Why
+- 方便一键对比不同扰动设置下的训练与评估结果，提高实验效率和可重复性。
+- 避免每次手动输入长命令。
+
+How
+- 默认 ENTRY=src/train_eval.py；若你选择模块方式，可改为 ENTRY="-m src.train_eval"。
+- 在 Git Bash/WSL 环境确保 LF 行尾，bash 可直接运行；在 Windows 环境需注意 PYTHONPATH 或 -m 运行方式。
+
+影响
+- 无侵入性：仅新增脚本，不影响 Python 代码。
+- 可直接运行脚本得到四组结果，对比模型鲁棒性。
+
+运行与注意事项
+- 从项目根目录运行，确保能看到 src/ 与 scripts/ 目录。
+- 如果遇到 ModuleNotFoundError: No module named 'src'：
+  - 在脚本首行添加 export PYTHONPATH=.
+  - 或把 ENTRY 改为 -m src.train_eval
+- Windows 上用 Git Bash，确保 run_main.sh 使用 LF 换行；否则会出现 bad interpreter ^M。
+- 依赖：需要 scikit-learn；如缺失，pip install scikit-learn
+
+总结
+- 本次改动在保持原有变量名与调用方式一致的前提下，新增三类合成数据扰动与更稳健的评估指标，并提供脚本实现批量实验运行。
+- 默认行为不变；只有当你通过 CLI 显式开启扰动或修改数据规模时，才会影响数据分布与评估结果。
+- 日志与输出 JSON 新增/补齐 falling_f1 对齐旧分析流水。
+
+
+增加三类可控扰动的目的，核心是让“合成数据更接近真实场景”，从而更准确地评估和提升模型的鲁棒性与可迁移性。具体原因如下：
+
+- 贴近真实信道特性与环境变化
+  - 子载波相关噪声（sc_corr_rho）：真实 CSI 在频域上存在相关性，白噪声假设过于理想化。加相关噪声可模拟硬件/多径导致的频域耦合。
+  - 环境突发（env_burst_rate）：人群流动、门开关、短时遮挡等会产生瞬时的窄带/宽带扰动，属于常见但非平稳的异常。
+  - 增益漂移（gain_drift_std）：温度、供电、硬件老化等引起的慢变化会导致幅度随时间缓慢漂移。
+
+- 更可靠地验证模型鲁棒性和泛化
+  - 在理想合成数据上表现好，不代表在实测数据或部署环境下稳定。加入可控扰动，能提前暴露模型在“相关噪声、突发异常、慢漂移”下的脆弱点。
+  - 可分离评估不同失配来源：分别开启/组合扰动，定位模型对哪类失配更敏感，指导有针对性的改进（正则化、数据增强、架构选择等）。
+
+- 可控、可复现、可对比
+  - 每个扰动都有强度参数（rho、rate、std），并且默认关闭，确保与历史结果一致。
+  - 通过脚本一键跑不同配置，形成可复现的对比曲线，支撑设计决策而不是拍脑袋。
+
+- 实验/工程上的具体收益
+  - 数据增强的系统化：不是随机加噪，而是与物理/设备/环境相符的增强，帮助模型学到更稳健的表示。
+  - 评估指标更有解释力：例如 f1_fall/AUPRC 在突发/漂移场景下的变化，能反映对关键类的真实风险。
+  - 更顺畅的从仿真到实测迁移：降低“上线后才发现失配”的概率，缩短迭代周期。
+
+一句话总结
+- 三类扰动分别覆盖频域相关性、非平稳瞬时异常、慢时间漂移三种常见失配源。让合成数据具备“可控的真实复杂度”，从而更早、更准地检验模型在真实世界下的稳健性与可用性。

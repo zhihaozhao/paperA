@@ -121,7 +121,9 @@ def eval_model(model, loader, device, num_classes=4):
             ys.append(y.numpy()); ps.append(prob)
     y = np.concatenate(ys); p = np.vstack(ps)
     m = compute_metrics(y, p, num_classes=num_classes, positive_class=1)
+    # m = compute_metrics(y, p, num_classes=p.shape[1], positive_class=args.positive_class)
     m["ece"] = ece(p, y, n_bins=15); m["brier"] = brier(p, y, num_classes=num_classes)
+    m["falling_f1"] = m.get("f1_fall", float("nan"))
     return m
 
 def main():
@@ -132,7 +134,33 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--epochs", type=int, default=20)
     ap.add_argument("--out", type=str, default="results/synth/out.json")
+    ap.add_argument("--sc_corr_rho", type=str, default=None,
+                        help="Subcarrier correlation rho (Toeplitz). Use a float or 'None'.")
+    ap.add_argument("--env_burst_rate", type=str, default="0.0",
+                        help="Expected number of bursts per window. 0 disables.")
+    ap.add_argument("--gain_drift_std", type=str, default="0.0",
+                        help="Std of slow multiplicative gain drift. 0 disables.")
+    ap.add_argument("--positive_class", type=int, default=1,
+                        help="Index of the positive class for AUPRC/F1_fall.")
+    ap.add_argument("--n_samples", type=int, default=2000)
+    ap.add_argument("--T", type=int, default=128)
+    ap.add_argument("--F", type=int, default=30)
     args = ap.parse_args()
+
+    def _maybe_none_float(s):
+        if s is None:
+            return None
+        if isinstance(s, (float, int)):
+            return float(s)
+        s_str = str(s).strip().lower()
+        if s_str in ("none", "null", ""):
+            return None
+        return float(s)
+
+    sc_corr_rho = _maybe_none_float(args.sc_corr_rho)
+    env_burst_rate = _maybe_none_float(args.env_burst_rate) or 0.0
+    gain_drift_std = _maybe_none_float(args.gain_drift_std) or 0.0
+
     # 1) 初始化 run 与 logger
     logger, meta = init_run(
         phase="P1", exp="E1", ver="V1",
@@ -144,7 +172,15 @@ def main():
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     set_seed(args.seed)
-    tr, te = get_synth_loaders(difficulty=args.difficulty, seed=args.seed)
+    # tr, te = get_synth_loaders(difficulty=args.difficulty, seed=args.seed)
+    tr, te = get_synth_loaders(
+        batch=64, difficulty=args.difficulty, seed=args.seed,
+        n=args.n_samples, T=args.T, F=args.F,
+        sc_corr_rho=sc_corr_rho,
+        env_burst_rate=env_burst_rate,
+        gain_drift_std=gain_drift_std
+    )
+
     x, y = next(iter(tr))
     # Determine feature dimension C regardless of (B, T, C) or (B, C, T)
     if x.dim() == 3:

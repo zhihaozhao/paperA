@@ -67,7 +67,7 @@ def setup_logger(run_id: str,
     ch.setFormatter(logging.Formatter("[%(asctime)s] %(levelname)s: %(message)s", datefmt="%H:%M:%S"))
     logger.addHandler(ch)
     # 文件
-    log_path = Path(logs_dir) / f"{run_id}.log"
+    log_path = Path(logs_dir) / f"{run_id}.txt"
     fh = logging.FileHandler(log_path, encoding="utf-8")
     fh.setLevel(level)
     fh.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(name)s | %(message)s",

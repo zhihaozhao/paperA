@@ -3,7 +3,10 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 
 class SynthCSIDataset(Dataset):
-    def __init__(self, n=2000, T=128, F=30, difficulty="mid", seed=0):
+    def __init__(self, n=2000, T=128, F=30, difficulty="mid", seed=0,
+        sc_corr_rho=None,        # None/<=0 disables
+        env_burst_rate=0.0,      # 0 disables
+        gain_drift_std=0.0):     # 0 disables
         rng = np.random.default_rng(seed)
         self.y = rng.integers(0, 4, size=n, endpoint=False)
 
@@ -62,6 +65,67 @@ class SynthCSIDataset(Dataset):
                 for fidx in idx:
                     X[i, :, fidx] += rng.normal(0, noise_std * 1.5, size=(T,)).astype(np.float32)
 
+        # ===== Optional perturbations (default OFF to preserve old behavior) =====
+        # Precompute subcarrier correlation if enabled
+        L_sc = None
+        if sc_corr_rho is not None and sc_corr_rho > 0.0:
+            idx = np.arange(F)
+            toe_row = (sc_corr_rho ** np.abs(idx - idx[0])).astype(np.float32)
+            Sigma_sc = toe_row[np.abs(idx[:, None] - idx[None, :])].astype(np.float32)
+            Sigma_sc = Sigma_sc + 1e-6 * np.eye(F, dtype=np.float32)
+            L_sc = np.linalg.cholesky(Sigma_sc).astype(np.float32)
+
+        for i in range(n):
+            x_i = X[i]  # (T, F)
+            T_local, F_local = x_i.shape
+
+            # 1) Subcarrier-correlated additive noise (time-smoothed)
+            if L_sc is not None:
+                z_t = rng.normal(0, 1, size=(T_local,)).astype(np.float32)
+                k = max(3, T_local // 16);
+                k = k if k % 2 == 1 else k + 1
+                kernel = np.ones(k, dtype=np.float32) / k
+                z_t = np.convolve(z_t, kernel, mode="same").astype(np.float32)
+                base_scale = 0.1 if difficulty in ("mid", "hard") else 0.07
+                add_noise = np.empty_like(x_i, dtype=np.float32)
+                for t_idx in range(T_local):
+                    e = rng.normal(0, 1, size=(F_local,)).astype(np.float32)
+                    add_noise[t_idx] = (L_sc @ e) * (base_scale * z_t[t_idx])
+                x_i = x_i + add_noise
+
+            # 2) Slow multiplicative gain drift
+            if gain_drift_std and gain_drift_std > 0.0:
+                drift_steps_extra = rng.normal(0, gain_drift_std, size=(T_local,)).astype(np.float32)
+                drift_curve = 1.0 + np.cumsum(drift_steps_extra) / max(1, T_local // 8)
+                drift_curve = np.clip(drift_curve, 0.8, 1.2).astype(np.float32)
+                x_i = x_i * drift_curve[:, None]
+
+            # 3) Environmental bursts (narrow/wide-band)
+            if env_burst_rate and env_burst_rate > 0.0:
+                n_events = rng.poisson(max(0.0, env_burst_rate))
+                for _ in range(n_events):
+                    t0 = rng.integers(0, T_local)
+                    width = rng.integers(max(2, T_local // 64), max(3, T_local // 16))
+                    t1 = min(T_local, t0 + width)
+                    if t1 <= t0:
+                        continue
+                    window = np.hanning(t1 - t0).astype(np.float32)
+                    amp = rng.uniform(0.3, 0.8)
+                    if rng.random() < 0.6:
+                        # narrow-band
+                        f_idx = rng.integers(0, F_local)
+                        x_i[t0:t1, f_idx] = x_i[t0:t1, f_idx] + amp * window
+                    else:
+                        # wide-band with possible correlated shape across subcarriers
+                        bump = amp * window[:, None]
+                        if L_sc is not None:
+                            e = rng.normal(0, 1, size=(F_local,)).astype(np.float32)
+                            shape_f = (L_sc @ e)
+                        else:
+                            shape_f = rng.normal(0, 1, size=(F_local,)).astype(np.float32)
+                        shape_f = shape_f / (np.linalg.norm(shape_f) + 1e-6)
+                        x_i[t0:t1, :] = x_i[t0:t1, :] + bump * shape_f[None, :]
+
         self.X = X
 
     def __len__(self):
@@ -70,8 +134,13 @@ class SynthCSIDataset(Dataset):
     def __getitem__(self, i):
         return torch.from_numpy(self.X[i]), int(self.y[i])
 
-def get_synth_loaders(batch=64, difficulty="mid", seed=0):
-    ds = SynthCSIDataset(difficulty=difficulty, seed=seed)
+def get_synth_loaders(batch=64, difficulty="mid", seed=0,
+                      n=2000, T=128, F=30,
+                      sc_corr_rho=None, env_burst_rate=0.0, gain_drift_std=0.0):
+    ds = SynthCSIDataset(n=n, T=T, F=F, difficulty=difficulty, seed=seed,
+                         sc_corr_rho=sc_corr_rho,
+                         env_burst_rate=env_burst_rate,
+                         gain_drift_std=gain_drift_std)
     idx = np.arange(len(ds))
     np.random.default_rng(seed).shuffle(idx)
     split = int(0.8*len(idx))
