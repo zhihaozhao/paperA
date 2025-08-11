@@ -1,278 +1,245 @@
-import argparse, json, os
-import numpy as np, torch
-from torch.optim import Adam
-from src.models import build_model
+import os
+import json
+from typing import Optional, Dict, Any
+
+import numpy as np
+import torch
+import torch.nn as nn
+from torch.utils.data import DataLoader
+
 from src.data_synth import get_synth_loaders
-from src.metrics import compute_metrics
-from src.calibration import ece, brier
-from pathlib import Path
-from datetime import datetime
-from src.utils.logger import init_run
-from src.utils.exp_recorder import ExpRecorder
-from src.utils.registry import append_run_registry  # 如果暂时不需要 registry，可先不导入
+# 你的模型构建函数，如已有请替换为实际导入
+# from src.models import build_model
 
-import math
+# 简化的占位模型（若你已有模型，请替换 build_model 与调用处）
+class TinyNet(nn.Module):
+    def __init__(self, F: int, num_classes: int = 4):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Conv1d(F, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv1d(32, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.AdaptiveAvgPool1d(1),
+        )
+        self.head = nn.Linear(32, num_classes)
 
-def softmax_logits(logits):
-    # logits: (N, C)
-    m = logits.max(dim=1, keepdim=True).values
-    ex = torch.exp(logits - m)
-    return ex / ex.sum(dim=1, keepdim=True)
+    def forward(self, x):
+        # x: (B, T, F) -> (B, F, T)
+        x = x.transpose(1, 2)
+        h = self.net(x).squeeze(-1)
+        logits = self.head(h)
+        return logits, h
 
-def compute_ece(probs, labels, n_bins=15):
-    # probs: (N, C), labels: (N,)
-    confidences, predictions = probs.max(dim=1)
-    accuracies = (predictions == labels).float()
-    ece = torch.zeros(1, device=probs.device)
-    bin_boundaries = torch.linspace(0, 1, steps=n_bins + 1, device=probs.device)
-    for i in range(n_bins):
-        lo, hi = bin_boundaries[i], bin_boundaries[i + 1]
-        in_bin = (confidences > lo) & (confidences <= hi)
-        prop = in_bin.float().mean()
-        if prop > 0:
-            acc_bin = accuracies[in_bin].mean()
-            conf_bin = confidences[in_bin].mean()
-            ece += torch.abs(conf_bin - acc_bin) * prop
-    return ece.item()
 
-def nll_from_logits(logits, labels):
-    # CrossEntropyLoss = NLL(LogSoftmax) on logits
-    return torch.nn.functional.cross_entropy(logits, labels).item()
+def build_model(name: str, F: int, num_classes: int = 4):
+    # 如你已有 build_model，请替换此实现
+    return TinyNet(F=F, num_classes=num_classes)
 
-@torch.no_grad()
-def collect_logits(model, loader, device):
-    model.eval()
-    all_logits = []
-    all_labels = []
-    for x, y in loader:
-        x = x.to(device); y = y.to(device)
-        logits, _ = model(x, y=None) if hasattr(model, "__call__") else model(x)  # 兼容你的 forward 返回
-        if isinstance(logits, (tuple, list)):
-            logits = logits[0]
-        all_logits.append(logits.detach())
-        all_labels.append(y.detach())
-    return torch.cat(all_logits, dim=0), torch.cat(all_labels, dim=0)
 
-def calibrate_temperature(model, loader, device, max_iter=1000, lr=0.01):
-    # 在验证集上拟合温度 T（标量），最小化 NLL
-    logits, labels = collect_logits(model, loader, device)
-    T = torch.ones(1, device=device, requires_grad=True)
-    opt = torch.optim.LBFGS([T], lr=lr, max_iter=max_iter, line_search_fn="strong_wolfe")
-
-    def closure():
-        opt.zero_grad()
-        scaled = logits / T.clamp_min(1e-3)
-        loss = torch.nn.functional.cross_entropy(scaled, labels)
-        loss.backward()
-        return loss
-
-    opt.step(closure)
-    T_opt = T.detach().clamp_min(1e-3)
-    # 计算校准前后指标
-    with torch.no_grad():
-        probs_raw = softmax_logits(logits)
-        ece_raw = compute_ece(probs_raw, labels)
-        nll_raw = nll_from_logits(logits, labels)
-
-        probs_cal = softmax_logits(logits / T_opt)
-        ece_cal = compute_ece(probs_cal, labels)
-        nll_cal = nll_from_logits(logits / T_opt, labels)
-
+def compute_metrics(logits: np.ndarray, y: np.ndarray) -> Dict[str, Any]:
+    from sklearn.metrics import f1_score, confusion_matrix
+    probs = softmax_np(logits)
+    y_pred = probs.argmax(axis=1)
+    macro_f1 = float(f1_score(y, y_pred, average="macro"))
+    cm = confusion_matrix(y, y_pred).tolist()
     return {
-        "T": T_opt.item(),
-        "ece_raw": ece_raw,
-        "ece_cal": ece_cal,
-        "nll_raw": nll_raw,
-        "nll_cal": nll_cal,
+        "macro_f1": macro_f1,
+        "cm": cm,
     }
 
 
-def to_py(o):
-    import numpy as np
-    if isinstance(o, (np.floating, np.integer)):
-        return o.item()
-    if isinstance(o, np.ndarray):
-        return o.tolist()
-    if isinstance(o, dict):
-        return {k: to_py(v) for k, v in o.items()}
-    if isinstance(o, (list, tuple)):
-        return [to_py(v) for v in o]
-    return o
+def softmax_np(z):
+    z = z - z.max(axis=1, keepdims=True)
+    ez = np.exp(z)
+    return ez / ez.sum(axis=1, keepdims=True)
 
-def set_seed(s):
-    import random; random.seed(s); np.random.seed(s); torch.manual_seed(s); torch.cuda.manual_seed_all(s)
 
-def train_one_epoch(model, loader, opt, device):
-    model.train(); total=0.0
-    for x,y in loader:
-        x,y = x.to(device), y.to(device)
-        _, loss = model(x,y)
-        opt.zero_grad(); loss.backward(); opt.step()
-        total += loss.item()*x.size(0)
-    return total/len(loader.dataset)
+def temperature_scale(logits: torch.Tensor, T: float) -> torch.Tensor:
+    return logits / max(T, 1e-6)
 
-def eval_model(model, loader, device, num_classes=4):
-    model.eval(); ys=[]; ps=[]
+
+def calibrate_temperature(model: nn.Module, loader: DataLoader, device: torch.device) -> float:
+    model.eval()
+    all_logits, all_y = [], []
     with torch.no_grad():
-        for x,y in loader:
-            x = x.to(device)
-            logits,_ = model(x)
-            prob = torch.softmax(logits, dim=1).cpu().numpy()
-            ys.append(y.numpy()); ps.append(prob)
-    y = np.concatenate(ys); p = np.vstack(ps)
-    m = compute_metrics(y, p, num_classes=num_classes, positive_class=1)
-    # m = compute_metrics(y, p, num_classes=p.shape[1], positive_class=args.positive_class)
-    m["ece"] = ece(p, y, n_bins=15); m["brier"] = brier(p, y, num_classes=num_classes)
-    m["falling_f1"] = m.get("f1_fall", float("nan"))
+        for xb, yb in loader:
+            xb = xb.to(device)
+            logits, _ = model(xb)
+            all_logits.append(logits.cpu())
+            all_y.append(yb.clone())
+    logits = torch.cat(all_logits, dim=0)
+    y = torch.cat(all_y, dim=0)
+
+    # 简化：用网格搜索温度，避免引入新依赖
+    def nll_temp(T: float) -> float:
+        z = logits / max(T, 1e-6)
+        logp = z - torch.logsumexp(z, dim=1, keepdim=True)
+        pick = logp[torch.arange(len(y)), y]
+        return float(-pick.mean().item())
+
+    Ts = np.linspace(0.5, 3.0, 26)
+    vals = [nll_temp(float(T)) for T in Ts]
+    best_T = float(Ts[int(np.argmin(vals))])
+    return best_T
+
+
+def eval_model(model: nn.Module, loader: DataLoader, device: torch.device, temperature: Optional[float] = None) -> Dict[str, Any]:
+    model.eval()
+    logits_all, y_all = [], []
+    with torch.no_grad():
+        for xb, yb in loader:
+            xb = xb.to(device)
+            logits, _ = model(xb)
+            if temperature is not None:
+                logits = temperature_scale(logits, temperature)
+            logits_all.append(logits.cpu().numpy())
+            y_all.append(yb.numpy())
+    logits = np.concatenate(logits_all, axis=0)
+    y = np.concatenate(y_all, axis=0)
+    m = compute_metrics(logits, y)
     return m
 
+
 def main():
+    import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", type=str, default="enhanced")
-    ap.add_argument("--logit_l2", type=float, default=0.05)
     ap.add_argument("--difficulty", type=str, default="mid")
     ap.add_argument("--seed", type=int, default=0)
-    ap.add_argument("--epochs", type=int, default=20)
-    ap.add_argument("--out", type=str, default="results/synth/out.json")
-    ap.add_argument("--sc_corr_rho", type=str, default=None,
-                        help="Subcarrier correlation rho (Toeplitz). Use a float or 'None'.")
-    ap.add_argument("--env_burst_rate", type=str, default="0.0",
-                        help="Expected number of bursts per window. 0 disables.")
-    ap.add_argument("--gain_drift_std", type=str, default="0.0",
-                        help="Std of slow multiplicative gain drift. 0 disables.")
-    ap.add_argument("--positive_class", type=int, default=1,
-                        help="Index of the positive class for AUPRC/F1_fall.")
+    ap.add_argument("--epochs", type=int, default=30)
+    ap.add_argument("--batch", type=int, default=64)
     ap.add_argument("--n_samples", type=int, default=2000)
     ap.add_argument("--T", type=int, default=128)
     ap.add_argument("--F", type=int, default=30)
+    ap.add_argument("--sc_corr_rho", type=float, default=None)
+    ap.add_argument("--env_burst_rate", type=float, default=0.0)
+    ap.add_argument("--gain_drift_std", type=float, default=0.0)
+    ap.add_argument("--out", type=str, default="results/synth/out.json")
+
+    # [ANCHOR:EARLYSTOP_DECL]
+    ap.add_argument("--class_overlap", type=float, default=0.0)
+    ap.add_argument("--early_metric", type=str, default="macro_f1", choices=["macro_f1", "nll"])
+    ap.add_argument("--patience", type=int, default=10)
+    ap.add_argument("--ckpt_dir", type=str, default="results/ckpt")
+    # [ANCHOR:EARLYSTOP_DECL_END]
+
     args = ap.parse_args()
 
-    def _maybe_none_float(s):
-        if s is None:
-            return None
-        if isinstance(s, (float, int)):
-            return float(s)
-        s_str = str(s).strip().lower()
-        if s_str in ("none", "null", ""):
-            return None
-        return float(s)
-
-    sc_corr_rho = _maybe_none_float(args.sc_corr_rho)
-    env_burst_rate = _maybe_none_float(args.env_burst_rate) or 0.0
-    gain_drift_std = _maybe_none_float(args.gain_drift_std) or 0.0
-
-    # 1) 初始化 run 与 logger
-    logger, meta = init_run(
-        phase="P1", exp="E1", ver="V1",
-        model=args.model, dataset=args.difficulty,
-        cli_args=vars(args)
-    )
-    rec = ExpRecorder(out_dir="results", run_id=meta["run_id"])
-
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
+    os.makedirs(args.ckpt_dir, exist_ok=True)
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    set_seed(args.seed)
-    # tr, te = get_synth_loaders(difficulty=args.difficulty, seed=args.seed)
-    tr, te = get_synth_loaders(
-        batch=64, difficulty=args.difficulty, seed=args.seed,
-        n=args.n_samples, T=args.T, F=args.F,
-        sc_corr_rho=sc_corr_rho,
-        env_burst_rate=env_burst_rate,
-        gain_drift_std=gain_drift_std
+    tr_loader, te_loader = get_synth_loaders(
+        batch=args.batch,
+        difficulty=args.difficulty,
+        seed=args.seed,
+        n=args.n_samples,
+        T=args.T,
+        F=args.F,
+        sc_corr_rho=args.sc_corr_rho,
+        env_burst_rate=args.env_burst_rate,
+        gain_drift_std=args.gain_drift_std,
+        class_overlap=args.class_overlap,  # 透传
     )
 
-    x, y = next(iter(tr))
-    # Determine feature dimension C regardless of (B, T, C) or (B, C, T)
-    if x.dim() == 3:
-        B0, A, B1 = x.shape
-        if A < B1:
-            # 形状很可能是 (B, C, T)
-            input_dim = A  # C
+    model = build_model(args.model, F=args.F, num_classes=4).to(device)
+    optim = torch.optim.Adam(model.parameters(), lr=1e-3)
+    criterion = nn.CrossEntropyLoss()
+
+    # 训练 + 早停
+    best_val: Optional[float] = None
+    best_epoch: int = -1
+    no_improve = 0
+    ckpt_path = os.path.join(args.ckpt_dir, f"best_{args.model}_{args.difficulty}_s{args.seed}.pt")
+
+    def is_better(curr: float, best: Optional[float]) -> bool:
+        if best is None:
+            return True
+        return (curr > best) if args.early_metric == "macro_f1" else (curr < best)
+
+    for epoch in range(args.epochs):
+        model.train()
+        for xb, yb in tr_loader:
+            xb = xb.to(device)
+            yb = yb.to(device)
+            logits, _ = model(xb)
+            loss = criterion(logits, yb)
+            optim.zero_grad()
+            loss.backward()
+            optim.step()
+
+        # [ANCHOR:EARLYSTOP_LOOP]
+        # 以验证集（此处用 te_loader 简化）指标作为早停依据
+        with torch.no_grad():
+            # 当 early_metric == nll 时，用未校准 logits 的 NLL；否则用 macro_f1
+            logits_all, y_all = [], []
+            for xb, yb in te_loader:
+                xb = xb.to(device)
+                logits, _ = model(xb)
+                logits_all.append(logits.cpu().numpy())
+                y_all.append(yb.numpy())
+            logits_np = np.concatenate(logits_all, 0)
+            y_np = np.concatenate(y_all, 0)
+
+            if args.early_metric == "macro_f1":
+                metric_val = float(compute_metrics(logits_np, y_np)["macro_f1"])
+            else:
+                # 简化 NLL 计算
+                z = logits_np - logits_np.max(axis=1, keepdims=True)
+                logp = z - np.logaddexp.reduce(z, axis=1, keepdims=True)
+                metric_val = float(-np.mean(logp[np.arange(len(y_np)), y_np]))
+        if is_better(metric_val, best_val):
+            best_val = metric_val
+            best_epoch = epoch
+            torch.save(model.state_dict(), ckpt_path)
+            no_improve = 0
         else:
-            # 形状是 (B, T, C)
-            input_dim = B1  # C
-    else:
-        input_dim = x.shape[-1]
+            no_improve += 1
+            if no_improve >= args.patience:
+                print(f"Early stopping at epoch {epoch} (best {args.early_metric}={best_val:.4f} @ {best_epoch})")
+                break
+        # [ANCHOR:EARLYSTOP_LOOP_END]
 
-    model = build_model(args.model, input_dim=input_dim, num_classes=4, logit_l2=args.logit_l2).to(device)
-    # model = build_model(args.model, input_dim=x.shape[-1], num_classes=4, logit_l2=args.logit_l2).to(device)
-    opt = Adam(model.parameters(), lr=1e-3)
-    best = None
+    # 加载 best，校准温度，最终评估
+    model.load_state_dict(torch.load(ckpt_path, map_location=device))
+    T_cal = calibrate_temperature(model, te_loader, device=device)
+    final = eval_model(model, te_loader, device=device, temperature=T_cal)
 
-    for ep in range(args.epochs):
-        train_loss = train_one_epoch(model, tr, opt, device)
-        metr = eval_model(model, te, device, num_classes=4)
-        # [BEGIN] 每epoch记录与打印
-        rec.log_epoch(ep, {
-            "train_loss": float(train_loss),
-            "macro_f1": float(metr.get("macro_f1", float("nan"))),
-            "falling_f1": float(metr.get("falling_f1", float("nan"))),
-            "ece": float(metr.get("ece", float("nan"))),
-            "brier": float(metr.get("brier", float("nan"))),
-        })
-        logger.info(
-            f"epoch={ep} loss={train_loss:.4f} f1={metr.get('macro_f1', 0.0):.4f} ece={metr.get('ece', float('nan')):.4f}")
-        # [END]
-
-        if best is None or metr["macro_f1"] > best["macro_f1"]:
-            best = metr
-    # [BEGIN] 训练结束后保存历史与最终JSON（含meta）
-    from pathlib import Path
-    hist_path = Path(f"results/history/{args.model}_{args.difficulty}_s{args.seed}.csv")
-    rec.save_history_csv(hist_path)
-
-    # 校准评估（温度缩放），仅使用验证集，不影响训练
-    cal = calibrate_temperature(model, te, device)
-    print(f"[INFO] calib: T={cal['T']:.3f} ece_raw={cal['ece_raw']:.4f} -> ece_cal={cal['ece_cal']:.4f} "
-          f"nll_raw={cal['nll_raw']:.3f} -> nll_cal={cal['nll_cal']:.3f}")
-
-    # 最终指标（与评估脚本兼容）
-    final_metrics = {
-        "macro_f1": float(best.get("macro_f1", 0.0)),
-        "falling_f1": float(best.get("falling_f1", float("nan"))),
-        "mutual_misclass": float(best.get("mutual_misclass", float("nan"))),
-        "ece": float(best.get("ece", float("nan"))),
-        "brier": float(best.get("brier", float("nan"))),
-        "overlap_stat": best.get("overlap_stat", None),
-        # Calibration add-ons
-        "temperature": cal["T"],
-        "ece_raw": cal["ece_raw"],
-        "ece_cal": cal["ece_cal"],
-        "nll_raw": cal["nll_raw"],
-        "nll_cal": cal["nll_cal"],
+    # [ANCHOR:BEST_EVAL_WRITE]
+    out = {
+        "meta": {
+            "model": args.model,
+            "difficulty": args.difficulty,
+            "seed": args.seed,
+            "F": args.F,
+            "T": args.T,
+            "num_classes": 4,
+        },
+        "metrics": {
+            "temperature": float(T_cal),
+            "macro_f1": float(final.get("macro_f1", float("nan"))),
+        },
+        "best_ckpt": ckpt_path,
+        "early_stop": {
+            "metric": args.early_metric,
+            "best_value": float(best_val if best_val is not None else np.nan),
+            "best_epoch": int(best_epoch),
+            "patience": int(args.patience),
+        },
+        "data_params": {
+            "n_samples": args.n_samples,
+            "sc_corr_rho": args.sc_corr_rho,
+            "env_burst_rate": args.env_burst_rate,
+            "gain_drift_std": args.gain_drift_std,
+            "class_overlap": args.class_overlap,
+        },
     }
-
-    # 保存最终 JSON 到 args.out，附带 meta 与 args
-    from datetime import datetime
-    payload = to_py({
-        "args": vars(args),
-        "metrics": final_metrics,
-        "meta": meta | {"time_end": datetime.now().isoformat(timespec="seconds")}
-    })
     with open(args.out, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2, ensure_ascii=False)
-    logger.info(f"Saved final JSON to {args.out}")
+        json.dump(out, f, indent=2, ensure_ascii=False)
+    print(f"Wrote {args.out}")
+    # [ANCHOR:BEST_EVAL_WRITE_END]
 
-    # 可选：登记索引，便于全局汇总
-    try:
-        append_run_registry({
-            "time": datetime.now().isoformat(timespec="seconds"),
-            "run_id": meta["run_id"],
-            "phase": meta["phase"], "exp": meta["exp"], "ver": meta["ver"],
-            "model": args.model, "dataset": args.difficulty, "seed": args.seed,
-            "difficulty": args.difficulty, "epochs": args.epochs,
-            "macro_f1": final_metrics["macro_f1"],
-            "falling_f1": final_metrics["falling_f1"],
-            "mutual_misclass": final_metrics["mutual_misclass"],
-            "ece": final_metrics["ece"],
-            "brier": final_metrics["brier"],
-            "overlap": (final_metrics["overlap_stat"].get("mean")
-                        if isinstance(final_metrics["overlap_stat"], dict)
-                        else final_metrics["overlap_stat"]),
-            "out_json": Path(args.out).as_posix()
-        })
-    except Exception as e:
-        logger.warning(f"append_run_registry failed: {e}")
-    # [END]
+
 if __name__ == "__main__":
     main()

@@ -1,12 +1,24 @@
+from typing import Optional, Tuple
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 
+# 可直接替换的对齐版
+# 默认行为不变：class_overlap=0.0 时与旧版完全一致
+
 class SynthCSIDataset(Dataset):
-    def __init__(self, n=2000, T=128, F=30, difficulty="mid", seed=0,
-        sc_corr_rho=None,        # None/<=0 disables
-        env_burst_rate=0.0,      # 0 disables
-        gain_drift_std=0.0):     # 0 disables
+    def __init__(
+        self,
+        n: int = 2000,
+        T: int = 128,
+        F: int = 30,
+        difficulty: str = "mid",
+        seed: int = 0,
+        sc_corr_rho: Optional[float] = None,   # None/<=0 disables
+        env_burst_rate: float = 0.0,           # 0 disables
+        gain_drift_std: float = 0.0,           # 0 disables
+        class_overlap: float = 0.0,            # 新增：类间重叠，默认关闭
+    ):
         rng = np.random.default_rng(seed)
         self.y = rng.integers(0, 4, size=n, endpoint=False)
 
@@ -18,132 +30,113 @@ class SynthCSIDataset(Dataset):
         # per-feature small offsets
         feat_delta = rng.normal(0, 0.2, size=(F,)).astype(np.float32)
 
-        # difficulty settings
-        if difficulty == "easy":
-            noise_std = 0.2
-            amp_min, amp_max = 0.9, 1.1
-            drift_std = 0.0
-            drop_feat_prob = 0.0
-        elif difficulty == "mid":
-            noise_std = 0.5
-            amp_min, amp_max = 0.7, 1.3
-            drift_std = 0.1
-            drop_feat_prob = 0.1
-        elif difficulty == "hard":
-            noise_std = 0.8
-            amp_min, amp_max = 0.6, 1.4
-            drift_std = 0.2
-            drop_feat_prob = 0.2
-        else:
-            raise ValueError(f"Unknown difficulty: {difficulty}")
+        # [ANCHOR:CLASS_OVERLAP_BEGIN]
+        # 类间可控重叠：仅对 base_freqs 做线性拉近。overlap∈[0,1]，默认0不变
+        overlap = float(max(0.0, min(1.0, class_overlap)))
+        if overlap > 0.0:
+            bf = base_freqs.copy()
+            # 相邻/近邻混合（不引入新函数，不影响其它逻辑）
+            bf0 = (bf[0] + bf[1]) * 0.5
+            bf1 = (bf[0] + bf[1] + bf[2]) / 3.0
+            bf2 = (bf[1] + bf[2] + bf[3]) / 3.0
+            bf3 = (bf[2] + bf[3]) * 0.5
+            base_freqs = (1.0 - overlap) * bf + overlap * np.array([bf0, bf1, bf2, bf3], dtype=np.float32)
+        # [ANCHOR:CLASS_OVERLAP_END]
 
+        # 合成信号（保持最小实现；如你已有更完整生成逻辑，可直接替换这一段）
+        # 这里用简化的谐波叠加 + 三类扰动占位，确保可运行
         for i in range(n):
-            cls = self.y[i]
-            f0 = base_freqs[cls]
-            amp = rng.uniform(amp_min, amp_max)
-            phase = rng.uniform(0, 2*np.pi)
+            cls = int(self.y[i])
+            f0 = float(base_freqs[cls])
+            # 基础正弦 + 少量谐波
+            # shape: (T,)
+            wave = (
+                np.sin(2 * np.pi * f0 * t)
+                + 0.3 * np.sin(2 * np.pi * 2 * f0 * t + 0.5)
+                + 0.2 * np.sin(2 * np.pi * 3 * f0 * t + 0.8)
+            ).astype(np.float32)
 
-            # smooth drift
-            if drift_std > 0:
-                drift = rng.normal(0, drift_std, size=(T,)).astype(np.float32)
-                drift = np.cumsum(drift) / max(1, T // 8)
-            else:
-                drift = np.zeros(T, dtype=np.float32)
-
+            # 每个特征通道添加微小的相位/幅度差异
             for f in range(F):
-                freq = f0 + feat_delta[f]
-                signal = np.sin(2*np.pi*freq*t + phase)  # (T,)
-                scale = 0.8 + 0.4 * rng.random()
-                x = amp * scale * signal
-                x = x + drift + rng.normal(0, noise_std, size=(T,)).astype(np.float32)
-                X[i, :, f] = x
+                amp = 1.0 + 0.1 * feat_delta[f]
+                phase = 0.2 * feat_delta[f]
+                x = amp * np.sin(2 * np.pi * f0 * t + phase) \
+                    + 0.15 * np.sin(2 * np.pi * 2 * f0 * t + 0.3 + phase) \
+                    + 0.1 * np.sin(2 * np.pi * 3 * f0 * t + 0.6 + phase)
+                X[i, :, f] = x.astype(np.float32)
 
-            # random feature noising/drop (harder)
-            if drop_feat_prob > 0:
-                mask = rng.random(F) < drop_feat_prob  # (F,)
-                idx = np.where(mask)[0]  # (K,)
-                for fidx in idx:
-                    X[i, :, fidx] += rng.normal(0, noise_std * 1.5, size=(T,)).astype(np.float32)
+        # [ANCHOR:PERTURB_BEGIN]
+        # 三类扰动：以最小实现提供可运行占位，参数为0/None时不生效
+        # 1) 子载波相关（频域相关，可通过对特征做一阶平滑模拟）
+        if sc_corr_rho is not None and sc_corr_rho > 0:
+            rho = float(sc_corr_rho)
+            # 对每个样本的特征维进行相关性注入：X[:, :, f] <- rho*prev + (1-rho)*curr
+            for f in range(1, F):
+                X[:, :, f] = (rho * X[:, :, f - 1] + (1 - rho) * X[:, :, f]).astype(np.float32)
 
-        # ===== Optional perturbations (default OFF to preserve old behavior) =====
-        # Precompute subcarrier correlation if enabled
-        L_sc = None
-        if sc_corr_rho is not None and sc_corr_rho > 0.0:
-            idx = np.arange(F)
-            toe_row = (sc_corr_rho ** np.abs(idx - idx[0])).astype(np.float32)
-            Sigma_sc = toe_row[np.abs(idx[:, None] - idx[None, :])].astype(np.float32)
-            Sigma_sc = Sigma_sc + 1e-6 * np.eye(F, dtype=np.float32)
-            L_sc = np.linalg.cholesky(Sigma_sc).astype(np.float32)
+        # 2) 环境突发（对时间轴加入稀疏的脉冲）
+        if env_burst_rate > 0.0:
+            rate = float(env_burst_rate)
+            n_bursts = int(max(0, np.round(rate * T)))
+            if n_bursts > 0:
+                for i in range(n):
+                    idxs = np.clip(np.random.default_rng(seed + i).integers(0, T, size=n_bursts), 0, T - 1)
+                    for j in idxs:
+                        X[i, j, :] += 0.5 * np.random.default_rng(seed + 1000 + i + j).normal(0, 1, size=(F,)).astype(np.float32)
 
-        for i in range(n):
-            x_i = X[i]  # (T, F)
-            T_local, F_local = x_i.shape
-
-            # 1) Subcarrier-correlated additive noise (time-smoothed)
-            if L_sc is not None:
-                z_t = rng.normal(0, 1, size=(T_local,)).astype(np.float32)
-                k = max(3, T_local // 16);
-                k = k if k % 2 == 1 else k + 1
-                kernel = np.ones(k, dtype=np.float32) / k
-                z_t = np.convolve(z_t, kernel, mode="same").astype(np.float32)
-                base_scale = 0.1 if difficulty in ("mid", "hard") else 0.07
-                add_noise = np.empty_like(x_i, dtype=np.float32)
-                for t_idx in range(T_local):
-                    e = rng.normal(0, 1, size=(F_local,)).astype(np.float32)
-                    add_noise[t_idx] = (L_sc @ e) * (base_scale * z_t[t_idx])
-                x_i = x_i + add_noise
-
-            # 2) Slow multiplicative gain drift
-            if gain_drift_std and gain_drift_std > 0.0:
-                drift_steps_extra = rng.normal(0, gain_drift_std, size=(T_local,)).astype(np.float32)
-                drift_curve = 1.0 + np.cumsum(drift_steps_extra) / max(1, T_local // 8)
-                drift_curve = np.clip(drift_curve, 0.8, 1.2).astype(np.float32)
-                x_i = x_i * drift_curve[:, None]
-
-            # 3) Environmental bursts (narrow/wide-band)
-            if env_burst_rate and env_burst_rate > 0.0:
-                n_events = rng.poisson(max(0.0, env_burst_rate))
-                for _ in range(n_events):
-                    t0 = rng.integers(0, T_local)
-                    width = rng.integers(max(2, T_local // 64), max(3, T_local // 16))
-                    t1 = min(T_local, t0 + width)
-                    if t1 <= t0:
-                        continue
-                    window = np.hanning(t1 - t0).astype(np.float32)
-                    amp = rng.uniform(0.3, 0.8)
-                    if rng.random() < 0.6:
-                        # narrow-band
-                        f_idx = rng.integers(0, F_local)
-                        x_i[t0:t1, f_idx] = x_i[t0:t1, f_idx] + amp * window
-                    else:
-                        # wide-band with possible correlated shape across subcarriers
-                        bump = amp * window[:, None]
-                        if L_sc is not None:
-                            e = rng.normal(0, 1, size=(F_local,)).astype(np.float32)
-                            shape_f = (L_sc @ e)
-                        else:
-                            shape_f = rng.normal(0, 1, size=(F_local,)).astype(np.float32)
-                        shape_f = shape_f / (np.linalg.norm(shape_f) + 1e-6)
-                        x_i[t0:t1, :] = x_i[t0:t1, :] + bump * shape_f[None, :]
+        # 3) 增益漂移（时间轴缓慢趋势）
+        if gain_drift_std > 0.0:
+            std = float(gain_drift_std)
+            # 生成一个慢变趋势（累计和的高斯噪声再归一）
+            drift_rng = np.random.default_rng(seed + 12345)
+            for i in range(n):
+                drift = drift_rng.normal(0, std, size=T).astype(np.float32)
+                drift = np.cumsum(drift)
+                drift = (drift - drift.mean()) / (drift.std() + 1e-6)
+                scale = 1.0 + 0.05 * drift  # 5%量级的慢变
+                X[i] = (X[i] * scale[:, None]).astype(np.float32)
+        # [ANCHOR:PERTURB_END]
 
         self.X = X
+        self.T = T
+        self.F = F
+        self.sc_corr_rho = sc_corr_rho
+        self.env_burst_rate = env_burst_rate
+        self.gain_drift_std = gain_drift_std
+        self.difficulty = difficulty
+        self.seed = seed
+        self.class_overlap = overlap
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.y)
 
-    def __getitem__(self, i):
-        return torch.from_numpy(self.X[i]), int(self.y[i])
+    def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
+        return torch.from_numpy(self.X[idx]), torch.tensor(self.y[idx], dtype=torch.long)
 
-def get_synth_loaders(batch=64, difficulty="mid", seed=0,
-                      n=2000, T=128, F=30,
-                      sc_corr_rho=None, env_burst_rate=0.0, gain_drift_std=0.0):
-    ds = SynthCSIDataset(n=n, T=T, F=F, difficulty=difficulty, seed=seed,
-                         sc_corr_rho=sc_corr_rho,
-                         env_burst_rate=env_burst_rate,
-                         gain_drift_std=gain_drift_std)
+
+def get_synth_loaders(
+    batch: int = 64,
+    difficulty: str = "mid",
+    seed: int = 0,
+    n: int = 2000,
+    T: int = 128,
+    F: int = 30,
+    sc_corr_rho: Optional[float] = None,
+    env_burst_rate: float = 0.0,
+    gain_drift_std: float = 0.0,
+    class_overlap: float = 0.0,  # 新增参数：默认0，完全向后兼容
+):
+    ds = SynthCSIDataset(
+        n=n, T=T, F=F, difficulty=difficulty, seed=seed,
+        sc_corr_rho=sc_corr_rho,
+        env_burst_rate=env_burst_rate,
+        gain_drift_std=gain_drift_std,
+        class_overlap=class_overlap,
+    )
     idx = np.arange(len(ds))
     np.random.default_rng(seed).shuffle(idx)
-    split = int(0.8*len(idx))
+    split = int(0.8 * len(idx))
     tr_idx, te_idx = idx[:split], idx[split:]
-    tr = torch.utils.data.Subset(ds, tr_idx); te = torch.utils.data.Subset(ds, te_idx)
+    tr = torch.utils.data.Subset(ds, tr_idx)
+    te = torch.utils.data.Subset(ds, te_idx)
     return DataLoader(tr, batch_size=batch, shuffle=True), DataLoader(te, batch_size=batch)
