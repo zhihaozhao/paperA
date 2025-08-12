@@ -7,8 +7,12 @@ N_BINS ?= 15
 SPLIT ?= te
 CSV ?=
 CSV_PER_CLASS ?=
+DIFF ?= mid
+SEED ?= 0
+LAMBDAS ?= 0,0.02,0.05,0.08,0.12,0.18
+JOBS ?= 1
 
-.PHONY: infer reliability train all clean dirs
+.PHONY: infer reliability train all clean dirs lambda_sweep
 
 dirs:
 	mkdir -p results/preds results/plots results/synth results/ckpt
@@ -21,6 +25,9 @@ reliability: dirs
 
 train: dirs
 	bash scripts/run_train.sh
+
+lambda_sweep:
+	bash scripts/run_lambda_sweep.sh "$(DIFF)" "$(SEED)" "$(LAMBDAS)" "$(JOBS)"
 
 all: infer reliability
 

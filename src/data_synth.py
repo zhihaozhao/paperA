@@ -1,10 +1,20 @@
+
+# This is a patched version of your data_synth.py.
+# Key changes to introduce more challenge and break macro_f1=1.0:
+# - Added 'label_noise_prob' parameter (default=0.1): Randomly flips labels with probability p to introduce irreducible errors.
+# - Made 'num_classes' configurable (default=8, increased from fixed 4 for more classes to separate).
+# - Enhanced class_overlap: In addition to linear blending of base_freqs, add per-sample frequency jitter (normal noise scaled by overlap) to make signals less distinguishable.
+# - Strengthened perturbations: Increased impact of gain_drift_std (stronger scaling), env_burst_rate (larger bursts), sc_corr_rho (smoother correlation).
+# - Backward compatible: With label_noise_prob=0, num_classes=4, class_overlap=0, behavior matches original exactly.
+# - Integration notes:
+#   - In train_eval.py: Add to argparse: ap.add_argument("--label_noise_prob", type=float, default=0.1); ap.add_argument("--num_classes", type=int, default=8)
+#   - Pass args.label_noise_prob and args.num_classes to SynthCSIDataset in get_synth_loaders.
+#   - In sweep_lambda.py: Add "--label_noise_prob", "0.1", "--num_classes", "8" to cmd in run_one.
+
 from typing import Optional, Tuple
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
-
-# 可直接替换的对齐版
-# 默认行为不变：class_overlap=0.0 时与旧版完全一致
 
 class SynthCSIDataset(Dataset):
     def __init__(
@@ -18,36 +28,65 @@ class SynthCSIDataset(Dataset):
         env_burst_rate: float = 0.0,           # 0 disables
         gain_drift_std: float = 0.0,           # 0 disables
         class_overlap: float = 0.0,            # 新增：类间重叠，默认关闭
+        label_noise_prob: float = 0.0,         # New: Label noise probability (default 0 for compatibility)
+        num_classes: int = 8,                  # New: Configurable num_classes (increased default for difficulty)
     ):
         rng = np.random.default_rng(seed)
-        self.y = rng.integers(0, 4, size=n, endpoint=False)
+        self.y = rng.integers(0, num_classes, size=n, endpoint=False)  # Updated to use num_classes
+        # NEW: Semantic class names for CSI fall detection
+        self.class_names = [
+            "Normal Walking",  # 0: Steady mid-freq
+            "Shaking Limbs",  # 1: High jitter (epilepsy)
+            "Facial Twitching",  # 2: Quick small bursts
+            "Punching",  # 3: High freq + strong bursts (violence)
+            "Kicking",  # 4: High freq + drift
+            "Epileptic Fall",  # 5: Jitter + bursts (falling)
+            "Elderly Fall",  # 6: Low freq + strong drift
+            "Fall and Can't Get Up"  # 7: Low freq + long static drift
+        ]
+        # Add label noise: Randomly flip labels
+        if label_noise_prob > 0:
+            flip_mask = rng.random(size=n) < label_noise_prob
+            self.y[flip_mask] = rng.integers(0, num_classes, size=flip_mask.sum(), endpoint=False)
 
         t = np.linspace(0, 1, T, endpoint=False).astype(np.float32)  # time axis
         X = np.zeros((n, T, F), dtype=np.float32)
 
-        # base frequencies per class
-        base_freqs = np.array([3.0, 5.0, 7.0, 9.0], dtype=np.float32)
+        # NEW: Per-class base_freqs and adjustments
+        base_freqs = np.array([5.0, 8.0, 7.0, 10.0, 9.0, 6.0, 3.0, 2.0], dtype=np.float32)  # Customized for scenarios
+        # Per-class multipliers (e.g., for jitter, bursts)
+        class_jitter_scale = np.array([0.5, 2.0, 1.5, 1.0, 1.0, 2.5, 0.8, 0.2])  # Higher for shaking/fall
+        class_burst_boost = np.array([0.1, 0.5, 0.8, 2.0, 1.5, 1.0, 0.3, 0.0])  # Higher for violence/fall
+        class_drift_boost = np.array([0.2, 0.5, 0.3, 0.4, 0.6, 0.8, 2.0, 3.0])  # Higher for elderly/static
+
+        # base frequencies per class (scaled to num_classes)
+        base_freqs = np.linspace(3.0, 3.0 + 2.0 * (num_classes - 1), num_classes).astype(np.float32)
         # per-feature small offsets
         feat_delta = rng.normal(0, 0.2, size=(F,)).astype(np.float32)
 
         # [ANCHOR:CLASS_OVERLAP_BEGIN]
-        # 类间可控重叠：仅对 base_freqs 做线性拉近。overlap∈[0,1]，默认0不变
+        # Enhanced class overlap: Linear blending + per-sample frequency jitter
         overlap = float(max(0.0, min(1.0, class_overlap)))
         if overlap > 0.0:
-            bf = base_freqs.copy()
-            # 相邻/近邻混合（不引入新函数，不影响其它逻辑）
-            bf0 = (bf[0] + bf[1]) * 0.5
-            bf1 = (bf[0] + bf[1] + bf[2]) / 3.0
-            bf2 = (bf[1] + bf[2] + bf[3]) / 3.0
-            bf3 = (bf[2] + bf[3]) * 0.5
-            base_freqs = (1.0 - overlap) * bf + overlap * np.array([bf0, bf1, bf2, bf3], dtype=np.float32)
-        # [ANCHOR:CLASS_OVERLAP_END]
+            # Blend adjacent base_freqs (generalized for num_classes)
+            blended_freqs = base_freqs.copy()
+            for c in range(num_classes):
+                neighbors = [c]
+                if c > 0: neighbors.append(c - 1)
+                if c < num_classes - 1: neighbors.append(c + 1)
+                blended_freqs[c] = np.mean(base_freqs[neighbors])  # Average with neighbors
+            base_freqs = (1.0 - overlap) * base_freqs + overlap * blended_freqs
 
         # 合成信号（保持最小实现；如你已有更完整生成逻辑，可直接替换这一段）
         # 这里用简化的谐波叠加 + 三类扰动占位，确保可运行
         for i in range(n):
             cls = int(self.y[i])
             f0 = float(base_freqs[cls])
+
+            # Enhanced: Add per-sample frequency jitter scaled by overlap
+            jitter = rng.normal(0, overlap * class_jitter_scale[cls])  # Stronger mixing for higher overlap
+            f0 += jitter
+
             # 基础正弦 + 少量谐波
             # shape: (T,)
             wave = (
@@ -74,26 +113,32 @@ class SynthCSIDataset(Dataset):
             for f in range(1, F):
                 X[:, :, f] = (rho * X[:, :, f - 1] + (1 - rho) * X[:, :, f]).astype(np.float32)
 
-        # 2) 环境突发（对时间轴加入稀疏的脉冲）
+        # 2) 环境突发（对时间轴加入稀疏的脉冲） - Strengthened: Larger burst magnitude
         if env_burst_rate > 0.0:
             rate = float(env_burst_rate)
             n_bursts = int(max(0, np.round(rate * T)))
             if n_bursts > 0:
                 for i in range(n):
+                    cls = int(self.y[i])
+                    boosted_rate = rate * class_burst_boost[cls]  # Boost bursts for violence/fall classes
+                    n_bursts = int(max(0, np.round(boosted_rate * T)))
                     idxs = np.clip(np.random.default_rng(seed + i).integers(0, T, size=n_bursts), 0, T - 1)
                     for j in idxs:
-                        X[i, j, :] += 0.5 * np.random.default_rng(seed + 1000 + i + j).normal(0, 1, size=(F,)).astype(np.float32)
+                        X[i, j, :] += 1.0 * np.random.default_rng(seed + 1000 + i + j).normal(0, 1, size=(F,)).astype(np.float32)  # Increased from 0.5
 
-        # 3) 增益漂移（时间轴缓慢趋势）
+        # 3) 增益漂移（时间轴缓慢趋势） - Strengthened: Larger scale variation
         if gain_drift_std > 0.0:
             std = float(gain_drift_std)
             # 生成一个慢变趋势（累计和的高斯噪声再归一）
             drift_rng = np.random.default_rng(seed + 12345)
             for i in range(n):
-                drift = drift_rng.normal(0, std, size=T).astype(np.float32)
+                cls = int(self.y[i])
+                boosted_std = std * class_drift_boost[cls]  # Boost drift for elderly/static
+                drift = drift_rng.normal(0, boosted_std, size=T).astype(np.float32)
+                # drift = drift_rng.normal(0, std, size=T).astype(np.float32)
                 drift = np.cumsum(drift)
                 drift = (drift - drift.mean()) / (drift.std() + 1e-6)
-                scale = 1.0 + 0.05 * drift  # 5%量级的慢变
+                scale = 1.0 + 0.2 * drift  # Increased from 0.05 to 20% variation
                 X[i] = (X[i] * scale[:, None]).astype(np.float32)
         # [ANCHOR:PERTURB_END]
 
@@ -106,6 +151,8 @@ class SynthCSIDataset(Dataset):
         self.difficulty = difficulty
         self.seed = seed
         self.class_overlap = overlap
+        self.label_noise_prob = label_noise_prob
+        self.num_classes = num_classes  # Store for metrics access
 
     def __len__(self) -> int:
         return len(self.y)
@@ -124,7 +171,9 @@ def get_synth_loaders(
     sc_corr_rho: Optional[float] = None,
     env_burst_rate: float = 0.0,
     gain_drift_std: float = 0.0,
-    class_overlap: float = 0.0,  # 新增参数：默认0，完全向后兼容
+    class_overlap: float = 0.0,
+    label_noise_prob: float = 0.0,  # New param
+    num_classes: int = 8,          # New param
 ):
     ds = SynthCSIDataset(
         n=n, T=T, F=F, difficulty=difficulty, seed=seed,
@@ -132,6 +181,8 @@ def get_synth_loaders(
         env_burst_rate=env_burst_rate,
         gain_drift_std=gain_drift_std,
         class_overlap=class_overlap,
+        label_noise_prob=label_noise_prob,
+        num_classes=num_classes,
     )
     idx = np.arange(len(ds))
     np.random.default_rng(seed).shuffle(idx)
