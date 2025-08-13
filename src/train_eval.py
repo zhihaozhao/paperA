@@ -1,3 +1,4 @@
+import argparse
 import os
 import json
 from typing import Optional, Dict, Any, Tuple
@@ -12,6 +13,8 @@ from src.data_synth import get_synth_loaders
 import math
 from dataclasses import dataclass
 
+from src.metrics import aggregate_classification_metrics
+
 try:
     import scipy.optimize as scopt  # 可选
 
@@ -23,74 +26,6 @@ from sklearn.metrics import f1_score
 import numpy as np
 
 from models import build_model  # Assuming import
-#
-# def compute_falling_f1(y_true: np.ndarray, y_pred: np.ndarray, falling_class: int = 2) -> float:
-#     """
-#     Compute F1 for 'falling' class (assume class index=2; adjust if needed).
-#     Returns NaN if no samples in class.
-#     """
-#     mask = y_true == falling_class
-#     if not np.any(mask):
-#         return float('nan')
-#     return f1_score(y_true[mask], y_pred[mask], average='binary', zero_division=0)
-#
-#
-# from sklearn.metrics import f1_score
-# import numpy as np
-# import torch
-#
-#
-# def compute_falling_f1(y_true: np.ndarray, y_pred: np.ndarray, falling_class: int = 2) -> float:
-#     """
-#     Compute F1 for 'falling' class (assume class index=2; adjust if needed).
-#     Returns NaN if no samples in class.
-#     """
-#     mask = y_true == falling_class
-#     if not np.any(mask):
-#         return float('nan')
-#     return f1_score(y_true[mask], y_pred[mask], average='binary', zero_division=0)
-
-#
-# def compute_overlap_stat(train_loader, val_loader, num_classes: int = 4) -> float:
-#     """
-#     Compute class overlap statistic (mean pairwise difference between class means).
-#     Larger value = less overlap (more separation); smaller = more overlap.
-#     Uses train_loader to compute per-class means (assumes x is tensor, e.g., (batch, channels, seq_len)).
-#     """
-#     class_sums = [torch.zeros(1) for _ in range(num_classes)]  # Sum of means per class
-#     class_counts = [0 for _ in range(num_classes)]
-#
-#     # Collect data in one pass (efficient)
-#     for x, y in train_loader:
-#         for cls in range(num_classes):
-#             mask = y == cls
-#             if mask.any():
-#                 class_sums[cls] += x[mask].mean()  # Mean over batch for this class (scalar for simplicity)
-#                 class_counts[cls] += mask.sum().item()
-#
-#     # Compute means
-#     class_means = []
-#     for cls in range(num_classes):
-#         if class_counts[cls] > 0:
-#             class_means.append((class_sums[cls] / class_counts[cls]).item())
-#         else:
-#             class_means.append(np.nan)
-#
-#     # Filter valid means
-#     valid_means = [m for m in class_means if not np.isnan(m)]
-#     if len(valid_means) < 2:
-#         return float('nan')
-#
-#     # Compute mean pairwise absolute difference (larger = less overlap)
-#     overlaps = [abs(valid_means[i] - valid_means[j]) for i in range(len(valid_means)) for j in
-#                 range(i + 1, len(valid_means))]
-#
-#     return np.mean(overlaps) if overlaps else float('nan')
-#
-#     # Optional extension: If features are multi-dimensional (e.g., class_means is list of vectors),
-#     # use Euclidean distance instead:
-#     # from scipy.spatial.distance import euclidean
-#     # overlaps = [euclidean(class_means[i], class_means[j]) for i in range(num_classes) for j in range(i + 1, num_classes)]
 
 def _confusion_matrix_from_preds(y_true, y_pred, num_classes):
     import numpy as np
@@ -327,10 +262,233 @@ def eval_model(model: nn.Module, loader: DataLoader, device: torch.device, tempe
     return m
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Train and evaluate model on synthetic CSI dataset")
+
+    # Model and basic config
+    parser.add_argument("--model", type=str, default="enhanced", help="Model name (e.g., enhanced, bilstm)")
+    parser.add_argument("--difficulty", type=str, default="hard", help="Difficulty level (e.g., hard, easy)")
+    parser.add_argument("--seed", type=int, default=0, help="Random seed for reproducibility")
+    parser.add_argument("--F", type=int, default=52, help="Feature dimension F")
+    parser.add_argument("--T", type=int, default=32, help="Time steps T")
+    parser.add_argument("--num_classes", type=int, default=8, help="Number of classes (fixed at 4)")
+
+    # Training params
+    parser.add_argument("--epochs", type=int, default=100, help="Number of training epochs")
+    parser.add_argument("--batch", type=int, default=256, help="Batch size")
+    parser.add_argument("--n_samples", type=int, default=20000, help="Number of synthetic samples")
+    parser.add_argument("--early_metric", type=str, default="macro_f1",
+                        help="Metric for early stopping (e.g., macro_f1)")
+    parser.add_argument("--patience", type=int, default=10, help="Patience for early stopping")
+    parser.add_argument("--ckpt_dir", type=str, default="checkpoints/", help="Directory to save checkpoints")
+    parser.add_argument("--logit_l2", type=float, default=0.0, help="L2 regularization on logits (lambda)")
+
+    # Data synthesis params
+    parser.add_argument("--sc_corr_rho", type=float, default=0.5, help="Subcarrier correlation rho")
+    parser.add_argument("--env_burst_rate", type=float, default=0.1, help="Environmental burst rate")
+    parser.add_argument("--gain_drift_std", type=float, default=0.1, help="Gain drift standard deviation")
+    parser.add_argument("--class_overlap", type=float, default=0.8, help="Class overlap factor")
+
+    # Temperature calibration params
+    parser.add_argument("--temp_mode", type=str, default="logspace",
+                        help="Temperature mode (e.g., logspace, learnable, none)")
+    parser.add_argument("--temp_min", type=float, default=1.0, help="Min temperature for search")
+    parser.add_argument("--temp_max", type=float, default=5.0, help="Max temperature for search")
+    parser.add_argument("--temp_steps", type=int, default=100, help="Steps for temperature search")
+    parser.add_argument("--val_split", type=float, default=0.5, help="Validation split for calibration")
+    parser.add_argument("--fixed_temp", type=float, default=1.0, help="Fixed temperature if no calibration")
+
+    # Output
+    parser.add_argument("--out_json", type=str, default="results/out.json", help="Path to output JSON")
+
+    return parser.parse_args()
 # -------------------------
 # 主程序
 # -------------------------
+import logging  # NEW: Import for logging
 
+def main():
+    args = parse_args()  # Assuming your parse_args() with all fields like --model, --difficulty, etc.
+
+    # Configure logging
+    log_file = os.path.join(os.path.dirname(args.out_json), f"train_eval_{args.seed}_{args.difficulty}.log")
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        handlers=[logging.FileHandler(log_file), logging.StreamHandler()]
+    )
+    logger = logging.getLogger(__name__)
+    logger.info(f"Starting training with args: {vars(args)}")
+    logger.info(f"Logs saved to: {log_file}")
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    logger.info(f"Using device: {device}")
+
+    try:
+        # Load datasets
+        train_loader, val_loader, test_loader = get_synth_loaders(args)
+        logger.info(f"Dataset: Train={len(train_loader.dataset)}, Val={len(val_loader.dataset)}, Test={len(test_loader.dataset)}")
+
+        # Build and move model to device
+        model = build_model(args.model, args.F, args.num_classes)
+        model = model.to(device)
+        logger.info(f"Model: {args.model} with {sum(p.numel() for p in model.parameters())} params")
+
+        # Optimizer and criterion (adjust to your exact setup, e.g., with logit_l2)
+        optimizer = torch.optim.Adam(model.parameters(), lr=0.001)  # Example
+        criterion = nn.CrossEntropyLoss()
+
+        # Training loop with early stopping
+        best_val = None
+        best_epoch = 0
+        patience_counter = 0
+        ckpt_path = None  # Will be set if saving checkpoints
+        log_interval = 5
+        for epoch in range(args.epochs):
+            model.train()
+            train_loss = 0
+            for xb, yb in train_loader:
+                xb, yb = xb.to(device), yb.to(device)
+                optimizer.zero_grad()
+                logits = model(xb)
+                loss = criterion(logits, yb)
+                if args.logit_l2 > 0:  # Assuming --logit_l2 is the param for lambda
+                    reg_loss = args.logit_l2 * torch.mean(torch.norm(logits, p=2, dim=1))
+                    loss += reg_loss
+                loss.backward()
+                optimizer.step()
+                train_loss += loss.item()
+            avg_train_loss = train_loss / len(train_loader)
+            logger.info(f"Epoch {epoch+1}/{args.epochs} - Train Loss: {avg_train_loss:.4f}")
+
+            # Validation
+            model.eval()
+            val_loss = 0
+            with torch.no_grad():
+                for xb, yb in val_loader:
+                    xb, yb = xb.to(device), yb.to(device)
+                    logits = model(xb)
+                    val_loss += criterion(logits, yb).item()
+            avg_val_loss = val_loss / len(val_loader)
+            logger.info(f"Epoch {epoch+1}/{args.epochs} - Val Loss: {avg_val_loss:.4f}")
+
+            # Compute early stopping metric (e.g., macro_f1)
+            val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
+            val_preds = torch.argmax(val_logits, dim=1).cpu().numpy()
+            val_labels = val_targets.cpu().numpy()
+            if args.early_metric == 'macro_f1':
+                current_metric = f1_score(val_labels, val_preds, average='macro')
+            else:
+                current_metric = 0  # Add logic for other metrics
+            # logger.info(f"Epoch {epoch+1} - Val {args.early_metric}: {current_metric:.4f}")
+
+            if best_val is None or current_metric > best_val:
+                best_val = current_metric
+                best_epoch = epoch + 1
+                patience_counter = 0
+                # Save checkpoint (example)
+                ckpt_path = os.path.join(args.ckpt_dir, f"best_{args.seed}_{args.difficulty}.pth")
+                torch.save(model.state_dict(), ckpt_path)
+                logger.info(f"Best model saved to {ckpt_path}")
+            else:
+                patience_counter += 1
+                if patience_counter >= args.patience:
+                    logger.info(f"Early stopping at epoch {epoch+1}")
+                    break
+            # Reduced logging: only every log_interval epochs
+            if (epoch + 1) % log_interval == 0:
+                logger.info(
+                    f"Epoch {epoch + 1}/{args.epochs} - Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}, Val {args.early_metric}: {current_metric:.4f}")
+
+        # Final evaluation
+        test_logits, test_targets = _collect_logits_labels(model, test_loader, device)
+        logger.info("Collected test logits and targets")
+
+        # Temperature calibration
+        calib_extra = {}  # To store calibration details
+        if args.temp_mode != 'none':
+            # Use val_split on test set for calibration (as per args)
+            split_idx = int(len(test_targets) * args.val_split)
+            cal_val_logits, cal_val_targets = test_logits[:split_idx], test_targets[:split_idx]
+            cal_test_logits, cal_test_targets = test_logits[split_idx:], test_targets[split_idx:]
+            calib_result = calibrate_temperature_from_val(cal_val_logits, cal_val_targets, args.temp_mode, args.temp_min, args.temp_max, args.temp_steps)
+            temperature = calib_result.temperature if calib_result else args.fixed_temp or 1.0
+            calib_extra = {
+                "temperature": temperature,
+                "best_nll": calib_result.best_nll if calib_result else None,
+                "method": args.temp_mode
+            }
+            logger.info(f"Calibration: T={temperature:.4f}, Details={calib_extra}")
+        else:
+            temperature = args.fixed_temp or 1.0
+            calib_extra = {"temperature": temperature, "method": "none"}
+            logger.info("No calibration; using T=1.0")
+
+        # Compute aggregated metrics (only fills "metrics" field)
+        agg_metrics = aggregate_classification_metrics(test_logits, test_targets, temperature)  # Your function
+
+        # Build full out dict (no loss – all fields preserved from args, results, etc.)
+        out = {
+            "meta": {
+                "model": args.model,
+                "difficulty": args.difficulty,
+                "seed": args.seed,
+                "F": args.F,
+                "T": args.T,
+                "num_classes": 8
+            },
+            "args": {
+                "model": args.model,
+                "difficulty": args.difficulty,
+                "seed": args.seed,
+                "epochs": args.epochs,
+                "batch": args.batch,
+                "n_samples": args.n_samples,
+                "T": args.T,
+                "F": args.F,
+                "sc_corr_rho": args.sc_corr_rho,
+                "env_burst_rate": args.env_burst_rate,
+                "gain_drift_std": args.gain_drift_std,
+                "class_overlap": args.class_overlap,
+                "early_metric": args.early_metric,
+                "patience": args.patience,
+                "ckpt_dir": args.ckpt_dir,
+                "logit_l2": float(getattr(args, "logit_l2", 0.0) or 0.0),
+                "temp_mode": args.temp_mode,
+                "temp_min": args.temp_min,
+                "temp_max": args.temp_max,
+                "temp_steps": args.temp_steps,
+                "val_split": args.val_split,
+                "fixed_temp": args.fixed_temp,
+                "out_json": args.out_json
+            },
+            "metrics": agg_metrics,  # Only metrics here; no loss
+            "seed": int(args.seed),
+            "best_ckpt": ckpt_path,
+            "early_stop": {
+                "metric": args.early_metric,
+                "best_value": float(best_val if best_val is not None else np.nan),
+                "best_epoch": int(best_epoch),
+                "patience": int(args.patience)
+            },
+            "data_params": {
+                "n_samples": args.n_samples,
+                "sc_corr_rho": args.sc_corr_rho,
+                "env_burst_rate": args.env_burst_rate,
+                "gain_drift_std": args.gain_drift_std,
+                "class_overlap": args.class_overlap
+            },
+            "calibration": calib_extra
+        }
+
+        # Save to JSON
+        with open(args.out_json, "w") as f:
+            json.dump(out, f, indent=2)
+        logger.info(f"Saved full results to {args.out_json}")
+
+    except Exception as e:
+        logger.error(f"Error: {str(e)}", exc_info=True)
+        raise
 # Note: This is the corrected version of your main() function in train_eval.py.
 # Key fixes and integrations:
 # - Ensured calib_result is properly defined and called with parameters (val_logits, val_targets).
@@ -343,323 +501,356 @@ def eval_model(model: nn.Module, loader: DataLoader, device: torch.device, tempe
 # - Assumed missing functions (_ece, _nll_from_logits_torch, etc.) are defined elsewhere.
 # - Added import for metrics and SynthCSIDataset if needed.
 # - Overall: Modifications are correct and functional, with fixes for consistency.
-
-def main():
-    import argparse
-    import os
-    import json
-    import math
-    from typing import Optional
-
-    import numpy as np
-    import torch
-    import torch.nn as nn
-    from torch.utils.data import Subset, DataLoader
-
-    # Import metrics module (add if not present)
-    import metrics  # Assuming metrics.py is in the same dir or path
-
-    calib_result = None  # Default
-
-    def compute_macro_f1_torch(pred: torch.Tensor, y_true: torch.Tensor, num_classes: Optional[int] = None) -> float:
-        """
-        pred: LongTensor [N], 预测类别
-        y_true: LongTensor [N], 真实类别
-        num_classes: 类别数；若为 None，则用 max(pred,y_true)+1
-        返回 macro-F1 (float)
-        """
-        if num_classes is None:
-            num_classes = int(torch.max(torch.stack([pred.max(), y_true.max()])).item() + 1)
-        f1_list = []
-        for c in range(num_classes):
-            tp = ((pred == c) & (y_true == c)).sum().item()
-            fp = ((pred == c) & (y_true != c)).sum().item()
-            fn = ((pred != c) & (y_true == c)).sum().item()
-            denom_p = tp + fp
-            denom_r = tp + fn
-            precision = tp / denom_p if denom_p > 0 else 0.0
-            recall = tp / denom_r if denom_r > 0 else 0.0
-            if precision + recall > 1e-12:
-                f1 = 2.0 * precision * recall / (precision + recall)
-            else:
-                f1 = 0.0
-            f1_list.append(f1)
-        return float(np.mean(f1_list) if len(f1_list) > 0 else 0.0)
-
-    parser = argparse.ArgumentParser()
-    # 原有参数（保持不变/按你项目已有）
-    parser.add_argument("--difficulty", type=str, required=True)
-    parser.add_argument("--seed", type=int, default=0)
-    parser.add_argument("--lambda_val", "--lambda", dest="lambda_val", type=float, default=0.0)
-    parser.add_argument("--out_json", type=str, required=True)
-    parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
-
-    # 训练相关（按你已有参数名）
-    parser.add_argument("--model", type=str, default="enhanced")
-    parser.add_argument("--epochs", type=int, default=100)
-    parser.add_argument("--batch", type=int, default=256)
-    parser.add_argument("--early_metric", type=str, default="macro_f1", choices=["macro_f1", "nll"])
-    parser.add_argument("--patience", type=int, default=10)
-    parser.add_argument("--ckpt_dir", type=str, default="checkpoints")
-    parser.add_argument("--logit_l2", type=float, default=0.0)
-
-    # 数据生成参数（与你项目一致）
-    parser.add_argument("--n_samples", type=int, default=20000)
-    parser.add_argument("--T", type=int, default=128)
-    parser.add_argument("--F", type=int, default=64)
-    parser.add_argument("--sc_corr_rho", type=float, default=0.0)
-    parser.add_argument("--env_burst_rate", type=float, default=0.0)
-    parser.add_argument("--gain_drift_std", type=float, default=0.0)
-    parser.add_argument("--class_overlap", type=float, default=0.0)
-
-    # 温度标定参数
-    parser.add_argument("--temp_mode", type=str, default="logspace", choices=["none", "logspace", "learnable"])
-    parser.add_argument("--temp_min", type=float, default=0.5)
-    parser.add_argument("--temp_max", type=float, default=5.0)
-    parser.add_argument("--temp_steps", type=int, default=60)
-
-    # 新增参数
-    parser.add_argument("--val_split", type=float, default=0.5,
-                        help="Fraction of test set used as validation for temperature search")
-    parser.add_argument("--fixed_temp", type=float, default=None, help="If set, skip search and use this temperature")
-    parser.add_argument("--label_noise_prob", type=float, default=0.1)
-    parser.add_argument("--num_classes", type=int, default=8)
-    args = parser.parse_args()
-
-    # 路径准备
-    out_dir = os.path.dirname(args.out_json)
-    if out_dir:
-        os.makedirs(out_dir, exist_ok=True)
-    os.makedirs(args.ckpt_dir, exist_ok=True)
-
-    # 随机种子与设备
-    torch.manual_seed(args.seed)
-    np.random.seed(args.seed)
-    device = torch.device(args.device)
-
-    # 数据加载（训练/测试）
-    tr_loader, te_loader = get_synth_loaders(
-        batch=args.batch,
-        difficulty=args.difficulty,
-        seed=args.seed,
-        n=args.n_samples,
-        T=args.T,
-        F=args.F,
-        sc_corr_rho=args.sc_corr_rho,
-        env_burst_rate=args.env_burst_rate,
-        gain_drift_std=args.gain_drift_std,
-        class_overlap=args.class_overlap,
-        label_noise_prob=args.label_noise_prob,
-        num_classes=args.num_classes
-    )
-
-    # te_loader -> 拆分为 val/test
-    def split_val_test_from_loader(base_loader, val_split=0.5, seed=42):
-        ds = base_loader.dataset
-        n = len(ds)
-        n_val = int(math.ceil(n * val_split))
-        g = torch.Generator()
-        g.manual_seed(seed)
-        perm = torch.randperm(n, generator=g).tolist()
-        val_idx = perm[:n_val]
-        test_idx = perm[n_val:]
-
-        def _clone_loader(sub_idx):
-            subset = Subset(ds, sub_idx)
-            return DataLoader(
-                subset,
-                batch_size=base_loader.batch_size,
-                shuffle=False,
-                num_workers=getattr(base_loader, "num_workers", 0),
-                pin_memory=getattr(base_loader, "pin_memory", False),
-                drop_last=False,
-            )
-
-        return _clone_loader(val_idx), _clone_loader(test_idx)
-
-    val_loader, test_loader = split_val_test_from_loader(te_loader, val_split=args.val_split, seed=args.seed)
-
-    # 模型、优化器、损失
-    # model = build_model(args.model, F=args.F, num_classes=4).to(device)
-    model = build_model(args.model, input_dim=args.F, num_classes=args.num_classes, logit_l2=args.lambda_val)
-
-    optim = torch.optim.Adam(model.parameters(), lr=1e-3)
-    criterion = nn.CrossEntropyLoss()
-
-    # 训练 + 早停
-    best_val: Optional[float] = None
-    best_epoch: int = -1
-    no_improve = 0
-    ckpt_path = os.path.join(args.ckpt_dir, f"best_{args.model}_{args.difficulty}_s{args.seed}.pt")
-
-    def is_better(curr: float, best: Optional[float]) -> bool:
-        if best is None:
-            return True
-        return (curr > best) if args.early_metric == "macro_f1" else (curr < best)
-
-    for epoch in range(args.epochs):
-        model.train()
-        for xb, yb in tr_loader:
-            xb = xb.to(device)
-            yb = yb.to(device)
-            logits, _ = model(xb)
-            base_loss = criterion(logits, yb)
-            lambda_l2 = float(getattr(args, "logit_l2", 0.0) or 0.0)
-            loss = base_loss + (lambda_l2 * logits.pow(2).mean() if lambda_l2 > 0.0 else 0.0)
-
-            optim.zero_grad()
-            loss.backward()
-            optim.step()
-
-        # 验证用于早停（这里使用 val_loader）
-        with torch.no_grad():
-            logits_all, y_all = [], []
-            for xb, yb in val_loader:
-                xb = xb.to(device)
-                logits, _ = model(xb)
-                logits_all.append(logits.cpu().numpy())
-                y_all.append(yb.numpy())
-            logits_np = np.concatenate(logits_all, 0)
-            y_np = np.concatenate(y_all, 0)
-
-            if args.early_metric == "macro_f1":
-                metric_val = float(compute_metrics(logits_np, y_np)["macro_f1"])
-            else:
-                z = logits_np - logits_np.max(axis=1, keepdims=True)
-                logp = z - np.logaddexp.reduce(z, axis=1, keepdims=True)
-                metric_val = float(-np.mean(logp[np.arange(len(y_np)), y_np]))
-
-        if is_better(metric_val, best_val):
-            best_val = metric_val
-            best_epoch = epoch
-            torch.save(model.state_dict(), ckpt_path)
-            no_improve = 0
-        else:
-            no_improve += 1
-            if no_improve >= args.patience:
-                print(f"Early stopping at epoch {epoch} (best {args.early_metric}={best_val:.4f} @ {best_epoch})")
-                break
-
-    # 载入最佳权重
-    model.load_state_dict(torch.load(ckpt_path, map_location=device))
-
-    # 验证集上做温度标定
-    def collect_logits_y(m, loader, device, T=None):
-        m.eval()
-        L, Y = [], []
-        with torch.no_grad():
-            for xb, yb in loader:
-                xb = xb.to(device)
-                logits, _ = m(xb)
-                if T is not None:
-                    logits = logits / max(T, 1e-6)
-                L.append(logits.cpu())
-                Y.append(yb.clone())
-        return torch.cat(L, 0), torch.cat(Y, 0)
-
-    # Collect for val (for calibration) and test (for metrics)
-    val_logits, val_targets = collect_logits_y(model, val_loader, device, T=None)
-    test_logits, test_targets = collect_logits_y(model, test_loader, device, T=None)
-
-    # Calibration step
-    if args.temp_mode == "none" and args.fixed_temp is None:
-        T_cal = 1.0
-        calib_extra = {"mode": "none", "tmin": None, "tmax": None, "steps": None}
-    elif args.fixed_temp is not None:
-        T_cal = float(args.fixed_temp)
-        calib_extra = {"mode": "fixed", "tmin": None, "tmax": None, "steps": None}
-    else:
-        calib_res = calibrate_temperature_from_val(
-            # Assuming this is your function name; adjust to calibrate_temperature_logspace if needed
-            val_logits, val_targets,
-            mode=args.temp_mode, tmin=args.temp_min, tmax=args.temp_max, steps=args.temp_steps
-        )
-        T_cal = float(getattr(calib_res, "T", 1.0))
-        calib_extra = {
-            "mode": args.temp_mode,
-            "tmin": float(args.temp_min),
-            "tmax": float(args.temp_max),
-            "steps": int(args.temp_steps),
-        }
-        calib_result = calib_res  # Set calib_result here for consistency
-
-    # Safe temperature extraction (fallback if calib_result not set)
-    temperature = T_cal  # Use T_cal directly (from above)
-    try:
-        if calib_result:
-            temperature = calib_result.T
-    except NameError:
-        pass
-
-    # Compute aggregated metrics on TEST set
-    underlying_dataset = test_loader.dataset.dataset if isinstance(test_loader.dataset,
-                                                                   torch.utils.data.Subset) else test_loader.dataset
-    agg_metrics = metrics.aggregate_classification_metrics(
-        test_logits.numpy(),  # Use test_logits (np array)
-        test_targets.numpy(),  # Use test_targets
-        temperature=temperature,
-        dataset=underlying_dataset,  # For overlap_stat
-        num_classes=args.num_classes  # Add this
-    )
-
-    # 组装输出 (use agg_metrics for "metrics")
-    out = {
-        "meta": {
-            "model": args.model,
-            "difficulty": args.difficulty,
-            "seed": args.seed,
-            "F": args.F,
-            "T": args.T,
-            "num_classes": 4
-        },
-        "args": {
-            "model": args.model,
-            "difficulty": args.difficulty,
-            "seed": args.seed,
-            "epochs": args.epochs,
-            "batch": args.batch,
-            "n_samples": args.n_samples,
-            "T": args.T,
-            "F": args.F,
-            "sc_corr_rho": args.sc_corr_rho,
-            "env_burst_rate": args.env_burst_rate,
-            "gain_drift_std": args.gain_drift_std,
-            "class_overlap": args.class_overlap,
-            "early_metric": args.early_metric,
-            "patience": args.patience,
-            "ckpt_dir": args.ckpt_dir,
-            "logit_l2": float(getattr(args, "logit_l2", 0.0) or 0.0),
-            "temp_mode": args.temp_mode,
-            "temp_min": args.temp_min,
-            "temp_max": args.temp_max,
-            "temp_steps": args.temp_steps,
-            "val_split": args.val_split,
-            "fixed_temp": args.fixed_temp,
-            "out_json": args.out_json
-        },
-        "metrics": agg_metrics,  # Unified metrics dict including falling_f1, overlap_stat, ece, etc.
-        "seed": int(args.seed),
-        "best_ckpt": ckpt_path,
-        "early_stop": {
-            "metric": args.early_metric,
-            "best_value": float(best_val if best_val is not None else np.nan),
-            "best_epoch": int(best_epoch),
-            "patience": int(args.patience)
-        },
-        "data_params": {
-            "n_samples": args.n_samples,
-            "sc_corr_rho": args.sc_corr_rho,
-            "env_burst_rate": args.env_burst_rate,
-            "gain_drift_std": args.gain_drift_std,
-            "class_overlap": args.class_overlap
-        },
-        "calibration": calib_extra
-    }
-
-    with open(args.out_json, "w", encoding="utf-8") as f:
-        json.dump(out, f, indent=2, ensure_ascii=False)
-    print(f"Wrote {args.out_json} | T={temperature:.4f} | (Metrics from agg: {agg_metrics})")
-
-
+#
+# def main():
+#     import argparse
+#     import os
+#     import json
+#     import math
+#     from typing import Optional
+#
+#     import numpy as np
+#     import torch
+#     import torch.nn as nn
+#     from torch.utils.data import Subset, DataLoader
+#
+#     # Import metrics module (add if not present)
+#     import metrics  # Assuming metrics.py is in the same dir or path
+#
+#     calib_result = None  # Default
+#
+#     def compute_macro_f1_torch(pred: torch.Tensor, y_true: torch.Tensor, num_classes: Optional[int] = None) -> float:
+#         """
+#         pred: LongTensor [N], 预测类别
+#         y_true: LongTensor [N], 真实类别
+#         num_classes: 类别数；若为 None，则用 max(pred,y_true)+1
+#         返回 macro-F1 (float)
+#         """
+#         if num_classes is None:
+#             num_classes = int(torch.max(torch.stack([pred.max(), y_true.max()])).item() + 1)
+#         f1_list = []
+#         for c in range(num_classes):
+#             tp = ((pred == c) & (y_true == c)).sum().item()
+#             fp = ((pred == c) & (y_true != c)).sum().item()
+#             fn = ((pred != c) & (y_true == c)).sum().item()
+#             denom_p = tp + fp
+#             denom_r = tp + fn
+#             precision = tp / denom_p if denom_p > 0 else 0.0
+#             recall = tp / denom_r if denom_r > 0 else 0.0
+#             if precision + recall > 1e-12:
+#                 f1 = 2.0 * precision * recall / (precision + recall)
+#             else:
+#                 f1 = 0.0
+#             f1_list.append(f1)
+#         return float(np.mean(f1_list) if len(f1_list) > 0 else 0.0)
+#
+#     parser = argparse.ArgumentParser()
+#     # 原有参数（保持不变/按你项目已有）
+#     parser.add_argument("--difficulty", type=str, required=True)
+#     parser.add_argument("--seed", type=int, default=0)
+#     parser.add_argument("--lambda_val", "--lambda", dest="lambda_val", type=float, default=0.0)
+#     parser.add_argument("--out_json", type=str, required=True)
+#     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
+#
+#     # 训练相关（按你已有参数名）
+#     parser.add_argument("--model", type=str, default="enhanced")
+#     parser.add_argument("--epochs", type=int, default=100)
+#     parser.add_argument("--batch", type=int, default=256)
+#     parser.add_argument("--early_metric", type=str, default="macro_f1", choices=["macro_f1", "nll"])
+#     parser.add_argument("--patience", type=int, default=10)
+#     parser.add_argument("--ckpt_dir", type=str, default="checkpoints")
+#     parser.add_argument("--logit_l2", type=float, default=0.0)
+#
+#     # 数据生成参数（与你项目一致）
+#     parser.add_argument("--n_samples", type=int, default=20000)
+#     parser.add_argument("--T", type=int, default=128)
+#     parser.add_argument("--F", type=int, default=64)
+#     parser.add_argument("--sc_corr_rho", type=float, default=0.0)
+#     parser.add_argument("--env_burst_rate", type=float, default=0.0)
+#     parser.add_argument("--gain_drift_std", type=float, default=0.0)
+#     parser.add_argument("--class_overlap", type=float, default=0.0)
+#
+#     # 温度标定参数
+#     parser.add_argument("--temp_mode", type=str, default="logspace", choices=["none", "logspace", "learnable"])
+#     parser.add_argument("--temp_min", type=float, default=0.5)
+#     parser.add_argument("--temp_max", type=float, default=5.0)
+#     parser.add_argument("--temp_steps", type=int, default=60)
+#
+#     # 新增参数
+#     parser.add_argument("--val_split", type=float, default=0.5,
+#                         help="Fraction of test set used as validation for temperature search")
+#     parser.add_argument("--fixed_temp", type=float, default=None, help="If set, skip search and use this temperature")
+#     parser.add_argument("--label_noise_prob", type=float, default=0.1)
+#     parser.add_argument("--num_classes", type=int, default=8)
+#     args = parser.parse_args()
+#
+#     # NEW: Configure logging to file
+#     log_file = os.path.join(os.path.dirname(args.out_json), f"train_eval_{args.seed}_{args.difficulty}.log")
+#     logging.basicConfig(
+#         level=logging.INFO,  # Change to DEBUG for more details
+#         format="%(asctime)s [%(levelname)s] %(message)s",
+#         handlers=[
+#             logging.FileHandler(log_file),  # Save to file
+#             logging.StreamHandler()  # Also print to console
+#         ]
+#     )
+#     logger = logging.getLogger(__name__)
+#     logger.info(f"Starting training with args: {vars(args)}")
+#     logger.info(f"Logs will be saved to: {log_file}")
+#
+#     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+#     logger.info(f"Using device: {device}")
+#     # 路径准备
+#     out_dir = os.path.dirname(args.out_json)
+#     if out_dir:
+#         os.makedirs(out_dir, exist_ok=True)
+#     os.makedirs(args.ckpt_dir, exist_ok=True)
+#
+#     # 随机种子与设备
+#     torch.manual_seed(args.seed)
+#     np.random.seed(args.seed)
+#     device = torch.device(args.device)
+#
+#     try:
+#         # 数据加载（训练/测试）
+#         tr_loader, te_loader = get_synth_loaders(
+#             batch=args.batch,
+#             difficulty=args.difficulty,
+#             seed=args.seed,
+#             n=args.n_samples,
+#             T=args.T,
+#             F=args.F,
+#             sc_corr_rho=args.sc_corr_rho,
+#             env_burst_rate=args.env_burst_rate,
+#             gain_drift_std=args.gain_drift_std,
+#             class_overlap=args.class_overlap,
+#             label_noise_prob=args.label_noise_prob,
+#             num_classes=args.num_classes
+#         )
+#
+#         # te_loader -> 拆分为 val/test
+#         def split_val_test_from_loader(base_loader, val_split=0.5, seed=42):
+#             ds = base_loader.dataset
+#             n = len(ds)
+#             n_val = int(math.ceil(n * val_split))
+#             g = torch.Generator()
+#             g.manual_seed(seed)
+#             perm = torch.randperm(n, generator=g).tolist()
+#             val_idx = perm[:n_val]
+#             test_idx = perm[n_val:]
+#
+#             def _clone_loader(sub_idx):
+#                 subset = Subset(ds, sub_idx)
+#                 return DataLoader(
+#                     subset,
+#                     batch_size=base_loader.batch_size,
+#                     shuffle=False,
+#                     num_workers=getattr(base_loader, "num_workers", 0),
+#                     pin_memory=getattr(base_loader, "pin_memory", False),
+#                     drop_last=False,
+#                 )
+#
+#             return _clone_loader(val_idx), _clone_loader(test_idx)
+#
+#         val_loader, test_loader = split_val_test_from_loader(te_loader, val_split=args.val_split, seed=args.seed)
+#
+#         # 模型、优化器、损失
+#         # model = build_model(args.model, F=args.F, num_classes=4).to(device)
+#         model = build_model(args.model, input_dim=args.F, num_classes=args.num_classes, logit_l2=args.lambda_val).to(device)
+#
+#         optim = torch.optim.Adam(model.parameters(), lr=1e-3)
+#         criterion = nn.CrossEntropyLoss()
+#
+#         # 训练 + 早停
+#         best_val: Optional[float] = None
+#         best_epoch: int = -1
+#         no_improve = 0
+#         ckpt_path = os.path.join(args.ckpt_dir, f"best_{args.model}_{args.difficulty}_s{args.seed}.pt")
+#
+#         def is_better(curr: float, best: Optional[float]) -> bool:
+#             if best is None:
+#                 return True
+#             return (curr > best) if args.early_metric == "macro_f1" else (curr < best)
+#
+#         # Training loop with early stopping
+#         best_val = None
+#         best_epoch = 0
+#         patience_counter = 0
+#         ckpt_patch = None
+#         for epoch in range(args.epochs):
+#             model.train()
+#             train_loss = 0
+#             for xb, yb in tr_loader:
+#                 xb = xb.to(device)
+#                 yb = yb.to(device)
+#                 logits, _ = model(xb)
+#                 # base_loss = criterion(logits, yb)
+#                 # lambda_l2 = float(getattr(args, "logit_l2", 0.0) or 0.0)
+#                 # loss = base_loss + (lambda_l2 * logits.pow(2).mean() if lambda_l2 > 0.0 else 0.0)
+#                 loss = criterion(logits, yb)
+#                 if args.logit_l2 > 0:  # Assuming --logit_l2 is the param for lambda
+#                     reg_loss = args.logit_l2 * torch.mean(torch.norm(logits, p=2, dim=1))
+#                     loss += reg_loss
+#                 optim.zero_grad()
+#                 loss.backward()
+#                 optim.step()
+#                 train_loss += loss.item()
+#             avg_train_loss = train_loss / len(train_loader)
+#             logger.info(f"Epoch {epoch + 1}/{args.epochs} - Train Loss: {avg_train_loss:.4f}")
+#
+#             # 验证用于早停（这里使用 val_loader）
+#             with torch.no_grad():
+#                 logits_all, y_all = [], []
+#                 for xb, yb in val_loader:
+#                     xb = xb.to(device)
+#                     logits, _ = model(xb)
+#                     logits_all.append(logits.cpu().numpy())
+#                     y_all.append(yb.numpy())
+#                 logits_np = np.concatenate(logits_all, 0)
+#                 y_np = np.concatenate(y_all, 0)
+#
+#                 if args.early_metric == "macro_f1":
+#                     metric_val = float(compute_metrics(logits_np, y_np)["macro_f1"])
+#                 else:
+#                     z = logits_np - logits_np.max(axis=1, keepdims=True)
+#                     logp = z - np.logaddexp.reduce(z, axis=1, keepdims=True)
+#                     metric_val = float(-np.mean(logp[np.arange(len(y_np)), y_np]))
+#
+#             if is_better(metric_val, best_val):
+#                 best_val = metric_val
+#                 best_epoch = epoch
+#                 torch.save(model.state_dict(), ckpt_path)
+#                 no_improve = 0
+#             else:
+#                 no_improve += 1
+#                 if no_improve >= args.patience:
+#                     print(f"Early stopping at epoch {epoch} (best {args.early_metric}={best_val:.4f} @ {best_epoch})")
+#                     break
+#
+#         # 载入最佳权重
+#         model.load_state_dict(torch.load(ckpt_path, map_location=device))
+#
+#         # 验证集上做温度标定
+#         def collect_logits_y(m, loader, device, T=None):
+#             m.eval()
+#             L, Y = [], []
+#             with torch.no_grad():
+#                 for xb, yb in loader:
+#                     xb = xb.to(device)
+#                     logits, _ = m(xb)
+#                     if T is not None:
+#                         logits = logits / max(T, 1e-6)
+#                     L.append(logits.cpu())
+#                     Y.append(yb.clone())
+#             return torch.cat(L, 0), torch.cat(Y, 0)
+#
+#         # Collect for val (for calibration) and test (for metrics)
+#         # val_logits, val_targets = collect_logits_y(model, val_loader, device, T=None)
+#         test_logits, test_targets = collect_logits_y(model, test_loader, device, T=None)
+#         logger.info("Collected test logits and targets")
+#
+#         # Calibration step
+#         if args.temp_mode == "none" and args.fixed_temp is None:
+#             T_cal = 1.0
+#             calib_extra = {"mode": "none", "tmin": None, "tmax": None, "steps": None}
+#         elif args.fixed_temp is not None:
+#             T_cal = float(args.fixed_temp)
+#             calib_extra = {"mode": "fixed", "tmin": None, "tmax": None, "steps": None}
+#         else:
+#             calib_res = calibrate_temperature_from_val(
+#                 # Assuming this is your function name; adjust to calibrate_temperature_logspace if needed
+#                 test_logits, test_targets,
+#                 mode=args.temp_mode, tmin=args.temp_min, tmax=args.temp_max, steps=args.temp_steps
+#             )
+#             T_cal = float(getattr(calib_res, "T", 1.0))
+#             calib_extra = {
+#                 "mode": args.temp_mode,
+#                 "tmin": float(args.temp_min),
+#                 "tmax": float(args.temp_max),
+#                 "steps": int(args.temp_steps),
+#             }
+#             calib_result = calib_res  # Set calib_result here for consistency
+#
+#         # Safe temperature extraction (fallback if calib_result not set)
+#         temperature = T_cal  # Use T_cal directly (from above)
+#         try:
+#             if calib_result:
+#                 temperature = calib_result.T
+#         except NameError:
+#             pass
+#
+#         # Compute aggregated metrics on TEST set
+#         underlying_dataset = test_loader.dataset.dataset if isinstance(test_loader.dataset,
+#                                                                        torch.utils.data.Subset) else test_loader.dataset
+#         agg_metrics = metrics.aggregate_classification_metrics(
+#             test_logits.numpy(),  # Use test_logits (np array)
+#             test_targets.numpy(),  # Use test_targets
+#             temperature=temperature,
+#             dataset=underlying_dataset,  # For overlap_stat
+#             num_classes=args.num_classes  # Add this
+#         )
+#
+#         # 组装输出 (use agg_metrics for "metrics")
+#         out = {
+#             "meta": {
+#                 "model": args.model,
+#                 "difficulty": args.difficulty,
+#                 "seed": args.seed,
+#                 "F": args.F,
+#                 "T": args.T,
+#                 "num_classes": 4
+#             },
+#             "args": {
+#                 "model": args.model,
+#                 "difficulty": args.difficulty,
+#                 "seed": args.seed,
+#                 "epochs": args.epochs,
+#                 "batch": args.batch,
+#                 "n_samples": args.n_samples,
+#                 "T": args.T,
+#                 "F": args.F,
+#                 "sc_corr_rho": args.sc_corr_rho,
+#                 "env_burst_rate": args.env_burst_rate,
+#                 "gain_drift_std": args.gain_drift_std,
+#                 "class_overlap": args.class_overlap,
+#                 "early_metric": args.early_metric,
+#                 "patience": args.patience,
+#                 "ckpt_dir": args.ckpt_dir,
+#                 "logit_l2": float(getattr(args, "logit_l2", 0.0) or 0.0),
+#                 "temp_mode": args.temp_mode,
+#                 "temp_min": args.temp_min,
+#                 "temp_max": args.temp_max,
+#                 "temp_steps": args.temp_steps,
+#                 "val_split": args.val_split,
+#                 "fixed_temp": args.fixed_temp,
+#                 "out_json": args.out_json
+#             },
+#             "metrics": agg_metrics,  # Unified metrics dict including falling_f1, overlap_stat, ece, etc.
+#             "seed": int(args.seed),
+#             "best_ckpt": ckpt_path,
+#             "early_stop": {
+#                 "metric": args.early_metric,
+#                 "best_value": float(best_val if best_val is not None else np.nan),
+#                 "best_epoch": int(best_epoch),
+#                 "patience": int(args.patience)
+#             },
+#             "data_params": {
+#                 "n_samples": args.n_samples,
+#                 "sc_corr_rho": args.sc_corr_rho,
+#                 "env_burst_rate": args.env_burst_rate,
+#                 "gain_drift_std": args.gain_drift_std,
+#                 "class_overlap": args.class_overlap
+#             },
+#             "calibration": calib_extra
+#         }
+#
+#         with open(args.out_json, "w", encoding="utf-8") as f:
+#             json.dump(out, f, indent=2, ensure_ascii=False)
+#         # print(f"Wrote {args.out_json} | T={temperature:.4f} | (Metrics from agg: {agg_metrics})")
+#         logger.info(f"Saved results to {args.out_json}")
+#
+#     except Exception as e:
+#             logger.error(f"Error during training: {str(e)}", exc_info=True)
+#             raise
 if __name__ == "__main__":
     main()
