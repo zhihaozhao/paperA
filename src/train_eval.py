@@ -362,6 +362,9 @@ def main():
         # Optimizer and criterion (adjust to your exact setup, e.g., with logit_l2)
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)  # Example
         criterion = nn.CrossEntropyLoss()
+        
+        ### UPDATED: Create checkpoints directory if it doesn't exist (fixes RuntimeError) ###
+        os.makedirs(args.ckpt_dir, exist_ok=True)  # Ensures 'checkpoints/' exists before saving
 
         # Training loop with early stopping
         best_val = None
