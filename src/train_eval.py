@@ -435,17 +435,18 @@ def main():
         logger.info("Collected test logits and targets")
 
         # Temperature calibration
-        calib_extra = {}  # To store calibration details
+        calib_extra = {}
         if args.temp_mode != 'none':
-            # Use val_split on test set for calibration (as per args)
             split_idx = int(len(test_targets) * args.val_split)
-            cal_val_logits, cal_val_targets = test_logits[:split_idx], test_targets[:split_idx]
-            cal_test_logits, cal_test_targets = test_logits[split_idx:], test_targets[split_idx:]
-            calib_result = calibrate_temperature_from_val(cal_val_logits, cal_val_targets, args.temp_mode, args.temp_min, args.temp_max, args.temp_steps)
-            temperature = calib_result.temperature if calib_result else args.fixed_temp or 1.0
+            cal_val_logits = test_logits[:split_idx]
+            cal_val_targets = test_targets[:split_idx]
+            calib_result = calibrate_temperature_from_val(cal_val_logits, cal_val_targets, args.temp_mode,
+                                                          args.temp_min, args.temp_max, args.temp_steps)
+            ### UPDATED: Fixed attribute names to match your TempCalibResult dataclass (T and nll) ###
+            temperature = calib_result.T if calib_result else args.fixed_temp or 1.0  # Use .T instead of .temperature
             calib_extra = {
                 "temperature": temperature,
-                "best_nll": calib_result.best_nll if calib_result else None,
+                "best_nll": calib_result.nll if calib_result else None,  # Use .nll instead of .best_nll
                 "method": args.temp_mode
             }
             logger.info(f"Calibration: T={temperature:.4f}, Details={calib_extra}")
