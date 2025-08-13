@@ -14,7 +14,8 @@
 from typing import Optional, Tuple
 import numpy as np
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, Subset
+# from torch.utils.data import Subset
 
 class SynthCSIDataset(Dataset):
     def __init__(
