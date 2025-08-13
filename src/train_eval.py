@@ -318,8 +318,10 @@ import logging  # NEW: Import for logging
 def main():
     args = parse_args()  # Assuming your parse_args() with all fields like --model, --difficulty, etc.
 
-    # Configure logging
+    # Configure logging to file
     log_file = os.path.join(os.path.dirname(args.out_json), f"train_eval_{args.seed}_{args.difficulty}.log")
+    os.makedirs(os.path.dirname(log_file), exist_ok=True)  # Create log directory if missing
+
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
@@ -456,7 +458,10 @@ def main():
             logger.info("No calibration; using T=1.0")
 
         # Compute aggregated metrics (only fills "metrics" field)
-        agg_metrics = aggregate_classification_metrics(test_logits, test_targets, temperature)  # Your function
+        # agg_metrics = aggregate_classification_metrics(test_logits, test_targets, temperature)  # Your function
+        ### UPDATED: Added .cpu().numpy() to convert tensors to NumPy arrays (fixes TypeError in metrics.py softmax/np.max) ###
+        agg_metrics = aggregate_classification_metrics(test_logits.cpu().numpy(), test_targets.cpu().numpy(),
+                                                       temperature, num_classes=args.num_classes)
 
         # Build full out dict (no loss – all fields preserved from args, results, etc.)
         out = {
