@@ -7,13 +7,21 @@ rem Models: enhanced, bilstm, cnn, conformer_lite; seeds 0..9
 @echo off
 setlocal enabledelayedexpansion
 
-rem === Explicit Python interpreter to avoid using base env ===
-rem Update this path if your environment path changes
-set "PY_EXE=D:\workspace_AI\Anaconda3\envs\py310\python.exe"
-if not exist "%PY_EXE%" (
-  echo [WARN] %PY_EXE% not found. Falling back to 'python' in PATH.
+rem === Python interpreter discovery ===
+rem Allow user override: set PY_EXE=... & sweep.bat
+if not defined PY_EXE (
+  for %%P in (
+    "D:\\workspace_AI\\Anaconda3\\envs\\py310\\python.exe"
+    "C:\\ProgramData\\Anaconda3\\envs\\py310\\python.exe"
+    "C:\\Users\\%USERNAME%\\Anaconda3\\envs\\py310\\python.exe"
+    "C:\\Users\\%USERNAME%\\miniconda3\\envs\\py310\\python.exe"
+  ) do (
+    if exist %%~P set "PY_EXE=%%~P" & goto :py_found
+  )
   set "PY_EXE=python"
 )
+:py_found
+echo [INFO] Using Python: %PY_EXE%
 
 for /L %%s in (0,1,9) do (
   for %%m in (enhanced bilstm cnn conformer_lite) do (
@@ -32,7 +40,7 @@ for /L %%s in (0,1,9) do (
       --early_metric macro_f1 ^
       --patience 10 ^
       --logit_l2 0.1 ^
-      --out_json results\paperA_!model!_hard_!seed!.json ^
+      --out_json results_gpu\paperA_!model!_hard_!seed!.json ^
       --temp_mode logspace ^
       --temp_min 1.0 ^
       --temp_max 5.0 ^

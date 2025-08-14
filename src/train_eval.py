@@ -8,6 +8,8 @@ import argparse
 import os
 import json
 from typing import Optional, Dict, Any, Tuple
+import subprocess
+from datetime import datetime
 
 import numpy as np
 import torch
@@ -319,8 +321,9 @@ def main():
     args = parse_args()  # Assuming your parse_args() with all fields like --model, --difficulty, etc.
 
     # Configure logging to file
-    log_file = os.path.join(os.path.dirname(args.out_json), f"train_eval_{args.seed}_{args.difficulty}.log")
-    os.makedirs(os.path.dirname(log_file), exist_ok=True)  # Create log directory if missing
+    out_dir_for_logs = os.path.dirname(args.out_json)
+    os.makedirs(out_dir_for_logs, exist_ok=True)
+    log_file = os.path.join(out_dir_for_logs, f"train_eval_{args.seed}_{args.difficulty}.log")
 
     logging.basicConfig(
         level=logging.INFO,
@@ -527,10 +530,57 @@ def main():
             "calibration": calib_extra
         }
 
+        # Enrich meta with code/version and runtime info
+        try:
+            git_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=os.getcwd(), stderr=subprocess.DEVNULL).decode().strip()
+        except Exception:
+            git_commit = ""
+        try:
+            git_branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=os.getcwd(), stderr=subprocess.DEVNULL).decode().strip()
+        except Exception:
+            git_branch = ""
+        out.setdefault("meta", {}).update({
+            "git_commit": git_commit,
+            "git_branch": git_branch,
+            "device": str(device),
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+        })
+
+        # Ensure output directory exists (for JSON)
+        os.makedirs(os.path.dirname(args.out_json), exist_ok=True)
+
         # Save to JSON
-        with open(args.out_json, "w") as f:
+        with open(args.out_json, "w", encoding="utf-8") as f:
             json.dump(out, f, indent=2)
         logger.info(f"Saved full results to {args.out_json}")
+
+        # Append lightweight registry for quick lookup (kept under results/registry.csv)
+        try:
+            reg_dir = os.path.join("results")
+            os.makedirs(reg_dir, exist_ok=True)
+            reg_path = os.path.join(reg_dir, "registry.csv")
+            header_needed = not os.path.exists(reg_path)
+            import csv
+            with open(reg_path, "a", newline="", encoding="utf-8") as rf:
+                w = csv.writer(rf)
+                if header_needed:
+                    w.writerow(["file", "model", "seed", "difficulty", "macro_f1", "ece_cal", "nll_cal", "git_commit", "git_branch", "device", "timestamp"])
+                w.writerow([
+                    args.out_json,
+                    args.model,
+                    args.seed,
+                    args.difficulty,
+                    out.get("metrics", {}).get("macro_f1", ""),
+                    out.get("metrics", {}).get("ece_cal", ""),
+                    out.get("metrics", {}).get("nll_cal", ""),
+                    git_commit,
+                    git_branch,
+                    str(device),
+                    out["meta"].get("timestamp", ""),
+                ])
+            logger.info(f"Updated registry: {reg_path}")
+        except Exception as _:
+            logger.warning("Failed to update results/registry.csv (non-fatal)")
 
     except Exception as e:
         logger.error(f"Error: {str(e)}", exc_info=True)

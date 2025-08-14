@@ -28,7 +28,7 @@ for /L %%s in (0,1,9) do (
       --early_metric macro_f1 ^
       --patience 10 ^
       --logit_l2 0.1 ^
-      --out_json results\paperA_!model!_hard_!seed!.json ^
+      --out_json results_cpu\paperA_!model!_hard_!seed!.json ^
       --temp_mode logspace ^
       --temp_min 1.0 ^
       --temp_max 5.0 ^
