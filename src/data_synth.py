@@ -338,6 +338,8 @@ def get_synth_loaders(
         class_overlap: float = 0.0,
         label_noise_prob: float = 0.0,  # New param
         num_classes: int = 8,  # New param
+        num_workers: int = 0,
+        pin_memory: bool = False,
 ):
     ds = SynthCSIDataset(
         n=n, T=T, F=F, difficulty=difficulty, seed=seed,
@@ -363,7 +365,7 @@ def get_synth_loaders(
     te = Subset(ds, te_idx)
 
     return (
-        DataLoader(tr, batch_size=batch, shuffle=True),
-        DataLoader(val, batch_size=batch, shuffle=False),
-        DataLoader(te, batch_size=batch, shuffle=False)
+        DataLoader(tr, batch_size=batch, shuffle=True, num_workers=num_workers, pin_memory=pin_memory),
+        DataLoader(val, batch_size=batch, shuffle=False, num_workers=num_workers, pin_memory=pin_memory),
+        DataLoader(te, batch_size=batch, shuffle=False, num_workers=num_workers, pin_memory=pin_memory)
     )

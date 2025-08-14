@@ -17,6 +17,7 @@ setlocal enabledelayedexpansion
 rem === Explicit Python interpreter to avoid using base env ===
 rem Update this path if your environment path changes
 set "PY_EXE=D:\workspace_AI\Anaconda3\envs\py310\python.exe"
+set "POWERSHELL_PY_EXE=$env:PY_EXE"
 
 for /L %%s in (0,1,9) do (
   for %%m in (enhanced bilstm cnn) do (
@@ -29,7 +30,7 @@ for /L %%s in (0,1,9) do (
       --seed !seed! ^
       --n_samples 20000 ^
       --epochs 100 ^
-      --batch 256 ^
+      --batch 1024 ^
       --T 128 ^
       --F 52 ^
       --early_metric macro_f1 ^
@@ -56,15 +57,15 @@ echo Sweep complete!
 ### Version 2: For Windows PowerShell (save as sweep.ps1)
 0..9 | ForEach-Object {
   $seed = $_
-  foreach ($model in @("enhanced", "bilstm", "cnn")) {
+  foreach ($model in @("enhanced", "bilstm", "cnn", "conformer_lite")) {
     Write-Host "Running: model=$model, seed=$seed"
-    python src\train_eval.py `
+    %PY_EXE% src\train_eval.py `
       --model $model `
       --difficulty hard `
       --seed $seed `
       --n_samples 20000 `
       --epochs 100 `
-      --batch 256 `
+      --batch 768 `
       --T 128 `
       --F 52 `
       --early_metric macro_f1 `

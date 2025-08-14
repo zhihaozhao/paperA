@@ -338,7 +338,10 @@ def main():
         # Load datasets
         # train_loader, val_loader, test_loader = get_synth_loaders(args)
         ### UPDATED: Explicit unpack of args to fix passing Namespace as batch_size ###
-        train_loader, val_loader, test_loader = get_synth_loaders(
+            # Tune dataloader for GPU throughput; CPU-safe defaults remain small
+            num_workers = 4 if torch.cuda.is_available() else 0
+            pin_memory = bool(torch.cuda.is_available())
+            train_loader, val_loader, test_loader = get_synth_loaders(
             batch=args.batch,  # Now passing int, not Namespace
             difficulty=args.difficulty,
             seed=args.seed,
@@ -350,7 +353,9 @@ def main():
             gain_drift_std=args.gain_drift_std,
             class_overlap=args.class_overlap,
             label_noise_prob=args.label_noise_prob,
-            num_classes=args.num_classes
+                num_classes=args.num_classes,
+                num_workers=num_workers,
+                pin_memory=pin_memory,
         )
         logger.info(f"Dataset: Train={len(train_loader.dataset)}, Val={len(val_loader.dataset)}, Test={len(test_loader.dataset)}")
 

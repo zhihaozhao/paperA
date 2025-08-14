@@ -14,7 +14,7 @@ rem Update this path if your environment path changes
 set "PY_EXE=D:\workspace_AI\Anaconda3\envs\py310\python.exe"
 
 for /L %%s in (0,1,9) do (
-  for %%m in (enhanced bilstm cnn) do (
+  for %%m in (enhanced bilstm cnn conformer_lite) do (
     set "model=%%m"
     set "seed=%%s"
     echo Running: model=!model!, seed=!seed!
@@ -24,7 +24,7 @@ for /L %%s in (0,1,9) do (
       --seed !seed! ^
       --n_samples 2000 ^
       --epochs 20 ^
-      --batch 32 ^
+      --batch 64 ^
       --T 128 ^
       --F 52 ^
       --early_metric macro_f1 ^
