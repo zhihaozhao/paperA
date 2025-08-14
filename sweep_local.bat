@@ -1,11 +1,9 @@
 
 
-# Local CPU Small Sweep Script
-# Usage: Save as local_sweep.bat (CMD) or local_sweep.ps1 (PowerShell).
-# Runs 3 models x 10 seeds with small params: n_samples=2000, epochs=20, batch=32.
-# Total time: ~30-60 mins on CPU.
+rem Local CPU Small Sweep Script
+rem Runs 4 models x 10 seeds with small params: n_samples=2000, epochs=20, batch=64.
 
-### Version 1: For Windows CMD (save as local_sweep.bat)
+rem === Version 1: For Windows CMD (save as sweep_local.bat) ===
 @echo off
 setlocal enabledelayedexpansion
 
@@ -48,10 +46,10 @@ for /L %%s in (0,1,9) do (
 
 echo Local small sweep complete!
 
-### Version 2: For Windows PowerShell (save as local_sweep.ps1)
+rem === Version 2: For Windows PowerShell (save as sweep_local.ps1) ===
 0..9 | ForEach-Object {
   $seed = $_
-  foreach ($model in @("enhanced", "bilstm", "cnn")) {
+  foreach ($model in @("enhanced", "bilstm", "cnn", "conformer_lite")) {
     Write-Host "Running: model=$model, seed=$seed"
     python src\train_eval.py `
       --model $model `
@@ -59,7 +57,7 @@ echo Local small sweep complete!
       --seed $seed `
       --n_samples 2000 `
       --epochs 20 `
-      --batch 32 `
+      --batch 64 `
       --T 128 `
       --F 52 `
       --early_metric macro_f1 `
