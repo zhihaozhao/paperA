@@ -14,12 +14,16 @@
 @echo off
 setlocal enabledelayedexpansion
 
+rem === Explicit Python interpreter to avoid using base env ===
+rem Update this path if your environment path changes
+set "PY_EXE=D:\workspace_AI\Anaconda3\envs\py310\python.exe"
+
 for /L %%s in (0,1,9) do (
   for %%m in (enhanced bilstm cnn) do (
     set "model=%%m"
     set "seed=%%s"
     echo Running: model=!model!, seed=!seed!
-    python src\train_eval.py ^
+    "%PY_EXE%" src\train_eval.py ^
       --model !model! ^
       --difficulty hard ^
       --seed !seed! ^
