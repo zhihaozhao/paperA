@@ -10,6 +10,7 @@ import json
 from typing import Optional, Dict, Any, Tuple
 import subprocess
 from datetime import datetime
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -308,6 +309,7 @@ def parse_args():
     parser.add_argument("--val_split", type=float, default=0.5, help="Validation split for calibration")
     parser.add_argument("--fixed_temp", type=float, default=1.0, help="Fixed temperature if no calibration")
     parser.add_argument("--label_noise_prob", type=float, default=0.0, help="Label noise probability")
+    parser.add_argument("--amp", action="store_true", help="Enable mixed precision on CUDA for speed and memory")
     # Output
     parser.add_argument("--out_json", type=str, default="results/out.json", help="Path to output JSON")
 
@@ -320,15 +322,16 @@ import logging  # NEW: Import for logging
 def main():
     args = parse_args()  # Assuming your parse_args() with all fields like --model, --difficulty, etc.
 
-    # Configure logging to file
-    out_dir_for_logs = os.path.dirname(args.out_json)
-    os.makedirs(out_dir_for_logs, exist_ok=True)
-    log_file = os.path.join(out_dir_for_logs, f"train_eval_{args.seed}_{args.difficulty}.log")
+    # Configure logging to file (unique per run, align with out_json basename)
+    out_json_path = Path(args.out_json)
+    out_json_path.parent.mkdir(parents=True, exist_ok=True)
+    log_file = str(out_json_path.with_suffix('.log'))
 
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(message)s",
-        handlers=[logging.FileHandler(log_file), logging.StreamHandler()]
+        handlers=[logging.FileHandler(log_file), logging.StreamHandler()],
+        force=True,
     )
     logger = logging.getLogger(__name__)
     logger.info(f"Starting training with args: {vars(args)}")
@@ -336,6 +339,10 @@ def main():
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     logger.info(f"Using device: {device}")
+    use_amp = bool(torch.cuda.is_available()) and bool(getattr(args, 'amp', False))
+    if use_amp:
+        from torch.cuda.amp import autocast, GradScaler
+        scaler = GradScaler()
 
     try:
         # Load datasets
@@ -387,15 +394,28 @@ def main():
             for xb, yb in train_loader:
                 xb, yb = xb.to(device), yb.to(device)
                 optimizer.zero_grad()
-                outputs = model(xb)  # Get full output
-                logits = outputs[0] if isinstance(outputs, tuple) else outputs
-                loss = criterion(logits, yb)
-                if args.logit_l2 > 0:  # Assuming --logit_l2 is the param for lambda
-                    reg_loss = args.logit_l2 * torch.mean(torch.norm(logits, p=2, dim=1))
-                    loss += reg_loss
-                    reg_loss_total += reg_loss.item()  # Accumulate for averaging
-                loss.backward()
-                optimizer.step()
+                if use_amp:
+                    with autocast():
+                        outputs = model(xb)
+                        logits = outputs[0] if isinstance(outputs, tuple) else outputs
+                        loss = criterion(logits, yb)
+                        if args.logit_l2 > 0:
+                            reg_loss = args.logit_l2 * torch.mean(torch.norm(logits, p=2, dim=1))
+                            loss = loss + reg_loss
+                            reg_loss_total += float(reg_loss.detach().item())
+                    scaler.scale(loss).backward()
+                    scaler.step(optimizer)
+                    scaler.update()
+                else:
+                    outputs = model(xb)  # Get full output
+                    logits = outputs[0] if isinstance(outputs, tuple) else outputs
+                    loss = criterion(logits, yb)
+                    if args.logit_l2 > 0:  # Assuming --logit_l2 is the param for lambda
+                        reg_loss = args.logit_l2 * torch.mean(torch.norm(logits, p=2, dim=1))
+                        loss += reg_loss
+                        reg_loss_total += reg_loss.item()  # Accumulate for averaging
+                    loss.backward()
+                    optimizer.step()
                 train_loss += loss.item()
             avg_train_loss = train_loss / len(train_loader)
             avg_reg_loss = reg_loss_total / len(train_loader) if args.logit_l2 > 0 else 0  # Average reg loss
