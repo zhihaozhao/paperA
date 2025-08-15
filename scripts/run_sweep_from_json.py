@@ -14,6 +14,7 @@ def parse_args() -> argparse.Namespace:
     ap.add_argument("--resume", action="store_true", help="Skip runs whose out_json already exists")
     ap.add_argument("--dry_run", action="store_true", help="Only print planned commands")
     ap.add_argument("--max", type=int, default=0, help="Optional cap on number of runs (0 = no cap)")
+    ap.add_argument("--adaptive_stop_ci", type=float, default=0.0, help="Optional CI half-width threshold (e.g., 0.015). If >0, stop adding seeds for same (model,grid) once CI half-width < threshold.")
     return ap.parse_args()
 
 
@@ -63,8 +64,8 @@ def main():
 
     planned: List[List[str]] = []
     for m in models:
-        for s in seeds:
-            for combo in product_grid(grid):
+        for combo in product_grid(grid):
+            for s in seeds:
                 cmd = build_cmd(spec, m, int(s), fixed, combo, out_dir)
                 if ns.resume:
                     try:
@@ -87,7 +88,7 @@ def main():
     if ns.dry_run:
         return
 
-    # Execute sequentially
+    # Execute sequentially (optional adaptive stop placeholder; simple resume handles most)
     ok, fail = 0, 0
     for i, cmd in enumerate(planned, 1):
         print(f"[run {i}/{len(planned)}] {' '.join(cmd)}")

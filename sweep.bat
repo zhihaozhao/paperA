@@ -23,7 +23,7 @@ if not defined PY_EXE (
 :py_found
 echo [INFO] Using Python: %PY_EXE%
 
-for /L %%s in (0,1,9) do (
+for /L %%s in (0,1,4) do (
   for %%m in (enhanced bilstm cnn conformer_lite) do (
     set "model=%%m"
     set "seed=%%s"
