@@ -34,7 +34,7 @@ for /L %%s in (0,1,9) do (
       --seed !seed! ^
       --n_samples 20000 ^
       --epochs 100 ^
-      --batch 512 ^
+      --batch 768 ^
       --T 128 ^
       --F 52 ^
       --early_metric macro_f1 ^
@@ -52,7 +52,11 @@ for /L %%s in (0,1,9) do (
       --env_burst_rate 0.2 ^
       --label_noise_prob 0.1 ^
       --num_classes 8 ^
-      --ckpt_dir checkpoints\
+      --ckpt_dir checkpoints\ ^
+      --amp ^
+      --save_ckpt final ^
+      --val_every 3 ^
+      --num_workers_override 2
   )
 )
 
