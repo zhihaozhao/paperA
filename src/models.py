@@ -74,7 +74,7 @@ class EnhancedNet(nn.Module):
     Input: x [B, T, F]
     """
 
-    def __init__(self, T: int, F: int, num_classes: int, base_channels: int = 48, attn_heads: int = 4):
+    def __init__(self, T: int, F: int, num_classes: int, base_channels: int = 160, attn_heads: int = 4):
         super().__init__()
         self.stem = nn.Sequential(
             nn.Conv2d(1, base_channels, kernel_size=3, stride=(2, 1), padding=1, bias=False),
@@ -139,14 +139,14 @@ class BiLSTM(nn.Module):
         return self.fc(out)
 
 class SimpleCNN(nn.Module):
-    def __init__(self, T, F, num_classes=8, input_channels=1):
+    def __init__(self, T, F, num_classes=8, input_channels=1, c1: int = 16, c2: int = 32, fc_hidden: int = 48):
         super(SimpleCNN, self).__init__()
-        self.conv1 = nn.Conv2d(input_channels, 32, kernel_size=3, padding=1)
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(input_channels, c1, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(c1, c2, kernel_size=3, padding=1)
         self.pool = nn.MaxPool2d(2, 2)
         # Calculate flattened size: after two pools, height=T//4, width=F//4
-        self.fc1 = nn.Linear(64 * (T // 4) * (F // 4), 128)
-        self.fc2 = nn.Linear(128, num_classes)
+        self.fc1 = nn.Linear(c2 * (T // 4) * (F // 4), fc_hidden)
+        self.fc2 = nn.Linear(fc_hidden, num_classes)
 
     def forward(self, x):
         # x: [batch, T, F] -> Add channel: [batch, 1, T, F]
