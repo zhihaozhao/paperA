@@ -369,10 +369,13 @@ def get_synth_loaders(
 
     # DataLoader kwargs with optional prefetch
     def dl(ds, shuffle: bool):
-        kwargs = dict(batch_size=batch, shuffle=shuffle, num_workers=num_workers, pin_memory=pin_memory,
+        # On Windows, force single-process and disable prefetch to avoid MP pickle issues
+        _nw = 0 if os.name == 'nt' else num_workers
+        _pf = 0 if os.name == 'nt' else (int(prefetch_factor) if (num_workers and num_workers > 0 and prefetch_factor) else None)
+        kwargs = dict(batch_size=batch, shuffle=shuffle, num_workers=_nw, pin_memory=pin_memory,
                       persistent_workers=False, timeout=0)
-        if num_workers and num_workers > 0 and prefetch_factor:
-            kwargs["prefetch_factor"] = int(prefetch_factor)
+        if _pf:
+            kwargs["prefetch_factor"] = _pf
         return DataLoader(ds, **kwargs)
 
     return (dl(tr, True), dl(val, False), dl(te, False))

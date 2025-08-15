@@ -365,15 +365,14 @@ def main():
         # Load datasets
         # train_loader, val_loader, test_loader = get_synth_loaders(args)
         ### UPDATED: Explicit unpack of args to fix passing Namespace as batch_size ###
-        # Tune dataloader for throughput; CPU runs use single-process loader to avoid overhead
+        # Tune dataloader; on Windows force single-process loaders to avoid MP pickle issues
         is_cuda = (device.type == 'cuda')
-        if getattr(args, 'num_workers_override', -1) is not None and args.num_workers_override >= 0:
+        if os.name == 'nt':
+            num_workers = 0
+        elif getattr(args, 'num_workers_override', -1) is not None and args.num_workers_override >= 0:
             num_workers = int(args.num_workers_override)
         else:
-            if is_cuda:
-                num_workers = 2 if os.name == 'nt' else 4
-            else:
-                num_workers = 0
+            num_workers = (4 if is_cuda else 0)
         pin_memory = bool(is_cuda)
         train_loader, val_loader, test_loader = get_synth_loaders(
             batch=args.batch,  # Now passing int, not Namespace
@@ -390,15 +389,9 @@ def main():
             num_classes=args.num_classes,
             num_workers=num_workers,
             pin_memory=pin_memory,
-            prefetch_factor=getattr(args, 'prefetch_factor', 2),
+            prefetch_factor=(0 if os.name == 'nt' else getattr(args, 'prefetch_factor', 2)),
         )
-        # On Windows, force val/test loaders to single-process to avoid multiprocess pickle issues
-        if os.name == 'nt':
-            from torch.utils.data import DataLoader as _DL
-            val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False,
-                             num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
-            test_loader = _DL(test_loader.dataset, batch_size=args.batch, shuffle=False,
-                              num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
+        # On Windows, val/test loaders already single-process via get_synth_loaders prefetch override; ensure fallback flags present when rebuilt on error.
         logger.info(f"Dataset: Train={len(train_loader.dataset)}, Val={len(val_loader.dataset)}, Test={len(test_loader.dataset)}")
         logger.info(f"DataLoader: num_workers={num_workers}, pin_memory={pin_memory}")
 
