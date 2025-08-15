@@ -143,7 +143,8 @@ class SynthCSIDataset(Dataset):
                 X[i] = (X[i] * scale[:, None]).astype(np.float32)
         # [ANCHOR:PERTURB_END]
 
-        self.X = X
+        # Store as float16 to cut host RAM usage; cast to float32 on access
+        self.X = X.astype(np.float16)
         self.T = T
         self.F = F
         self.sc_corr_rho = sc_corr_rho
@@ -159,7 +160,8 @@ class SynthCSIDataset(Dataset):
         return len(self.y)
 
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
-        return torch.from_numpy(self.X[idx]), torch.tensor(self.y[idx], dtype=torch.long)
+        # Cast back to float32 on the fly for model stability
+        return torch.from_numpy(self.X[idx]).float(), torch.tensor(self.y[idx], dtype=torch.long)
 
 
 
@@ -340,6 +342,7 @@ def get_synth_loaders(
         num_classes: int = 8,  # New param
         num_workers: int = 0,
         pin_memory: bool = False,
+        prefetch_factor: int = 2,
 ):
     ds = SynthCSIDataset(
         n=n, T=T, F=F, difficulty=difficulty, seed=seed,
@@ -364,8 +367,11 @@ def get_synth_loaders(
     val = Subset(ds, val_idx)
     te = Subset(ds, te_idx)
 
-    return (
-        DataLoader(tr, batch_size=batch, shuffle=True, num_workers=num_workers, pin_memory=pin_memory),
-        DataLoader(val, batch_size=batch, shuffle=False, num_workers=num_workers, pin_memory=pin_memory),
-        DataLoader(te, batch_size=batch, shuffle=False, num_workers=num_workers, pin_memory=pin_memory)
-    )
+    # DataLoader kwargs with optional prefetch
+    def dl(ds, shuffle: bool):
+        kwargs = dict(batch_size=batch, shuffle=shuffle, num_workers=num_workers, pin_memory=pin_memory)
+        if num_workers and num_workers > 0 and prefetch_factor:
+            kwargs["prefetch_factor"] = int(prefetch_factor)
+        return DataLoader(ds, **kwargs)
+
+    return (dl(tr, True), dl(val, False), dl(te, False))

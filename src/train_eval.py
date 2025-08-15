@@ -373,6 +373,7 @@ def main():
             num_classes=args.num_classes,
             num_workers=num_workers,
             pin_memory=pin_memory,
+            prefetch_factor=getattr(args, 'prefetch_factor', 2),
         )
         logger.info(f"Dataset: Train={len(train_loader.dataset)}, Val={len(val_loader.dataset)}, Test={len(test_loader.dataset)}")
         logger.info(f"DataLoader: num_workers={num_workers}, pin_memory={pin_memory}")
