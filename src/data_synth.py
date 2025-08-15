@@ -12,6 +12,7 @@
 #   - In sweep_lambda.py: Add "--label_noise_prob", "0.1", "--num_classes", "8" to cmd in run_one.
 
 from typing import Optional, Tuple
+import os
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader, Subset

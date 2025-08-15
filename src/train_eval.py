@@ -348,18 +348,21 @@ def main():
     logger.info(f"Using device: {device}")
     use_amp = bool(torch.cuda.is_available()) and bool(getattr(args, 'amp', False))
     if use_amp:
-        # Version-compatible AMP imports
+        # Prefer new API, fall back to old
         try:
             from torch.amp import autocast as _autocast
-            from torch.cuda.amp import GradScaler as _GradScaler
-            scaler = _GradScaler()
+            from torch.amp import GradScaler as _GradScaler
+            scaler = _GradScaler("cuda")
             def _amp_ctx():
                 return _autocast("cuda")
         except Exception:
-            from torch.cuda.amp import autocast as _autocast, GradScaler as _GradScaler
-            scaler = _GradScaler()
-            def _amp_ctx():
-                return _autocast()
+            try:
+                from torch.cuda.amp import autocast as _autocast, GradScaler as _GradScaler
+                scaler = _GradScaler()
+                def _amp_ctx():
+                    return _autocast()
+            except Exception:
+                use_amp = False
 
     try:
         # Load datasets
