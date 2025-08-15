@@ -348,7 +348,8 @@ def main():
     logger.info(f"Using device: {device}")
     use_amp = bool(torch.cuda.is_available()) and bool(getattr(args, 'amp', False))
     if use_amp:
-        from torch.cuda.amp import autocast, GradScaler
+        from torch.amp import autocast
+        from torch.cuda.amp import GradScaler
         scaler = GradScaler()
 
     try:
@@ -456,18 +457,35 @@ def main():
             if do_val:
                 model.eval()
                 val_loss = 0
-                with torch.no_grad():
-                    for xb, yb in val_loader:
-                        xb, yb = xb.to(device), yb.to(device)
-                        outputs = model(xb)  # Get full output
-                        logits = outputs[0] if isinstance(outputs, tuple) else outputs
-                        val_loss += criterion(logits, yb).item()
-                avg_val_loss = val_loss / len(val_loader)
+                try:
+                    with torch.no_grad():
+                        for xb, yb in val_loader:
+                            xb, yb = xb.to(device), yb.to(device)
+                            outputs = model(xb)  # Get full output
+                            logits = outputs[0] if isinstance(outputs, tuple) else outputs
+                            val_loss += criterion(logits, yb).item()
+                except OSError as e:
+                    logger.warning(f"Val loader error {e}; rebuilding with num_workers=0 and retrying once")
+                    from torch.utils.data import DataLoader as _DL
+                    val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False, num_workers=0, pin_memory=False)
+                    with torch.no_grad():
+                        for xb, yb in val_loader:
+                            xb, yb = xb.to(device), yb.to(device)
+                            outputs = model(xb)
+                            logits = outputs[0] if isinstance(outputs, tuple) else outputs
+                            val_loss += criterion(logits, yb).item()
+                avg_val_loss = val_loss / max(1, len(val_loader))
                 logger.info(f"Epoch {epoch+1}/{args.epochs} - Val Loss: {avg_val_loss:.4f}")
 
             # Compute early stopping metric (e.g., macro_f1)
             if do_val:
-                val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
+                try:
+                    val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
+                except OSError as e:
+                    logger.warning(f"Val collect error {e}; rebuilding with num_workers=0 and retrying once")
+                    from torch.utils.data import DataLoader as _DL
+                    val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False, num_workers=0, pin_memory=False)
+                    val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
                 val_preds = torch.argmax(val_logits, dim=1).cpu().numpy()
                 val_labels = val_targets.cpu().numpy()
                 if args.early_metric == 'macro_f1':
@@ -499,7 +517,13 @@ def main():
                     log_msg += f", Avg Reg Loss: {avg_reg_loss:.6f}"  # Verify reg is non-zero
                 logger.info(log_msg)
         # Final evaluation
-        test_logits, test_targets = _collect_logits_labels(model, test_loader, device)
+        try:
+            test_logits, test_targets = _collect_logits_labels(model, test_loader, device)
+        except OSError as e:
+            logger.warning(f"Test collect error {e}; rebuilding test loader with num_workers=0 and retrying once")
+            from torch.utils.data import DataLoader as _DL
+            test_loader = _DL(test_loader.dataset, batch_size=args.batch, shuffle=False, num_workers=0, pin_memory=False)
+            test_logits, test_targets = _collect_logits_labels(model, test_loader, device)
         logger.info("Collected test logits and targets")
 
         # Temperature calibration
