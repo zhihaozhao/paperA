@@ -34,7 +34,7 @@ for /L %%s in (0,1,9) do (
       --seed !seed! ^
       --n_samples 20000 ^
       --epochs 100 ^
-      --batch 1024 ^
+      --batch 512 ^
       --T 128 ^
       --F 52 ^
       --early_metric macro_f1 ^
