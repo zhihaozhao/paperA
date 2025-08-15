@@ -30,12 +30,14 @@ __pycache__/
 
 # 本项目生成物（实验产物）
 results/
+results_cpu/
 plots/
 tables/
 # 若你将日志放在 results/logs 下，上面 results/ 已包含；如果单独目录：
 logs/
 figs/
 chat/
+referenes/
 
 # 临时打包/上传文件
 artifacts-*.zip
