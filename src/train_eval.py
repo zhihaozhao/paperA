@@ -392,6 +392,13 @@ def main():
             pin_memory=pin_memory,
             prefetch_factor=getattr(args, 'prefetch_factor', 2),
         )
+        # On Windows, force val/test loaders to single-process to avoid multiprocess pickle issues
+        if os.name == 'nt':
+            from torch.utils.data import DataLoader as _DL
+            val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False,
+                             num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
+            test_loader = _DL(test_loader.dataset, batch_size=args.batch, shuffle=False,
+                              num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
         logger.info(f"Dataset: Train={len(train_loader.dataset)}, Val={len(val_loader.dataset)}, Test={len(test_loader.dataset)}")
         logger.info(f"DataLoader: num_workers={num_workers}, pin_memory={pin_memory}")
 
