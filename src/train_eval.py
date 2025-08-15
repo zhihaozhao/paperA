@@ -365,12 +365,16 @@ def main():
         # Load datasets
         # train_loader, val_loader, test_loader = get_synth_loaders(args)
         ### UPDATED: Explicit unpack of args to fix passing Namespace as batch_size ###
-        # Tune dataloader for GPU throughput; CPU-safe defaults remain small
+        # Tune dataloader for throughput; CPU runs use single-process loader to avoid overhead
+        is_cuda = (device.type == 'cuda')
         if getattr(args, 'num_workers_override', -1) is not None and args.num_workers_override >= 0:
             num_workers = int(args.num_workers_override)
         else:
-            num_workers = 2 if (os.name == 'nt' and torch.cuda.is_available()) else (4 if torch.cuda.is_available() else 0)
-        pin_memory = bool(torch.cuda.is_available())
+            if is_cuda:
+                num_workers = 2 if os.name == 'nt' else 4
+            else:
+                num_workers = 0
+        pin_memory = bool(is_cuda)
         train_loader, val_loader, test_loader = get_synth_loaders(
             batch=args.batch,  # Now passing int, not Namespace
             difficulty=args.difficulty,
@@ -511,7 +515,8 @@ def main():
                 best_val = current_metric
                 best_epoch = epoch + 1
                 patience_counter = 0
-                if args.save_ckpt != 'none':
+                # Only save best checkpoint when policy allows all
+                if args.save_ckpt == 'all':
                     ckpt_name = f"best_{args.model}_{args.seed}_{args.difficulty}.pth"
                     ckpt_path = os.path.join(args.ckpt_dir, ckpt_name)
                     torch.save(model.state_dict(), ckpt_path)
@@ -646,7 +651,7 @@ def main():
         logger.info(f"Saved full results to {args.out_json}")
 
         # Save final checkpoint if requested
-        if args.save_ckpt == 'final':
+        if args.save_ckpt in ('final', 'all'):
             final_ckpt = os.path.join(args.ckpt_dir, f"final_{args.model}_{args.seed}_{args.difficulty}.pth")
             torch.save(model.state_dict(), final_ckpt)
             logger.info(f"Final model saved to {final_ckpt}")
