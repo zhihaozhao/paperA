@@ -314,6 +314,9 @@ def parse_args():
     parser.add_argument("--num_workers_override", type=int, default=-1, help="Override dataloader workers (-1 = auto)")
     parser.add_argument("--prefetch_factor", type=int, default=2, help="Dataloader prefetch_factor when workers>0")
     parser.add_argument("--val_every", type=int, default=1, help="Validate every k epochs to reduce overhead")
+    parser.add_argument("--resume_from", type=str, default="", help="Path to resume checkpoint (last_*.pt)")
+    parser.add_argument("--save_last_every", type=int, default=0, help="Save 'last' training checkpoint every k epochs (0=disable)")
+    parser.add_argument("--strict_load", type=str, default="true", help="Strict state_dict load (true/false)")
     # Output
     parser.add_argument("--out_json", type=str, default="results/out.json", help="Path to output JSON")
 
@@ -383,6 +386,16 @@ def main():
         model = model.to(device)
         logger.info(f"Model: {args.model} with {sum(p.numel() for p in model.parameters())} params")
 
+        # Optional resume
+        if args.resume_from:
+            try:
+                strict = str(args.strict_load).lower() in ("1","true","yes")
+                state = torch.load(args.resume_from, map_location=device)
+                model.load_state_dict(state, strict=strict)
+                logger.info(f"Resumed weights from {args.resume_from} (strict={strict})")
+            except Exception as e:
+                logger.warning(f"Resume failed from {args.resume_from}: {e}")
+
         # Optimizer and criterion (adjust to your exact setup, e.g., with logit_l2)
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)  # Example
         criterion = nn.CrossEntropyLoss()
@@ -428,6 +441,12 @@ def main():
                 train_loss += loss.item()
             avg_train_loss = train_loss / len(train_loader)
             avg_reg_loss = reg_loss_total / len(train_loader) if args.logit_l2 > 0 else 0  # Average reg loss
+
+            # Optionally save "last" checkpoint periodically for resume
+            if args.save_last_every and ((epoch + 1) % max(1, args.save_last_every) == 0):
+                last_ckpt = os.path.join(args.ckpt_dir, f"last_{args.model}_{args.seed}_{args.difficulty}.pt")
+                torch.save(model.state_dict(), last_ckpt)
+                logger.info(f"Saved last checkpoint: {last_ckpt} (epoch={epoch+1})")
 
             # logger.info(f"Epoch {epoch+1}/{args.epochs} - Train Loss: {avg_train_loss:.4f}")
 
