@@ -369,7 +369,8 @@ def get_synth_loaders(
 
     # DataLoader kwargs with optional prefetch
     def dl(ds, shuffle: bool):
-        kwargs = dict(batch_size=batch, shuffle=shuffle, num_workers=num_workers, pin_memory=pin_memory)
+        kwargs = dict(batch_size=batch, shuffle=shuffle, num_workers=num_workers, pin_memory=pin_memory,
+                      persistent_workers=False, timeout=0)
         if num_workers and num_workers > 0 and prefetch_factor:
             kwargs["prefetch_factor"] = int(prefetch_factor)
         return DataLoader(ds, **kwargs)

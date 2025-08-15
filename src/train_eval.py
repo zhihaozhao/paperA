@@ -476,7 +476,8 @@ def main():
                 except OSError as e:
                     logger.warning(f"Val loader error {e}; rebuilding with num_workers=0 and retrying once")
                     from torch.utils.data import DataLoader as _DL
-                    val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False, num_workers=0, pin_memory=False)
+                    val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False,
+                                     num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
                     with torch.no_grad():
                         for xb, yb in val_loader:
                             xb, yb = xb.to(device), yb.to(device)
@@ -493,7 +494,8 @@ def main():
                 except OSError as e:
                     logger.warning(f"Val collect error {e}; rebuilding with num_workers=0 and retrying once")
                     from torch.utils.data import DataLoader as _DL
-                    val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False, num_workers=0, pin_memory=False)
+                    val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False,
+                                     num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
                     val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
                 val_preds = torch.argmax(val_logits, dim=1).cpu().numpy()
                 val_labels = val_targets.cpu().numpy()
@@ -531,7 +533,8 @@ def main():
         except OSError as e:
             logger.warning(f"Test collect error {e}; rebuilding test loader with num_workers=0 and retrying once")
             from torch.utils.data import DataLoader as _DL
-            test_loader = _DL(test_loader.dataset, batch_size=args.batch, shuffle=False, num_workers=0, pin_memory=False)
+            test_loader = _DL(test_loader.dataset, batch_size=args.batch, shuffle=False,
+                               num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
             test_logits, test_targets = _collect_logits_labels(model, test_loader, device)
         logger.info("Collected test logits and targets")
 
