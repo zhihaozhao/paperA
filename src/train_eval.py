@@ -348,9 +348,8 @@ def main():
     logger.info(f"Using device: {device}")
     use_amp = bool(torch.cuda.is_available()) and bool(getattr(args, 'amp', False))
     if use_amp:
-        from torch.amp import autocast
-        from torch.cuda.amp import GradScaler
-        scaler = GradScaler()
+        from torch.amp import autocast, GradScaler
+        scaler = GradScaler(device_type="cuda")
 
     try:
         # Load datasets
@@ -418,7 +417,7 @@ def main():
                 xb, yb = xb.to(device), yb.to(device)
                 optimizer.zero_grad()
                 if use_amp:
-                    with autocast():
+                    with autocast("cuda"):
                         outputs = model(xb)
                         logits = outputs[0] if isinstance(outputs, tuple) else outputs
                         loss = criterion(logits, yb)
