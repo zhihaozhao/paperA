@@ -310,6 +310,10 @@ def parse_args():
     parser.add_argument("--fixed_temp", type=float, default=1.0, help="Fixed temperature if no calibration")
     parser.add_argument("--label_noise_prob", type=float, default=0.0, help="Label noise probability")
     parser.add_argument("--amp", action="store_true", help="Enable mixed precision on CUDA for speed and memory")
+    parser.add_argument("--save_ckpt", type=str, default="final", choices=["all", "final", "none"], help="Checkpoint saving policy")
+    parser.add_argument("--num_workers_override", type=int, default=-1, help="Override dataloader workers (-1 = auto)")
+    parser.add_argument("--prefetch_factor", type=int, default=2, help="Dataloader prefetch_factor when workers>0")
+    parser.add_argument("--val_every", type=int, default=1, help="Validate every k epochs to reduce overhead")
     # Output
     parser.add_argument("--out_json", type=str, default="results/out.json", help="Path to output JSON")
 
@@ -349,7 +353,10 @@ def main():
         # train_loader, val_loader, test_loader = get_synth_loaders(args)
         ### UPDATED: Explicit unpack of args to fix passing Namespace as batch_size ###
         # Tune dataloader for GPU throughput; CPU-safe defaults remain small
-        num_workers = 4 if torch.cuda.is_available() else 0
+        if getattr(args, 'num_workers_override', -1) is not None and args.num_workers_override >= 0:
+            num_workers = int(args.num_workers_override)
+        else:
+            num_workers = 2 if (os.name == 'nt' and torch.cuda.is_available()) else (4 if torch.cuda.is_available() else 0)
         pin_memory = bool(torch.cuda.is_available())
         train_loader, val_loader, test_loader = get_synth_loaders(
             batch=args.batch,  # Now passing int, not Namespace
@@ -368,6 +375,7 @@ def main():
             pin_memory=pin_memory,
         )
         logger.info(f"Dataset: Train={len(train_loader.dataset)}, Val={len(val_loader.dataset)}, Test={len(test_loader.dataset)}")
+        logger.info(f"DataLoader: num_workers={num_workers}, pin_memory={pin_memory}")
 
         # Build and move model to device
         model = build_model(args.model, args.F, args.num_classes)
@@ -423,35 +431,42 @@ def main():
             # logger.info(f"Epoch {epoch+1}/{args.epochs} - Train Loss: {avg_train_loss:.4f}")
 
             # Validation
-            model.eval()
-            val_loss = 0
-            with torch.no_grad():
-                for xb, yb in val_loader:
-                    xb, yb = xb.to(device), yb.to(device)
-                    outputs = model(xb)  # Get full output
-                    logits = outputs[0] if isinstance(outputs, tuple) else outputs
-                    val_loss += criterion(logits, yb).item()
-            avg_val_loss = val_loss / len(val_loader)
-            logger.info(f"Epoch {epoch+1}/{args.epochs} - Val Loss: {avg_val_loss:.4f}")
+            do_val = ((epoch + 1) % max(1, args.val_every) == 0)
+            avg_val_loss = float('nan')
+            if do_val:
+                model.eval()
+                val_loss = 0
+                with torch.no_grad():
+                    for xb, yb in val_loader:
+                        xb, yb = xb.to(device), yb.to(device)
+                        outputs = model(xb)  # Get full output
+                        logits = outputs[0] if isinstance(outputs, tuple) else outputs
+                        val_loss += criterion(logits, yb).item()
+                avg_val_loss = val_loss / len(val_loader)
+                logger.info(f"Epoch {epoch+1}/{args.epochs} - Val Loss: {avg_val_loss:.4f}")
 
             # Compute early stopping metric (e.g., macro_f1)
-            val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
-            val_preds = torch.argmax(val_logits, dim=1).cpu().numpy()
-            val_labels = val_targets.cpu().numpy()
-            if args.early_metric == 'macro_f1':
-                current_metric = f1_score(val_labels, val_preds, average='macro')
+            if do_val:
+                val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
+                val_preds = torch.argmax(val_logits, dim=1).cpu().numpy()
+                val_labels = val_targets.cpu().numpy()
+                if args.early_metric == 'macro_f1':
+                    current_metric = f1_score(val_labels, val_preds, average='macro')
+                else:
+                    current_metric = 0  # Add logic for other metrics
             else:
-                current_metric = 0  # Add logic for other metrics
+                current_metric = best_val if best_val is not None else 0
             # logger.info(f"Epoch {epoch+1} - Val {args.early_metric}: {current_metric:.4f}")
 
             if best_val is None or current_metric > best_val:
                 best_val = current_metric
                 best_epoch = epoch + 1
                 patience_counter = 0
-                # Save checkpoint (example)
-                ckpt_path = os.path.join(args.ckpt_dir, f"best_{args.seed}_{args.difficulty}.pth")
-                torch.save(model.state_dict(), ckpt_path)
-                logger.info(f"Best model saved to {ckpt_path}")
+                if args.save_ckpt != 'none':
+                    ckpt_name = f"best_{args.model}_{args.seed}_{args.difficulty}.pth"
+                    ckpt_path = os.path.join(args.ckpt_dir, ckpt_name)
+                    torch.save(model.state_dict(), ckpt_path)
+                    logger.info(f"Best model saved to {ckpt_path}")
             else:
                 patience_counter += 1
                 if patience_counter >= args.patience:
@@ -573,6 +588,12 @@ def main():
         with open(args.out_json, "w", encoding="utf-8") as f:
             json.dump(out, f, indent=2)
         logger.info(f"Saved full results to {args.out_json}")
+
+        # Save final checkpoint if requested
+        if args.save_ckpt == 'final':
+            final_ckpt = os.path.join(args.ckpt_dir, f"final_{args.model}_{args.seed}_{args.difficulty}.pth")
+            torch.save(model.state_dict(), final_ckpt)
+            logger.info(f"Final model saved to {final_ckpt}")
 
         # Append lightweight registry for quick lookup (kept under results/registry.csv)
         try:
