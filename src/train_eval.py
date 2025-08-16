@@ -323,6 +323,7 @@ def parse_args():
     parser.add_argument("--val_split", type=float, default=0.5, help="Validation split for calibration")
     parser.add_argument("--fixed_temp", type=float, default=1.0, help="Fixed temperature if no calibration")
     parser.add_argument("--label_noise_prob", type=float, default=0.0, help="Label noise probability")
+    parser.add_argument("--cache_dir", type=str, default="cache/synth_data", help="Directory for dataset caching")
     parser.add_argument(
         "--amp",
         nargs='?',
@@ -396,6 +397,7 @@ def main():
             class_overlap=args.class_overlap,
             label_noise_prob=args.label_noise_prob,
             num_classes=args.num_classes,
+            cache_dir=args.cache_dir,
             num_workers=num_workers,
             pin_memory=pin_memory,
         )
