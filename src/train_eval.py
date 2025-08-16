@@ -314,9 +314,6 @@ def parse_args():
     parser.add_argument("--num_workers_override", type=int, default=-1, help="Override dataloader workers (-1 = auto)")
     parser.add_argument("--prefetch_factor", type=int, default=2, help="Dataloader prefetch_factor when workers>0")
     parser.add_argument("--val_every", type=int, default=1, help="Validate every k epochs to reduce overhead")
-    parser.add_argument("--resume_from", type=str, default="", help="Path to resume checkpoint (last_*.pt)")
-    parser.add_argument("--save_last_every", type=int, default=0, help="Save 'last' training checkpoint every k epochs (0=disable)")
-    parser.add_argument("--strict_load", type=str, default="true", help="Strict state_dict load (true/false)")
     # Output
     parser.add_argument("--out_json", type=str, default="results/out.json", help="Path to output JSON")
 
@@ -348,35 +345,19 @@ def main():
     logger.info(f"Using device: {device}")
     use_amp = bool(torch.cuda.is_available()) and bool(getattr(args, 'amp', False))
     if use_amp:
-        # Prefer new API, fall back to old
-        try:
-            from torch.amp import autocast as _autocast
-            from torch.amp import GradScaler as _GradScaler
-            scaler = _GradScaler("cuda")
-            def _amp_ctx():
-                return _autocast("cuda")
-        except Exception:
-            try:
-                from torch.cuda.amp import autocast as _autocast, GradScaler as _GradScaler
-                scaler = _GradScaler()
-                def _amp_ctx():
-                    return _autocast()
-            except Exception:
-                use_amp = False
+        from torch.cuda.amp import autocast, GradScaler
+        scaler = GradScaler()
 
     try:
         # Load datasets
         # train_loader, val_loader, test_loader = get_synth_loaders(args)
         ### UPDATED: Explicit unpack of args to fix passing Namespace as batch_size ###
-        # Tune dataloader; on Windows force single-process loaders to avoid MP pickle issues
-        is_cuda = (device.type == 'cuda')
-        if os.name == 'nt':
-            num_workers = 0
-        elif getattr(args, 'num_workers_override', -1) is not None and args.num_workers_override >= 0:
+        # Tune dataloader for GPU throughput; CPU-safe defaults remain small
+        if getattr(args, 'num_workers_override', -1) is not None and args.num_workers_override >= 0:
             num_workers = int(args.num_workers_override)
         else:
-            num_workers = (4 if is_cuda else 0)
-        pin_memory = bool(is_cuda)
+            num_workers = 2 if (os.name == 'nt' and torch.cuda.is_available()) else (4 if torch.cuda.is_available() else 0)
+        pin_memory = bool(torch.cuda.is_available())
         train_loader, val_loader, test_loader = get_synth_loaders(
             batch=args.batch,  # Now passing int, not Namespace
             difficulty=args.difficulty,
@@ -392,9 +373,7 @@ def main():
             num_classes=args.num_classes,
             num_workers=num_workers,
             pin_memory=pin_memory,
-            prefetch_factor=(0 if os.name == 'nt' else getattr(args, 'prefetch_factor', 2)),
         )
-        # On Windows, val/test loaders already single-process via get_synth_loaders prefetch override; ensure fallback flags present when rebuilt on error.
         logger.info(f"Dataset: Train={len(train_loader.dataset)}, Val={len(val_loader.dataset)}, Test={len(test_loader.dataset)}")
         logger.info(f"DataLoader: num_workers={num_workers}, pin_memory={pin_memory}")
 
@@ -402,16 +381,6 @@ def main():
         model = build_model(args.model, args.F, args.num_classes)
         model = model.to(device)
         logger.info(f"Model: {args.model} with {sum(p.numel() for p in model.parameters())} params")
-
-        # Optional resume
-        if args.resume_from:
-            try:
-                strict = str(args.strict_load).lower() in ("1","true","yes")
-                state = torch.load(args.resume_from, map_location=device)
-                model.load_state_dict(state, strict=strict)
-                logger.info(f"Resumed weights from {args.resume_from} (strict={strict})")
-            except Exception as e:
-                logger.warning(f"Resume failed from {args.resume_from}: {e}")
 
         # Optimizer and criterion (adjust to your exact setup, e.g., with logit_l2)
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)  # Example
@@ -434,7 +403,7 @@ def main():
                 xb, yb = xb.to(device), yb.to(device)
                 optimizer.zero_grad()
                 if use_amp:
-                    with _amp_ctx():
+                    with autocast():
                         outputs = model(xb)
                         logits = outputs[0] if isinstance(outputs, tuple) else outputs
                         loss = criterion(logits, yb)
@@ -459,12 +428,6 @@ def main():
             avg_train_loss = train_loss / len(train_loader)
             avg_reg_loss = reg_loss_total / len(train_loader) if args.logit_l2 > 0 else 0  # Average reg loss
 
-            # Optionally save "last" checkpoint periodically for resume
-            if args.save_last_every and ((epoch + 1) % max(1, args.save_last_every) == 0):
-                last_ckpt = os.path.join(args.ckpt_dir, f"last_{args.model}_{args.seed}_{args.difficulty}.pt")
-                torch.save(model.state_dict(), last_ckpt)
-                logger.info(f"Saved last checkpoint: {last_ckpt} (epoch={epoch+1})")
-
             # logger.info(f"Epoch {epoch+1}/{args.epochs} - Train Loss: {avg_train_loss:.4f}")
 
             # Validation
@@ -473,37 +436,18 @@ def main():
             if do_val:
                 model.eval()
                 val_loss = 0
-                try:
-                    with torch.no_grad():
-                        for xb, yb in val_loader:
-                            xb, yb = xb.to(device), yb.to(device)
-                            outputs = model(xb)  # Get full output
-                            logits = outputs[0] if isinstance(outputs, tuple) else outputs
-                            val_loss += criterion(logits, yb).item()
-                except OSError as e:
-                    logger.warning(f"Val loader error {e}; rebuilding with num_workers=0 and retrying once")
-                    from torch.utils.data import DataLoader as _DL
-                    val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False,
-                                     num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
-                    with torch.no_grad():
-                        for xb, yb in val_loader:
-                            xb, yb = xb.to(device), yb.to(device)
-                            outputs = model(xb)
-                            logits = outputs[0] if isinstance(outputs, tuple) else outputs
-                            val_loss += criterion(logits, yb).item()
-                avg_val_loss = val_loss / max(1, len(val_loader))
+                with torch.no_grad():
+                    for xb, yb in val_loader:
+                        xb, yb = xb.to(device), yb.to(device)
+                        outputs = model(xb)  # Get full output
+                        logits = outputs[0] if isinstance(outputs, tuple) else outputs
+                        val_loss += criterion(logits, yb).item()
+                avg_val_loss = val_loss / len(val_loader)
                 logger.info(f"Epoch {epoch+1}/{args.epochs} - Val Loss: {avg_val_loss:.4f}")
 
             # Compute early stopping metric (e.g., macro_f1)
             if do_val:
-                try:
-                    val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
-                except OSError as e:
-                    logger.warning(f"Val collect error {e}; rebuilding with num_workers=0 and retrying once")
-                    from torch.utils.data import DataLoader as _DL
-                    val_loader = _DL(val_loader.dataset, batch_size=args.batch, shuffle=False,
-                                     num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
-                    val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
+                val_logits, val_targets = _collect_logits_labels(model, val_loader, device)
                 val_preds = torch.argmax(val_logits, dim=1).cpu().numpy()
                 val_labels = val_targets.cpu().numpy()
                 if args.early_metric == 'macro_f1':
@@ -518,7 +462,7 @@ def main():
                 best_val = current_metric
                 best_epoch = epoch + 1
                 patience_counter = 0
-                # Only save best checkpoint when policy allows all
+                # Only save-on-improvement when policy is 'all'.
                 if args.save_ckpt == 'all':
                     ckpt_name = f"best_{args.model}_{args.seed}_{args.difficulty}.pth"
                     ckpt_path = os.path.join(args.ckpt_dir, ckpt_name)
@@ -536,14 +480,7 @@ def main():
                     log_msg += f", Avg Reg Loss: {avg_reg_loss:.6f}"  # Verify reg is non-zero
                 logger.info(log_msg)
         # Final evaluation
-        try:
-            test_logits, test_targets = _collect_logits_labels(model, test_loader, device)
-        except OSError as e:
-            logger.warning(f"Test collect error {e}; rebuilding test loader with num_workers=0 and retrying once")
-            from torch.utils.data import DataLoader as _DL
-            test_loader = _DL(test_loader.dataset, batch_size=args.batch, shuffle=False,
-                               num_workers=0, pin_memory=False, persistent_workers=False, timeout=0)
-            test_logits, test_targets = _collect_logits_labels(model, test_loader, device)
+        test_logits, test_targets = _collect_logits_labels(model, test_loader, device)
         logger.info("Collected test logits and targets")
 
         # Temperature calibration
@@ -654,7 +591,7 @@ def main():
         logger.info(f"Saved full results to {args.out_json}")
 
         # Save final checkpoint if requested
-        if args.save_ckpt in ('final', 'all'):
+        if args.save_ckpt == 'final':
             final_ckpt = os.path.join(args.ckpt_dir, f"final_{args.model}_{args.seed}_{args.difficulty}.pth")
             torch.save(model.state_dict(), final_ckpt)
             logger.info(f"Final model saved to {final_ckpt}")
