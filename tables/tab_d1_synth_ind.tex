@@ -1,0 +1,16 @@
+\begin{table}[t]
+  \centering
+  \caption{D1: Synthetic InD capacity-aligned validation (10 seeds, mean Macro-F1). We enforce matched capacity (\(\pm10\%\)) and report Macro-F1 averaged over seeds 0--9 from `results/metrics/summary_cpu.csv`.}
+  \label{tab:d1-synth-ind}
+  \begin{tabular}{lcc}
+    \toprule
+    Model & Seeds & Macro-F1 (mean) \\
+    \midrule
+    Enhanced (CNN+SE+Light Attn) & 0--9 & 0.9831 \\
+    CNN (baseline)               & 0--9 & 0.9432 \\
+    Conformer-lite (control)     & 0--9 & 0.8659 \\
+    BiLSTM (baseline)            & 0--9 & 0.5973 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
