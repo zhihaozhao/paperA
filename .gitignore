@@ -6,7 +6,7 @@ Thumbs.db
 *.tmp
 *.bak
 *.orig
-*.log
+# *.log
 
 # ���⻷������������
 .venv/

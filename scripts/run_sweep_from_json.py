@@ -29,10 +29,19 @@ def build_cmd(spec: Dict[str, Any], model: str, seed: int, fixed: Dict[str, Any]
     args = [exe, os.path.join("src", "train_eval.py"), "--model", model]
     # Basic/fixed fields
     for k, v in fixed.items():
-        args.extend([f"--{k}", str(v)])
+        # Handle boolean CLI flags correctly: present flag when True, omit when False
+        if isinstance(v, bool):
+            if v:
+                args.append(f"--{k}")
+        else:
+            args.extend([f"--{k}", str(v)])
     # Grid/overrides
     for k, v in combo.items():
-        args.extend([f"--{k}", str(v)])
+        if isinstance(v, bool):
+            if v:
+                args.append(f"--{k}")
+        else:
+            args.extend([f"--{k}", str(v)])
     # Seed and out
     args.extend(["--seed", str(seed)])
     diff = str(fixed.get("difficulty", "hard"))
