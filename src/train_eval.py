@@ -36,6 +36,20 @@ import numpy as np
 
 from models import build_model  # Assuming import
 
+def _str2bool(v):
+    """Parse boolean-like CLI values.
+    Accepts: true/false, yes/no, y/n, 1/0 (case-insensitive), or a bare flag via const.
+    """
+    if isinstance(v, bool):
+        return v
+    if isinstance(v, str):
+        val = v.strip().lower()
+        if val in ("y", "yes", "t", "true", "1"):  # enable
+            return True
+        if val in ("n", "no", "f", "false", "0"):  # disable
+            return False
+    raise argparse.ArgumentTypeError("Boolean value expected (e.g., True/False).")
+
 def _confusion_matrix_from_preds(y_true, y_pred, num_classes):
     import numpy as np
     C = np.zeros((num_classes, num_classes), dtype=np.int64)
@@ -309,7 +323,14 @@ def parse_args():
     parser.add_argument("--val_split", type=float, default=0.5, help="Validation split for calibration")
     parser.add_argument("--fixed_temp", type=float, default=1.0, help="Fixed temperature if no calibration")
     parser.add_argument("--label_noise_prob", type=float, default=0.0, help="Label noise probability")
-    parser.add_argument("--amp", action="store_true", help="Enable mixed precision on CUDA for speed and memory")
+    parser.add_argument(
+        "--amp",
+        nargs='?',
+        const=True,
+        default=False,
+        type=_str2bool,
+        help="Enable mixed precision on CUDA (accepts True/False; bare flag implies True)",
+    )
     parser.add_argument("--save_ckpt", type=str, default="final", choices=["all", "final", "none"], help="Checkpoint saving policy")
     parser.add_argument("--num_workers_override", type=int, default=-1, help="Override dataloader workers (-1 = auto)")
     parser.add_argument("--prefetch_factor", type=int, default=2, help="Dataloader prefetch_factor when workers>0")
