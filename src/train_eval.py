@@ -316,6 +316,7 @@ def parse_args():
     parser.add_argument("--val_every", type=int, default=1, help="Validate every k epochs to reduce overhead")
     # Output
     parser.add_argument("--out_json", type=str, default="results/out.json", help="Path to output JSON")
+    parser.add_argument("--log_dir", type=str, default="", help="Optional directory to store log files. If empty, logs/ under out_json directory is used.")
 
     return parser.parse_args()
 # -------------------------
@@ -326,10 +327,13 @@ import logging  # NEW: Import for logging
 def main():
     args = parse_args()  # Assuming your parse_args() with all fields like --model, --difficulty, etc.
 
-    # Configure logging to file (unique per run, align with out_json basename)
+    # Configure logging to file (centralized in logs/ by default)
     out_json_path = Path(args.out_json)
     out_json_path.parent.mkdir(parents=True, exist_ok=True)
-    log_file = str(out_json_path.with_suffix('.log'))
+    base_name = out_json_path.stem
+    log_dir = Path(args.log_dir) if getattr(args, 'log_dir', '') else (out_json_path.parent / "logs")
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_file = str((log_dir / f"{base_name}.log").resolve())
 
     logging.basicConfig(
         level=logging.INFO,
