@@ -1,12 +1,58 @@
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
+import hashlib
+import pickle
+import os
+from pathlib import Path
 
 class SynthCSIDataset(Dataset):
     def __init__(self, n=2000, T=128, F=30, difficulty="mid", seed=0,
         sc_corr_rho=None,        # None/<=0 disables
         env_burst_rate=0.0,      # 0 disables
-        gain_drift_std=0.0):     # 0 disables
+        gain_drift_std=0.0,      # 0 disables
+        cache_dir="cache/synth_data"):     # 缓存目录
+        
+        # 生成缓存key
+        cache_key = self._generate_cache_key(n, T, F, difficulty, seed, 
+                                           sc_corr_rho, env_burst_rate, gain_drift_std)
+        
+        # 设置缓存路径
+        cache_path = Path(cache_dir) / f"synth_data_{cache_key}.pkl"
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # 尝试加载缓存
+        if cache_path.exists():
+            print(f"[INFO] Loading cached dataset from {cache_path}")
+            try:
+                with open(cache_path, 'rb') as f:
+                    cached_data = pickle.load(f)
+                self.X = cached_data['X']
+                self.y = cached_data['y']
+                return
+            except Exception as e:
+                print(f"[WARNING] Failed to load cache: {e}, regenerating...")
+        
+        # 缓存不存在或加载失败，重新生成
+        print(f"[INFO] Generating new dataset (n={n}, T={T}, F={F}, difficulty={difficulty}, seed={seed})")
+        self._generate_data(n, T, F, difficulty, seed, sc_corr_rho, env_burst_rate, gain_drift_std)
+        
+        # 保存到缓存
+        try:
+            cache_data = {'X': self.X, 'y': self.y}
+            with open(cache_path, 'wb') as f:
+                pickle.dump(cache_data, f)
+            print(f"[INFO] Dataset cached to {cache_path}")
+        except Exception as e:
+            print(f"[WARNING] Failed to save cache: {e}")
+    
+    def _generate_cache_key(self, n, T, F, difficulty, seed, sc_corr_rho, env_burst_rate, gain_drift_std):
+        """生成基于参数的缓存键"""
+        params_str = f"n={n}_T={T}_F={F}_diff={difficulty}_seed={seed}_rho={sc_corr_rho}_burst={env_burst_rate}_drift={gain_drift_std}"
+        return hashlib.md5(params_str.encode()).hexdigest()[:12]
+    
+    def _generate_data(self, n, T, F, difficulty, seed, sc_corr_rho, env_burst_rate, gain_drift_std):
+        """原始的数据生成逻辑"""
         rng = np.random.default_rng(seed)
         self.y = rng.integers(0, 4, size=n, endpoint=False)
 
@@ -136,11 +182,13 @@ class SynthCSIDataset(Dataset):
 
 def get_synth_loaders(batch=64, difficulty="mid", seed=0,
                       n=2000, T=128, F=30,
-                      sc_corr_rho=None, env_burst_rate=0.0, gain_drift_std=0.0):
+                      sc_corr_rho=None, env_burst_rate=0.0, gain_drift_std=0.0,
+                      cache_dir="cache/synth_data"):
     ds = SynthCSIDataset(n=n, T=T, F=F, difficulty=difficulty, seed=seed,
                          sc_corr_rho=sc_corr_rho,
                          env_burst_rate=env_burst_rate,
-                         gain_drift_std=gain_drift_std)
+                         gain_drift_std=gain_drift_std,
+                         cache_dir=cache_dir)
     idx = np.arange(len(ds))
     np.random.default_rng(seed).shuffle(idx)
     split = int(0.8*len(idx))
