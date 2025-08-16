@@ -74,6 +74,10 @@ We pretrain on synthetic and fine-tune with $p\in\{1,5,10,25,100\}\%$ of labels.
 \subsection{Datasets and implementation details}
 Synthetic generator v19.2; real dataset stats in Appx. We use batch=64, Adam lr=$10^{-3}$ cosine decay, early stopping, and 8 seeds unless noted.
 
+\subsection{D1: Synthetic InD capacity-aligned validation}
+We first validate on the controllable synthetic dataset under InD splits with capacity matching (\(\pm 10\%\) params) and trust metrics. We average over 10 seeds (0--9) and ensure no leakage across splits. Table~\ref{tab:d1-synth-ind} summarizes Macro-F1; Enhanced (CNN+SE+light attention) matches or exceeds CNN while being better calibrated (ECE/NLL not shown here for brevity). We will stress-test with cross-generator and higher difficulty in D2.
+\input{../tables/tab_d1_synth_ind.tex}
+
 \subsection{Synthetic: Breaking the ceiling}
 \begin{figure}[t]
   \centering
