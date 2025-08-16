@@ -1,0 +1,19 @@
+{
+  "models": ["enhanced", "cnn", "bilstm", "conformer_lite"],
+  "seeds": [0, 1, 2, 3, 4],
+  "fixed": {
+    "difficulty": "hard",
+    "epochs": 100,
+    "batch": 768,
+    "amp": true,
+    "save_ckpt": "final",
+    "val_every": 3,
+    "num_workers_override": 0
+  },
+  "grid": {
+    "class_overlap": [0.0, 0.4, 0.8],
+    "label_noise_prob": [0.0, 0.05, 0.1],
+    "env_burst_rate": [0.0, 0.1, 0.2]
+  },
+  "output_dir": "results_gpu/d2"
+}
