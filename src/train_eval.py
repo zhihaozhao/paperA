@@ -371,8 +371,8 @@ def main():
     logger.info(f"Using device: {device}")
     use_amp = bool(torch.cuda.is_available()) and bool(getattr(args, 'amp', False))
     if use_amp:
-        from torch.cuda.amp import autocast, GradScaler
-        scaler = GradScaler()
+        from torch.amp import autocast, GradScaler
+        scaler = GradScaler('cuda')
 
     try:
         # Load datasets
@@ -405,7 +405,7 @@ def main():
         logger.info(f"DataLoader: num_workers={num_workers}, pin_memory={pin_memory}")
 
         # Build and move model to device
-        model = build_model(args.model, args.F, args.num_classes)
+        model = build_model(args.model, args.F, args.num_classes, T=args.T)
         model = model.to(device)
         logger.info(f"Model: {args.model} with {sum(p.numel() for p in model.parameters())} params")
 
@@ -430,7 +430,7 @@ def main():
                 xb, yb = xb.to(device), yb.to(device)
                 optimizer.zero_grad()
                 if use_amp:
-                    with autocast():
+                    with autocast('cuda'):
                         outputs = model(xb)
                         logits = outputs[0] if isinstance(outputs, tuple) else outputs
                         loss = criterion(logits, yb)
