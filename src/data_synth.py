@@ -182,6 +182,10 @@ from typing import Optional, Tuple
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
+import hashlib
+import pickle
+import os
+from pathlib import Path
 
 class SynthCSIDataset(Dataset):
     def __init__(
@@ -197,7 +201,54 @@ class SynthCSIDataset(Dataset):
         class_overlap: float = 0.0,            # 新增：类间重叠，默认关闭
         label_noise_prob: float = 0.0,         # New: Label noise probability (default 0 for compatibility)
         num_classes: int = 8,                  # New: Configurable num_classes (increased default for difficulty)
+        cache_dir: str = "cache/synth_data",   # 缓存目录
     ):
+        # 生成缓存key（包含所有相关参数）
+        cache_key = self._generate_cache_key(n, T, F, difficulty, seed, 
+                                           sc_corr_rho, env_burst_rate, gain_drift_std,
+                                           class_overlap, label_noise_prob, num_classes)
+        
+        # 设置缓存路径
+        cache_path = Path(cache_dir) / f"synth_data_{cache_key}.pkl"
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # 尝试加载缓存
+        if cache_path.exists():
+            print(f"[INFO] Loading cached dataset from {cache_path}")
+            try:
+                with open(cache_path, 'rb') as f:
+                    cached_data = pickle.load(f)
+                self.X = cached_data['X']
+                self.y = cached_data['y']
+                if hasattr(cached_data, 'class_names'):
+                    self.class_names = cached_data['class_names']
+                return
+            except Exception as e:
+                print(f"[WARNING] Failed to load cache: {e}, regenerating...")
+        
+        # 缓存不存在或加载失败，重新生成
+        print(f"[INFO] Generating new dataset (n={n}, T={T}, F={F}, difficulty={difficulty}, seed={seed})")
+        self._generate_data(n, T, F, difficulty, seed, sc_corr_rho, env_burst_rate, gain_drift_std,
+                           class_overlap, label_noise_prob, num_classes)
+        
+        # 保存到缓存
+        try:
+            cache_data = {'X': self.X, 'y': self.y, 'class_names': self.class_names}
+            with open(cache_path, 'wb') as f:
+                pickle.dump(cache_data, f)
+            print(f"[INFO] Dataset cached to {cache_path}")
+        except Exception as e:
+            print(f"[WARNING] Failed to save cache: {e}")
+    
+    def _generate_cache_key(self, n, T, F, difficulty, seed, sc_corr_rho, env_burst_rate, gain_drift_std,
+                           class_overlap, label_noise_prob, num_classes):
+        """生成基于参数的缓存键"""
+        params_str = f"n={n}_T={T}_F={F}_diff={difficulty}_seed={seed}_rho={sc_corr_rho}_burst={env_burst_rate}_drift={gain_drift_std}_overlap={class_overlap}_noise={label_noise_prob}_classes={num_classes}"
+        return hashlib.md5(params_str.encode()).hexdigest()[:12]
+    
+    def _generate_data(self, n, T, F, difficulty, seed, sc_corr_rho, env_burst_rate, gain_drift_std,
+                      class_overlap, label_noise_prob, num_classes):
+        """原始的数据生成逻辑"""
         rng = np.random.default_rng(seed)
         self.y = rng.integers(0, num_classes, size=n, endpoint=False)  # Updated to use num_classes
         # NEW: Semantic class names for CSI fall detection
@@ -341,6 +392,7 @@ def get_synth_loaders(
         class_overlap: float = 0.0,
         label_noise_prob: float = 0.0,  # New param
         num_classes: int = 8,  # New param
+        cache_dir: str = "cache/synth_data",  # 缓存目录
         num_workers: int = 0,
         pin_memory: bool = False,
         prefetch_factor: int = 2,
@@ -353,6 +405,7 @@ def get_synth_loaders(
         class_overlap=class_overlap,
         label_noise_prob=label_noise_prob,
         num_classes=num_classes,
+        cache_dir=cache_dir,
     )
     idx = np.arange(len(ds))
     np.random.default_rng(seed).shuffle(idx)
