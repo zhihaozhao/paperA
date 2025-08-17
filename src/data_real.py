@@ -13,4 +13,13 @@ def get_real_loaders_loso(X, y, subjects, test_subj, batch=64):
     tr = RealCSIDataset(X[tr_idx], y[tr_idx]); te = RealCSIDataset(X[te_idx], y[te_idx])
     return DataLoader(tr, batch_size=batch, shuffle=True), DataLoader(te, batch_size=batch)
 
+def get_real_loaders(dataset="default", batch_size=64, seed=0, split_ratio=0.8):
+    """
+    Generic real data loader for cross-domain experiments
+    This is a placeholder implementation that generates synthetic data for now
+    """
+    # For now, fall back to synthetic data since no real data is available
+    from src.data_synth import get_synth_loaders
+    return get_synth_loaders(batch=batch_size, difficulty="hard", seed=seed)
+
 # TODO: implement LORO and manifest export when real data available

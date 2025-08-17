@@ -201,3 +201,9 @@ def build_model(name, input_dim, num_classes, logit_l2=0.05):
        return TinyTransformer(input_dim=input_dim, num_classes=num_classes, logit_l2=logit_l2)
     else:
         raise ValueError(f"Unknown model {name}")
+
+def get_model(name, input_dim, num_classes=4, logit_l2=0.05):
+    """
+    Alias for build_model for compatibility
+    """
+    return build_model(name, input_dim, num_classes, logit_l2)

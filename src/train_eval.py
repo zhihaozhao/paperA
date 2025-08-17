@@ -111,6 +111,61 @@ def train_one_epoch(model, loader, opt, device):
         total += loss.item()*x.size(0)
     return total/len(loader.dataset)
 
+def compute_overlap_stat(model, loader, device):
+    """
+    Compute overlap statistics for class separability analysis
+    """
+    model.eval()
+    features_per_class = {i: [] for i in range(4)}
+    
+    with torch.no_grad():
+        for batch_x, batch_y in loader:
+            batch_x = batch_x.to(device)
+            
+            # Get features before final classification layer
+            if hasattr(model, 'get_features'):
+                features = model.get_features(batch_x)
+            else:
+                # Fallback: use penultimate layer if available
+                output = model(batch_x)
+                features = output[0] if isinstance(output, tuple) else output
+                if len(features.shape) > 2:
+                    features = features.mean(dim=-1)  # Global average pooling
+            
+            features = features.cpu().numpy()
+            batch_y = batch_y.numpy()
+            
+            for i in range(len(batch_y)):
+                class_label = int(batch_y[i])
+                features_per_class[class_label].append(features[i])
+    
+    # Compute class centroids
+    centroids = {}
+    for class_idx, feature_list in features_per_class.items():
+        if feature_list:
+            centroids[class_idx] = np.mean(feature_list, axis=0)
+    
+    # Compute pairwise overlaps (cosine similarity)
+    overlaps = []
+    class_pairs = []
+    for i in range(4):
+        for j in range(i+1, 4):
+            if i in centroids and j in centroids:
+                c1, c2 = centroids[i], centroids[j]
+                cosine_sim = np.dot(c1, c2) / (np.linalg.norm(c1) * np.linalg.norm(c2) + 1e-8)
+                overlaps.append(cosine_sim)
+                class_pairs.append((i, j))
+    
+    if overlaps:
+        return {
+            "mean": float(np.mean(overlaps)),
+            "std": float(np.std(overlaps)),
+            "pairs": class_pairs,
+            "values": overlaps
+        }
+    else:
+        return {"mean": 0.0, "std": 0.0, "pairs": [], "values": []}
+
 def eval_model(model, loader, device, num_classes=4):
     model.eval(); ys=[]; ps=[]
     with torch.no_grad():
@@ -123,6 +178,11 @@ def eval_model(model, loader, device, num_classes=4):
     m = compute_metrics(y, p, num_classes=num_classes, positive_class=1)
     # m = compute_metrics(y, p, num_classes=p.shape[1], positive_class=args.positive_class)
     m["ece"] = ece(p, y, n_bins=15); m["brier"] = brier(p, y, num_classes=num_classes)
+    # 添加overlap统计计算
+    overlap_stat = compute_overlap_stat(model, loader, device)
+    
+    # 确保overlap_stat被包含在结果中
+    m["overlap_stat"] = overlap_stat
     m["falling_f1"] = m.get("f1_fall", float("nan"))
     return m
 
