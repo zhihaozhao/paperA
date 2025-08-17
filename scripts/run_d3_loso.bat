@@ -31,7 +31,7 @@ if "%PYTHON_ENV%"=="" (
 if "%MODELS%"=="" set MODELS=enhanced,cnn,bilstm,conformer_lite
 if "%SEEDS%"=="" set SEEDS=0,1,2,3,4
 if "%EPOCHS%"=="" set EPOCHS=100
-if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main
+if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main\Data
 if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d3\loso
 
 echo Experiment Configuration:

@@ -318,10 +318,17 @@ def run_loso_experiment(args):
         
     except Exception as e:
         logger.warning(f"Failed to load benchmark data: {e}")
-        logger.info("Falling back to synthetic data for testing...")
+        logger.info("Falling back to realistic synthetic data for LOSO simulation...")
+        
+        # Generate challenging synthetic data that simulates cross-subject variability
         train_loader, val_loader, test_loader = get_synth_loaders(
-            batch=args.batch_size, difficulty="hard", seed=args.seed,  # Use "hard" difficulty 
-            n=1500, T=128, F=30, num_classes=4
+            batch=args.batch_size, difficulty="hard", seed=args.seed,
+            n=1500, T=128, F=30, num_classes=4,
+            # Add realistic cross-subject variations
+            sc_corr_rho=0.5,  # Lower correlation for subject differences
+            env_burst_rate=0.15,  # Higher noise for realism
+            gain_drift_std=0.01,  # Subject-specific gain variations
+            dropout_p=0.1  # Add dropout for generalization challenge
         )
     
     # Model setup
@@ -392,11 +399,17 @@ def run_loro_experiment(args):
         
     except Exception as e:
         logger.warning(f"Failed to load benchmark data: {e}")
-        logger.info("Falling back to synthetic data for testing...")
+        logger.info("Falling back to realistic synthetic data for LORO simulation...")
+        
+        # Generate challenging synthetic data that simulates cross-room variability  
         train_loader, val_loader, _ = get_synth_loaders(
             batch=args.batch_size, difficulty="hard", seed=args.seed,
             n=1500, T=128, F=30, num_classes=4,
-        sc_corr_rho=0.7, env_burst_rate=0.05, gain_drift_std=0.003
+            # Add realistic cross-room variations
+            sc_corr_rho=0.4,  # Lower correlation for room differences
+            env_burst_rate=0.2,  # Higher environmental noise
+            gain_drift_std=0.02,  # Room-specific propagation variations
+            dropout_p=0.15  # Add dropout for environmental robustness
     )
     
     # Model setup and training

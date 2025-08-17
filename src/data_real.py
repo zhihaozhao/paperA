@@ -18,6 +18,11 @@ class BenchmarkCSIDataset:
     
     def __init__(self, benchmark_path: str = "benchmarks/WiFi-CSI-Sensing-Benchmark-main"):
         self.benchmark_path = Path(benchmark_path)
+        # Check for Data subdirectory (correct structure based on GitHub repo)
+        if (self.benchmark_path / "Data").exists():
+            self.data_path = self.benchmark_path / "Data"
+        else:
+            self.data_path = self.benchmark_path
         self.X = None
         self.y = None
         self.subjects = None
@@ -29,19 +34,42 @@ class BenchmarkCSIDataset:
         Load WiFi CSI benchmark dataset
         Returns: X, y, subjects, rooms, metadata
         """
-        # Try multiple common data formats for WiFi CSI benchmarks
+        # Search for data files in multiple benchmark datasets (NTU-Fi_HAR, UT_HAR, Widardata, NTU-Fi-HumanID)
+        data_files = []
+        
+        # Check standard benchmark subdirectories
+        benchmark_dirs = ["NTU-Fi_HAR", "UT_HAR", "Widardata", "NTU-Fi-HumanID"]
+        
+        for subdir in benchmark_dirs:
+            subdir_path = self.data_path / subdir
+            if subdir_path.exists():
+                # Try different data formats
+                try:
+                    import h5py
+                    data_files.extend(list(subdir_path.glob("**/*.h5")))
+                    data_files.extend(list(subdir_path.glob("**/*.hdf5")))
+                except ImportError:
+                    pass
+                
+                data_files.extend(list(subdir_path.glob("**/*.npz")))
+                data_files.extend(list(subdir_path.glob("**/*.csv")))
+                data_files.extend(list(subdir_path.glob("**/*.mat")))
+                
+        # Also check root data directory
         try:
             import h5py
-            data_files = list(self.benchmark_path.glob("*.h5")) + \
-                        list(self.benchmark_path.glob("*.hdf5")) + \
-                        list(self.benchmark_path.glob("data/*.h5"))
+            data_files.extend(list(self.data_path.glob("*.h5")))
+            data_files.extend(list(self.data_path.glob("*.hdf5")))
         except ImportError:
-            data_files = []
+            pass
             
-        data_files += list(self.benchmark_path.glob("*.npz"))
+        data_files.extend(list(self.data_path.glob("*.npz")))
+        data_files.extend(list(self.data_path.glob("*.csv")))
                     
         if not data_files:
-            raise FileNotFoundError(f"No data files found in {self.benchmark_path}")
+            raise FileNotFoundError(f"No data files found in {self.data_path} or subdirectories {benchmark_dirs}")
+            
+        print(f"[INFO] Found {len(data_files)} data files in benchmark directory")
             
         # Load the first available data file
         data_file = data_files[0]
