@@ -33,6 +33,9 @@ if "%SEEDS%"=="" set SEEDS=0,1,2,3,4
 if "%EPOCHS%"=="" set EPOCHS=100
 if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main\Data
 if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d3\loro
+if "%FILES_PER_ACTIVITY%"=="" set FILES_PER_ACTIVITY=3
+if "%CLASS_WEIGHT%"=="" set CLASS_WEIGHT=inv_freq
+if "%LORO_ALL_FOLDS%"=="" set LORO_ALL_FOLDS=1
 
 echo Experiment Configuration:
 echo   Model List: %MODELS%
@@ -107,7 +110,9 @@ for %%m in (%MODELS%) do (
         
         :: Run single experiment
         set OUTPUT_FILE=%OUTPUT_DIR%\loro_%%m_seed%%s.json
-        python -m src.train_cross_domain --model %%m --seed %%s --epochs %EPOCHS% --protocol loro --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
+        set FOLDS_FLAG=
+        if "%LORO_ALL_FOLDS%"=="1" set FOLDS_FLAG=--loro_all_folds
+        python -m src.train_cross_domain --model %%m --seed %%s --epochs %EPOCHS% --protocol loro --benchmark_path "%BENCHMARK_PATH%" --files_per_activity %FILES_PER_ACTIVITY% --class_weight %CLASS_WEIGHT% %FOLDS_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
         
         if !ERRORLEVEL! equ 0 (
             set /a SUCCESS_CONFIGS+=1
