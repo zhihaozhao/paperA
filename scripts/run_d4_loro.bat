@@ -32,7 +32,7 @@ if "%MODELS%"=="" set MODELS=enhanced,cnn,bilstm,conformer_lite
 if "%SEEDS%"=="" set SEEDS=0,1,2,3,4
 if "%LABEL_RATIOS%"=="" set LABEL_RATIOS=0.01,0.05,0.10,0.15,0.20,0.50,1.00
 if "%TRANSFER_METHODS%"=="" set TRANSFER_METHODS=zero_shot,linear_probe,fine_tune,temp_scale
-if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main
+if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main\Data
 if "%D2_MODELS_PATH%"=="" set D2_MODELS_PATH=checkpoints\d2
 if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d4\sim2real
 
