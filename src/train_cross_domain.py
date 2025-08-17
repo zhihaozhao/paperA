@@ -20,6 +20,40 @@ from src.utils.logger import setup_logger
 from src.utils.io import set_seed
 from src.utils.exp_recorder import append_run_registry, init_run
 
+def compute_falling_metrics(y_true, y_prob, num_classes=8):
+    """
+    Compute falling detection metrics for 8-class system
+    Classes 5-7 are falling-related: Epileptic Fall, Elderly Fall, Fall Can't Get Up
+    Classes 0-4 are non-falling: Normal Walking, Shaking, Twitching, Punching, Kicking
+    """
+    from src.metrics import compute_metrics
+    
+    # Standard 8-class metrics
+    standard_metrics = compute_metrics(y_true, y_prob, num_classes=num_classes, positive_class=5)
+    
+    # Binary falling detection: classes 5-7 vs classes 0-4
+    y_true_binary = (y_true >= 5).astype(int)  # 1 for falling (5-7), 0 for non-falling (0-4)
+    
+    # Sum probabilities for falling classes
+    y_prob_falling = y_prob[:, 5:8].sum(axis=1)  # P(class5) + P(class6) + P(class7)
+    y_prob_binary = np.column_stack([1 - y_prob_falling, y_prob_falling])  # [P(non-fall), P(fall)]
+    
+    # Compute binary falling metrics
+    falling_metrics = compute_metrics(y_true_binary, y_prob_binary, num_classes=2, positive_class=1)
+    
+    # Merge results
+    result = standard_metrics.copy()
+    result['falling_f1'] = falling_metrics['f1_fall']  # Binary falling F1
+    result['falling_auprc'] = falling_metrics['auprc']  # Binary falling AUPRC
+    result['falling_cm'] = falling_metrics['cm']  # 2x2 falling confusion matrix
+    
+    # Add class names for interpretability
+    class_names = ['Normal_Walk', 'Shaking', 'Twitching', 'Punching', 'Kicking', 
+                   'Epileptic_Fall', 'Elderly_Fall', 'Fall_CantGetUp']
+    result['class_names'] = class_names
+    
+    return result
+
 def make_json_serializable(obj):
     """Convert numpy/torch objects to JSON-serializable Python types"""
     if obj is None:
@@ -236,7 +270,7 @@ def eval_model(model, loader, device, positive_class=1):
     probs = torch.softmax(logits, dim=1).numpy()
     labels = labels.numpy()
     
-    metrics = compute_metrics(labels, probs, num_classes=4, positive_class=positive_class)
+    metrics = compute_falling_metrics(labels, probs, num_classes=8)  # Use 8-class fall detection metrics
     
     # Add ECE calculation (simplified)
     confidence = np.max(probs, axis=1)
@@ -288,7 +322,7 @@ def main():
     # Training parameters
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
     parser.add_argument("--batch_size", type=int, default=64, help="Batch size")
-    parser.add_argument("--positive_class", type=int, default=3, help="Positive class for AUPRC (Falling=3)")
+    parser.add_argument("--positive_class", type=int, default=5, help="Positive class for AUPRC (Epileptic_Fall=5 in 8-class system)")
     
     # Legacy compatibility
     parser.add_argument("--source", type=str, default="synth", help="Source domain (legacy)")
@@ -348,7 +382,7 @@ def run_loso_experiment(args):
         # Generate challenging synthetic data that simulates cross-subject variability
         train_loader, val_loader, test_loader = get_synth_loaders(
             batch=args.batch_size, difficulty="hard", seed=args.seed,
-            n=1500, T=128, F=30, num_classes=4,
+            n=1500, T=128, F=30, num_classes=8,  # 8-class fall detection system
             # Add realistic cross-subject variations
             sc_corr_rho=0.5,  # Lower correlation for subject differences
             env_burst_rate=0.15,  # Higher noise for realism
@@ -357,14 +391,15 @@ def run_loso_experiment(args):
             label_noise_prob=0.05  # Add label noise for realism
         )
     
-    # Model setup
+    # Model setup for 8-class fall detection system
     x_sample, _ = next(iter(train_loader))
     input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
     
-    model = get_model(args.model, input_dim=input_dim, num_classes=4)
+    model = get_model(args.model, input_dim=input_dim, num_classes=8)  # 8-class fall detection
     model = model.to(device)
     
-    # Training and evaluation
+    # Training and evaluation (classes 5-7 are falling-related for binary fall detection)
+    args.positive_class = 5  # Use epileptic_fall as primary falling class for AUPRC
     best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
     
     # Compute overlap statistics
@@ -377,9 +412,12 @@ def run_loso_experiment(args):
         "seed": int(args.seed),
         "aggregate_stats": {
             "macro_f1": {"mean": float(best_metrics.get("macro_f1", 0.0)), "std": 0.0},
-            "falling_f1": {"mean": float(best_metrics.get("f1_fall", 0.0)), "std": 0.0},
+            "falling_f1": {"mean": float(best_metrics.get("falling_f1", 0.0)), "std": 0.0},  # Binary falling detection F1
             "ece": {"mean": float(best_metrics.get("ece", 0.0)), "std": 0.0},
-            "auprc_falling": {"mean": float(best_metrics.get("auprc", 0.0)), "std": 0.0},
+            "auprc_falling": {"mean": float(best_metrics.get("falling_auprc", 0.0)), "std": 0.0},  # Binary falling AUPRC
+            "epileptic_fall_f1": {"mean": float(best_metrics.get("per_class_f1", [0]*8)[5]), "std": 0.0},  # 类5: 癫痫跌倒
+            "elderly_fall_f1": {"mean": float(best_metrics.get("per_class_f1", [0]*8)[6]), "std": 0.0},      # 类6: 老人跌倒
+            "fall_cantgetup_f1": {"mean": float(best_metrics.get("per_class_f1", [0]*8)[7]), "std": 0.0},   # 类7: 跌倒起不来
             "mutual_misclass": {"mean": 0.0, "std": 0.0}  # TODO: Implement
         },
         "fold_results": [make_json_serializable(best_metrics)],  # Single fold for now
@@ -430,7 +468,7 @@ def run_loro_experiment(args):
         # Generate challenging synthetic data that simulates cross-room variability  
         train_loader, val_loader, _ = get_synth_loaders(
             batch=args.batch_size, difficulty="hard", seed=args.seed,
-            n=1500, T=128, F=30, num_classes=4,
+            n=1500, T=128, F=30, num_classes=8,  # 8-class fall detection system
             # Add realistic cross-room variations
             sc_corr_rho=0.4,  # Lower correlation for room differences
             env_burst_rate=0.2,  # Higher environmental noise
@@ -439,11 +477,11 @@ def run_loro_experiment(args):
             label_noise_prob=0.08  # Add more label noise for room variations
     )
     
-    # Model setup and training
+    # Model setup and training for 8-class fall detection
     x_sample, _ = next(iter(train_loader))
     input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
     
-    model = get_model(args.model, input_dim=input_dim, num_classes=4)
+    model = get_model(args.model, input_dim=input_dim, num_classes=8)  # 8-class fall detection
     model = model.to(device)
     
     best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
@@ -456,9 +494,12 @@ def run_loro_experiment(args):
         "seed": int(args.seed),
         "aggregate_stats": {
             "macro_f1": {"mean": float(best_metrics.get("macro_f1", 0.0)), "std": 0.0},
-            "falling_f1": {"mean": float(best_metrics.get("f1_fall", 0.0)), "std": 0.0},
+            "falling_f1": {"mean": float(best_metrics.get("falling_f1", 0.0)), "std": 0.0},  # Binary falling detection F1
             "ece": {"mean": float(best_metrics.get("ece", 0.0)), "std": 0.0},
-            "auprc_falling": {"mean": float(best_metrics.get("auprc", 0.0)), "std": 0.0},
+            "auprc_falling": {"mean": float(best_metrics.get("falling_auprc", 0.0)), "std": 0.0},  # Binary falling AUPRC
+            "epileptic_fall_f1": {"mean": float(best_metrics.get("per_class_f1", [0]*8)[5]), "std": 0.0},  # 类5: 癫痫跌倒
+            "elderly_fall_f1": {"mean": float(best_metrics.get("per_class_f1", [0]*8)[6]), "std": 0.0},      # 类6: 老人跌倒
+            "fall_cantgetup_f1": {"mean": float(best_metrics.get("per_class_f1", [0]*8)[7]), "std": 0.0},   # 类7: 跌倒起不来
             "mutual_misclass": {"mean": 0.0, "std": 0.0}
         },
         "fold_results": [make_json_serializable(best_metrics)],
@@ -499,13 +540,13 @@ def run_sim2real_experiment(args):
         logger.info("Training model from scratch on synthetic data")
         train_loader, val_loader, _ = get_synth_loaders(
             batch=args.batch_size, difficulty="mid", seed=args.seed,
-            n=2000, T=128, F=30, num_classes=4
+            n=2000, T=128, F=30, num_classes=8  # 8-class fall detection system
         )
         
         x_sample, _ = next(iter(train_loader))
         input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
         
-        model = get_model(args.model, input_dim=input_dim, num_classes=4)
+        model = get_model(args.model, input_dim=input_dim, num_classes=8)  # 8-class fall detection
         model = model.to(device)
         
         # Pre-train on synthetic data
@@ -535,12 +576,16 @@ def run_sim2real_experiment(args):
         "transfer_method": args.transfer_method,
         "zero_shot_metrics": {
             "macro_f1": float(zero_shot_metrics.get("macro_f1", 0.0)),
-            "falling_f1": float(zero_shot_metrics.get("f1_fall", 0.0)),
+            "falling_f1": float(zero_shot_metrics.get("falling_f1", 0.0)),  # Binary falling detection F1
+            "epileptic_fall_f1": float(zero_shot_metrics.get("per_class_f1", [0]*8)[5]),  # 癫痫跌倒
+            "elderly_fall_f1": float(zero_shot_metrics.get("per_class_f1", [0]*8)[6]),     # 老人跌倒
             "ece": float(zero_shot_metrics.get("ece", 0.0))
         },
         "target_metrics": {
             "macro_f1": float(final_metrics.get("macro_f1", 0.0)),
-            "falling_f1": float(final_metrics.get("f1_fall", 0.0)),
+            "falling_f1": float(final_metrics.get("falling_f1", 0.0)),  # Binary falling detection F1
+            "epileptic_fall_f1": float(final_metrics.get("per_class_f1", [0]*8)[5]),  # 癫痫跌倒
+            "elderly_fall_f1": float(final_metrics.get("per_class_f1", [0]*8)[6]),     # 老人跌倒
             "ece": float(final_metrics.get("ece", 0.0))
         },
         "meta": make_json_serializable(meta)
@@ -612,11 +657,11 @@ def apply_temperature_scaling(model, loader, device, positive_class):
     probs_cal, t_opt = temperature_scaling(probs, labels)
     
     if probs_cal is not None and t_opt is not None:
-        metrics = compute_metrics(labels, probs_cal, num_classes=4, positive_class=positive_class)
+        metrics = compute_falling_metrics(labels, probs_cal, num_classes=8)  # 8-class fall detection
         metrics["temperature"] = t_opt
     else:
         probs = torch.softmax(torch.from_numpy(logits), dim=1).numpy()
-        metrics = compute_metrics(labels, probs, num_classes=4, positive_class=positive_class)
+        metrics = compute_falling_metrics(labels, probs, num_classes=8)  # 8-class fall detection
         metrics["temperature"] = 1.0
     
     # Add ECE
