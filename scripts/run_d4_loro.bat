@@ -35,6 +35,7 @@ if "%TRANSFER_METHODS%"=="" set TRANSFER_METHODS=zero_shot,linear_probe,fine_tun
 if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main\Data
 if "%D2_MODELS_PATH%"=="" set D2_MODELS_PATH=checkpoints\d2
 if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d4\sim2real
+if "%AMP%"=="" set AMP=0
 
 echo Experiment Configuration:
 echo   Model List: %MODELS%
@@ -124,11 +125,13 @@ for %%m in (%MODELS%) do (
                 set MODEL_FILE=
                 if exist "%D2_MODELS_PATH%\final_%%m_%%s_hard.pth" set MODEL_FILE=%D2_MODELS_PATH%\final_%%m_%%s_hard.pth
                 if "%MODEL_FILE%"=="" if exist "%D2_MODELS_PATH%\final_%%m_0_hard.pth" set MODEL_FILE=%D2_MODELS_PATH%\final_%%m_0_hard.pth
+                set AMP_FLAG=
+                if "%AMP%"=="1" set AMP_FLAG=--amp
                 if not "%MODEL_FILE%"=="" (
-                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
+                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 ) else (
                     echo [WARN] No D2 checkpoint found for model=%%m seed=%%s in %D2_MODELS_PATH%. Running from scratch.
-                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
+                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 )
                 
                 if !ERRORLEVEL! equ 0 (

@@ -36,6 +36,7 @@ if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d3\loso
 if "%FILES_PER_ACTIVITY%"=="" set FILES_PER_ACTIVITY=3
 if "%CLASS_WEIGHT%"=="" set CLASS_WEIGHT=inv_freq
 if "%LOSO_ALL_FOLDS%"=="" set LOSO_ALL_FOLDS=1
+if "%AMP%"=="" set AMP=0
 
 echo Experiment Configuration:
 echo   Model List: %MODELS%
@@ -112,7 +113,9 @@ for %%m in (%MODELS%) do (
         set OUTPUT_FILE=%OUTPUT_DIR%\loso_%%m_seed%%s.json
         set FOLDS_FLAG=
         if "%LOSO_ALL_FOLDS%"=="1" set FOLDS_FLAG=--loso_all_folds
-        python -m src.train_cross_domain --model %%m --seed %%s --epochs %EPOCHS% --protocol loso --benchmark_path "%BENCHMARK_PATH%" --files_per_activity %FILES_PER_ACTIVITY% --class_weight %CLASS_WEIGHT% %FOLDS_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
+        set AMP_FLAG=
+        if "%AMP%"=="1" set AMP_FLAG=--amp
+        python -m src.train_cross_domain --model %%m --seed %%s --epochs %EPOCHS% --protocol loso --benchmark_path "%BENCHMARK_PATH%" --files_per_activity %FILES_PER_ACTIVITY% --class_weight %CLASS_WEIGHT% %FOLDS_FLAG% %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
         
         if !ERRORLEVEL! equ 0 (
             set /a SUCCESS_CONFIGS+=1
