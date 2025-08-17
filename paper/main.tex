@@ -36,7 +36,7 @@ WiFi CSI, Human Activity Recognition, Synthetic Data Generation, Sim2Real Transf
 
 \section{Introduction}
 
-Human Activity Recognition (HAR) using WiFi Channel State Information (CSI) has emerged as a promising approach for ubiquitous sensing applications, offering device-free monitoring capabilities in smart homes, healthcare, and security systems~\cite{reference1}. Unlike traditional vision-based or wearable sensor approaches, WiFi CSI leverages the existing wireless infrastructure to detect human activities through signal perturbations caused by body movements, providing a privacy-preserving and unobtrusive sensing solution.
+Human Activity Recognition (HAR) using WiFi Channel State Information (CSI) has emerged as a promising approach for ubiquitous sensing applications, offering device-free monitoring capabilities in smart homes, healthcare, and security systems~\cite{csi_survey2019}. Unlike traditional vision-based or wearable sensor approaches, WiFi CSI leverages the existing wireless infrastructure to detect human activities through signal perturbations caused by body movements, providing a privacy-preserving and unobtrusive sensing solution.
 
 Recent advances in deep learning have significantly improved WiFi CSI HAR performance, with comprehensive evaluations provided by benchmark studies such as SenseFi~\cite{yang2023sensefi}, which systematically compared 11 deep learning models across 4 public datasets. However, despite these promising results, practical deployment of WiFi CSI HAR systems faces several critical challenges that limit their real-world applicability:
 
@@ -71,29 +71,29 @@ The remainder of this paper is organized as follows: Section II reviews related 
 
 \subsection{WiFi CSI Human Activity Recognition}
 
-WiFi CSI-based HAR has attracted significant research attention due to its non-intrusive nature and ubiquitous availability. Early works focused on feature engineering approaches~\cite{reference2}, extracting handcrafted features from CSI amplitude and phase information. With the advancement of deep learning, various neural network architectures have been explored for WiFi CSI HAR.
+WiFi CSI-based HAR has attracted significant research attention due to its non-intrusive nature and ubiquitous availability. Early works focused on feature engineering approaches~\cite{csi_basics2016}, extracting handcrafted features from CSI amplitude and phase information. With the advancement of deep learning, various neural network architectures have been explored for WiFi CSI HAR.
 
-\textbf{Deep Learning Approaches:} Convolutional Neural Networks (CNNs) have been widely adopted for spatial feature extraction from CSI data~\cite{reference3}. Recurrent Neural Networks (RNNs), particularly LSTM and BiLSTM variants, have shown effectiveness in modeling temporal dependencies in CSI sequences~\cite{reference4}. More recently, attention mechanisms and Transformer architectures have been explored for capturing long-range dependencies~\cite{reference5}.
+\textbf{Deep Learning Approaches:} Convolutional Neural Networks (CNNs) have been widely adopted for spatial feature extraction from CSI data~\cite{clnet2021}. Recurrent Neural Networks (RNNs), particularly LSTM and BiLSTM variants, have shown effectiveness in modeling temporal dependencies in CSI sequences~\cite{rewis2022}. More recently, attention mechanisms and Transformer architectures have been explored for capturing long-range dependencies~\cite{autofi2022}.
 
 \textbf{SenseFi Benchmark:} Yang et al.~\cite{yang2023sensefi} proposed SenseFi, the first comprehensive benchmark for deep learning-based WiFi human sensing, systematically evaluating 11 models (MLP, LeNet, ResNet variants, RNN, GRU, LSTM, BiLSTM, CNN+GRU, ViT) across 4 public datasets (UT-HAR, NTU-Fi-HAR, NTU-Fi-HumanID, Widar). Their study revealed significant performance variations across different models and datasets, highlighting the challenges of cross-domain generalization in WiFi CSI HAR. While SenseFi provides valuable insights into model performance on real data, it assumes the availability of sufficient labeled training data, which remains a significant limitation in practical deployments.
 
 \subsection{Cross-Domain Transfer Learning}
 
-Domain adaptation techniques have been explored to address the cross-environment deployment challenges in WiFi CSI HAR~\cite{reference6}. Approaches include feature alignment methods, adversarial training, and meta-learning techniques. However, these methods still require substantial amounts of data from both source and target domains.
+Domain adaptation techniques have been explored to address the cross-environment deployment challenges in WiFi CSI HAR~\cite{fewsense2022}. Wang et al.~\cite{fewsense2022} proposed FewSense for few-shot cross-domain learning, while~\cite{airfi2022} introduced AirFi for domain generalization. However, these methods still require substantial amounts of data from both source and target domains.
 
 \subsection{Synthetic Data Generation for Sensing Applications}
 
-\textbf{Traditional Simulation Approaches:} Early works in wireless sensing simulation focused on ray-tracing methods and channel modeling~\cite{reference7}. However, these approaches often lack the complexity needed to capture real-world variations and are computationally expensive.
+\textbf{Traditional Simulation Approaches:} Early works in wireless sensing simulation focused on ray-tracing methods and channel modeling~\cite{ray_tracing_wireless2000}. However, these approaches often lack the complexity needed to capture real-world variations and are computationally expensive.
 
-\textbf{Physics-Informed Machine Learning:} Recent advances in physics-informed neural networks (PINNs) have shown promise in incorporating physical constraints into machine learning models~\cite{reference8}. However, their application to WiFi CSI data generation remains largely unexplored.
+\textbf{Physics-Informed Machine Learning:} Recent advances in physics-informed neural networks (PINNs) have shown promise in incorporating physical constraints into machine learning models~\cite{pinn_karniadakis2021}. However, their application to WiFi CSI data generation remains largely unexplored.
 
-\textbf{Sim2Real Transfer Learning:} Simulation-to-reality transfer has been successfully applied in robotics~\cite{reference9} and autonomous driving~\cite{reference10}, demonstrating the potential of synthetic data for real-world applications. However, systematic Sim2Real studies in WiFi sensing are lacking.
+\textbf{Sim2Real Transfer Learning:} Simulation-to-reality transfer has been successfully applied in robotics~\cite{sim2real_robotics2017} and autonomous driving~\cite{sim2real_autonomous2019}, demonstrating the potential of synthetic data for real-world applications. However, systematic Sim2Real studies in WiFi sensing are lacking.
 
 \subsection{Trustworthy Machine Learning}
 
-\textbf{Model Calibration:} Modern neural networks often exhibit poor calibration, producing overconfident predictions~\cite{reference11}. Calibration techniques such as temperature scaling and Platt scaling have been developed to improve prediction reliability.
+\textbf{Model Calibration:} Modern neural networks often exhibit poor calibration, producing overconfident predictions~\cite{calibration_guo2017}. Calibration techniques such as temperature scaling~\cite{temperature_scaling2017} and Platt scaling have been developed to improve prediction reliability.
 
-\textbf{Uncertainty Quantification:} Bayesian approaches and ensemble methods have been explored for uncertainty estimation in deep learning models~\cite{reference12}. However, their application to WiFi CSI HAR has received limited attention.
+\textbf{Uncertainty Quantification:} Bayesian approaches and ensemble methods have been explored for uncertainty estimation in deep learning models~\cite{reliability_assessment2019}. However, their application to WiFi CSI HAR has received limited attention.
 
 \textbf{Research Gap:} While existing works have made significant progress in WiFi CSI HAR model development and benchmark evaluation, there remains a critical gap in addressing the fundamental data scarcity challenge through systematic synthetic data generation and Sim2Real transfer learning. Our work fills this gap by proposing a physics-guided approach that enables effective transfer from synthetic to real domains while maintaining trustworthy evaluation standards.
 
@@ -113,11 +113,11 @@ where $\mathbf{A}(f,t)$ represents the amplitude matrix and $\boldsymbol{\Phi}(f
 
 \subsection{Physics-Guided Generation Framework}
 
-Our synthetic data generation framework incorporates key physical phenomena that affect WiFi signal propagation in indoor environments:
+Our synthetic data generation framework incorporates key physical phenomena that affect WiFi signal propagation in indoor environments, following established wireless communication principles~\cite{goldsmith2005wireless}.
 
 \subsubsection{Multipath Propagation Model}
 
-Indoor WiFi signals experience complex multipath propagation due to reflections, diffractions, and scattering from walls, furniture, and other objects. We model the channel impulse response as:
+Indoor WiFi signals experience complex multipath propagation due to reflections, diffractions, and scattering from walls, furniture, and other objects~\cite{multipath_fading2003}. We model the channel impulse response as:
 
 \begin{equation}
 h(t) = \sum_{i=1}^{N_{paths}} \alpha_i(t) \delta(t - \tau_i(t))
@@ -129,7 +129,7 @@ where $\alpha_i(t)$ and $\tau_i(t)$ represent the complex amplitude and delay of
 
 Human activities cause time-varying perturbations to the wireless channel through:
 
-\textbf{Absorption and Scattering:} The human body acts as a dielectric obstacle, causing signal absorption and scattering. We model this effect using the Fresnel reflection coefficient:
+\textbf{Absorption and Scattering:} The human body acts as a dielectric obstacle, causing signal absorption and scattering. We model this effect using the Fresnel reflection coefficient~\cite{fresnel_reflection1995}:
 
 \begin{equation}
 \Gamma = \frac{\sqrt{\epsilon_r} - 1}{\sqrt{\epsilon_r} + 1}
@@ -193,7 +193,7 @@ Building upon our physics-guided synthetic data, we propose an enhanced deep lea
 
 \subsubsection{Squeeze-and-Excitation Enhanced BiLSTM}
 
-Our enhanced model integrates squeeze-and-excitation (SE) modules~\cite{reference13} with bidirectional LSTM layers to improve feature representation:
+Our enhanced model integrates squeeze-and-excitation (SE) modules~\cite{se_networks2018} with bidirectional LSTM layers to improve feature representation:
 
 \begin{equation}
 \mathbf{h}_t = \text{BiLSTM}(\mathbf{x}_t, \mathbf{h}_{t-1})
@@ -223,7 +223,7 @@ where $\mathbf{c}$ represents the context vector obtained through attention-weig
 
 \subsubsection{Calibration Analysis}
 
-We employ Expected Calibration Error (ECE) to assess model calibration:
+We employ Expected Calibration Error (ECE) to assess model calibration~\cite{calibration_guo2017}:
 
 \begin{equation}
 \text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{n} |\text{acc}(B_m) - \text{conf}(B_m)|
