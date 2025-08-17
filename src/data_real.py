@@ -16,8 +16,9 @@ class RealCSIDataset(Dataset):
 class BenchmarkCSIDataset:
     """WiFi CSI Benchmark Dataset Loader with LOSO/LORO Support"""
     
-    def __init__(self, benchmark_path: str = "benchmarks/WiFi-CSI-Sensing-Benchmark-main"):
+    def __init__(self, benchmark_path: str = "benchmarks/WiFi-CSI-Sensing-Benchmark-main", files_per_activity: int = 2):
         self.benchmark_path = Path(benchmark_path)
+        self.files_per_activity = int(files_per_activity)
         # Check for Data subdirectory (correct structure based on GitHub repo)
         if (self.benchmark_path / "Data").exists():
             self.data_path = self.benchmark_path / "Data"
@@ -152,7 +153,7 @@ class BenchmarkCSIDataset:
         
         # Load data from each activity (limit files per activity for balance)
         all_X, all_y, all_subjects, all_rooms = [], [], [], []
-        files_per_activity = 2  # Load 2 files per activity for testing
+        files_per_activity = max(1, int(self.files_per_activity))  # configurable
         
         # 8-class fall detection system labels
         activity_labels = {

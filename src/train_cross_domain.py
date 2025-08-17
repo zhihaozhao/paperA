@@ -317,6 +317,7 @@ def main():
     # Data parameters
     parser.add_argument("--benchmark_path", type=str, default="benchmarks/WiFi-CSI-Sensing-Benchmark-main", 
                        help="Path to WiFi CSI benchmark dataset")
+    parser.add_argument("--files_per_activity", type=int, default=2, help="Number of files to load per activity (for balance)")
     parser.add_argument("--output_dir", type=str, default="results", help="Output directory")
     
     # D4 Sim2Real specific parameters
@@ -328,6 +329,8 @@ def main():
     # Training parameters
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
     parser.add_argument("--batch_size", type=int, default=64, help="Batch size")
+    parser.add_argument("--class_weight", type=str, default="inv_freq", choices=["none", "inv_freq"], help="Loss class weighting strategy")
+    parser.add_argument("--loso_all_folds", action="store_true", help="Run LOSO across all subjects and aggregate")
     parser.add_argument("--positive_class", type=int, default=5, help="Positive class for AUPRC (Epileptic_Fall=5 in 8-class system)")
     
     # Legacy compatibility
@@ -368,18 +371,71 @@ def run_loso_experiment(args):
     from src.data_real import BenchmarkCSIDataset, get_real_loaders_loso
     
     logger.info(f"Loading WiFi CSI benchmark data from {args.benchmark_path}")
-    benchmark = BenchmarkCSIDataset(args.benchmark_path)
+    benchmark = BenchmarkCSIDataset(args.benchmark_path, files_per_activity=args.files_per_activity)
     
     try:
         X, y, subjects, rooms, metadata = benchmark.load_wifi_csi_benchmark()
         logger.info(f"Loaded benchmark: X.shape={X.shape}, y.shape={y.shape}, n_subjects={len(np.unique(subjects))}")
         
-        # For LOSO, we'll test on first subject as example (should iterate through all subjects)
-        test_subject = 0  # This should iterate through all subjects in full implementation
-        train_loader, test_loader = get_real_loaders_loso(X, y, subjects, test_subject, batch=args.batch_size)
-        val_loader = test_loader  # Use test as validation for now
-        
-        logger.info(f"LOSO split: test_subject={test_subject}, train_size={len(train_loader.dataset)}, test_size={len(test_loader.dataset)}")
+        # LOSO splits
+        from src.data_real import BenchmarkCSIDataset as _B
+        splits = benchmark.create_loso_splits(subjects)
+        logger.info(f"Found {len(splits)} LOSO folds")
+
+        def _compute_class_weights(y_train: np.ndarray, num_classes: int = 8) -> torch.Tensor:
+            if args.class_weight == "none":
+                return None
+            counts = np.bincount(y_train.astype(int), minlength=num_classes).astype(np.float32)
+            counts[counts == 0] = 1.0
+            inv = 1.0 / counts
+            weights = inv / inv.mean()
+            return torch.tensor(weights, dtype=torch.float32)
+
+        fold_metrics = []
+        if args.loso_all_folds:
+            for fold_id, (train_idx, test_idx) in enumerate(splits):
+                trX, trY = X[train_idx], y[train_idx]
+                teX, teY = X[test_idx], y[test_idx]
+                train_loader, test_loader = get_real_loaders_loso(X, y, subjects, np.unique(subjects)[fold_id], batch=args.batch_size)
+                val_loader = test_loader
+                class_w = _compute_class_weights(trY)
+
+                # Model per fold
+                x_sample, _ = next(iter(train_loader))
+                input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
+                model = get_model(args.model, input_dim=input_dim, num_classes=8).to(device)
+                best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args, class_weights=class_w)
+                fold_metrics.append(best_metrics)
+
+            # Aggregate
+            def _mean_of(key: str):
+                vals = [m.get(key, 0.0) for m in fold_metrics]
+                return float(np.mean(vals)) if vals else 0.0
+            best_metrics = {
+                "macro_f1": _mean_of("macro_f1"),
+                "falling_f1": _mean_of("falling_f1"),
+                "ece": _mean_of("ece"),
+                "falling_auprc": _mean_of("falling_auprc"),
+                "per_class_f1": np.mean([m.get("per_class_f1", [0]*8) for m in fold_metrics], axis=0).tolist(),
+            }
+            # Use last fold for overlap stat exemplar
+            overlap_stat = compute_overlap_stat(model, val_loader, device)
+        else:
+            # Quick single-fold: test first subject only
+            test_subject = 0
+            train_loader, test_loader = get_real_loaders_loso(X, y, subjects, test_subject, batch=args.batch_size)
+            val_loader = test_loader
+            logger.info(f"LOSO split: test_subject={test_subject}, train_size={len(train_loader.dataset)}, test_size={len(test_loader.dataset)}")
+
+            # Class weights from training labels
+            tr_idx = np.where(subjects != test_subject)[0]
+            class_w = _compute_class_weights(y[tr_idx])
+            # Model setup
+            x_sample, _ = next(iter(train_loader))
+            input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
+            model = get_model(args.model, input_dim=input_dim, num_classes=8).to(device)
+            best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args, class_weights=class_w)
+            overlap_stat = compute_overlap_stat(model, val_loader, device)
         
     except Exception as e:
         logger.warning(f"Failed to load benchmark data: {e}")
@@ -397,19 +453,8 @@ def run_loso_experiment(args):
             label_noise_prob=0.05  # Add label noise for realism
         )
     
-    # Model setup for 8-class fall detection system
-    x_sample, _ = next(iter(train_loader))
-    input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
-    
-    model = get_model(args.model, input_dim=input_dim, num_classes=8)  # 8-class fall detection
-    model = model.to(device)
-    
     # Training and evaluation (classes 5-7 are falling-related for binary fall detection)
     args.positive_class = 5  # Use epileptic_fall as primary falling class for AUPRC
-    best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
-    
-    # Compute overlap statistics
-    overlap_stat = compute_overlap_stat(model, val_loader, device)
     
     # Save results in D3 format
     results = {
@@ -426,7 +471,7 @@ def run_loso_experiment(args):
             "fall_cantgetup_f1": {"mean": float(best_metrics.get("per_class_f1", [0]*8)[7]), "std": 0.0},   # 类7: 跌倒起不来
             "mutual_misclass": {"mean": 0.0, "std": 0.0}  # TODO: Implement
         },
-        "fold_results": [make_json_serializable(best_metrics)],  # Single fold for now
+        "fold_results": [make_json_serializable(best_metrics)],
         "overlap_stat": make_json_serializable(overlap_stat),
         "meta": make_json_serializable(meta)
     }
@@ -603,10 +648,12 @@ def run_sim2real_experiment(args):
     logger.info(f"Sim2Real results saved to {args.out}")
     return results
 
-def train_and_evaluate(model, train_loader, val_loader, device, args):
+def train_and_evaluate(model, train_loader, val_loader, device, args, class_weights: torch.Tensor = None):
     """Common training and evaluation loop"""
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
-    criterion = torch.nn.CrossEntropyLoss()
+    if class_weights is not None:
+        class_weights = class_weights.to(device)
+    criterion = torch.nn.CrossEntropyLoss(weight=class_weights)
     
     best_val_f1 = 0.0
     best_metrics = {}
