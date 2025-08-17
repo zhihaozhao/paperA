@@ -1,90 +1,90 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: D3+D4 主控制脚本: Windows conda环境下的跨域实验
-:: D3: LOSO/LORO 跨域泛化实验 (跨主体/跨房间)
-:: D4: Sim2Real 标签效率评估实验 (合成到真实迁移)
-:: 支持环境自动检测: 远程GPU(base) vs 本地CPU(py310)
+:: D3+D4 Main Control Script: Cross-domain experiments on Windows conda environment
+:: D3: LOSO/LORO Cross-domain generalization experiments (cross-subject/cross-room)
+:: D4: Sim2Real Label efficiency evaluation (synthetic to real transfer)
+:: Supports auto environment detection: Remote GPU(base) vs Local CPU(py310)
 
 echo ====================================
-echo   WiFi CSI 跨域泛化实验 (D3+D4)
-echo   支持远程GPU和本地CPU环境
+echo   WiFi CSI Cross-Domain Experiments (D3+D4)
+echo   Supports Remote GPU and Local CPU environments
 echo ====================================
 
-:: 环境自动检测
+:: Auto environment detection
 if "%PYTHON_ENV%"=="" (
     if exist "D:\anaconda\python.exe" (
-        echo [检测] 远程GPU环境 - 使用conda base
+        echo [DETECTED] Remote GPU environment - using conda base
         set PYTHON_ENV=base
         set ENV_TYPE=remote_gpu
     ) else if exist "D:\workspace_AI\Anaconda3\envs\py310\python.exe" (
-        echo [检测] 本地CPU环境 - 使用conda py310
+        echo [DETECTED] Local CPU environment - using conda py310
         set PYTHON_ENV=py310
         set ENV_TYPE=local_cpu
     ) else (
-        echo [默认] 使用py310环境
+        echo [DEFAULT] Using py310 environment
         set PYTHON_ENV=py310
         set ENV_TYPE=default
     )
 )
 
-:: 设置默认参数
+:: Set default parameters
 if "%MODEL%"=="" set MODEL=enhanced
 if "%QUICK_MODE%"=="" set QUICK_MODE=0
 
-:: 显示配置
-echo 运行配置:
-echo   模型: %MODEL%
-echo   Python环境: %PYTHON_ENV% (%ENV_TYPE%)
-echo   快速模式: %QUICK_MODE%
+:: Display configuration
+echo Runtime Configuration:
+echo   Model: %MODEL%
+echo   Python Environment: %PYTHON_ENV% (%ENV_TYPE%)
+echo   Quick Mode: %QUICK_MODE%
 
-:: 激活conda环境
+:: Activate conda environment
 echo.
-echo [初始化] 激活conda环境 %PYTHON_ENV%...
+echo [INIT] Activating conda environment %PYTHON_ENV%...
 call conda activate %PYTHON_ENV%
 if %ERRORLEVEL% neq 0 (
-    echo [错误] 无法激活conda环境 %PYTHON_ENV%
+    echo [ERROR] Failed to activate conda environment %PYTHON_ENV%
     if "%ENV_TYPE%"=="remote_gpu" (
-        echo 远程GPU环境：请确保conda base环境可用
+        echo Remote GPU environment: Please ensure conda base environment is available
     ) else (
-        echo 本地CPU环境：请确保已安装conda并创建了py310环境
+        echo Local CPU environment: Please ensure conda is installed with py310 environment
     )
     pause
     exit /b 1
 )
 
-:: 验证Python环境
+:: Verify Python environment
 python --version 2>nul
 if %ERRORLEVEL% neq 0 (
-    echo [错误] Python不可用，请检查conda环境
+    echo [ERROR] Python is not available, please check conda environment
     pause
     exit /b 1
 )
 
-:: 切换到项目根目录
+:: Switch to project root directory
 cd /d "%~dp0\.."
-echo [信息] 项目根目录: %CD%
+echo [INFO] Project root directory: %CD%
 
-:: 验证项目结构
+:: Verify project structure
 if not exist "src\train_cross_domain.py" (
-    echo [错误] 找不到 src\train_cross_domain.py，请确保在正确的项目目录
+    echo [ERROR] Cannot find src\train_cross_domain.py, please ensure correct project directory
     pause
     exit /b 1
 )
 
 echo.
-echo [验证] Python模块导入测试...
-python -c "from src.train_cross_domain import main; from src.train_eval import main; print('模块导入成功')" 2>nul
+echo [VERIFY] Testing Python module imports...
+python -c "import src.train_cross_domain; print('Module import successful')" 2>nul
 if %ERRORLEVEL% neq 0 (
-    echo [错误] Python模块导入失败，请检查依赖安装
-    echo 建议运行: pip install numpy torch scikit-learn matplotlib pandas
+    echo [ERROR] Python module import failed, please check dependency installation
+    echo Suggestion: pip install numpy torch scikit-learn matplotlib pandas
     pause
     exit /b 1
 )
 
-:: 设置实验参数 (基于D3_D4实验计划)
+:: Set experiment parameters (based on D3_D4 experiment plan)
 if "%QUICK_MODE%"=="1" (
-    echo [快速模式] 使用较少轮数和种子进行测试
+    echo [QUICK MODE] Using reduced epochs and seeds for testing
     set D3_MODELS=enhanced,cnn
     set D3_EPOCHS=10
     set D3_SEEDS=0,1
@@ -93,7 +93,7 @@ if "%QUICK_MODE%"=="1" (
     set D4_LABEL_RATIOS=0.10,0.50,1.00
     set D4_TRANSFER_METHODS=zero_shot,fine_tune
 ) else (
-    echo [完整模式] 使用D3_D4实验计划的完整配置
+    echo [FULL MODE] Using complete D3_D4 experiment plan configuration
     set D3_MODELS=enhanced,cnn,bilstm,conformer_lite
     set D3_EPOCHS=100
     set D3_SEEDS=0,1,2,3,4
@@ -103,17 +103,17 @@ if "%QUICK_MODE%"=="1" (
     set D4_TRANSFER_METHODS=zero_shot,linear_probe,fine_tune,temp_scale
 )
 
-:: 询问用户要运行哪些实验
+:: Ask user which experiments to run
 echo.
-echo 请选择要运行的实验:
-echo [1] D3 LOSO (跨主体泛化)
-echo [2] D3 LORO (跨房间泛化)
-echo [3] D4 Sim2Real (标签效率)
-echo [4] D3全部 (LOSO + LORO)
-echo [5] 全部实验 (D3 + D4)
-echo [6] 退出
+echo Please select experiments to run:
+echo [1] D3 LOSO (Cross-Subject Generalization)
+echo [2] D3 LORO (Cross-Room Generalization)
+echo [3] D4 Sim2Real (Label Efficiency)
+echo [4] All D3 (LOSO + LORO)
+echo [5] All Experiments (D3 + D4)
+echo [6] Exit
 echo.
-set /p CHOICE=请输入选择 (1-6): 
+set /p CHOICE=Please enter choice (1-6): 
 
 if "%CHOICE%"=="1" goto :run_d3_loso
 if "%CHOICE%"=="2" goto :run_d3_loro
@@ -121,12 +121,12 @@ if "%CHOICE%"=="3" goto :run_d4_sim2real
 if "%CHOICE%"=="4" goto :run_d3_all
 if "%CHOICE%"=="5" goto :run_all
 if "%CHOICE%"=="6" goto :eof
-echo [错误] 无效选择，退出
+echo [ERROR] Invalid choice, exiting
 goto :eof
 
 :run_d3_loso
 echo.
-echo === 开始 D3 LOSO 跨主体实验 ===
+echo === Starting D3 LOSO Cross-Subject Experiments ===
 set MODELS=%D3_MODELS%
 set EPOCHS=%D3_EPOCHS%
 set SEEDS=%D3_SEEDS%
@@ -135,7 +135,7 @@ goto :finish
 
 :run_d3_loro
 echo.
-echo === 开始 D3 LORO 跨房间实验 ===
+echo === Starting D3 LORO Cross-Room Experiments ===
 set MODELS=%D3_MODELS%
 set EPOCHS=%D3_EPOCHS%
 set SEEDS=%D3_SEEDS%
@@ -144,7 +144,7 @@ goto :finish
 
 :run_d4_sim2real
 echo.
-echo === 开始 D4 Sim2Real 标签效率实验 ===
+echo === Starting D4 Sim2Real Label Efficiency Experiments ===
 set MODELS=%D4_MODELS%
 set SEEDS=%D4_SEEDS%
 call "%~dp0\run_d4_loro.bat"
@@ -152,52 +152,52 @@ goto :finish
 
 :run_d3_all
 echo.
-echo === 开始 D3 LOSO 跨主体实验 ===
+echo === Starting D3 LOSO Cross-Subject Experiments ===
 set MODELS=%D3_MODELS%
 set EPOCHS=%D3_EPOCHS%
 set SEEDS=%D3_SEEDS%
 call "%~dp0\run_d3_loso.bat"
 
 if %ERRORLEVEL% neq 0 (
-    echo [错误] D3 LOSO实验失败
+    echo [ERROR] D3 LOSO experiments failed
     goto :error_finish
 )
 
 echo.
-echo === 开始 D3 LORO 跨房间实验 ===
+echo === Starting D3 LORO Cross-Room Experiments ===
 call "%~dp0\run_d3_loro.bat"
 goto :finish
 
 :run_all
 echo.
-echo === 开始 D3 LOSO 跨主体实验 ===
+echo === Starting D3 LOSO Cross-Subject Experiments ===
 set MODELS=%D3_MODELS%
 set EPOCHS=%D3_EPOCHS%
 set SEEDS=%D3_SEEDS%
 call "%~dp0\run_d3_loso.bat"
 
 if %ERRORLEVEL% neq 0 (
-    echo [错误] D3 LOSO实验失败，跳过后续实验
+    echo [ERROR] D3 LOSO experiments failed, skipping subsequent experiments
     goto :error_finish
 )
 
 echo.
-echo === 开始 D3 LORO 跨房间实验 ===
+echo === Starting D3 LORO Cross-Room Experiments ===
 call "%~dp0\run_d3_loro.bat"
 
 if %ERRORLEVEL% neq 0 (
-    echo [错误] D3 LORO实验失败，跳过D4
+    echo [ERROR] D3 LORO experiments failed, skipping D4
     goto :error_finish
 )
 
 echo.
-echo === 开始 D4 Sim2Real 标签效率实验 ===
+echo === Starting D4 Sim2Real Label Efficiency Experiments ===
 set MODELS=%D4_MODELS%
 set SEEDS=%D4_SEEDS%
 call "%~dp0\run_d4_loro.bat"
 
 if %ERRORLEVEL% neq 0 (
-    echo [错误] D4实验失败
+    echo [ERROR] D4 experiments failed
     goto :error_finish
 )
 
@@ -206,18 +206,18 @@ goto :finish
 :finish
 echo.
 echo =====================================
-echo   所有选定实验已完成!
+echo   All Selected Experiments Completed!
 echo =====================================
 echo.
-echo 结果文件位置:
+echo Result file locations:
 if exist "results\d3\loso" echo   D3 LOSO: results\d3\loso\
 if exist "results\d3\loro" echo   D3 LORO: results\d3\loro\
 if exist "results\d4\sim2real" echo   D4 Sim2Real: results\d4\sim2real\
 echo.
-echo 您可以查看以下汇总文件:
-if exist "results\d3\loso\d3_loso_summary.json" echo   D3 LOSO汇总: results\d3\loso\d3_loso_summary.json
-if exist "results\d3\loro\d3_loro_summary.json" echo   D3 LORO汇总: results\d3\loro\d3_loro_summary.json
-if exist "results\d4\sim2real\d4_sim2real_summary.json" echo   D4 Sim2Real汇总: results\d4\sim2real\d4_sim2real_summary.json
+echo You can check the following summary files:
+if exist "results\d3\loso\d3_loso_summary.json" echo   D3 LOSO Summary: results\d3\loso\d3_loso_summary.json
+if exist "results\d3\loro\d3_loro_summary.json" echo   D3 LORO Summary: results\d3\loro\d3_loro_summary.json
+if exist "results\d4\sim2real\d4_sim2real_summary.json" echo   D4 Sim2Real Summary: results\d4\sim2real\d4_sim2real_summary.json
 echo.
 pause
 goto :eof
@@ -225,8 +225,8 @@ goto :eof
 :error_finish
 echo.
 echo =====================================
-echo   实验执行中出现错误!
+echo   Error occurred during experiments!
 echo =====================================
-echo 请检查上述错误信息并重新运行
+echo Please check the above error messages and re-run
 pause
 exit /b 1
