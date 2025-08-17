@@ -130,6 +130,71 @@ class BenchmarkCSIDataset:
                     self.subjects = data.get('subjects', np.arange(len(self.y)) % 10)
                     self.rooms = data.get('rooms', np.arange(len(self.y)) % 5)
                     
+                elif data_file.suffix == '.mat':
+                    # MATLAB file loading for WiFi CSI benchmark
+                    try:
+                        from scipy.io import loadmat
+                        mat_data = loadmat(data_file)
+                        print(f"[INFO] MAT keys available: {[k for k in mat_data.keys() if not k.startswith('__')]}")
+                        
+                        # Try common WiFi CSI variable names
+                        csi_data = None
+                        labels = None
+                        
+                        # Common CSI data key names
+                        for key in ['csi_data', 'data', 'X', 'csi', 'signal']:
+                            if key in mat_data:
+                                csi_data = mat_data[key]
+                                print(f"[INFO] Found CSI data with key: {key}, shape: {csi_data.shape}")
+                                break
+                                
+                        # Common label key names  
+                        for key in ['labels', 'y', 'target', 'class', 'activity']:
+                            if key in mat_data:
+                                labels = mat_data[key].flatten()  # Ensure 1D
+                                print(f"[INFO] Found labels with key: {key}, shape: {labels.shape}")
+                                break
+                        
+                        if csi_data is None or labels is None:
+                            print(f"[WARNING] Could not find CSI data or labels in {data_file}")
+                            continue
+                            
+                        # Ensure 3D format [N, T, F]
+                        if len(csi_data.shape) == 2:
+                            # [N, features] -> [N, T, F]
+                            N, total_features = csi_data.shape
+                            T = 128  # Default time steps
+                            F = total_features // T if total_features >= T else total_features
+                            if total_features >= T * F:
+                                self.X = csi_data[:, :T*F].reshape(N, T, F)
+                            else:
+                                print(f"[WARNING] Insufficient features in {data_file}: {total_features}")
+                                continue
+                        elif len(csi_data.shape) == 3:
+                            self.X = csi_data  # Already in correct format
+                        else:
+                            print(f"[WARNING] Unexpected CSI data shape in {data_file}: {csi_data.shape}")
+                            continue
+                            
+                        self.y = labels
+                        
+                        # Try to extract subject/room info from filename or mat file
+                        self.subjects = mat_data.get('subjects', np.arange(len(self.y)) % 10)
+                        self.rooms = mat_data.get('rooms', np.arange(len(self.y)) % 5)
+                        
+                        # If subjects/rooms are not 1D, flatten them
+                        if hasattr(self.subjects, 'flatten'):
+                            self.subjects = self.subjects.flatten()
+                        if hasattr(self.rooms, 'flatten'):
+                            self.rooms = self.rooms.flatten()
+                            
+                    except ImportError:
+                        print(f"[ERROR] scipy not available for .mat files, skipping {data_file}")
+                        continue
+                    except Exception as e:
+                        print(f"[ERROR] Failed to load .mat file {data_file}: {e}")
+                        continue
+                        
                 elif data_file.suffix == '.csv':
                     # Simple CSV loading (basic implementation)
                     import pandas as pd

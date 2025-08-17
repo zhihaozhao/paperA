@@ -345,21 +345,35 @@ def run_loso_experiment(args):
     # Compute overlap statistics
     overlap_stat = compute_overlap_stat(model, val_loader, device)
     
+    # Convert all values to JSON-serializable format
+    def make_json_serializable(obj):
+        """Convert numpy/torch objects to JSON-serializable Python types"""
+        if hasattr(obj, 'item'):  # Single numpy/torch scalar
+            return obj.item()
+        elif hasattr(obj, 'tolist'):  # numpy array
+            return obj.tolist()
+        elif isinstance(obj, dict):
+            return {k: make_json_serializable(v) for k, v in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [make_json_serializable(v) for v in obj]
+        else:
+            return obj
+    
     # Save results in D3 format
     results = {
         "protocol": "LOSO",
         "model": args.model,
-        "seed": args.seed,
+        "seed": int(args.seed),
         "aggregate_stats": {
-            "macro_f1": {"mean": best_metrics.get("macro_f1", 0.0), "std": 0.0},
-            "falling_f1": {"mean": best_metrics.get("f1_fall", 0.0), "std": 0.0},
-            "ece": {"mean": best_metrics.get("ece", 0.0), "std": 0.0},
-            "auprc_falling": {"mean": best_metrics.get("auprc", 0.0), "std": 0.0},
+            "macro_f1": {"mean": float(best_metrics.get("macro_f1", 0.0)), "std": 0.0},
+            "falling_f1": {"mean": float(best_metrics.get("f1_fall", 0.0)), "std": 0.0},
+            "ece": {"mean": float(best_metrics.get("ece", 0.0)), "std": 0.0},
+            "auprc_falling": {"mean": float(best_metrics.get("auprc", 0.0)), "std": 0.0},
             "mutual_misclass": {"mean": 0.0, "std": 0.0}  # TODO: Implement
         },
-        "fold_results": [best_metrics],  # Single fold for now
-        "overlap_stat": overlap_stat,
-        "meta": meta
+        "fold_results": [make_json_serializable(best_metrics)],  # Single fold for now
+        "overlap_stat": make_json_serializable(overlap_stat),
+        "meta": make_json_serializable(meta)
     }
     
     with open(args.out, "w", encoding="utf-8") as f:
@@ -424,21 +438,35 @@ def run_loro_experiment(args):
     best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
     overlap_stat = compute_overlap_stat(model, val_loader, device)
     
+    # Convert all values to JSON-serializable format
+    def make_json_serializable(obj):
+        """Convert numpy/torch objects to JSON-serializable Python types"""
+        if hasattr(obj, 'item'):  # Single numpy/torch scalar
+            return obj.item()
+        elif hasattr(obj, 'tolist'):  # numpy array
+            return obj.tolist()
+        elif isinstance(obj, dict):
+            return {k: make_json_serializable(v) for k, v in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [make_json_serializable(v) for v in obj]
+        else:
+            return obj
+    
     # Save results in D3 format
     results = {
         "protocol": "LORO",
         "model": args.model,
-        "seed": args.seed,
+        "seed": int(args.seed),
         "aggregate_stats": {
-            "macro_f1": {"mean": best_metrics.get("macro_f1", 0.0), "std": 0.0},
-            "falling_f1": {"mean": best_metrics.get("f1_fall", 0.0), "std": 0.0},
-            "ece": {"mean": best_metrics.get("ece", 0.0), "std": 0.0},
-            "auprc_falling": {"mean": best_metrics.get("auprc", 0.0), "std": 0.0},
+            "macro_f1": {"mean": float(best_metrics.get("macro_f1", 0.0)), "std": 0.0},
+            "falling_f1": {"mean": float(best_metrics.get("f1_fall", 0.0)), "std": 0.0},
+            "ece": {"mean": float(best_metrics.get("ece", 0.0)), "std": 0.0},
+            "auprc_falling": {"mean": float(best_metrics.get("auprc", 0.0)), "std": 0.0},
             "mutual_misclass": {"mean": 0.0, "std": 0.0}
         },
-        "fold_results": [best_metrics],
-        "overlap_stat": overlap_stat,
-        "meta": meta
+        "fold_results": [make_json_serializable(best_metrics)],
+        "overlap_stat": make_json_serializable(overlap_stat),
+        "meta": make_json_serializable(meta)
     }
     
     with open(args.out, "w", encoding="utf-8") as f:
@@ -501,24 +529,38 @@ def run_sim2real_experiment(args):
         # Fine-tuning or linear probe with limited labels
         final_metrics = transfer_learning(model, test_loader, device, args)
     
+    # Convert all values to JSON-serializable format
+    def make_json_serializable(obj):
+        """Convert numpy/torch objects to JSON-serializable Python types"""
+        if hasattr(obj, 'item'):  # Single numpy/torch scalar
+            return obj.item()
+        elif hasattr(obj, 'tolist'):  # numpy array
+            return obj.tolist()
+        elif isinstance(obj, dict):
+            return {k: make_json_serializable(v) for k, v in obj.items()}
+        elif isinstance(obj, (list, tuple)):
+            return [make_json_serializable(v) for v in obj]
+        else:
+            return obj
+    
     # Save D4 format results
     results = {
         "protocol": "Sim2Real",
         "model": args.model,
-        "seed": args.seed,
-        "label_ratio": args.label_ratio,
+        "seed": int(args.seed),
+        "label_ratio": float(args.label_ratio),
         "transfer_method": args.transfer_method,
         "zero_shot_metrics": {
-            "macro_f1": zero_shot_metrics.get("macro_f1", 0.0),
-            "falling_f1": zero_shot_metrics.get("f1_fall", 0.0),
-            "ece": zero_shot_metrics.get("ece", 0.0)
+            "macro_f1": float(zero_shot_metrics.get("macro_f1", 0.0)),
+            "falling_f1": float(zero_shot_metrics.get("f1_fall", 0.0)),
+            "ece": float(zero_shot_metrics.get("ece", 0.0))
         },
         "target_metrics": {
-            "macro_f1": final_metrics.get("macro_f1", 0.0),
-            "falling_f1": final_metrics.get("f1_fall", 0.0),
-            "ece": final_metrics.get("ece", 0.0)
+            "macro_f1": float(final_metrics.get("macro_f1", 0.0)),
+            "falling_f1": float(final_metrics.get("f1_fall", 0.0)),
+            "ece": float(final_metrics.get("ece", 0.0))
         },
-        "meta": meta
+        "meta": make_json_serializable(meta)
     }
     
     with open(args.out, "w", encoding="utf-8") as f:
