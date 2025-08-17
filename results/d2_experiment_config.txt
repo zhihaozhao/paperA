@@ -1,0 +1,26 @@
+
+D2 Experimental Configuration
+===========================
+
+Scale:
+- Total Experiments: 405
+- Models Evaluated: 3 (Enhanced, CNN, BiLSTM)
+- Parameter Combinations: 27
+- Seeds per Configuration: 5 (0, 1, 2, 3, 4)
+
+Parameter Grid:
+- Class Overlap: [0.0, 0.4, 0.8]
+- Environmental Burst Rate: [0.0, 0.1, 0.2] 
+- Label Noise Probability: [0.0, 0.05, 0.1]
+
+Training Configuration:
+- Batch Size: 768
+- Optimizer: Adam (lr=1e-3)
+- Early Stopping: Patience=10 on validation macro-F1
+- Epochs: Up to 100
+- Hardware: NVIDIA GPU with mixed precision
+
+Evaluation Metrics:
+- Primary: Macro F1, Falling F1
+- Calibration: ECE (raw and temperature-scaled), NLL, Brier Score
+- Robustness: Mutual misclassification, parameter sensitivity

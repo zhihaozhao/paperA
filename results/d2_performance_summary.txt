@@ -1,0 +1,15 @@
+
+D2 Synthetic Validation Summary:
+- Total experiments: 405 
+- Models evaluated: 3
+- Parameter combinations: 27
+
+Overall Performance:
+- Macro F1: 0.939±0.092
+- Falling F1: 0.939±0.092
+- ECE improvement: 35.9%
+
+Enhanced Model Advantages:
+- Outperforms baselines by 1.7% in falling detection
+- Consistent performance across 27 parameter combinations
+- Superior calibration after temperature scaling
