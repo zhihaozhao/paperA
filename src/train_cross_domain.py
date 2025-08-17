@@ -334,6 +334,7 @@ def main():
     parser.add_argument("--batch_size", type=int, default=64, help="Batch size")
     parser.add_argument("--class_weight", type=str, default="inv_freq", choices=["none", "inv_freq"], help="Loss class weighting strategy")
     parser.add_argument("--loso_all_folds", action="store_true", help="Run LOSO across all subjects and aggregate")
+    parser.add_argument("--loro_all_folds", action="store_true", help="Run LORO across all rooms and aggregate")
     parser.add_argument("--positive_class", type=int, default=5, help="Positive class for AUPRC (Epileptic_Fall=5 in 8-class system)")
     
     # Legacy compatibility
@@ -503,18 +504,68 @@ def run_loro_experiment(args):
     from src.data_real import BenchmarkCSIDataset, get_real_loaders_loro
     
     logger.info(f"Loading WiFi CSI benchmark data from {args.benchmark_path}")
-    benchmark = BenchmarkCSIDataset(args.benchmark_path)
+    benchmark = BenchmarkCSIDataset(args.benchmark_path, files_per_activity=args.files_per_activity)
     
     try:
         X, y, subjects, rooms, metadata = benchmark.load_wifi_csi_benchmark()
         logger.info(f"Loaded benchmark: X.shape={X.shape}, y.shape={y.shape}, n_rooms={len(np.unique(rooms))}")
         
-        # For LORO, we'll test on first room as example (should iterate through all rooms)
-        test_room = 0  # This should iterate through all rooms in full implementation
-        train_loader, test_loader = get_real_loaders_loro(X, y, rooms, test_room, batch=args.batch_size)
-        val_loader = test_loader  # Use test as validation for now
-        
-        logger.info(f"LORO split: test_room={test_room}, train_size={len(train_loader.dataset)}, test_size={len(test_loader.dataset)}")
+        # LORO splits
+        splits = benchmark.create_loro_splits(rooms)
+        logger.info(f"Found {len(splits)} LORO folds")
+
+        def _compute_class_weights(y_train: np.ndarray, num_classes: int = 8) -> torch.Tensor:
+            if args.class_weight == "none":
+                return None
+            counts = np.bincount(y_train.astype(int), minlength=num_classes).astype(np.float32)
+            counts[counts == 0] = 1.0
+            inv = 1.0 / counts
+            weights = inv / inv.mean()
+            return torch.tensor(weights, dtype=torch.float32)
+
+        fold_metrics = []
+        if args.loro_all_folds:
+            unique_rooms = np.unique(rooms)
+            for fold_id, (train_idx, test_idx) in enumerate(splits):
+                trX, trY = X[train_idx], y[train_idx]
+                # Build loaders for this fold
+                test_room = unique_rooms[fold_id]
+                train_loader, test_loader = get_real_loaders_loro(X, y, rooms, test_room, batch=args.batch_size)
+                val_loader = test_loader
+                class_w = _compute_class_weights(trY)
+
+                x_sample, _ = next(iter(train_loader))
+                input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
+                model = get_model(args.model, input_dim=input_dim, num_classes=8).to(device)
+                best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args, class_weights=class_w)
+                fold_metrics.append(best_metrics)
+
+            # Aggregate
+            def _mean_of(key: str):
+                vals = [m.get(key, 0.0) for m in fold_metrics]
+                return float(np.mean(vals)) if vals else 0.0
+            best_metrics = {
+                "macro_f1": _mean_of("macro_f1"),
+                "falling_f1": _mean_of("falling_f1"),
+                "ece": _mean_of("ece"),
+                "falling_auprc": _mean_of("falling_auprc"),
+                "per_class_f1": np.mean([m.get("per_class_f1", [0]*8) for m in fold_metrics], axis=0).tolist(),
+            }
+            overlap_stat = compute_overlap_stat(model, val_loader, device)
+        else:
+            # Quick single-fold: test first room only
+            test_room = 0
+            train_loader, test_loader = get_real_loaders_loro(X, y, rooms, test_room, batch=args.batch_size)
+            val_loader = test_loader
+            logger.info(f"LORO split: test_room={test_room}, train_size={len(train_loader.dataset)}, test_size={len(test_loader.dataset)}")
+
+            tr_idx = np.where(rooms != test_room)[0]
+            class_w = _compute_class_weights(y[tr_idx])
+            x_sample, _ = next(iter(train_loader))
+            input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
+            model = get_model(args.model, input_dim=input_dim, num_classes=8).to(device)
+            best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args, class_weights=class_w)
+            overlap_stat = compute_overlap_stat(model, val_loader, device)
         
     except Exception as e:
         logger.warning(f"Failed to load benchmark data: {e}")

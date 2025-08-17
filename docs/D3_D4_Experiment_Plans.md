@@ -26,6 +26,29 @@ Validate model robustness across subjects and environments using real WiFi CSI b
 - `--loso_all_folds`: 跑完整 LOSO 全折并聚合
 - 其他：`--epochs, --batch_size, --lr, --benchmark_path`
 
+### D3/D4 验收与导出命令
+
+#### D3 验收
+```powershell
+python scripts\validate_d3_acceptance.py --root results --out_dir results\metrics --save_report docs\d3_acceptance_report.md
+```
+
+#### D2 验收（参考）
+```powershell
+python scripts\validate_d2_acceptance.py --results-dir results_gpu\d2 --save-report docs\d2_acceptance_report.md
+```
+
+#### D4 运行（Windows 总控）
+```cmd
+scripts\run_d3_d4_windows.bat
+```
+
+#### D4 验收与曲线导出
+```powershell
+python scripts\validate_d4_acceptance.py --root results\d4 --out_dir results\metrics --save_report docs\d4_acceptance_report.md
+python scripts\export_d4_curves.py --root results\d4 --out_dir results\metrics
+```
+
 ### D3.2 Experimental Grid
 ```
 Total Configurations: 4 models × 2 protocols × N_subjects × 5 seeds
