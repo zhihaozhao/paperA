@@ -65,6 +65,10 @@ if %ERRORLEVEL% neq 0 (
 cd /d "%~dp0\.."
 echo [INFO] Project root directory: %CD%
 
+:: Set PYTHONPATH to include project root
+set PYTHONPATH=%CD%;%PYTHONPATH%
+echo [INFO] PYTHONPATH set to: %CD%
+
 :: Check D2 pre-trained models
 if not exist "%D2_MODELS_PATH%" (
     echo [WARNING] D2 pre-trained models not found: %D2_MODELS_PATH%
@@ -116,7 +120,7 @@ for %%m in (%MODELS%) do (
                 echo [EXPERIMENT !TOTAL_CONFIGS!] Model: %%m, Ratio: %%r, Method: %%t, Seed: %%s
                 
                 :: Run single Sim2Real experiment
-                python src\sim2real.py --model %%m --seed %%s --label_ratio %%r --transfer_method %%t --d2_model_path "%D2_MODELS_PATH%" --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%"
+                python -m src.sim2real --model %%m --seed %%s --label_ratio %%r --transfer_method %%t --d2_model_path "%D2_MODELS_PATH%" --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%"
                 
                 if !ERRORLEVEL! equ 0 (
                     set /a SUCCESS_CONFIGS+=1

@@ -65,6 +65,10 @@ if %ERRORLEVEL% neq 0 (
 cd /d "%~dp0\.."
 echo [INFO] Project root directory: %CD%
 
+:: Set PYTHONPATH to include project root
+set PYTHONPATH=%CD%;%PYTHONPATH%
+echo [INFO] PYTHONPATH set to: %CD%
+
 :: Verify project structure
 if not exist "src\train_cross_domain.py" (
     echo [ERROR] Cannot find src\train_cross_domain.py, please ensure correct project directory

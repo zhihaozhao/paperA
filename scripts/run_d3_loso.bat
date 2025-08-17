@@ -61,6 +61,10 @@ if %ERRORLEVEL% neq 0 (
 cd /d "%~dp0\.."
 echo [INFO] Project root directory: %CD%
 
+:: Set PYTHONPATH to include project root
+set PYTHONPATH=%CD%;%PYTHONPATH%
+echo [INFO] PYTHONPATH set to: %CD%
+
 :: Check benchmark dataset
 if not exist "%BENCHMARK_PATH%" (
     echo [WARNING] Benchmark dataset not found: %BENCHMARK_PATH%
@@ -102,7 +106,7 @@ for %%m in (%MODELS%) do (
         echo [EXPERIMENT !TOTAL_CONFIGS!] Model: %%m, Seed: %%s, Protocol: loso
         
         :: Run single experiment
-        python src\train_cross_domain.py --model %%m --seed %%s --epochs %EPOCHS% --protocol loso --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%"
+        python -m src.train_cross_domain --model %%m --seed %%s --epochs %EPOCHS% --protocol loso --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%"
         
         if !ERRORLEVEL! equ 0 (
             set /a SUCCESS_CONFIGS+=1
