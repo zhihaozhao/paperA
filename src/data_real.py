@@ -65,10 +65,28 @@ class BenchmarkCSIDataset:
                 key = hashlib.md5(key_src.encode("utf-8")).hexdigest()[:12]
                 cache_path = self.cache_dir / f"bench_{key}.npz"
                 np.savez_compressed(cache_path, X=self.X, y=self.y, subjects=self.subjects, rooms=self.rooms)
-                (self.cache_dir / f"bench_{key}.meta.json").write_text(json.dumps(self.metadata), encoding='utf-8')
+                # Make metadata JSON-serializable (numpy -> list/int/float)
+                def _to_jsonable(obj):
+                    try:
+                        import numpy as _np
+                        if isinstance(obj, _np.ndarray):
+                            return obj.tolist()
+                        if isinstance(obj, (_np.integer,)):
+                            return int(obj)
+                        if isinstance(obj, (_np.floating,)):
+                            return float(obj)
+                    except Exception:
+                        pass
+                    if isinstance(obj, dict):
+                        return {k: _to_jsonable(v) for k, v in obj.items()}
+                    if isinstance(obj, (list, tuple)):
+                        return [_to_jsonable(v) for v in obj]
+                    return obj
+                meta_json = _to_jsonable(self.metadata)
+                (self.cache_dir / f"bench_{key}.meta.json").write_text(json.dumps(meta_json), encoding='utf-8')
                 print(f"[INFO] Real benchmark cached to {cache_path}")
-            except Exception as _:
-                print("[WARNING] Failed to save real benchmark cache")
+            except Exception as e:
+                print(f"[WARNING] Failed to save real benchmark cache: {e}")
         return X, y, subjects, rooms, metadata
     
     def _load_multiclass_data(self):
