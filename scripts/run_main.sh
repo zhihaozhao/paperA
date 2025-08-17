@@ -5,7 +5,7 @@ export PYTHONPATH=.
 #   ENTRY="-m src.train_eval" or default to "src/train_eval.py"
 #   N/T/F/DIFF/SEED/POS_CLS environment variables
 
-PYTHON_BIN=${PYTHON_BIN:-python}
+PYTHON_BIN=${PYTHON_BIN:-python3}
 ENTRY=${ENTRY:-src/train_eval.py}
 N=${N:-2000}
 T=${T:-128}
