@@ -249,6 +249,7 @@ def cross_domain_train(args):
     
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
+    os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
     
@@ -477,6 +478,7 @@ def run_loso_experiment(args):
         "meta": make_json_serializable(meta)
     }
     
+    os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
     
