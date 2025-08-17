@@ -5,6 +5,7 @@ import os
 import json
 from pathlib import Path
 from typing import Tuple, List, Dict, Optional
+import hashlib
 
 class RealCSIDataset(Dataset):
     def __init__(self, X, y, metadata=None):
@@ -14,11 +15,14 @@ class RealCSIDataset(Dataset):
     def __getitem__(self, i): return torch.from_numpy(self.X[i]), int(self.y[i])
 
 class BenchmarkCSIDataset:
-    """WiFi CSI Benchmark Dataset Loader with LOSO/LORO Support"""
+    """WiFi CSI Benchmark Dataset Loader with LOSO/LORO Support and optional caching"""
     
-    def __init__(self, benchmark_path: str = "benchmarks/WiFi-CSI-Sensing-Benchmark-main", files_per_activity: int = 2):
+    def __init__(self, benchmark_path: str = "benchmarks/WiFi-CSI-Sensing-Benchmark-main", files_per_activity: int = 2,
+                 cache_dir: str = "cache/real_benchmark", use_cache: bool = True):
         self.benchmark_path = Path(benchmark_path)
         self.files_per_activity = int(files_per_activity)
+        self.cache_dir = Path(cache_dir)
+        self.use_cache = bool(use_cache)
         # Check for Data subdirectory (correct structure based on GitHub repo)
         if (self.benchmark_path / "Data").exists():
             self.data_path = self.benchmark_path / "Data"
@@ -35,7 +39,37 @@ class BenchmarkCSIDataset:
         Load WiFi CSI benchmark dataset from multiple activity files
         Returns: X, y, subjects, rooms, metadata
         """
-        return self._load_multiclass_data()
+        # Try cache first
+        if self.use_cache:
+            key_src = f"path={str(self.benchmark_path.resolve())}|fpa={self.files_per_activity}"
+            key = hashlib.md5(key_src.encode("utf-8")).hexdigest()[:12]
+            cache_path = self.cache_dir / f"bench_{key}.npz"
+            if cache_path.exists():
+                try:
+                    print(f"[INFO] Loading cached real benchmark: {cache_path}")
+                    data = np.load(cache_path, allow_pickle=False)
+                    self.X = data['X']
+                    self.y = data['y']
+                    self.subjects = data['subjects']
+                    self.rooms = data['rooms']
+                    self.metadata = json.loads((self.cache_dir / f"bench_{key}.meta.json").read_text(encoding='utf-8')) if (self.cache_dir / f"bench_{key}.meta.json").exists() else {}
+                    return self.X, self.y, self.subjects, self.rooms, self.metadata
+                except Exception as _:
+                    print("[WARNING] Failed to load real benchmark cache; rebuilding...")
+        # Build fresh
+        X, y, subjects, rooms, metadata = self._load_multiclass_data()
+        if self.use_cache:
+            try:
+                self.cache_dir.mkdir(parents=True, exist_ok=True)
+                key_src = f"path={str(self.benchmark_path.resolve())}|fpa={self.files_per_activity}"
+                key = hashlib.md5(key_src.encode("utf-8")).hexdigest()[:12]
+                cache_path = self.cache_dir / f"bench_{key}.npz"
+                np.savez_compressed(cache_path, X=self.X, y=self.y, subjects=self.subjects, rooms=self.rooms)
+                (self.cache_dir / f"bench_{key}.meta.json").write_text(json.dumps(self.metadata), encoding='utf-8')
+                print(f"[INFO] Real benchmark cached to {cache_path}")
+            except Exception as _:
+                print("[WARNING] Failed to save real benchmark cache")
+        return X, y, subjects, rooms, metadata
     
     def _load_multiclass_data(self):
         """Load balanced multi-class data from multiple activity files"""
