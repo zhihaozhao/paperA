@@ -335,6 +335,8 @@ def main():
     parser.add_argument("--batch_size", type=int, default=64, help="Batch size")
     parser.add_argument("--class_weight", type=str, default="inv_freq", choices=["none", "inv_freq"], help="Loss class weighting strategy")
     parser.add_argument("--loso_all_folds", action="store_true", help="Run LOSO across all subjects and aggregate")
+    parser.add_argument("--patience", type=int, default=10, help="Early stopping patience (epochs without improvement)")
+    parser.add_argument("--min_epochs", type=int, default=20, help="Minimum epochs before early stopping")
     parser.add_argument("--loro_all_folds", action="store_true", help="Run LORO across all rooms and aggregate")
     parser.add_argument("--positive_class", type=int, default=5, help="Positive class for AUPRC (Epileptic_Fall=5 in 8-class system)")
     
@@ -721,6 +723,7 @@ def train_and_evaluate(model, train_loader, val_loader, device, args, class_weig
     
     best_val_f1 = 0.0
     best_metrics = {}
+    epochs_without_improve = 0
     
     for epoch in range(args.epochs):
         # Training
@@ -744,9 +747,16 @@ def train_and_evaluate(model, train_loader, val_loader, device, args, class_weig
         if val_metrics["macro_f1"] > best_val_f1:
             best_val_f1 = val_metrics["macro_f1"]
             best_metrics = val_metrics.copy()
+            epochs_without_improve = 0
+        else:
+            epochs_without_improve += 1
         
         if (epoch + 1) % 10 == 0:
             print(f"Epoch {epoch+1}/{args.epochs}: Loss={train_loss/len(train_loader):.4f}, F1={val_metrics['macro_f1']:.4f}")
+
+        # Early stopping
+        if (epoch + 1) >= int(getattr(args, 'min_epochs', 0)) and epochs_without_improve >= int(getattr(args, 'patience', 0)):
+            break
     
     return best_metrics
 
