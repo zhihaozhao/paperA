@@ -203,6 +203,11 @@ def cross_domain_train(args):
     best_val_f1 = 0.0
     best_metrics = {}
     
+    use_amp = bool(getattr(args, 'amp', False)) and torch.cuda.is_available()
+    if use_amp:
+        from torch.cuda.amp import autocast, GradScaler
+        scaler = GradScaler()
+
     for epoch in range(args.epochs):
         # Train
         model.train()
@@ -211,11 +216,20 @@ def cross_domain_train(args):
             batch_x, batch_y = batch_x.to(device), batch_y.to(device)
             
             optimizer.zero_grad()
-            output = model(batch_x)
-            logits = output[0] if isinstance(output, tuple) else output
-            loss = criterion(logits, batch_y)
-            loss.backward()
-            optimizer.step()
+            if use_amp:
+                with autocast():
+                    output = model(batch_x)
+                    logits = output[0] if isinstance(output, tuple) else output
+                    loss = criterion(logits, batch_y)
+                scaler.scale(loss).backward()
+                scaler.step(optimizer)
+                scaler.update()
+            else:
+                output = model(batch_x)
+                logits = output[0] if isinstance(output, tuple) else output
+                loss = criterion(logits, batch_y)
+                loss.backward()
+                optimizer.step()
             
             train_loss += loss.item()
         
@@ -339,6 +353,7 @@ def main():
     parser.add_argument("--min_epochs", type=int, default=20, help="Minimum epochs before early stopping")
     parser.add_argument("--loro_all_folds", action="store_true", help="Run LORO across all rooms and aggregate")
     parser.add_argument("--positive_class", type=int, default=5, help="Positive class for AUPRC (Epileptic_Fall=5 in 8-class system)")
+    parser.add_argument("--amp", action="store_true", help="Enable CUDA AMP for faster training if available")
     
     # Legacy compatibility
     parser.add_argument("--source", type=str, default="synth", help="Source domain (legacy)")
