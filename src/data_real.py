@@ -267,30 +267,26 @@ class BenchmarkCSIDataset:
                         break
                         
             elif data_file.suffix == '.csv':
-                # Load .csv files (UT-HAR dataset)
+                # Load .csv files (UT-HAR dataset). Handle potential non-UTF8 encodings
                 import pandas as pd
-                df = pd.read_csv(data_file)
-                
+                df = None
+                for enc in ["utf-8", "latin1", "iso-8859-1", "cp1252"]:
+                    try:
+                        df = pd.read_csv(data_file, encoding=enc, engine="python", on_bad_lines="skip")
+                        break
+                    except Exception:
+                        df = None
+                if df is None:
+                    print(f"[ERROR] Failed to read CSV with common encodings: {data_file}")
+                    return False
                 if len(df.columns) >= 2:
-                    # UT-HAR format: features + label in last column
-                    feature_data = df.iloc[:, :-1].values  # All columns except last
-                    file_labels = df.iloc[:, -1].values    # Last column as labels
-                    
-                    # Convert UT-HAR labels to our 8-class system
-                    ut_har_to_8class = {
-                        'lie down': 7,    # Fall can't get up
-                        'fall': 6,        # Elderly fall (default)
-                        'walk': 0,        # Normal walking
-                        'pickup': 3,      # Punching (aggressive motion)
-                        'run': 0,         # Normal walking
-                        'sit down': 0,    # Normal activity
-                        'stand up': 0     # Normal activity
-                    }
-                    
-                    # Map labels and create CSI data
-                    csi_data = feature_data
-                    
-                    print(f"[INFO] UT-HAR CSV data: {csi_data.shape}, original labels: {np.unique(file_labels)}")
+                    # UT-HAR format: features + label in last column (best-effort)
+                    feature_data = df.iloc[:, :-1].to_numpy()
+                    file_labels = df.iloc[:, -1].to_numpy()
+                    # Map labels if textual, else keep numeric
+                    # Note: We keep label mapping placeholder here; actual mapping can be refined per dataset
+                    csi_data = feature_data.astype(np.float32, copy=False)
+                    print(f"[INFO] UT-HAR CSV data: {csi_data.shape}")
                     
             if csi_data is None:
                 return False
