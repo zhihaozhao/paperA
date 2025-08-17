@@ -650,6 +650,14 @@ def run_sim2real_experiment(args):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     set_seed(args.seed)
     
+    # Load REAL dataset first to infer input dims and ensure no fallback
+    from src.data_real import BenchmarkCSIDataset, RealCSIDataset
+    bench = BenchmarkCSIDataset(args.benchmark_path, files_per_activity=int(getattr(args, 'files_per_activity', 2)))
+    X, y, subjects, rooms, metadata = bench.load_wifi_csi_benchmark()
+    T_real, F_real = int(X.shape[1]), int(X.shape[2])
+    test_loader = DataLoader(RealCSIDataset(X, y), batch_size=args.batch_size, shuffle=False)
+    logger.info(f"[D4] Zero-shot REAL eval prepared: T={T_real}, F={F_real}, N={len(y)}")
+    
     # Load D2 pre-trained model if available
     model = None
     if args.d2_model_path and os.path.exists(args.d2_model_path):
@@ -660,29 +668,26 @@ def run_sim2real_experiment(args):
             logger.warning(f"Failed to load D2 model: {e}, training from scratch")
     
     if model is None:
-        # Train from scratch on synthetic data
-        logger.info("Training model from scratch on synthetic data")
-        train_loader, val_loader, _ = get_synth_loaders(
-            batch=args.batch_size, difficulty="mid", seed=args.seed,
-            n=2000, T=128, F=30, num_classes=8  # 8-class fall detection system
-        )
-        
-        x_sample, _ = next(iter(train_loader))
-        input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
-        
-        model = get_model(args.model, input_dim=input_dim, num_classes=8)  # 8-class fall detection
-        model = model.to(device)
-        
-        # Pre-train on synthetic data
-        best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
-        logger.info(f"Synthetic pre-training completed: F1={best_metrics.get('macro_f1', 0.0):.3f}")
+        # Either skip synthetic pretraining (random init) or pretrain on synthetic
+        if bool(getattr(args, 'skip_synth_pretrain', False)):
+            logger.info("[D4] Skipping synthetic pretraining; using random-initialized model for zero_shot/transfer")
+            model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
+        else:
+            logger.info("Training model from scratch on synthetic data")
+            train_loader, val_loader, _ = get_synth_loaders(
+                batch=args.batch_size, difficulty="mid", seed=args.seed,
+                n=2000, T=128, F=30, num_classes=8  # 8-class fall detection system
+            )
+            
+            x_sample, _ = next(iter(train_loader))
+            input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
+            
+            model = get_model(args.model, input_dim=input_dim, num_classes=8).to(device)
+            best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
+            logger.info(f"Synthetic pre-training completed: F1={best_metrics.get('macro_f1', 0.0):.3f}")
     
     # Zero-shot evaluation on real data (STRICT: no synthetic fallback)
-    from src.data_real import BenchmarkCSIDataset, RealCSIDataset
-    bench = BenchmarkCSIDataset(args.benchmark_path, files_per_activity=int(getattr(args, 'files_per_activity', 2)))
-    X, y, subjects, rooms, metadata = bench.load_wifi_csi_benchmark()
     logger.info(f"[D4] Zero-shot REAL eval: X={X.shape}, y={y.shape}, subjects={len(np.unique(subjects))}, rooms={len(np.unique(rooms))}")
-    test_loader = DataLoader(RealCSIDataset(X, y), batch_size=args.batch_size, shuffle=False)
     zero_shot_metrics = eval_model(model, test_loader, device, args.positive_class)
     
     # Apply transfer method
