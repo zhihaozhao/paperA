@@ -73,3 +73,25 @@ models/
 !plots/.gitkeep
 !tables/.gitkeep
 !logs/.gitkeep
+
+# WiFi-CSI-Sensing-Benchmark (external dependency)
+benchmarks/WiFi-CSI-Sensing-Benchmark-main/
+benchmarks/*/Data/
+benchmarks/*/data/
+
+# Cache files
+cache/
+*.cache
+cache_*/
+
+# Large data files
+*.pkl
+*.npz
+*.h5
+*.hdf5
+
+# Core dumps and temporary files
+core
+core.*
+*.tmp
+*.temp
