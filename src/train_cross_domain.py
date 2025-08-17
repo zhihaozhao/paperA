@@ -10,6 +10,7 @@ import os
 import torch
 import numpy as np
 from pathlib import Path
+from collections import defaultdict
 
 from src.metrics import compute_metrics
 from src.data_synth import get_synth_loaders
@@ -81,58 +82,63 @@ def make_json_serializable(obj):
 
 def compute_overlap_stat(model, loader, device):
     """
-    Compute overlap statistics for class separability analysis
+    Compute overlap statistics for class separability analysis.
+    - Adapts to the actual set of labels present in the loader (no hard-coded class count)
+    - Robust feature pooling: collapses all non-batch dimensions to get per-sample vectors
     """
     model.eval()
-    features_per_class = {i: [] for i in range(4)}
-    
+    features_per_class = defaultdict(list)
+
     with torch.no_grad():
         for batch_x, batch_y in loader:
             batch_x = batch_x.to(device)
-            
-            # Get features before final classification layer
+
+            # Get features before final classification layer, or fallback to logits
             if hasattr(model, 'get_features'):
-                features = model.get_features(batch_x)
+                feats = model.get_features(batch_x)
             else:
-                # Fallback: use penultimate layer if available
                 output = model(batch_x)
-                features = output[0] if isinstance(output, tuple) else output
-                if len(features.shape) > 2:
-                    features = features.mean(dim=-1)  # Global average pooling
-            
-            features = features.cpu().numpy()
-            batch_y = batch_y.numpy()
-            
-            for i in range(len(batch_y)):
-                class_label = int(batch_y[i])
-                features_per_class[class_label].append(features[i])
-    
+                feats = output[0] if isinstance(output, tuple) else output
+
+            # Collapse to [B, D]
+            while feats.dim() > 2:
+                feats = feats.mean(dim=-1)
+
+            feats_np = feats.cpu().numpy()
+            labels_np = batch_y.cpu().numpy()
+
+            for i in range(len(labels_np)):
+                class_label = int(labels_np[i])
+                if 0 <= class_label < 10_000:  # basic guard
+                    features_per_class[class_label].append(feats_np[i])
+
     # Compute class centroids
     centroids = {}
     for class_idx, feature_list in features_per_class.items():
         if feature_list:
             centroids[class_idx] = np.mean(feature_list, axis=0)
-    
-    # Compute pairwise overlaps (cosine similarity)
+
+    # Compute pairwise overlaps (cosine similarity) over observed classes
     overlaps = []
     class_pairs = []
-    for i in range(4):
-        for j in range(i+1, 4):
-            if i in centroids and j in centroids:
-                c1, c2 = centroids[i], centroids[j]
-                cosine_sim = np.dot(c1, c2) / (np.linalg.norm(c1) * np.linalg.norm(c2) + 1e-8)
-                overlaps.append(cosine_sim)
-                class_pairs.append((i, j))
-    
+    observed = sorted(centroids.keys())
+    for a in range(len(observed)):
+        for b in range(a + 1, len(observed)):
+            i, j = observed[a], observed[b]
+            c1, c2 = centroids[i], centroids[j]
+            denom = (np.linalg.norm(c1) * np.linalg.norm(c2)) + 1e-8
+            cosine_sim = float(np.dot(c1, c2) / denom)
+            overlaps.append(cosine_sim)
+            class_pairs.append((i, j))
+
     if overlaps:
         return {
             "mean": float(np.mean(overlaps)),
             "std": float(np.std(overlaps)),
             "pairs": class_pairs,
-            "values": overlaps
+            "values": overlaps,
         }
-    else:
-        return {"mean": 0.0, "std": 0.0, "pairs": [], "values": []}
+    return {"mean": 0.0, "std": 0.0, "pairs": [], "values": []}
 
 def cross_domain_train(args):
     """
