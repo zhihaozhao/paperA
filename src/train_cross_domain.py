@@ -20,6 +20,31 @@ from src.utils.logger import setup_logger
 from src.utils.io import set_seed
 from src.utils.exp_recorder import append_run_registry, init_run
 
+def make_json_serializable(obj):
+    """Convert numpy/torch objects to JSON-serializable Python types"""
+    if obj is None:
+        return None
+    elif hasattr(obj, 'item') and hasattr(obj, 'size') and obj.size == 1:  # Single element numpy/torch scalar
+        return obj.item()
+    elif hasattr(obj, 'tolist'):  # numpy array
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {k: make_json_serializable(v) for k, v in obj.items()}
+    elif isinstance(obj, (list, tuple)):
+        return [make_json_serializable(v) for v in obj]
+    elif hasattr(obj, '__float__'):  # Try to convert to float
+        try:
+            return float(obj)
+        except (ValueError, TypeError):
+            return str(obj)
+    elif hasattr(obj, '__int__'):  # Try to convert to int
+        try:
+            return int(obj)
+        except (ValueError, TypeError):
+            return str(obj)
+    else:
+        return obj
+
 def compute_overlap_stat(model, loader, device):
     """
     Compute overlap statistics for class separability analysis
@@ -345,20 +370,6 @@ def run_loso_experiment(args):
     # Compute overlap statistics
     overlap_stat = compute_overlap_stat(model, val_loader, device)
     
-    # Convert all values to JSON-serializable format
-    def make_json_serializable(obj):
-        """Convert numpy/torch objects to JSON-serializable Python types"""
-        if hasattr(obj, 'item'):  # Single numpy/torch scalar
-            return obj.item()
-        elif hasattr(obj, 'tolist'):  # numpy array
-            return obj.tolist()
-        elif isinstance(obj, dict):
-            return {k: make_json_serializable(v) for k, v in obj.items()}
-        elif isinstance(obj, (list, tuple)):
-            return [make_json_serializable(v) for v in obj]
-        else:
-            return obj
-    
     # Save results in D3 format
     results = {
         "protocol": "LOSO",
@@ -438,20 +449,6 @@ def run_loro_experiment(args):
     best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
     overlap_stat = compute_overlap_stat(model, val_loader, device)
     
-    # Convert all values to JSON-serializable format
-    def make_json_serializable(obj):
-        """Convert numpy/torch objects to JSON-serializable Python types"""
-        if hasattr(obj, 'item'):  # Single numpy/torch scalar
-            return obj.item()
-        elif hasattr(obj, 'tolist'):  # numpy array
-            return obj.tolist()
-        elif isinstance(obj, dict):
-            return {k: make_json_serializable(v) for k, v in obj.items()}
-        elif isinstance(obj, (list, tuple)):
-            return [make_json_serializable(v) for v in obj]
-        else:
-            return obj
-    
     # Save results in D3 format
     results = {
         "protocol": "LORO",
@@ -528,20 +525,6 @@ def run_sim2real_experiment(args):
     else:
         # Fine-tuning or linear probe with limited labels
         final_metrics = transfer_learning(model, test_loader, device, args)
-    
-    # Convert all values to JSON-serializable format
-    def make_json_serializable(obj):
-        """Convert numpy/torch objects to JSON-serializable Python types"""
-        if hasattr(obj, 'item'):  # Single numpy/torch scalar
-            return obj.item()
-        elif hasattr(obj, 'tolist'):  # numpy array
-            return obj.tolist()
-        elif isinstance(obj, dict):
-            return {k: make_json_serializable(v) for k, v in obj.items()}
-        elif isinstance(obj, (list, tuple)):
-            return [make_json_serializable(v) for v in obj]
-        else:
-            return obj
     
     # Save D4 format results
     results = {
