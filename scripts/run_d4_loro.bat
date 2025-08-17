@@ -123,8 +123,6 @@ for %%m in (%MODELS%) do (
                 set OUTPUT_FILE=%OUTPUT_DIR%\sim2real_%%m_%%r_%%t_seed%%s.json
                 set MODEL_FILE=
                 if exist "%D2_MODELS_PATH%\final_%%m_%%s_hard.pth" set MODEL_FILE=%D2_MODELS_PATH%\final_%%m_%%s_hard.pth
-                if "%MODEL_FILE%"=="" if exist "%D2_MODELS_PATH%\best_%%m_%%s_hard.pth" set MODEL_FILE=%D2_MODELS_PATH%\best_%%m_%%s_hard.pth
-                if "%MODEL_FILE%"=="" if exist "%D2_MODELS_PATH%\best_%%m_0_hard.pth" set MODEL_FILE=%D2_MODELS_PATH%\best_%%m_0_hard.pth
                 if "%MODEL_FILE%"=="" if exist "%D2_MODELS_PATH%\final_%%m_0_hard.pth" set MODEL_FILE=%D2_MODELS_PATH%\final_%%m_0_hard.pth
                 if not "%MODEL_FILE%"=="" (
                     python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
