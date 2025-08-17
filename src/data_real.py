@@ -174,6 +174,7 @@ class BenchmarkCSIDataset:
                 
             activity_label = activity_labels.get(activity, 0)
             is_falling = activity_label >= 5  # 类5-7是跌倒相关
+            # Smoke-mode downsampling: if Kicking/ Punching classes lack files, ensure minimal synthetic fill avoided here (keep real-only)
             
             print(f"\n[INFO] Loading {activity} data (label={activity_label}, falling={is_falling})...")
             

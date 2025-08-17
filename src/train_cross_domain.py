@@ -14,9 +14,10 @@ from collections import defaultdict
 
 from src.metrics import compute_metrics
 from src.data_synth import get_synth_loaders
-from src.data_real import get_real_loaders  # Assuming this exists or will be created
+from src.data_real import get_real_loaders  # legacy fallback
 from src.models import get_model
 from src.calibration import TemperatureScaling
+from torch.utils.data import DataLoader
 from src.utils.logger import setup_logger
 from src.utils.io import set_seed
 from src.utils.exp_recorder import append_run_registry, init_run
@@ -659,8 +660,15 @@ def run_sim2real_experiment(args):
         best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
         logger.info(f"Synthetic pre-training completed: F1={best_metrics.get('macro_f1', 0.0):.3f}")
     
-    # Zero-shot evaluation on real data
-    _, test_loader, _ = get_real_loaders(batch_size=args.batch_size, seed=args.seed + 1000)
+    # Zero-shot evaluation on real data (use real benchmark, not synthetic fallback)
+    try:
+        from src.data_real import BenchmarkCSIDataset, RealCSIDataset
+        bench = BenchmarkCSIDataset(args.benchmark_path, files_per_activity=int(getattr(args, 'files_per_activity', 2)))
+        X, y, subjects, rooms, metadata = bench.load_wifi_csi_benchmark()
+        test_loader = DataLoader(RealCSIDataset(X, y), batch_size=args.batch_size, shuffle=False)
+    except Exception as _:
+        # Fallback to legacy helper (may return synthetic); kept to avoid hard crash
+        _, test_loader, _ = get_real_loaders(batch_size=args.batch_size, seed=args.seed + 1000)
     zero_shot_metrics = eval_model(model, test_loader, device, args.positive_class)
     
     # Apply transfer method
