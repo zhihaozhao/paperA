@@ -18,7 +18,13 @@ Validate model robustness across subjects and environments using real WiFi CSI b
 **Models**: enhanced, cnn, bilstm, conformer_lite (capacity-matched ±10%)
 **Protocol**: LOSO (Leave-One-Subject-Out) & LORO (Leave-One-Room-Out)
 **Seeds**: 0, 1, 2, 3, 4 (consistency with D2)
-**Metrics**: macro_f1, falling_f1, ece, nll, auprc_falling, mutual_misclass
+**Metrics**: macro_f1, falling_f1, ece, auprc_falling, mutual_misclass
+**CLI Params (train_cross_domain.py)**:
+- `--protocol {loso,loro,sim2real}`: 协议选择
+- `--files_per_activity INT`: 每类读取的文件数（平衡/速度）
+- `--class_weight {none,inv_freq}`: 损失加权方案（类别不平衡）
+- `--loso_all_folds`: 跑完整 LOSO 全折并聚合
+- 其他：`--epochs, --batch_size, --lr, --benchmark_path`
 
 ### D3.2 Experimental Grid
 ```
@@ -81,6 +87,23 @@ Transfer Learning Protocols:
 - **Coverage**: All label efficiency points with ≥3 successful seeds
 
 ---
+
+## D3/D4 验收命令
+
+### D3 验收
+```powershell
+python scripts\validate_d3_acceptance.py --root results --out_dir results\metrics --save_report docs\d3_acceptance_report.md
+```
+
+### D2 验收（参考）
+```powershell
+python scripts\validate_d2_acceptance.py --results-dir results_gpu\d2 --save-report docs\d2_acceptance_report.md
+```
+
+### D4 运行（Windows 总控）
+```cmd
+scripts\run_d3_d4_windows.bat
+```
 
 ## Implementation Requirements
 
