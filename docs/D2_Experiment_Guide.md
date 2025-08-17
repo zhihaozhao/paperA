@@ -17,11 +17,14 @@ D2实验是WiFi CSI人体行为识别项目的关键验证节点，主要完成�
 4. **模型对比**: 确认Enhanced模型相对于基线模型的优势
 
 ### 📊 实验规模
-- **模型数量**: 4个 (Enhanced, LSTM, TCN, Transformer)
-- **随机种子**: 8个 (seeds: 0-7)
-- **难度级别**: 3个 (easy, mid, hard)  
-- **总实验数**: 4 × 8 × 3 = 96个单独实验
-- **数据规模**: 每个实验20,000样本 (T=32, F=52)
+- **模型数量**: 4个 (Enhanced, CNN, BiLSTM, Conformer-Lite)
+- **随机种子**: 5个 (seeds: 0-4)
+- **网格参数**: 
+  - Class Overlap: 3个值 [0.0, 0.4, 0.8]
+  - Label Noise: 3个值 [0.0, 0.05, 0.1] 
+  - Env Burst Rate: 3个值 [0.0, 0.1, 0.2]
+- **总实验数**: 4 × 5 × 3 × 3 × 3 = **540个**单独实验
+- **数据规模**: 每个实验默认样本数 (固定难度: hard)
 
 ## 🎯 D2验收标准详解
 
@@ -78,11 +81,11 @@ D2实验是WiFi CSI人体行为识别项目的关键验证节点，主要完成�
 #### 必需产出文件
 ```
 ✅ results/synth/summary.csv
-   - 包含所有96个实验的汇总指标
-   - 字段: model, difficulty, seed, macro_f1, falling_f1, ece, brier等
+   - 包含所有540个实验的汇总指标
+   - 字段: model, seed, class_overlap, label_noise_prob, env_burst_rate, macro_f1, falling_f1, ece, brier等
 
 ✅ plots/fig_synth_bars.pdf  
-   - 四个模型在三个难度下的性能条形图
+   - 四个模型在不同参数组合下的性能条形图
    - 误差棒显示多种子标准差
 
 ✅ plots/fig_overlap_scatter.pdf
@@ -124,10 +127,10 @@ rm -rf cache/synth_data/*  # 或保留用于加速
 
 #### 方案A: 使用预生成缓存 (推荐)
 ```bash
-# 1. 预生成所有需要的数据集 (~2小时一次性投入)
+# 1. 预生成所有需要的数据集 (~10-15小时一次性投入)
 python scripts/pregenerate_d2_datasets.py --spec scripts/d2_spec.json
 
-# 2. 运行D2实验 (~30分钟，从缓存加载)
+# 2. 运行D2实验 (~3-4小时，从缓存加载)
 python scripts/run_sweep_from_json.py --spec scripts/d2_spec.json --resume
 
 # 3. 生成汇总分析
@@ -151,24 +154,21 @@ python scripts/run_sweep_from_json.py --spec scripts/d2_spec.json --resume
 #### 标准D2配置 (`scripts/d2_spec.json`)
 ```json
 {
-  "models": ["enhanced", "lstm", "tcn", "txf"],
-  "seeds": [0, 1, 2, 3, 4, 5, 6, 7],
+  "models": ["enhanced", "cnn", "bilstm", "conformer_lite"],
+  "seeds": [0, 1, 2, 3, 4],
   "fixed": {
-    "difficulty": "mid",
-    "n_samples": 20000,
-    "T": 32,
-    "F": 52,
+    "difficulty": "hard",
     "epochs": 100,
-    "batch": 256,
-    "num_classes": 8
+    "batch": 768,
+    "amp": true,
+    "save_ckpt": "final",
+    "val_every": 3,
+    "num_workers_override": 0
   },
   "grid": {
-    "difficulty": ["easy", "mid", "hard"],
-    "sc_corr_rho": [0.5],
-    "env_burst_rate": [0.1], 
-    "gain_drift_std": [0.1],
-    "class_overlap": [0.8],
-    "label_noise_prob": [0.05]
+    "class_overlap": [0.0, 0.4, 0.8],
+    "label_noise_prob": [0.0, 0.05, 0.1],
+    "env_burst_rate": [0.0, 0.1, 0.2]
   },
   "output_dir": "results_gpu/d2"
 }
@@ -185,9 +185,10 @@ tail -f logs/d2_experiment.log
 python -c "
 import pandas as pd
 df = pd.read_csv('results/synth/summary.csv')
-print(f'Progress: {len(df)}/96 experiments')
+print(f'Progress: {len(df)}/540 experiments')
 print(f'Falling F1 range: {df.falling_f1.min():.3f}-{df.falling_f1.max():.3f}')
 print(f'Mutual misclass > 0: {(df.mutual_misclass > 0).sum()}/{len(df)}')
+print(f'Parameter combinations completed: {df.groupby([\"class_overlap\", \"label_noise_prob\", \"env_burst_rate\"]).ngroups}/27')
 "
 
 # 3. 验收关键指标

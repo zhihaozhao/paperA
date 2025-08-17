@@ -70,8 +70,11 @@ class D2AcceptanceValidator:
                 result = {
                     'file': json_file.name,
                     'model': args.get('model', 'unknown'),
-                    'difficulty': args.get('difficulty', 'unknown'),
+                    'difficulty': args.get('difficulty', 'hard'),
                     'seed': args.get('seed', 0),
+                    'class_overlap': args.get('class_overlap', 0.0),
+                    'label_noise_prob': args.get('label_noise_prob', 0.0),
+                    'env_burst_rate': args.get('env_burst_rate', 0.0),
                     'macro_f1': metrics.get('macro_f1', 0.0),
                     'falling_f1': metrics.get('falling_f1', 0.0),
                     'mutual_misclass': metrics.get('mutual_misclass', 0.0),
@@ -95,7 +98,7 @@ class D2AcceptanceValidator:
         self.log("\n=== 基本完整性检查 ===")
         
         # 检查实验数量
-        expected_experiments = 4 * 8 * 3  # 4模型 × 8种子 × 3难度
+        expected_experiments = 4 * 5 * 3 * 3 * 3  # 4模型 × 5种子 × 3overlap × 3noise × 3burst = 540
         actual_experiments = len(df)
         
         completeness_ok = self.check(
@@ -105,7 +108,7 @@ class D2AcceptanceValidator:
         )
         
         # 检查模型覆盖
-        expected_models = {'enhanced', 'lstm', 'tcn', 'txf'}
+        expected_models = {'enhanced', 'cnn', 'bilstm', 'conformer_lite'}
         actual_models = set(df['model'].unique())
         models_ok = self.check(
             expected_models.issubset(actual_models),
@@ -113,16 +116,25 @@ class D2AcceptanceValidator:
             f"模型覆盖不足: 期望{sorted(expected_models)}, 实际{sorted(actual_models)}"
         )
         
-        # 检查难度级别覆盖
-        expected_difficulties = {'easy', 'mid', 'hard'}
-        actual_difficulties = set(df['difficulty'].unique())
-        difficulties_ok = self.check(
-            expected_difficulties.issubset(actual_difficulties),
-            f"难度级别完整: {sorted(actual_difficulties)}",
-            f"难度级别不足: 期望{sorted(expected_difficulties)}, 实际{sorted(actual_difficulties)}"
-        )
+        # 检查网格参数覆盖
+        expected_overlaps = {0.0, 0.4, 0.8}
+        expected_noise = {0.0, 0.05, 0.1}
+        expected_burst = {0.0, 0.1, 0.2}
         
-        return completeness_ok and models_ok and difficulties_ok
+        actual_overlaps = set(df.get('class_overlap', []).unique()) if 'class_overlap' in df.columns else set()
+        actual_noise = set(df.get('label_noise_prob', []).unique()) if 'label_noise_prob' in df.columns else set()
+        actual_burst = set(df.get('env_burst_rate', []).unique()) if 'env_burst_rate' in df.columns else set()
+        
+        params_ok = True
+        if actual_overlaps:
+            overlap_ok = self.check(
+                expected_overlaps.issubset(actual_overlaps),
+                f"Class Overlap参数完整: {sorted(actual_overlaps)}",
+                f"Class Overlap参数不足: 期望{sorted(expected_overlaps)}, 实际{sorted(actual_overlaps)}"
+            )
+            params_ok = params_ok and overlap_ok
+        
+        return completeness_ok and models_ok and params_ok
     
     def validate_performance_metrics(self, df: pd.DataFrame) -> bool:
         """验证性能指标"""
