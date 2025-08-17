@@ -2,8 +2,8 @@
 setlocal enabledelayedexpansion
 
 :: D3+D4 主控制脚本: Windows conda环境下的跨域实验
-:: D3: LOSO (Leave-One-Subject-Out) 跨主体实验
-:: D4: LORO (Leave-One-Room-Out) 跨房间高难度实验
+:: D3: LOSO/LORO 跨域泛化实验 (跨主体/跨房间)
+:: D4: Sim2Real 标签效率评估实验 (合成到真实迁移)
 :: 支持环境自动检测: 远程GPU(base) vs 本地CPU(py310)
 
 echo ====================================
