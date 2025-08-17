@@ -1,4 +1,4 @@
-# OS / ±à¼­Æ÷
+# OS / ï¿½à¼­ï¿½ï¿½
 .DS_Store
 Thumbs.db
 *.swp
@@ -8,7 +8,7 @@ Thumbs.db
 *.orig
 *.log
 
-# ÐéÄâ»·¾³ÓëÒÀÀµ»º´æ
+# ï¿½ï¿½ï¿½â»·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 .venv/
 venv/
 env/
@@ -28,20 +28,28 @@ __pycache__/
 .profile
 *.nbconvert.ipynb
 
-# ±¾ÏîÄ¿Éú³ÉÎï£¨ÊµÑé²úÎï£©
+# ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï£¨Êµï¿½ï¿½ï¿½ï¿½ï£©
 results/
+results_cpu/
 plots/
 tables/
-# ÈôÄã½«ÈÕÖ¾·ÅÔÚ results/logs ÏÂ£¬ÉÏÃæ results/ ÒÑ°üº¬£»Èç¹ûµ¥¶ÀÄ¿Â¼£º
+# ï¿½ï¿½ï¿½ã½«ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ results/logs ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ results/ ï¿½Ñ°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½ï¿½
 logs/
+figs/
+chat/
+referenes/
 
-# ÁÙÊ±´ò°ü/ÉÏ´«ÎÄ¼þ
+# ï¿½ï¿½Ê±ï¿½ï¿½ï¿½/ï¿½Ï´ï¿½ï¿½Ä¼ï¿½
 artifacts-*.zip
 *.tar
 *.tar.gz
 *.zip
 
-# Êý¾ÝÓëÈ¨ÖØ£¨Çë°´Ðè·ÅÖÃ£©
+# Core dump files
+core
+core.*
+
+# ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¨ï¿½Ø£ï¿½ï¿½ë°´ï¿½ï¿½ï¿½ï¿½Ã£ï¿½
 data/
 datasets/
 weights/
@@ -60,8 +68,30 @@ models/
 .idea/
 *.code-workspace
 
-# ¸²¸Ç¹æÔò£ºÈ·±£¸ú×Ù±ØÒªµÄÄ£°å»ò¿ÕÄ¿Â¼Õ¼Î»·û
+# ï¿½ï¿½ï¿½Ç¹ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½Ù±ï¿½Òªï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½Ä¿Â¼Õ¼Î»ï¿½ï¿½
 !results/.gitkeep
 !plots/.gitkeep
 !tables/.gitkeep
 !logs/.gitkeep
+
+# WiFi-CSI-Sensing-Benchmark (external dependency)
+benchmarks/WiFi-CSI-Sensing-Benchmark-main/
+benchmarks/*/Data/
+benchmarks/*/data/
+
+# Cache files
+cache/
+*.cache
+cache_*/
+
+# Large data files
+*.pkl
+*.npz
+*.h5
+*.hdf5
+
+# Core dumps and temporary files
+core
+core.*
+*.tmp
+*.temp

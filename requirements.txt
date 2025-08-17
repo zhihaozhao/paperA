@@ -1,0 +1,14 @@
+
+# requirements.txt
+# This file lists the Python dependencies for your CSI dataset training project.
+# It includes essentials for PyTorch-based models, data synthesis, metrics calculation, and sweep scripts.
+# Install with: pip install -r requirements.txt
+# Versions are pinned for reproducibility (based on common stable releases as of 2025); adjust if needed.
+
+torch==2.3.1  # Core ML framework for models and training
+numpy==1.26.4  # Array operations and data handling
+scikit-learn==1.5.1  # Metrics like F1-score, ECE, Brier
+pandas==2.2.2  # CSV handling in sweeps and data loading
+scipy==1.13.1  # Statistical functions (e.g., for overlap stats)
+matplotlib==3.9.1  # Optional: Plotting confusion matrices or results
+tqdm==4.66.4  # Progress bars for training loops

@@ -134,3 +134,197 @@ How
 
 一句话总结
 - 三类扰动分别覆盖频域相关性、非平稳瞬时异常、慢时间漂移三种常见失配源。让合成数据具备“可控的真实复杂度”，从而更早、更准地检验模型在真实世界下的稳健性与可用性。
+
+
+# 2.
+好的。我将按我们前面约定的方案提交一个可运行版本，包含 infer.py、reliability.py、早停与best checkpoint、class_overlap，以及更新的脚本与参数对齐。下面给出完整的变更说明（Change Note）与运行示例命令。说明中严格沿用了你当前命名和风格，默认保持向后兼容。
+
+Change Note
+
+总体目标
+- 形成训练-校准-推理-可靠性评估-对比报告的闭环
+- 在不破坏原有默认行为的前提下，引入：
+  - 三类可控扰动（已就绪）
+  - 类间可控重叠 class_overlap（新增）
+  - 早停与 best checkpoint（新增）
+  - 推理脚本 infer.py 输出校准概率（新增）
+  - 可靠性图脚本 reliability.py，支持总体与按类绘制（新增）
+  - 汇总可视化脚本 plot_summary.py（新增）
+  - 脚本 run_main.sh 扩展（新增/更新）
+
+依据日志文件
+- 已参考你提供的运行日志与 meta，保持 run_id/phase/exp/ver 等记录格式一致，输出 JSON 中追加新字段但不破坏旧字段读取。
+
+一、data_synth.py
+What
+- 新增 class_overlap: float ∈ [0,1]，默认 0.0。控制类间分布重叠程度。
+- 现有扰动参数保持：sc_corr_rho、env_burst_rate、gain_drift_std。
+- 在生成每类基频与幅度分布时，根据 class_overlap 拉近相邻类别的统计（如 sitting vs standing），并引入小幅共享特征模式，使类间边界更模糊。
+- 透传 class_overlap 至 get_synth_loaders。
+
+Why
+- HAR 中 sitting/standing 等类存在显著重叠；可控的 overlap 有助于系统化评估模型在边界样本上的表现与校准。
+
+How
+- 在 base_freqs 基础上按 overlap 内插相邻类的频率与幅度统计；walking 类在 overlap>0 时与静态类共享部分特征子带能量分布。
+- 默认 class_overlap=0.0 时不改变历史分布（向后兼容）。
+- 无破坏性修改，仍然支持原三类扰动的叠加。
+
+二、train_eval.py
+What
+- 新增 CLI 参数：
+  - --n_samples, --T, --F（已对齐）
+  - --sc_corr_rho, --env_burst_rate, --gain_drift_std（已对齐）
+  - --class_overlap 新增
+  - 早停与 best checkpoint：
+    - --early_metric {macro_f1, nll} 默认 macro_f1
+    - --patience 10（默认）
+    - --ckpt_dir results/ckpt
+- 训练循环中：
+  - 跟踪 early_metric，保存 best state_dict 到 ckpt_dir
+  - 提前停止（耐心用尽）或到达最大 epoch 时终止
+  - 结束后加载 best 权重，在验证集重新拟合温度 T，再写回最终 JSON
+- 输出 JSON 增加：
+  - best_ckpt 路径
+  - early_stop 信息（best_epoch、stopped_epoch、metric_name、metric_value）
+  - 仍保留并更新 temperature/ece_raw/ece_cal/nll_raw/nll_cal
+- eval_model 中补齐 m["falling_f1"] = m.get("f1_fall", nan)，保证 recorder 与日志的键名一致。
+
+Why
+- 早停可减少过拟合与无效计算
+- “best + 温度校准”输出更稳健
+- 保持日志、历史 CSV 与最终 JSON 的一致与可追溯
+
+How
+- 以最小改动接入早停：比较 best 与当前指标；当 early_metric=macro_f1 则越大越好，当 early_metric=nll 则越小越好
+- 训练完成后读取 best_ckpt，调用 calibrate_temperature 并更新最终指标与 JSON
+
+三、metrics.py
+What
+- 保持你提供版本（返回 macro_f1、per_class_f1、f1_fall、cm、auprc）
+- 与 eval_model 的 falling_f1 别名对齐
+
+Why
+- 稳健性增强，避免类别缺失警告；提供 f1_fall 与 AUPRC 便于关注关键类
+
+四、src/models.py
+What
+- 维持你提供的 BiLSTM、LSTM32、TCN、TinyTransformer 实现
+- 统一 forward 对 (B,T,C)/(B,C,T) 输入的兼容（TCN/TinyTransformer 已处理）
+- 保持 logit_l2 行为一致
+
+Why
+- 与现有训练/推理管线保持一致
+
+五、src/infer.py（新增）
+What
+- 加载 best checkpoint 与温度 T，对指定 split（默认 te）输出校准后的概率与预测
+- 可输出 NPZ：logits_raw、logits_cal、probs_cal、preds、labels
+
+CLI
+- --ckpt path/to/best.pt
+- --out_json path/to/out.json（用于读取 T；也可 --T 显式传入）
+- --T 可选，若不传则从 out_json["metrics"]["temperature"] 读取
+- --split {te,tr} 默认 te
+- --save_npz results/preds/{model}_{diff}_s{seed}.npz
+
+六、src/reliability.py（新增）
+What
+- 生成 reliability diagram
+  - 总体曲线：max-confidence vs accuracy（raw 与 calibrated）
+  - per-class 曲线（可选）：每类单独做分箱与曲线
+- 显示并保存：ECE/NLL 前后对比文本标注
+
+CLI
+- --from_npz results/preds/*.npz 或现场计算选项（可兼容未来扩展）
+- --n_bins 15（默认）
+- --per_class true/false；--class_id 指定单类（可选）
+- --save path/to/output.png(.pdf)
+
+七、scripts/plot_summary.py（新增）
+What
+- 汇总 results/history/*.csv 与 results/synth/*.json
+- 生成对比图（macro_f1/ECE/NLL vs 难度/模型），输出到 results/plots
+
+CLI
+- --glob "results/synth/out_*.json"
+- --save_dir results/plots
+- --metrics macro_f1,ece,nll
+
+八、scripts/run_main.sh（更新）
+What
+- 在脚本顶部 export PYTHONPATH=.
+- ENTRY 默认 -m src.train_eval（模块方式，兼容 Windows/Git Bash）
+- 新增 class_overlap 的传参示例
+- 保持四场景批量运行；支持通过环境变量覆盖
+
+Why
+- 一键对比不同扰动；跨平台更稳
+
+How
+- 结构与旧版一致，仅扩展参数与 PATH 处理，减少 ModuleNotFoundError 问题
+
+九、向后兼容性
+- 不显式传入 class_overlap 与扰动参数时，行为与历史版本一致
+- 输出 JSON 增加字段，但不移除既有字段；旧分析脚本不受影响
+
+运行示例命令
+
+基础
+- 设置项目根为 PYTHONPATH（若用 -m 则可省略）
+  export PYTHONPATH=.
+
+训练（含早停与 best checkpoint + 温度校准）
+- 中等难度、带适度 overlap 与三类扰动
+  python -m src.train_eval \
+    --model enhanced --difficulty mid --seed 0 \
+    --epochs 60 --patience 10 --early_metric macro_f1 --ckpt_dir results/ckpt \
+    --n_samples 2000 --T 128 --F 30 \
+    --class_overlap 0.2 \
+    --sc_corr_rho 0.7 --env_burst_rate 0.05 --gain_drift_std 0.003 \
+    --out results/synth/out_mid.json
+
+推理（加载 best + 已校准概率）
+- 从最终 JSON 读取温度 T，输出 NPZ
+  python -m src.infer \
+    --ckpt results/ckpt/best_enhanced_mid_s0.pt \
+    --out_json results/synth/out_mid.json \
+    --split te \
+    --save_npz results/preds/enhanced_mid_s0.npz
+
+可靠性图（总体与按类）
+- 总体 raw vs calibrated
+  python -m src.reliability \
+    --from_npz results/preds/enhanced_mid_s0.npz \
+    --n_bins 15 \
+    --save results/plots/reliability_enhanced_mid.png
+- 每类曲线
+  python -m src.reliability \
+    --from_npz results/preds/enhanced_mid_s0.npz \
+    --n_bins 15 --per_class true \
+    --save results/plots/reliability_enhanced_mid_perclass.png
+
+批量总结与对比图
+- 将多个输出 JSON 汇总绘图
+  python scripts/plot_summary.py \
+    --glob "results/synth/out_*.json" \
+    --save_dir results/plots \
+    --metrics macro_f1,ece,nll
+
+批量脚本
+- 直接运行四场景（默认参数，可通过环境变量覆盖）
+  bash scripts/run_main.sh
+- 如果正类不是 1，例如 3：
+  POS_CLS=3 bash scripts/run_main.sh
+
+注意事项
+- Windows/Git Bash 建议使用模块方式运行：python -m src.train_eval 等；或在脚本首行 export PYTHONPATH=.
+- run_main.sh 确保 LF 换行；若出现 bad interpreter ^M，用编辑器改为 LF。
+- 依赖：scikit-learn、matplotlib、seaborn（若用 seaborn），缺失时 pip install scikit-learn matplotlib seaborn
+
+后续可选增强
+- class_overlap_matrix: 精细控制具体类对（如仅 sitting vs standing）重叠强度
+- reliability 图扩展 PR/ROC；支持从历史缓存 logits 直接绘图（已为 NPZ 预留）
+- infer.py 支持自定义数据源（文件或实时流）与滑窗
+
+如果需要，我可以将本次改动以一个打包的 patch（git apply 可用）或提交分支的方式提供。你也可以把当前仓库给一个分支名，我直接以该分支提交，包含上述文件与改动，并基于你上传的日志/元信息对 run_id 等记录字段保持一致。

@@ -1,4 +1,199 @@
 
+# 0. 计划
+# A11
+好，我按你给出的 A10.1 任务板，结合依赖关系，给出两周冲刺的执行顺序与每天的可交付检查点。目标是每一段都有“能验收的产物”，并尽量并行不互相阻塞。
+
+总体原则
+- 先打通 P0（因果与校准基座），再推进 P1（真实集与稳健性），最后攻坚 P2（Sim2Real 与 probe），P3 视精力可选。
+- 每天保证至少一个可验证产物（CSV/PDF/TEX），并把生成脚本稳定在 scripts/ 下。
+- 严格路径规范：results/*.csv/json、plots/*.pdf、tables/*.tex；保存前 mkdir parents=True。
+
+第1周
+D1：合成评估骨架与单元跑通（P0.1 起步）
+- 目标
+  - 跑通四个模型（enhanced/lstm/tcn/txf）在 difficulty=mid、seed=0 的训练与评估，产出 4 个 JSON
+- 产物
+  - results/synth/{model}_mid_s0.json 四个
+  - 一个通用 savefig_safe 与 dump_json_safe 工具
+- 动作
+  - train_eval.py：确保输出 payload 中包含 macro_f1、falling_f1、mutual_misclass、ece、brier、overlap_stat，并记录 args
+  - 脚本：scripts/run_synth_eval.sh（先支持 seeds=1、difficulties=mid，验证后扩展）
+- 验收
+  - 四个 run 正常结束；falling_f1 非满分（<0.99）
+
+D2：扩展多 seed/多难度 + 汇总与出两张图（P0.1 完成）
+- 目标
+  - seeds=8、difficulties={low,mid,high} 跑完
+  - 汇总 CSV 与两张图
+- 产物
+  - results/synth/metrics.csv
+  - plots/fig_synth_bars.pdf
+  - plots/fig_overlap_scatter.pdf（含线性回归斜率、p 值、R^2）
+- 动作
+  - eval/overlap_regression.py：读取所有 JSON，生成 CSV、绘制条形图与散点+回归线
+- 验收
+  - Falling F1 < 0.99，Mutual Misclass > 0
+  - overlap–误差回归斜率 > 0 且 p < 0.05
+
+D3：λ 扫描与容量对齐（P0.2）
+- 目标
+  - 跑 Enhanced 在 λ∈{0,0.02,0.05,0.08,0.12,0.18} 的 sweep（至少 difficulty=mid，seed=0 先行）
+  - 做一次容量对齐对照
+- 产物
+  - plots/fig_lambda_curves.pdf（F1/ECE/Mutual vs λ）
+  - tables/tab_capacity_match.tex（参数量±10% 对齐）
+- 动作
+  - scripts/run_lambda_sweep.sh：产出 results/synth/lambda/*.json 与汇总
+  - scripts/run_capacity_match.sh：Enhanced_small vs Baseline_large（记录参数量）
+- 验收
+  - 最佳点出现在 λ>0；容量对齐后 Enhanced 仍不劣且校准更好
+
+D4：校准与可靠性（P0.3）
+- 目标
+  - 完成 ECE、Brier、温度缩放 TS 对照；生成可靠性图
+- 产物
+  - plots/fig_reliability_enhanced_vs_baselines.pdf
+  - tables/tab_calibration_real.tex（均值±CI）
+- 动作
+  - eval/calibration.py：实现 ECE/Brier/TS；从已有 JSON 读取 logits/probs 或补充保存
+  - plots/reliability_plot.py：binning+曲线
+- 验收
+  - λ>0 的 Enhanced 在真实集前还未做，但先在合成上验证趋势；代码链路稳定
+
+D5：真实数据读取与划分协议（P1.1 起步）
+- 目标
+  - 搭建 data/data_real.py 与 splits/real_splits.py；生成年/人/位置的 LOSO/LORO manifest
+- 产物
+  - manifests/splits.json
+  - 初步统计（样本数、时长等）供 Tab. A1
+- 动作
+  - 标准化、对齐到合成维度（通道、长度、采样率）
+- 验收
+  - 可用的 DataLoader、一个 batch 可视化/基准前向通过
+
+D6：真实主结果初版（P1.1）
+- 目标
+  - 跑通 LOSO 或 LORO 的一个完整折；记下训练时长与资源
+- 产物
+  - results/real/*.csv（至少一个折）
+  - 表格草稿 tables/tab_main_real.tex（结构就绪）
+- 动作
+  - scripts/run_real_loso.sh、run_real_loro.sh（先最小折）
+- 验收
+  - Enhanced 相对强基线有不劣趋势；链路稳定
+
+D7：分桶评估与代价敏感（P1.2 + P1.3）
+- 目标
+  - 实现 overlap/noise/domain 分桶；计算固定 FPR 下 TPR
+- 产物
+  - plots/fig_bucket_perf_curves.pdf
+  - plots/fig_cost_sensitive.pdf
+- 动作
+  - eval/binning.py、eval/operating_point.py 完成；与真实/合成结果对接
+- 验收
+  - Enhanced 在高难度桶下斜率更缓/方差更小；低 FPR 区域更优
+
+第2周
+D8：真实主结果全量 & 统计显著性（P1.1 完成）
+- 目标
+  - 完成 LOSO/LORO 全部折；做配对 t 检验、Cohen’s d、95% CI
+- 产物
+  - tables/tab_main_real.tex（最终版）
+- 动作
+  - 统计模块：读取每折 CSV，计算配对检验与效应量，填充 TEX
+- 验收
+  - 主结论成立或明确边界条件；日志干净
+
+D9：校准在真实集的对比（P0.3 最终验收）
+- 目标
+  - 在真实集上产出 ECE、Brier、可靠性图，TS 对照
+- 产物
+  - plots/fig_reliability_enhanced_vs_baselines.pdf（真实集版本）
+  - tables/tab_calibration_real.tex（最终版）
+- 验收
+  - λ>0 的 Enhanced 在真实集 ECE/Brier 显著更优（p<0.05）
+
+D10：Sim2Real 样本效率（P2.1）
+- 目标
+  - 预训练合成，按 p∈{1,5,10,25,100}% 微调真实，画样本效率曲线
+- 产物
+  - plots/fig_sim2real_curve.pdf
+  - tables/tab_sim2real_gain.tex
+- 动作
+  - train/pretrain_synth.py 保存 encoder
+  - train/finetune_real.py 支持子采样标注比例
+- 验收
+  - 10–20% 标注达到 ≥90–95% 全标注性能
+
+D11：Linear Probe（P2.2）
+- 目标
+  - 冻结预训练 encoder，训线性头，跑 LOSO/LORO
+- 产物
+  - tables/tab_linear_probe.tex
+- 验收
+  - Enhanced 预训练表征的 probe 优于基线
+
+D12：复现与一键出图（P2.3 起步）
+- 目标
+  - 统一从 CSV→PDF/TEX 的脚本，保证新机器可跑
+- 产物
+  - scripts/make_all_plots.sh
+  - README_anonymous.md（运行说明、依赖、环境）
+- 验收
+  - 只需一条命令可生成主图主表
+
+D13：论文撰写与占位替换
+- 目标
+  - 将 LaTeX 模板中的 TODO 替换为实际数值；解决重复 label/引用
+- 产物
+  - main.pdf（干净日志：无致命报错，警告可接受）
+- 验收
+  - 数值一致、图表路径正确、引用无误
+
+D14：缓冲与加分项（P3，可选）
+- 目标
+  - 选做 t-SNE/UMAP、失败案例、公开对比
+- 产物
+  - Fig. A1/A2 或对比实验附录
+- 验收
+  - 不影响主线的前提下加分
+
+并行与责任切分建议
+- 一人专注合成与校准（P0.1-P0.3），另一人推进真实数据与分桶（P1.1-P1.2），第三人预研 Sim2Real 与 probe（P2.1-P2.2）。
+- 每晚固定提交：plots/*.pdf、tables/*.tex、results/*.csv 及日志摘要。
+
+今天立刻要做的事（T0）
+- 执行 D1：
+  - 跑四条最小命令（四模型×mid×seed=0），产出 4 个 JSON 到 results/synth/
+  - 回报每个 JSON 的 metrics 键名，以便我提供 eval/overlap_regression.py 的对齐版
+- 同时创建 scripts/run_synth_eval.sh 骨架（先跑单种难度和单 seed）
+
+如果你同意该顺序，我可以马上提供：
+- scripts/run_synth_eval.sh 的模板
+- eval/overlap_regression.py 的最小实现（读 JSON、汇总 CSV、画两张图）
+- savefig_safe 与 dump_json_safe 工具片段
+
+告诉我你是更想先拿脚本模板，还是先跑四条最小命令确认输出字段。
+
+
+你的应用方向很实用——使用 CSI（Channel State Information）数据进行跌倒检测，并扩展到辅助场景如癫痫相关症状（抖动/抽搐）、校园暴力（挥拳/踢腿）、老人护理（跌倒后起不来）。这让合成数据集更有针对性，而不是抽象频率。我们可以自定义 SynthCSIDataset 来模拟这些类别，通过调整生成参数（e.g., 频率、扰动）来近似真实 CSI 模式：
+
+高频/突发：模拟快速动作如踢腿/挥拳（高 base_freq + bursts）。
+低频/漂移：模拟缓慢动作如老人跌倒后躺地（低 freq + gain_drift）。
+相关/抖动：模拟癫痫抖动（sc_corr_rho + jitter）。
+自定义 8 个类别的建议映射
+基于你的描述，我设计了 8 个类别（num_classes=8），每个有名称和生成调整。类别 ID 0-7，对应不同 "动作模式"：
+
+类 0: Normal Walking（正常行走） - 中频，少扰动。
+类 1: Shaking Limbs（肢体抖动，癫痫相关） - 高 jitter + sc_corr_rho（模拟抖动相关性）。
+类 2: Facial Twitching（面部抽搐） - 中高频 + 小 bursts（快速小脉冲）。
+类 3: Punching（挥拳，校园暴力） - 高频 + 强 bursts（突发高能量）。
+类 4: Kicking（踢腿） - 高频 + gain_drift（动态幅度变化）。
+类 5: Epileptic Fall（癫痫跌倒） - 中频 + 高 jitter + bursts（抖动导致跌倒）。
+类 6: Elderly Fall（老人跌倒） - 低频 + 强 gain_drift（缓慢趋势 + 持久低能量）。
+类 7: Fall and Can't Get Up（跌倒后起不来） - 低频 + 长 drift + 零 bursts（静态躺地）。
+falling 类：假设类 5-7 是 "falling-related"（用于 falling_f1 的 binary 计算）。你可以设置 pos_label=[5,6,7] 并 binarize（falling vs non-falling）。
+
 
 明白。下面我按你的项目结构，逐个文件说明其职责、典型函数/类、数据流向与调用关系，并对 metrics 的指标与参数逐一讲解。因为我无法直接打开你仓库的源代码逐行阅读，这里采用“结构化、对齐你给定文件名与我们已讨论流程”的详细讲解法：我会基于常见实现模式与我们已达成的一致做法，给出每个文件的典型内容构成、关键函数的逐行级别解释思路、常见参数含义与你项目中应有的具体用法。你可以对照你的实际代码快速核对；若某个函数名或实现与我描述不同，告诉我函数签名或贴一小段代码，我再按你的实际版本逐行解读。
 
