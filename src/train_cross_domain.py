@@ -328,7 +328,8 @@ def run_loso_experiment(args):
             sc_corr_rho=0.5,  # Lower correlation for subject differences
             env_burst_rate=0.15,  # Higher noise for realism
             gain_drift_std=0.01,  # Subject-specific gain variations
-            dropout_p=0.1  # Add dropout for generalization challenge
+            class_overlap=0.1,  # Add class overlap for generalization challenge
+            label_noise_prob=0.05  # Add label noise for realism
         )
     
     # Model setup
@@ -409,7 +410,8 @@ def run_loro_experiment(args):
             sc_corr_rho=0.4,  # Lower correlation for room differences
             env_burst_rate=0.2,  # Higher environmental noise
             gain_drift_std=0.02,  # Room-specific propagation variations
-            dropout_p=0.15  # Add dropout for environmental robustness
+            class_overlap=0.15,  # Add class overlap for environmental robustness
+            label_noise_prob=0.08  # Add more label noise for room variations
     )
     
     # Model setup and training
