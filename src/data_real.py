@@ -187,6 +187,43 @@ class BenchmarkCSIDataset:
         if not all_X:
             raise ValueError("No data could be loaded from any files")
             
+        # Standardize shapes before concatenation
+        target_T, target_F = 128, 30
+        def _standardize_csi(arr: np.ndarray, T_target: int, F_target: int) -> np.ndarray:
+            # Ensure [N, T, F]
+            if arr.ndim == 2:
+                N, D = arr.shape
+                total = T_target * F_target
+                out = np.zeros((N, total), dtype=np.float32)
+                d = min(D, total)
+                out[:, :d] = arr[:, :d].astype(np.float32)
+                return out.reshape(N, T_target, F_target)
+            if arr.ndim == 3:
+                N, T0, F0 = arr.shape[0], arr.shape[1], arr.shape[2]
+                # Resample time by index mapping
+                if T0 != T_target:
+                    idx_t = np.linspace(0, max(T0 - 1, 1), num=T_target).astype(int)
+                    arr = arr[:, idx_t, :]
+                # Adjust feature dim by crop/pad
+                if F0 == F_target:
+                    return arr.astype(np.float32)
+                out = np.zeros((N, T_target, F_target), dtype=np.float32)
+                if F0 > F_target:
+                    out[:, :, :] = arr[:, :, :F_target].astype(np.float32)
+                else:
+                    out[:, :, :F0] = arr.astype(np.float32)
+                return out
+            # Fallback: flatten then reshape
+            N = arr.shape[0]
+            vec = arr.reshape(N, -1).astype(np.float32)
+            total = T_target * F_target
+            out = np.zeros((N, total), dtype=np.float32)
+            d = min(vec.shape[1], total)
+            out[:, :d] = vec[:, :d]
+            return out.reshape(N, T_target, F_target)
+
+        all_X = [ _standardize_csi(x, target_T, target_F) for x in all_X ]
+
         # Combine all data
         self.X = np.concatenate(all_X, axis=0)
         self.y = np.concatenate(all_y, axis=0)
