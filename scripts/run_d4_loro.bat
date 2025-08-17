@@ -3,12 +3,29 @@ setlocal enabledelayedexpansion
 
 :: D4 实验: Sim2Real 标签效率评估实验
 :: 从D2预训练模型开始，在真实数据上进行标签效率测试
-:: 适用于Windows conda py310环境
+:: 支持环境自动检测: 远程GPU(base) vs 本地CPU(py310)
 
 echo ========================================
 echo   D4 Sim2Real 标签效率实验
 echo   从合成预训练到真实数据迁移
 echo ========================================
+
+:: 环境自动检测 (如果未在父脚本中设置)
+if "%PYTHON_ENV%"=="" (
+    if exist "D:\anaconda\python.exe" (
+        echo [检测] 远程GPU环境 - 使用conda base
+        set PYTHON_ENV=base
+        set ENV_TYPE=remote_gpu
+    ) else if exist "D:\workspace_AI\Anaconda3\envs\py310\python.exe" (
+        echo [检测] 本地CPU环境 - 使用conda py310
+        set PYTHON_ENV=py310
+        set ENV_TYPE=local_cpu
+    ) else (
+        echo [默认] 使用py310环境
+        set PYTHON_ENV=py310
+        set ENV_TYPE=default
+    )
+)
 
 :: 设置默认参数 (基于D3_D4实验计划)
 if "%MODELS%"=="" set MODELS=enhanced,cnn,bilstm,conformer_lite
@@ -18,7 +35,6 @@ if "%TRANSFER_METHODS%"=="" set TRANSFER_METHODS=zero_shot,linear_probe,fine_tun
 if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main
 if "%D2_MODELS_PATH%"=="" set D2_MODELS_PATH=checkpoints\d2
 if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d4\sim2real
-if "%PYTHON_ENV%"=="" set PYTHON_ENV=py310
 
 echo 实验配置:
 echo   模型列表: %MODELS%
@@ -28,7 +44,7 @@ echo   迁移方法: %TRANSFER_METHODS%
 echo   D2模型路径: %D2_MODELS_PATH%
 echo   真实数据路径: %BENCHMARK_PATH%
 echo   输出目录: %OUTPUT_DIR%
-echo   Python环境: %PYTHON_ENV%
+echo   Python环境: %PYTHON_ENV% (%ENV_TYPE%)
 
 :: 激活conda环境
 echo.
@@ -36,7 +52,11 @@ echo [环境] 激活conda环境 %PYTHON_ENV%...
 call conda activate %PYTHON_ENV%
 if %ERRORLEVEL% neq 0 (
     echo [错误] 无法激活conda环境 %PYTHON_ENV%
-    echo 请确保已安装conda并创建了py310环境
+    if "%ENV_TYPE%"=="remote_gpu" (
+        echo 远程GPU环境：请确保conda base环境可用
+    ) else (
+        echo 本地CPU环境：请确保已安装conda并创建了py310环境
+    )
     pause
     exit /b 1
 )

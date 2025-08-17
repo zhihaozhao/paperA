@@ -3,12 +3,29 @@ setlocal enabledelayedexpansion
 
 :: D3 实验: LORO (Leave-One-Room-Out) 跨房间泛化实验
 :: 基于WiFi-CSI-Sensing-Benchmark真实数据
-:: 适用于Windows conda py310环境
+:: 支持环境自动检测: 远程GPU(base) vs 本地CPU(py310)
 
 echo ========================================
 echo   D3 LORO 跨房间泛化实验
 echo   基于WiFi CSI Benchmark真实数据
 echo ========================================
+
+:: 环境自动检测 (如果未在父脚本中设置)
+if "%PYTHON_ENV%"=="" (
+    if exist "D:\anaconda\python.exe" (
+        echo [检测] 远程GPU环境 - 使用conda base
+        set PYTHON_ENV=base
+        set ENV_TYPE=remote_gpu
+    ) else if exist "D:\workspace_AI\Anaconda3\envs\py310\python.exe" (
+        echo [检测] 本地CPU环境 - 使用conda py310
+        set PYTHON_ENV=py310
+        set ENV_TYPE=local_cpu
+    ) else (
+        echo [默认] 使用py310环境
+        set PYTHON_ENV=py310
+        set ENV_TYPE=default
+    )
+)
 
 :: 设置默认参数 (基于D3_D4实验计划)
 if "%MODELS%"=="" set MODELS=enhanced,cnn,bilstm,conformer_lite
@@ -16,7 +33,6 @@ if "%SEEDS%"=="" set SEEDS=0,1,2,3,4
 if "%EPOCHS%"=="" set EPOCHS=100
 if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main
 if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d3\loro
-if "%PYTHON_ENV%"=="" set PYTHON_ENV=py310
 
 echo 实验配置:
 echo   模型列表: %MODELS%
@@ -24,7 +40,7 @@ echo   随机种子: %SEEDS%
 echo   训练轮数: %EPOCHS%
 echo   数据集路径: %BENCHMARK_PATH%
 echo   输出目录: %OUTPUT_DIR%
-echo   Python环境: %PYTHON_ENV%
+echo   Python环境: %PYTHON_ENV% (%ENV_TYPE%)
 
 :: 激活conda环境
 echo.
@@ -32,7 +48,11 @@ echo [环境] 激活conda环境 %PYTHON_ENV%...
 call conda activate %PYTHON_ENV%
 if %ERRORLEVEL% neq 0 (
     echo [错误] 无法激活conda环境 %PYTHON_ENV%
-    echo 请确保已安装conda并创建了py310环境
+    if "%ENV_TYPE%"=="remote_gpu" (
+        echo 远程GPU环境：请确保conda base环境可用
+    ) else (
+        echo 本地CPU环境：请确保已安装conda并创建了py310环境
+    )
     pause
     exit /b 1
 )

@@ -2,7 +2,10 @@
 
 ## 环境要求
 - Windows 10/11
-- Conda Python 3.10 环境 (py310) [[memory:6363638]]
+- Conda环境 [[memory:6363638]]:
+  - **远程GPU**: conda base环境 (D:\anaconda\python.exe)
+  - **本地CPU**: conda py310环境 (D:\workspace_AI\Anaconda3\envs\py310\python.exe)
+  - 脚本会自动检测并选择合适的环境
 - WiFi-CSI-Sensing-Benchmark数据集
 - 已安装依赖：numpy, torch, scikit-learn, matplotlib, pandas, scipy
 
@@ -66,14 +69,33 @@ cd scripts
 run_d4_loro.bat
 ```
 
-### 4. 快速测试模式
+### 5. 环境配置
+
+#### 自动环境检测
+脚本会自动检测您的环境：
+- **远程GPU**: 检测到 `D:\anaconda\python.exe` → 使用conda base环境
+- **本地CPU**: 检测到 `D:\workspace_AI\Anaconda3\envs\py310\python.exe` → 使用py310环境
+- **默认**: 未检测到特定路径 → 使用py310环境
+
+#### 手动指定环境
+```cmd
+:: 强制使用base环境（远程GPU）
+set PYTHON_ENV=base
+run_d3_d4_windows.bat
+
+:: 强制使用py310环境（本地CPU）
+set PYTHON_ENV=py310
+run_d3_d4_windows.bat
+```
+
+### 6. 快速测试模式
 ```cmd
 :: 设置快速模式（减少轮数和种子）
 set QUICK_MODE=1
 run_d3_d4_windows.bat
 ```
 
-### 5. 自定义参数
+### 7. 自定义参数
 ```cmd
 :: D3 LOSO自定义示例
 set MODELS=enhanced,cnn

@@ -1,24 +1,41 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: D3+D4 主控制脚本: Windows conda py310环境下的跨域实验
+:: D3+D4 主控制脚本: Windows conda环境下的跨域实验
 :: D3: LOSO (Leave-One-Subject-Out) 跨主体实验
 :: D4: LORO (Leave-One-Room-Out) 跨房间高难度实验
+:: 支持环境自动检测: 远程GPU(base) vs 本地CPU(py310)
 
 echo ====================================
 echo   WiFi CSI 跨域泛化实验 (D3+D4)
-echo   适用于Windows conda py310环境
+echo   支持远程GPU和本地CPU环境
 echo ====================================
+
+:: 环境自动检测
+if "%PYTHON_ENV%"=="" (
+    if exist "D:\anaconda\python.exe" (
+        echo [检测] 远程GPU环境 - 使用conda base
+        set PYTHON_ENV=base
+        set ENV_TYPE=remote_gpu
+    ) else if exist "D:\workspace_AI\Anaconda3\envs\py310\python.exe" (
+        echo [检测] 本地CPU环境 - 使用conda py310
+        set PYTHON_ENV=py310
+        set ENV_TYPE=local_cpu
+    ) else (
+        echo [默认] 使用py310环境
+        set PYTHON_ENV=py310
+        set ENV_TYPE=default
+    )
+)
 
 :: 设置默认参数
 if "%MODEL%"=="" set MODEL=enhanced
-if "%PYTHON_ENV%"=="" set PYTHON_ENV=py310
 if "%QUICK_MODE%"=="" set QUICK_MODE=0
 
 :: 显示配置
 echo 运行配置:
 echo   模型: %MODEL%
-echo   Python环境: %PYTHON_ENV%
+echo   Python环境: %PYTHON_ENV% (%ENV_TYPE%)
 echo   快速模式: %QUICK_MODE%
 
 :: 激活conda环境
@@ -27,7 +44,11 @@ echo [初始化] 激活conda环境 %PYTHON_ENV%...
 call conda activate %PYTHON_ENV%
 if %ERRORLEVEL% neq 0 (
     echo [错误] 无法激活conda环境 %PYTHON_ENV%
-    echo 请确保已安装conda并创建了py310环境
+    if "%ENV_TYPE%"=="remote_gpu" (
+        echo 远程GPU环境：请确保conda base环境可用
+    ) else (
+        echo 本地CPU环境：请确保已安装conda并创建了py310环境
+    )
     pause
     exit /b 1
 )
