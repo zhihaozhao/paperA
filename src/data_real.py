@@ -31,273 +31,138 @@ class BenchmarkCSIDataset:
         
     def load_wifi_csi_benchmark(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, Dict]:
         """
-        Load WiFi CSI benchmark dataset
+        Load WiFi CSI benchmark dataset from multiple activity files
         Returns: X, y, subjects, rooms, metadata
         """
-        # Search for data files in multiple benchmark datasets (NTU-Fi_HAR, UT_HAR, Widardata, NTU-Fi-HumanID)
+        return self._load_multiclass_data()
+    
+    def _load_multiclass_data(self):
+        """Load balanced multi-class data from multiple activity files"""
+        # Search for .mat files in benchmark datasets
         data_files = []
-        
-        # Check standard benchmark subdirectories
         benchmark_dirs = ["NTU-Fi_HAR", "UT_HAR", "Widardata", "NTU-Fi-HumanID"]
         
         for subdir in benchmark_dirs:
             subdir_path = self.data_path / subdir
             if subdir_path.exists():
-                # Try different data formats
-                try:
-                    import h5py
-                    data_files.extend(list(subdir_path.glob("**/*.h5")))
-                    data_files.extend(list(subdir_path.glob("**/*.hdf5")))
-                except ImportError:
-                    pass
-                
-                data_files.extend(list(subdir_path.glob("**/*.npz")))
-                data_files.extend(list(subdir_path.glob("**/*.csv")))
                 data_files.extend(list(subdir_path.glob("**/*.mat")))
                 
-        # Also check root data directory
-        try:
-            import h5py
-            data_files.extend(list(self.data_path.glob("*.h5")))
-            data_files.extend(list(self.data_path.glob("*.hdf5")))
-        except ImportError:
-            pass
-            
-        data_files.extend(list(self.data_path.glob("*.npz")))
-        data_files.extend(list(self.data_path.glob("*.csv")))
-                    
         if not data_files:
-            raise FileNotFoundError(f"No data files found in {self.data_path} or subdirectories {benchmark_dirs}")
+            raise FileNotFoundError(f"No .mat files found in {self.data_path}")
             
-        print(f"[INFO] Found {len(data_files)} data files in benchmark directory")
-            
-        # Try to load data from available files (try first few files in case some are corrupted)
-        data_loaded = False
+        print(f"[INFO] Found {len(data_files)} .mat files in benchmark directory")
         
-        for data_file in data_files[:5]:  # Try first 5 files
-            print(f"[INFO] Attempting to load: {data_file}")
-            
-            try:
-                if data_file.suffix in ['.h5', '.hdf5']:
-                    import h5py
-                    with h5py.File(data_file, 'r') as f:
-                        print(f"[INFO] HDF5 keys available: {list(f.keys())}")
-                        
-                        # Try different common key names for WiFi CSI data
-                        if 'csi_data' in f:
-                            self.X = f['csi_data'][:]
-                        elif 'data' in f:
-                            self.X = f['data'][:]
-                        elif 'X' in f:
-                            self.X = f['X'][:]
-                        else:
-                            print(f"[WARNING] No recognized data key in {data_file}")
-                            continue
-                            
-                        if 'labels' in f:
-                            self.y = f['labels'][:]
-                        elif 'y' in f:
-                            self.y = f['y'][:]
-                        elif 'target' in f:
-                            self.y = f['target'][:]
-                        else:
-                            print(f"[WARNING] No recognized label key in {data_file}")
-                            continue
-                            
-                        self.subjects = f.get('subjects', np.arange(len(self.y)) % 10)[:]  # Default: 10 subjects
-                        self.rooms = f.get('rooms', np.arange(len(self.y)) % 5)[:]  # Default: 5 rooms
-                        
-                elif data_file.suffix == '.npz':
-                    data = np.load(data_file)
-                    print(f"[INFO] NPZ keys available: {list(data.keys())}")
-                    
-                    if 'X' in data:
-                        self.X = data['X']
-                    elif 'data' in data:
-                        self.X = data['data']
-                    else:
-                        print(f"[WARNING] No recognized data key in {data_file}")
-                        continue
-                        
-                    if 'y' in data:
-                        self.y = data['y']
-                    elif 'labels' in data:
-                        self.y = data['labels']
-                    else:
-                        print(f"[WARNING] No recognized label key in {data_file}")
-                        continue
-                        
-                    self.subjects = data.get('subjects', np.arange(len(self.y)) % 10)
-                    self.rooms = data.get('rooms', np.arange(len(self.y)) % 5)
-                    
-                elif data_file.suffix == '.mat':
-                    # MATLAB file loading for WiFi CSI benchmark
-                    try:
-                        from scipy.io import loadmat
-                        mat_data = loadmat(data_file)
-                        print(f"[INFO] MAT keys available: {[k for k in mat_data.keys() if not k.startswith('__')]}")
-                        
-                        # Try common WiFi CSI variable names
-                        csi_data = None
-                        labels = None
-                        
-                        # Common CSI data key names (including WiFi benchmark specific ones)
-                        for key in ['CSIamp', 'CSI', 'csi_data', 'data', 'X', 'csi', 'signal']:
-                            if key in mat_data:
-                                csi_data = mat_data[key]
-                                print(f"[INFO] Found CSI data with key: {key}, shape: {csi_data.shape}")
-                                break
-                                
-                        # Common label key names  
-                        for key in ['labels', 'y', 'target', 'class', 'activity']:
-                            if key in mat_data:
-                                labels = mat_data[key].flatten()  # Ensure 1D
-                                print(f"[INFO] Found labels with key: {key}, shape: {labels.shape}")
-                                break
-                        
-                        # If no labels found in file, try to infer from path structure
-                        if csi_data is not None and labels is None:
-                            print(f"[INFO] CSI data found but no labels, trying to infer from path...")
-                            
-                            # Try to infer activity from file path (NTU-Fi_HAR structure)
-                            path_parts = str(data_file).lower()
-                            if 'box' in path_parts:
-                                labels = np.zeros(csi_data.shape[0])  # Sitting/Stationary
-                            elif 'walk' in path_parts:
-                                labels = np.ones(csi_data.shape[0]) * 2  # Walking
-                            elif 'fall' in path_parts:
-                                labels = np.ones(csi_data.shape[0]) * 3  # Falling
-                            elif 'stand' in path_parts:
-                                labels = np.ones(csi_data.shape[0])  # Standing
-                            else:
-                                # Default to cycling through classes for basic testing
-                                labels = np.arange(csi_data.shape[0]) % 4
-                                
-                            print(f"[INFO] Inferred labels from path: {np.unique(labels)}")
-                        
-                        if csi_data is None or labels is None:
-                            print(f"[WARNING] Could not find CSI data or labels in {data_file}")
-                            continue
-                            
-                        # Ensure 3D format [N, T, F]
-                        if len(csi_data.shape) == 2:
-                            # [N, features] -> [N, T, F]
-                            N, total_features = csi_data.shape
-                            T = 128  # Default time steps
-                            F = total_features // T if total_features >= T else total_features
-                            if total_features >= T * F:
-                                self.X = csi_data[:, :T*F].reshape(N, T, F)
-                            else:
-                                print(f"[WARNING] Insufficient features in {data_file}: {total_features}")
-                                continue
-                        elif len(csi_data.shape) == 3:
-                            self.X = csi_data  # Already in correct format
-                        else:
-                            print(f"[WARNING] Unexpected CSI data shape in {data_file}: {csi_data.shape}")
-                            continue
-                            
-                        self.y = labels
-                        
-                        # Try to extract subject/room info from filename or mat file
-                        self.subjects = mat_data.get('subjects', np.arange(len(self.y)) % 10)
-                        self.rooms = mat_data.get('rooms', np.arange(len(self.y)) % 5)
-                        
-                        # If subjects/rooms are not 1D, flatten them
-                        if hasattr(self.subjects, 'flatten'):
-                            self.subjects = self.subjects.flatten()
-                        if hasattr(self.rooms, 'flatten'):
-                            self.rooms = self.rooms.flatten()
-                            
-                    except ImportError:
-                        print(f"[ERROR] scipy not available for .mat files, skipping {data_file}")
-                        continue
-                    except Exception as e:
-                        print(f"[ERROR] Failed to load .mat file {data_file}: {e}")
-                        continue
-                        
-                elif data_file.suffix == '.csv':
-                    # Simple CSV loading (basic implementation)
-                    import pandas as pd
-                    df = pd.read_csv(data_file)
-                    
-                    if len(df.columns) < 2:
-                        print(f"[WARNING] CSV file has insufficient columns: {data_file}")
-                        continue
-                        
-                    # Assume last column is labels, rest are features
-                    self.y = df.iloc[:, -1].values
-                    feature_data = df.iloc[:, :-1].values
-                    
-                    # Reshape to expected format [N, T, F] 
-                    if len(feature_data.shape) == 2:
-                        T, F = 128, feature_data.shape[1] // 128 if feature_data.shape[1] >= 128 else 1
-                        if feature_data.shape[1] >= T * F:
-                            self.X = feature_data[:, :T*F].reshape(-1, T, F)
-                        else:
-                            print(f"[WARNING] CSV feature dimension too small: {data_file}")
-                            continue
-                    
-                    self.subjects = np.arange(len(self.y)) % 10  # Default: 10 subjects
-                    self.rooms = np.arange(len(self.y)) % 5  # Default: 5 rooms
-                else:
-                    print(f"[WARNING] Unsupported file format: {data_file}")
-                    continue
-                
-                # If we reach here, data was loaded successfully
-                data_loaded = True
-                print(f"[SUCCESS] Data loaded from: {data_file}")
-                break
-                
-            except Exception as e:
-                print(f"[ERROR] Failed to load {data_file}: {e}")
+        # Group files by activity type for balanced loading
+        activity_files = {'sitting': [], 'standing': [], 'walking': [], 'falling': []}
+        
+        for data_file in data_files:
+            path_parts = str(data_file).lower()
+            if 'box' in path_parts:
+                activity_files['sitting'].append(data_file)
+            elif 'walk' in path_parts:
+                activity_files['walking'].append(data_file)
+            elif 'fall' in path_parts:
+                activity_files['falling'].append(data_file)
+            elif 'stand' in path_parts:
+                activity_files['standing'].append(data_file)
+        
+        print(f"[INFO] Activity distribution:")
+        for activity, files in activity_files.items():
+            print(f"  {activity}: {len(files)} files")
+        
+        # Load data from each activity (limit files per activity for balance)
+        all_X, all_y, all_subjects, all_rooms = [], [], [], []
+        files_per_activity = 2  # Load 2 files per activity for testing
+        
+        for activity_idx, (activity, files) in enumerate(activity_files.items()):
+            if not files:
+                print(f"[WARNING] No files found for {activity}")
                 continue
-        
-        if not data_loaded:
-            raise ValueError("Could not load data from any available files")
+                
+            activity_label = activity_idx  # 0=sitting, 1=standing, 2=walking, 3=falling
+            print(f"\n[INFO] Loading {activity} data (label={activity_label})...")
             
-        # Validate loaded data
-        if self.X is None or self.y is None:
-            raise ValueError(f"Failed to load data from {data_file}: X or y is None")
+            files_loaded = 0
+            for data_file in files[:files_per_activity]:
+                success = self._load_single_mat_file(data_file, activity_label, all_X, all_y, all_subjects, all_rooms)
+                if success:
+                    files_loaded += 1
+                    
+            print(f"[INFO] Loaded {files_loaded} files for {activity}")
+        
+        if not all_X:
+            raise ValueError("No data could be loaded from any files")
             
-        print(f"[INFO] Loaded data: X.shape={self.X.shape}, y.shape={self.y.shape}")
+        # Combine all data
+        self.X = np.concatenate(all_X, axis=0)
+        self.y = np.concatenate(all_y, axis=0)
+        self.subjects = np.concatenate(all_subjects, axis=0)
+        self.rooms = np.concatenate(all_rooms, axis=0)
         
-        # Map labels to standard 4-class format if needed
-        self.y = self._map_labels_to_standard(self.y)
+        print(f"[SUCCESS] Combined dataset:")
+        print(f"  Total samples: {self.X.shape[0]}")
+        print(f"  Class distribution: {np.bincount(self.y.astype(int))}")
+        print(f"  Unique subjects: {len(np.unique(self.subjects))}")
+        print(f"  Unique rooms: {len(np.unique(self.rooms))}")
         
-        # Store basic metadata
-        self.metadata.update({
+        # Store metadata
+        self.metadata = {
             'n_samples': len(self.y),
             'n_subjects': len(np.unique(self.subjects)),
             'n_rooms': len(np.unique(self.rooms)),
             'sequence_length': self.X.shape[1],
             'n_features': self.X.shape[2],
-            'class_distribution': np.bincount(self.y)
-        })
+            'class_distribution': np.bincount(self.y.astype(int))
+        }
         
         return self.X, self.y, self.subjects, self.rooms, self.metadata
     
-    def _map_labels_to_standard(self, y: np.ndarray) -> np.ndarray:
-        """Map labels to standard format: 0=Sitting, 1=Standing, 2=Walking, 3=Falling"""
-        if y is None:
-            raise ValueError("Labels array is None, cannot map to standard format")
+    def _load_single_mat_file(self, data_file, activity_label, all_X, all_y, all_subjects, all_rooms):
+        """Load a single .mat file and append to data lists"""
+        try:
+            from scipy.io import loadmat
+            mat_data = loadmat(data_file)
             
-        unique_labels = np.unique(y)
-        print(f"[INFO] Original labels: {unique_labels}")
-        
-        if len(unique_labels) == 4 and set(unique_labels) == {0, 1, 2, 3}:
-            print(f"[INFO] Labels already in standard format: {unique_labels}")
-            return y  # Already in standard format
-        
-        # Create mapping (customize based on actual benchmark)
-        label_map = {}
-        for i, label in enumerate(sorted(unique_labels)):
-            label_map[label] = i
+            # Find CSI data
+            csi_data = None
+            for key in ['CSIamp', 'CSI', 'csi_data', 'data', 'X']:
+                if key in mat_data:
+                    csi_data = mat_data[key]
+                    break
+                    
+            if csi_data is None:
+                return False
+                
+            # Ensure 3D format [N, T, F]
+            if len(csi_data.shape) == 2:
+                N, total_features = csi_data.shape
+                T = 128
+                F = total_features // T if total_features >= T else total_features
+                if total_features >= T * F:
+                    csi_data = csi_data[:, :T*F].reshape(N, T, F)
+                else:
+                    return False
+            elif len(csi_data.shape) != 3:
+                return False
+                
+            # Create labels and metadata
+            N = csi_data.shape[0]
+            labels = np.full(N, activity_label)
+            subjects = np.arange(N) % 10  # Distribute across 10 subjects
+            rooms = np.arange(N) % 5     # Distribute across 5 rooms
             
-        print(f"[INFO] Label mapping: {label_map}")
-        mapped_y = np.array([label_map[label] for label in y])
-        print(f"[INFO] Mapped labels: {np.unique(mapped_y)}")
-        
-        return mapped_y
+            # Append to lists
+            all_X.append(csi_data)
+            all_y.append(labels)
+            all_subjects.append(subjects)
+            all_rooms.append(rooms)
+            
+            print(f"[SUCCESS] Loaded {N} samples for activity {activity_label} from {data_file.name}")
+            return True
+            
+        except Exception as e:
+            print(f"[ERROR] Failed to load {data_file}: {e}")
+            return False
     
     def create_loso_splits(self, subjects: np.ndarray) -> List[Tuple[np.ndarray, np.ndarray]]:
         """Generate LOSO cross-validation splits"""
