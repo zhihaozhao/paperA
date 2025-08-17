@@ -268,26 +268,33 @@ class BenchmarkCSIDataset:
                         break
                         
             elif data_file.suffix == '.csv':
-                # Load .csv files (UT-HAR dataset). Handle potential non-UTF8 encodings
+                # Load .csv files (UT-HAR dataset) robustly
+                # Skip label files explicitly (e.g., label/y_*.csv)
+                if ('/label/' in str(data_file).replace('\\','/') or data_file.name.lower().startswith('y_')):
+                    print(f"[INFO] Skipping label CSV: {data_file}")
+                    return False
                 import pandas as pd
                 df = None
                 for enc in ["utf-8", "latin1", "iso-8859-1", "cp1252"]:
                     try:
-                        df = pd.read_csv(data_file, encoding=enc, engine="python", on_bad_lines="skip")
+                        df = pd.read_csv(data_file, encoding=enc, engine="python", on_bad_lines="skip", header=None)
                         break
                     except Exception:
                         df = None
-                if df is None:
-                    print(f"[ERROR] Failed to read CSV with common encodings: {data_file}")
+                if df is None or df.empty:
+                    print(f"[WARNING] CSV unreadable or empty: {data_file}")
                     return False
-                if len(df.columns) >= 2:
-                    # UT-HAR format: features + label in last column (best-effort)
-                    feature_data = df.iloc[:, :-1].to_numpy()
-                    file_labels = df.iloc[:, -1].to_numpy()
-                    # Map labels if textual, else keep numeric
-                    # Note: We keep label mapping placeholder here; actual mapping can be refined per dataset
-                    csi_data = feature_data.astype(np.float32, copy=False)
-                    print(f"[INFO] UT-HAR CSV data: {csi_data.shape}")
+                # Coerce all to numeric; drop columns with too many NaNs; fill remaining NaNs with 0
+                df = df.apply(pd.to_numeric, errors='coerce')
+                # Drop columns with >50% NaNs
+                na_frac = df.isna().mean(axis=0)
+                df = df.loc[:, na_frac <= 0.5]
+                df = df.fillna(0.0)
+                if df.shape[1] < 2 or df.shape[0] < 1:
+                    print(f"[WARNING] CSV has insufficient numeric data after cleaning: {data_file}")
+                    return False
+                csi_data = df.to_numpy(dtype=np.float32, copy=False)
+                print(f"[INFO] UT-HAR CSV data (cleaned): {csi_data.shape}")
                     
             if csi_data is None:
                 return False
