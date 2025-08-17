@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "model": "enhanced",
+    "difficulty": "hard",
+    "seed": 3,
+    "F": 52,
+    "T": 32,
+    "num_classes": 8,
+    "git_commit": "a3b30c0aacbfb7acf695ac031a3410f41698e32f",
+    "git_branch": "feat/enhanced-model-and-sweep",
+    "device": "cuda",
+    "timestamp": "2025-08-16T17:13:09.150542Z"
+  },
+  "args": {
+    "model": "enhanced",
+    "difficulty": "hard",
+    "seed": 3,
+    "epochs": 100,
+    "batch": 768,
+    "n_samples": 20000,
+    "T": 32,
+    "F": 52,
+    "sc_corr_rho": 0.5,
+    "env_burst_rate": 0.2,
+    "gain_drift_std": 0.1,
+    "class_overlap": 0.8,
+    "label_noise_prob": 0.1,
+    "early_metric": "macro_f1",
+    "patience": 10,
+    "ckpt_dir": "checkpoints/",
+    "logit_l2": 0.0,
+    "temp_mode": "logspace",
+    "temp_min": 1.0,
+    "temp_max": 5.0,
+    "temp_steps": 100,
+    "val_split": 0.5,
+    "fixed_temp": 1.0,
+    "out_json": "results_gpu/d2\\paperA_enhanced_hard_s3_cla0p8_env0p2_lab0p1.json"
+  },
+  "metrics": {
+    "macro_f1": 0.9850636493509085,
+    "ece_raw": 0.009128196597099306,
+    "ece_cal": 0.0051875920991102855,
+    "nll_raw": 0.047547705471515656,
+    "nll_cal": 0.03687781095504761,
+    "brier": 0.002577902078151558,
+    "mutual_misclass": 0.0021374959480536,
+    "temperature": 1.7954400777816772,
+    "falling_f1": 0.9850636493509085
+  },
+  "seed": 3,
+  "best_ckpt": null,
+  "early_stop": {
+    "metric": "macro_f1",
+    "best_value": 0.9876777517601859,
+    "best_epoch": 42,
+    "patience": 10
+  },
+  "data_params": {
+    "n_samples": 20000,
+    "sc_corr_rho": 0.5,
+    "env_burst_rate": 0.2,
+    "gain_drift_std": 0.1,
+    "class_overlap": 0.8,
+    "label_noise_prob": 0.1
+  },
+  "calibration": {
+    "temperature": 1.7954400777816772,
+    "best_nll": 0.037080008536577225,
+    "method": "logspace"
+  }
+}
