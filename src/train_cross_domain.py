@@ -301,7 +301,7 @@ def run_loso_experiment(args):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     set_seed(args.seed)
     
-    train_loader, val_loader = get_synth_loaders(
+    train_loader, val_loader, test_loader = get_synth_loaders(
         batch=args.batch_size, difficulty="mid", seed=args.seed,
         n=1500, T=128, F=30
     )
@@ -357,7 +357,7 @@ def run_loro_experiment(args):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     set_seed(args.seed)
     
-    train_loader, val_loader = get_synth_loaders(
+    train_loader, val_loader, _ = get_synth_loaders(
         batch=args.batch_size, difficulty="hard", seed=args.seed,
         n=1500, T=128, F=30,
         sc_corr_rho=0.7, env_burst_rate=0.05, gain_drift_std=0.003
@@ -421,7 +421,7 @@ def run_sim2real_experiment(args):
     if model is None:
         # Train from scratch on synthetic data
         logger.info("Training model from scratch on synthetic data")
-        train_loader, val_loader = get_synth_loaders(
+        train_loader, val_loader, _ = get_synth_loaders(
             batch=args.batch_size, difficulty="mid", seed=args.seed,
             n=2000, T=128, F=30
         )
@@ -437,7 +437,7 @@ def run_sim2real_experiment(args):
         logger.info(f"Synthetic pre-training completed: F1={best_metrics.get('macro_f1', 0.0):.3f}")
     
     # Zero-shot evaluation on real data
-    test_loader, _ = get_real_loaders(batch_size=args.batch_size, seed=args.seed + 1000)
+    _, test_loader, _ = get_real_loaders(batch_size=args.batch_size, seed=args.seed + 1000)
     zero_shot_metrics = eval_model(model, test_loader, device, args.positive_class)
     
     # Apply transfer method
