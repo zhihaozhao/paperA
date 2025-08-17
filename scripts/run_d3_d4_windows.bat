@@ -61,69 +61,117 @@ if %ERRORLEVEL% neq 0 (
     exit /b 1
 )
 
-:: 设置快速模式参数
+:: 设置实验参数 (基于D3_D4实验计划)
 if "%QUICK_MODE%"=="1" (
     echo [快速模式] 使用较少轮数和种子进行测试
-    set D3_EPOCHS=5
+    set D3_MODELS=enhanced,cnn
+    set D3_EPOCHS=10
     set D3_SEEDS=0,1
-    set D4_EPOCHS=5
+    set D4_MODELS=enhanced,cnn
     set D4_SEEDS=0,1
+    set D4_LABEL_RATIOS=0.10,0.50,1.00
+    set D4_TRANSFER_METHODS=zero_shot,fine_tune
 ) else (
-    echo [完整模式] 使用完整轮数和种子
-    set D3_EPOCHS=20
-    set D3_SEEDS=0,1,2
-    set D4_EPOCHS=25
-    set D4_SEEDS=0,1,2,3
+    echo [完整模式] 使用D3_D4实验计划的完整配置
+    set D3_MODELS=enhanced,cnn,bilstm,conformer_lite
+    set D3_EPOCHS=100
+    set D3_SEEDS=0,1,2,3,4
+    set D4_MODELS=enhanced,cnn,bilstm,conformer_lite
+    set D4_SEEDS=0,1,2,3,4
+    set D4_LABEL_RATIOS=0.01,0.05,0.10,0.15,0.20,0.50,1.00
+    set D4_TRANSFER_METHODS=zero_shot,linear_probe,fine_tune,temp_scale
 )
 
 :: 询问用户要运行哪些实验
 echo.
 echo 请选择要运行的实验:
-echo [1] 仅 D3 LOSO 实验
-echo [2] 仅 D4 LORO 实验  
-echo [3] D3 + D4 全部实验
-echo [4] 退出
+echo [1] D3 LOSO (跨主体泛化)
+echo [2] D3 LORO (跨房间泛化)
+echo [3] D4 Sim2Real (标签效率)
+echo [4] D3全部 (LOSO + LORO)
+echo [5] 全部实验 (D3 + D4)
+echo [6] 退出
 echo.
-set /p CHOICE=请输入选择 (1-4): 
+set /p CHOICE=请输入选择 (1-6): 
 
-if "%CHOICE%"=="1" goto :run_d3
-if "%CHOICE%"=="2" goto :run_d4
-if "%CHOICE%"=="3" goto :run_both
-if "%CHOICE%"=="4" goto :eof
+if "%CHOICE%"=="1" goto :run_d3_loso
+if "%CHOICE%"=="2" goto :run_d3_loro
+if "%CHOICE%"=="3" goto :run_d4_sim2real
+if "%CHOICE%"=="4" goto :run_d3_all
+if "%CHOICE%"=="5" goto :run_all
+if "%CHOICE%"=="6" goto :eof
 echo [错误] 无效选择，退出
 goto :eof
 
-:run_d3
+:run_d3_loso
 echo.
-echo === 开始 D3 LOSO 实验 ===
+echo === 开始 D3 LOSO 跨主体实验 ===
+set MODELS=%D3_MODELS%
 set EPOCHS=%D3_EPOCHS%
 set SEEDS=%D3_SEEDS%
 call "%~dp0\run_d3_loso.bat"
 goto :finish
 
-:run_d4
+:run_d3_loro
 echo.
-echo === 开始 D4 LORO 实验 ===
-set EPOCHS=%D4_EPOCHS%
+echo === 开始 D3 LORO 跨房间实验 ===
+set MODELS=%D3_MODELS%
+set EPOCHS=%D3_EPOCHS%
+set SEEDS=%D3_SEEDS%
+call "%~dp0\run_d3_loro.bat"
+goto :finish
+
+:run_d4_sim2real
+echo.
+echo === 开始 D4 Sim2Real 标签效率实验 ===
+set MODELS=%D4_MODELS%
 set SEEDS=%D4_SEEDS%
 call "%~dp0\run_d4_loro.bat"
 goto :finish
 
-:run_both
+:run_d3_all
 echo.
-echo === 开始 D3 LOSO 实验 ===
+echo === 开始 D3 LOSO 跨主体实验 ===
+set MODELS=%D3_MODELS%
 set EPOCHS=%D3_EPOCHS%
 set SEEDS=%D3_SEEDS%
 call "%~dp0\run_d3_loso.bat"
 
 if %ERRORLEVEL% neq 0 (
-    echo [错误] D3实验失败，跳过D4
+    echo [错误] D3 LOSO实验失败
     goto :error_finish
 )
 
 echo.
-echo === 开始 D4 LORO 实验 ===
-set EPOCHS=%D4_EPOCHS%
+echo === 开始 D3 LORO 跨房间实验 ===
+call "%~dp0\run_d3_loro.bat"
+goto :finish
+
+:run_all
+echo.
+echo === 开始 D3 LOSO 跨主体实验 ===
+set MODELS=%D3_MODELS%
+set EPOCHS=%D3_EPOCHS%
+set SEEDS=%D3_SEEDS%
+call "%~dp0\run_d3_loso.bat"
+
+if %ERRORLEVEL% neq 0 (
+    echo [错误] D3 LOSO实验失败，跳过后续实验
+    goto :error_finish
+)
+
+echo.
+echo === 开始 D3 LORO 跨房间实验 ===
+call "%~dp0\run_d3_loro.bat"
+
+if %ERRORLEVEL% neq 0 (
+    echo [错误] D3 LORO实验失败，跳过D4
+    goto :error_finish
+)
+
+echo.
+echo === 开始 D4 Sim2Real 标签效率实验 ===
+set MODELS=%D4_MODELS%
 set SEEDS=%D4_SEEDS%
 call "%~dp0\run_d4_loro.bat"
 
@@ -141,12 +189,14 @@ echo   所有选定实验已完成!
 echo =====================================
 echo.
 echo 结果文件位置:
-if exist "results\loso" echo   D3 LOSO: results\loso\
-if exist "results\loro" echo   D4 LORO: results\loro\
+if exist "results\d3\loso" echo   D3 LOSO: results\d3\loso\
+if exist "results\d3\loro" echo   D3 LORO: results\d3\loro\
+if exist "results\d4\sim2real" echo   D4 Sim2Real: results\d4\sim2real\
 echo.
 echo 您可以查看以下汇总文件:
-if exist "results\loso\d3_loso_summary.json" echo   D3汇总: results\loso\d3_loso_summary.json
-if exist "results\loro\d4_loro_summary.json" echo   D4汇总: results\loro\d4_loro_summary.json
+if exist "results\d3\loso\d3_loso_summary.json" echo   D3 LOSO汇总: results\d3\loso\d3_loso_summary.json
+if exist "results\d3\loro\d3_loro_summary.json" echo   D3 LORO汇总: results\d3\loro\d3_loro_summary.json
+if exist "results\d4\sim2real\d4_sim2real_summary.json" echo   D4 Sim2Real汇总: results\d4\sim2real\d4_sim2real_summary.json
 echo.
 pause
 goto :eof

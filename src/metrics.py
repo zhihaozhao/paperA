@@ -25,8 +25,8 @@ import numpy as np
 from typing import Dict, Optional, Tuple
 from sklearn.metrics import f1_score  # NEW: Import for falling_f1
 
-# Assuming SynthCSIDataset is importable (from data_synth.py); adjust path if needed
-from data_synth import SynthCSIDataset  # NEW: Import for overlap_stat; change if in different file
+# Import for overlap_stat computation if needed
+# from src.data_synth import SynthCSIDataset  # Use relative import when needed
 
 
 def confusion_matrix_from_preds(y_true: np.ndarray, y_pred: np.ndarray, num_classes: int) -> np.ndarray:
@@ -323,200 +323,51 @@ def aggregate_classification_metrics(
 # ... (rest of metrics.py, including definitions for compute_ece, compute_nll, etc.)
 
 
-# # -*- coding: utf-8 -*-
-# """
-# Metrics utilities.
-#
-# This module provides:
-# - confusion_matrix_from_preds
-# - compute_macro_f1
-# - compute_ece (expected calibration error; simple binning)
-# - compute_brier
-# - compute_mutual_misclass  <-- new metric
-# - aggregate_classification_metrics: one-stop aggregator to compute all metrics given logits/preds/labels
-#
-# If you already have similar functions elsewhere, you can:
-# - copy only compute_mutual_misclass and confusion_matrix_from_preds
-# - or replace aggregate_classification_metrics with your project-specific aggregator
-#
-# Author: D3 task patch
-# """
-#
-# from __future__ import annotations
-# import numpy as np
-# from typing import Dict, Optional, Tuple
-#
-#
-# def confusion_matrix_from_preds(y_true: np.ndarray, y_pred: np.ndarray, num_classes: int) -> np.ndarray:
-#     """
-#     Build a KxK confusion matrix C where C[i, j] = count(true=i, pred=j).
-#     """
-#     C = np.zeros((num_classes, num_classes), dtype=np.int64)
-#     for t, p in zip(y_true, y_pred):
-#         C[int(t), int(p)] += 1
-#     return C
-#
-#
-# def compute_macro_f1(y_true: np.ndarray, y_pred: np.ndarray, num_classes: int) -> float:
-#     """
-#     Simple macro-F1 from confusion matrix.
-#     """
-#     C = confusion_matrix_from_preds(y_true, y_pred, num_classes)
-#     f1s = []
-#     for k in range(num_classes):
-#         tp = C[k, k]
-#         fp = C[:, k].sum() - tp
-#         fn = C[k, :].sum() - tp
-#         if tp + fp == 0 or tp + fn == 0:
-#             f1s.append(0.0)
-#             continue
-#         prec = tp / float(tp + fp)
-#         rec = tp / float(tp + fn)
-#         if prec + rec == 0:
-#             f1s.append(0.0)
-#             continue
-#         f1s.append(2 * prec * rec / (prec + rec))
-#     return float(np.mean(f1s)) if f1s else 0.0
-#
-#
-# def softmax(x: np.ndarray, axis: int = -1) -> np.ndarray:
-#     x = x - np.max(x, axis=axis, keepdims=True)
-#     ex = np.exp(x)
-#     return ex / np.sum(ex, axis=axis, keepdims=True)
-#
-#
-# def compute_ece(
-#     logits: np.ndarray,
-#     y_true: np.ndarray,
-#     n_bins: int = 15,
-#     temperature: Optional[float] = None,
-# ) -> float:
-#     """
-#     Expected calibration error with equal-width confidence bins on [0,1].
-#     Uses top-class confidence.
-#
-#     If 'temperature' is provided, applies logits/temperature before softmax.
-#     """
-#     if temperature is not None:
-#         probs = softmax(logits / float(temperature), axis=1)
-#     else:
-#         probs = softmax(logits, axis=1)
-#
-#     conf = np.max(probs, axis=1)
-#     pred = np.argmax(probs, axis=1)
-#     correct = (pred == y_true).astype(np.float32)
-#
-#     bins = np.linspace(0.0, 1.0, n_bins + 1)
-#     ece = 0.0
-#     for b in range(n_bins):
-#         lo, hi = bins[b], bins[b + 1]
-#         mask = (conf >= lo) & (conf < hi if b < n_bins - 1 else conf <= hi)
-#         if not np.any(mask):
-#             continue
-#         acc_bin = float(np.mean(correct[mask]))
-#         conf_bin = float(np.mean(conf[mask]))
-#         ece += (np.sum(mask) / len(conf)) * abs(acc_bin - conf_bin)
-#     return float(ece)
-#
-#
-# def compute_brier(
-#     logits: np.ndarray,
-#     y_true: np.ndarray,
-#     num_classes: int,
-#     temperature: Optional[float] = None,
-# ) -> float:
-#     """
-#     Multiclass Brier score (mean squared error between one-hot and probs).
-#     """
-#     if temperature is not None:
-#         probs = softmax(logits / float(temperature), axis=1)
-#     else:
-#         probs = softmax(logits, axis=1)
-#
-#     one_hot = np.eye(num_classes)[y_true]
-#     mse = np.mean((probs - one_hot) ** 2)
-#     return float(mse)
-#
-#
-# def compute_nll(
-#     logits: np.ndarray,
-#     y_true: np.ndarray,
-#     temperature: Optional[float] = None,
-# ) -> float:
-#     """
-#     Negative log-likelihood (cross-entropy) using temperature-scaled logits if provided.
-#     """
-#     if temperature is not None:
-#         logits = logits / float(temperature)
-#     # stable log-softmax
-#     z = logits - np.max(logits, axis=1, keepdims=True)
-#     log_probs = z - np.log(np.sum(np.exp(z), axis=1, keepdims=True))
-#     nll = -np.mean(log_probs[np.arange(len(y_true)), y_true])
-#     return float(nll)
-#
-#
-# def compute_mutual_misclass(y_true: np.ndarray, y_pred: np.ndarray, num_classes: int) -> float:
-#     """
-#     Mutual misclassification rate:
-#     For each unordered class pair {i, j}, compute
-#       m_ij = (C[i,j] + C[j,i]) / (count(true=i) + count(true=j))
-#     and return the average over all pairs.
-#
-#     Returns float in [0, 1]. If num_classes < 2 or denominators are 0, returns 0.0.
-#     """
-#     if num_classes < 2:
-#         return 0.0
-#     C = confusion_matrix_from_preds(y_true, y_pred, num_classes)
-#     totals = C.sum(axis=1)  # samples per true class
-#     pairs = []
-#     for i in range(num_classes):
-#         for j in range(i + 1, num_classes):
-#             denom = float(totals[i] + totals[j])
-#             if denom <= 0:
-#                 continue
-#             m_ij = (C[i, j] + C[j, i]) / denom
-#             pairs.append(m_ij)
-#     if not pairs:
-#         return 0.0
-#     return float(np.mean(pairs))
-#
-#
-# def aggregate_classification_metrics(
-#     logits: np.ndarray,
-#     y_true: np.ndarray,
-#     temperature: Optional[float] = None,
-#     n_bins_ece: int = 15,
-# ) -> Dict[str, float]:
-#     """
-#     Compute a standard set of metrics given logits and labels.
-#     - Returns macro_f1, ece_raw, ece_cal (if temperature), nll_raw, nll_cal, brier, mutual_misclass, temperature
-#     """
-#     num_classes = logits.shape[1]
-#     preds_raw = np.argmax(logits, axis=1)
-#
-#     macro_f1 = compute_macro_f1(y_true, preds_raw, num_classes)
-#     ece_raw = compute_ece(logits, y_true, n_bins=n_bins_ece, temperature=None)
-#     nll_raw = compute_nll(logits, y_true, temperature=None)
-#
-#     if temperature is not None:
-#         ece_cal = compute_ece(logits, y_true, n_bins=n_bins_ece, temperature=temperature)
-#         nll_cal = compute_nll(logits, y_true, temperature=temperature)
-#     else:
-#         ece_cal = ece_raw
-#         nll_cal = nll_raw
-#
-#     # Mutual uses argmax labels; calibration won't change argmax
-#     mutual_misclass = compute_mutual_misclass(y_true, preds_raw, num_classes)
-#
-#     brier = compute_brier(logits, y_true, num_classes, temperature=temperature)
-#
-#     return {
-#         "macro_f1": macro_f1,
-#         "ece_raw": ece_raw,
-#         "ece_cal": ece_cal,
-#         "nll_raw": nll_raw,
-#         "nll_cal": nll_cal,
-#         "brier": brier,
-#         "mutual_misclass": mutual_misclass,
-#         "temperature": float(temperature) if temperature is not None else None,
-#     }
+def compute_metrics(y_true, y_prob, num_classes=4, positive_class=3):
+    """
+    Backward compatibility function for compute_metrics
+    Maps to the new aggregate_classification_metrics function
+    """
+    # Convert probabilities to logits (approximate)
+    y_prob = np.clip(y_prob, 1e-8, 1-1e-8)
+    logits = np.log(y_prob)
+    
+    # Use the new aggregation function
+    metrics = aggregate_classification_metrics(
+        logits=logits,
+        y_true=y_true,
+        temperature=None,
+        num_classes=num_classes
+    )
+    
+    # Extract and rename fields for backward compatibility
+    result = {
+        "macro_f1": metrics.get("macro_f1", 0.0),
+        "f1_fall": metrics.get("falling_f1", 0.0),
+        "ece": metrics.get("ece_raw", 0.0),
+        "auprc": 0.0,  # TODO: Extract from metrics if available
+        "cm": confusion_matrix_from_preds(y_true, np.argmax(y_prob, axis=1), num_classes)
+    }
+    
+    # Compute AUPRC for falling class
+    try:
+        from sklearn.metrics import average_precision_score
+        y_true_bin = (y_true == positive_class).astype(int)
+        if y_true_bin.sum() > 0 and y_true_bin.sum() < len(y_true_bin):
+            result["auprc"] = average_precision_score(y_true_bin, y_prob[:, positive_class])
+        else:
+            result["auprc"] = float("nan")
+    except:
+        result["auprc"] = float("nan")
+    
+    # Add per-class F1
+    try:
+        from sklearn.metrics import f1_score as sklearn_f1
+        per_class_f1 = sklearn_f1(y_true, np.argmax(y_prob, axis=1), 
+                                  average=None, labels=list(range(num_classes)), 
+                                  zero_division=0)
+        result["per_class_f1"] = per_class_f1
+    except:
+        result["per_class_f1"] = np.zeros(num_classes)
+    
+    return result

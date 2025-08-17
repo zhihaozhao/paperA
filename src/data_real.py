@@ -153,3 +153,14 @@ def get_sim2real_loaders(X, y, label_ratio=0.1, seed=0, batch=64):
     
     return (DataLoader(train_ds, batch_size=batch, shuffle=True), 
             DataLoader(test_ds, batch_size=batch, shuffle=False))
+
+def get_real_loaders(dataset="default", batch_size=64, seed=0, split_ratio=0.8):
+    """
+    Generic real data loader for cross-domain experiments
+    This is a placeholder implementation that uses synthetic data for now
+    
+    TODO: Replace with actual benchmark data loading when WiFi-CSI-Sensing-Benchmark is integrated
+    """
+    # For now, fall back to synthetic data since benchmark integration is in progress
+    from src.data_synth import get_synth_loaders
+    return get_synth_loaders(batch=batch_size, difficulty="hard", seed=seed)

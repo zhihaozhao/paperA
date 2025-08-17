@@ -280,3 +280,10 @@ class ConformerLite(nn.Module):
         x = self.pool(x).squeeze(-1)  # [B, d_model]
         return self.head(x)
 
+def get_model(name, input_dim, num_classes=4, logit_l2=0.05, T=128):
+    """
+    Alias for build_model for backward compatibility
+    Maps input_dim to F parameter for consistency
+    """
+    return build_model(name=name, F=input_dim, num_classes=num_classes, T=T)
+

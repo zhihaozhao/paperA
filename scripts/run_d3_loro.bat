@@ -1,12 +1,12 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: D3 实验: LOSO (Leave-One-Subject-Out) 跨主体泛化实验
+:: D3 实验: LORO (Leave-One-Room-Out) 跨房间泛化实验
 :: 基于WiFi-CSI-Sensing-Benchmark真实数据
 :: 适用于Windows conda py310环境
 
 echo ========================================
-echo   D3 LOSO 跨主体泛化实验
+echo   D3 LORO 跨房间泛化实验
 echo   基于WiFi CSI Benchmark真实数据
 echo ========================================
 
@@ -15,7 +15,7 @@ if "%MODELS%"=="" set MODELS=enhanced,cnn,bilstm,conformer_lite
 if "%SEEDS%"=="" set SEEDS=0,1,2,3,4
 if "%EPOCHS%"=="" set EPOCHS=100
 if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main
-if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d3\loso
+if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d3\loro
 if "%PYTHON_ENV%"=="" set PYTHON_ENV=py310
 
 echo 实验配置:
@@ -70,7 +70,7 @@ for %%m in (%MODELS%) do (
 )
 
 echo.
-echo [开始] 运行 %TOTAL_RUNS% 个LOSO实验配置...
+echo [开始] 运行 %TOTAL_RUNS% 个LORO实验配置...
 
 set CURRENT_RUN=0
 :: 运行所有模型和种子的组合
@@ -78,14 +78,14 @@ for %%m in (%MODELS%) do (
     for %%s in (%SEEDS%) do (
         set /a CURRENT_RUN+=1
         echo.
-        echo [!CURRENT_RUN!/%TOTAL_RUNS%] LOSO: model=%%m, seed=%%s
+        echo [!CURRENT_RUN!/%TOTAL_RUNS%] LORO: model=%%m, seed=%%s
         
-        set OUTPUT_FILE=%OUTPUT_DIR%\loso_%%m_seed%%s.json
+        set OUTPUT_FILE=%OUTPUT_DIR%\loro_%%m_seed%%s.json
         
-        echo [执行] 运行LOSO跨主体实验...
+        echo [执行] 运行LORO跨房间实验...
         python -m src.train_cross_domain ^
             --model %%m ^
-            --protocol loso ^
+            --protocol loro ^
             --benchmark_path "%BENCHMARK_PATH%" ^
             --seed %%s ^
             --epochs %EPOCHS% ^
@@ -101,17 +101,17 @@ for %%m in (%MODELS%) do (
     )
 )
 
-:: 生成D3 LOSO汇总报告
+:: 生成D3 LORO汇总报告
 echo.
-echo [汇总] 生成D3 LOSO实验报告...
+echo [汇总] 生成D3 LORO实验报告...
 python -c "
 import json, glob, numpy as np
 from pathlib import Path
 import os
 
-# 读取所有LOSO结果文件
+# 读取所有LORO结果文件
 output_dir = '%OUTPUT_DIR%'.replace('\\\\', '/')
-pattern = f'{output_dir}/loso_*_seed*.json'
+pattern = f'{output_dir}/loro_*_seed*.json'
 files = glob.glob(pattern)
 
 print(f'找到 {len(files)} 个结果文件')
@@ -128,7 +128,7 @@ for f in files:
         # 提取文件名信息
         fname = os.path.basename(f)
         parts = fname.replace('.json', '').split('_')
-        model = '_'.join(parts[1:-1])  # loso_MODEL_seedN -> MODEL
+        model = '_'.join(parts[1:-1])  # loro_MODEL_seedN -> MODEL
         seed = int(parts[-1].replace('seed', ''))
         
         if model not in models:
@@ -188,7 +188,7 @@ if results:
             }
     
     summary['experiment_info'] = {
-        'protocol': 'LOSO',
+        'protocol': 'LORO',
         'total_configs': len(results),
         'models': models,
         'seeds': sorted(seeds),
@@ -199,11 +199,11 @@ if results:
         }
     }
     
-    summary_file = os.path.join('%OUTPUT_DIR%', 'd3_loso_summary.json')
+    summary_file = os.path.join('%OUTPUT_DIR%', 'd3_loro_summary.json')
     with open(summary_file, 'w', encoding='utf-8') as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
     
-    print('\\n=== D3 LOSO 实验汇总 ===')
+    print('\\n=== D3 LORO 实验汇总 ===')
     for model, stats in summary['models'].items():
         print(f'\\n{model.upper()}模型 (n={stats[\"n_seeds\"]}):')
         print(f'  Macro F1: {stats[\"macro_f1_mean\"]:.3f} ± {stats[\"macro_f1_std\"]:.3f}')
@@ -225,12 +225,13 @@ else:
 
 echo.
 echo ========================================
-echo [成功] D3 LOSO 实验全部完成!
+echo [成功] D3 LORO 实验全部完成!
 echo ========================================
 echo 结果目录: %OUTPUT_DIR%
 echo.
 echo 下一步建议:
-echo   1. 查看汇总: type "%OUTPUT_DIR%\d3_loso_summary.json"
-echo   2. 运行LORO: scripts\run_d3_loro.bat
-echo   3. 验证结果: python scripts\validate_d3_acceptance.py --protocol loso
+echo   1. 查看汇总: type "%OUTPUT_DIR%\d3_loro_summary.json"
+echo   2. 运行D4实验: scripts\run_d4_loro.bat
+echo   3. 验证结果: python scripts\validate_d3_acceptance.py --protocol loro
+echo   4. 对比LOSO结果: python scripts\compare_loso_loro.py
 echo ========================================
