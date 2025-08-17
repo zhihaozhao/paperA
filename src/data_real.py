@@ -163,4 +163,4 @@ def get_real_loaders(dataset="default", batch_size=64, seed=0, split_ratio=0.8):
     """
     # For now, fall back to synthetic data since benchmark integration is in progress
     from src.data_synth import get_synth_loaders
-    return get_synth_loaders(batch=batch_size, difficulty="hard", seed=seed)
+    return get_synth_loaders(batch=batch_size, difficulty="hard", seed=seed, num_classes=4)

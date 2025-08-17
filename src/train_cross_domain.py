@@ -303,7 +303,7 @@ def run_loso_experiment(args):
     
     train_loader, val_loader, test_loader = get_synth_loaders(
         batch=args.batch_size, difficulty="mid", seed=args.seed,
-        n=1500, T=128, F=30
+        n=1500, T=128, F=30, num_classes=4
     )
     
     # Model setup
@@ -359,7 +359,7 @@ def run_loro_experiment(args):
     
     train_loader, val_loader, _ = get_synth_loaders(
         batch=args.batch_size, difficulty="hard", seed=args.seed,
-        n=1500, T=128, F=30,
+        n=1500, T=128, F=30, num_classes=4,
         sc_corr_rho=0.7, env_burst_rate=0.05, gain_drift_std=0.003
     )
     
@@ -423,7 +423,7 @@ def run_sim2real_experiment(args):
         logger.info("Training model from scratch on synthetic data")
         train_loader, val_loader, _ = get_synth_loaders(
             batch=args.batch_size, difficulty="mid", seed=args.seed,
-            n=2000, T=128, F=30
+            n=2000, T=128, F=30, num_classes=4
         )
         
         x_sample, _ = next(iter(train_loader))
