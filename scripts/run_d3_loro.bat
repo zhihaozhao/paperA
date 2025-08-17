@@ -106,7 +106,8 @@ for %%m in (%MODELS%) do (
         echo [EXPERIMENT !TOTAL_CONFIGS!] Model: %%m, Seed: %%s, Protocol: loro
         
         :: Run single experiment
-        python -m src.train_cross_domain --model %%m --seed %%s --epochs %EPOCHS% --protocol loro --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%"
+        set OUTPUT_FILE=%OUTPUT_DIR%\loro_%%m_seed%%s.json
+        python -m src.train_cross_domain --model %%m --seed %%s --epochs %EPOCHS% --protocol loro --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
         
         if !ERRORLEVEL! equ 0 (
             set /a SUCCESS_CONFIGS+=1

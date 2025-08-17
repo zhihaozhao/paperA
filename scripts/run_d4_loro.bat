@@ -120,7 +120,9 @@ for %%m in (%MODELS%) do (
                 echo [EXPERIMENT !TOTAL_CONFIGS!] Model: %%m, Ratio: %%r, Method: %%t, Seed: %%s
                 
                 :: Run single Sim2Real experiment
-                python -m src.sim2real --model %%m --seed %%s --label_ratio %%r --transfer_method %%t --d2_model_path "%D2_MODELS_PATH%" --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%"
+                set OUTPUT_FILE=%OUTPUT_DIR%\sim2real_%%m_%%r_%%t_seed%%s.json
+                set MODEL_FILE=%D2_MODELS_PATH%\%%m_best.pth
+                python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --benchmark_path "%BENCHMARK_PATH%" --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 
                 if !ERRORLEVEL! equ 0 (
                     set /a SUCCESS_CONFIGS+=1
