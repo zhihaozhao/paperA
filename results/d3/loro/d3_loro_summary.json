@@ -1,0 +1,20 @@
+{ 
+  "experiment_type": "D3_LORO", 
+  "start_time": "2025/08/18 周一  5:39:51.58", 
+  "configuration": { 
+    "models": "enhanced,cnn,bilstm,conformer_lite", 
+    "seeds": "0,1,2,3,4", 
+    "epochs": 100, 
+    "protocol": "loro", 
+    "benchmark_path": "benchmarks\WiFi-CSI-Sensing-Benchmark-main\Data" 
+  }, 
+  "results": [ 
+  ], 
+  "completion_stats": { 
+    "total_configs": 20, 
+    "successful": 20, 
+    "failed": 0, 
+    "success_rate": "20/20" 
+  }, 
+  "end_time": "2025/08/18 周一  7:39:33.00" 
+} 

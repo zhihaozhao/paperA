@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "model": "cnn",
+    "difficulty": "hard",
+    "seed": 1,
+    "F": 52,
+    "T": 128,
+    "num_classes": 8,
+    "git_commit": "4be13390535d28023a30a9689ca01dab14e48812",
+    "git_branch": "feat/enhanced-model-and-sweep",
+    "device": "cuda",
+    "timestamp": "2025-08-14T11:59:40.352685Z"
+  },
+  "args": {
+    "model": "cnn",
+    "difficulty": "hard",
+    "seed": 1,
+    "epochs": 100,
+    "batch": 1024,
+    "n_samples": 20000,
+    "T": 128,
+    "F": 52,
+    "sc_corr_rho": 0.5,
+    "env_burst_rate": 0.2,
+    "gain_drift_std": 0.6,
+    "class_overlap": 0.8,
+    "label_noise_prob": 0.1,
+    "early_metric": "macro_f1",
+    "patience": 10,
+    "ckpt_dir": "checkpoints\\",
+    "logit_l2": 0.1,
+    "temp_mode": "logspace",
+    "temp_min": 1.0,
+    "temp_max": 5.0,
+    "temp_steps": 100,
+    "val_split": 0.5,
+    "fixed_temp": 1.0,
+    "out_json": "results\\paperA_cnn_hard_1.json"
+  },
+  "metrics": {
+    "macro_f1": 0.9943474806559893,
+    "ece_raw": 0.11062039065361023,
+    "ece_cal": 0.001896134227514267,
+    "nll_raw": 0.13339227437973022,
+    "nll_cal": 0.01924782805144787,
+    "brier": 0.0011663670753340614,
+    "mutual_misclass": 0.0008068679932581799,
+    "temperature": 0.4480102062225342,
+    "falling_f1": 0.9943474806559893
+  },
+  "seed": 1,
+  "best_ckpt": "checkpoints\\best_1_hard.pth",
+  "early_stop": {
+    "metric": "macro_f1",
+    "best_value": 0.9965722263175685,
+    "best_epoch": 39,
+    "patience": 10
+  },
+  "data_params": {
+    "n_samples": 20000,
+    "sc_corr_rho": 0.5,
+    "env_burst_rate": 0.2,
+    "gain_drift_std": 0.6,
+    "class_overlap": 0.8,
+    "label_noise_prob": 0.1
+  },
+  "calibration": {
+    "temperature": 0.4480102062225342,
+    "best_nll": 0.02147495560348034,
+    "method": "logspace"
+  }
+}
