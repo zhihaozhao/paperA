@@ -143,6 +143,12 @@ for %%m in (%MODELS%) do (
                 rem Fallback to checkpoints root (final_*)
                 if "%MODEL_FILE%"=="" if exist "checkpoints\final_%%m_%%s_hard.pth" set MODEL_FILE=checkpoints\final_%%m_%%s_hard.pth
                 if "%MODEL_FILE%"=="" if exist "checkpoints\final_%%m_0_hard.pth" set MODEL_FILE=checkpoints\final_%%m_0_hard.pth
+                rem Recursive search for exact matches in D2 folder
+                if "%MODEL_FILE%"=="" for /f "delims=" %%p in ('dir /b /s "%D2_MODELS_PATH%\final_%%m_%%s_hard.pth" 2^>nul') do set MODEL_FILE=%%p
+                if "%MODEL_FILE%"=="" for /f "delims=" %%p in ('dir /b /s "%D2_MODELS_PATH%\final_%%m_0_hard.pth" 2^>nul') do set MODEL_FILE=%%p
+                rem Recursive search in project checkpoints folder
+                if "%MODEL_FILE%"=="" for /f "delims=" %%p in ('dir /b /s "checkpoints\final_%%m_%%s_hard.pth" 2^>nul') do set MODEL_FILE=%%p
+                if "%MODEL_FILE%"=="" for /f "delims=" %%p in ('dir /b /s "checkpoints\final_%%m_0_hard.pth" 2^>nul') do set MODEL_FILE=%%p
                 rem Fallback to checkpoints root (best_*), last resort
                 if "%MODEL_FILE%"=="" if exist "checkpoints\best_%%m_%%s_hard.pth" set MODEL_FILE=checkpoints\best_%%m_%%s_hard.pth
                 if "%MODEL_FILE%"=="" if exist "checkpoints\best_%%s_hard.pth" set MODEL_FILE=checkpoints\best_%%s_hard.pth
@@ -152,9 +158,10 @@ for %%m in (%MODELS%) do (
                 set AMP_FLAG=
                 if "%AMP%"=="1" set AMP_FLAG=--amp
                 if not "%MODEL_FILE%"=="" (
+                    echo [INFO] Using D2 checkpoint: !MODEL_FILE!
                     python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 ) else (
-                    echo [WARN] No specific D2 checkpoint matched naming heuristics in %D2_MODELS_PATH% for model=%%m seed=%%s. Will pass directory for internal discovery.
+                    echo [WARN] No specific D2 checkpoint matched in %D2_MODELS_PATH% for model=%%m seed=%%s. Passing directory for internal discovery.
                     python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "%D2_MODELS_PATH%" --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 )
                 
