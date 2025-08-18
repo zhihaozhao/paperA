@@ -668,7 +668,12 @@ def run_sim2real_experiment(args):
         try:
             if os.path.isdir(d2_path):
                 import glob
-                # Recursive patterns to robustly find common naming schemes
+                # First: try exact expected filename final_{model}_{seed}_hard.pth
+                exact_ckpt = os.path.join(d2_path, f"final_{args.model}_{args.seed}_hard.pth")
+                if os.path.isfile(exact_ckpt):
+                    ckpt_path = exact_ckpt
+                else:
+                    # Recursive patterns to robustly find common naming schemes
                 name_patts = [
                     f"*{args.model}*seed{args.seed}*hard.*",
                     f"*{args.model}*seed{args.seed}*.pt",
@@ -676,26 +681,31 @@ def run_sim2real_experiment(args):
                     f"final_{args.model}_seed{args.seed}_hard.*",
                     f"final_{args.model}_{args.seed}_hard.*",
                     f"*{args.model}*_{args.seed}_hard.*",
-                    f"final_model_seed{args.seed}_hard.*",
-                    f"*seed{args.seed}*hard.*",
-                    f"*seed{args.seed}*.pt",
-                    f"*seed{args.seed}*.pth",
-                    "*final*.pt", "*final*.pth",
-                    "*best*.pt", "*best*.pth",
-                    "*.pt", "*.pth",
+                    # Avoid cross-arch fallbacks; do not include generic seed-only patterns here
+                    # Keep minimal generics if they still include model name
+                    f"*final*{args.model}*.*",
+                    f"*best*{args.model}*.*",
                 ]
                 # Prefer the first pattern that yields any match; within that, pick the newest by mtime
-                ckpt_path = None
-                for npat in name_patts:
-                    pat = os.path.join(d2_path, "**", npat)
-                    matches = glob.glob(pat, recursive=True)
-                    if matches:
-                        ckpt_path = max(matches, key=lambda p: os.path.getmtime(p))
-                        break
+                if 'ckpt_path' not in locals() or not ckpt_path:
+                    ckpt_path = None
+                    for npat in name_patts:
+                        pat = os.path.join(d2_path, "**", npat)
+                        matches = glob.glob(pat, recursive=True)
+                        if matches:
+                            ckpt_path = max(matches, key=lambda p: os.path.getmtime(p))
+                            break
             elif os.path.isfile(d2_path):
                 ckpt_path = d2_path
             else:
                 ckpt_path = None
+            # Guard: ensure the chosen file appears to match the requested architecture
+            if ckpt_path and os.path.exists(ckpt_path):
+                base = os.path.basename(ckpt_path).lower()
+                if args.model.lower() not in base:
+                    logger.warning(f"Found checkpoint {ckpt_path} but it does not match model={args.model}. Skipping to avoid cross-arch load.")
+                    ckpt_path = None
+
             if ckpt_path and os.path.exists(ckpt_path):
                 logger.info(f"Loading D2 pre-trained model from {ckpt_path}")
                 try:
