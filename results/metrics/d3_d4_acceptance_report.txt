@@ -1,0 +1,94 @@
+D3/D4 EXPERIMENTAL ACCEPTANCE REPORT
+==================================================
+
+D3 Results: 40 configurations processed
+D4 Results: 56 configurations processed
+
+OVERALL STATUS: ✗ REJECTED
+
+ISSUES FOUND:
+- D3: LOSO_conformer_lite: low mean macro F1 = 0.403
+- D3: LOSO_conformer_lite: high variability CV = 0.856
+- D3: LORO_cnn: high variability CV = 0.109
+- D4: enhanced zero_shot: best F1 0.160 < 0.900 within 20.0% labels
+- D4: enhanced fine_tune: best F1 0.824 < 0.900 within 20.0% labels
+- D4: enhanced linear_probe: best F1 0.273 < 0.900 within 20.0% labels
+
+D3 CROSS-DOMAIN ANALYSIS:
+------------------------------
+
+LOSO Protocol:
+  bilstm: 0.803±0.020 (5 seeds)
+  cnn: 0.842±0.022 (5 seeds)
+  conformer_lite: 0.403±0.345 (5 seeds)
+  enhanced: 0.830±0.001 (5 seeds)
+
+LORO Protocol:
+  enhanced: 0.830±0.001 (5 seeds)
+  conformer_lite: 0.841±0.035 (5 seeds)
+  cnn: 0.796±0.087 (5 seeds)
+  bilstm: 0.789±0.040 (5 seeds)
+
+D4 SIM2REAL ANALYSIS:
+------------------------------
+
+enhanced Model:
+  zero_shot:
+      1.0% labels: 0.160 F1 (+0.000)
+      1.0% labels: 0.154 F1 (+0.000)
+      1.0% labels: 0.157 F1 (+0.000)
+      1.0% labels: 0.126 F1 (+0.000)
+      1.0% labels: 0.152 F1 (+0.000)
+      1.0% labels: 0.154 F1 (+0.000)
+      5.0% labels: 0.126 F1 (+0.000)
+      5.0% labels: 0.153 F1 (+0.000)
+      5.0% labels: 0.160 F1 (+0.000)
+      5.0% labels: 0.153 F1 (+0.000)
+      5.0% labels: 0.157 F1 (+0.000)
+  fine_tune:
+      1.0% labels: 0.419 F1 (+0.293)
+      1.0% labels: 0.498 F1 (+0.341)
+      1.0% labels: 0.498 F1 (+0.338)
+      1.0% labels: 0.498 F1 (+0.341)
+      1.0% labels: 0.476 F1 (+0.324)
+      1.0% labels: 0.461 F1 (+0.307)
+      1.0% labels: 0.461 F1 (+0.307)
+      1.0% labels: 0.498 F1 (+0.338)
+      1.0% labels: 0.429 F1 (+0.427)
+      1.0% labels: 0.419 F1 (+0.293)
+      1.0% labels: 0.476 F1 (+0.324)
+      1.0% labels: 0.329 F1 (+0.175)
+      5.0% labels: 0.792 F1 (+0.631)
+      5.0% labels: 0.806 F1 (+0.653)
+      5.0% labels: 0.781 F1 (+0.624)
+      5.0% labels: 0.766 F1 (+0.613)
+      5.0% labels: 0.772 F1 (+0.646)
+      5.0% labels: 0.766 F1 (+0.613)
+     10.0% labels: 0.713 F1 (+0.559)
+     10.0% labels: 0.803 F1 (+0.675)
+     10.0% labels: 0.801 F1 (+0.649)
+     10.0% labels: 0.775 F1 (+0.615)
+     10.0% labels: 0.556 F1 (+0.399)
+     20.0% labels: 0.818 F1 (+0.665)
+     20.0% labels: 0.817 F1 (+0.691)
+     20.0% labels: 0.823 F1 (+0.666)
+     20.0% labels: 0.821 F1 (+0.661)
+     20.0% labels: 0.824 F1 (+0.673)
+    100.0% labels: 0.833 F1 (+0.700)
+    100.0% labels: 0.833 F1 (+0.700)
+    100.0% labels: 0.833 F1 (+0.708)
+    100.0% labels: 0.833 F1 (+0.700)
+    100.0% labels: 0.833 F1 (+0.750)
+  linear_probe:
+      1.0% labels: 0.121 F1 (+-0.039)
+      1.0% labels: 0.134 F1 (+0.008)
+      1.0% labels: 0.227 F1 (+0.070)
+      1.0% labels: 0.206 F1 (+0.052)
+      1.0% labels: 0.221 F1 (+0.069)
+      1.0% labels: 0.206 F1 (+0.052)
+      1.0% labels: 0.221 F1 (+0.069)
+      5.0% labels: 0.273 F1 (+0.120)
+      5.0% labels: 0.258 F1 (+0.098)
+      5.0% labels: 0.166 F1 (+0.009)
+      5.0% labels: 0.169 F1 (+0.043)
+      5.0% labels: 0.225 F1 (+0.072)
