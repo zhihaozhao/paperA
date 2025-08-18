@@ -674,27 +674,27 @@ def run_sim2real_experiment(args):
                     ckpt_path = exact_ckpt
                 else:
                     # Recursive patterns to robustly find common naming schemes
-                name_patts = [
-                    f"*{args.model}*seed{args.seed}*hard.*",
-                    f"*{args.model}*seed{args.seed}*.pt",
-                    f"*{args.model}*seed{args.seed}*.pth",
-                    f"final_{args.model}_seed{args.seed}_hard.*",
-                    f"final_{args.model}_{args.seed}_hard.*",
-                    f"*{args.model}*_{args.seed}_hard.*",
-                    # Avoid cross-arch fallbacks; do not include generic seed-only patterns here
-                    # Keep minimal generics if they still include model name
-                    f"*final*{args.model}*.*",
-                    f"*best*{args.model}*.*",
-                ]
-                # Prefer the first pattern that yields any match; within that, pick the newest by mtime
-                if 'ckpt_path' not in locals() or not ckpt_path:
-                    ckpt_path = None
-                    for npat in name_patts:
-                        pat = os.path.join(d2_path, "**", npat)
-                        matches = glob.glob(pat, recursive=True)
-                        if matches:
-                            ckpt_path = max(matches, key=lambda p: os.path.getmtime(p))
-                            break
+                    name_patts = [
+                        f"*{args.model}*seed{args.seed}*hard.*",
+                        f"*{args.model}*seed{args.seed}*.pt",
+                        f"*{args.model}*seed{args.seed}*.pth",
+                        f"final_{args.model}_seed{args.seed}_hard.*",
+                        f"final_{args.model}_{args.seed}_hard.*",
+                        f"*{args.model}*_{args.seed}_hard.*",
+                        # Avoid cross-arch fallbacks; do not include generic seed-only patterns here
+                        # Keep minimal generics if they still include model name
+                        f"*final*{args.model}*.*",
+                        f"*best*{args.model}*.*",
+                    ]
+                    # Prefer the first pattern that yields any match; within that, pick the newest by mtime
+                    if 'ckpt_path' not in locals() or not ckpt_path:
+                        ckpt_path = None
+                        for npat in name_patts:
+                            pat = os.path.join(d2_path, "**", npat)
+                            matches = glob.glob(pat, recursive=True)
+                            if matches:
+                                ckpt_path = max(matches, key=lambda p: os.path.getmtime(p))
+                                break
             elif os.path.isfile(d2_path):
                 ckpt_path = d2_path
             else:
