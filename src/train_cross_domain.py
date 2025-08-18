@@ -356,6 +356,9 @@ def main():
     parser.add_argument("--loro_all_folds", action="store_true", help="Run LORO across all rooms and aggregate")
     parser.add_argument("--positive_class", type=int, default=5, help="Positive class for AUPRC (Epileptic_Fall=5 in 8-class system)")
     parser.add_argument("--amp", action="store_true", help="Enable CUDA AMP for faster training if available")
+    # Input normalization for real data (D4)
+    parser.add_argument("--input_norm", type=str, default="zscore", choices=["none","zscore","center","minmax"], help="Normalization applied to REAL X before splitting")
+    parser.add_argument("--norm_eps", type=float, default=1e-6, help="Epsilon to stabilize normalization")
     
     # Legacy compatibility
     parser.add_argument("--source", type=str, default="synth", help="Source domain (legacy)")
@@ -657,6 +660,24 @@ def run_sim2real_experiment(args):
     bench = BenchmarkCSIDataset(args.benchmark_path, files_per_activity=int(getattr(args, 'files_per_activity', 2)))
     X, y, subjects, rooms, metadata = bench.load_wifi_csi_benchmark()
     T_real, F_real = int(X.shape[1]), int(X.shape[2])
+    # Optional normalization on REAL data for better zero-shot stability
+    def _normalize_csi(arr, mode: str, eps: float):
+        if mode == "none":
+            return arr
+        if mode == "zscore":
+            mean = arr.mean(axis=(0,1), keepdims=True)
+            std = arr.std(axis=(0,1), keepdims=True)
+            return (arr - mean) / (std + eps)
+        if mode == "center":
+            mean = arr.mean(axis=(0,1), keepdims=True)
+            return arr - mean
+        if mode == "minmax":
+            amin = arr.min(axis=(0,1), keepdims=True)
+            amax = arr.max(axis=(0,1), keepdims=True)
+            return 2.0 * (arr - amin) / (amax - amin + eps) - 1.0
+        return arr
+    X = _normalize_csi(X, mode=str(getattr(args, 'input_norm', 'zscore')).lower(), eps=float(getattr(args, 'norm_eps', 1e-6)))
+    logger.info(f"[D4] Applied input_norm={args.input_norm} to REAL data")
     # Split real data into labeled small subset (for probe/calibration) and unlabeled test set
     train_loader, test_loader = get_sim2real_loaders(X, y, label_ratio=float(args.label_ratio), seed=int(args.seed), batch=args.batch_size)
     logger.info(f"[D4] Zero-shot REAL eval prepared: T={T_real}, F={F_real}, N_total={len(y)}, N_labeled={len(train_loader.dataset)}, N_test={len(test_loader.dataset)}")
