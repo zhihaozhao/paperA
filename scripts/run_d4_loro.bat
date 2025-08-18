@@ -34,6 +34,8 @@ if "%LABEL_RATIOS%"=="" set LABEL_RATIOS=0.01,0.05,0.10,0.15,0.20,0.50,1.00
 if "%TRANSFER_METHODS%"=="" set TRANSFER_METHODS=zero_shot,linear_probe,fine_tune,temp_scale
 if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main
 if "%D2_MODELS_PATH%"=="" set D2_MODELS_PATH=checkpoints\d2
+rem Prefer user's local D2 checkpoints directory if it exists
+if exist "E:\paperA\paperA\checkpoints" set D2_MODELS_PATH=E:\paperA\paperA\checkpoints
 if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d4\sim2real
 if "%AMP%"=="" set AMP=0
 
@@ -138,10 +140,10 @@ for %%m in (%MODELS%) do (
                 set AMP_FLAG=
                 if "%AMP%"=="1" set AMP_FLAG=--amp
                 if not "%MODEL_FILE%"=="" (
-                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
+                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 ) else (
                     echo [WARN] No D2 checkpoint found for model=%%m seed=%%s in %D2_MODELS_PATH%. Running from scratch.
-                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
+                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 )
                 
                 if !ERRORLEVEL! equ 0 (
