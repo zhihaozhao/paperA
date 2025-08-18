@@ -1,0 +1,7 @@
+# Figure 4: D4 Label Efficiency Data for Origin
+# Column 1: Label_Percent, Column 2: F1_Score, Column 3: Error_Bar
+1.0	0.455	0.050
+5.0	0.780	0.016
+10.0	0.730	0.104
+20.0	0.821	0.003
+100.0	0.833	0.000

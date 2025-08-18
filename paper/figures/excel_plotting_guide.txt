@@ -1,0 +1,36 @@
+
+# Excel/LibreOffice Calc 绘图指南
+
+## Figure 3: D3 Cross-Domain Performance
+
+数据文件: figure3_excel_data.csv
+
+绘图步骤:
+1. 导入CSV数据到Excel
+2. 选择数据范围 A1:E5
+3. 插入图表 → 柱状图 → 分组柱状图
+4. 格式设置:
+   - 图表尺寸: 17.1cm × 10cm
+   - 字体: Times New Roman, 10pt
+   - 颜色: LOSO=#2E86AB, LORO=#E84855
+   - 误差棒: 添加误差线，±1标准差
+
+## Figure 4: D4 Label Efficiency
+
+数据文件: figure4_excel_data.csv
+
+绘图步骤:
+1. 导入CSV数据到Excel
+2. 选择Label_Percent和F1_Score列
+3. 插入图表 → 折线图 → 带标记的平滑线
+4. 格式设置:
+   - 图表尺寸: 17.1cm × 12cm
+   - 主线: #2E86AB, 2.5pt宽度
+   - 添加趋势线和误差棒
+   - 标注: 82.1% @ 20%标签
+
+## IEEE IoTJ导出设置:
+- 分辨率: 300 DPI
+- 格式: PDF (首选) 或 高分辨率PNG
+- 字体: Times New Roman
+- 线条: 最小0.5pt
