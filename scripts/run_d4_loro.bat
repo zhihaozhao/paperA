@@ -161,7 +161,9 @@ for %%m in (%MODELS%) do (
                     echo [INFO] Using D2 checkpoint: !MODEL_FILE!
                     python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 ) else (
+                    set EXPECTED_FILE=%D2_MODELS_PATH%\final_%%m_%%s_hard.pth
                     echo [WARN] No specific D2 checkpoint matched in %D2_MODELS_PATH% for model=%%m seed=%%s. Passing directory for internal discovery.
+                    echo [INFO] Expected exact checkpoint: !EXPECTED_FILE!
                     python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "%D2_MODELS_PATH%" --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 )
                 

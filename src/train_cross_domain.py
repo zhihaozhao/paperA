@@ -670,6 +670,7 @@ def run_sim2real_experiment(args):
                 import glob
                 # First: try exact expected filename final_{model}_{seed}_hard.pth
                 exact_ckpt = os.path.join(d2_path, f"final_{args.model}_{args.seed}_hard.pth")
+                logger.info(f"[D4] Expecting exact D2 checkpoint: {exact_ckpt}")
                 if os.path.isfile(exact_ckpt):
                     ckpt_path = exact_ckpt
                 else:
@@ -686,12 +687,16 @@ def run_sim2real_experiment(args):
                         f"*final*{args.model}*.*",
                         f"*best*{args.model}*.*",
                     ]
+                    logger.info(f"[D4] Searching D2 checkpoint patterns (in order): {name_patts}")
                     # Prefer the first pattern that yields any match; within that, pick the newest by mtime
                     if 'ckpt_path' not in locals() or not ckpt_path:
                         ckpt_path = None
                         for npat in name_patts:
                             pat = os.path.join(d2_path, "**", npat)
                             matches = glob.glob(pat, recursive=True)
+                            sample = matches[:5]
+                            if sample:
+                                logger.info(f"[D4] Pattern matched {len(matches)} file(s), sample: {sample}")
                             if matches:
                                 ckpt_path = max(matches, key=lambda p: os.path.getmtime(p))
                                 break
