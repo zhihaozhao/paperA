@@ -10,7 +10,7 @@ import os
 import torch
 import numpy as np
 from pathlib import Path
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 from src.metrics import compute_metrics
 from src.data_synth import get_synth_loaders
@@ -674,6 +674,8 @@ def run_sim2real_experiment(args):
                     f"*{args.model}*seed{args.seed}*.pt",
                     f"*{args.model}*seed{args.seed}*.pth",
                     f"final_{args.model}_seed{args.seed}_hard.*",
+                    f"final_{args.model}_{args.seed}_hard.*",
+                    f"*{args.model}*_{args.seed}_hard.*",
                     f"final_model_seed{args.seed}_hard.*",
                     f"*seed{args.seed}*hard.*",
                     f"*seed{args.seed}*.pt",
@@ -682,11 +684,14 @@ def run_sim2real_experiment(args):
                     "*best*.pt", "*best*.pth",
                     "*.pt", "*.pth",
                 ]
-                cands = []
+                # Prefer the first pattern that yields any match; within that, pick the newest by mtime
+                ckpt_path = None
                 for npat in name_patts:
                     pat = os.path.join(d2_path, "**", npat)
-                    cands.extend(glob.glob(pat, recursive=True))
-                ckpt_path = max(cands, key=lambda p: os.path.getmtime(p)) if cands else None
+                    matches = glob.glob(pat, recursive=True)
+                    if matches:
+                        ckpt_path = max(matches, key=lambda p: os.path.getmtime(p))
+                        break
             elif os.path.isfile(d2_path):
                 ckpt_path = d2_path
             else:
@@ -695,23 +700,30 @@ def run_sim2real_experiment(args):
                 logger.info(f"Loading D2 pre-trained model from {ckpt_path}")
                 try:
                     obj = torch.load(ckpt_path, map_location=device)
-                    if hasattr(obj, 'state_dict'):
-                        # Likely a torch.nn.Module
+                    # Case A: fully serialized nn.Module
+                    if isinstance(obj, torch.nn.Module):
                         model = obj
-                    elif isinstance(obj, dict) and any(k in obj for k in ('state_dict','model','model_state')):
-                        # Common checkpoint dict formats
-                        state = obj.get('state_dict') or obj.get('model_state') or obj.get('model')
-                        # Build fresh model and load state dict
+                    # Case B: checkpoint dict or raw state_dict
+                    elif isinstance(obj, (dict, OrderedDict)):
+                        if any(k in obj for k in ('state_dict', 'model', 'model_state')):
+                            state = obj.get('state_dict') or obj.get('model_state') or obj.get('model')
+                        else:
+                            # Treat mapping as raw state_dict
+                            state = obj
                         model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
                         try:
                             model.load_state_dict(state, strict=False)
                         except Exception:
-                            # If wrapped with module.* keys
-                            new_state = {k.replace('module.',''): v for k,v in state.items()}
-                            model.load_state_dict(new_state, strict=False)
+                            cleaned = {k.replace('module.', ''): v for k, v in state.items()}
+                            model.load_state_dict(cleaned, strict=False)
                     else:
-                        # Assume it's directly the model
-                        model = obj
+                        # Fallback attempt
+                        try:
+                            model = obj
+                            _ = model.eval()
+                        except Exception:
+                            logger.warning("Unrecognized checkpoint object; initializing fresh model.")
+                            model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
                 except Exception as e:
                     logger.warning(f"Failed to deserialize D2 model from {ckpt_path}: {e}. Running from scratch.")
             else:
