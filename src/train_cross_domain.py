@@ -668,9 +668,12 @@ def run_sim2real_experiment(args):
             logger.warning(f"Failed to load D2 model: {e}, training from scratch")
     
     if model is None:
-        # Either skip synthetic pretraining (random init) or pretrain on synthetic
-        if bool(getattr(args, 'skip_synth_pretrain', False)):
-            logger.info("[D4] Skipping synthetic pretraining; using random-initialized model for zero_shot/transfer")
+        # Do NOT load or pretrain on synthetic data for zero-shot (and temp_scale) transfers
+        if str(getattr(args, 'transfer_method', 'zero_shot')).lower() in ("zero_shot", "temp_scale"):
+            logger.info("[D4] Zero-shot/TempScale: initializing model without synthetic pretraining")
+            model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
+        elif bool(getattr(args, 'skip_synth_pretrain', False)):
+            logger.info("[D4] Skipping synthetic pretraining; using random-initialized model for transfer")
             model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
         else:
             logger.info("Training model from scratch on synthetic data")
