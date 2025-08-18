@@ -653,12 +653,13 @@ def run_sim2real_experiment(args):
     set_seed(args.seed)
     
     # Load REAL dataset first to infer input dims and ensure no fallback
-    from src.data_real import BenchmarkCSIDataset, RealCSIDataset
+    from src.data_real import BenchmarkCSIDataset, RealCSIDataset, get_sim2real_loaders
     bench = BenchmarkCSIDataset(args.benchmark_path, files_per_activity=int(getattr(args, 'files_per_activity', 2)))
     X, y, subjects, rooms, metadata = bench.load_wifi_csi_benchmark()
     T_real, F_real = int(X.shape[1]), int(X.shape[2])
-    test_loader = DataLoader(RealCSIDataset(X, y), batch_size=args.batch_size, shuffle=False)
-    logger.info(f"[D4] Zero-shot REAL eval prepared: T={T_real}, F={F_real}, N={len(y)}")
+    # Split real data into labeled small subset (for probe/calibration) and unlabeled test set
+    train_loader, test_loader = get_sim2real_loaders(X, y, label_ratio=float(args.label_ratio), seed=int(args.seed), batch=args.batch_size)
+    logger.info(f"[D4] Zero-shot REAL eval prepared: T={T_real}, F={F_real}, N_total={len(y)}, N_labeled={len(train_loader.dataset)}, N_test={len(test_loader.dataset)}")
     
     # Load D2 pre-trained model if available (supports directory or file path)
     model = None
@@ -704,11 +705,11 @@ def run_sim2real_experiment(args):
     if args.transfer_method == "zero_shot":
         final_metrics = zero_shot_metrics
     elif args.transfer_method == "temp_scale":
-        # Temperature scaling only
-        final_metrics = apply_temperature_scaling(model, test_loader, device, args.positive_class)
+        # Temperature scaling only: fit T on small labeled subset, evaluate on held-out test
+        final_metrics = apply_temperature_scaling(model, train_loader, test_loader, device, args.positive_class)
     else:
-        # Fine-tuning or linear probe with limited labels
-        final_metrics = transfer_learning(model, test_loader, device, args)
+        # Fine-tuning or linear probe with limited labels on labeled subset, evaluate on held-out test
+        final_metrics = transfer_learning(model, train_loader, test_loader, device, args)
     
     # Save D4 format results
     results = {
@@ -787,42 +788,48 @@ def train_and_evaluate(model, train_loader, val_loader, device, args, class_weig
     
     return best_metrics
 
-def apply_temperature_scaling(model, loader, device, positive_class):
-    """Apply temperature scaling calibration"""
-    # Get model outputs
+def apply_temperature_scaling(model, labeled_loader, test_loader, device, positive_class):
+    """Apply temperature scaling: fit T on labeled subset, evaluate on test set"""
+    # Collect logits/labels on labeled subset for fitting
     model.eval()
-    all_logits = []
-    all_labels = []
-    
+    logits_lab, labels_lab = [], []
     with torch.no_grad():
-        for batch_x, batch_y in loader:
-            batch_x = batch_x.to(device)
-            output = model(batch_x)
-            logits = output[0] if isinstance(output, tuple) else output
-            all_logits.append(logits.cpu())
-            all_labels.append(batch_y)
-    
-    logits = torch.cat(all_logits, dim=0).numpy()
-    labels = torch.cat(all_labels, dim=0).numpy()
-    
-    # Apply temperature scaling
+        for x, y in labeled_loader:
+            x = x.to(device)
+            out = model(x)
+            lg = out[0] if isinstance(out, tuple) else out
+            logits_lab.append(lg.cpu())
+            labels_lab.append(y)
+    logits_lab = torch.cat(logits_lab, dim=0).numpy()
+    labels_lab = torch.cat(labels_lab, dim=0).numpy()
+
+    # Fit temperature on labeled subset
     from src.calibration import temperature_scaling
-    probs = torch.softmax(torch.from_numpy(logits), dim=1).numpy()
-    probs_cal, t_opt = temperature_scaling(probs, labels)
-    
-    if probs_cal is not None and t_opt is not None:
-        metrics = compute_falling_metrics(labels, probs_cal, num_classes=8)  # 8-class fall detection
-        metrics["temperature"] = t_opt
-    else:
-        probs = torch.softmax(torch.from_numpy(logits), dim=1).numpy()
-        metrics = compute_falling_metrics(labels, probs, num_classes=8)  # 8-class fall detection
-        metrics["temperature"] = 1.0
-    
-    # Add ECE
-    confidence = np.max(probs_cal if probs_cal is not None else probs, axis=1)
-    predictions = np.argmax(probs_cal if probs_cal is not None else probs, axis=1)
-    accuracy = (predictions == labels).astype(float)
-    
+    probs_lab = torch.softmax(torch.from_numpy(logits_lab), dim=1).numpy()
+    probs_lab_cal, t_opt = temperature_scaling(probs_lab, labels_lab)
+    T = float(t_opt) if t_opt is not None else 1.0
+
+    # Evaluate on test set with calibrated temperature
+    all_logits_test, all_labels_test = [], []
+    with torch.no_grad():
+        for x, y in test_loader:
+            x = x.to(device)
+            out = model(x)
+            lg = out[0] if isinstance(out, tuple) else out
+            all_logits_test.append((lg / T).cpu())  # apply temperature to logits
+            all_labels_test.append(y)
+    logits_test = torch.cat(all_logits_test, dim=0).numpy()
+    labels_test = torch.cat(all_labels_test, dim=0).numpy()
+    probs_test = torch.softmax(torch.from_numpy(logits_test), dim=1).numpy()
+
+    # Compute metrics on test set
+    metrics = compute_falling_metrics(labels_test, probs_test, num_classes=8)
+    metrics["temperature"] = T
+
+    # ECE from calibrated probs (test set)
+    confidence = np.max(probs_test, axis=1)
+    predictions = np.argmax(probs_test, axis=1)
+    accuracy = (predictions == labels_test).astype(float)
     n_bins = 15
     ece = 0.0
     for i in range(n_bins):
@@ -830,21 +837,46 @@ def apply_temperature_scaling(model, loader, device, positive_class):
         bin_upper = (i + 1) / n_bins
         in_bin = (confidence > bin_lower) & (confidence <= bin_upper)
         prop_in_bin = in_bin.mean()
-        
         if prop_in_bin > 0:
             accuracy_in_bin = accuracy[in_bin].mean()
             avg_confidence_in_bin = confidence[in_bin].mean()
             ece += np.abs(avg_confidence_in_bin - accuracy_in_bin) * prop_in_bin
-    
     metrics["ece"] = float(ece)
     metrics["falling_f1"] = metrics.get("f1_fall", float("nan"))
-    
     return metrics
 
-def transfer_learning(model, loader, device, args):
-    """Perform transfer learning (fine-tune or linear probe)"""
-    # Simple implementation for now - just return evaluation
-    return eval_model(model, loader, device, args.positive_class)
+def transfer_learning(model, labeled_loader, test_loader, device, args):
+    """Perform transfer learning (fine-tune or linear probe) on labeled subset, evaluate on test set"""
+    method = str(getattr(args, 'transfer_method', 'fine_tune')).lower()
+    if method == 'linear_probe':
+        # Freeze backbone; train a new linear head
+        if hasattr(model, 'head') and hasattr(model, 'attn'):
+            for p in model.parameters():
+                p.requires_grad = False
+            for p in model.head.parameters():
+                p.requires_grad = True
+            optimizer = torch.optim.Adam(model.head.parameters(), lr=args.lr)
+        else:
+            # Fallback: train last linear layer if identifiable; otherwise do no-op
+            optimizer = torch.optim.Adam([p for p in model.parameters() if p.requires_grad], lr=args.lr)
+    else:
+        optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+
+    criterion = torch.nn.CrossEntropyLoss()
+    epochs = max(1, int(getattr(args, 'min_epochs', 3)))
+    model.train()
+    for epoch in range(epochs):
+        for x, y in labeled_loader:
+            x, y = x.to(device), y.to(device)
+            optimizer.zero_grad()
+            out = model(x)
+            logits = out[0] if isinstance(out, tuple) else out
+            loss = criterion(logits, y)
+            loss.backward()
+            optimizer.step()
+
+    # Evaluate on test set
+    return eval_model(model, test_loader, device, args.positive_class)
 
 if __name__ == "__main__":
     main()
