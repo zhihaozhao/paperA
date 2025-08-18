@@ -28,10 +28,16 @@ if "%PYTHON_ENV%"=="" (
 )
 
 :: Set default parameters (based on D3_D4 experiment plan)
-if "%MODELS%"=="" set MODELS=enhanced,cnn,bilstm,conformer_lite
-if "%SEEDS%"=="" set SEEDS=0,1,2,3,4
-if "%LABEL_RATIOS%"=="" set LABEL_RATIOS=0.01,0.05,0.10,0.15,0.20,0.50,1.00
-if "%TRANSFER_METHODS%"=="" set TRANSFER_METHODS=zero_shot,linear_probe,fine_tune,temp_scale
+:: By default, IGNORE pre-set env variables and use full-sweep defaults (560 configs)
+:: To honor pre-set env vars (MODELS/SEEDS/LABEL_RATIOS/TRANSFER_METHODS), set USE_ENV=1 before calling this script
+if "%USE_ENV%"=="1" (
+    echo [CONFIG] Using pre-set environment variables for D4 (MODELS/SEEDS/LABEL_RATIOS/TRANSFER_METHODS)
+) else (
+    set MODELS=enhanced,cnn,bilstm,conformer_lite
+    set SEEDS=0,1,2,3,4
+    set LABEL_RATIOS=0.01,0.05,0.10,0.15,0.20,0.50,1.00
+    set TRANSFER_METHODS=zero_shot,linear_probe,fine_tune,temp_scale
+)
 if "%BENCHMARK_PATH%"=="" set BENCHMARK_PATH=benchmarks\WiFi-CSI-Sensing-Benchmark-main
 if "%D2_MODELS_PATH%"=="" set D2_MODELS_PATH=checkpoints\d2
 rem Prefer user's local D2 checkpoints directory if it exists
