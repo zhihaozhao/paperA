@@ -31,6 +31,7 @@ __pycache__/
 # ����Ŀ�����ʵ����
 # results/
 results_cpu/
+scripts/results
 plots/
 tables/
 # ���㽫��־���� results/logs �£����� results/ �Ѱ������������Ŀ¼��
@@ -38,6 +39,7 @@ logs/
 figs/
 chat/
 referenes/
+benchmarks/
 
 # ��ʱ���/�ϴ��ļ�
 artifacts-*.zip

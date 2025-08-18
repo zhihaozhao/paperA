@@ -1,0 +1,18 @@
+
+D2 Calibration Analysis Summary
+==============================
+
+Overall Calibration Metrics:
+- ECE Before Calibration: 0.011
+- ECE After Calibration: 0.007 
+- Relative Improvement: 35.9%
+
+Model-Specific Calibration (ECE After Temperature Scaling):
+- Enhanced: 0.006±0.009
+- Cnn: 0.006±0.007
+- Bilstm: 0.009±0.008
+
+Key Findings:
+- Temperature scaling consistently improves calibration across all models
+- Enhanced model maintains lowest ECE after calibration
+- Calibration improvement is statistically significant across 405 experiments
