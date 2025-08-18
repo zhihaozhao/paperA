@@ -260,6 +260,50 @@ python generate_svg_figures.py
 
 ---
 
+## 🆕 Complete Advanced Figure Suite
+
+### Figure 1: System Architecture Overview (NEW)
+**Title**: Physics-Guided Synthetic WiFi CSI Data Generation Framework
+**Description**: Comprehensive system architecture showing complete framework pipeline
+
+#### 🏗️ Architecture Features
+- Multi-layer framework visualization (Input → Physics → Synthesis → Model → Evaluation → Results)
+- Physics modeling components (Multipath, Human Body, Environmental)
+- Enhanced model architecture (CNN + SE + Attention)
+- Key innovation highlights and performance integration
+
+#### 🖼️ Generated Figures
+- **Main**: `figure1_system_architecture.pdf` - **[NEW COMPREHENSIVE]**
+- **Detailed**: `figure1_detailed_dataflow.pdf` - Detailed processing pipeline
+- **Preview**: `figure1_system_architecture.png` - High-res version
+
+#### 📊 Data Export
+- **Components**: `figure1_architecture_components.csv` - System components
+- **Metrics**: `figure1_performance_metrics.csv` - Key performance data
+
+---
+
+### Figure 2: Experimental Protocols (NEW)
+**Title**: Comprehensive Experimental Evaluation Protocols (D2, CDAE, STEA)
+**Description**: Complete visualization of all evaluation protocols and configurations
+
+#### 🔬 Protocol Features
+- D2 Protocol: 540 configurations for synthetic data validation
+- CDAE Protocol: 40 configurations for cross-domain evaluation  
+- STEA Protocol: 56 configurations for transfer efficiency
+- Statistical validation and integration flowchart
+
+#### 🖼️ Generated Figures
+- **Main**: `figure2_experimental_protocols.pdf` - **[NEW COMPREHENSIVE]**
+- **Flowchart**: `figure2_protocol_flowchart.pdf` - Simplified protocol flow
+- **Preview**: `figure2_experimental_protocols.png` - High-res version
+
+#### 📊 Data Export
+- **Summary**: `figure2_protocols_summary.csv` - Protocol overview
+- **Detailed**: `figure2_detailed_configurations.csv` - Full configurations
+
+---
+
 ## 🆕 Advanced Scientific Figures (Upgraded)
 
 ### Figure 3: Advanced Violin Plot (Upgraded)
@@ -367,32 +411,35 @@ python generate_svg_figures.py
 
 ## 🛠️ Enhanced Tool Support Matrix
 
-| Tool/Language | Fig 3 | Fig 4 | Fig 5 | Fig 6 | Advanced Status |
-|---------------|-------|-------|-------|-------|-----------------|
-| **Python** | 🎻 | 🫧 | 🔥 | 🔍 | **Full Advanced Support** |
-| **R/ggplot2** | 📊 | 📊 | 📊 | 📊 | Data export compatible |
-| **MATLAB/Octave** | 📊 | 📊 | 📊 | 📊 | Data export compatible |
-| **Excel/Origin** | 📊 | 📊 | 📊 | 📊 | Data export ready |
+| Tool/Language | Fig 1 | Fig 2 | Fig 3 | Fig 4 | Fig 5 | Fig 6 | Advanced Status |
+|---------------|-------|-------|-------|-------|-------|-------|-----------------|
+| **Python** | 🏗️ | 🔬 | 🎻 | 🫧 | 🔥 | 🔍 | **Full Advanced Support** |
+| **R/ggplot2** | 📊 | 📊 | 📊 | 📊 | 📊 | 📊 | Data export compatible |
+| **MATLAB/Octave** | 📊 | 📊 | 📊 | 📊 | 📊 | 📊 | Data export compatible |
+| **Excel/Origin** | 📊 | 📊 | 📊 | 📊 | 📊 | 📊 | Data export ready |
 
-**Legend**: 🎻 Violin Plot | 🫧 Bubble Plot | 🔥 Heatmap | 🔍 PCA Analysis | 📊 Data Export
+**Legend**: 🏗️ Architecture | 🔬 Protocols | 🎻 Violin Plot | 🫧 Bubble Plot | 🔥 Heatmap | 🔍 PCA Analysis | 📊 Data Export
 
 ---
 
 ## 📏 Updated File Size Summary
 
-### Advanced Figures (Total: ~45KB)
+### Advanced Figures (Total: ~75KB)
+- Figure 1 NEW: ~12KB (2 PDFs + PNG + data)
+- Figure 2 NEW: ~13KB (2 PDFs + PNG + data)
 - Figure 3 Advanced: ~8KB (PDF + PNG + SVG + data)
 - Figure 4 Advanced: ~12KB (2 PDFs + PNG + data)  
 - Figure 5 NEW: ~15KB (2 PDFs + PNG + data)
-- Figure 6 NEW: ~10KB (2 PDFs + PNG + data)
+- Figure 6 NEW: ~15KB (2 PDFs + PNG + data)
 
-### Advanced Scripts (Total: ~45KB)
-- **Python Advanced**: 38KB (4 comprehensive scripts)
-- **Generation Suite**: 7KB (master script + reporting)
+### Advanced Scripts (Total: ~70KB)
+- **Python Advanced**: 60KB (6 comprehensive scripts)
+- **Generation Suite**: 10KB (master script + reporting + documentation)
 
-### Enhanced Data Files (Total: ~8KB)
-- Multi-dimensional datasets: 6KB (4 main files)
+### Enhanced Data Files (Total: ~12KB)
+- Multi-dimensional datasets: 8KB (6 main figure data files)
 - Statistical results: 2KB (significance, variance data)
+- Architecture & protocol data: 2KB (system components, configurations)
 
 ---
 
@@ -406,10 +453,12 @@ python generate_all_advanced_figures.py
 
 ### Individual Advanced Figures
 ```bash
-python figure3_advanced_violin.py    # Statistical violin plot
-python figure4_advanced_bubble.py    # Multi-dimensional bubbles
-python figure5_performance_heatmap.py # Hierarchical clustering
-python figure6_pca_analysis.py       # Feature space analysis
+python figure1_system_architecture.py  # System architecture overview
+python figure2_experimental_protocols.py # Experimental protocols
+python figure3_advanced_violin.py      # Statistical violin plot
+python figure4_advanced_bubble.py      # Multi-dimensional bubbles
+python figure5_performance_heatmap.py  # Hierarchical clustering
+python figure6_pca_analysis.py         # Feature space analysis
 ```
 
 ### Legacy Compatibility
@@ -441,7 +490,7 @@ python figure6_pca_analysis.py       # Feature space analysis
 
 ---
 
-**Document Version**: v3.0 - ADVANCED EDITION  
+**Document Version**: v4.0 - COMPLETE EDITION  
 **Last Updated**: 2025-01-18  
-**Status**: ✅ All figures upgraded to publication-grade scientific visualizations  
-**Enhancement Level**: 🚀 Publication-ready with statistical rigor and professional design
+**Status**: ✅ Complete figure suite with architecture and protocols  
+**Enhancement Level**: 🚀 Publication-ready comprehensive visualization system

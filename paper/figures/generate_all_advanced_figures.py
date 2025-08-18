@@ -69,7 +69,25 @@ def create_summary_report():
 ## 🎯 Executive Summary
 Successfully upgraded IEEE IoTJ paper figures from basic charts to advanced scientific visualizations.
 
-## 📈 Figure Upgrades Completed
+## 📈 Complete Figure Suite Generated
+
+### Figure 1: System Architecture Overview (NEW)
+- **Type**: Comprehensive framework diagram
+- **Features**: 
+  - Complete physics-guided synthetic data generation pipeline
+  - Multi-layer architecture with clear data flow
+  - Key innovation highlights and performance metrics
+  - IEEE-compliant professional design
+- **Files**: `figure1_system_architecture.pdf`, `figure1_detailed_dataflow.pdf`
+
+### Figure 2: Experimental Protocols (NEW)  
+- **Type**: Comprehensive evaluation protocol visualization
+- **Features**:
+  - D2, CDAE, and STEA protocol detailed descriptions
+  - Configuration specifications and statistical validation
+  - Protocol integration flowchart
+  - Performance summary and breakthrough results
+- **Files**: `figure2_experimental_protocols.pdf`, `figure2_protocol_flowchart.pdf`
 
 ### Figure 3: Cross-Domain Performance → Advanced Violin Plot
 - **Upgrade**: Simple bar chart → Statistical distribution visualization
@@ -191,7 +209,7 @@ python figure6_pca_analysis.py       # PCA analysis
 **Total Enhancement**: From basic charts to publication-grade scientific visualizations
 """
     
-    with open('ADVANCED_FIGURES_REPORT.md', 'w') as f:
+    with open('ADVANCED_FIGURES_REPORT.md', 'w', encoding='utf-8') as f:
         f.write(report_content)
     
     print("📋 Generated comprehensive report: ADVANCED_FIGURES_REPORT.md")
@@ -208,6 +226,8 @@ def main():
     
     # Figure generation sequence
     figures_to_generate = [
+        ("figure1_system_architecture.py", "System Architecture Overview (Figure 1)"),
+        ("figure2_experimental_protocols.py", "Experimental Protocols (Figure 2)"),
         ("figure3_advanced_violin.py", "Advanced Violin Plot (Figure 3 Upgrade)"),
         ("figure4_advanced_bubble.py", "Multi-Dimensional Bubble Plot (Figure 4 Upgrade)"),
         ("figure5_performance_heatmap.py", "Performance Heatmap with Clustering (NEW)"),
