@@ -439,11 +439,29 @@ def get_sim2real_loaders(X, y, label_ratio=0.1, seed=0, batch=64):
     labeled_idx = []
     for class_id in np.unique(y):
         class_idx = np.where(y == class_id)[0]
-        n_class_labeled = max(1, int(len(class_idx) * label_ratio))
+        # Ensure at least one sample remains for test if possible
+        if len(class_idx) >= 2:
+            n_class_labeled = min(len(class_idx) - 1, max(1, int(len(class_idx) * label_ratio)))
+        else:
+            # If only one sample exists for this class, put it into labeled set
+            n_class_labeled = 1
         labeled_idx.extend(rng.choice(class_idx, n_class_labeled, replace=False))
     
     labeled_idx = np.array(labeled_idx)
     unlabeled_idx = np.setdiff1d(np.arange(len(y)), labeled_idx)
+    
+    # Fallback: if no unlabeled/test samples remain (e.g., label_ratio=1.0),
+    # move one sample per class from labeled to test to enable evaluation
+    if unlabeled_idx.size == 0:
+        move_to_test = []
+        for class_id in np.unique(y):
+            class_lab = labeled_idx[y[labeled_idx] == class_id]
+            if class_lab.size > 0:
+                move_to_test.append(class_lab[0])
+        if move_to_test:
+            move_to_test = np.array(move_to_test)
+            labeled_idx = np.setdiff1d(labeled_idx, move_to_test)
+            unlabeled_idx = move_to_test
     
     # Create train/test loaders
     train_ds = RealCSIDataset(X[labeled_idx], y[labeled_idx])

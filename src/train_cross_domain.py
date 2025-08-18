@@ -331,6 +331,7 @@ def main():
     parser.add_argument("--seed", type=int, default=0, help="Random seed")
     parser.add_argument("--epochs", type=int, default=100, help="Number of epochs")
     parser.add_argument("--out", type=str, default="results/cross_domain/out.json", help="Output file")
+    parser.add_argument("--resume", action="store_true", help="Skip if output already exists")
     
     # Data parameters
     parser.add_argument("--benchmark_path", type=str, default="benchmarks/WiFi-CSI-Sensing-Benchmark-main", 
@@ -370,6 +371,15 @@ def main():
     
     args = parser.parse_args()
     
+    # Resume guard
+    try:
+        out_path = str(getattr(args, 'out', ''))
+        if getattr(args, 'resume', False) and out_path and os.path.exists(out_path):
+            print(f"[RESUME] Skip: output exists: {out_path}")
+            return {"skipped": True, "out": out_path}
+    except Exception:
+        pass
+
     # Route to appropriate experiment based on protocol
     if args.protocol == "loso":
         return run_loso_experiment(args)
@@ -784,7 +794,18 @@ def run_sim2real_experiment(args):
     
     # Zero-shot evaluation on real data (STRICT: no synthetic fallback)
     logger.info(f"[D4] Zero-shot REAL eval: X={X.shape}, y={y.shape}, subjects={len(np.unique(subjects))}, rooms={len(np.unique(rooms))}")
-    zero_shot_metrics = eval_model(model, test_loader, device, args.positive_class)
+    # Fallback if test_loader is empty (e.g., label_ratio ~ 1.0)
+    zero_shot_metrics = {}
+    try:
+        if len(getattr(test_loader, 'dataset', [])) == 0:
+            logger.warning("[D4] Test set is empty; evaluating zero-shot on full dataset as fallback")
+            full_loader = DataLoader(RealCSIDataset(X, y), batch_size=args.batch_size, shuffle=False)
+            zero_shot_metrics = eval_model(model, full_loader, device, args.positive_class)
+        else:
+            zero_shot_metrics = eval_model(model, test_loader, device, args.positive_class)
+    except Exception as e:
+        logger.warning(f"[D4] Zero-shot eval failed ({e}); returning empty metrics")
+        zero_shot_metrics = {}
     
     # Apply transfer method
     if args.transfer_method == "zero_shot":
