@@ -89,14 +89,15 @@ Successfully upgraded IEEE IoTJ paper figures from basic charts to advanced scie
   - Performance summary and breakthrough results
 - **Files**: `figure2_experimental_protocols.pdf`, `figure2_protocol_flowchart.pdf`
 
-### Figure 3: Cross-Domain Performance → Advanced Violin Plot
-- **Upgrade**: Simple bar chart → Statistical distribution visualization
+### Figure 3: Cross-Domain Performance → Enhanced 3D Statistical Analysis
+- **Upgrade**: Simple bar chart → 3D statistical visualization with comprehensive analysis
 - **Features**: 
-  - Full performance distributions with confidence intervals
-  - Statistical significance testing (t-tests, p-values)
-  - Violin plots showing data density
-  - Professional IEEE-compliant styling
-- **Files**: `figure3_advanced_violin.pdf`, `figure3_violin_data.csv`
+  - 3D bar plots with error representation (perfect for small datasets)
+  - High-contrast color scheme with golden Enhanced model highlighting
+  - Multi-dimensional analysis (consistency, cross-domain gap, deployment readiness)
+  - Complete statistical significance testing with effect sizes
+  - Professional IEEE-compliant 3D design
+- **Files**: `figure3_final_enhanced_3d_statistical.pdf`, `figure3_statistical_analysis.csv`
 
 ### Figure 4: Label Efficiency → Multi-Dimensional Bubble Plot  
 - **Upgrade**: Simple line plot → Multi-method bubble visualization
@@ -228,7 +229,7 @@ def main():
     figures_to_generate = [
         ("figure1_system_architecture.py", "System Architecture Overview (Figure 1)"),
         ("figure2_experimental_protocols.py", "Experimental Protocols (Figure 2)"),
-        ("figure3_advanced_violin.py", "Advanced Violin Plot (Figure 3 Upgrade)"),
+        ("figure3_final_recommendation.py", "Enhanced 3D Statistical Analysis (Figure 3 Upgrade)"),
         ("figure4_advanced_bubble.py", "Multi-Dimensional Bubble Plot (Figure 4 Upgrade)"),
         ("figure5_performance_heatmap.py", "Performance Heatmap with Clustering (NEW)"),
         ("figure6_pca_analysis.py", "PCA Feature Space Analysis (NEW)")
