@@ -658,36 +658,41 @@ def run_sim2real_experiment(args):
     test_loader = DataLoader(RealCSIDataset(X, y), batch_size=args.batch_size, shuffle=False)
     logger.info(f"[D4] Zero-shot REAL eval prepared: T={T_real}, F={F_real}, N={len(y)}")
     
-    # Load D2 pre-trained model if available
+    # Load D2 pre-trained model if available (supports directory or file path)
     model = None
-    if args.d2_model_path and os.path.exists(args.d2_model_path):
+    if getattr(args, 'd2_model_path', None):
+        d2_path = str(args.d2_model_path)
         try:
-            logger.info(f"Loading D2 pre-trained model from {args.d2_model_path}")
-            model = torch.load(args.d2_model_path, map_location=device)
+            if os.path.isdir(d2_path):
+                import glob
+                patts = [
+                    os.path.join(d2_path, f"*{args.model}*seed{args.seed}*.pt"),
+                    os.path.join(d2_path, f"*{args.model}*seed{args.seed}*.pth"),
+                    os.path.join(d2_path, f"*{args.model}*.pt"),
+                    os.path.join(d2_path, f"*{args.model}*.pth"),
+                    os.path.join(d2_path, "*.pt"),
+                    os.path.join(d2_path, "*.pth"),
+                ]
+                cands = []
+                for p in patts:
+                    cands.extend(glob.glob(p))
+                ckpt_path = max(cands, key=lambda p: os.path.getmtime(p)) if cands else None
+            elif os.path.isfile(d2_path):
+                ckpt_path = d2_path
+            else:
+                ckpt_path = None
+            if ckpt_path and os.path.exists(ckpt_path):
+                logger.info(f"Loading D2 pre-trained model from {ckpt_path}")
+                model = torch.load(ckpt_path, map_location=device)
+            else:
+                logger.warning(f"No D2 checkpoint found for model={args.model} seed={args.seed} in {d2_path}. Running from scratch.")
         except Exception as e:
-            logger.warning(f"Failed to load D2 model: {e}, training from scratch")
+            logger.warning(f"Failed to search/load D2 model from {d2_path}: {e}. Running from scratch.")
     
     if model is None:
-        # Do NOT load or pretrain on synthetic data for zero-shot (and temp_scale) transfers
-        if str(getattr(args, 'transfer_method', 'zero_shot')).lower() in ("zero_shot", "temp_scale"):
-            logger.info("[D4] Zero-shot/TempScale: initializing model without synthetic pretraining")
-            model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
-        elif bool(getattr(args, 'skip_synth_pretrain', False)):
-            logger.info("[D4] Skipping synthetic pretraining; using random-initialized model for transfer")
-            model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
-        else:
-            logger.info("Training model from scratch on synthetic data")
-            train_loader, val_loader, _ = get_synth_loaders(
-                batch=args.batch_size, difficulty="mid", seed=args.seed,
-                n=2000, T=128, F=30, num_classes=8  # 8-class fall detection system
-            )
-            
-            x_sample, _ = next(iter(train_loader))
-            input_dim = x_sample.shape[-1] if x_sample.dim() == 3 else x_sample.shape[1]
-            
-            model = get_model(args.model, input_dim=input_dim, num_classes=8).to(device)
-            best_metrics = train_and_evaluate(model, train_loader, val_loader, device, args)
-            logger.info(f"Synthetic pre-training completed: F1={best_metrics.get('macro_f1', 0.0):.3f}")
+        # Per requirement: do NOT load or pretrain on synthetic data before training for Sim2Real
+        logger.info("[D4] Initializing model from scratch without synthetic pretraining")
+        model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
     
     # Zero-shot evaluation on real data (STRICT: no synthetic fallback)
     logger.info(f"[D4] Zero-shot REAL eval: X={X.shape}, y={y.shape}, subjects={len(np.unique(subjects))}, rooms={len(np.unique(rooms))}")
