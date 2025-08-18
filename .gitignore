@@ -95,3 +95,32 @@ core
 core.*
 *.tmp
 *.temp
+
+# LaTeX generated files
+paper/*.pdf
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.bbl
+paper/*.blg
+paper/*.toc
+paper/*.lof
+paper/*.lot
+paper/*.synctex.gz
+paper/*.nav
+paper/*.snm
+paper/*.vrb
+
+# Generated figure files
+paper/figures/*.pdf
+paper/figures/*.svg
+paper/figures/*.png
+paper/figures/*.jpg
+paper/figures/*.jpeg
+paper/figures/*.eps
+paper/figures/figures_*.html
+paper/figures/figures_*.json
+paper/figures/*.txt
+paper/figures/*.dat

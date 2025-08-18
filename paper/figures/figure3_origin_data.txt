@@ -1,6 +1,0 @@
-# Figure 3: D3 Cross-Domain Data for Origin
-# Column 1: Model, Column 2: LOSO_F1, Column 3: LOSO_Err, Column 4: LORO_F1, Column 5: LORO_Err
-Enhanced	0.830	0.001	0.830	0.001
-CNN	0.842	0.025	0.796	0.097
-BiLSTM	0.803	0.022	0.789	0.044
-Conformer	0.403	0.386	0.841	0.040
