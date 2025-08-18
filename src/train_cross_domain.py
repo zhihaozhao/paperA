@@ -668,17 +668,24 @@ def run_sim2real_experiment(args):
         try:
             if os.path.isdir(d2_path):
                 import glob
-                patts = [
-                    os.path.join(d2_path, f"*{args.model}*seed{args.seed}*.pt"),
-                    os.path.join(d2_path, f"*{args.model}*seed{args.seed}*.pth"),
-                    os.path.join(d2_path, f"*{args.model}*.pt"),
-                    os.path.join(d2_path, f"*{args.model}*.pth"),
-                    os.path.join(d2_path, "*.pt"),
-                    os.path.join(d2_path, "*.pth"),
+                # Recursive patterns to robustly find common naming schemes
+                name_patts = [
+                    f"*{args.model}*seed{args.seed}*hard.*",
+                    f"*{args.model}*seed{args.seed}*.pt",
+                    f"*{args.model}*seed{args.seed}*.pth",
+                    f"final_{args.model}_seed{args.seed}_hard.*",
+                    f"final_model_seed{args.seed}_hard.*",
+                    f"*seed{args.seed}*hard.*",
+                    f"*seed{args.seed}*.pt",
+                    f"*seed{args.seed}*.pth",
+                    "*final*.pt", "*final*.pth",
+                    "*best*.pt", "*best*.pth",
+                    "*.pt", "*.pth",
                 ]
                 cands = []
-                for p in patts:
-                    cands.extend(glob.glob(p))
+                for npat in name_patts:
+                    pat = os.path.join(d2_path, "**", npat)
+                    cands.extend(glob.glob(pat, recursive=True))
                 ckpt_path = max(cands, key=lambda p: os.path.getmtime(p)) if cands else None
             elif os.path.isfile(d2_path):
                 ckpt_path = d2_path
@@ -708,7 +715,15 @@ def run_sim2real_experiment(args):
                 except Exception as e:
                     logger.warning(f"Failed to deserialize D2 model from {ckpt_path}: {e}. Running from scratch.")
             else:
-                logger.warning(f"No D2 checkpoint found for model={args.model} seed={args.seed} in {d2_path}. Running from scratch.")
+                # Emit a brief listing to help users verify paths
+                try:
+                    all_pth = []
+                    for pat in (os.path.join(d2_path, "**", "*.pth"), os.path.join(d2_path, "**", "*.pt")):
+                        all_pth.extend(glob.glob(pat, recursive=True))
+                    sample = all_pth[:5]
+                    logger.warning(f"No D2 checkpoint found for model={args.model} seed={args.seed} in {d2_path}. Files seen (sample {len(sample)}/{len(all_pth)}): {sample} . Running from scratch.")
+                except Exception:
+                    logger.warning(f"No D2 checkpoint found for model={args.model} seed={args.seed} in {d2_path}. Running from scratch.")
         except Exception as e:
             logger.warning(f"Failed to search/load D2 model from {d2_path}: {e}. Running from scratch.")
     
