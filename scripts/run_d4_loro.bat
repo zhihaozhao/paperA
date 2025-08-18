@@ -45,6 +45,12 @@ if exist "E:\paperA\paperA\checkpoints" set D2_MODELS_PATH=E:\paperA\paperA\chec
 if "%OUTPUT_DIR%"=="" set OUTPUT_DIR=results\d4\sim2real
 if "%AMP%"=="" set AMP=0
 
+:: Normalize comma-separated lists to space-separated for FOR loops
+set "MODELS=%MODELS:,= %"
+set "SEEDS=%SEEDS:,= %"
+set "LABEL_RATIOS=%LABEL_RATIOS:,= %"
+set "TRANSFER_METHODS=%TRANSFER_METHODS:,= %"
+
 echo Experiment Configuration:
 echo   Model List: %MODELS%
 echo   Random Seeds: %SEEDS%
