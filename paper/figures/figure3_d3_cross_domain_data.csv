@@ -1,0 +1,9 @@
+protocol,model,mean_f1,std_f1,cv,seeds,model_display,color_code
+LOSO,enhanced,0.830,0.001,0.002,5,Enhanced,#2E86AB
+LOSO,cnn,0.842,0.025,0.030,5,CNN,#E84855
+LOSO,bilstm,0.803,0.022,0.027,5,BiLSTM,#3CB371
+LOSO,conformer_lite,0.403,0.386,0.957,5,Conformer-lite,#DC143C
+LORO,enhanced,0.830,0.001,0.001,5,Enhanced,#2E86AB
+LORO,cnn,0.796,0.097,0.122,5,CNN,#E84855
+LORO,bilstm,0.789,0.044,0.056,5,BiLSTM,#3CB371
+LORO,conformer_lite,0.841,0.040,0.047,5,Conformer-lite,#DC143C

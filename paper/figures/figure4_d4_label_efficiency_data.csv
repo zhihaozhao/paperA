@@ -1,0 +1,6 @@
+label_ratio_percent,mean_f1,std_f1,seeds,performance_level,y_error_lower,y_error_upper
+1.0,0.455,0.050,12,Progress,0.405,0.505
+5.0,0.780,0.016,6,Good,0.764,0.796
+10.0,0.730,0.104,5,Good,0.626,0.834
+20.0,0.821,0.003,5,Target Achieved,0.818,0.824
+100.0,0.833,0.000,5,Target Achieved,0.833,0.833
