@@ -148,8 +148,8 @@ for %%m in (%MODELS%) do (
                 if not "%MODEL_FILE%"=="" (
                     python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "!MODEL_FILE!" --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 ) else (
-                    echo [WARN] No D2 checkpoint found for model=%%m seed=%%s in %D2_MODELS_PATH%. Running from scratch.
-                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
+                    echo [WARN] No specific D2 checkpoint matched naming heuristics in %D2_MODELS_PATH% for model=%%m seed=%%s. Will pass directory for internal discovery.
+                    python -m src.train_cross_domain --model %%m --seed %%s --protocol sim2real --label_ratio %%r --transfer_method %%t --d2_model_path "%D2_MODELS_PATH%" --skip_synth_pretrain --benchmark_path "%BENCHMARK_PATH%" --files_per_activity 3 --class_weight inv_freq %AMP_FLAG% --output_dir "%OUTPUT_DIR%" --out "!OUTPUT_FILE!"
                 )
                 
                 if !ERRORLEVEL! equ 0 (

@@ -686,7 +686,27 @@ def run_sim2real_experiment(args):
                 ckpt_path = None
             if ckpt_path and os.path.exists(ckpt_path):
                 logger.info(f"Loading D2 pre-trained model from {ckpt_path}")
-                model = torch.load(ckpt_path, map_location=device)
+                try:
+                    obj = torch.load(ckpt_path, map_location=device)
+                    if hasattr(obj, 'state_dict'):
+                        # Likely a torch.nn.Module
+                        model = obj
+                    elif isinstance(obj, dict) and any(k in obj for k in ('state_dict','model','model_state')):
+                        # Common checkpoint dict formats
+                        state = obj.get('state_dict') or obj.get('model_state') or obj.get('model')
+                        # Build fresh model and load state dict
+                        model = get_model(args.model, input_dim=F_real, num_classes=8).to(device)
+                        try:
+                            model.load_state_dict(state, strict=False)
+                        except Exception:
+                            # If wrapped with module.* keys
+                            new_state = {k.replace('module.',''): v for k,v in state.items()}
+                            model.load_state_dict(new_state, strict=False)
+                    else:
+                        # Assume it's directly the model
+                        model = obj
+                except Exception as e:
+                    logger.warning(f"Failed to deserialize D2 model from {ckpt_path}: {e}. Running from scratch.")
             else:
                 logger.warning(f"No D2 checkpoint found for model={args.model} seed={args.seed} in {d2_path}. Running from scratch.")
         except Exception as e:
