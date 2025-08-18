@@ -1,0 +1,34 @@
+2025-08-16 15:53:13,104 [INFO] Starting training with args: {'model': 'enhanced', 'difficulty': 'hard', 'seed': 0, 'F': 52, 'T': 32, 'num_classes': 8, 'epochs': 100, 'batch': 768, 'n_samples': 20000, 'early_metric': 'macro_f1', 'patience': 10, 'ckpt_dir': 'checkpoints/', 'logit_l2': 0.0, 'sc_corr_rho': 0.5, 'env_burst_rate': 0.1, 'gain_drift_std': 0.1, 'class_overlap': 0.8, 'temp_mode': 'logspace', 'temp_min': 1.0, 'temp_max': 5.0, 'temp_steps': 100, 'val_split': 0.5, 'fixed_temp': 1.0, 'label_noise_prob': 0.0, 'amp': True, 'save_ckpt': 'final', 'num_workers_override': 0, 'prefetch_factor': 2, 'val_every': 3, 'out_json': 'results_gpu/d2\\paperA_enhanced_hard_s0_cla0p8_env0p1_lab0p0.json'}
+2025-08-16 15:53:13,104 [INFO] Logs saved to: results_gpu\d2\paperA_enhanced_hard_s0_cla0p8_env0p1_lab0p0.log
+2025-08-16 15:53:13,124 [INFO] Using device: cuda
+2025-08-16 15:55:24,223 [INFO] Dataset: Train=14000, Val=3000, Test=3000
+2025-08-16 15:55:24,224 [INFO] DataLoader: num_workers=0, pin_memory=True
+2025-08-16 15:55:24,352 [INFO] Model: enhanced with 640713 params
+2025-08-16 15:55:46,708 [INFO] Epoch 3/100 - Val Loss: 0.5629
+2025-08-16 15:55:54,865 [INFO] Epoch 5/100 - Train Loss: 0.1615, Val Loss: nan, Val macro_f1: 0.7641
+2025-08-16 15:55:59,217 [INFO] Epoch 6/100 - Val Loss: 0.1716
+2025-08-16 15:56:11,857 [INFO] Epoch 9/100 - Val Loss: 0.1315
+2025-08-16 15:56:16,261 [INFO] Epoch 10/100 - Train Loss: 0.0909, Val Loss: nan, Val macro_f1: 0.9517
+2025-08-16 15:56:24,398 [INFO] Epoch 12/100 - Val Loss: 0.1462
+2025-08-16 15:56:36,944 [INFO] Epoch 15/100 - Val Loss: 0.1605
+2025-08-16 15:56:37,452 [INFO] Epoch 15/100 - Train Loss: 0.0564, Val Loss: 0.1605, Val macro_f1: 0.9505
+2025-08-16 15:56:49,364 [INFO] Epoch 18/100 - Val Loss: 0.1353
+2025-08-16 15:56:57,425 [INFO] Epoch 20/100 - Train Loss: 0.0375, Val Loss: nan, Val macro_f1: 0.9561
+2025-08-16 15:57:01,908 [INFO] Epoch 21/100 - Val Loss: 0.1791
+2025-08-16 15:57:14,255 [INFO] Epoch 24/100 - Val Loss: 0.1504
+2025-08-16 15:57:18,514 [INFO] Epoch 25/100 - Train Loss: 0.0158, Val Loss: nan, Val macro_f1: 0.9615
+2025-08-16 15:57:26,796 [INFO] Epoch 27/100 - Val Loss: 0.1774
+2025-08-16 15:57:39,168 [INFO] Epoch 30/100 - Val Loss: 0.1727
+2025-08-16 15:57:39,666 [INFO] Epoch 30/100 - Train Loss: 0.0017, Val Loss: 0.1727, Val macro_f1: 0.9628
+2025-08-16 15:57:51,714 [INFO] Epoch 33/100 - Val Loss: 0.1805
+2025-08-16 15:57:59,795 [INFO] Epoch 35/100 - Train Loss: 0.0198, Val Loss: nan, Val macro_f1: 0.9640
+2025-08-16 15:58:04,075 [INFO] Epoch 36/100 - Val Loss: 0.2363
+2025-08-16 15:58:16,625 [INFO] Epoch 39/100 - Val Loss: 0.1758
+2025-08-16 15:58:20,917 [INFO] Epoch 40/100 - Train Loss: 0.0263, Val Loss: nan, Val macro_f1: 0.9640
+2025-08-16 15:58:28,960 [INFO] Epoch 42/100 - Val Loss: 0.1980
+2025-08-16 15:58:33,253 [INFO] Early stopping at epoch 43
+2025-08-16 15:58:33,751 [INFO] Collected test logits and targets
+2025-08-16 15:58:33,808 [INFO] Calibration: T=2.2543, Details={'temperature': 2.2543179988861084, 'best_nll': 0.1102292612195015, 'method': 'logspace'}
+2025-08-16 15:58:34,083 [INFO] Saved full results to results_gpu/d2\paperA_enhanced_hard_s0_cla0p8_env0p1_lab0p0.json
+2025-08-16 15:58:34,092 [INFO] Final model saved to checkpoints/final_enhanced_0_hard.pth
+2025-08-16 15:58:34,093 [INFO] Updated registry: results\registry.csv
