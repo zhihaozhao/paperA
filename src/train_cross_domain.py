@@ -666,6 +666,7 @@ def run_sim2real_experiment(args):
     if getattr(args, 'd2_model_path', None):
         d2_path = str(args.d2_model_path)
         try:
+            logger.info(f"[D4] d2_model_path input: {d2_path} (isdir={os.path.isdir(d2_path)}, isfile={os.path.isfile(d2_path)})")
             if os.path.isdir(d2_path):
                 import glob
                 # First: try exact expected filename final_{model}_{seed}_hard.pth
@@ -704,6 +705,7 @@ def run_sim2real_experiment(args):
                 ckpt_path = d2_path
             else:
                 ckpt_path = None
+            logger.info(f"[D4] Resolved checkpoint candidate: {ckpt_path if 'ckpt_path' in locals() else None}")
             # Guard: ensure the chosen file appears to match the requested architecture
             if ckpt_path and os.path.exists(ckpt_path):
                 base = os.path.basename(ckpt_path).lower()
