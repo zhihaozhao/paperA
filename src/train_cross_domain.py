@@ -343,6 +343,8 @@ def main():
     parser.add_argument("--label_ratio", type=float, default=1.0, help="Ratio of labeled real data to use")
     parser.add_argument("--transfer_method", type=str, default="fine_tune", 
                        help="Transfer method: zero_shot, linear_probe, fine_tune, temp_scale")
+    parser.add_argument("--skip_synth_pretrain", action="store_true",
+                       help="If set, never pretrain on synthetic data (for all transfer methods)")
     
     # Training parameters
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
