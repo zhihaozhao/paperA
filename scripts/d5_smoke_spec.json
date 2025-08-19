@@ -26,5 +26,5 @@
     "num_workers_override": 2
   },
   "grid": {},
-  "output_dir": "results_gpu"
+  "output_dir": "results_gpu/d5"
 }

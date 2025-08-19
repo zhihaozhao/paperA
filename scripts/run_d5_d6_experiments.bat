@@ -126,16 +126,21 @@ echo.
 echo [STEP 3] Generating Analysis and Summary...
 
 rem Export results summary
-"%PY_EXE%" scripts\export_summary.py --pattern "results_gpu\*.json" --out_csv results\metrics\d5_d6_summary.csv
+"%PY_EXE%" scripts\export_summary.py --pattern "results_gpu\d5\*.json" --out_csv results\metrics\d5_summary.csv
+"%PY_EXE%" scripts\export_summary.py --pattern "results_gpu\d6\*.json" --out_csv results\metrics\d6_summary.csv
 if errorlevel 1 (
   echo [WARNING] Export summary failed, but continuing...
 )
 
 rem Generate plots (if plotting scripts exist)
 if exist "src\plotting.py" (
-  "%PY_EXE%" -c "import src.plotting as p; p.plot_ablation_results('results_gpu', 'plots/d5_ablation.pdf')"
+  "%PY_EXE%" -c "import src.plotting as p; p.plot_ablation_results('results_gpu/d5', 'plots/d5_ablation.pdf')"
   if errorlevel 1 (
-    echo [WARNING] Plot generation failed, but continuing...
+    echo [WARNING] D5 plot generation failed, but continuing...
+  )
+  "%PY_EXE%" -c "import src.plotting as p; p.plot_robustness_results('results_gpu/d6', 'plots/d6_robustness.pdf')"
+  if errorlevel 1 (
+    echo [WARNING] D6 plot generation failed, but continuing...
   )
 )
 
@@ -144,12 +149,14 @@ echo ========================================
 echo D5 & D6 Experiments Completed!
 echo ========================================
 echo.
-echo Results location: results_gpu\
-echo Summary CSV: results\metrics\d5_d6_summary.csv
+echo Results locations:
+echo   D5: results_gpu\d5\
+echo   D6: results_gpu\d6\
+echo Summary CSVs: results\metrics\d5_summary.csv, results\metrics\d6_summary.csv
 echo.
 echo Next steps:
-echo 1. Check results_gpu\ for individual JSON files
-echo 2. Review results\metrics\d5_d6_summary.csv
+echo 1. Check results_gpu\d5\ and results_gpu\d6\ for individual JSON files
+echo 2. Review results\metrics\d5_summary.csv and results\metrics\d6_summary.csv
 echo 3. Run acceptance criteria validation
 echo.
 

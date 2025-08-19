@@ -136,15 +136,21 @@ def generate_report(df: pd.DataFrame, d5_criteria: Dict[str, bool], d6_criteria:
     return "\n".join(report)
 
 def main():
-    # Load results
+    # Load results from both D5 and D6 directories
     print("Loading experiment results...")
-    df = load_results("results_gpu/*.json")
+    df_d5 = load_results("results_gpu/d5/*.json")
+    df_d6 = load_results("results_gpu/d6/*.json")
+    
+    # Combine results
+    df = pd.concat([df_d5, df_d6], ignore_index=True)
     
     if df.empty:
         print("❌ No results found! Please run experiments first.")
         return 1
     
     print(f"✅ Loaded {len(df)} results")
+    print(f"  - D5 results: {len(df_d5)} files")
+    print(f"  - D6 results: {len(df_d6)} files")
     
     # Validate criteria
     print("Validating acceptance criteria...")
