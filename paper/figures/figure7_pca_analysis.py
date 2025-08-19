@@ -133,11 +133,14 @@ def create_pca_biplot():
     for i in range(pca_result.shape[1]):
         data_df[f'PC{i+1}'] = pca_result[:, i]
     
-    # Create figure with multiple subplots for 7-panel comprehensive analysis
-    fig = plt.figure(figsize=(24, 18))  # Much larger figure for 7 subplots
+    # Create figure with scientific 3-column layout (4:3:3 ratio)
+    fig = plt.figure(figsize=(20, 12))  # Optimized for double-column page
     
-    # Main PCA scatter plot
-    ax1 = plt.subplot2grid((4, 4), (0, 0), colspan=2, rowspan=2)
+    # Define grid structure: 3 rows × 10 columns to achieve 4:3:3 ratio
+    # Column 1: 0-3 (width=4), Column 2: 4-6 (width=3), Column 3: 7-9 (width=3)
+    
+    # Column 1, Row 1: PCA Feature Space Analysis (main biplot)
+    ax1 = plt.subplot2grid((3, 10), (0, 0), colspan=4, rowspan=1)
     
     # Plot each model with confidence ellipses
     models = data_df['Model'].unique()
@@ -184,9 +187,10 @@ def create_pca_biplot():
     ax1.set_ylabel(f'Second Principal Component ({pca.explained_variance_ratio_[1]:.1%} variance)', 
                    fontweight='bold', fontsize=16)
     ax1.set_title('PCA Feature Space Analysis: Model Clustering and Protocol Separation', 
-                 fontweight='bold', pad=20, fontsize=18)
+                 fontweight='bold', pad=15, fontsize=16)
     ax1.grid(True, alpha=0.3)
-    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=11)
+    # Embed legend inside the plot for better space utilization
+    ax1.legend(loc='upper right', fontsize=10, framealpha=0.9)
     
     # Add arrows for feature loadings with anti-overlap positioning
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
@@ -219,8 +223,8 @@ def create_pca_biplot():
                     fontsize=10, ha='center', va='center', fontweight='bold',
                     bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, edgecolor='gray'))
     
-    # Explained variance plot
-    ax2 = plt.subplot2grid((4, 4), (0, 2))
+    # Column 2, Row 1: PCA Explained Variance
+    ax2 = plt.subplot2grid((3, 10), (0, 4), colspan=3, rowspan=1)
     
     explained_var = pca.explained_variance_ratio_
     cumulative_var = np.cumsum(explained_var)
@@ -244,8 +248,8 @@ def create_pca_biplot():
         ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
                 f'{var:.1%}', ha='center', va='bottom', fontsize=10, fontweight='bold')
     
-    # Model separation analysis
-    ax3 = plt.subplot2grid((4, 4), (0, 3))
+    # Column 2, Row 2: Model Separation Distances
+    ax3 = plt.subplot2grid((3, 10), (1, 4), colspan=3, rowspan=1)
     
     # Calculate inter-model distances in PC space
     model_centers = {}
@@ -282,8 +286,8 @@ def create_pca_biplot():
     
     plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
     
-    # Protocol consistency analysis
-    ax4 = plt.subplot2grid((4, 4), (2, 0), colspan=2)
+    # Column 1, Row 2-3: Cross-Protocol Consistency Analysis (extend to match column heights)
+    ax4 = plt.subplot2grid((3, 10), (1, 0), colspan=4, rowspan=2)
     
     # Calculate LOSO-LORO distance for each model
     protocol_consistency = {}
@@ -321,8 +325,8 @@ def create_pca_biplot():
     bars[enhanced_idx].set_linewidth(3)
     bars[enhanced_idx].set_edgecolor('gold')
     
-    # 3D PCA plot
-    ax5 = plt.subplot2grid((4, 4), (2, 2), projection='3d')
+    # Column 2, Row 3: 3D Feature Space
+    ax5 = plt.subplot2grid((3, 10), (2, 4), colspan=3, rowspan=1, projection='3d')
     
     for model in models:
         model_data = data_df[data_df['Model'] == model]
@@ -338,8 +342,8 @@ def create_pca_biplot():
     ax5.set_title('3D Feature Space', fontweight='bold', fontsize=14)
     ax5.legend(fontsize=10)
     
-    # PCA Feature Loadings Matrix (6th subplot)
-    ax6 = plt.subplot2grid((4, 4), (1, 2), colspan=2)
+    # Column 3, Row 1: PCA Feature Loadings Matrix
+    ax6 = plt.subplot2grid((3, 10), (0, 7), colspan=3, rowspan=1)
     
     # Create loadings matrix for visualization
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
@@ -362,8 +366,8 @@ def create_pca_biplot():
     ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=12)
     ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=12)
     
-    # Feature Contributions to Top 2 PCs (7th subplot)
-    ax7 = plt.subplot2grid((4, 4), (3, 0), colspan=2)
+    # Column 3, Row 2-3: Feature Contributions to Top 2 PCs (extend to match column heights)
+    ax7 = plt.subplot2grid((3, 10), (1, 7), colspan=3, rowspan=2)
     
     # Calculate absolute contributions for PC1 and PC2
     pc1_contributions = np.abs(loadings_df['PC1']).sort_values(ascending=True)
@@ -384,7 +388,7 @@ def create_pca_biplot():
     ax7.legend(fontsize=11)
     ax7.grid(True, alpha=0.3, axis='x')
     
-    plt.tight_layout(pad=3.0)  # Increased padding for better spacing
+    plt.tight_layout(pad=2.0, w_pad=1.5, h_pad=1.5)  # Optimized spacing for 3-column layout
     
     return fig, data_df, pca
 
