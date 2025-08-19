@@ -134,7 +134,7 @@ def create_pca_biplot():
         data_df[f'PC{i+1}'] = pca_result[:, i]
     
     # Create figure with scientific 3-column layout (4:3:3 ratio)
-    fig = plt.figure(figsize=(20, 12))  # Optimized for double-column page
+    fig = plt.figure(figsize=(22, 14))  # Increased size to prevent overlaps
     
     # Define grid structure: 3 rows × 10 columns to achieve 4:3:3 ratio
     # Column 1: 0-3 (width=4), Column 2: 4-6 (width=3), Column 3: 7-9 (width=3)
@@ -181,16 +181,16 @@ def create_pca_biplot():
             )
             ax1.add_patch(ellipse)
     
-    # Customize main plot with larger fonts
+    # Customize main plot with proper spacing
     ax1.set_xlabel(f'First Principal Component ({pca.explained_variance_ratio_[0]:.1%} variance)', 
-                   fontweight='bold', fontsize=16)
+                   fontweight='bold', fontsize=14, labelpad=12)
     ax1.set_ylabel(f'Second Principal Component ({pca.explained_variance_ratio_[1]:.1%} variance)', 
-                   fontweight='bold', fontsize=16)
+                   fontweight='bold', fontsize=14, labelpad=12)
     ax1.set_title('PCA Feature Space Analysis: Model Clustering and Protocol Separation', 
-                 fontweight='bold', pad=15, fontsize=16)
+                 fontweight='bold', pad=20, fontsize=15)
     ax1.grid(True, alpha=0.3)
     # Embed legend inside the plot for better space utilization
-    ax1.legend(loc='upper right', fontsize=10, framealpha=0.9)
+    ax1.legend(loc='upper right', fontsize=9, framealpha=0.9, bbox_to_anchor=(0.98, 0.98))
     
     # Add arrows for feature loadings with anti-overlap positioning
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
@@ -235,10 +235,10 @@ def create_pca_biplot():
     ax2_twin.plot(range(1, len(explained_var) + 1), cumulative_var * 100, 
                  'ro-', linewidth=2, markersize=6)
     
-    ax2.set_xlabel('Principal Component', fontweight='bold', fontsize=13)
-    ax2.set_ylabel('Explained Variance Ratio', color='blue', fontweight='bold', fontsize=13)
-    ax2_twin.set_ylabel('Cumulative Variance (%)', color='red', fontweight='bold', fontsize=13)
-    ax2.set_title('PCA Explained Variance', fontweight='bold', fontsize=14)
+    ax2.set_xlabel('Principal Component', fontweight='bold', fontsize=12, labelpad=10)
+    ax2.set_ylabel('Explained Variance Ratio', color='blue', fontweight='bold', fontsize=12, labelpad=10)
+    ax2_twin.set_ylabel('Cumulative Variance (%)', color='red', fontweight='bold', fontsize=12, labelpad=10)
+    ax2.set_title('PCA Explained Variance', fontweight='bold', fontsize=13, pad=15)
     ax2.tick_params(axis='y', labelcolor='blue')
     ax2_twin.tick_params(axis='y', labelcolor='red')
     ax2.grid(True, alpha=0.3)
@@ -274,9 +274,9 @@ def create_pca_biplot():
     im = ax3.imshow(distance_matrix, cmap='viridis')
     ax3.set_xticks(range(len(models)))
     ax3.set_yticks(range(len(models)))
-    ax3.set_xticklabels(models, rotation=45, ha='right', fontsize=11)
-    ax3.set_yticklabels(models, fontsize=11)
-    ax3.set_title('Model Separation\nDistances', fontweight='bold', fontsize=14)
+    ax3.set_xticklabels(models, rotation=45, ha='right', fontsize=10)
+    ax3.set_yticklabels(models, fontsize=10)
+    ax3.set_title('Model Separation\nDistances', fontweight='bold', fontsize=13, pad=15)
     
     # Add distance values
     for i in range(len(models)):
@@ -311,8 +311,9 @@ def create_pca_biplot():
     colors = [data_df[data_df['Model'] == model].iloc[0]['Color'] for model in models_sorted]
     
     bars = ax4.bar(models_sorted, scores, color=colors, alpha=0.8, edgecolor='black')
-    ax4.set_ylabel('LOSO-LORO Distance (Lower = More Consistent)', fontweight='bold', fontsize=13)
-    ax4.set_title('Cross-Protocol Consistency Analysis', fontweight='bold', fontsize=16)
+    ax4.set_ylabel('LOSO-LORO Distance (Lower = More Consistent)', fontweight='bold', fontsize=12, labelpad=12)
+    ax4.set_xlabel('Model', fontweight='bold', fontsize=12, labelpad=10)
+    ax4.set_title('Cross-Protocol Consistency Analysis', fontweight='bold', fontsize=15, pad=20)
     ax4.grid(True, alpha=0.3, axis='y')
     
     # Add value labels
@@ -336,11 +337,11 @@ def create_pca_biplot():
         ax5.scatter(model_data['PC1'], model_data['PC2'], model_data['PC3'],
                    c=color, marker=marker, s=40, alpha=0.6, label=model)
     
-    ax5.set_xlabel('PC1', fontweight='bold', fontsize=12)
-    ax5.set_ylabel('PC2', fontweight='bold', fontsize=12)  
-    ax5.set_zlabel('PC3', fontweight='bold', fontsize=12)
-    ax5.set_title('3D Feature Space', fontweight='bold', fontsize=14)
-    ax5.legend(fontsize=10)
+    ax5.set_xlabel('PC1', fontweight='bold', fontsize=11, labelpad=8)
+    ax5.set_ylabel('PC2', fontweight='bold', fontsize=11, labelpad=8)  
+    ax5.set_zlabel('PC3', fontweight='bold', fontsize=11, labelpad=8)
+    ax5.set_title('3D Feature Space', fontweight='bold', fontsize=13, pad=15)
+    ax5.legend(fontsize=9, loc='upper left')
     
     # Column 3, Row 1: PCA Feature Loadings Matrix
     ax6 = plt.subplot2grid((3, 10), (0, 7), colspan=3, rowspan=1)
@@ -361,10 +362,10 @@ def create_pca_biplot():
     import seaborn as sns
     sns.heatmap(loadings_df, annot=True, fmt='.2f', cmap='RdBu_r', center=0,
                 square=False, linewidths=0.5, ax=ax6, 
-                annot_kws={'size': 9}, cbar_kws={'label': 'Loading Weight'})
-    ax6.set_title('PCA Feature Loadings Matrix', fontweight='bold', fontsize=14)
-    ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=12)
-    ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=12)
+                annot_kws={'size': 8}, cbar_kws={'label': 'Loading Weight'})
+    ax6.set_title('PCA Feature Loadings Matrix', fontweight='bold', fontsize=13, pad=15)
+    ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=11, labelpad=10)
+    ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=11, labelpad=10)
     
     # Column 3, Row 2-3: Feature Contributions to Top 2 PCs (extend to match column heights)
     ax7 = plt.subplot2grid((3, 10), (1, 7), colspan=3, rowspan=2)
@@ -382,13 +383,15 @@ def create_pca_biplot():
              label='PC2 Contribution', alpha=0.8, color='#E74C3C')
     
     ax7.set_yticks(y_pos)
-    ax7.set_yticklabels(pc1_contributions.index, fontsize=11)
-    ax7.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=12)
-    ax7.set_title('Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=14)
-    ax7.legend(fontsize=11)
+    ax7.set_yticklabels(pc1_contributions.index, fontsize=10)
+    ax7.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=11, labelpad=10)
+    ax7.set_title('Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=13, pad=15)
+    ax7.legend(fontsize=10, loc='lower right')
     ax7.grid(True, alpha=0.3, axis='x')
     
-    plt.tight_layout(pad=2.0, w_pad=1.5, h_pad=1.5)  # Optimized spacing for 3-column layout
+    # Adjust layout with significant spacing to prevent overlaps
+    plt.subplots_adjust(left=0.08, bottom=0.10, right=0.95, top=0.92, 
+                       wspace=0.4, hspace=0.5)  # Increased spacing between subplots
     
     return fig, data_df, pca
 
