@@ -1,0 +1,10 @@
+# Origin Pro数据文件 - Figure 4: Sim2Real Label Efficiency Curve  
+# 格式: Label_Ratio	F1_Score	Std_Error
+# 主曲线颜色: #2E86AB (深蓝)
+# 参考线: 目标线y=0.80(红虚线), 理想线y=0.90(橙点线), Zero-shot基线y=0.151(灰实线)
+Label_Ratio	F1_Score	Std_Error
+1.0	0.455	0.050
+5.0	0.780	0.016
+10.0	0.730	0.104
+20.0	0.821	0.003
+100.0	0.833	0.000

@@ -1,0 +1,8 @@
+# Origin Pro数据文件 - Figure 3: Cross-Domain Generalization Performance
+# 格式: Model	LOSO_F1	LOSO_Error	LORO_F1	LORO_Error
+# 颜色代码: Enhanced=#2E86AB, CNN=#E84855, BiLSTM=#3CB371, Conformer=#DC143C
+Model	LOSO_F1	LOSO_Error	LORO_F1	LORO_Error
+Enhanced	0.830	0.001	0.830	0.001
+CNN	0.842	0.025	0.796	0.097
+BiLSTM	0.803	0.022	0.789	0.044
+Conformer	0.403	0.386	0.841	0.040
