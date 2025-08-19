@@ -13,8 +13,14 @@ import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
 
-# Set publication-ready style
-plt.style.use('seaborn-v0_8-paper')
+# Set publication-ready style (fallback safe)
+try:
+    plt.style.use('seaborn-v0_8-paper')
+except Exception:
+    try:
+        plt.style.use('seaborn-paper')
+    except Exception:
+        pass
 
 # Configure for IEEE IoTJ standards
 plt.rcParams.update({
@@ -111,7 +117,7 @@ def create_comprehensive_protocols():
     }
     
     # === Synthetic Robustness Validation (Left Column) ===
-    ax.text(3, 10.5, 'Synthetic Robustness\nValidation', fontsize=14, fontweight='bold', color='darkorange', wrap=True)
+    ax.text(3, 10.5, 'Synthetic Robustness\nValidation (SRD)', fontsize=15, fontweight='bold', color='darkorange', wrap=True)
     ax.text(3, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=11, color='darkorange', style='italic')
     
     d2_content = """Objective: Validate synthetic data quality
@@ -265,7 +271,7 @@ def create_comprehensive_protocols():
         ax.text(0.5, 1.4 - i*0.15, stat, fontsize=8, color='purple')
     
     # === Performance Metrics Table ===
-    ax.text(12, 1.8, 'Key Performance Summary', fontsize=12, fontweight='bold', color='darkblue')
+    ax.text(12, 1.8, 'Key Performance Summary', fontsize=13, fontweight='bold', color='darkblue')
     
     metrics = [
         ["Protocol", "Key Metric", "Achievement"],
@@ -423,7 +429,7 @@ if __name__ == "__main__":
     
     # Save figures
     output_files = [
-        ('figure2_experimental_protocols.pdf', fig1),
+        ('figure4_experimental_overview.pdf', fig1),
         ('figure2_experimental_protocols.png', fig1),
         ('figure2_protocol_flowchart.pdf', fig2),
         ('figure2_protocol_flowchart.png', fig2)
@@ -433,6 +439,18 @@ if __name__ == "__main__":
         fig.savefig(filename, dpi=300, bbox_inches='tight', 
                    facecolor='white', edgecolor='none')
         print(f"✅ Saved: {filename}")
+
+    # Export double-column friendly PDF as figure4_experimental_overview.pdf (approx 7.2x4.5 inches)
+    try:
+        orig_size = fig1.get_size_inches()
+        fig1.set_size_inches(7.2, 4.5)
+        fig1.savefig('figure4_experimental_overview.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+        print("✅ Saved: figure4_experimental_overview.pdf (double-column)")
+    finally:
+        try:
+            fig1.set_size_inches(orig_size)
+        except Exception:
+            pass
     
     # Export data
     export_protocols_data()

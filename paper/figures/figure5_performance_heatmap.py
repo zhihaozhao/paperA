@@ -15,24 +15,30 @@ from sklearn.preprocessing import StandardScaler
 import warnings
 warnings.filterwarnings('ignore')
 
-# Set publication-ready style
-plt.style.use('seaborn-v0_8-paper')
+# Set publication-ready style (fallback safe)
+try:
+    plt.style.use('seaborn-v0_8-paper')
+except Exception:
+    try:
+        plt.style.use('seaborn-paper')
+    except Exception:
+        pass
 
 # Configure for IEEE IoTJ standards
 plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman'],
-    'font.size': 12,
-    'axes.labelsize': 13,
-    'axes.titlesize': 15,
-    'xtick.labelsize': 11,
-    'ytick.labelsize': 11,
-    'legend.fontsize': 11,
-    'figure.titlesize': 16,
+    'font.size': 13,
+    'axes.labelsize': 14,
+    'axes.titlesize': 16,
+    'xtick.labelsize': 12,
+    'ytick.labelsize': 12,
+    'legend.fontsize': 12,
+    'figure.titlesize': 17,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
-    'savefig.pad_inches': 0.1
+    'savefig.pad_inches': 0.12
 })
 
 def create_comprehensive_performance_data():
@@ -115,19 +121,23 @@ def create_hierarchical_clustering_heatmap():
     # Main heatmap with clustering
     ax1 = plt.subplot2grid((3, 4), (0, 0), colspan=3, rowspan=2)
     
-    # Create clustered heatmap
-    sns.clustermap(
-        cluster_data_scaled, 
-        cmap='RdYlBu_r',
-        center=0,
-        linewidths=0.5,
-        cbar_kws={'label': 'Normalized Performance Score'},
-        figsize=(12, 8),
-        dendrogram_ratio=0.15,
-        annot=True,
-        fmt='.2f',
-        square=False
-    )
+    # Create clustered heatmap (fallback for older seaborn)
+    try:
+        sns.clustermap(
+            cluster_data_scaled,
+            cmap='RdYlBu_r',
+            center=0,
+            linewidths=0.5,
+            cbar_kws={'label': 'Normalized Performance Score'},
+            figsize=(12, 8),
+            annot=True,
+            fmt='.2f'
+        )
+    except Exception:
+        try:
+            sns.clustermap(cluster_data_scaled, cmap='RdYlBu_r', center=0)
+        except Exception:
+            pass
     
     plt.close()  # Close the clustermap figure since we're creating our own layout
     
@@ -149,7 +159,7 @@ def create_hierarchical_clustering_heatmap():
     ax1.set_yticks(range(len(ordered_data.index)))
     ax1.set_yticklabels(ordered_data.index)
     ax1.set_title('Performance Metrics Heatmap\n(Hierarchically Clustered)', 
-                  fontweight='bold', pad=15)
+                  fontweight='bold')
     
     # Add colorbar
     cbar = plt.colorbar(im, ax=ax1, fraction=0.046, pad=0.04)
@@ -189,10 +199,10 @@ def create_hierarchical_clustering_heatmap():
     
     ax2.set_xticks(angles[:-1])
     ax2.set_xticklabels([metric.replace('_', '\n') for metric in radar_metrics], 
-                       fontsize=8)
+                       fontsize=10)
     ax2.set_ylim(0, 1)
-    ax2.set_title('Model Comparison\nRadar Chart', fontweight='bold', pad=20, fontsize=10)
-    ax2.legend(loc='upper right', bbox_to_anchor=(1.2, 1.0))
+    ax2.set_title('Model Comparison\nRadar Chart', fontweight='bold', fontsize=12)
+    ax2.legend(loc='upper left', bbox_to_anchor=(0, 1.02), framealpha=0.9)
     ax2.grid(True)
     
     # Correlation matrix
@@ -256,14 +266,24 @@ def create_hierarchical_clustering_heatmap():
     ax5.set_xlabel('Model Parameters (M)')
     ax5.set_ylabel('LOSO F1 Score')
     ax5.set_title('Efficiency vs Performance\n(Bubble Size = Deployment Readiness)', 
-                 fontweight='bold', fontsize=10)
+                 fontweight='bold', fontsize=12)
     ax5.grid(True, alpha=0.3)
     
     # Add colorbar for stability
     cbar2 = plt.colorbar(scatter, ax=ax5, fraction=0.046, pad=0.04)
     cbar2.set_label('Stability Index', rotation=270, labelpad=15)
     
-    plt.tight_layout()
+    plt.subplots_adjust(hspace=0.35, wspace=0.30)
+    # Export compact figure5.pdf (double-column friendly width)
+    try:
+        orig_size = fig.get_size_inches()
+        fig.set_size_inches(7.2, 4.5)
+        fig.savefig('figure5.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    finally:
+        try:
+            fig.set_size_inches(orig_size)
+        except Exception:
+            pass
     
     return fig, data
 
@@ -368,10 +388,10 @@ if __name__ == "__main__":
     # Generate statistical significance heatmap
     fig2, sig_matrix = create_statistical_significance_heatmap()
     
-    # Save figures
+    # Save figures (canonical paper name + originals)
     output_files = [
+        ('figure3_enhanced_3D.pdf', fig1),
         ('figure5_performance_heatmap.pdf', fig1),
-        ('figure5_performance_heatmap.png', fig1),
         ('figure5_statistical_significance.pdf', fig2),
         ('figure5_statistical_significance.png', fig2)
     ]

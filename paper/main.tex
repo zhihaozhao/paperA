@@ -100,7 +100,7 @@ The remainder of this paper is organized as follows: Section II reviews related 
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure1_system_architecture.pdf}
+\includegraphics[width=\columnwidth]{figures/figure1_system overview.pdf}
 \caption{System overview of the physics-guided synthetic \gls{csi} generation and Sim2Real pipeline, including physics modeling (multipath, human interaction, environment), parameterized synthesis, enhanced model (\gls{cnn}+\gls{se}+temporal attention), and trustworthy evaluation.}
 \label{fig:system_overview}
 \end{figure}
@@ -247,7 +247,7 @@ This caching system reduces dataset generation time from minutes to seconds for 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure6_physics_guided_3d_framework.pdf}
+\includegraphics[width=\columnwidth]{figures/figure2_physics-guided.pdf}
 \caption{Physics-Guided Sim2Real Framework 3D Visualization. The framework integrates physics modeling (multipath, human interaction, environment), synthetic \gls{csi} generation, and \gls{stea} transfer learning protocols. The 3D representation illustrates the complete pipeline from physics principles to practical deployment, enabling 82.1\% F1 performance at 20\% label efficiency.}
 \label{fig:physics_3d_framework}
 \end{figure}
@@ -292,7 +292,7 @@ where $\mathbf{c}$ represents the context vector obtained through attention-weig
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure5_enhanced_3d_architecture.pdf}
+\includegraphics[width=\columnwidth]{figures/figure3_enhanced_3D.pdf}
 \caption{Enhanced Model 3D Architecture. The architecture integrates \gls{cnn} feature extraction, \gls{se} channel attention, and temporal attention mechanisms in a multi-level processing pipeline. The 3D visualization illustrates component relationships and abstraction levels, with \gls{se} and Attention modules highlighted as key innovations achieving 83.0±0.1\% F1 cross-domain consistency.}
 \label{fig:enhanced_3d_arch}
 \end{figure}
@@ -335,8 +335,8 @@ We evaluate model reliability through:
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure2_experimental_protocols.pdf}
-\caption{Experimental protocols overview: Synthetic Robustness Validation (540 configurations), \gls{cdae} (\gls{loso}/\gls{loro}), and \gls{stea} label-efficiency evaluation.}
+\includegraphics[width=\columnwidth]{figures/figure4_experimental_overview.pdf}
+\caption{Experimental protocols overview: Synthetic Robustness Validation (SRD, 540 configurations; first use in full), \gls{cdae} (\gls{loso}/\gls{loro}), and \gls{stea} label-efficiency evaluation.}
 \label{fig:protocols}
 \end{figure}
 
@@ -397,9 +397,17 @@ The \gls{cdae} protocol evaluation reveals exceptional cross-domain consistency 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure3_enhanced_compatible.pdf}
+\includegraphics[width=\columnwidth]{figures/figure5_cross-domain.pdf}
 \caption{Cross-domain generalization performance across \gls{loso} and \gls{loro}. Subplots: (top-left) main LOSO/LORO comparison with error bars; (top-right) cross-domain gap $|\text{LOSO}-\text{LORO}|$ (lower is better); (bottom-left) stability (CV, log-scale); (bottom-right) significance (−log$_{10}$(p)). The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
 \label{fig:cross_domain}
+\end{figure}
+
+% PCA analysis figure (original Figure 6) added for completeness in Methods
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/figure7_pca_analysis.pdf}
+\caption{PCA analysis of feature space illustrating variance explained and class separability used to guide architectural choices.}
+\label{fig:pca_analysis}
 \end{figure}
 
 \textbf{\gls{loso} Protocol Results:} The Enhanced model achieves 83.0±0.1\% macro F1, demonstrating superior subject-independent generalization. While the \gls{cnn} baseline achieves slightly higher mean performance (84.2±2.5\%), it exhibits significantly higher variability, indicating reduced robustness across different subjects. The \gls{bilstm} baseline reaches 80.3±2.2\% F1, showing reasonable performance but with higher variance than the Enhanced model. The Conformer-lite architecture shows instability with high variability ($\text{CV}=95.7\%$), suggesting poor adaptation to the subject-independent scenario.
@@ -414,7 +422,7 @@ The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure4_advanced_bubble.pdf}
+\includegraphics[width=\columnwidth]{figures/figure6_label_efficiency.pdf}
 \caption{Sim2Real label efficiency of the Enhanced model. Subplots: (left) label ratio vs. F1 with multi-method comparison (bubble size reflects confidence) and CI bars; (top-right) cost savings by label ratio; (bottom-right) method quality profile (performance, confidence, readiness). Only 20\% labeled real data achieves 82.1\% macro F1 (80\% labeling cost reduction).}
 \label{fig:label_efficiency}
 \end{figure}

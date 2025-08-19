@@ -207,7 +207,7 @@ def create_enhanced_model_architecture():
     
     # === Customization ===
     ax.set_title('Enhanced Model 3D Architecture\n(CNN + SE + Temporal Attention)', 
-                fontsize=16, fontweight='bold', pad=30)
+                fontsize=16, fontweight='bold')
     
     ax.set_xlabel('Processing Flow →', fontweight='bold', labelpad=15)
     ax.set_ylabel('Model Components', fontweight='bold', labelpad=15)
@@ -335,7 +335,7 @@ def create_data_flow_diagram():
     
     # === Title and Layout ===
     ax.set_title('Enhanced Model Architecture: Comprehensive Framework Overview\n(Inspired by SenseFi and SE-Networks)', 
-                fontsize=16, fontweight='bold', pad=20)
+                fontsize=16, fontweight='bold')
     
     ax.set_xlim(0, 16)
     ax.set_ylim(-0.5, 7.5)
@@ -381,7 +381,7 @@ if __name__ == "__main__":
     
     # Save figures
     output_files = [
-        ('enhanced_model_3d_architecture.pdf', fig1),
+        ('figure3_enhanced_3D.pdf', fig1),
         ('enhanced_model_3d_architecture.png', fig1),
         ('enhanced_model_dataflow.pdf', fig2),
         ('enhanced_model_dataflow.png', fig2)

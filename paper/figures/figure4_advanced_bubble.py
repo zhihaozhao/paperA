@@ -284,7 +284,7 @@ def create_efficiency_phase_analysis():
     ax.set_xlabel('Label Ratio (%)', fontweight='bold')
     ax.set_ylabel('Macro F1 Score', fontweight='bold')
     ax.set_title('Sim2Real Efficiency Phase Analysis: Three-Stage Learning Process', 
-                fontweight='bold', pad=20)
+                fontweight='bold')
     
     ax.set_xlim(-2, 105)
     ax.set_ylim(0.4, 0.9)
@@ -334,7 +334,7 @@ if __name__ == "__main__":
     
     # Save figures
     output_files = [
-        ('figure4_advanced_bubble.pdf', fig1),
+        ('figure6_label_efficiency.pdf', fig1),
         ('figure4_advanced_bubble.png', fig1),
         ('figure4_efficiency_phases.pdf', fig2),
         ('figure4_efficiency_phases.png', fig2)

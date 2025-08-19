@@ -14,7 +14,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Set publication-ready style
-plt.style.use('seaborn-v0_8-paper')
+# plt.style.use('seaborn-v0_8-paper')  # Commented out for compatibility
 
 # Configure for IEEE IoTJ standards
 plt.rcParams.update({
@@ -365,6 +365,13 @@ if __name__ == "__main__":
                    facecolor='white', edgecolor='none')
         print(f"✅ Saved: {filename}")
     
+    # Also save with canonical paper filename
+    try:
+        fig1.savefig('figure1_system overview.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+        print('✅ Saved: figure1_system overview.pdf')
+    except Exception:
+        pass
+
     # Export data
     export_architecture_data()
     

@@ -28,7 +28,7 @@ plt.rcParams.update({
 
 def create_enhanced_barplot():
     """Create enhanced cross-domain performance analysis"""
-    
+    show_value_labels = False  # disable top-of-bar value labels to avoid clutter
     # Data from paper results
     data = {
         'Model': ['Enhanced', 'CNN', 'BiLSTM', 'Conformer-lite'],
@@ -60,13 +60,14 @@ def create_enhanced_barplot():
     
     # Add performance values on bars
     y_margin = max(df['LOSO_Std'].max(), df['LORO_Std'].max()) + 0.02
-    for i, (bar1, bar2) in enumerate(zip(bars1, bars2)):
-        height1 = bar1.get_height()
-        height2 = bar2.get_height()
-        ax1.text(bar1.get_x() + bar1.get_width()/2., height1 + y_margin,
-                f'{height1:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=11, clip_on=False)
-        ax1.text(bar2.get_x() + bar2.get_width()/2., height2 + y_margin,
-                f'{height2:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=11, clip_on=False)
+    if show_value_labels:
+        for i, (bar1, bar2) in enumerate(zip(bars1, bars2)):
+            height1 = bar1.get_height()
+            height2 = bar2.get_height()
+            ax1.text(bar1.get_x() + bar1.get_width()/2., height1 + y_margin,
+                    f'{height1:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=11, clip_on=False)
+            ax1.text(bar2.get_x() + bar2.get_width()/2., height2 + y_margin,
+                    f'{height2:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=11, clip_on=False)
     
     ax1.set_title('Cross-Domain Performance Comparison\n(Enhanced Model in Gold)', 
                  fontweight='bold')
@@ -183,8 +184,8 @@ if __name__ == "__main__":
     fig = create_enhanced_barplot()
     
     # Save figure
-    fig.savefig('figure3_enhanced_compatible.pdf', dpi=300, bbox_inches='tight', facecolor='white')
-    fig.savefig('figure3_enhanced_compatible.png', dpi=300, bbox_inches='tight', facecolor='white')
+    for out in ['figure5_cross-domain.pdf', 'figure3_enhanced_compatible.pdf']:
+        fig.savefig(out, dpi=300, bbox_inches='tight', facecolor='white')
     
     print('✅ Generated: figure3_enhanced_compatible.pdf')
     print('✅ Generated: figure3_enhanced_compatible.png')
