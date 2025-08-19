@@ -133,11 +133,11 @@ def create_pca_biplot():
     for i in range(pca_result.shape[1]):
         data_df[f'PC{i+1}'] = pca_result[:, i]
     
-    # Create figure with multiple subplots
-    fig = plt.figure(figsize=(18, 14))  # Increased figure size for better layout
+    # Create figure with multiple subplots for 7-panel comprehensive analysis
+    fig = plt.figure(figsize=(24, 18))  # Much larger figure for 7 subplots
     
     # Main PCA scatter plot
-    ax1 = plt.subplot2grid((3, 3), (0, 0), colspan=2, rowspan=2)
+    ax1 = plt.subplot2grid((4, 4), (0, 0), colspan=2, rowspan=2)
     
     # Plot each model with confidence ellipses
     models = data_df['Model'].unique()
@@ -220,7 +220,7 @@ def create_pca_biplot():
                     bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, edgecolor='gray'))
     
     # Explained variance plot
-    ax2 = plt.subplot2grid((3, 3), (0, 2))
+    ax2 = plt.subplot2grid((4, 4), (0, 2))
     
     explained_var = pca.explained_variance_ratio_
     cumulative_var = np.cumsum(explained_var)
@@ -245,7 +245,7 @@ def create_pca_biplot():
                 f'{var:.1%}', ha='center', va='bottom', fontsize=10, fontweight='bold')
     
     # Model separation analysis
-    ax3 = plt.subplot2grid((3, 3), (1, 2))
+    ax3 = plt.subplot2grid((4, 4), (0, 3))
     
     # Calculate inter-model distances in PC space
     model_centers = {}
@@ -283,7 +283,7 @@ def create_pca_biplot():
     plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
     
     # Protocol consistency analysis
-    ax4 = plt.subplot2grid((3, 3), (2, 0), colspan=2)
+    ax4 = plt.subplot2grid((4, 4), (2, 0), colspan=2)
     
     # Calculate LOSO-LORO distance for each model
     protocol_consistency = {}
@@ -322,7 +322,7 @@ def create_pca_biplot():
     bars[enhanced_idx].set_edgecolor('gold')
     
     # 3D PCA plot
-    ax5 = plt.subplot2grid((3, 3), (2, 2), projection='3d')
+    ax5 = plt.subplot2grid((4, 4), (2, 2), projection='3d')
     
     for model in models:
         model_data = data_df[data_df['Model'] == model]
@@ -337,6 +337,52 @@ def create_pca_biplot():
     ax5.set_zlabel('PC3', fontweight='bold', fontsize=12)
     ax5.set_title('3D Feature Space', fontweight='bold', fontsize=14)
     ax5.legend(fontsize=10)
+    
+    # PCA Feature Loadings Matrix (6th subplot)
+    ax6 = plt.subplot2grid((4, 4), (1, 2), colspan=2)
+    
+    # Create loadings matrix for visualization
+    feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
+                    'Channel_Diversity', 'Signal_Strength', 'Noise_Resilience',
+                    'Attention_Weight', 'Memory_State', 'Feature_Interaction', 'Complexity']
+    
+    # Use first 5 components for the heatmap
+    loadings_df = pd.DataFrame(
+        pca.components_[:5, :].T,  # Transpose to get features as rows
+        columns=[f'PC{i+1}' for i in range(5)],
+        index=feature_names
+    )
+    
+    # Create heatmap
+    import seaborn as sns
+    sns.heatmap(loadings_df, annot=True, fmt='.2f', cmap='RdBu_r', center=0,
+                square=False, linewidths=0.5, ax=ax6, 
+                annot_kws={'size': 9}, cbar_kws={'label': 'Loading Weight'})
+    ax6.set_title('PCA Feature Loadings Matrix', fontweight='bold', fontsize=14)
+    ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=12)
+    ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=12)
+    
+    # Feature Contributions to Top 2 PCs (7th subplot)
+    ax7 = plt.subplot2grid((4, 4), (3, 0), colspan=2)
+    
+    # Calculate absolute contributions for PC1 and PC2
+    pc1_contributions = np.abs(loadings_df['PC1']).sort_values(ascending=True)
+    pc2_contributions = np.abs(loadings_df['PC2']).sort_values(ascending=True)
+    
+    # Create horizontal bar chart
+    y_pos = np.arange(len(feature_names))
+    
+    ax7.barh(y_pos - 0.2, pc1_contributions, height=0.4, 
+             label='PC1 Contribution', alpha=0.8, color='#3498DB')
+    ax7.barh(y_pos + 0.2, pc2_contributions, height=0.4, 
+             label='PC2 Contribution', alpha=0.8, color='#E74C3C')
+    
+    ax7.set_yticks(y_pos)
+    ax7.set_yticklabels(pc1_contributions.index, fontsize=11)
+    ax7.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=12)
+    ax7.set_title('Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=14)
+    ax7.legend(fontsize=11)
+    ax7.grid(True, alpha=0.3, axis='x')
     
     plt.tight_layout(pad=3.0)  # Increased padding for better spacing
     
@@ -427,5 +473,5 @@ if __name__ == "__main__":
     plt.show()
     
     print("\n🎉 Advanced PCA Analysis Complete!")
-    print("🔍 Comprehensive feature space visualization with 6 subplots")
-    print("📊 Features: Biplot + loadings + clustering + protocol consistency + 3D view")
+    print("🔍 Comprehensive feature space visualization with 7 subplots")
+    print("📊 Features: Biplot + variance + separation + consistency + 3D + loadings + contributions")
