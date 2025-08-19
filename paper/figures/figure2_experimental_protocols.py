@@ -33,7 +33,7 @@ plt.rcParams.update({
     'savefig.pad_inches': 0.1
 })
 
-def create_protocol_box(ax, xy, width, height, title, content, color, title_color='white'):
+def create_protocol_box(ax, xy, width, height, title, content, color, title_color='black'):
     """Create a protocol description box"""
     # Main box
     box = FancyBboxPatch(
@@ -50,23 +50,23 @@ def create_protocol_box(ax, xy, width, height, title, content, color, title_colo
     title_box = FancyBboxPatch(
         xy, width, 0.4,
         boxstyle="round,pad=0.01",
-        facecolor='darkblue',
+        facecolor='#DDE7FF',
         edgecolor='black',
         linewidth=1,
-        alpha=0.9
+        alpha=0.95
     )
     ax.add_patch(title_box)
     
     # Title text
     ax.text(xy[0] + width/2, xy[1] + 0.2, title, 
            ha='center', va='center', 
-           fontsize=10, fontweight='bold', color=title_color)
+           fontsize=10, fontweight='bold', color=title_color, wrap=True)
     
     # Content text
     ax.text(xy[0] + width/2, xy[1] + height/2 - 0.1, content, 
            ha='center', va='center', 
-           fontsize=8, color='black', 
-           bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8))
+           fontsize=9, color='black', wrap=True,
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9))
     
     return box
 
@@ -111,7 +111,7 @@ def create_comprehensive_protocols():
     }
     
     # === Synthetic Robustness Validation (Left Column) ===
-    ax.text(3, 10.5, 'Synthetic Robustness Validation', fontsize=14, fontweight='bold', color='darkorange')
+    ax.text(3, 10.5, 'Synthetic Robustness\nValidation', fontsize=14, fontweight='bold', color='darkorange', wrap=True)
     ax.text(3, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=11, color='darkorange', style='italic')
     
     d2_content = """Objective: Validate synthetic data quality
@@ -212,7 +212,7 @@ def create_comprehensive_protocols():
     # Label efficiency arrow
     ax.annotate('', xy=(14.5, 6.8), xytext=(11.5, 6.8),
                arrowprops=dict(arrowstyle='<->', lw=2, color='darkblue'))
-    ax.text(13, 6.5, 'Label Efficiency: 1% → 100%', ha='center', fontsize=9, 
+    ax.text(13, 6.5, 'Label Efficiency: 1% -> 100%', ha='center', fontsize=9, 
            fontweight='bold', color='darkblue')
     
     # === Integration Flow ===
@@ -220,7 +220,7 @@ def create_comprehensive_protocols():
     
     # Integration boxes
     integration_boxes = [
-        {'pos': (2, 5), 'size': (3, 0.8), 'label': 'D2 Validation\n✓ Synthetic data quality', 'color': '#FFE5B4'},
+        {'pos': (2, 5), 'size': (3, 0.8), 'label': 'Synthetic Robustness\n✓ Synthetic data quality', 'color': '#FFE5B4'},
         {'pos': (6.5, 5), 'size': (3, 0.8), 'label': 'CDAE Generalization\n✓ 83.0±0.1% Cross-domain', 'color': '#C8E6C9'},
         {'pos': (11, 5), 'size': (3, 0.8), 'label': 'STEA Efficiency\n✓ 82.1% @ 20% labels', 'color': '#E1F5FE'}
     ]
@@ -269,7 +269,7 @@ def create_comprehensive_protocols():
     
     metrics = [
         ["Protocol", "Key Metric", "Achievement"],
-        ["D2", "Robustness", "540 configs validated"],
+        ["Synthetic Robustness", "Robustness", "540 configs validated"],
         ["CDAE", "Consistency", "CV < 0.2%"],
         ["STEA", "Efficiency", "80% cost reduction"]
     ]
@@ -309,7 +309,7 @@ def create_protocol_flowchart():
     # Define flowchart stages
     stages = [
         {'pos': (1, 6), 'size': (2.5, 0.8), 'label': 'Physics-Guided\nSynthetic Generation', 'color': '#FFE5B4'},
-        {'pos': (5, 6.5), 'size': (2, 0.6), 'label': 'D2 Protocol\nValidation', 'color': '#FFD700'},
+        {'pos': (5, 6.5), 'size': (2, 0.6), 'label': 'Synthetic Robustness\nValidation', 'color': '#FFD700'},
         {'pos': (5, 5.5), 'size': (2, 0.6), 'label': 'Enhanced Model\nTraining', 'color': '#FFC0CB'},
         {'pos': (9, 6.5), 'size': (2, 0.6), 'label': 'CDAE Protocol\nCross-Domain', 'color': '#C8E6C9'},
         {'pos': (9, 5.5), 'size': (2, 0.6), 'label': 'STEA Protocol\nTransfer Efficiency', 'color': '#E1F5FE'},
@@ -335,9 +335,9 @@ def create_protocol_flowchart():
     
     # Add arrows between stages
     arrows = [
-        ((3.5, 6.4), (5, 6.8)),      # Generation to D2
+        ((3.5, 6.4), (5, 6.8)),      # Generation to SRV
         ((3.5, 6.4), (5, 5.8)),      # Generation to Training
-        ((7, 6.8), (9, 6.8)),        # D2 to CDAE
+        ((7, 6.8), (9, 6.8)),        # SRV to CDAE
         ((7, 5.8), (9, 5.8)),        # Training to STEA  
         ((11, 6.8), (12.5, 6.5)),    # CDAE to Evaluation
         ((11, 5.8), (12.5, 6.3))     # STEA to Evaluation
@@ -379,7 +379,7 @@ def export_protocols_data():
     import pandas as pd
     
     protocol_data = {
-        'Protocol': ['D2', 'CDAE', 'STEA'],
+        'Protocol': ['Synthetic Robustness', 'CDAE', 'STEA'],
         'Full_Name': ['Robustness Analysis', 'Cross-Domain Adaptation Evaluation', 'Sim2Real Transfer Efficiency Assessment'],
         'Configurations': [540, 40, 56],
         'Key_Metric': ['Synthetic_Quality', 'Cross_Domain_F1', 'Label_Efficiency'],
@@ -392,7 +392,7 @@ def export_protocols_data():
     
     # Detailed configuration data
     config_data = {
-        'Protocol': ['D2']*9 + ['CDAE']*8 + ['STEA']*7,
+        'Protocol': ['Synthetic Robustness']*9 + ['CDAE']*8 + ['STEA']*7,
         'Parameter': ['Models', 'Seeds', 'Noise_Levels', 'Overlap_Conditions', 'Difficulty_Levels', 
                      'Time_Steps', 'Feature_Dims', 'Burst_Rates', 'Total_Configs'] +
                     ['Models', 'Protocols', 'Seeds', 'Subjects', 'Rooms', 'Cross_Validation', 

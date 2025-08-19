@@ -398,7 +398,7 @@ The \gls{cdae} protocol evaluation reveals exceptional cross-domain consistency 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{figures/figure3_enhanced_compatible.pdf}
-\caption{Cross-domain generalization performance across \gls{loso} and \gls{loro}. The Enhanced model achieves identical 83.0±0.1\% macro F1 in both protocols with exceptional stability ($\text{CV}<0.2\%$).}
+\caption{Cross-domain generalization performance across \gls{loso} and \gls{loro}. Subplots: (top-left) main LOSO/LORO comparison with error bars; (top-right) cross-domain gap $|\text{LOSO}-\text{LORO}|$ (lower is better); (bottom-left) stability (CV, log-scale); (bottom-right) significance (−log$_{10}$(p)). The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
 \label{fig:cross_domain}
 \end{figure}
 
@@ -415,7 +415,7 @@ The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{figures/figure4_advanced_bubble.pdf}
-\caption{Sim2Real label efficiency of the Enhanced model. Only 20\% labeled real data achieves 82.1\% macro F1 (80\% labeling cost reduction). The efficiency curve exhibits three phases: Bootstrap (1\%), Rapid growth (5--10\%), and Convergence (\(\geq\)20\%).}
+\caption{Sim2Real label efficiency of the Enhanced model. Subplots: (left) label ratio vs. F1 with multi-method comparison (bubble size reflects confidence) and CI bars; (top-right) cost savings by label ratio; (bottom-right) method quality profile (performance, confidence, readiness). Only 20\% labeled real data achieves 82.1\% macro F1 (80\% labeling cost reduction).}
 \label{fig:label_efficiency}
 \end{figure}
 

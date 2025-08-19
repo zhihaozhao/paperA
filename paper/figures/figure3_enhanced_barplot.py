@@ -9,12 +9,21 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-# Configure for IEEE IoTJ standards
+# Configure for IEEE IoTJ standards (larger fonts and readability)
 plt.rcParams.update({
-    'font.size': 10,
+    'font.family': 'serif',
+    'font.serif': ['Times New Roman'],
+    'font.size': 12,
+    'axes.labelsize': 13,
+    'axes.titlesize': 15,
+    'xtick.labelsize': 11,
+    'ytick.labelsize': 11,
+    'legend.fontsize': 11,
+    'figure.titlesize': 16,
     'figure.dpi': 300,
     'savefig.dpi': 300,
-    'savefig.bbox': 'tight'
+    'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.1
 })
 
 def create_enhanced_barplot():
@@ -37,10 +46,11 @@ def create_enhanced_barplot():
     x = np.arange(len(df['Model']))
     width = 0.35
     
+    error_kw = dict(elinewidth=1.5, ecolor='black', capsize=5)
     bars1 = ax1.bar(x - width/2, df['LOSO_F1'], width, yerr=df['LOSO_Std'], 
-                   label='LOSO', color='#2ECC71', alpha=0.8, capsize=5, capthick=2)
+                   label='LOSO', color='#2ECC71', alpha=0.85, error_kw=error_kw)
     bars2 = ax1.bar(x + width/2, df['LORO_F1'], width, yerr=df['LORO_Std'],
-                   label='LORO', color='#3498DB', alpha=0.8, capsize=5, capthick=2)
+                   label='LORO', color='#3498DB', alpha=0.85, error_kw=error_kw)
     
     # Enhanced model golden highlighting
     bars1[0].set_edgecolor('gold')
@@ -49,29 +59,30 @@ def create_enhanced_barplot():
     bars2[0].set_linewidth(4)
     
     # Add performance values on bars
+    y_margin = max(df['LOSO_Std'].max(), df['LORO_Std'].max()) + 0.02
     for i, (bar1, bar2) in enumerate(zip(bars1, bars2)):
         height1 = bar1.get_height()
         height2 = bar2.get_height()
-        ax1.text(bar1.get_x() + bar1.get_width()/2., height1 + df['LOSO_Std'].iloc[i] + 0.01,
-                f'{height1:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
-        ax1.text(bar2.get_x() + bar2.get_width()/2., height2 + df['LORO_Std'].iloc[i] + 0.01,
-                f'{height2:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=9)
+        ax1.text(bar1.get_x() + bar1.get_width()/2., height1 + y_margin,
+                f'{height1:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=11, clip_on=False)
+        ax1.text(bar2.get_x() + bar2.get_width()/2., height2 + y_margin,
+                f'{height2:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=11, clip_on=False)
     
     ax1.set_title('Cross-Domain Performance Comparison\n(Enhanced Model in Gold)', 
-                 fontweight='bold', fontsize=12)
+                 fontweight='bold')
     ax1.set_ylabel('Macro F1 Score', fontweight='bold')
     ax1.set_xticks(x)
     ax1.set_xticklabels(df['Model'], fontweight='bold')
-    ax1.legend(fontweight='bold')
+    ax1.legend(loc='upper left', bbox_to_anchor=(0, 1.02), ncol=2, framealpha=0.9)
     ax1.grid(True, alpha=0.3, axis='y')
-    ax1.set_ylim(0, 1.0)
+    ax1.set_ylim(0, 1.05)
     
     # Add consistency annotation for Enhanced
     ax1.annotate('Perfect Consistency\n83.0±0.1% (LOSO = LORO)', 
-                xy=(0, 0.83), xytext=(1.5, 0.9),
+                xy=(0, 0.83), xytext=(1.2, 0.98),
                 arrowprops=dict(arrowstyle='->', lw=2, color='red'),
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.8),
-                fontsize=10, ha='center', fontweight='bold')
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.85),
+                fontsize=12, ha='center', fontweight='bold')
     
     # === Cross-Domain Gap Analysis ===
     gaps = abs(df['LOSO_F1'] - df['LORO_F1'])
@@ -91,8 +102,9 @@ def create_enhanced_barplot():
     # Add gap values on bars
     for bar, gap in zip(bars_gap, gaps):
         height = bar.get_height()
-        ax2.text(bar.get_x() + bar.get_width()/2, height + 0.002,
-                f'{gap:.3f}', ha='center', va='bottom', fontweight='bold')
+        ax2.text(bar.get_x() + bar.get_width()/2, height + 0.01,
+                f'{gap:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=11, clip_on=False)
+    ax2.set_ylim(0, float(max(gaps)) + 0.08)
     
     # === Coefficient of Variation Analysis ===
     cv_scores = [0.12, 2.97, 2.74, 95.79]  # From paper
@@ -113,8 +125,9 @@ def create_enhanced_barplot():
     # Add CV values
     for bar, cv in zip(bars_cv, cv_scores):
         height = bar.get_height()
-        ax3.text(bar.get_x() + bar.get_width()/2, height * 1.2,
-                f'{cv:.1f}%', ha='center', va='bottom', fontweight='bold')
+        ax3.text(bar.get_x() + bar.get_width()/2, height * 1.3,
+                f'{cv:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=11, clip_on=False)
+    ax3.set_ylim(0.1, 200)
     
     # === Statistical Significance Analysis ===
     comparisons = ['Enhanced\nvs CNN', 'Enhanced\nvs BiLSTM', 'Enhanced\nvs Conformer']
@@ -134,7 +147,7 @@ def create_enhanced_barplot():
     ax4.set_ylabel('-log₁₀(p-value)', fontweight='bold')
     ax4.set_xticks(range(len(comparisons)))
     ax4.set_xticklabels(comparisons, fontweight='bold')
-    ax4.legend()
+    ax4.legend(loc='upper left', bbox_to_anchor=(0, 1.02), framealpha=0.9)
     ax4.grid(True, alpha=0.3, axis='y')
     
     # Add significance stars on bars
@@ -144,7 +157,7 @@ def create_enhanced_barplot():
                 star, ha='center', va='bottom', fontsize=16, 
                 fontweight='bold', color='red')
     
-    plt.tight_layout()
+    plt.subplots_adjust(hspace=0.35, wspace=0.30)
     
     return fig
 

@@ -13,24 +13,30 @@ from matplotlib.patches import Rectangle
 import warnings
 warnings.filterwarnings('ignore')
 
-# Set publication-ready style
-plt.style.use('seaborn-v0_8-paper')
+# Set publication-ready style (fallback safe)
+try:
+    plt.style.use('seaborn-v0_8-paper')
+except Exception:
+    try:
+        plt.style.use('seaborn-paper')
+    except Exception:
+        pass
 
 # Configure for IEEE IoTJ standards
 plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman'],
-    'font.size': 12,
-    'axes.labelsize': 13,
-    'axes.titlesize': 15,
-    'xtick.labelsize': 11,
-    'ytick.labelsize': 11,
-    'legend.fontsize': 11,
-    'figure.titlesize': 16,
+    'font.size': 13,
+    'axes.labelsize': 14,
+    'axes.titlesize': 16,
+    'xtick.labelsize': 12,
+    'ytick.labelsize': 12,
+    'legend.fontsize': 12,
+    'figure.titlesize': 17,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
-    'savefig.pad_inches': 0.1
+    'savefig.pad_inches': 0.12
 })
 
 def create_label_efficiency_data():
@@ -161,8 +167,8 @@ def create_advanced_bubble_plot():
     # Customize main plot
     ax1.set_xlabel('Label Ratio (%)', fontweight='bold')
     ax1.set_ylabel('Macro F1 Score', fontweight='bold')
-    ax1.set_title('Sim2Real Transfer Efficiency: Multi-Method Comparison\n(Bubble Size ∝ Confidence)', 
-                 fontweight='bold', pad=15)
+    ax1.set_title('Sim2Real Transfer Efficiency: Multi-Method Comparison\n(Bubble Size ~ Confidence)', 
+                 fontweight='bold')
     
     ax1.set_xlim(-2, 105)
     ax1.set_ylim(0.0, 0.9)
@@ -224,7 +230,7 @@ def create_advanced_bubble_plot():
     ax3.set_xticks(angles[:-1])
     ax3.set_xticklabels(categories, fontsize=8)
     ax3.set_ylim(0, 1)
-    ax3.set_title('Method Quality Profile', fontweight='bold', pad=20, fontsize=12)
+    ax3.set_title('Method Quality Profile', fontweight='bold', fontsize=12)
     ax3.grid(True)
     
     plt.tight_layout()
