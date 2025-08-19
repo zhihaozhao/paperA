@@ -94,7 +94,7 @@ While existing approaches have explored various techniques including transfer le
 \item \textbf{Enhanced Model Architecture:} We propose an enhanced deep learning architecture incorporating \gls{se} modules and temporal attention mechanisms, achieving superior performance on both synthetic and real data.
 \end{enumerate}
 
-\textbf{Comprehensive Experimental Validation:} We validate our approach through three systematic evaluation protocols: (1) \textit{D2 Robustness Analysis}: 540 configurations across noise and overlap conditions, (2) \textit{\gls{cdae}}: 40 configurations validating \gls{loso}/\gls{loro} generalization, and (3) \textit{\gls{stea}}: 56 configurations quantifying Sim2Real label efficiency. Results demonstrate breakthrough performance including 83.0±0.1\% F1 cross-domain consistency and 82.1\% F1 achievement using only 20\% labeled real data.
+\textbf{Comprehensive Experimental Validation:} We validate our approach through three systematic evaluation protocols: (1) \textit{Synthetic Robustness Validation}: 540 configurations across noise, class overlap, and difficulty conditions, (2) \textit{\gls{cdae}}: 40 configurations validating \gls{loso}/\gls{loro} generalization, and (3) \textit{\gls{stea}}: 56 configurations quantifying Sim2Real label efficiency. Results demonstrate breakthrough performance including 83.0±0.1\% F1 cross-domain consistency and 82.1\% F1 achievement using only 20\% labeled real data.
 
 The remainder of this paper is organized as follows: Section II reviews related work in \gls{wifi} \gls{csi} \gls{har} and synthetic data generation. Section III presents our physics-guided synthetic data generation framework. Section IV describes the enhanced model architecture and trustworthy evaluation protocols. Section V presents comprehensive experimental results. Section VI discusses implications and limitations, and Section VII concludes the paper.
 
@@ -336,11 +336,14 @@ We evaluate model reliability through:
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/figure2_experimental_protocols.pdf}
-\caption{Experimental protocols overview: D2 robustness (540 configurations), \gls{cdae} (\gls{loso}/\gls{loro}), and \gls{stea} label-efficiency evaluation.}
+\caption{Experimental protocols overview: Synthetic Robustness Validation (540 configurations), \gls{cdae} (\gls{loso}/\gls{loro}), and \gls{stea} label-efficiency evaluation.}
 \label{fig:protocols}
 \end{figure}
 
 \subsection{Experimental Setup}
+
+\subsubsection{In-Domain Capacity-Aligned Validation}
+We begin with an in-domain capacity-aligned validation to establish a reliable baseline and verify metric consistency. Architectures are matched within ±10\% parameter count to ensure fair comparison. For each model, at least three random seeds are evaluated and the primary metrics (macro F1, ECE, NLL) are reported. This step confirms that our training and evaluation pipeline is stable and calibrated before moving to cross-domain and Sim2Real evaluations.
 
 \subsubsection{Datasets and Benchmarks}
 
@@ -394,8 +397,8 @@ The \gls{cdae} protocol evaluation reveals exceptional cross-domain consistency 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure3_advanced_violin.pdf}
-\caption{Cross-domain generalization performance using distribution-based violin plots comparing \gls{loso} and \gls{loro} across models. The Enhanced model achieves identical 83.0±0.1\% macro F1 in both protocols with exceptional stability ($\text{CV}<0.2\%$).}
+\includegraphics[width=\columnwidth]{figures/figure3_enhanced_compatible.pdf}
+\caption{Cross-domain generalization performance across \gls{loso} and \gls{loro}. The Enhanced model achieves identical 83.0±0.1\% macro F1 in both protocols with exceptional stability ($\text{CV}<0.2\%$).}
 \label{fig:cross_domain}
 \end{figure}
 

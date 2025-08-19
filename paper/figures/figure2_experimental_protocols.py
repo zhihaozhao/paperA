@@ -110,9 +110,9 @@ def create_comprehensive_protocols():
         'stea': '#E1F5FE'     # Light blue
     }
     
-    # === D2 Protocol (Left Column) ===
-    ax.text(3, 10.5, 'D2 Protocol', fontsize=14, fontweight='bold', color='darkorange')
-    ax.text(3, 10.2, 'Synthetic Data Validation', fontsize=11, color='darkorange', style='italic')
+    # === Synthetic Robustness Validation (Left Column) ===
+    ax.text(3, 10.5, 'Synthetic Robustness Validation', fontsize=14, fontweight='bold', color='darkorange')
+    ax.text(3, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=11, color='darkorange', style='italic')
     
     d2_content = """Objective: Validate synthetic data quality
     • 540 configurations tested
@@ -121,7 +121,7 @@ def create_comprehensive_protocols():
     • Difficulty: {easy, medium, hard}
     • Models: 4 architectures × 5 seeds"""
     
-    create_protocol_box(ax, (0.5, 8.5), 5, 1.8, 'D2: Robustness Analysis', 
+    create_protocol_box(ax, (0.5, 8.5), 5, 1.8, 'Synthetic Robustness: 540 Configs', 
                        d2_content, protocol_colors['d2'])
     
     # D2 Flow diagram

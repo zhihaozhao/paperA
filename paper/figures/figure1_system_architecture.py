@@ -113,7 +113,7 @@ def create_system_architecture():
     
     # Generated datasets
     create_rounded_box(ax, (0.5, 3.8), 1.5, 0.6, 
-                      'D2 Protocol\n540 Configs', 
+                      'Synthetic\nRobustness (540)', 
                       colors['synthesis'], fontsize=11)
     
     create_rounded_box(ax, (2.2, 3.8), 1.5, 0.6, 
