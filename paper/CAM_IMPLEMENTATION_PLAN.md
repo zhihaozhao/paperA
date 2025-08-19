@@ -186,3 +186,69 @@ Option B (可选): 增加简化CAM → 需要2-3天额外开发
 ---
 
 *CAM分析完成，建议专注当前strong draft的投稿准备*
+
+
+
+
+图表制作建议
+立即可用的最佳方案:
+🥇 如果你有MATLAB:
+cd paper/figures
+matlab -r "run('plot_method4_matlab.m'); exit"
+
+🥈 如果你有R:
+
+R -e "install.packages(c('ggplot2','dplyr'))"
+R -e "source('plot_method3_r_ggplot2.R')"  
+
+🥉 如果你想用Excel:
+1. 打开 figure3_excel_data.csv
+2. 按照 excel_plotting_guide.txt 操作
+3. 使用提供的颜色代码和规范
+
+实验专业命名方案
+D3 → "Cross-Domain Adaptation Evaluation (CDAE)"
+全称: Cross-Domain Adaptation Evaluation Protocol
+简称: CDAE Protocol
+核心: LOSO + LORO双重跨域验证
+成果: Enhanced模型83.0±0.1% F1完美一致性
+D4 → "Sim2Real Transfer Efficiency Assessment (STEA)"
+全称: Sim2Real Transfer Efficiency Assessment Protocol
+简称: STEA Protocol
+核心: 多迁移方法 + 标签效率扫描
+突破: 82.1% F1 @ 20%标签 (80%成本降低)
+
+
+生成的图表资源 (26个文件)
+直接可用的绘图脚本:
+🔬 MATLAB标准: plot_method4_matlab.m (推荐)
+🏆 R ggplot2: plot_method3_r_ggplot2.R (最佳质量)  
+🔥 Python: plot_method2_matplotlib.py (灵活性强)
+📊 Gnuplot: plot_method2_gnuplot.gp (科学标准)
+
+多格式数据文件:
+📊 CSV数据: figure3/4_*_data.csv (Excel兼容)
+📄 TXT格式: figure3/4_origin_data.txt (Origin导入)
+🌐 SVG矢量: figure4_web_svg.svg (Web预览)
+📝 LaTeX: figure3_latex_tikz.tex (直接嵌入)
+
+完整文档支持:
+ 绘图指南: DETAILED_PLOTTING_GUIDE.md
+📊 方法对比: PLOTTING_METHODS_COMPARISON.md  
+🎯 图表规范: FIGURE_SPECIFICATIONS.md
+🌐 Web预览: figures_preview.html
+
+
+🚀 关键实验内容扩展 (论文章节)
+CDAE Protocol详述:
+目标: 跨域泛化能力全面评估
+配置: 40个实验 (4模型 × 2协议 × 5seeds)
+亮点: Enhanced模型83.0±0.1% F1跨LOSO/LORO完美一致性
+意义: 证明superior domain-agnostic feature learning
+
+STEA Protocol详述:
+目标: Sim2Real迁移效率量化评估  
+配置: 56个实验 (4方法 × 7比例 × 多seeds)
+突破: 82.1% F1 @ 20%标签 (80%成本降低)
+意义: 解决WiFi CSI HAR的数据稀缺challenge
+

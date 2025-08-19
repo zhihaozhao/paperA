@@ -98,6 +98,13 @@ While existing approaches have explored various techniques including transfer le
 
 The remainder of this paper is organized as follows: Section II reviews related work in \gls{wifi} \gls{csi} \gls{har} and synthetic data generation. Section III presents our physics-guided synthetic data generation framework. Section IV describes the enhanced model architecture and trustworthy evaluation protocols. Section V presents comprehensive experimental results. Section VI discusses implications and limitations, and Section VII concludes the paper.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/figure1_system_architecture.pdf}
+\caption{System overview of the physics-guided synthetic \gls{csi} generation and Sim2Real pipeline, including physics modeling (multipath, human interaction, environment), parameterized synthesis, enhanced model (\gls{cnn}+\gls{se}+temporal attention), and trustworthy evaluation.}
+\label{fig:system_overview}
+\end{figure}
+
 \section{Related Work}
 
 \subsection{WiFi CSI Human Activity Recognition}
@@ -240,7 +247,7 @@ This caching system reduces dataset generation time from minutes to seconds for 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure6_physics_3d_framework_basic.pdf}
+\includegraphics[width=\columnwidth]{figures/figure6_physics_guided_3d_framework.pdf}
 \caption{Physics-Guided Sim2Real Framework 3D Visualization. The framework integrates physics modeling (multipath, human interaction, environment), synthetic \gls{csi} generation, and \gls{stea} transfer learning protocols. The 3D representation illustrates the complete pipeline from physics principles to practical deployment, enabling 82.1\% F1 performance at 20\% label efficiency.}
 \label{fig:physics_3d_framework}
 \end{figure}
@@ -285,20 +292,18 @@ where $\mathbf{c}$ represents the context vector obtained through attention-weig
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure5_enhanced_3d_arch_basic.pdf}
-\caption{Enhanced Model Architecture: Reference-Inspired Professional Design. The architecture diagram integrates \gls{cnn} feature extraction, \gls{se} channel attention, and temporal attention mechanisms inspired by leading papers including SenseFi~\cite{yang2023sensefi} and SE-Networks~\cite{se_networks2018}. The visualization shows: (top) complete processing pipeline from WiFi \gls{csi} input through classification output, (bottom) baseline model comparison demonstrating Enhanced model's superior consistency. Key innovations (\gls{se} and Attention modules) are highlighted with golden dashed borders, emphasizing the architectural components that enable 83.0±0.1\% F1 cross-domain consistency ($\text{CV}<0.2\%$).}
+\includegraphics[width=\columnwidth]{figures/figure5_enhanced_3d_architecture.pdf}
+\caption{Enhanced Model 3D Architecture. The architecture integrates \gls{cnn} feature extraction, \gls{se} channel attention, and temporal attention mechanisms in a multi-level processing pipeline. The 3D visualization illustrates component relationships and abstraction levels, with \gls{se} and Attention modules highlighted as key innovations achieving 83.0±0.1\% F1 cross-domain consistency.}
 \label{fig:enhanced_3d_arch}
 \end{figure}
 
 \subsubsection{Architecture Design Rationale}
 
-The Enhanced model architecture design is guided by three key principles inspired by leading research in \gls{wifi} \gls{csi} \gls{har} and attention mechanisms: (1) \textbf{Multi-scale Feature Learning}: \gls{cnn} layers extract hierarchical spatial features at different abstraction levels, following the approach established in CLNet~\cite{clnet2021}, (2) \textbf{Channel-wise Attention}: \gls{se} modules enable selective emphasis on informative feature channels, directly inspired by the seminal SE-Networks paper~\cite{se_networks2018}, and (3) \textbf{Temporal Dependency Modeling}: The attention mechanism captures long-range temporal relationships critical for activity recognition, building upon advances demonstrated in the SenseFi benchmark~\cite{yang2023sensefi}.
+The Enhanced model architecture design is guided by three key principles: (1) \textbf{Multi-scale Feature Learning}: \gls{cnn} layers extract hierarchical spatial features at different abstraction levels, (2) \textbf{Channel-wise Attention}: \gls{se} modules enable selective emphasis on informative feature channels, and (3) \textbf{Temporal Dependency Modeling}: The attention mechanism captures long-range temporal relationships critical for activity recognition.
 
 \textbf{\gls{cnn}-\gls{se} Integration:} The integration of \gls{se} modules after \gls{cnn} feature extraction enables the model to learn channel-wise feature importance adaptively. This is particularly effective for \gls{wifi} \gls{csi} data where different frequency subcarriers may have varying importance for different activities.
 
 \textbf{Temporal Attention Benefits:} The temporal attention mechanism addresses limitations of traditional \gls{rnn} approaches by enabling direct modeling of long-range dependencies without the vanishing gradient problem. This capability is crucial for recognizing activities with extended temporal patterns.
-
-\textbf{Reference-Inspired Design Philosophy:} Our Enhanced model architecture synthesizes insights from multiple leading works: the systematic evaluation approach from SenseFi~\cite{yang2023sensefi} informed our multi-baseline comparison strategy, the channel attention mechanism from SE-Networks~\cite{se_networks2018} provided the foundation for our \gls{se} module integration, and the lightweight design principles from CLNet~\cite{clnet2021} guided our parameter-efficient implementation. This reference-inspired design ensures our architecture builds upon established best practices while introducing novel combinations for superior cross-domain performance.
 
 \subsection{Trustworthy Evaluation Protocol}
 
@@ -327,6 +332,13 @@ We evaluate model reliability through:
 \end{equation}
 
 \section{Experimental Evaluation}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/figure2_experimental_protocols.pdf}
+\caption{Experimental protocols overview: D2 robustness (540 configurations), \gls{cdae} (\gls{loso}/\gls{loro}), and \gls{stea} label-efficiency evaluation.}
+\label{fig:protocols}
+\end{figure}
 
 \subsection{Experimental Setup}
 
@@ -382,8 +394,8 @@ The \gls{cdae} protocol evaluation reveals exceptional cross-domain consistency 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure3_cdae_basic.pdf}
-\caption{Cross-Domain Performance: Enhanced Statistical Analysis. The Enhanced model (highlighted in gold) demonstrates unprecedented consistency with identical 83.0±0.1\% macro F1 performance across both \gls{loso} and \gls{loro} protocols. The multi-panel visualization includes: (top-left) main performance comparison with error bars, (top-right) cross-domain gap analysis showing Enhanced model's minimal gap (0.000), (bottom-left) coefficient of variation analysis demonstrating Enhanced model's exceptional stability ($\text{CV}<0.2\%$), and (bottom-right) Enhanced model's key advantages summary. Error bars indicate ±1 standard deviation across 5 random seeds.}
+\includegraphics[width=\columnwidth]{figures/figure3_advanced_violin.pdf}
+\caption{Cross-domain generalization performance using distribution-based violin plots comparing \gls{loso} and \gls{loro} across models. The Enhanced model achieves identical 83.0±0.1\% macro F1 in both protocols with exceptional stability ($\text{CV}<0.2\%$).}
 \label{fig:cross_domain}
 \end{figure}
 
@@ -399,8 +411,8 @@ The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure4_stea_basic.pdf}
-\caption{Sim2Real label efficiency breakthrough achieved by Enhanced model. Only 20\% labeled real data is required to achieve 82.1\% macro F1 score, reducing labeling costs by 80\% while maintaining near-optimal performance. Shaded region indicates the efficient deployment range.}
+\includegraphics[width=\columnwidth]{figures/figure4_advanced_bubble.pdf}
+\caption{Sim2Real label efficiency of the Enhanced model. Only 20\% labeled real data achieves 82.1\% macro F1 (80\% labeling cost reduction). The efficiency curve exhibits three phases: Bootstrap (1\%), Rapid growth (5--10\%), and Convergence (\(\geq\)20\%).}
 \label{fig:label_efficiency}
 \end{figure}
 

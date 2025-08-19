@@ -1,0 +1,21 @@
+Label_Ratio,F1_Score,Confidence,Method
+1,0.151,0.98,Zero-shot
+5,0.151,0.98,Zero-shot
+10,0.151,0.98,Zero-shot
+20,0.151,0.98,Zero-shot
+100,0.151,0.98,Zero-shot
+1,0.18,0.975,Linear Probe
+5,0.195,0.97,Linear Probe
+10,0.205,0.972,Linear Probe
+20,0.218,0.978,Linear Probe
+100,0.225,0.98,Linear Probe
+1,0.455,0.95,Fine-tune
+5,0.78,0.984,Fine-tune
+10,0.73,0.896,Fine-tune
+20,0.821,0.997,Fine-tune
+100,0.833,1.0,Fine-tune
+1,0.44,0.945,Temperature Scaling
+5,0.76,0.98,Temperature Scaling
+10,0.715,0.89,Temperature Scaling
+20,0.805,0.992,Temperature Scaling
+100,0.825,0.995,Temperature Scaling

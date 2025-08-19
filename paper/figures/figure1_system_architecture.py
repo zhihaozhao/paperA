@@ -20,20 +20,20 @@ plt.style.use('seaborn-v0_8-paper')
 plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman'],
-    'font.size': 10,
-    'axes.labelsize': 11,
-    'axes.titlesize': 12,
-    'xtick.labelsize': 9,
-    'ytick.labelsize': 9,
-    'legend.fontsize': 9,
-    'figure.titlesize': 14,
+    'font.size': 12,
+    'axes.labelsize': 13,
+    'axes.titlesize': 15,
+    'xtick.labelsize': 11,
+    'ytick.labelsize': 11,
+    'legend.fontsize': 11,
+    'figure.titlesize': 16,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
     'savefig.pad_inches': 0.1
 })
 
-def create_rounded_box(ax, xy, width, height, label, color, text_color='black', fontsize=10):
+def create_rounded_box(ax, xy, width, height, label, color, text_color='black', fontsize=12):
     """Create a rounded rectangle with text"""
     box = FancyBboxPatch(
         xy, width, height,
@@ -81,99 +81,99 @@ def create_system_architecture():
     
     # Title
     ax.text(7, 9.5, 'Physics-Guided Synthetic WiFi CSI Data Generation Framework', 
-           ha='center', va='center', fontsize=16, fontweight='bold')
+           ha='center', va='center', fontsize=18, fontweight='bold')
     
     # === Input Data Layer ===
     create_rounded_box(ax, (0.5, 8), 2.5, 0.8, 
                       'Real WiFi CSI\nBenchmark Data\n(SenseFi)', 
-                      colors['input'], fontsize=9)
+                      colors['input'], fontsize=12)
     
     # === Physics Modeling Layer ===
-    ax.text(1, 7.5, 'Physics Modeling Layer', fontsize=12, fontweight='bold', color='darkgreen')
+    ax.text(1, 7.5, 'Physics Modeling Layer', fontsize=14, fontweight='bold', color='darkgreen')
     
     # Multipath Effects
     create_rounded_box(ax, (0.2, 6.5), 1.8, 0.6, 
                       'Multipath\nPropagation', 
-                      colors['physics'], fontsize=9)
+                      colors['physics'], fontsize=12)
     
     # Human Body Interaction
     create_rounded_box(ax, (2.2, 6.5), 1.8, 0.6, 
                       'Human Body\nInteraction', 
-                      colors['physics'], fontsize=9)
+                      colors['physics'], fontsize=12)
     
     # Environmental Variations
     create_rounded_box(ax, (4.2, 6.5), 1.8, 0.6, 
                       'Environmental\nVariations', 
-                      colors['physics'], fontsize=9)
+                      colors['physics'], fontsize=12)
     
     # === Synthetic Data Generation ===
     create_rounded_box(ax, (2.5, 5), 3, 0.8, 
                       'Physics-Guided\nSynthetic CSI Generator\n(Parameterized)', 
-                      colors['synthesis'], fontsize=10)
+                      colors['synthesis'], fontsize=13)
     
     # Generated datasets
     create_rounded_box(ax, (0.5, 3.8), 1.5, 0.6, 
                       'D2 Protocol\n540 Configs', 
-                      colors['synthesis'], fontsize=8)
+                      colors['synthesis'], fontsize=11)
     
     create_rounded_box(ax, (2.2, 3.8), 1.5, 0.6, 
                       'CDAE Protocol\n40 Configs', 
-                      colors['synthesis'], fontsize=8)
+                      colors['synthesis'], fontsize=11)
     
     create_rounded_box(ax, (3.9, 3.8), 1.5, 0.6, 
                       'STEA Protocol\n56 Configs', 
-                      colors['synthesis'], fontsize=8)
+                      colors['synthesis'], fontsize=11)
     
     # === Model Architecture ===
-    ax.text(8.5, 7.5, 'Enhanced Model Architecture', fontsize=12, fontweight='bold', color='darkred')
+    ax.text(8.5, 7.5, 'Enhanced Model Architecture', fontsize=14, fontweight='bold', color='darkred')
     
     # CNN Feature Extraction
     create_rounded_box(ax, (7.5, 6.8), 1.8, 0.5, 
                       'CNN Feature\nExtraction', 
-                      colors['model'], fontsize=9)
+                      colors['model'], fontsize=12)
     
     # SE Module
     create_rounded_box(ax, (9.5, 6.8), 1.8, 0.5, 
                       'Squeeze-Excitation\nModule', 
-                      colors['model'], fontsize=9)
+                      colors['model'], fontsize=12)
     
     # Temporal Attention
     create_rounded_box(ax, (11.5, 6.8), 1.8, 0.5, 
                       'Temporal Attention\nMechanism', 
-                      colors['model'], fontsize=9)
+                      colors['model'], fontsize=12)
     
     # BiLSTM
     create_rounded_box(ax, (8.5, 6), 3, 0.5, 
                       'Bidirectional LSTM', 
-                      colors['model'], fontsize=10)
+                      colors['model'], fontsize=13)
     
     # === Sim2Real Transfer Learning ===
     create_rounded_box(ax, (7, 4.5), 4, 0.8, 
                       'Sim2Real Transfer Learning\n(Zero-shot, Linear Probe, Fine-tune, Temp Scaling)', 
-                      colors['model'], fontsize=9)
+                      colors['model'], fontsize=12)
     
     # === Trustworthy Evaluation ===
-    ax.text(8.5, 3.5, 'Trustworthy Evaluation Protocols', fontsize=12, fontweight='bold', color='darkslategray')
+    ax.text(8.5, 3.5, 'Trustworthy Evaluation Protocols', fontsize=14, fontweight='bold', color='darkslategray')
     
     # Calibration Analysis
     create_rounded_box(ax, (7, 2.8), 1.8, 0.5, 
                       'Calibration\nAnalysis (ECE)', 
-                      colors['evaluation'], fontsize=8)
+                      colors['evaluation'], fontsize=11)
     
     # Cross-Domain Robustness
     create_rounded_box(ax, (9, 2.8), 2, 0.5, 
                       'Cross-Domain\nRobustness', 
-                      colors['evaluation'], fontsize=8)
+                      colors['evaluation'], fontsize=11)
     
     # Statistical Significance
     create_rounded_box(ax, (11.2, 2.8), 1.8, 0.5, 
                       'Statistical\nSignificance', 
-                      colors['evaluation'], fontsize=8)
+                      colors['evaluation'], fontsize=11)
     
     # === Output Results ===
     create_rounded_box(ax, (4, 1.5), 6, 0.8, 
                       'Key Results: 83.0±0.1% F1 Cross-Domain Consistency\n82.1% F1 @ 20% Labels (80% Cost Reduction)', 
-                      colors['output'], fontsize=10)
+                      colors['output'], fontsize=13)
     
     # === Add Arrows ===
     # Input to physics modeling
@@ -215,7 +215,7 @@ def create_system_architecture():
     ]
     
     ax.legend(handles=legend_elements, loc='upper right', bbox_to_anchor=(0.98, 0.98), 
-             framealpha=0.9, fontsize=9)
+             framealpha=0.9, fontsize=11)
     
     # === Add Key Innovation Highlights ===
     # Highlight box for key innovations
@@ -224,7 +224,7 @@ def create_system_architecture():
                             facecolor='none', linestyle='--', alpha=0.8)
     ax.add_patch(highlight_box)
     
-    ax.text(10.2, 8.1, '🔥 Key Innovations', fontsize=11, fontweight='bold', 
+    ax.text(10.2, 8.1, '🔥 Key Innovations', fontsize=13, fontweight='bold', 
            color='darkorange', ha='center')
     
     # Performance metrics box

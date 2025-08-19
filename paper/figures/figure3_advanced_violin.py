@@ -21,13 +21,13 @@ sns.set_palette("husl")
 plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman'],
-    'font.size': 10,
-    'axes.labelsize': 10,
-    'axes.titlesize': 12,
-    'xtick.labelsize': 9,
-    'ytick.labelsize': 9,
-    'legend.fontsize': 9,
-    'figure.titlesize': 12,
+    'font.size': 12,
+    'axes.labelsize': 13,
+    'axes.titlesize': 15,
+    'xtick.labelsize': 11,
+    'ytick.labelsize': 11,
+    'legend.fontsize': 11,
+    'figure.titlesize': 16,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
@@ -163,13 +163,13 @@ def create_advanced_violin_plot():
     ax.axhline(y=0.9, color='gray', linestyle=':', alpha=0.5, linewidth=0.8)
     
     # Add text annotations for reference lines
-    ax.text(3.5, 0.81, 'Good Performance (80%)', fontsize=8, alpha=0.7)
-    ax.text(3.5, 0.91, 'Excellent Performance (90%)', fontsize=8, alpha=0.7)
+    ax.text(3.5, 0.81, 'Good Performance (80%)', fontsize=11, alpha=0.7)
+    ax.text(3.5, 0.91, 'Excellent Performance (90%)', fontsize=11, alpha=0.7)
     
     # Customize legend
     handles, labels = ax.get_legend_handles_labels()
     ax.legend(handles, ['Leave-One-Subject-Out (LOSO)', 'Leave-One-Room-Out (LORO)'], 
-              title='Evaluation Protocol', title_fontsize=9, fontsize=9,
+              title='Evaluation Protocol', title_fontsize=11, fontsize=11,
               loc='lower right', framealpha=0.9)
     
     # Add statistical annotations
@@ -180,7 +180,7 @@ def create_advanced_violin_plot():
     enhanced_consistency = enhanced_data.groupby('Protocol')['F1_Score'].std().mean()
     ax.text(-0.4, 0.75, f'Enhanced Model\nConsistency:\nCV < 0.2%', 
             bbox=dict(boxstyle='round,pad=0.3', facecolor='lightblue', alpha=0.7),
-            fontsize=8, ha='center', va='center')
+            fontsize=11, ha='center', va='center')
     
     # Grid and styling
     ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)

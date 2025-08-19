@@ -20,13 +20,13 @@ plt.style.use('seaborn-v0_8-paper')
 plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman'],
-    'font.size': 10,
-    'axes.labelsize': 11,
-    'axes.titlesize': 12,
-    'xtick.labelsize': 9,
-    'ytick.labelsize': 9,
-    'legend.fontsize': 9,
-    'figure.titlesize': 12,
+    'font.size': 12,
+    'axes.labelsize': 13,
+    'axes.titlesize': 15,
+    'xtick.labelsize': 11,
+    'ytick.labelsize': 11,
+    'legend.fontsize': 11,
+    'figure.titlesize': 16,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
@@ -156,7 +156,7 @@ def create_advanced_bubble_plot():
                 xy=(20, 0.821), xytext=(50, 0.65),
                 arrowprops=dict(arrowstyle='->', lw=1.5, color='red'),
                 bbox=dict(boxstyle='round,pad=0.5', facecolor='yellow', alpha=0.8),
-                fontsize=9, ha='center', fontweight='bold')
+                fontsize=12, ha='center', fontweight='bold')
     
     # Customize main plot
     ax1.set_xlabel('Label Ratio (%)', fontweight='bold')
@@ -187,7 +187,7 @@ def create_advanced_bubble_plot():
     
     ax2.set_xlabel('Label Ratio Levels')
     ax2.set_ylabel('Cost Reduction (%)')
-    ax2.set_title('Cost Savings Analysis', fontweight='bold', fontsize=10)
+    ax2.set_title('Cost Savings Analysis', fontweight='bold', fontsize=12)
     ax2.set_xticks(range(len(finetune_data)))
     ax2.set_xticklabels([f'{int(r)}%' for r in finetune_data['Label_Ratio']], rotation=45)
     ax2.grid(True, alpha=0.3)
@@ -196,7 +196,7 @@ def create_advanced_bubble_plot():
     for i, (bar, reduction) in enumerate(zip(bars, cost_reduction)):
         height = bar.get_height()
         ax2.text(bar.get_x() + bar.get_width()/2., height + 1,
-                f'{reduction:.0f}%', ha='center', va='bottom', fontsize=8)
+                f'{reduction:.0f}%', ha='center', va='bottom', fontsize=11)
     
     # Third plot: Method Comparison Radar
     ax3 = plt.subplot2grid((2, 3), (1, 2), projection='polar')
@@ -224,7 +224,7 @@ def create_advanced_bubble_plot():
     ax3.set_xticks(angles[:-1])
     ax3.set_xticklabels(categories, fontsize=8)
     ax3.set_ylim(0, 1)
-    ax3.set_title('Method Quality Profile', fontweight='bold', pad=20, fontsize=10)
+    ax3.set_title('Method Quality Profile', fontweight='bold', pad=20, fontsize=12)
     ax3.grid(True)
     
     plt.tight_layout()

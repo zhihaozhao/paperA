@@ -22,13 +22,13 @@ plt.style.use('seaborn-v0_8-paper')
 plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman'],
-    'font.size': 9,
-    'axes.labelsize': 10,
-    'axes.titlesize': 11,
-    'xtick.labelsize': 8,
-    'ytick.labelsize': 8,
-    'legend.fontsize': 8,
-    'figure.titlesize': 12,
+    'font.size': 12,
+    'axes.labelsize': 13,
+    'axes.titlesize': 15,
+    'xtick.labelsize': 11,
+    'ytick.labelsize': 11,
+    'legend.fontsize': 11,
+    'figure.titlesize': 16,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
@@ -161,7 +161,7 @@ def create_hierarchical_clustering_heatmap():
             value = ordered_data.iloc[i, j]
             color = 'white' if abs(value) > 1 else 'black'
             ax1.text(j, i, f'{value:.1f}', ha='center', va='center', 
-                    color=color, fontsize=8, fontweight='bold')
+                    color=color, fontsize=10, fontweight='bold')
     
     # Performance comparison radar chart
     ax2 = plt.subplot2grid((3, 4), (0, 3), projection='polar')
