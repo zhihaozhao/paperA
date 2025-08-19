@@ -27,23 +27,21 @@ except Exception:
     except Exception:
         pass
 
-# Configure for IEEE IoTJ standards with MUCH LARGER FONTS for better visibility
+# Configure for IEEE IoTJ standards with LARGER FONTS
 plt.rcParams.update({
     'font.family': 'serif',
-    'font.serif': ['Times New Roman', 'DejaVu Serif'],  # PAD format fallback
-    'font.size': 18,           # Further increased for visibility
-    'axes.labelsize': 20,      # Much larger axis labels
-    'axes.titlesize': 22,      # Much larger titles  
-    'xtick.labelsize': 16,     # Larger tick labels
-    'ytick.labelsize': 16,     # Larger tick labels
-    'legend.fontsize': 16,     # Larger legend
-    'figure.titlesize': 24,    # Much larger figure title
+    'font.serif': ['Times New Roman'],
+    'font.size': 14,           # Increased from 10
+    'axes.labelsize': 16,      # Increased from 11
+    'axes.titlesize': 18,      # Increased from 12
+    'xtick.labelsize': 14,     # Increased from 9
+    'ytick.labelsize': 14,     # Increased from 9
+    'legend.fontsize': 14,     # Increased from 9
+    'figure.titlesize': 20,    # Increased from 12
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
-    'savefig.pad_inches': 0.15,
-    'savefig.format': 'pdf',   # PAD format support
-    'text.usetex': False       # Disable LaTeX for PAD compatibility
+    'savefig.pad_inches': 0.1
 })
 
 def simulate_feature_space_data():
@@ -174,7 +172,7 @@ def create_comprehensive_pca_analysis():
     ax1.set_title('PCA Feature Space Analysis: Model Clustering and Protocol Separation', 
                   fontweight='bold', fontsize=22)
     ax1.grid(True, alpha=0.3)
-    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=16)
+    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=18)
     
     # === Variance Explained ===
     ax2 = plt.subplot2grid((3, 3), (0, 2))
@@ -186,15 +184,15 @@ def create_comprehensive_pca_analysis():
     ax2.bar(components, explained_variance, color=['#27AE60', '#3498DB', '#F39C12'], alpha=0.8)
     ax2.plot(components, cumulative_variance, 'ro-', linewidth=2, markersize=8)
     
-    ax2.set_xlabel('Principal Component', fontweight='bold', fontsize=18)
-    ax2.set_ylabel('Variance Explained', fontweight='bold', fontsize=18)
-    ax2.set_title('Variance Explained by PCs', fontweight='bold', fontsize=20)
+    ax2.set_xlabel('Principal Component', fontweight='bold', fontsize=14)
+    ax2.set_ylabel('Variance Explained', fontweight='bold', fontsize=14)
+    ax2.set_title('Variance Explained by PCs', fontweight='bold', fontsize=16)
     ax2.grid(True, alpha=0.3)
     
-    # Add value labels with larger fonts
+    # Add value labels
     for i, (var, cum_var) in enumerate(zip(explained_variance, cumulative_variance)):
-        ax2.text(i+1, var + 0.01, f'{var:.1%}', ha='center', va='bottom', fontsize=14, fontweight='bold')
-        ax2.text(i+1, cum_var + 0.01, f'{cum_var:.1%}', ha='center', va='bottom', fontsize=14, fontweight='bold', color='red')
+        ax2.text(i+1, var + 0.01, f'{var:.1%}', ha='center', va='bottom', fontsize=12, fontweight='bold')
+        ax2.text(i+1, cum_var + 0.01, f'{cum_var:.1%}', ha='center', va='bottom', fontsize=12, fontweight='bold', color='red')
     
     # === Cross-Domain Gap Analysis ===
     ax3 = plt.subplot2grid((3, 3), (1, 2))
@@ -212,15 +210,15 @@ def create_comprehensive_pca_analysis():
     colors = ['#27AE60', '#3498DB', '#F39C12', '#E74C3C']
     
     bars = ax3.bar(gap_df['Model'], gap_df['Cross_Domain_Gap'], color=colors, alpha=0.8)
-    ax3.set_xlabel('Model', fontweight='bold', fontsize=18)
-    ax3.set_ylabel('Cross-Domain Gap (Euclidean Distance)', fontweight='bold', fontsize=18)
-    ax3.set_title('Cross-Domain Consistency Analysis', fontweight='bold', fontsize=20)
+    ax3.set_xlabel('Model', fontweight='bold', fontsize=14)
+    ax3.set_ylabel('Cross-Domain Gap (Euclidean Distance)', fontweight='bold', fontsize=14)
+    ax3.set_title('Cross-Domain Consistency Analysis', fontweight='bold', fontsize=16)
     ax3.grid(True, alpha=0.3, axis='y')
     
-    # Add value labels with larger fonts
+    # Add value labels
     for bar, gap in zip(bars, gap_df['Cross_Domain_Gap']):
         ax3.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
-                f'{gap:.3f}', ha='center', va='bottom', fontsize=16, fontweight='bold')
+                f'{gap:.3f}', ha='center', va='bottom', fontsize=12, fontweight='bold')
     
     # === Model Performance Consistency ===
     ax4 = plt.subplot2grid((3, 3), (2, 0), colspan=2)
@@ -238,16 +236,16 @@ def create_comprehensive_pca_analysis():
     colors = ['#27AE60', '#3498DB', '#F39C12', '#E74C3C']
     
     bars = ax4.bar(models_sorted, scores, color=colors, alpha=0.8)
-    ax4.set_xlabel('Model', fontweight='bold', fontsize=20)
-    ax4.set_ylabel('Consistency Score', fontweight='bold', fontsize=20)
-    ax4.set_title('Model Performance Consistency Analysis', fontweight='bold', fontsize=22)
+    ax4.set_xlabel('Model', fontweight='bold', fontsize=16)
+    ax4.set_ylabel('Consistency Score', fontweight='bold', fontsize=16)
+    ax4.set_title('Model Performance Consistency Analysis', fontweight='bold', fontsize=18)
     ax4.set_ylim(0, 1.1)
     ax4.grid(True, alpha=0.3, axis='y')
     
-    # Add value labels with much larger fonts
+    # Add value labels
     for bar, score in zip(bars, scores):
         ax4.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.02,
-                f'{score:.2f}', ha='center', va='bottom', fontweight='bold', fontsize=16)
+                f'{score:.2f}', ha='center', va='bottom', fontweight='bold', fontsize=12)
     
     # Highlight Enhanced model's superior consistency
     enhanced_idx = models_sorted.index('Enhanced')
@@ -265,11 +263,11 @@ def create_comprehensive_pca_analysis():
         ax5.scatter(model_data['PC1'], model_data['PC2'], model_data['PC3'],
                    c=color, marker=marker, s=50, alpha=0.6, label=model)
     
-    ax5.set_xlabel('PC1', fontweight='bold', fontsize=18)
-    ax5.set_ylabel('PC2', fontweight='bold', fontsize=18)  
-    ax5.set_zlabel('PC3', fontweight='bold', fontsize=18)
-    ax5.set_title('3D Feature Space', fontweight='bold', fontsize=20)
-    ax5.legend(fontsize=14)
+    ax5.set_xlabel('PC1', fontweight='bold', fontsize=14)
+    ax5.set_ylabel('PC2', fontweight='bold', fontsize=14)  
+    ax5.set_zlabel('PC3', fontweight='bold', fontsize=14)
+    ax5.set_title('3D Feature Space', fontweight='bold', fontsize=16)
+    ax5.legend(fontsize=12)
     
     plt.tight_layout()
     
@@ -303,11 +301,11 @@ def create_feature_importance_analysis():
     )
     
     sns.heatmap(loadings_df, annot=True, fmt='.2f', cmap='RdBu_r', center=0,
-                square=False, linewidths=0.5, ax=ax1, annot_kws={'size': 14},
+                square=False, linewidths=0.5, ax=ax1,
                 cbar_kws={'label': 'Loading Weight'})
-    ax1.set_title('PCA Feature Loadings Matrix', fontweight='bold', fontsize=20)
-    ax1.set_xlabel('Principal Components', fontweight='bold', fontsize=18)
-    ax1.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=18)
+    ax1.set_title('PCA Feature Loadings Matrix', fontweight='bold', fontsize=16)
+    ax1.set_xlabel('Principal Components', fontweight='bold', fontsize=14)
+    ax1.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=14)
     
     # Feature contribution to top 2 PCs
     pc1_contributions = np.abs(loadings_df['PC1']).sort_values(ascending=True)
@@ -322,10 +320,10 @@ def create_feature_importance_analysis():
              label='PC2 Contribution', alpha=0.8, color='#E74C3C')
     
     ax2.set_yticks(y_pos)
-    ax2.set_yticklabels(pc1_contributions.index, fontsize=14)
-    ax2.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=18)
-    ax2.set_title('Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=20)
-    ax2.legend(fontsize=16)
+    ax2.set_yticklabels(pc1_contributions.index, fontsize=12)
+    ax2.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=14)
+    ax2.set_title('Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=16)
+    ax2.legend(fontsize=12)
     ax2.grid(True, alpha=0.3, axis='x')
     
     plt.tight_layout()
@@ -369,25 +367,10 @@ if __name__ == "__main__":
     # Generate comprehensive PCA analysis
     fig, data_df, pca = create_comprehensive_pca_analysis()
     
-    # Save figure with canonical filename and PAD format support
-    output_files = [
-        'figure7_pca_analysis.pdf',
-        'figure7_pca_analysis.png'
-    ]
-    
-    for filename in output_files:
-        try:
-            # PAD format compatible saving
-            fig.savefig(filename, dpi=300, bbox_inches='tight', 
-                       facecolor='white', edgecolor='none',
-                       format='pdf' if filename.endswith('.pdf') else 'png',
-                       metadata={'Creator': 'PCA Analysis Script - PAD Compatible'})
-            print(f"✅ Saved (PAD compatible): {filename}")
-        except Exception as e:
-            # Fallback for PAD compatibility
-            fig.savefig(filename, dpi=300, bbox_inches='tight', 
-                       facecolor='white', edgecolor='none')
-            print(f"✅ Saved (fallback): {filename} - {str(e)[:50]}")
+    # Save figure with canonical filename
+    fig.savefig('figure7_pca_analysis.pdf', dpi=300, bbox_inches='tight', 
+               facecolor='white', edgecolor='none')
+    print("✅ Saved: figure7_pca_analysis.pdf")
     
     # Export data
     export_pca_data()
