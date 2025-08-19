@@ -136,11 +136,11 @@ def create_pca_biplot():
     # Create figure with scientific 3-column layout (4:3:3 ratio)
     fig = plt.figure(figsize=(20, 12))  # Optimized size for better proportions
     
-    # Define grid structure: 6 rows × 10 columns to achieve 4:3:3 ratio and 1:1 height ratios
-    # Column 1: 0-3 (width=4), Column 2: 4-6 (width=3), Column 3: 7-9 (width=3)
+    # Define grid structure: 8 rows × 12 columns for precise positioning
+    # Column 1: 0-4 (width=4+1), Column 2: 5-7 (width=3), Column 3: 8-11 (width=3+1)
     
-    # Column 1, Row 1-3: PCA Feature Space Analysis (main biplot) - 1:1 ratio part 1
-    ax1 = plt.subplot2grid((6, 10), (0, 0), colspan=4, rowspan=3)
+    # 11: Column 1, Row 1 - PCA Feature Space Analysis (main biplot)
+    ax1 = plt.subplot2grid((8, 12), (0, 0), colspan=5, rowspan=2)
     
     # Plot each model with confidence ellipses
     models = data_df['Model'].unique()
@@ -223,8 +223,8 @@ def create_pca_biplot():
                     fontsize=10, ha='center', va='center', fontweight='bold',
                     bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, edgecolor='gray'))
     
-    # Column 2, Row 1-2: PCA Explained Variance
-    ax2 = plt.subplot2grid((6, 10), (0, 4), colspan=3, rowspan=2)
+    # 12: Column 2, Row 1 - PCA Explained Variance (向下移动一个title位置)
+    ax2 = plt.subplot2grid((8, 12), (1, 5), colspan=3, rowspan=2)
     
     explained_var = pca.explained_variance_ratio_
     cumulative_var = np.cumsum(explained_var)
@@ -248,8 +248,8 @@ def create_pca_biplot():
         ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
                 f'{var:.1%}', ha='center', va='bottom', fontsize=10, fontweight='bold')
     
-    # Column 2, Row 3-4: Model Separation Distances (centered)
-    ax3 = plt.subplot2grid((6, 10), (2, 4), colspan=3, rowspan=2)
+    # 22: Column 2, Row 2 - Model Separation Distances (下移2个字的距离)
+    ax3 = plt.subplot2grid((8, 12), (3, 5), colspan=3, rowspan=2)
     
     # Calculate inter-model distances in PC space
     model_centers = {}
@@ -286,8 +286,8 @@ def create_pca_biplot():
     
     plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
     
-    # Column 1, Row 4-6: Cross-Protocol Consistency Analysis - 1:1 ratio part 2
-    ax4 = plt.subplot2grid((6, 10), (3, 0), colspan=4, rowspan=3)
+    # 21: Column 1, Row 2 - Cross-Protocol Consistency Analysis (右移动2.5个字的间距)
+    ax4 = plt.subplot2grid((8, 12), (2, 1), colspan=4, rowspan=2)
     
     # Calculate LOSO-LORO distance for each model
     protocol_consistency = {}
@@ -326,8 +326,8 @@ def create_pca_biplot():
     bars[enhanced_idx].set_linewidth(3)
     bars[enhanced_idx].set_edgecolor('gold')
     
-    # Column 2, Row 5-6: 3D Feature Space (centered at bottom)
-    ax5 = plt.subplot2grid((6, 10), (4, 4), colspan=3, rowspan=2, projection='3d')
+    # 23: Column 3, Row 2 - 3D Feature Space (下移2个字的距离)
+    ax5 = plt.subplot2grid((8, 12), (3, 8), colspan=3, rowspan=2, projection='3d')
     
     for model in models:
         model_data = data_df[data_df['Model'] == model]
@@ -343,8 +343,8 @@ def create_pca_biplot():
     ax5.set_title('3D Feature Space', fontweight='bold', fontsize=11, pad=12)
     ax5.legend(fontsize=8, loc='upper left', framealpha=0.8)
     
-    # Column 3, Row 1-3: PCA Feature Loadings Matrix - 1:1 ratio part 1  
-    ax6 = plt.subplot2grid((6, 10), (0, 7), colspan=3, rowspan=3)
+    # 31: Column 1, Row 3 - PCA Feature Loadings Matrix (y轴label放右侧)
+    ax6 = plt.subplot2grid((8, 12), (5, 0), colspan=4, rowspan=2)
     
     # Create loadings matrix for visualization
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
@@ -365,10 +365,13 @@ def create_pca_biplot():
                 annot_kws={'size': 7}, cbar_kws={'label': 'Loading Weight'})
     ax6.set_title('PCA Feature Loadings Matrix', fontweight='bold', fontsize=11, pad=12)
     ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=9, labelpad=8)
+    # 31: y轴label放右侧
     ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=9, labelpad=8)
+    ax6.yaxis.set_label_position('right')
+    ax6.yaxis.tick_right()
     
-    # Column 3, Row 4-6: Feature Contributions to Top 2 PCs - 1:1 ratio part 2
-    ax7 = plt.subplot2grid((6, 10), (3, 7), colspan=3, rowspan=3)
+    # 32: Column 2, Row 3 - Feature Contributions to Top 2 PCs (下移1.5个字距离，y轴label放右侧)
+    ax7 = plt.subplot2grid((8, 12), (6, 5), colspan=3, rowspan=2)
     
     # Calculate absolute contributions for PC1 and PC2
     pc1_contributions = np.abs(loadings_df['PC1']).sort_values(ascending=True)
@@ -386,12 +389,15 @@ def create_pca_biplot():
     ax7.set_yticklabels(pc1_contributions.index, fontsize=9)
     ax7.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=9, labelpad=8)
     ax7.set_title('Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=11, pad=12)
-    ax7.legend(fontsize=9, loc='lower right', framealpha=0.8)
+    # 32: y轴label放右侧，避免与21,22重叠
+    ax7.yaxis.set_label_position('right')
+    ax7.yaxis.tick_right()
+    ax7.legend(fontsize=9, loc='lower left', framealpha=0.8)  # 移到左下角避免右侧y轴
     ax7.grid(True, alpha=0.3, axis='x')
     
-    # Adjust layout with optimal spacing for 3-column design
-    plt.subplots_adjust(left=0.06, bottom=0.08, right=0.92, top=0.94, 
-                       wspace=0.45, hspace=0.35)  # Extra right space for Column 3 y-labels
+    # Adjust layout with precise spacing to prevent any overlaps
+    plt.subplots_adjust(left=0.05, bottom=0.08, right=0.88, top=0.94, 
+                       wspace=0.5, hspace=0.4)  # Extra space for right-side y-labels and proper separation
     
     return fig, data_df, pca
 
