@@ -1,0 +1,4 @@
+model,fruit,scene,occlusion,lighting,platform,fps,map50,small_ap
+YOLOv5s,apple,outdoor,medium,direct sun,Jetson TX2,31,0.90,0.82
+YOLOv4-tiny,grape,outdoor,medium,overcast,Jetson Nano,86,0.91,0.80
+Mask R-CNN,strawberry,greenhouse,high,mixed,RTX 2080,8,0.95,0.88
