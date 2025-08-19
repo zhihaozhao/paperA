@@ -1,0 +1,4 @@
+Achievement,Configurations,Full_Name,Innovation,Key_Metric,Protocol
+Validated,540,Robustness Analysis,Multi_Parameter,Synthetic_Quality,Synthetic Robustness
+83.0±0.1%,40,Cross-Domain Adaptation Evaluation,Perfect_Consistency,Cross_Domain_F1,CDAE
+82.1% @ 20%,56,Sim2Real Transfer Efficiency Assessment,Cost_Reduction,Label_Efficiency,STEA

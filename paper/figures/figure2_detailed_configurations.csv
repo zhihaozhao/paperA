@@ -1,0 +1,25 @@
+Parameter,Protocol,Value
+Models,Synthetic Robustness,4
+Seeds,Synthetic Robustness,5
+Noise_Levels,Synthetic Robustness,3
+Overlap_Conditions,Synthetic Robustness,3
+Difficulty_Levels,Synthetic Robustness,3
+Time_Steps,Synthetic Robustness,3
+Feature_Dims,Synthetic Robustness,3
+Burst_Rates,Synthetic Robustness,3
+Total_Configs,Synthetic Robustness,540
+Models,CDAE,4
+Protocols,CDAE,2
+Seeds,CDAE,5
+Subjects,CDAE,Multiple
+Rooms,CDAE,Multiple
+Cross_Validation,CDAE,5-fold
+Statistical_Tests,CDAE,p-values
+Total_Configs,CDAE,40
+Transfer_Methods,STEA,4
+Label_Ratios,STEA,7
+Seeds,STEA,5
+Baselines,STEA,Zero-shot
+Metrics,STEA,F1/ECE/Brier
+Efficiency_Phases,STEA,3
+Total_Configs,STEA,56

@@ -1,0 +1,30 @@
+{
+  "models": ["enhanced", "cnn"],
+  "seeds": [0, 1],
+  "fixed": {
+    "difficulty": "hard",
+    "n_samples": 5000,
+    "epochs": 20,
+    "batch": 256,
+    "T": 128,
+    "F": 52,
+    "early_metric": "macro_f1",
+    "patience": 8,
+    "logit_l2": 0.1,
+    "temp_mode": "logspace",
+    "temp_steps": 50,
+    "val_split": 0.5,
+    "class_overlap": 0.8,
+    "gain_drift_std": 0.6,
+    "sc_corr_rho": 0.5,
+    "env_burst_rate": 0.2,
+    "label_noise_prob": 0.1,
+    "num_classes": 8,
+    "amp": true,
+    "save_ckpt": "final",
+    "val_every": 3,
+    "num_workers_override": 2
+  },
+  "grid": {},
+  "output_dir": "results_gpu"
+}

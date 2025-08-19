@@ -1,0 +1,5 @@
+,Temporal_Features,Spatial_Features,Frequency_Features,Attention_Weights,SE_Channel_Weights,LSTM_States
+BiLSTM,0.35,0.15,0.15,0.0,0.0,0.35
+CNN,0.3,0.25,0.2,0.0,0.0,0.25
+Conformer-lite,0.2,0.2,0.2,0.2,0.0,0.2
+Enhanced,0.25,0.2,0.18,0.15,0.12,0.1

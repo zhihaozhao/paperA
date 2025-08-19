@@ -1,0 +1,5 @@
+Consistency,F1_Score,Innovation,Protocol
+CV<0.2%,0.83,Cross_Subject,CDAE_LOSO
+CV<0.2%,0.83,Cross_Environment,CDAE_LORO
+High,0.821,Label_Efficient,STEA_20%
+Baseline,0.833,Full_Supervision,STEA_Full

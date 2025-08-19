@@ -1,0 +1,30 @@
+{
+  "models": ["enhanced", "cnn", "bilstm", "conformer_lite"],
+  "seeds": [0, 1, 2, 3, 4],
+  "fixed": {
+    "difficulty": "hard",
+    "n_samples": 20000,
+    "epochs": 100,
+    "batch": 768,
+    "T": 128,
+    "F": 52,
+    "early_metric": "macro_f1",
+    "patience": 10,
+    "logit_l2": 0.1,
+    "temp_mode": "logspace",
+    "temp_steps": 100,
+    "val_split": 0.5,
+    "class_overlap": 0.8,
+    "gain_drift_std": 0.6,
+    "sc_corr_rho": 0.5,
+    "env_burst_rate": 0.2,
+    "label_noise_prob": 0.1,
+    "num_classes": 8,
+    "amp": true,
+    "save_ckpt": "final",
+    "val_every": 3,
+    "num_workers_override": 2
+  },
+  "grid": {},
+  "output_dir": "results_gpu"
+}
