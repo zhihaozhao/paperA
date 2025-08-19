@@ -1,0 +1,9 @@
+Component,Type,Key_Innovation,Parameters,Color_Code
+Input,Data,False,T×F×N,#E8F4FD
+CNN_Conv1,Feature_Extraction,False,32_filters,#FFE5B4
+CNN_Conv2,Feature_Extraction,False,64_filters,#FFE5B4
+CNN_Conv3,Feature_Extraction,False,128_filters,#FFE5B4
+SE_Module,Channel_Attention,True,Squeeze_Excite,#FFD700
+BiLSTM,Temporal_Modeling,False,Bidirectional,#98FB98
+Attention,Temporal_Attention,True,Query_Key_Value,#DDA0DD
+Output,Classification,False,Softmax,#F0E68C

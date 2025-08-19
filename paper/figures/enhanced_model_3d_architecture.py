@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Enhanced Model 3D Architecture Visualization
+Enhanced Model 3D Architecture Visualization - PAD Format Compatible
 Inspired by SenseFi and SE-Networks architecture diagrams
 IEEE IoTJ Paper - WiFi CSI HAR
+Fixed: White text visibility, STEA encoding, PAD format support
 """
 
 import matplotlib.pyplot as plt
@@ -13,13 +14,23 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-# Configure for IEEE IoTJ standards
+# Configure for IEEE IoTJ standards with PAD format support
 plt.rcParams.update({
     'font.family': 'serif',
-    'font.size': 10,
+    'font.serif': ['Times New Roman', 'DejaVu Serif'],  # PAD format fallback
+    'font.size': 12,
+    'axes.labelsize': 14,
+    'axes.titlesize': 16,
+    'xtick.labelsize': 12,
+    'ytick.labelsize': 12,
+    'legend.fontsize': 12,
+    'figure.titlesize': 18,
     'figure.dpi': 300,
     'savefig.dpi': 300,
-    'savefig.bbox': 'tight'
+    'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.2,
+    'savefig.format': 'pdf',  # PAD format support
+    'text.usetex': False      # Disable LaTeX for PAD compatibility
 })
 
 def create_3d_block(ax, center, size, color, label, text_color='black'):
@@ -115,8 +126,8 @@ def create_enhanced_model_architecture():
     
     # BiLSTM detail
     ax.text(10.5, 0, 1.5, 'Forward LSTM\n+\nBackward LSTM', 
-           ha='center', va='center', fontsize=8,
-           bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.9))
+           ha='center', va='center', fontsize=10, color='darkgreen', fontweight='bold',
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgreen', alpha=0.9, edgecolor='gray'))
     
     # === Temporal Attention Mechanism (Key Innovation) ===
     create_3d_block(ax, [13, 0, 3.2], [1.8, 1.8, 1.2], colors['attention'], 
@@ -124,8 +135,8 @@ def create_enhanced_model_architecture():
     
     # Attention detail
     ax.text(13, 0, 1.8, 'Query-Key-Value\n↓\nSoftmax\n↓\nWeighted Sum', 
-           ha='center', va='center', fontsize=8,
-           bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.9))
+           ha='center', va='center', fontsize=10, color='darkmagenta', fontweight='bold',
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='lavender', alpha=0.9, edgecolor='gray'))
     
     # === Output Classification ===
     create_3d_block(ax, [15.5, 0, 2], [1.5, 1.5, 0.6], colors['output'], 
@@ -157,22 +168,30 @@ def create_enhanced_model_architecture():
            [3.8, 3.8, 2.6, 2.6, 3.8], 'gold', linewidth=4, alpha=0.9)
     
     # === Architecture Advantages Text ===
-    ax.text(8, 2.5, 4.5, '⭐ Key Innovations', fontsize=12, fontweight='bold', 
-           color='darkorange', ha='center')
-    ax.text(8, 2.5, 4.2, '• SE: Channel-wise attention', fontsize=10, 
-           color='darkgoldenrod', ha='center')
-    ax.text(8, 2.5, 3.9, '• Temporal: Long-range dependencies', fontsize=10, 
-           color='purple', ha='center')
+    ax.text(8, 2.5, 4.5, 'Key Innovations', fontsize=14, fontweight='bold', 
+           color='darkorange', ha='center',
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, edgecolor='orange'))
+    ax.text(8, 2.5, 4.2, 'SE: Channel-wise attention', fontsize=12, 
+           color='darkgoldenrod', ha='center', fontweight='bold')
+    ax.text(8, 2.5, 3.9, 'Temporal: Long-range dependencies', fontsize=12, 
+           color='purple', ha='center', fontweight='bold')
     
     # === Performance Results Integration ===
-    ax.text(7.5, -2.5, 1.5, 'Performance Achievements:', fontsize=11, fontweight='bold', 
-           color='darkblue', ha='center')
-    ax.text(7.5, -2.5, 1.2, '• 83.0±0.1% Cross-Domain F1', fontsize=10, 
-           color='darkgreen', ha='center')
-    ax.text(7.5, -2.5, 0.9, '• Perfect LOSO-LORO Consistency', fontsize=10, 
-           color='darkgreen', ha='center')
-    ax.text(7.5, -2.5, 0.6, '• CV < 0.2% Exceptional Stability', fontsize=10, 
-           color='darkgreen', ha='center')
+    ax.text(7.5, -2.5, 1.5, 'Performance Achievements:', fontsize=13, fontweight='bold', 
+           color='darkblue', ha='center',
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='lightblue', alpha=0.9, edgecolor='navy'))
+    ax.text(7.5, -2.5, 1.2, '83.0±0.1% Cross-Domain F1', fontsize=11, 
+           color='darkgreen', ha='center', fontweight='bold')
+    ax.text(7.5, -2.5, 0.9, 'Perfect LOSO-LORO Consistency', fontsize=11, 
+           color='darkgreen', ha='center', fontweight='bold')
+    ax.text(7.5, -2.5, 0.6, 'CV < 0.2% Exceptional Stability', fontsize=11, 
+           color='darkgreen', ha='center', fontweight='bold')
+    
+    # === STEA Protocol Results (Fixed encoding) ===
+    ax.text(7.5, -2.5, 0.3, 'STEA: 82.1% F1 @ 20% labels', fontsize=11, 
+           color='darkred', ha='center', fontweight='bold')
+    ax.text(7.5, -2.5, 0.0, '80% Label Cost Reduction', fontsize=11, 
+           color='darkred', ha='center', fontweight='bold')
     
     # === Model Comparison Context ===
     # Add small comparison models on the side
@@ -186,25 +205,27 @@ def create_enhanced_model_architecture():
         create_3d_block(ax, model['pos'], [1, 1, 0.4], model['color'], model['label'])
     
     # Comparison arrow
-    ax.text(4, 3.8, 1.5, 'Baseline Models', fontsize=10, fontweight='bold', 
-           ha='center', color='gray')
+    ax.text(4, 3.8, 1.5, 'Baseline Models', fontsize=12, fontweight='bold', 
+           ha='center', color='darkgray',
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='lightgray', alpha=0.8, edgecolor='black'))
     
     # === 3D Visualization Enhancements ===
     # Add data dimension visualization
-    ax.text(0, -1.5, 3.5, 'Input Dimensions', fontsize=11, fontweight='bold', 
-           color='darkblue', ha='center')
+    ax.text(0, -1.5, 3.5, 'Input Dimensions', fontsize=13, fontweight='bold', 
+           color='darkblue', ha='center',
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='lightcyan', alpha=0.9, edgecolor='navy'))
     
     # Time dimension
     ax.plot([0, 0], [-1.2, -0.8], [3.8, 4.2], 'r-', linewidth=3)
-    ax.text(0, -1.0, 4.4, 'Time', fontsize=9, color='red', ha='center')
+    ax.text(0, -1.0, 4.4, 'Time', fontsize=11, color='darkred', ha='center', fontweight='bold')
     
     # Frequency dimension  
     ax.plot([-0.4, 0.4], [-1.2, -1.2], [3.8, 3.8], 'g-', linewidth=3)
-    ax.text(0, -1.4, 3.8, 'Frequency', fontsize=9, color='green', ha='center')
+    ax.text(0, -1.4, 3.8, 'Frequency', fontsize=11, color='darkgreen', ha='center', fontweight='bold')
     
     # Antenna dimension
     ax.plot([0, 0], [-1.2, -1.2], [3.4, 4.2], 'b-', linewidth=3)
-    ax.text(0.2, -1.2, 3.8, 'Antennas', fontsize=9, color='blue', ha='center')
+    ax.text(0.2, -1.2, 3.8, 'Antennas', fontsize=11, color='darkblue', ha='center', fontweight='bold')
     
     # === Customization ===
     ax.set_title('Enhanced Model 3D Architecture\n(CNN + SE + Temporal Attention)', 
@@ -320,19 +341,21 @@ def create_data_flow_diagram():
     ax.add_patch(enhanced_highlight)
     
     # === Performance Metrics Integration ===
-    ax.text(8, 1, 'Key Achievements', ha='center', fontsize=12, 
-           fontweight='bold', color='darkgreen')
+    ax.text(8, 1, 'Key Achievements', ha='center', fontsize=14, 
+           fontweight='bold', color='darkgreen',
+           bbox=dict(boxstyle='round,pad=0.4', facecolor='lightgreen', alpha=0.9, edgecolor='darkgreen'))
     
     achievements = [
-        '• Perfect Cross-Domain Consistency: 83.0±0.1% F1',
-        '• Minimal Performance Gap: |LOSO - LORO| = 0.000',
-        '• Exceptional Stability: CV < 0.2%', 
-        '• Label Efficiency: 82.1% F1 @ 20% real data'
+        'Perfect Cross-Domain Consistency: 83.0±0.1% F1',
+        'Minimal Performance Gap: |LOSO - LORO| = 0.000',
+        'Exceptional Stability: CV < 0.2%', 
+        'STEA: 82.1% F1 @ 20% real data (Label Efficiency)'
     ]
     
     for i, achievement in enumerate(achievements):
-        ax.text(1, 0.5 - i*0.15, achievement, fontsize=10, 
-               fontweight='bold', color='darkgreen')
+        ax.text(1, 0.5 - i*0.15, achievement, fontsize=11, 
+               fontweight='bold', color='darkgreen',
+               bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8, edgecolor='green'))
     
     # === Title and Layout ===
     ax.set_title('Enhanced Model Architecture: Comprehensive Framework Overview\n(Inspired by SenseFi and SE-Networks)', 
@@ -380,18 +403,28 @@ if __name__ == "__main__":
     print("📊 Creating 2D Data Flow Diagram...")
     fig2, ax2 = create_data_flow_diagram()
     
-    # Save figures
+    # Save figures with PAD format support
     output_files = [
         ('figure3_enhanced_3D.pdf', fig1),
+        ('enhanced_model_3d_architecture.pdf', fig1),
         ('enhanced_model_3d_architecture.png', fig1),
         ('enhanced_model_dataflow.pdf', fig2),
         ('enhanced_model_dataflow.png', fig2)
     ]
     
     for filename, fig in output_files:
-        fig.savefig(filename, dpi=300, bbox_inches='tight', 
-                   facecolor='white', edgecolor='none')
-        print(f"✅ Saved: {filename}")
+        try:
+            # PAD format compatible saving
+            fig.savefig(filename, dpi=300, bbox_inches='tight', 
+                       facecolor='white', edgecolor='none',
+                       format='pdf' if filename.endswith('.pdf') else 'png',
+                       metadata={'Creator': 'Enhanced Model Architecture Script'})
+            print(f"✅ Saved (PAD compatible): {filename}")
+        except Exception as e:
+            # Fallback for PAD compatibility
+            fig.savefig(filename, dpi=300, bbox_inches='tight', 
+                       facecolor='white', edgecolor='none')
+            print(f"✅ Saved (fallback): {filename} - {str(e)[:50]}")
     
     # Export data
     export_architecture_data()
