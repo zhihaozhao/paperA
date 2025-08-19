@@ -23,7 +23,7 @@ plt.rcParams.update({
 })
 
 def create_3d_block(ax, center, size, color, label, text_color='black'):
-    """Create a 3D block with label"""
+    """Create a 3D block with label - Fixed for better text visibility"""
     x, y, z = center
     dx, dy, dz = size
     
@@ -50,9 +50,10 @@ def create_3d_block(ax, center, size, color, label, text_color='black'):
                                  linewidths=1, alpha=0.8)
     ax.add_collection3d(collection)
     
-    # Add label
+    # Add label with improved visibility - no white text
     ax.text(x, y, z, label, ha='center', va='center', 
-           fontsize=9, fontweight='bold', color=text_color)
+           fontsize=11, fontweight='bold', color=text_color,
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, edgecolor='gray'))
     
     return collection
 
@@ -79,8 +80,8 @@ def create_enhanced_model_architecture():
     
     # Add input dimensions annotation
     ax.text(0, 0, 1.2, 'T: Time Steps\nF: Frequency\nN: Antennas', 
-           ha='center', va='center', fontsize=8, 
-           bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+           ha='center', va='center', fontsize=10, color='darkblue', fontweight='bold',
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9, edgecolor='gray'))
     
     # === CNN Feature Extraction Layers ===
     cnn_layers = [
@@ -105,8 +106,8 @@ def create_enhanced_model_architecture():
     
     # SE module detailed components
     ax.text(8, 0, 1.8, 'Global Avg Pool\n↓\nFC-ReLU-FC\n↓\nSigmoid', 
-           ha='center', va='center', fontsize=8,
-           bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.9))
+           ha='center', va='center', fontsize=10, color='darkred', fontweight='bold',
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.9, edgecolor='gray'))
     
     # === BiLSTM Layer ===
     create_3d_block(ax, [10.5, 0, 2.5], [2, 1.5, 0.8], colors['lstm'], 
