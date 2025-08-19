@@ -1,0 +1,28 @@
+Editor-in-Chief
+IEEE Access
+
+Subject: Submission of Review Manuscript "Advances in Autonomous Fruit-Picking Robots: Methodologies, Technologies, and Challenges"
+
+Dear Editor,
+
+We submit our review manuscript entitled "Advances in Autonomous Fruit-Picking Robots: Methodologies, Technologies, and Challenges" for consideration in IEEE Access.
+
+Scope and contributions:
+- We conduct a PRISMA-guided systematic review of 137 studies (2015–2024) covering multi-sensor fusion, vision-based detection (R-CNN/YOLO/segmentation), and motion planning/control for autonomous fruit-picking robots.
+- We present orchard-specific quantitative comparisons (mAP@0.5, FPS, small-object AP; success rate, cycle time, damage rate) and analyze perception–action integration in field/greenhouse settings.
+- We identify open challenges (robust multimodal fusion, real-time closed-loop control, gentle manipulation at scale) and propose benchmark recommendations and a reproducibility package (CSV data and plotting scripts).
+
+Fit with IEEE Access:
+- The article integrates sensing, machine vision, and robotic control with reproducibility resources, aligning with IEEE Access’s emphasis on impactful, application-driven research with broad accessibility.
+
+Compliance:
+- The manuscript is original and not under consideration elsewhere. All authors approved the submission. Any AI tool was used only for language polishing post-analysis; all scientific content is authored and verified by the authors.
+
+Suggested Associate Editors/Reviewers (optional) can be provided upon request.
+
+We appreciate your consideration.
+
+Sincerely,
+Zhihao Zhao (corresponding author on behalf of all authors)
+Affiliations as listed in the manuscript
+Email: [insert]
