@@ -89,6 +89,19 @@
     stringstyle=\color{red}
 }
 
+% JSON语言定义
+\lstdefinelanguage{json}{
+    basicstyle=\ttfamily\footnotesize,
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue}\bfseries,
+    morestring=[b]",
+    morestring=[b]',
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morekeywords={true,false,null}
+}
+
 \begin{document}
 
 % 设置页眉页脚
