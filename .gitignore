@@ -124,3 +124,4 @@ paper/figures/figures_*.html
 paper/figures/figures_*.json
 paper/figures/*.txt
 paper/figures/*.dat
+# Repos directory contains separated repositories
