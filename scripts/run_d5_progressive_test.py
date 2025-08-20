@@ -26,7 +26,7 @@ def run_experiment(model, config, seed=0, epochs=20):
         "--env_burst_rate", str(config["env_burst_rate"]),
         "--gain_drift_std", str(config["gain_drift_std"]),
         "--sc_corr_rho", str(config["sc_corr_rho"]),
-        "--out", f"results_gpu/d5_progressive/{model}_level{config['level']}_s{seed}.json"
+        "--out", f"../WiFi-CSI-Sensing-Results/results_gpu/d5/{model}_level{config['level']}_s{seed}.json"
     ]
     
     print(f"[RUN] {' '.join(cmd)}")
@@ -54,8 +54,8 @@ def load_results(configs):
         level = config['level']
         
         # 尝试加载Enhanced结果
-        enhanced_file = f"results_gpu/d5_progressive/enhanced_level{level}_s0.json"
-        cnn_file = f"results_gpu/d5_progressive/cnn_level{level}_s0.json"
+        enhanced_file = f"../WiFi-CSI-Sensing-Results/results_gpu/d5/enhanced_level{level}_s0.json"
+        cnn_file = f"../WiFi-CSI-Sensing-Results/results_gpu/d5/cnn_level{level}_s0.json"
         
         if Path(enhanced_file).exists() and Path(cnn_file).exists():
             try:
@@ -129,7 +129,7 @@ def analyze_results(results):
     print(f"ECE改善: {best_level['ece_improvement']:.3f}")
     
     # 保存结果
-    output_file = "results_gpu/d5_progressive/progressive_test_summary.json"
+    output_file = "../WiFi-CSI-Sensing-Results/results_gpu/d5/progressive_test_summary.json"
     Path(output_file).parent.mkdir(parents=True, exist_ok=True)
     
     summary = {
@@ -203,7 +203,7 @@ def main():
         print("开始D5渐进式难度测试...")
         
         # 创建输出目录
-        Path("results_gpu/d5_progressive").mkdir(parents=True, exist_ok=True)
+        Path("../WiFi-CSI-Sensing-Results/results_gpu/d5").mkdir(parents=True, exist_ok=True)
         
         # 运行实验
         for config in difficulty_configs:
