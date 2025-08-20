@@ -1,0 +1,23 @@
+2025-08-16 15:45:28,131 [INFO] Starting training with args: {'model': 'enhanced', 'difficulty': 'hard', 'seed': 0, 'F': 52, 'T': 32, 'num_classes': 8, 'epochs': 100, 'batch': 768, 'n_samples': 20000, 'early_metric': 'macro_f1', 'patience': 10, 'ckpt_dir': 'checkpoints/', 'logit_l2': 0.0, 'sc_corr_rho': 0.5, 'env_burst_rate': 0.0, 'gain_drift_std': 0.1, 'class_overlap': 0.8, 'temp_mode': 'logspace', 'temp_min': 1.0, 'temp_max': 5.0, 'temp_steps': 100, 'val_split': 0.5, 'fixed_temp': 1.0, 'label_noise_prob': 0.05, 'amp': True, 'save_ckpt': 'final', 'num_workers_override': 0, 'prefetch_factor': 2, 'val_every': 3, 'out_json': 'results_gpu/d2\\paperA_enhanced_hard_s0_cla0p8_env0p0_lab0p05.json'}
+2025-08-16 15:45:28,132 [INFO] Logs saved to: results_gpu\d2\paperA_enhanced_hard_s0_cla0p8_env0p0_lab0p05.log
+2025-08-16 15:45:28,159 [INFO] Using device: cuda
+2025-08-16 15:47:26,309 [INFO] Dataset: Train=14000, Val=3000, Test=3000
+2025-08-16 15:47:26,310 [INFO] DataLoader: num_workers=0, pin_memory=True
+2025-08-16 15:47:26,435 [INFO] Model: enhanced with 640713 params
+2025-08-16 15:47:48,987 [INFO] Epoch 3/100 - Val Loss: 0.7007
+2025-08-16 15:47:57,064 [INFO] Epoch 5/100 - Train Loss: 0.6782, Val Loss: nan, Val macro_f1: 0.7015
+2025-08-16 15:48:01,356 [INFO] Epoch 6/100 - Val Loss: 0.6817
+2025-08-16 15:48:13,932 [INFO] Epoch 9/100 - Val Loss: 0.6961
+2025-08-16 15:48:18,232 [INFO] Epoch 10/100 - Train Loss: 0.6695, Val Loss: nan, Val macro_f1: 0.7077
+2025-08-16 15:48:26,321 [INFO] Epoch 12/100 - Val Loss: 0.6866
+2025-08-16 15:48:38,927 [INFO] Epoch 15/100 - Val Loss: 0.6893
+2025-08-16 15:48:39,430 [INFO] Epoch 15/100 - Train Loss: 0.6582, Val Loss: 0.6893, Val macro_f1: 0.6992
+2025-08-16 15:48:51,272 [INFO] Epoch 18/100 - Val Loss: 0.7103
+2025-08-16 15:48:59,337 [INFO] Epoch 20/100 - Train Loss: 0.6380, Val Loss: nan, Val macro_f1: 0.7145
+2025-08-16 15:49:03,823 [INFO] Epoch 21/100 - Val Loss: 0.7133
+2025-08-16 15:49:08,115 [INFO] Early stopping at epoch 22
+2025-08-16 15:49:08,604 [INFO] Collected test logits and targets
+2025-08-16 15:49:08,659 [INFO] Calibration: T=1.0330, Details={'temperature': 1.0330482721328735, 'best_nll': 0.638827919960022, 'method': 'logspace'}
+2025-08-16 15:49:08,930 [INFO] Saved full results to results_gpu/d2\paperA_enhanced_hard_s0_cla0p8_env0p0_lab0p05.json
+2025-08-16 15:49:08,940 [INFO] Final model saved to checkpoints/final_enhanced_0_hard.pth
+2025-08-16 15:49:08,941 [INFO] Updated registry: results\registry.csv

@@ -1,0 +1,7 @@
+{
+  "spec": "scripts\\d2_spec.json",
+  "total_planned": 40,
+  "ok": 0,
+  "fail": 40,
+  "timestamp": "20250816T061613Z"
+}

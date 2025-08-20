@@ -1,0 +1,60 @@
+{
+  "protocol": "Sim2Real",
+  "model": "enhanced",
+  "seed": 3,
+  "label_ratio": 0.1,
+  "transfer_method": "fine_tune",
+  "zero_shot_metrics": {
+    "macro_f1": 0.12710983412764776,
+    "falling_f1": 0.12710983412764776,
+    "epileptic_fall_f1": 0.008385744234800839,
+    "elderly_fall_f1": 0.024365482233502538,
+    "ece": 0.7773875447337404
+  },
+  "target_metrics": {
+    "macro_f1": 0.8025326866892492,
+    "falling_f1": 0.8025326866892492,
+    "epileptic_fall_f1": 0.9503397804495557,
+    "elderly_fall_f1": 0.9533333333333334,
+    "ece": 0.00930346240221111
+  },
+  "meta": {
+    "run_id": "D4-Sim2Real-V1-20250818-135227-a14e44d9",
+    "phase": "D4",
+    "exp": "Sim2Real",
+    "ver": "V1",
+    "desc": "Sim2Real fine_tune with 10.0% labels",
+    "time_start": "2025-08-18T13:52:27",
+    "args": {
+      "model": "enhanced",
+      "protocol": "sim2real",
+      "seed": 3.0,
+      "epochs": 100.0,
+      "out": "results\\d4\\sim2real\\enhanced_s3_bs8_lr1e-3_me50_ft_0.1.json",
+      "benchmark_path": "benchmarks\\WiFi-CSI-Sensing-Benchmark-main",
+      "files_per_activity": 3.0,
+      "output_dir": "results",
+      "d2_model_path": "E:\\paperA\\paperA\\checkpoints",
+      "label_ratio": 0.1,
+      "transfer_method": "fine_tune",
+      "skip_synth_pretrain": 1.0,
+      "lr": 0.001,
+      "batch_size": 8.0,
+      "class_weight": "inv_freq",
+      "loso_all_folds": 0.0,
+      "patience": 8.0,
+      "min_epochs": 50.0,
+      "loro_all_folds": 0.0,
+      "positive_class": 5.0,
+      "amp": 0.0,
+      "input_norm": "zscore",
+      "norm_eps": 1e-06,
+      "source": "synth",
+      "target": "real",
+      "difficulty": "mid",
+      "n_samples": 2000.0,
+      "T": 128.0,
+      "F": 30.0
+    }
+  }
+}

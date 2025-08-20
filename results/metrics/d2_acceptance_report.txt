@@ -1,0 +1,11 @@
+D2 Acceptance Report
+Root: results_gpu\d2
+Files: 540
+
+Means by model (Macro-F1, count):
+  - bilstm: 0.920842 (135)
+  - cnn: 0.945973 (135)
+  - conformer_lite: 0.936524 (135)
+  - enhanced: 0.949400 (135)
+
+Status: PASS

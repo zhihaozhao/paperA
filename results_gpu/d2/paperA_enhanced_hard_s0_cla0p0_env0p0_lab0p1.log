@@ -1,0 +1,20 @@
+2025-08-16 14:39:43,703 [INFO] Starting training with args: {'model': 'enhanced', 'difficulty': 'hard', 'seed': 0, 'F': 52, 'T': 32, 'num_classes': 8, 'epochs': 100, 'batch': 768, 'n_samples': 20000, 'early_metric': 'macro_f1', 'patience': 10, 'ckpt_dir': 'checkpoints/', 'logit_l2': 0.0, 'sc_corr_rho': 0.5, 'env_burst_rate': 0.0, 'gain_drift_std': 0.1, 'class_overlap': 0.0, 'temp_mode': 'logspace', 'temp_min': 1.0, 'temp_max': 5.0, 'temp_steps': 100, 'val_split': 0.5, 'fixed_temp': 1.0, 'label_noise_prob': 0.1, 'amp': True, 'save_ckpt': 'final', 'num_workers_override': 0, 'prefetch_factor': 2, 'val_every': 3, 'out_json': 'results_gpu/d2\\paperA_enhanced_hard_s0_cla0p0_env0p0_lab0p1.json'}
+2025-08-16 14:39:43,703 [INFO] Logs saved to: results_gpu\d2\paperA_enhanced_hard_s0_cla0p0_env0p0_lab0p1.log
+2025-08-16 14:39:43,728 [INFO] Using device: cuda
+2025-08-16 14:39:58,684 [INFO] Dataset: Train=14000, Val=3000, Test=3000
+2025-08-16 14:39:58,685 [INFO] DataLoader: num_workers=0, pin_memory=True
+2025-08-16 14:39:58,763 [INFO] Model: enhanced with 640713 params
+2025-08-16 14:40:03,975 [INFO] Best model saved to checkpoints/best_enhanced_0_hard.pth
+2025-08-16 14:40:10,372 [INFO] Epoch 3/100 - Val Loss: 0.0000
+2025-08-16 14:40:10,722 [INFO] Best model saved to checkpoints/best_enhanced_0_hard.pth
+2025-08-16 14:40:16,741 [INFO] Epoch 5/100 - Train Loss: 0.0000, Val Loss: nan, Val macro_f1: 1.0000
+2025-08-16 14:40:20,088 [INFO] Epoch 6/100 - Val Loss: 0.0000
+2025-08-16 14:40:29,849 [INFO] Epoch 9/100 - Val Loss: 0.0000
+2025-08-16 14:40:33,199 [INFO] Epoch 10/100 - Train Loss: 0.0000, Val Loss: nan, Val macro_f1: 1.0000
+2025-08-16 14:40:39,556 [INFO] Epoch 12/100 - Val Loss: 0.0000
+2025-08-16 14:40:42,910 [INFO] Early stopping at epoch 13
+2025-08-16 14:40:43,249 [INFO] Collected test logits and targets
+2025-08-16 14:40:43,281 [INFO] Calibration: T=1.0000, Details={'temperature': 1.0, 'best_nll': 3.3076588579206145e-07, 'method': 'logspace'}
+2025-08-16 14:40:43,501 [INFO] Saved full results to results_gpu/d2\paperA_enhanced_hard_s0_cla0p0_env0p0_lab0p1.json
+2025-08-16 14:40:43,507 [INFO] Final model saved to checkpoints/final_enhanced_0_hard.pth
+2025-08-16 14:40:43,508 [INFO] Updated registry: results\registry.csv
