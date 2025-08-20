@@ -1,0 +1,24 @@
+Editor-in-Chief
+Robotics and Autonomous Systems
+
+Subject: Submission of Review Manuscript "Field-Robotics Benchmarks for Autonomous Fruit Picking: Perception-to-Action Integration, Quantitative Trade-offs, and Deployment Guidance"
+
+Dear Editor,
+
+We submit our review manuscript for consideration in Robotics and Autonomous Systems.
+
+Positioning and contributions:
+- A PRISMA-guided synthesis of 137 studies (2015–2024) covering sensing, vision, planning, and control for autonomous fruit picking, with emphasis on outdoor/greenhouse field conditions.
+- Benchmark-driven quantitative comparisons (mAP@0.5, FPS, small-object AP; success rate, cycle time, damage rate) and analysis of perception–planning–control coupling.
+- Cross-study gaps and deployment guidance: robustness under occlusion/illumination variability, computation–power constraints on mobile platforms, multi-robot scaling, and reproducibility resources (CSV + scripts).
+
+Fit with RAS:
+- Emphasis on field robotics, closed-loop autonomy, and quantitative trade-offs aligns with RAS’s scope on integrated robotic systems.
+
+Compliance:
+- The manuscript is original and not under consideration elsewhere. All authors approved the submission. Any AI tool was used solely for language polishing post-analysis; scientific content is authored and verified by the authors.
+
+Sincerely,
+Zhihao Zhao (corresponding author)
+Affiliations per manuscript
+Email: [insert]
