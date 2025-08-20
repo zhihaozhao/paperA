@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="648" height="378" xmlns="http://www.w3.org/2000/svg">
+    <!-- 背景 -->
+    <rect width="648" height="378" fill="white" stroke="black" stroke-width="1"/>
+    
+    <!-- 标题 -->
+    <text x="324" y="25" text-anchor="middle" font-family="Times New Roman" font-size="12" font-weight="bold">
+        Cross-Domain Generalization Performance
+    </text>
+    
+    <!-- 绘图区域边框 -->
+    <rect x="50" y="40" width="548" height="238" 
+          fill="none" stroke="black" stroke-width="0.5"/>
+    
+    <!-- Y轴网格线和标签 -->
+    <line x1="50" y1="278.0" x2="598" y2="278.0" 
+          stroke="gray" stroke-width="0.25" opacity="0.3"/>
+    <text x="45" y="281.0" text-anchor="end" font-family="Times New Roman" font-size="9">
+        0.0
+    </text>
+    <line x1="50" y1="230.4" x2="598" y2="230.4" 
+          stroke="gray" stroke-width="0.25" opacity="0.3"/>
+    <text x="45" y="233.4" text-anchor="end" font-family="Times New Roman" font-size="9">
+        0.2
+    </text>
+    <line x1="50" y1="182.8" x2="598" y2="182.8" 
+          stroke="gray" stroke-width="0.25" opacity="0.3"/>
+    <text x="45" y="185.8" text-anchor="end" font-family="Times New Roman" font-size="9">
+        0.4
+    </text>
+    <line x1="50" y1="135.2" x2="598" y2="135.2" 
+          stroke="gray" stroke-width="0.25" opacity="0.3"/>
+    <text x="45" y="138.2" text-anchor="end" font-family="Times New Roman" font-size="9">
+        0.6
+    </text>
+    <line x1="50" y1="87.6" x2="598" y2="87.6" 
+          stroke="gray" stroke-width="0.25" opacity="0.3"/>
+    <text x="45" y="90.6" text-anchor="end" font-family="Times New Roman" font-size="9">
+        0.8
+    </text>
+    <line x1="50" y1="40.0" x2="598" y2="40.0" 
+          stroke="gray" stroke-width="0.25" opacity="0.3"/>
+    <text x="45" y="43.0" text-anchor="end" font-family="Times New Roman" font-size="9">
+        1.0
+    </text>
+    <text x="20" y="159" text-anchor="middle" font-family="Times New Roman" 
+          font-size="10" transform="rotate(-90, 20, 159)">
+        Macro F1 Score
+    </text>
+    <!-- Enhanced LOSO柱状 -->
+    <rect x="80.5" y="80.46000000000001" width="30" height="197.54"
+          fill="#2E86AB" stroke="black" stroke-width="1.5" opacity="0.9"/>
+    
+    <!-- Enhanced LOSO误差棒 -->
+    <line x1="95.5" y1="80.22200000000001" 
+          x2="95.5" y2="80.69800000000001" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="92.5" y1="80.22200000000001" 
+          x2="98.5" y2="80.22200000000001" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="92.5" y1="80.69800000000001" 
+          x2="98.5" y2="80.69800000000001" 
+          stroke="black" stroke-width="0.5"/>
+          
+    <!-- Enhanced LOSO数值标签 -->
+    <text x="95.5" y="75.22200000000001" 
+          text-anchor="middle" font-family="Times New Roman" font-size="8">
+        0.830±0.001
+    </text>
+    <!-- Enhanced LORO柱状 -->
+    <rect x="126.5" y="80.46000000000001" width="30" height="197.54"
+          fill="#2E86AB" stroke="black" stroke-width="1.5" opacity="0.7"/>
+    
+    <!-- Enhanced LORO误差棒 -->
+    <line x1="141.5" y1="80.22200000000001" 
+          x2="141.5" y2="80.69800000000001" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="138.5" y1="80.22200000000001" 
+          x2="144.5" y2="80.22200000000001" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="138.5" y1="80.69800000000001" 
+          x2="144.5" y2="80.69800000000001" 
+          stroke="black" stroke-width="0.5"/>
+          
+    <!-- Enhanced LORO数值标签 -->
+    <text x="141.5" y="75.22200000000001" 
+          text-anchor="middle" font-family="Times New Roman" font-size="8">
+        0.830±0.001
+    </text>
+    
+    <!-- X轴标签 -->
+    <text x="118.5" y="298" text-anchor="middle" 
+          font-family="Times New Roman" font-size="9">
+        Enhanced
+    </text>
+    <!-- CNN LOSO柱状 -->
+    <rect x="217.5" y="77.60400000000001" width="30" height="200.396"
+          fill="#E84855" stroke="black" stroke-width="0.5" opacity="0.9"/>
+    
+    <!-- CNN LOSO误差棒 -->
+    <line x1="232.5" y1="71.65400000000001" 
+          x2="232.5" y2="83.55400000000002" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="229.5" y1="71.65400000000001" 
+          x2="235.5" y2="71.65400000000001" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="229.5" y1="83.55400000000002" 
+          x2="235.5" y2="83.55400000000002" 
+          stroke="black" stroke-width="0.5"/>
+          
+    <!-- CNN LOSO数值标签 -->
+    <text x="232.5" y="66.65400000000001" 
+          text-anchor="middle" font-family="Times New Roman" font-size="8">
+        0.842±0.025
+    </text>
+    <!-- CNN LORO柱状 -->
+    <rect x="263.5" y="88.55199999999999" width="30" height="189.448"
+          fill="#E84855" stroke="black" stroke-width="0.5" opacity="0.7"/>
+    
+    <!-- CNN LORO误差棒 -->
+    <line x1="278.5" y1="65.466" 
+          x2="278.5" y2="111.63799999999999" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="275.5" y1="65.466" 
+          x2="281.5" y2="65.466" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="275.5" y1="111.63799999999999" 
+          x2="281.5" y2="111.63799999999999" 
+          stroke="black" stroke-width="0.5"/>
+          
+    <!-- CNN LORO数值标签 -->
+    <text x="278.5" y="60.465999999999994" 
+          text-anchor="middle" font-family="Times New Roman" font-size="8">
+        0.796±0.097
+    </text>
+    
+    <!-- X轴标签 -->
+    <text x="255.5" y="298" text-anchor="middle" 
+          font-family="Times New Roman" font-size="9">
+        CNN
+    </text>
+    <!-- BiLSTM LOSO柱状 -->
+    <rect x="354.5" y="86.886" width="30" height="191.114"
+          fill="#3CB371" stroke="black" stroke-width="0.5" opacity="0.9"/>
+    
+    <!-- BiLSTM LOSO误差棒 -->
+    <line x1="369.5" y1="81.64999999999999" 
+          x2="369.5" y2="92.122" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="366.5" y1="81.64999999999999" 
+          x2="372.5" y2="81.64999999999999" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="366.5" y1="92.122" 
+          x2="372.5" y2="92.122" 
+          stroke="black" stroke-width="0.5"/>
+          
+    <!-- BiLSTM LOSO数值标签 -->
+    <text x="369.5" y="76.64999999999999" 
+          text-anchor="middle" font-family="Times New Roman" font-size="8">
+        0.803±0.022
+    </text>
+    <!-- BiLSTM LORO柱状 -->
+    <rect x="400.5" y="90.21799999999999" width="30" height="187.782"
+          fill="#3CB371" stroke="black" stroke-width="0.5" opacity="0.7"/>
+    
+    <!-- BiLSTM LORO误差棒 -->
+    <line x1="415.5" y1="79.746" 
+          x2="415.5" y2="100.68999999999998" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="412.5" y1="79.746" 
+          x2="418.5" y2="79.746" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="412.5" y1="100.68999999999998" 
+          x2="418.5" y2="100.68999999999998" 
+          stroke="black" stroke-width="0.5"/>
+          
+    <!-- BiLSTM LORO数值标签 -->
+    <text x="415.5" y="74.746" 
+          text-anchor="middle" font-family="Times New Roman" font-size="8">
+        0.789±0.044
+    </text>
+    
+    <!-- X轴标签 -->
+    <text x="392.5" y="298" text-anchor="middle" 
+          font-family="Times New Roman" font-size="9">
+        BiLSTM
+    </text>
+    <!-- Conformer LOSO柱状 -->
+    <rect x="491.5" y="182.086" width="30" height="95.914"
+          fill="#DC143C" stroke="black" stroke-width="0.5" opacity="0.9"/>
+    
+    <!-- Conformer LOSO误差棒 -->
+    <line x1="506.5" y1="90.218" 
+          x2="506.5" y2="273.954" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="503.5" y1="90.218" 
+          x2="509.5" y2="90.218" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="503.5" y1="273.954" 
+          x2="509.5" y2="273.954" 
+          stroke="black" stroke-width="0.5"/>
+          
+    <!-- Conformer LOSO数值标签 -->
+    <text x="506.5" y="85.218" 
+          text-anchor="middle" font-family="Times New Roman" font-size="8">
+        0.403±0.386
+    </text>
+    <!-- Conformer LORO柱状 -->
+    <rect x="537.5" y="77.84200000000001" width="30" height="200.158"
+          fill="#DC143C" stroke="black" stroke-width="0.5" opacity="0.7"/>
+    
+    <!-- Conformer LORO误差棒 -->
+    <line x1="552.5" y1="68.32200000000002" 
+          x2="552.5" y2="87.36200000000001" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="549.5" y1="68.32200000000002" 
+          x2="555.5" y2="68.32200000000002" 
+          stroke="black" stroke-width="0.5"/>
+    <line x1="549.5" y1="87.36200000000001" 
+          x2="555.5" y2="87.36200000000001" 
+          stroke="black" stroke-width="0.5"/>
+          
+    <!-- Conformer LORO数值标签 -->
+    <text x="552.5" y="63.32200000000002" 
+          text-anchor="middle" font-family="Times New Roman" font-size="8">
+        0.841±0.040
+    </text>
+    
+    <!-- X轴标签 -->
+    <text x="529.5" y="298" text-anchor="middle" 
+          font-family="Times New Roman" font-size="9">
+        Conformer
+    </text>
+    
+    <!-- X轴标题 -->
+    <text x="324" y="368" text-anchor="middle" 
+          font-family="Times New Roman" font-size="10">
+        Model Architecture
+    </text>
+    
+    <!-- 图例 -->
+    <g transform="translate(528, 60)">
+        <rect width="110" height="40" fill="white" stroke="black" stroke-width="0.5" opacity="0.9"/>
+        <!-- LOSO图例 -->
+        <rect x="5" y="8" width="15" height="10" fill="#2E86AB" opacity="0.9"/>
+        <text x="25" y="16" font-family="Times New Roman" font-size="9">LOSO</text>
+        <!-- LORO图例 -->  
+        <rect x="5" y="23" width="15" height="10" fill="#2E86AB" opacity="0.7"/>
+        <text x="25" y="31" font-family="Times New Roman" font-size="9">LORO</text>
+    </g>
+    
+</svg>
