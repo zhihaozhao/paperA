@@ -1,0 +1,32 @@
+name: Compile Papers
+
+on:
+  push:
+    branches: [ thesis/phd-dissertation-chapter ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/latex-action@v3
+        with:
+          root_file: |
+            benchmarks/JER_FP2025/FP_2025_IEEE-ACCESS.tex
+            benchmarks/JER_FP2025/FP_2025_RAS.tex
+            benchmarks/JER_FP2025/FP_2025_BE.tex
+            benchmarks/JER_FP2025/FP_2025_SN-APPLIED-SCIENCES.tex
+          latexmk_use_xelatex: false
+      - name: Collect PDFs
+        run: |
+          mkdir -p benchmarks/JER_FP2025/pdfs
+          for f in benchmarks/JER_FP2025/FP_2025_IEEE-ACCESS.pdf benchmarks/JER_FP2025/FP_2025_RAS.pdf benchmarks/JER_FP2025/FP_2025_BE.pdf benchmarks/JER_FP2025/FP_2025_SN-APPLIED-SCIENCES.pdf; do
+            [ -f "$f" ] && cp "$f" benchmarks/JER_FP2025/pdfs/
+          done
+      - name: Commit PDFs
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'benchmarks/JER_FP2025/pdfs/*.pdf'
+          message: 'CI: add compiled PDFs for journal versions'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

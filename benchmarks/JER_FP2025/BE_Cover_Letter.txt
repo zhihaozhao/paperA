@@ -1,0 +1,22 @@
+Editor-in-Chief
+Biosystems Engineering
+
+Subject: Submission of Review Manuscript "Benchmarking Autonomous Fruit-Picking Robots: Engineering Metrics and Deployment Implications"
+
+Dear Editor,
+
+We submit our engineering-focused review manuscript to Biosystems Engineering.
+
+Scope and contributions:
+- PRISMA-guided synthesis (137 studies, 2015–2024) covering sensing, vision, manipulation and motion control with agriculture-oriented constraints.
+- Unified engineering metrics and tables (success rate, cycle time, damage rate; power/compute footprints; bill of materials trends) with reproducible CSV and scripts.
+- Deployment guidance on robustness under orchard variability, retrofit feasibility, and cost–performance trade-offs.
+
+Fit with the journal:
+- Emphasis on agricultural engineering systems, metrics and deployability.
+
+Compliance:
+- Original submission; not under consideration elsewhere; all authors approve. Any AI tool was used only for language polishing after analysis.
+
+Sincerely,
+Zhihao Zhao (corresponding author)

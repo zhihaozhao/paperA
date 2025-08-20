@@ -1,0 +1,19 @@
+Editor-in-Chief
+SN Applied Sciences
+
+Subject: Submission of Review Manuscript "Autonomous Fruit-Picking Robots: Quantitative Synthesis and Practical Pathways"
+
+Dear Editor,
+
+We submit our application-oriented review to SN Applied Sciences.
+
+Highlights:
+- Quantitative synthesis across sensing/vision/control with unified benchmarks.
+- Practical pathways for deployment (datasets, metrics, scripts) and reproducibility package.
+- Identified gaps and research agenda for robust, scalable systems.
+
+Compliance:
+- Original work; all authors approve; AI tools used only for post-analysis polishing.
+
+Sincerely,
+Zhihao Zhao (corresponding author)
