@@ -25,8 +25,8 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.append(str(PROJECT_ROOT / "src"))
 
-from train_eval import build_model, train_one_epoch, eval_model
-from data_synth import get_synth_loaders
+from src.train_eval import build_model, train_one_epoch, eval_model
+from src.data_synth import get_synth_loaders
 
 
 class OptimizedSim2RealExperiments:

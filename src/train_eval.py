@@ -34,7 +34,7 @@ except Exception:
 from sklearn.metrics import f1_score
 import numpy as np
 
-from models import build_model  # Assuming import
+from src.models import build_model  # Fixed import path
 
 def _str2bool(v):
     """Parse boolean-like CLI values.

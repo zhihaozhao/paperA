@@ -20,9 +20,8 @@ If you already have similar functions elsewhere, you can:
 Author: D3 task patch
 """
 
-from __future__ import annotations
 import numpy as np
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional, Tuple, Any
 from sklearn.metrics import f1_score  # NEW: Import for falling_f1
 
 # Import for overlap_stat computation if needed
@@ -269,7 +268,7 @@ def aggregate_classification_metrics(
         y_true: np.ndarray,
         temperature: Optional[float] = None,
         n_bins_ece: int = 15,
-        dataset: Optional[SynthCSIDataset] = None,  # NEW: Optional param for overlap_stat
+        dataset: Optional[Any] = None,  # NEW: Optional param for overlap_stat
         num_classes: Optional[int] = None,  # NEW: Optional param for multiclass handling
 ) -> Dict[str, float]:
     """

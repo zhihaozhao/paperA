@@ -162,8 +162,8 @@ from util import load_data_n_model
 
 # 导入我们的模块
 sys.path.append(str(Path(__file__).parent.parent / "src"))
-from train_eval import build_model
-from data_synth import get_synth_loaders
+from src.train_eval import build_model
+from src.data_synth import get_synth_loaders
 
 def run_sim2real_comparison():
     """运行Sim2Real对比实验"""

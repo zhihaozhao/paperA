@@ -12,7 +12,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.data_synth import get_synth_loaders
 from src.metrics import aggregate_classification_metrics
-from models import build_model
+from src.models import build_model
 
 
 def parse_args() -> argparse.Namespace:
