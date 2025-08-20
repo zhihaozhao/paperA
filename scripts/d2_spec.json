@@ -15,5 +15,5 @@
     "label_noise_prob": [0.0, 0.05, 0.1],
     "env_burst_rate": [0.0, 0.1, 0.2]
   },
-  "output_dir": "results_gpu/d2"
+  "output_dir": "../WiFi-CSI-Sensing-Results/results_gpu/d2"
 }

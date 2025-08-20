@@ -26,5 +26,5 @@
     "num_workers_override": 2
   },
   "grid": {},
-  "output_dir": "results_gpu/d6"
+  "output_dir": "../WiFi-CSI-Sensing-Results/results_gpu/d6"
 }
