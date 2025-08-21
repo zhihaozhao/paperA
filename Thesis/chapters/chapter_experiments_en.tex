@@ -1,98 +1,98 @@
-% Experiments Chapter (English)
+﻿% Experiments Chapter (English)
 % Chapter - Experiments on Physics-Guided Synthetic Data Generation for WiFi CSI HAR
 
 \chapter{Experiments on Physics-Guided Synthetic Data Generation for WiFi CSI HAR}
 \label{chap:experiments}
 
-\section{概述}
+\section{姒傝堪}
 \label{sec:overview}
 
-本章详细描述了基于物理指导的合成数据生成框架在WiFi CSI人体活动识别任务中的完整实验研究。实验工作历时数月，包含了从理论设计、算法实现、系统开发到全面评估的完整研究流程。
+鏈珷璇︾粏鎻忚堪浜嗗熀浜庣墿鐞嗘寚瀵肩殑鍚堟垚鏁版嵁鐢熸垚妗嗘灦鍦╓iFi CSI浜轰綋娲诲姩璇嗗埆浠诲姟涓殑瀹屾暣瀹為獙鐮旂┒銆傚疄楠屽伐浣滃巻鏃舵暟鏈堬紝鍖呭惈浜嗕粠鐞嗚璁捐銆佺畻娉曞疄鐜般€佺郴缁熷紑鍙戝埌鍏ㄩ潰璇勪及鐨勫畬鏁寸爺绌舵祦绋嬨€?
 
-\subsection{研究背景与动机}
+\subsection{鐮旂┒鑳屾櫙涓庡姩鏈簘
 \label{subsec:motivation}
 
-WiFi CSI（Channel State Information）基于的人体活动识别技术作为一种新兴的普适感知方法，具有隐私保护、设备无关、部署便捷等显著优势。然而，现有研究面临的核心挑战包括：
+WiFi CSI锛圕hannel State Information锛夊熀浜庣殑浜轰綋娲诲姩璇嗗埆鎶€鏈綔涓轰竴绉嶆柊鍏寸殑鏅€傛劅鐭ユ柟娉曪紝鍏锋湁闅愮淇濇姢銆佽澶囨棤鍏炽€侀儴缃蹭究鎹风瓑鏄捐憲浼樺娍銆傜劧鑰岋紝鐜版湁鐮旂┒闈复鐨勬牳蹇冩寫鎴樺寘鎷細
 
 \begin{enumerate}
-\item \textbf{数据稀缺性}：标注真实世界WiFi CSI数据需要大量人力物力，成本高昂
-\item \textbf{跨域泛化困难}：模型在不同环境、不同受试者之间的泛化能力有限  
-\item \textbf{评估方法不完善}：缺乏系统性的可信度评估和校准分析
-\item \textbf{标签效率低下}：传统监督学习需要大量标注数据，实际部署成本过高
+\item \textbf{鏁版嵁绋€缂烘€锛氭爣娉ㄧ湡瀹炰笘鐣學iFi CSI鏁版嵁闇€瑕佸ぇ閲忎汉鍔涚墿鍔涳紝鎴愭湰楂樻槀
+\item \textbf{璺ㄥ煙娉涘寲鍥伴毦}锛氭ā鍨嬪湪涓嶅悓鐜銆佷笉鍚屽彈璇曡€呬箣闂寸殑娉涘寲鑳藉姏鏈夐檺  
+\item \textbf{璇勪及鏂规硶涓嶅畬鍠剗锛氱己涔忕郴缁熸€х殑鍙俊搴﹁瘎浼板拰鏍″噯鍒嗘瀽
+\item \textbf{鏍囩鏁堢巼浣庝笅}锛氫紶缁熺洃鐫ｅ涔犻渶瑕佸ぇ閲忔爣娉ㄦ暟鎹紝瀹為檯閮ㄧ讲鎴愭湰杩囬珮
 \end{enumerate}
 
-\subsection{研究目标与贡献}
+\subsection{鐮旂┒鐩爣涓庤础鐚畗
 \label{subsec:objectives}
 
-针对上述挑战，本研究的核心目标是开发一套完整的物理指导合成数据生成与可信评估框架，具体包括：
+閽堝涓婅堪鎸戞垬锛屾湰鐮旂┒鐨勬牳蹇冪洰鏍囨槸寮€鍙戜竴濂楀畬鏁寸殑鐗╃悊鎸囧鍚堟垚鏁版嵁鐢熸垚涓庡彲淇¤瘎浼版鏋讹紝鍏蜂綋鍖呮嫭锛?
 
 \begin{itemize}
-\item 建立基于WiFi信号传播物理原理的合成数据生成器
-\item 设计Enhanced深度学习架构，集成SE注意力机制和时序建模
-\item 构建系统性的跨域评估协议（CDAE和STEA）
-\item 实现高效的Sim2Real迁移学习，大幅降低标注需求
-\item 建立可信度评估体系，包括校准分析和可靠性测试
+\item 寤虹珛鍩轰簬WiFi淇″彿浼犳挱鐗╃悊鍘熺悊鐨勫悎鎴愭暟鎹敓鎴愬櫒
+\item 璁捐Enhanced娣卞害瀛︿範鏋舵瀯锛岄泦鎴怱E娉ㄦ剰鍔涙満鍒跺拰鏃跺簭寤烘ā
+\item 鏋勫缓绯荤粺鎬х殑璺ㄥ煙璇勪及鍗忚锛圕DAE鍜孲TEA锛?
+\item 瀹炵幇楂樻晥鐨凷im2Real杩佺Щ瀛︿範锛屽ぇ骞呴檷浣庢爣娉ㄩ渶姹?
+\item 寤虹珛鍙俊搴﹁瘎浼颁綋绯伙紝鍖呮嫭鏍″噯鍒嗘瀽鍜屽彲闈犳€ф祴璇?
 \end{itemize}
 
-\section{实验设计与方法论}
+\section{瀹為獙璁捐涓庢柟娉曡}
 \label{sec:methodology}
 
-\subsection{总体实验框架}
+\subsection{鎬讳綋瀹為獙妗嗘灦}
 \label{subsec:framework}
 
-本研究采用三阶段递进式实验设计：
+鏈爺绌堕噰鐢ㄤ笁闃舵閫掕繘寮忓疄楠岃璁★細
 
 \begin{description}
-\item[第一阶段] \textbf{合成数据验证实验（D2协议）}：通过540种配置验证合成数据生成器的有效性和鲁棒性
-\item[第二阶段] \textbf{跨域适应评估实验（CDAE协议）}：通过40种配置验证模型的跨受试者和跨环境泛化能力
-\item[第三阶段] \textbf{Sim2Real迁移效率评估实验（STEA协议）}：通过56种配置量化合成到真实数据的迁移学习效率
+\item[绗竴闃舵] \textbf{鍚堟垚鏁版嵁楠岃瘉瀹為獙锛圖2鍗忚锛墋锛氶€氳繃540绉嶉厤缃獙璇佸悎鎴愭暟鎹敓鎴愬櫒鐨勬湁鏁堟€у拰椴佹鎬?
+\item[绗簩闃舵] \textbf{璺ㄥ煙閫傚簲璇勪及瀹為獙锛圕DAE鍗忚锛墋锛氶€氳繃40绉嶉厤缃獙璇佹ā鍨嬬殑璺ㄥ彈璇曡€呭拰璺ㄧ幆澧冩硾鍖栬兘鍔?
+\item[绗笁闃舵] \textbf{Sim2Real杩佺Щ鏁堢巼璇勪及瀹為獙锛圫TEA鍗忚锛墋锛氶€氳繃56绉嶉厤缃噺鍖栧悎鎴愬埌鐪熷疄鏁版嵁鐨勮縼绉诲涔犳晥鐜?
 \end{description}
 
-\subsection{物理指导的合成数据生成原理}
+\subsection{鐗╃悊鎸囧鐨勫悎鎴愭暟鎹敓鎴愬師鐞唥
 \label{subsec:physics_principles}
 
-\subsubsection{WiFi信号传播建模}
-WiFi CSI信号的生成基于经典的无线信道传播理论。设CSI矩阵为$\mathbf{H} \in \mathbb{C}^{N_t \times N_r \times K}$，其中$N_t$和$N_r$分别为发射和接收天线数量，$K$为子载波数量。
+\subsubsection{WiFi淇″彿浼犳挱寤烘ā}
+WiFi CSI淇″彿鐨勭敓鎴愬熀浜庣粡鍏哥殑鏃犵嚎淇￠亾浼犳挱鐞嗚銆傝CSI鐭╅樀涓?\mathbf{H} \in \mathbb{C}^{N_t \times N_r \times K}$锛屽叾涓?N_t$鍜?N_r$鍒嗗埆涓哄彂灏勫拰鎺ユ敹澶╃嚎鏁伴噺锛?K$涓哄瓙杞芥尝鏁伴噺銆?
 
-信道响应建模为：
+淇￠亾鍝嶅簲寤烘ā涓猴細
 \begin{equation}
 \mathbf{H}(f_k) = \sum_{l=1}^{L} \alpha_l e^{-j2\pi f_k \tau_l} \mathbf{a}_r(\theta_{r,l}) \mathbf{a}_t^H(\theta_{t,l})
 \label{eq:channel_model}
 \end{equation}
 
-其中：
+鍏朵腑锛?
 \begin{itemize}
-\item $\alpha_l$：第$l$条路径的复增益
-\item $\tau_l$：第$l$条路径的时延
-\item $\theta_{r,l}, \theta_{t,l}$：接收和发射角度
-\item $\mathbf{a}_r(\cdot), \mathbf{a}_t(\cdot)$：天线阵列响应向量
+\item $\alpha_l$锛氱$l$鏉¤矾寰勭殑澶嶅鐩?
+\item $\tau_l$锛氱$l$鏉¤矾寰勭殑鏃跺欢
+\item $\theta_{r,l}, \theta_{t,l}$锛氭帴鏀跺拰鍙戝皠瑙掑害
+\item $\mathbf{a}_r(\cdot), \mathbf{a}_t(\cdot)$锛氬ぉ绾块樀鍒楀搷搴斿悜閲?
 \end{itemize}
 
-\subsubsection{人体交互建模}
-人体活动对WiFi信号的影响通过动态散射体建模：
+\subsubsection{浜轰綋浜や簰寤烘ā}
+浜轰綋娲诲姩瀵筗iFi淇″彿鐨勫奖鍝嶉€氳繃鍔ㄦ€佹暎灏勪綋寤烘ā锛?
 
 \begin{equation}
 \alpha_l(t) = \alpha_{l,0} + \Delta\alpha_l(t) \cdot f_{\text{activity}}(t)
 \label{eq:human_interaction}
 \end{equation}
 
-其中$f_{\text{activity}}(t)$为活动特征函数，针对不同活动类型（坐立、站立、行走、跌倒）具有不同的时频特征。
+鍏朵腑$f_{\text{activity}}(t)$涓烘椿鍔ㄧ壒寰佸嚱鏁帮紝閽堝涓嶅悓娲诲姩绫诲瀷锛堝潗绔嬨€佺珯绔嬨€佽璧般€佽穼鍊掞級鍏锋湁涓嶅悓鐨勬椂棰戠壒寰併€?
 
-\subsection{Enhanced模型架构设计}
+\subsection{Enhanced妯″瀷鏋舵瀯璁捐}
 \label{subsec:enhanced_architecture}
 
-\subsubsection{整体架构}
-Enhanced模型采用分层特征提取策略，包含以下关键组件：
+\subsubsection{鏁翠綋鏋舵瀯}
+Enhanced妯″瀷閲囩敤鍒嗗眰鐗瑰緛鎻愬彇绛栫暐锛屽寘鍚互涓嬪叧閿粍浠讹細
 
 \begin{enumerate}
-\item \textbf{卷积特征提取层}：多层1D卷积提取时频特征
-\item \textbf{SE注意力模块}：通道级自适应特征重加权
-\item \textbf{时序建模层}：BiLSTM捕获长程时序依赖
-\item \textbf{时序注意力机制}：Query-Key-Value结构建模全局依赖
-\item \textbf{分类输出层}：全连接层输出四类活动概率
+\item \textbf{鍗风Н鐗瑰緛鎻愬彇灞倉锛氬灞?D鍗风Н鎻愬彇鏃堕鐗瑰緛
+\item \textbf{SE娉ㄦ剰鍔涙ā鍧梷锛氶€氶亾绾ц嚜閫傚簲鐗瑰緛閲嶅姞鏉?
+\item \textbf{鏃跺簭寤烘ā灞倉锛欱iLSTM鎹曡幏闀跨▼鏃跺簭渚濊禆
+\item \textbf{鏃跺簭娉ㄦ剰鍔涙満鍒秨锛歈uery-Key-Value缁撴瀯寤烘ā鍏ㄥ眬渚濊禆
+\item \textbf{鍒嗙被杈撳嚭灞倉锛氬叏杩炴帴灞傝緭鍑哄洓绫绘椿鍔ㄦ鐜?
 \end{enumerate}
 
-模型的数学表示为：
+妯″瀷鐨勬暟瀛﹁〃绀轰负锛?
 \begin{align}
 \mathbf{X}_{\text{conv}} &= \text{Conv1D}(\mathbf{X}_{\text{input}}) \\
 \mathbf{X}_{\text{se}} &= \text{SE}(\mathbf{X}_{\text{conv}}) \\
@@ -101,8 +101,8 @@ Enhanced模型采用分层特征提取策略，包含以下关键组件：
 \mathbf{y} &= \text{Classifier}(\mathbf{X}_{\text{attn}})
 \end{align}
 
-\subsubsection{SE注意力机制}
-SE模块的实现采用全局平均池化和两层全连接网络：
+\subsubsection{SE娉ㄦ剰鍔涙満鍒秨
+SE妯″潡鐨勫疄鐜伴噰鐢ㄥ叏灞€骞冲潎姹犲寲鍜屼袱灞傚叏杩炴帴缃戠粶锛?
 
 \begin{align}
 \mathbf{z} &= \text{GAP}(\mathbf{X}) = \frac{1}{T}\sum_{t=1}^{T}\mathbf{X}_t \\
@@ -110,60 +110,60 @@ SE模块的实现采用全局平均池化和两层全连接网络：
 \tilde{\mathbf{X}} &= \mathbf{s} \odot \mathbf{X}
 \end{align}
 
-其中$\mathbf{W}_1 \in \mathbb{R}^{C/r \times C}$和$\mathbf{W}_2 \in \mathbb{R}^{C \times C/r}$为可学习参数，$r$为降维比例。
+鍏朵腑$\mathbf{W}_1 \in \mathbb{R}^{C/r \times C}$鍜?\mathbf{W}_2 \in \mathbb{R}^{C \times C/r}$涓哄彲瀛︿範鍙傛暟锛?r$涓洪檷缁存瘮渚嬨€?
 
-\section{实验协议与评估方法}
+\section{瀹為獙鍗忚涓庤瘎浼版柟娉晑
 \label{sec:protocols}
 
-\subsection{D2协议：合成数据鲁棒性验证}
+\subsection{D2鍗忚锛氬悎鎴愭暟鎹瞾妫掓€ч獙璇亇
 \label{subsec:d2_protocol}
 
-D2协议旨在验证合成数据生成器的鲁棒性和可控性，通过系统性地变化关键物理参数来测试模型性能。
+D2鍗忚鏃ㄥ湪楠岃瘉鍚堟垚鏁版嵁鐢熸垚鍣ㄧ殑椴佹鎬у拰鍙帶鎬э紝閫氳繃绯荤粺鎬у湴鍙樺寲鍏抽敭鐗╃悊鍙傛暟鏉ユ祴璇曟ā鍨嬫€ц兘銆?
 
-\subsubsection{实验设计}
+\subsubsection{瀹為獙璁捐}
 \begin{itemize}
-\item \textbf{配置总数}：540种配置
-\item \textbf{变化参数}：噪声水平、类别重叠度、信道衰落、谐波干扰
-\item \textbf{难度等级}：低、中、高三个等级
-\item \textbf{随机种子}：每种配置8个独立随机种子
-\item \textbf{模型对比}：Enhanced vs CNN vs BiLSTM vs Conformer-lite
+\item \textbf{閰嶇疆鎬绘暟}锛?40绉嶉厤缃?
+\item \textbf{鍙樺寲鍙傛暟}锛氬櫔澹版按骞炽€佺被鍒噸鍙犲害銆佷俊閬撹“钀姐€佽皭娉㈠共鎵?
+\item \textbf{闅惧害绛夌骇}锛氫綆銆佷腑銆侀珮涓変釜绛夌骇
+\item \textbf{闅忔満绉嶅瓙}锛氭瘡绉嶉厤缃?涓嫭绔嬮殢鏈虹瀛?
+\item \textbf{妯″瀷瀵规瘮}锛欵nhanced vs CNN vs BiLSTM vs Conformer-lite
 \end{itemize}
 
-\subsubsection{关键参数设置}
+\subsubsection{鍏抽敭鍙傛暟璁剧疆}
 \begin{table}[h]
 \centering
-\caption{D2协议关键参数配置}
+\caption{D2鍗忚鍏抽敭鍙傛暟閰嶇疆}
 \label{tab:d2_parameters}
 \begin{tabular}{@{}lll@{}}
 \toprule
-参数类别 & 参数名称 & 取值范围 \\
+鍙傛暟绫诲埆 & 鍙傛暟鍚嶇О & 鍙栧€艰寖鍥?\\
 \midrule
-数据规模 & 样本数量 & 20,000 \\
-& 时间长度 & 128 \\
-& 频率维度 & 52 \\
+鏁版嵁瑙勬ā & 鏍锋湰鏁伴噺 & 20,000 \\
+& 鏃堕棿闀垮害 & 128 \\
+& 棰戠巼缁村害 & 52 \\
 \midrule
-训练参数 & 批次大小 & 768 \\
-& 学习率 & $10^{-3}$ \\
-& 优化器 & Adam \\
-& 学习率调度 & Cosine衰减 \\
+璁粌鍙傛暟 & 鎵规澶у皬 & 768 \\
+& 瀛︿範鐜?& $10^{-3}$ \\
+& 浼樺寲鍣?& Adam \\
+& 瀛︿範鐜囪皟搴?& Cosine琛板噺 \\
 \midrule
-难度控制 & 类别重叠度 & 0.3-0.8 \\
-& 噪声标准差 & 0.1-0.6 \\
-& 信道衰落 & 0.2-0.7 \\
-& 标签噪声概率 & 0.05-0.15 \\
+闅惧害鎺у埗 & 绫诲埆閲嶅彔搴?& 0.3-0.8 \\
+& 鍣０鏍囧噯宸?& 0.1-0.6 \\
+& 淇￠亾琛拌惤 & 0.2-0.7 \\
+& 鏍囩鍣０姒傜巼 & 0.05-0.15 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsubsection{实验脚本与实现}
-核心训练脚本 \texttt{src/train\_eval.py} 的关键实现细节：
+\subsubsection{瀹為獙鑴氭湰涓庡疄鐜皚
+鏍稿績璁粌鑴氭湰 \texttt{src/train\_eval.py} 鐨勫叧閿疄鐜扮粏鑺傦細
 
-\begin{lstlisting}[language=Python,caption=D2协议核心训练代码]
-# D2协议训练主循环
+\begin{lstlisting}[language=Python,caption=D2鍗忚鏍稿績璁粌浠ｇ爜]
+# D2鍗忚璁粌涓诲惊鐜?
 def run_d2_experiment(config):
-    """D2协议实验执行函数"""
+    """D2鍗忚瀹為獙鎵ц鍑芥暟"""
     
-    # 1. 数据生成
+    # 1. 鏁版嵁鐢熸垚
     generator = SyntheticCSIGenerator(
         difficulty=config.difficulty,
         noise_std=config.noise_std,
@@ -171,14 +171,14 @@ def run_d2_experiment(config):
         gain_drift_std=config.gain_drift_std
     )
     
-    # 2. 模型初始化
+    # 2. 妯″瀷鍒濆鍖?
     model = get_model(
         name=config.model_name,
         input_shape=(config.T, config.F),
         num_classes=4
     )
     
-    # 3. 训练过程
+    # 3. 璁粌杩囩▼
     optimizer = torch.optim.Adam(
         model.parameters(), 
         lr=config.lr,
@@ -190,7 +190,7 @@ def run_d2_experiment(config):
         T_max=config.epochs
     )
     
-    # 4. 训练循环
+    # 4. 璁粌寰幆
     for epoch in range(config.epochs):
         model.train()
         total_loss = 0
@@ -198,15 +198,15 @@ def run_d2_experiment(config):
         for batch_idx, (data, target) in enumerate(train_loader):
             optimizer.zero_grad()
             
-            # 前向传播
+            # 鍓嶅悜浼犳挱
             output = model(data)
             
-            # 损失计算（包含logit L2正则化）
+            # 鎹熷け璁＄畻锛堝寘鍚玪ogit L2姝ｅ垯鍖栵級
             ce_loss = F.cross_entropy(output, target)
             l2_loss = config.logit_l2 * torch.norm(output, p=2, dim=1).mean()
             loss = ce_loss + l2_loss
             
-            # 反向传播
+            # 鍙嶅悜浼犳挱
             loss.backward()
             optimizer.step()
             
@@ -214,13 +214,13 @@ def run_d2_experiment(config):
         
         scheduler.step()
         
-        # 验证和早停
+        # 楠岃瘉鍜屾棭鍋?
         if epoch % config.val_every == 0:
             val_metrics = evaluate_model(model, val_loader)
             if early_stopping.should_stop(val_metrics[config.early_metric]):
                 break
     
-    # 5. 最终评估
+    # 5. 鏈€缁堣瘎浼?
     test_metrics = comprehensive_evaluation(model, test_loader)
     
     return {
@@ -232,30 +232,30 @@ def run_d2_experiment(config):
     }
 \end{lstlisting}
 
-\subsection{CDAE协议：跨域适应评估}
+\subsection{CDAE鍗忚锛氳法鍩熼€傚簲璇勪及}
 \label{subsec:cdae_protocol}
 
-CDAE（Cross-Domain Adaptation Evaluation）协议专门设计用于评估模型在跨受试者（LOSO）和跨环境（LORO）场景下的泛化能力。
+CDAE锛圕ross-Domain Adaptation Evaluation锛夊崗璁笓闂ㄨ璁＄敤浜庤瘎浼版ā鍨嬪湪璺ㄥ彈璇曡€咃紙LOSO锛夊拰璺ㄧ幆澧冿紙LORO锛夊満鏅笅鐨勬硾鍖栬兘鍔涖€?
 
-\subsubsection{实验设计原理}
-跨域评估的核心在于确保训练集和测试集在关键域属性上完全分离：
+\subsubsection{瀹為獙璁捐鍘熺悊}
+璺ㄥ煙璇勪及鐨勬牳蹇冨湪浜庣‘淇濊缁冮泦鍜屾祴璇曢泦鍦ㄥ叧閿煙灞炴€т笂瀹屽叏鍒嗙锛?
 
 \begin{itemize}
-\item \textbf{LOSO（Leave-One-Subject-Out）}：测试集包含训练中未见过的受试者数据
-\item \textbf{LORO（Leave-One-Room-Out）}：测试集包含训练中未见过的环境配置
+\item \textbf{LOSO锛圠eave-One-Subject-Out锛墋锛氭祴璇曢泦鍖呭惈璁粌涓湭瑙佽繃鐨勫彈璇曡€呮暟鎹?
+\item \textbf{LORO锛圠eave-One-Room-Out锛墋锛氭祴璇曢泦鍖呭惈璁粌涓湭瑙佽繃鐨勭幆澧冮厤缃?
 \end{itemize}
 
-\subsubsection{统计显著性检验}
-为确保结果的统计可靠性，所有CDAE实验都包含：
+\subsubsection{缁熻鏄捐憲鎬ф楠寎
+涓虹‘淇濈粨鏋滅殑缁熻鍙潬鎬э紝鎵€鏈塁DAE瀹為獙閮藉寘鍚細
 
 \begin{enumerate}
-\item \textbf{Bootstrap置信区间}：95\%置信区间计算
-\item \textbf{配对t检验}：模型间性能差异显著性测试
-\item \textbf{效应量计算}：Cohen's d效应量评估实际意义
-\item \textbf{变异系数分析}：模型稳定性量化评估
+\item \textbf{Bootstrap缃俊鍖洪棿}锛?5\%缃俊鍖洪棿璁＄畻
+\item \textbf{閰嶅t妫€楠寎锛氭ā鍨嬮棿鎬ц兘宸紓鏄捐憲鎬ф祴璇?
+\item \textbf{鏁堝簲閲忚绠梷锛欳ohen's d鏁堝簲閲忚瘎浼板疄闄呮剰涔?
+\item \textbf{鍙樺紓绯绘暟鍒嗘瀽}锛氭ā鍨嬬ǔ瀹氭€ч噺鍖栬瘎浼?
 \end{enumerate}
 
-统计检验的数学表示：
+缁熻妫€楠岀殑鏁板琛ㄧず锛?
 \begin{align}
 \text{CI}_{95\%} &= \bar{x} \pm 1.96 \cdot \frac{s}{\sqrt{n}} \\
 t &= \frac{\bar{d}}{s_d/\sqrt{n}} \\
@@ -263,159 +263,159 @@ t &= \frac{\bar{d}}{s_d/\sqrt{n}} \\
 \text{CV} &= \frac{\sigma}{\mu} \times 100\%
 \end{align}
 
-\subsection{STEA协议：Sim2Real迁移效率评估}
+\subsection{STEA鍗忚锛歋im2Real杩佺Щ鏁堢巼璇勪及}
 \label{subsec:stea_protocol}
 
-STEA（Sim2Real Transfer Efficiency Assessment）协议量化评估从合成数据到真实数据的迁移学习效率。
+STEA锛圫im2Real Transfer Efficiency Assessment锛夊崗璁噺鍖栬瘎浼颁粠鍚堟垚鏁版嵁鍒扮湡瀹炴暟鎹殑杩佺Щ瀛︿範鏁堢巼銆?
 
-\subsubsection{迁移学习策略}
-实验采用两阶段迁移学习策略：
+\subsubsection{杩佺Щ瀛︿範绛栫暐}
+瀹為獙閲囩敤涓ら樁娈佃縼绉诲涔犵瓥鐣ワ細
 
 \begin{enumerate}
-\item \textbf{预训练阶段}：在大规模合成数据上预训练模型
-\item \textbf{微调阶段}：在不同比例的真实标注数据上微调
+\item \textbf{棰勮缁冮樁娈祡锛氬湪澶ц妯″悎鎴愭暟鎹笂棰勮缁冩ā鍨?
+\item \textbf{寰皟闃舵}锛氬湪涓嶅悓姣斾緥鐨勭湡瀹炴爣娉ㄦ暟鎹笂寰皟
 \end{enumerate}
 
-微调过程的数学描述：
+寰皟杩囩▼鐨勬暟瀛︽弿杩帮細
 \begin{align}
 \theta_{\text{pretrain}} &= \arg\min_\theta \mathcal{L}_{\text{synthetic}}(\theta) \\
 \theta_{\text{finetune}} &= \arg\min_\theta \mathcal{L}_{\text{real}}(\theta; \theta_{\text{pretrain}})
 \end{align}
 
-其中$\mathcal{L}_{\text{real}}$基于标注比例$p \in \{1\%, 5\%, 10\%, 20\%, 100\%\}$的真实数据子集。
+鍏朵腑$\mathcal{L}_{\text{real}}$鍩轰簬鏍囨敞姣斾緥$p \in \{1\%, 5\%, 10\%, 20\%, 100\%\}$鐨勭湡瀹炴暟鎹瓙闆嗐€?
 
-\section{核心算法实现}
+\section{鏍稿績绠楁硶瀹炵幇}
 \label{sec:algorithms}
 
-\subsection{合成数据生成算法}
+\subsection{鍚堟垚鏁版嵁鐢熸垚绠楁硶}
 \label{subsec:synthetic_generation}
 
-\subsubsection{核心生成流程}
-合成CSI数据生成器的核心实现包含以下步骤：
+\subsubsection{鏍稿績鐢熸垚娴佺▼}
+鍚堟垚CSI鏁版嵁鐢熸垚鍣ㄧ殑鏍稿績瀹炵幇鍖呭惈浠ヤ笅姝ラ锛?
 
 \begin{algorithm}
-\caption{物理指导的CSI数据生成算法}
+\caption{鐗╃悊鎸囧鐨凜SI鏁版嵁鐢熸垚绠楁硶}
 \label{alg:csi_generation}
 \begin{algorithmic}[1]
-\REQUIRE 活动类型 $c \in \{\text{坐立, 站立, 行走, 跌倒}\}$，物理参数 $\phi$
-\ENSURE 合成CSI序列 $\mathbf{X} \in \mathbb{R}^{T \times F}$
-\STATE 初始化基础信道参数：路径数$L$，多普勒频移$f_d$
-\STATE 生成多径传播参数：$\{\alpha_l, \tau_l, \theta_l\}_{l=1}^L$
+\REQUIRE 娲诲姩绫诲瀷 $c \in \{\text{鍧愮珛, 绔欑珛, 琛岃蛋, 璺屽€拀\}$锛岀墿鐞嗗弬鏁?$\phi$
+\ENSURE 鍚堟垚CSI搴忓垪 $\mathbf{X} \in \mathbb{R}^{T \times F}$
+\STATE 鍒濆鍖栧熀纭€淇￠亾鍙傛暟锛氳矾寰勬暟$L$锛屽鏅嫆棰戠Щ$f_d$
+\STATE 鐢熸垚澶氬緞浼犳挱鍙傛暟锛?\{\alpha_l, \tau_l, \theta_l\}_{l=1}^L$
 \FOR{$t = 1$ to $T$}
-    \STATE 计算活动相关的散射变化：$\Delta\alpha_l(t) = f_c(t, \phi)$
+    \STATE 璁＄畻娲诲姩鐩稿叧鐨勬暎灏勫彉鍖栵細$\Delta\alpha_l(t) = f_c(t, \phi)$
     \FOR{$k = 1$ to $F$}
-        \STATE 计算子载波$k$的信道响应：
+        \STATE 璁＄畻瀛愯浇娉?k$鐨勪俊閬撳搷搴旓細
         \STATE $H(t, f_k) = \sum_{l=1}^{L} (\alpha_l + \Delta\alpha_l(t)) e^{-j2\pi f_k \tau_l}$
     \ENDFOR
-    \STATE 添加测量噪声：$\tilde{H}(t, f_k) = H(t, f_k) + \mathcal{N}(0, \sigma^2)$
-    \STATE 提取幅度特征：$X(t, k) = |\tilde{H}(t, f_k)|$
+    \STATE 娣诲姞娴嬮噺鍣０锛?\tilde{H}(t, f_k) = H(t, f_k) + \mathcal{N}(0, \sigma^2)$
+    \STATE 鎻愬彇骞呭害鐗瑰緛锛?X(t, k) = |\tilde{H}(t, f_k)|$
 \ENDFOR
 \RETURN $\mathbf{X}$
 \end{algorithmic}
 \end{algorithm}
 
-\subsubsection{可控性参数}
-为了支持系统性的难度控制和鲁棒性测试，生成器包含以下可调参数：
+\subsubsection{鍙帶鎬у弬鏁皚
+涓轰簡鏀寔绯荤粺鎬х殑闅惧害鎺у埗鍜岄瞾妫掓€ф祴璇曪紝鐢熸垚鍣ㄥ寘鍚互涓嬪彲璋冨弬鏁帮細
 
 \begin{table}[h]
 \centering
-\caption{合成数据生成器可控参数}
+\caption{鍚堟垚鏁版嵁鐢熸垚鍣ㄥ彲鎺у弬鏁皚
 \label{tab:controllable_parameters}
 \begin{tabular}{@{}llll@{}}
 \toprule
-参数类别 & 参数名称 & 物理意义 & 取值范围 \\
+鍙傛暟绫诲埆 & 鍙傛暟鍚嶇О & 鐗╃悊鎰忎箟 & 鍙栧€艰寖鍥?\\
 \midrule
-\multirow{3}{*}{信号质量} & noise\_std & 测量噪声强度 & 0.1-0.6 \\
-& snr\_range & 信噪比范围 & 10-30 dB \\
-& channel\_dropout & 信道衰落概率 & 0.1-0.3 \\
+\multirow{3}{*}{淇″彿璐ㄩ噺} & noise\_std & 娴嬮噺鍣０寮哄害 & 0.1-0.6 \\
+& snr\_range & 淇″櫔姣旇寖鍥?& 10-30 dB \\
+& channel\_dropout & 淇￠亾琛拌惤姒傜巼 & 0.1-0.3 \\
 \midrule
-\multirow{2}{*}{活动特征} & class\_overlap & 类别间重叠度 & 0.3-0.8 \\
-& activity\_strength & 活动信号强度 & 0.5-1.0 \\
+\multirow{2}{*}{娲诲姩鐗瑰緛} & class\_overlap & 绫诲埆闂撮噸鍙犲害 & 0.3-0.8 \\
+& activity\_strength & 娲诲姩淇″彿寮哄害 & 0.5-1.0 \\
 \midrule
-\multirow{3}{*}{环境因素} & multipath\_count & 多径数量 & 3-8 \\
-& doppler\_spread & 多普勒扩展 & 1-5 Hz \\
-& env\_complexity & 环境复杂度 & 0.2-0.8 \\
+\multirow{3}{*}{鐜鍥犵礌} & multipath\_count & 澶氬緞鏁伴噺 & 3-8 \\
+& doppler\_spread & 澶氭櫘鍕掓墿灞?& 1-5 Hz \\
+& env\_complexity & 鐜澶嶆潅搴?& 0.2-0.8 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{实验实施过程}
+\section{瀹為獙瀹炴柦杩囩▼}
 \label{sec:implementation}
 
-\subsection{开发环境与工具链}
+\subsection{寮€鍙戠幆澧冧笌宸ュ叿閾緘
 \label{subsec:development_environment}
 
-\subsubsection{硬件环境}
+\subsubsection{纭欢鐜}
 \begin{itemize}
-\item \textbf{本地开发环境}：Windows 11，Anaconda Python 3.10
-\item \textbf{GPU计算环境}：远程Linux服务器，NVIDIA GPU集群
-\item \textbf{存储系统}：分布式文件系统，支持大规模数据管理
+\item \textbf{鏈湴寮€鍙戠幆澧儅锛歐indows 11锛孉naconda Python 3.10
+\item \textbf{GPU璁＄畻鐜}锛氳繙绋婰inux鏈嶅姟鍣紝NVIDIA GPU闆嗙兢
+\item \textbf{瀛樺偍绯荤粺}锛氬垎甯冨紡鏂囦欢绯荤粺锛屾敮鎸佸ぇ瑙勬ā鏁版嵁绠＄悊
 \end{itemize}
 
-\subsubsection{软件依赖}
+\subsubsection{杞欢渚濊禆}
 \begin{table}[h]
 \centering
-\caption{主要软件依赖与版本}
+\caption{涓昏杞欢渚濊禆涓庣増鏈瑌
 \label{tab:software_dependencies}
 \begin{tabular}{@{}lll@{}}
 \toprule
-软件包 & 版本 & 用途 \\
+杞欢鍖?& 鐗堟湰 & 鐢ㄩ€?\\
 \midrule
-Python & 3.10+ & 主要开发语言 \\
-PyTorch & 1.12+ & 深度学习框架 \\
-NumPy & 1.21+ & 数值计算 \\
-SciPy & 1.8+ & 科学计算 \\
-Matplotlib & 3.5+ & 可视化 \\
-Seaborn & 0.11+ & 统计可视化 \\
-Pandas & 1.4+ & 数据处理 \\
-Scikit-learn & 1.1+ & 机器学习工具 \\
+Python & 3.10+ & 涓昏寮€鍙戣瑷€ \\
+PyTorch & 1.12+ & 娣卞害瀛︿範妗嗘灦 \\
+NumPy & 1.21+ & 鏁板€艰绠?\\
+SciPy & 1.8+ & 绉戝璁＄畻 \\
+Matplotlib & 3.5+ & 鍙鍖?\\
+Seaborn & 0.11+ & 缁熻鍙鍖?\\
+Pandas & 1.4+ & 鏁版嵁澶勭悊 \\
+Scikit-learn & 1.1+ & 鏈哄櫒瀛︿範宸ュ叿 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsubsection{代码组织结构}
-项目采用模块化设计，主要组件包括：
+\subsubsection{浠ｇ爜缁勭粐缁撴瀯}
+椤圭洰閲囩敤妯″潡鍖栬璁★紝涓昏缁勪欢鍖呮嫭锛?
 
-\begin{lstlisting}[language=bash,caption=项目代码结构]
+\begin{lstlisting}[language=bash,caption=椤圭洰浠ｇ爜缁撴瀯]
 paperA/
-├── src/                    # 核心源代码
-│   ├── data_synth.py      # 合成数据生成
-│   ├── data_real.py       # 真实数据加载
-│   ├── models.py          # 模型定义
-│   ├── train_eval.py      # 训练评估
-│   ├── metrics.py         # 评估指标
-│   ├── calibration.py     # 校准分析
-│   └── utils/             # 工具函数
-├── scripts/               # 实验脚本
-│   ├── run_d2_validation.sh
-│   ├── run_cdae_eval.sh
-│   └── run_stea_transfer.sh
-├── results/               # 实验结果
-│   ├── synthetic/         # D2协议结果
-│   ├── cross_domain/      # CDAE协议结果
-│   └── sim2real/          # STEA协议结果
-└── paper/                 # 论文撰写
-    ├── main.tex
-    ├── figures/
-    └── tables/
+鈹溾攢鈹€ src/                    # 鏍稿績婧愪唬鐮?
+鈹?  鈹溾攢鈹€ data_synth.py      # 鍚堟垚鏁版嵁鐢熸垚
+鈹?  鈹溾攢鈹€ data_real.py       # 鐪熷疄鏁版嵁鍔犺浇
+鈹?  鈹溾攢鈹€ models.py          # 妯″瀷瀹氫箟
+鈹?  鈹溾攢鈹€ train_eval.py      # 璁粌璇勪及
+鈹?  鈹溾攢鈹€ metrics.py         # 璇勪及鎸囨爣
+鈹?  鈹溾攢鈹€ calibration.py     # 鏍″噯鍒嗘瀽
+鈹?  鈹斺攢鈹€ utils/             # 宸ュ叿鍑芥暟
+鈹溾攢鈹€ scripts/               # 瀹為獙鑴氭湰
+鈹?  鈹溾攢鈹€ run_d2_validation.sh
+鈹?  鈹溾攢鈹€ run_cdae_eval.sh
+鈹?  鈹斺攢鈹€ run_stea_transfer.sh
+鈹溾攢鈹€ results/               # 瀹為獙缁撴灉
+鈹?  鈹溾攢鈹€ synthetic/         # D2鍗忚缁撴灉
+鈹?  鈹溾攢鈹€ cross_domain/      # CDAE鍗忚缁撴灉
+鈹?  鈹斺攢鈹€ sim2real/          # STEA鍗忚缁撴灉
+鈹斺攢鈹€ paper/                 # 璁烘枃鎾板啓
+    鈹溾攢鈹€ main.tex
+    鈹溾攢鈹€ figures/
+    鈹斺攢鈹€ tables/
 \end{lstlisting}
 
-\subsection{实验执行流程}
+\subsection{瀹為獙鎵ц娴佺▼}
 \label{subsec:execution_workflow}
 
-\subsubsection{D2协议执行}
-D2协议的实验执行采用批处理方式，确保实验的可重复性和系统性：
+\subsubsection{D2鍗忚鎵ц}
+D2鍗忚鐨勫疄楠屾墽琛岄噰鐢ㄦ壒澶勭悊鏂瑰紡锛岀‘淇濆疄楠岀殑鍙噸澶嶆€у拰绯荤粺鎬э細
 
-\begin{lstlisting}[language=bash,caption=D2协议批处理脚本]
+\begin{lstlisting}[language=bash,caption=D2鍗忚鎵瑰鐞嗚剼鏈琞
 #!/bin/bash
-# D2协议批量实验执行脚本
+# D2鍗忚鎵归噺瀹為獙鎵ц鑴氭湰
 
-# 实验参数设置
+# 瀹為獙鍙傛暟璁剧疆
 MODELS=("enhanced" "cnn" "bilstm" "conformer_lite")
 DIFFICULTIES=("low" "mid" "high")
 SEEDS=(0 1 2 3 4 5 6 7)
 
-# 批量实验循环
+# 鎵归噺瀹為獙寰幆
 for model in "${MODELS[@]}"; do
     for difficulty in "${DIFFICULTIES[@]}"; do
         for seed in "${SEEDS[@]}"; do
@@ -433,144 +433,144 @@ for model in "${MODELS[@]}"; do
                 --early_metric macro_f1 \
                 --patience 10
                 
-            # 检查执行状态
+            # 妫€鏌ユ墽琛岀姸鎬?
             if [ $? -eq 0 ]; then
-                echo "✅ Success: $model - $difficulty - seed$seed"
+                echo "鉁?Success: $model - $difficulty - seed$seed"
             else
-                echo "❌ Failed: $model - $difficulty - seed$seed"
+                echo "鉂?Failed: $model - $difficulty - seed$seed"
             fi
         done
     done
 done
 
-# 生成汇总报告
+# 鐢熸垚姹囨€绘姤鍛?
 python scripts/generate_d2_summary.py
 \end{lstlisting}
 
-\section{详细实验结果与分析}
+\section{璇︾粏瀹為獙缁撴灉涓庡垎鏋恾
 \label{sec:detailed_results}
 
-\subsection{D2协议：合成数据验证结果}
+\subsection{D2鍗忚锛氬悎鎴愭暟鎹獙璇佺粨鏋渳
 \label{subsec:d2_results}
 
-\subsubsection{主要性能指标}
-D2协议实验通过540种配置的系统性测试，验证了Enhanced模型在合成数据上的优越性能：
+\subsubsection{涓昏鎬ц兘鎸囨爣}
+D2鍗忚瀹為獙閫氳繃540绉嶉厤缃殑绯荤粺鎬ф祴璇曪紝楠岃瘉浜咵nhanced妯″瀷鍦ㄥ悎鎴愭暟鎹笂鐨勪紭瓒婃€ц兘锛?
 
 \begin{table}[h]
 \centering
-\caption{D2协议主要性能指标（平均值±标准差）}
+\caption{D2鍗忚涓昏鎬ц兘鎸囨爣锛堝钩鍧囧€悸辨爣鍑嗗樊锛墋
 \label{tab:d2_main_results}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-模型 & Macro F1 & Falling F1 & 互误分类率 & ECE \\
+妯″瀷 & Macro F1 & Falling F1 & 浜掕鍒嗙被鐜?& ECE \\
 \midrule
-Enhanced & \textbf{89.2±2.1} & \textbf{87.5±2.8} & \textbf{0.045±0.012} & \textbf{0.023±0.008} \\
-CNN & 84.7±3.2 & 82.1±4.1 & 0.078±0.025 & 0.041±0.015 \\
-BiLSTM & 81.3±4.8 & 78.9±5.2 & 0.095±0.031 & 0.052±0.018 \\
-Conformer-lite & 45.2±38.6 & 41.7±35.9 & 0.287±0.195 & 0.118±0.067 \\
+Enhanced & \textbf{89.2卤2.1} & \textbf{87.5卤2.8} & \textbf{0.045卤0.012} & \textbf{0.023卤0.008} \\
+CNN & 84.7卤3.2 & 82.1卤4.1 & 0.078卤0.025 & 0.041卤0.015 \\
+BiLSTM & 81.3卤4.8 & 78.9卤5.2 & 0.095卤0.031 & 0.052卤0.018 \\
+Conformer-lite & 45.2卤38.6 & 41.7卤35.9 & 0.287卤0.195 & 0.118卤0.067 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsubsection{重叠度-误差因果分析}
-通过线性回归分析，建立了类别重叠度与分类误差之间的因果关系：
+\subsubsection{閲嶅彔搴?璇樊鍥犳灉鍒嗘瀽}
+閫氳繃绾挎€у洖褰掑垎鏋愶紝寤虹珛浜嗙被鍒噸鍙犲害涓庡垎绫昏宸箣闂寸殑鍥犳灉鍏崇郴锛?
 
 \begin{equation}
 \text{Mutual\_Misclassification} = \beta_0 + \beta_1 \cdot \text{Class\_Overlap} + \epsilon
 \label{eq:overlap_regression}
 \end{equation}
 
-回归结果显示Enhanced模型具有最强的抗重叠鲁棒性：
+鍥炲綊缁撴灉鏄剧ずEnhanced妯″瀷鍏锋湁鏈€寮虹殑鎶楅噸鍙犻瞾妫掓€э細
 \begin{itemize}
-\item Enhanced：$\beta_1 = 0.156$ (p < 0.001, $R^2 = 0.847$)
-\item CNN：$\beta_1 = 0.234$ (p < 0.001, $R^2 = 0.762$)  
-\item BiLSTM：$\beta_1 = 0.298$ (p < 0.001, $R^2 = 0.695$)
-\item Conformer-lite：$\beta_1 = 0.512$ (p < 0.001, $R^2 = 0.456$)
+\item Enhanced锛?\beta_1 = 0.156$ (p < 0.001, $R^2 = 0.847$)
+\item CNN锛?\beta_1 = 0.234$ (p < 0.001, $R^2 = 0.762$)  
+\item BiLSTM锛?\beta_1 = 0.298$ (p < 0.001, $R^2 = 0.695$)
+\item Conformer-lite锛?\beta_1 = 0.512$ (p < 0.001, $R^2 = 0.456$)
 \end{itemize}
 
-\subsection{CDAE协议：跨域泛化结果}
+\subsection{CDAE鍗忚锛氳法鍩熸硾鍖栫粨鏋渳
 \label{subsec:cdae_results}
 
-CDAE协议的突破性发现是Enhanced模型实现了完美的跨域一致性。
+CDAE鍗忚鐨勭獊鐮存€у彂鐜版槸Enhanced妯″瀷瀹炵幇浜嗗畬缇庣殑璺ㄥ煙涓€鑷存€с€?
 
-\subsubsection{LOSO协议结果}
-Leave-One-Subject-Out评估结果：
+\subsubsection{LOSO鍗忚缁撴灉}
+Leave-One-Subject-Out璇勪及缁撴灉锛?
 
 \begin{table}[h]
 \centering
-\caption{LOSO协议详细结果}
+\caption{LOSO鍗忚璇︾粏缁撴灉}
 \label{tab:loso_results}
 \begin{tabular}{@{}lccccc@{}}
 \toprule
-模型 & Macro F1 & Falling F1 & 95\% CI & Cohen's d & CV (\%) \\
+妯″瀷 & Macro F1 & Falling F1 & 95\% CI & Cohen's d & CV (\%) \\
 \midrule
-Enhanced & \textbf{83.0±0.1} & \textbf{81.2±0.2} & [82.9, 83.1] & - & \textbf{0.12} \\
-CNN & 76.4±2.8 & 74.1±3.2 & [75.8, 77.0] & 2.14 & 3.67 \\
-BiLSTM & 73.2±3.1 & 71.8±3.4 & [72.5, 73.9] & 2.87 & 4.23 \\
-Conformer-lite & 42.1±38.2 & 39.8±36.1 & [35.2, 49.0] & 1.05 & 90.74 \\
+Enhanced & \textbf{83.0卤0.1} & \textbf{81.2卤0.2} & [82.9, 83.1] & - & \textbf{0.12} \\
+CNN & 76.4卤2.8 & 74.1卤3.2 & [75.8, 77.0] & 2.14 & 3.67 \\
+BiLSTM & 73.2卤3.1 & 71.8卤3.4 & [72.5, 73.9] & 2.87 & 4.23 \\
+Conformer-lite & 42.1卤38.2 & 39.8卤36.1 & [35.2, 49.0] & 1.05 & 90.74 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsubsection{LORO协议结果}
-Leave-One-Room-Out评估验证了环境无关的泛化能力：
+\subsubsection{LORO鍗忚缁撴灉}
+Leave-One-Room-Out璇勪及楠岃瘉浜嗙幆澧冩棤鍏崇殑娉涘寲鑳藉姏锛?
 
 \begin{table}[h]
 \centering
-\caption{LORO协议详细结果}
+\caption{LORO鍗忚璇︾粏缁撴灉}
 \label{tab:loro_results}
 \begin{tabular}{@{}lccccc@{}}
 \toprule
-模型 & Macro F1 & Falling F1 & 95\% CI & Cohen's d & CV (\%) \\
+妯″瀷 & Macro F1 & Falling F1 & 95\% CI & Cohen's d & CV (\%) \\
 \midrule
-Enhanced & \textbf{83.0±0.1} & \textbf{81.2±0.1} & [82.9, 83.1] & - & \textbf{0.12} \\
-CNN & 75.8±3.1 & 73.6±3.5 & [75.1, 76.5] & 2.21 & 4.09 \\
-BiLSTM & 72.9±3.4 & 71.2±3.7 & [72.1, 73.7] & 2.94 & 4.66 \\
-Conformer-lite & 84.1±4.0 & 82.3±4.2 & [83.2, 85.0] & -0.28 & 4.75 \\
+Enhanced & \textbf{83.0卤0.1} & \textbf{81.2卤0.1} & [82.9, 83.1] & - & \textbf{0.12} \\
+CNN & 75.8卤3.1 & 73.6卤3.5 & [75.1, 76.5] & 2.21 & 4.09 \\
+BiLSTM & 72.9卤3.4 & 71.2卤3.7 & [72.1, 73.7] & 2.94 & 4.66 \\
+Conformer-lite & 84.1卤4.0 & 82.3卤4.2 & [83.2, 85.0] & -0.28 & 4.75 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{关键发现}：Enhanced模型在LOSO和LORO协议下实现了完全相同的性能（83.0±0.1\%），体现了卓越的域无关泛化能力。
+\textbf{鍏抽敭鍙戠幇}锛欵nhanced妯″瀷鍦↙OSO鍜孡ORO鍗忚涓嬪疄鐜颁簡瀹屽叏鐩稿悓鐨勬€ц兘锛?3.0卤0.1\%锛夛紝浣撶幇浜嗗崜瓒婄殑鍩熸棤鍏虫硾鍖栬兘鍔涖€?
 
-\subsection{STEA协议：标签效率突破}
+\subsection{STEA鍗忚锛氭爣绛炬晥鐜囩獊鐮磢
 \label{subsec:stea_results}
 
-STEA协议验证了Sim2Real迁移学习的标签效率优势：
+STEA鍗忚楠岃瘉浜哠im2Real杩佺Щ瀛︿範鐨勬爣绛炬晥鐜囦紭鍔匡細
 
 \begin{table}[h]
 \centering
-\caption{STEA协议：不同标注比例下的性能}
+\caption{STEA鍗忚锛氫笉鍚屾爣娉ㄦ瘮渚嬩笅鐨勬€ц兘}
 \label{tab:stea_results}
 \begin{tabular}{@{}lccccc@{}}
 \toprule
-标注比例 & Enhanced & CNN & BiLSTM & Conformer-lite & 全监督参考 \\
+鏍囨敞姣斾緥 & Enhanced & CNN & BiLSTM & Conformer-lite & 鍏ㄧ洃鐫ｅ弬鑰?\\
 \midrule
-1\% & 65.2±2.1 & 58.3±3.4 & 56.7±4.2 & 48.2±12.3 & - \\
-5\% & 75.8±1.5 & 68.9±2.8 & 67.2±3.1 & 58.1±8.7 & - \\
-10\% & 79.4±1.2 & 72.6±2.3 & 71.8±2.7 & 64.3±6.2 & - \\
-20\% & \textbf{82.1±0.8} & 75.1±2.1 & 74.6±2.4 & 68.7±4.8 & - \\
-100\% & 83.3±0.5 & 76.8±1.9 & 76.2±2.1 & 70.4±3.2 & 83.3±0.5 \\
+1\% & 65.2卤2.1 & 58.3卤3.4 & 56.7卤4.2 & 48.2卤12.3 & - \\
+5\% & 75.8卤1.5 & 68.9卤2.8 & 67.2卤3.1 & 58.1卤8.7 & - \\
+10\% & 79.4卤1.2 & 72.6卤2.3 & 71.8卤2.7 & 64.3卤6.2 & - \\
+20\% & \textbf{82.1卤0.8} & 75.1卤2.1 & 74.6卤2.4 & 68.7卤4.8 & - \\
+100\% & 83.3卤0.5 & 76.8卤1.9 & 76.2卤2.1 & 70.4卤3.2 & 83.3卤0.5 \\
 \midrule
-\multicolumn{6}{l}{\textbf{关键指标}} \\
-20\%效率比 & \textbf{98.6\%} & 97.8\% & 97.9\% & 97.6\% & 100\% \\
-成本降低 & \textbf{80\%} & 80\% & 80\% & 80\% & 0\% \\
+\multicolumn{6}{l}{\textbf{鍏抽敭鎸囨爣}} \\
+20\%鏁堢巼姣?& \textbf{98.6\%} & 97.8\% & 97.9\% & 97.6\% & 100\% \\
+鎴愭湰闄嶄綆 & \textbf{80\%} & 80\% & 80\% & 80\% & 0\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{突破性成果}：Enhanced模型仅使用20\%标注数据即可达到98.6\%的全监督性能，实现了80\%的标注成本降低。
+\textbf{绐佺牬鎬ф垚鏋渳锛欵nhanced妯″瀷浠呬娇鐢?0\%鏍囨敞鏁版嵁鍗冲彲杈惧埌98.6\%鐨勫叏鐩戠潱鎬ц兘锛屽疄鐜颁簡80\%鐨勬爣娉ㄦ垚鏈檷浣庛€?
 
-\section{实验脚本与程序清单}
+\section{瀹為獙鑴氭湰涓庣▼搴忔竻鍗晑
 \label{sec:scripts}
 
-\subsection{核心训练脚本}
+\subsection{鏍稿績璁粌鑴氭湰}
 \label{subsec:training_scripts}
 
-\subsubsection{主训练程序}
-\texttt{src/train\_eval.py} 是整个实验系统的核心，包含了模型训练、评估和结果保存的完整流程：
+\subsubsection{涓昏缁冪▼搴弣
+\texttt{src/train\_eval.py} 鏄暣涓疄楠岀郴缁熺殑鏍稿績锛屽寘鍚簡妯″瀷璁粌銆佽瘎浼板拰缁撴灉淇濆瓨鐨勫畬鏁存祦绋嬶細
 
-\begin{lstlisting}[language=Python,caption=训练评估主程序结构]
+\begin{lstlisting}[language=Python,caption=璁粌璇勪及涓荤▼搴忕粨鏋刔
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -580,7 +580,7 @@ import json
 import logging
 from pathlib import Path
 
-# 自定义模块导入
+# 鑷畾涔夋ā鍧楀鍏?
 from data_synth import SyntheticCSIDataset
 from data_real import RealCSIDataset
 from models import get_model
@@ -590,8 +590,8 @@ from utils.logger import setup_logger
 from utils.io import save_results_json
 
 def main():
-    """主训练函数"""
-    # 1. 参数解析
+    """涓昏缁冨嚱鏁?""
+    # 1. 鍙傛暟瑙ｆ瀽
     parser = argparse.ArgumentParser(description='WiFi CSI HAR Training')
     parser.add_argument('--model', type=str, required=True,
                        choices=['enhanced', 'cnn', 'bilstm', 'conformer_lite'])
@@ -607,11 +607,11 @@ def main():
     
     args = parser.parse_args()
     
-    # 2. 随机种子设置
+    # 2. 闅忔満绉嶅瓙璁剧疆
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
     
-    # 3. 数据准备
+    # 3. 鏁版嵁鍑嗗
     if args.data_type == 'synthetic':
         dataset = SyntheticCSIDataset(
             n_samples=args.n_samples,
@@ -624,14 +624,14 @@ def main():
             seed=args.seed
         )
     
-    # 4. 模型初始化
+    # 4. 妯″瀷鍒濆鍖?
     model = get_model(
         name=args.model,
         input_shape=(args.T, args.F),
         num_classes=4
     )
     
-    # 5. 训练过程
+    # 5. 璁粌杩囩▼
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
     
@@ -639,18 +639,18 @@ def main():
     patience_counter = 0
     
     for epoch in range(args.epochs):
-        # 训练阶段
+        # 璁粌闃舵
         model.train()
         train_loss = train_one_epoch(model, train_loader, optimizer, args)
         
-        # 验证阶段
+        # 楠岃瘉闃舵
         model.eval()
         val_metrics = evaluate_model(model, val_loader)
         
-        # 学习率调整
+        # 瀛︿範鐜囪皟鏁?
         scheduler.step()
         
-        # 早停检查
+        # 鏃╁仠妫€鏌?
         if val_metrics[args.early_metric] > best_metric:
             best_metric = val_metrics[args.early_metric]
             patience_counter = 0
@@ -661,15 +661,15 @@ def main():
                 print(f"Early stopping at epoch {epoch}")
                 break
     
-    # 6. 最终评估
+    # 6. 鏈€缁堣瘎浼?
     model.load_state_dict(torch.load(f"checkpoints/{args.model}_best.pth"))
     test_metrics = comprehensive_evaluation(model, test_loader)
     
-    # 7. 校准分析
+    # 7. 鏍″噯鍒嗘瀽
     calibrator = TemperatureScaling()
     calibrated_metrics = calibrator.fit_transform(model, cal_loader, test_loader)
     
-    # 8. 结果保存
+    # 8. 缁撴灉淇濆瓨
     results = {
         'config': vars(args),
         'metrics': test_metrics,
@@ -687,63 +687,63 @@ if __name__ == "__main__":
     main()
 \end{lstlisting}
 
-\subsection{评估指标计算}
+\subsection{璇勪及鎸囨爣璁＄畻}
 \label{subsec:metrics_implementation}
 
-\subsubsection{综合评估函数}
-\texttt{src/metrics.py} 实现了所有关键评估指标的计算：
+\subsubsection{缁煎悎璇勪及鍑芥暟}
+\texttt{src/metrics.py} 瀹炵幇浜嗘墍鏈夊叧閿瘎浼版寚鏍囩殑璁＄畻锛?
 
-\begin{lstlisting}[language=Python,caption=综合评估指标实现]
+\begin{lstlisting}[language=Python,caption=缁煎悎璇勪及鎸囨爣瀹炵幇]
 import numpy as np
 import torch
 from sklearn.metrics import f1_score, confusion_matrix, roc_auc_score
 from scipy import stats
 
 class MetricsCalculator:
-    """综合评估指标计算器"""
+    """缁煎悎璇勪及鎸囨爣璁＄畻鍣?""
     
     def __init__(self, num_classes=4, class_names=None):
         self.num_classes = num_classes
         self.class_names = class_names or ['Sitting', 'Standing', 'Walking', 'Falling']
     
     def compute_all_metrics(self, y_true, y_pred, y_proba):
-        """计算所有评估指标"""
+        """璁＄畻鎵€鏈夎瘎浼版寚鏍?""
         metrics = {}
         
-        # 1. 基础分类指标
+        # 1. 鍩虹鍒嗙被鎸囨爣
         metrics['macro_f1'] = f1_score(y_true, y_pred, average='macro')
         metrics['weighted_f1'] = f1_score(y_true, y_pred, average='weighted')
         
-        # 2. 类别特定F1分数
+        # 2. 绫诲埆鐗瑰畾F1鍒嗘暟
         class_f1 = f1_score(y_true, y_pred, average=None)
         for i, class_name in enumerate(self.class_names):
             metrics[f'{class_name.lower()}_f1'] = class_f1[i]
         
-        # 3. 混淆矩阵分析
+        # 3. 娣锋穯鐭╅樀鍒嗘瀽
         cm = confusion_matrix(y_true, y_pred)
         metrics['confusion_matrix'] = cm.tolist()
         
-        # 4. 互误分类率（类别间混淆）
+        # 4. 浜掕鍒嗙被鐜囷紙绫诲埆闂存贩娣嗭級
         metrics['mutual_misclassification'] = self._compute_mutual_misclass(cm)
         
-        # 5. 校准指标
+        # 5. 鏍″噯鎸囨爣
         metrics['ece'] = self._compute_ece(y_true, y_proba)
         metrics['brier_score'] = self._compute_brier_score(y_true, y_proba)
         metrics['nll'] = self._compute_nll(y_true, y_proba)
         
-        # 6. 可靠性分析
+        # 6. 鍙潬鎬у垎鏋?
         metrics['reliability_curve'] = self._compute_reliability_curve(y_true, y_proba)
         
         return metrics
     
     def _compute_mutual_misclass(self, cm):
-        """计算互误分类率"""
+        """璁＄畻浜掕鍒嗙被鐜?""
         n_total = np.sum(cm)
         off_diagonal = np.sum(cm) - np.trace(cm)
         return off_diagonal / n_total
     
     def _compute_ece(self, y_true, y_proba, n_bins=10):
-        """计算期望校准误差 (ECE)"""
+        """璁＄畻鏈熸湜鏍″噯璇樊 (ECE)"""
         confidences = np.max(y_proba, axis=1)
         predictions = np.argmax(y_proba, axis=1)
         accuracies = (predictions == y_true)
@@ -765,18 +765,18 @@ class MetricsCalculator:
         return ece
     
     def _compute_brier_score(self, y_true, y_proba):
-        """计算Brier分数"""
+        """璁＄畻Brier鍒嗘暟"""
         y_true_onehot = np.eye(self.num_classes)[y_true]
         return np.mean(np.sum((y_proba - y_true_onehot) ** 2, axis=1))
     
     def _compute_nll(self, y_true, y_proba):
-        """计算负对数似然"""
-        epsilon = 1e-15  # 防止log(0)
+        """璁＄畻璐熷鏁颁技鐒?""
+        epsilon = 1e-15  # 闃叉log(0)
         y_proba_clipped = np.clip(y_proba, epsilon, 1 - epsilon)
         return -np.mean(np.log(y_proba_clipped[np.arange(len(y_true)), y_true]))
     
     def _compute_reliability_curve(self, y_true, y_proba, n_bins=10):
-        """计算可靠性曲线数据"""
+        """璁＄畻鍙潬鎬ф洸绾挎暟鎹?""
         confidences = np.max(y_proba, axis=1)
         predictions = np.argmax(y_proba, axis=1)
         accuracies = (predictions == y_true)
@@ -808,24 +808,24 @@ class MetricsCalculator:
         }
 \end{lstlisting}
 
-\section{关键技术创新点}
+\section{鍏抽敭鎶€鏈垱鏂扮偣}
 \label{sec:innovations}
 
-\subsection{物理约束的合成数据生成}
+\subsection{鐗╃悊绾︽潫鐨勫悎鎴愭暟鎹敓鎴恾
 \label{subsec:physics_constrained}
 
-\subsubsection{多径传播建模}
-基于射线追踪理论，建立了精确的多径传播模型：
+\subsubsection{澶氬緞浼犳挱寤烘ā}
+鍩轰簬灏勭嚎杩借釜鐞嗚锛屽缓绔嬩簡绮剧‘鐨勫寰勪紶鎾ā鍨嬶細
 
 \begin{equation}
 h(t, \tau) = \sum_{l=1}^{L(t)} \alpha_l(t) \delta(\tau - \tau_l(t))
 \label{eq:multipath_model}
 \end{equation}
 
-其中$L(t)$为时变路径数量，$\alpha_l(t)$和$\tau_l(t)$分别为第$l$条路径的时变增益和时延。
+鍏朵腑$L(t)$涓烘椂鍙樿矾寰勬暟閲忥紝$\alpha_l(t)$鍜?\tau_l(t)$鍒嗗埆涓虹$l$鏉¤矾寰勭殑鏃跺彉澧炵泭鍜屾椂寤躲€?
 
-\subsubsection{人体散射建模}
-人体活动引起的信道变化通过基于物理的散射模型描述：
+\subsubsection{浜轰綋鏁ｅ皠寤烘ā}
+浜轰綋娲诲姩寮曡捣鐨勪俊閬撳彉鍖栭€氳繃鍩轰簬鐗╃悊鐨勬暎灏勬ā鍨嬫弿杩帮細
 
 \begin{align}
 \alpha_{\text{body}}(t) &= A_0 \cdot \exp(-j\phi_{\text{doppler}}(t)) \cdot W_{\text{activity}}(t) \\
@@ -837,11 +837,11 @@ W_{\text{activity}}(t) &= \begin{cases}
 \end{cases}
 \end{align}
 
-\subsection{Enhanced架构的SE-Attention集成}
+\subsection{Enhanced鏋舵瀯鐨凷E-Attention闆嗘垚}
 \label{subsec:se_attention}
 
-\subsubsection{SE模块数学原理}
-SE模块通过学习通道间的重要性权重，实现自适应特征选择：
+\subsubsection{SE妯″潡鏁板鍘熺悊}
+SE妯″潡閫氳繃瀛︿範閫氶亾闂寸殑閲嶈鎬ф潈閲嶏紝瀹炵幇鑷€傚簲鐗瑰緛閫夋嫨锛?
 
 \begin{align}
 \mathbf{z}_c &= \frac{1}{H \times W} \sum_{i=1}^{H} \sum_{j=1}^{W} \mathbf{X}_{c,i,j} \\
@@ -849,41 +849,41 @@ SE模块通过学习通道间的重要性权重，实现自适应特征选择：
 \tilde{\mathbf{X}}_c &= s_c \cdot \mathbf{X}_c
 \end{align}
 
-其中$\delta$为ReLU激活函数，$\sigma$为Sigmoid函数。
+鍏朵腑$\delta$涓篟eLU婵€娲诲嚱鏁帮紝$\sigma$涓篠igmoid鍑芥暟銆?
 
-\subsubsection{时序注意力机制}
-时序注意力采用scaled dot-product attention：
+\subsubsection{鏃跺簭娉ㄦ剰鍔涙満鍒秨
+鏃跺簭娉ㄦ剰鍔涢噰鐢╯caled dot-product attention锛?
 
 \begin{align}
 \text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) &= \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^T}{\sqrt{d_k}}\right)\mathbf{V} \\
 \mathbf{Q} &= \mathbf{X}\mathbf{W}^Q, \quad \mathbf{K} = \mathbf{X}\mathbf{W}^K, \quad \mathbf{V} = \mathbf{X}\mathbf{W}^V
 \end{align}
 
-\section{实验结果的深度分析}
+\section{瀹為獙缁撴灉鐨勬繁搴﹀垎鏋恾
 \label{sec:deep_analysis}
 
-\subsection{特征空间分析}
+\subsection{鐗瑰緛绌洪棿鍒嗘瀽}
 \label{subsec:feature_space}
 
-通过主成分分析（PCA），我们深入分析了不同模型学习到的特征表示。\figref{fig:pca_comprehensive}展示了完整的七面板特征空间分析。
+閫氳繃涓绘垚鍒嗗垎鏋愶紙PCA锛夛紝鎴戜滑娣卞叆鍒嗘瀽浜嗕笉鍚屾ā鍨嬪涔犲埌鐨勭壒寰佽〃绀恒€俓figref{fig:pca_comprehensive}灞曠ず浜嗗畬鏁寸殑涓冮潰鏉跨壒寰佺┖闂村垎鏋愩€?
 
-\subsubsection{主成分贡献度分解}
-前两个主成分解释了28.3\%的总方差：
+\subsubsection{涓绘垚鍒嗚础鐚害鍒嗚В}
+鍓嶄袱涓富鎴愬垎瑙ｉ噴浜?8.3\%鐨勬€绘柟宸細
 \begin{itemize}
-\item PC1：20.1\%方差，主要捕获时序模式和活动动态特征
-\item PC2：8.2\%方差，主要捕获空间相关性和频域特征
+\item PC1锛?0.1\%鏂瑰樊锛屼富瑕佹崟鑾锋椂搴忔ā寮忓拰娲诲姩鍔ㄦ€佺壒寰?
+\item PC2锛?.2\%鏂瑰樊锛屼富瑕佹崟鑾风┖闂寸浉鍏虫€у拰棰戝煙鐗瑰緛
 \end{itemize}
 
-\subsubsection{跨协议一致性量化}
-通过欧几里得距离量化LOSO-LORO协议间的特征一致性：
+\subsubsection{璺ㄥ崗璁竴鑷存€ч噺鍖杴
+閫氳繃娆у嚑閲屽緱璺濈閲忓寲LOSO-LORO鍗忚闂寸殑鐗瑰緛涓€鑷存€э細
 
 \begin{table}[h]
 \centering
-\caption{特征空间跨协议一致性分析}
+\caption{鐗瑰緛绌洪棿璺ㄥ崗璁竴鑷存€у垎鏋恾
 \label{tab:feature_consistency}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-模型 & LOSO中心 & LORO中心 & 欧式距离 & 相对一致性 \\
+妯″瀷 & LOSO涓績 & LORO涓績 & 娆у紡璺濈 & 鐩稿涓€鑷存€?\\
 \midrule
 Enhanced & (2.55, 1.85) & (2.60, 1.90) & \textbf{0.08} & 100\% \\
 BiLSTM & (1.50, 1.50) & (1.40, 1.30) & 0.23 & 65.2\% \\
@@ -893,29 +893,29 @@ Conformer-lite & (-0.50, 0.20) & (2.00, 2.50) & 4.56 & 1.8\% \\
 \end{tabular}
 \end{table}
 
-\subsection{校准分析与可信度评估}
+\subsection{鏍″噯鍒嗘瀽涓庡彲淇″害璇勪及}
 \label{subsec:calibration_analysis}
 
-\subsubsection{温度缩放校准}
-针对模型输出的过度自信问题，采用温度缩放进行校准：
+\subsubsection{娓╁害缂╂斁鏍″噯}
+閽堝妯″瀷杈撳嚭鐨勮繃搴﹁嚜淇￠棶棰橈紝閲囩敤娓╁害缂╂斁杩涜鏍″噯锛?
 
 \begin{equation}
 p_i^{\text{calibrated}} = \frac{\exp(z_i/T)}{\sum_{j=1}^{C} \exp(z_j/T)}
 \label{eq:temperature_scaling}
 \end{equation}
 
-其中$T > 0$为温度参数，通过验证集优化确定。
+鍏朵腑$T > 0$涓烘俯搴﹀弬鏁帮紝閫氳繃楠岃瘉闆嗕紭鍖栫‘瀹氥€?
 
-\subsubsection{可靠性曲线分析}
-可靠性曲线通过比较预测置信度与实际准确率来评估校准质量：
+\subsubsection{鍙潬鎬ф洸绾垮垎鏋恾
+鍙潬鎬ф洸绾块€氳繃姣旇緝棰勬祴缃俊搴︿笌瀹為檯鍑嗙‘鐜囨潵璇勪及鏍″噯璐ㄩ噺锛?
 
 \begin{table}[h]
 \centering
-\caption{模型校准性能对比}
+\caption{妯″瀷鏍″噯鎬ц兘瀵规瘮}
 \label{tab:calibration_performance}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
-模型 & ECE & Brier分数 & NLL & 最优温度 \\
+妯″瀷 & ECE & Brier鍒嗘暟 & NLL & 鏈€浼樻俯搴?\\
 \midrule
 Enhanced & \textbf{0.0072} & \textbf{0.156} & \textbf{0.342} & 1.12 \\
 CNN & 0.0234 & 0.198 & 0.398 & 1.45 \\
@@ -925,123 +925,123 @@ Conformer-lite & 0.0456 & 0.287 & 0.534 & 2.13 \\
 \end{tabular}
 \end{table}
 
-\section{技术实现细节}
+\section{鎶€鏈疄鐜扮粏鑺倉
 \label{sec:technical_details}
 
-\subsection{合成数据生成器实现}
+\subsection{鍚堟垚鏁版嵁鐢熸垚鍣ㄥ疄鐜皚
 \label{subsec:generator_implementation}
 
-\subsubsection{核心类设计}
-\texttt{src/data\_synth.py} 中的 \texttt{SyntheticCSIGenerator} 类实现了完整的物理指导数据生成：
+\subsubsection{鏍稿績绫昏璁
+\texttt{src/data\_synth.py} 涓殑 \texttt{SyntheticCSIGenerator} 绫诲疄鐜颁簡瀹屾暣鐨勭墿鐞嗘寚瀵兼暟鎹敓鎴愶細
 
-\begin{lstlisting}[language=Python,caption=合成数据生成器核心实现]
+\begin{lstlisting}[language=Python,caption=鍚堟垚鏁版嵁鐢熸垚鍣ㄦ牳蹇冨疄鐜癩
 class SyntheticCSIGenerator:
-    """物理指导的CSI数据生成器"""
+    """鐗╃悊鎸囧鐨凜SI鏁版嵁鐢熸垚鍣?""
     
     def __init__(self, config):
-        self.T = config.T  # 时间步数
-        self.F = config.F  # 频率子载波数
-        self.fc = config.fc  # 载波频率
-        self.bandwidth = config.bandwidth  # 带宽
+        self.T = config.T  # 鏃堕棿姝ユ暟
+        self.F = config.F  # 棰戠巼瀛愯浇娉㈡暟
+        self.fc = config.fc  # 杞芥尝棰戠巼
+        self.bandwidth = config.bandwidth  # 甯﹀
         
-        # 物理参数
-        self.c = 3e8  # 光速
-        self.lambda_c = self.c / self.fc  # 载波波长
+        # 鐗╃悊鍙傛暟
+        self.c = 3e8  # 鍏夐€?
+        self.lambda_c = self.c / self.fc  # 杞芥尝娉㈤暱
         
-        # 活动模板
+        # 娲诲姩妯℃澘
         self.activity_templates = self._initialize_templates()
         
-        # 可控参数
+        # 鍙帶鍙傛暟
         self.noise_std = config.noise_std
         self.class_overlap = config.class_overlap
         self.multipath_count = config.multipath_count
     
     def generate_activity_sequence(self, activity_type, duration=None):
-        """生成特定活动的CSI序列"""
+        """鐢熸垚鐗瑰畾娲诲姩鐨凜SI搴忓垪"""
         duration = duration or self.T
         
-        # 1. 基础信道建模
+        # 1. 鍩虹淇￠亾寤烘ā
         base_channel = self._generate_base_channel()
         
-        # 2. 活动相关的动态变化
+        # 2. 娲诲姩鐩稿叧鐨勫姩鎬佸彉鍖?
         activity_modulation = self._get_activity_modulation(
             activity_type, duration
         )
         
-        # 3. 多径传播效应
+        # 3. 澶氬緞浼犳挱鏁堝簲
         multipath_effects = self._apply_multipath_effects(
             base_channel, activity_modulation
         )
         
-        # 4. 环境噪声和干扰
+        # 4. 鐜鍣０鍜屽共鎵?
         noisy_signal = self._add_environmental_noise(multipath_effects)
         
-        # 5. 特征提取（幅度和相位）
+        # 5. 鐗瑰緛鎻愬彇锛堝箙搴﹀拰鐩镐綅锛?
         csi_features = self._extract_csi_features(noisy_signal)
         
         return csi_features
     
     def _generate_base_channel(self):
-        """生成基础信道响应"""
-        # 基于OFDM的多子载波信道建模
+        """鐢熸垚鍩虹淇￠亾鍝嶅簲"""
+        # 鍩轰簬OFDM鐨勫瀛愯浇娉俊閬撳缓妯?
         frequencies = np.linspace(
             self.fc - self.bandwidth/2,
             self.fc + self.bandwidth/2,
             self.F
         )
         
-        # 初始化信道矩阵
+        # 鍒濆鍖栦俊閬撶煩闃?
         H = np.zeros((self.T, self.F), dtype=complex)
         
-        # 多径分量生成
+        # 澶氬緞鍒嗛噺鐢熸垚
         for path_idx in range(self.multipath_count):
-            # 路径参数
-            delay = np.random.exponential(50e-9)  # 指数分布时延
-            gain = np.random.rayleigh(1.0)  # 瑞利分布增益
-            phase = np.random.uniform(0, 2*np.pi)  # 均匀分布初相
+            # 璺緞鍙傛暟
+            delay = np.random.exponential(50e-9)  # 鎸囨暟鍒嗗竷鏃跺欢
+            gain = np.random.rayleigh(1.0)  # 鐟炲埄鍒嗗竷澧炵泭
+            phase = np.random.uniform(0, 2*np.pi)  # 鍧囧寑鍒嗗竷鍒濈浉
             
-            # 频域响应
+            # 棰戝煙鍝嶅簲
             for f_idx, freq in enumerate(frequencies):
                 H[:, f_idx] += gain * np.exp(-1j * (2*np.pi*freq*delay + phase))
         
         return H
     
     def _get_activity_modulation(self, activity_type, duration):
-        """获取活动相关的调制模式"""
-        t = np.linspace(0, duration/100, duration)  # 假设100Hz采样率
+        """鑾峰彇娲诲姩鐩稿叧鐨勮皟鍒舵ā寮?""
+        t = np.linspace(0, duration/100, duration)  # 鍋囪100Hz閲囨牱鐜?
         
         if activity_type == 'sitting':
-            # 静态活动：微小随机变化
+            # 闈欐€佹椿鍔細寰皬闅忔満鍙樺寲
             modulation = 0.05 * np.random.normal(0, 1, duration)
             
         elif activity_type == 'standing':
-            # 站立：轻微摇摆
+            # 绔欑珛锛氳交寰憞鎽?
             sway_freq = 0.1 + 0.05 * np.random.random()
             modulation = 0.1 * np.sin(2*np.pi*sway_freq*t) + \
                         0.02 * np.random.normal(0, 1, duration)
             
         elif activity_type == 'walking':
-            # 行走：周期性运动
+            # 琛岃蛋锛氬懆鏈熸€ц繍鍔?
             step_freq = 1.2 + 0.4 * np.random.random()  # 1.2-1.6 Hz
             modulation = 0.3 * np.sin(2*np.pi*step_freq*t) + \
                         0.15 * np.sin(2*np.pi*2*step_freq*t) + \
                         0.05 * np.random.normal(0, 1, duration)
             
         elif activity_type == 'falling':
-            # 跌倒：突变信号
+            # 璺屽€掞細绐佸彉淇″彿
             fall_start = duration // 3 + np.random.randint(-duration//6, duration//6)
             fall_duration = duration // 4
             
             modulation = np.zeros(duration)
             modulation[:fall_start] = 0.05 * np.random.normal(0, 1, fall_start)
             
-            # 跌倒过程：指数衰减
+            # 璺屽€掕繃绋嬶細鎸囨暟琛板噺
             fall_indices = slice(fall_start, min(fall_start + fall_duration, duration))
             fall_t = np.arange(len(range(*fall_indices.indices(duration))))
             modulation[fall_indices] = 0.8 * np.exp(-fall_t/10) * \
                                       (1 + 0.2*np.random.normal(0, 1, len(fall_t)))
             
-            # 跌倒后：低幅度随机
+            # 璺屽€掑悗锛氫綆骞呭害闅忔満
             if fall_start + fall_duration < duration:
                 post_fall = slice(fall_start + fall_duration, duration)
                 modulation[post_fall] = 0.02 * np.random.normal(0, 1, 
@@ -1050,18 +1050,18 @@ class SyntheticCSIGenerator:
         return modulation
     
     def _apply_multipath_effects(self, base_channel, activity_mod):
-        """应用多径传播效应"""
-        # 时变信道建模
+        """搴旂敤澶氬緞浼犳挱鏁堝簲"""
+        # 鏃跺彉淇￠亾寤烘ā
         H_dynamic = np.zeros_like(base_channel, dtype=complex)
         
         for t in range(self.T):
-            # 活动相关的路径增益变化
+            # 娲诲姩鐩稿叧鐨勮矾寰勫鐩婂彉鍖?
             path_gain_variation = 1.0 + activity_mod[t]
             
-            # 多普勒频移效应
+            # 澶氭櫘鍕掗绉绘晥搴?
             doppler_shift = self._compute_doppler_shift(activity_mod[t])
             
-            # 应用到各子载波
+            # 搴旂敤鍒板悇瀛愯浇娉?
             for f in range(self.F):
                 H_dynamic[t, f] = base_channel[t, f] * path_gain_variation * \
                                  np.exp(1j * doppler_shift * t)
@@ -1069,55 +1069,55 @@ class SyntheticCSIGenerator:
         return H_dynamic
     
     def _add_environmental_noise(self, signal):
-        """添加环境噪声和干扰"""
-        # 1. 高斯白噪声
+        """娣诲姞鐜鍣０鍜屽共鎵?""
+        # 1. 楂樻柉鐧藉櫔澹?
         noise_power = self.noise_std ** 2
         noise = np.sqrt(noise_power/2) * (
             np.random.normal(0, 1, signal.shape) + 
             1j * np.random.normal(0, 1, signal.shape)
         )
         
-        # 2. 频率选择性衰落
+        # 2. 棰戠巼閫夋嫨鎬ц“钀?
         fading = np.random.rayleigh(1.0, signal.shape)
         
-        # 3. 相位噪声
+        # 3. 鐩镐綅鍣０
         phase_noise = np.random.normal(0, 0.1, signal.shape)
         
-        # 合成噪声信号
+        # 鍚堟垚鍣０淇″彿
         noisy_signal = signal * fading * np.exp(1j * phase_noise) + noise
         
         return noisy_signal
     
     def _extract_csi_features(self, complex_signal):
-        """从复数信号提取CSI特征"""
-        # 幅度特征
+        """浠庡鏁颁俊鍙锋彁鍙朇SI鐗瑰緛"""
+        # 骞呭害鐗瑰緛
         amplitude = np.abs(complex_signal)
         
-        # 相位特征（展开）
+        # 鐩镐綅鐗瑰緛锛堝睍寮€锛?
         phase = np.unwrap(np.angle(complex_signal), axis=1)
         
-        # 组合特征
+        # 缁勫悎鐗瑰緛
         features = np.concatenate([amplitude, phase], axis=1)
         
-        # 标准化
+        # 鏍囧噯鍖?
         features = (features - np.mean(features, axis=0)) / np.std(features, axis=0)
         
         return features
 \end{lstlisting}
 
-\subsection{Enhanced模型详细实现}
+\subsection{Enhanced妯″瀷璇︾粏瀹炵幇}
 \label{subsec:enhanced_implementation}
 
-\subsubsection{完整模型定义}
-\texttt{src/models.py} 中Enhanced模型的完整实现：
+\subsubsection{瀹屾暣妯″瀷瀹氫箟}
+\texttt{src/models.py} 涓璄nhanced妯″瀷鐨勫畬鏁村疄鐜帮細
 
-\begin{lstlisting}[language=Python,caption=Enhanced模型完整实现]
+\begin{lstlisting}[language=Python,caption=Enhanced妯″瀷瀹屾暣瀹炵幇]
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 class SEModule(nn.Module):
-    """Squeeze-and-Excitation模块"""
+    """Squeeze-and-Excitation妯″潡"""
     
     def __init__(self, channels, reduction=16):
         super(SEModule, self).__init__()
@@ -1136,7 +1136,7 @@ class SEModule(nn.Module):
         return x * y.expand_as(x)
 
 class TemporalAttention(nn.Module):
-    """时序注意力模块"""
+    """鏃跺簭娉ㄦ剰鍔涙ā鍧?""
     
     def __init__(self, input_dim, hidden_dim=64):
         super(TemporalAttention, self).__init__()
@@ -1157,18 +1157,18 @@ class TemporalAttention(nn.Module):
         K = self.key(x)    # (B, T, H)
         V = self.value(x)  # (B, T, H)
         
-        # 计算注意力权重
+        # 璁＄畻娉ㄦ剰鍔涙潈閲?
         attention_scores = torch.matmul(Q, K.transpose(-2, -1)) * self.scale
         attention_weights = F.softmax(attention_scores, dim=-1)
         attention_weights = self.dropout(attention_weights)
         
-        # 应用注意力
+        # 搴旂敤娉ㄦ剰鍔?
         attended = torch.matmul(attention_weights, V)
         
         return attended
 
 class EnhancedCSIModel(nn.Module):
-    """Enhanced WiFi CSI HAR模型"""
+    """Enhanced WiFi CSI HAR妯″瀷"""
     
     def __init__(self, input_shape, num_classes=4, hidden_dim=256):
         super(EnhancedCSIModel, self).__init__()
@@ -1176,31 +1176,31 @@ class EnhancedCSIModel(nn.Module):
         T, F = input_shape
         self.input_shape = input_shape
         
-        # 1. 卷积特征提取
+        # 1. 鍗风Н鐗瑰緛鎻愬彇
         self.conv_layers = nn.Sequential(
-            # 第一层卷积
+            # 绗竴灞傚嵎绉?
             nn.Conv1d(F, 32, kernel_size=3, padding=1),
             nn.BatchNorm1d(32),
             nn.ReLU(inplace=True),
             nn.Dropout(0.1),
             
-            # 第二层卷积
+            # 绗簩灞傚嵎绉?
             nn.Conv1d(32, 64, kernel_size=3, padding=1),
             nn.BatchNorm1d(64),
             nn.ReLU(inplace=True),
             nn.Dropout(0.1),
             
-            # 第三层卷积
+            # 绗笁灞傚嵎绉?
             nn.Conv1d(64, 128, kernel_size=3, padding=1),
             nn.BatchNorm1d(128),
             nn.ReLU(inplace=True),
             nn.Dropout(0.1),
         )
         
-        # 2. SE注意力模块
+        # 2. SE娉ㄦ剰鍔涙ā鍧?
         self.se_module = SEModule(128, reduction=16)
         
-        # 3. BiLSTM时序建模
+        # 3. BiLSTM鏃跺簭寤烘ā
         self.bilstm = nn.LSTM(
             input_size=128,
             hidden_size=hidden_dim // 2,
@@ -1210,13 +1210,13 @@ class EnhancedCSIModel(nn.Module):
             dropout=0.1
         )
         
-        # 4. 时序注意力
+        # 4. 鏃跺簭娉ㄦ剰鍔?
         self.temporal_attention = TemporalAttention(
             input_dim=hidden_dim,
             hidden_dim=64
         )
         
-        # 5. 分类器
+        # 5. 鍒嗙被鍣?
         self.classifier = nn.Sequential(
             nn.Linear(64, 32),
             nn.ReLU(inplace=True),
@@ -1224,40 +1224,40 @@ class EnhancedCSIModel(nn.Module):
             nn.Linear(32, num_classes)
         )
         
-        # 初始化权重
+        # 鍒濆鍖栨潈閲?
         self._initialize_weights()
     
     def forward(self, x):
-        # 输入: (batch, time, freq)
+        # 杈撳叆: (batch, time, freq)
         batch_size, seq_len, n_features = x.size()
         
-        # 1. 卷积特征提取
-        # 转置为 (batch, freq, time) for Conv1d
+        # 1. 鍗风Н鐗瑰緛鎻愬彇
+        # 杞疆涓?(batch, freq, time) for Conv1d
         x = x.transpose(1, 2)  # (batch, freq, time)
         conv_features = self.conv_layers(x)  # (batch, 128, time)
         
-        # 2. SE注意力
+        # 2. SE娉ㄦ剰鍔?
         se_features = self.se_module(conv_features)  # (batch, 128, time)
         
-        # 3. 转换为LSTM输入格式
+        # 3. 杞崲涓篖STM杈撳叆鏍煎紡
         lstm_input = se_features.transpose(1, 2)  # (batch, time, 128)
         
-        # 4. BiLSTM时序建模
+        # 4. BiLSTM鏃跺簭寤烘ā
         lstm_output, (h_n, c_n) = self.bilstm(lstm_input)  # (batch, time, hidden_dim)
         
-        # 5. 时序注意力
+        # 5. 鏃跺簭娉ㄦ剰鍔?
         attention_output = self.temporal_attention(lstm_output)  # (batch, time, 64)
         
-        # 6. 全局平均池化
+        # 6. 鍏ㄥ眬骞冲潎姹犲寲
         pooled = torch.mean(attention_output, dim=1)  # (batch, 64)
         
-        # 7. 分类输出
+        # 7. 鍒嗙被杈撳嚭
         logits = self.classifier(pooled)  # (batch, num_classes)
         
         return logits
     
     def _initialize_weights(self):
-        """权重初始化"""
+        """鏉冮噸鍒濆鍖?""
         for m in self.modules():
             if isinstance(m, nn.Conv1d):
                 nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
@@ -1280,27 +1280,27 @@ class EnhancedCSIModel(nn.Module):
                         param.data.fill_(0)
 \end{lstlisting}
 
-\section{实验管理与版本控制}
+\section{瀹為獙绠＄悊涓庣増鏈帶鍒秨
 \label{sec:experiment_management}
 
-\subsection{Git分支管理策略}
+\subsection{Git鍒嗘敮绠＄悊绛栫暐}
 \label{subsec:git_strategy}
 
-项目采用系统化的Git分支管理策略确保实验的可追溯性和版本控制：
+椤圭洰閲囩敤绯荤粺鍖栫殑Git鍒嗘敮绠＄悊绛栫暐纭繚瀹為獙鐨勫彲杩芥函鎬у拰鐗堟湰鎺у埗锛?
 
 \begin{description}
-\item[\texttt{master}] 主分支，包含稳定的发布版本
-\item[\texttt{feat/enhanced-model-and-sweep}] 主要开发分支，包含Enhanced模型和参数扫描实验
-\item[\texttt{results/exp-*}] 实验结果分支，保存特定实验的完整结果
+\item[\texttt{master}] 涓诲垎鏀紝鍖呭惈绋冲畾鐨勫彂甯冪増鏈?
+\item[\texttt{feat/enhanced-model-and-sweep}] 涓昏寮€鍙戝垎鏀紝鍖呭惈Enhanced妯″瀷鍜屽弬鏁版壂鎻忓疄楠?
+\item[\texttt{results/exp-*}] 瀹為獙缁撴灉鍒嗘敮锛屼繚瀛樼壒瀹氬疄楠岀殑瀹屾暣缁撴灉
 \end{description}
 
-\subsection{实验记录与可重现性}
+\subsection{瀹為獙璁板綍涓庡彲閲嶇幇鎬
 \label{subsec:reproducibility}
 
-\subsubsection{实验配置管理}
-所有实验配置都保存为JSON格式，确保完全可重现：
+\subsubsection{瀹為獙閰嶇疆绠＄悊}
+鎵€鏈夊疄楠岄厤缃兘淇濆瓨涓篔SON鏍煎紡锛岀‘淇濆畬鍏ㄥ彲閲嶇幇锛?
 
-\begin{lstlisting}[language=json,caption=实验配置示例]
+\begin{lstlisting}[language=json,caption=瀹為獙閰嶇疆绀轰緥]
 {
   "experiment_name": "D2_Enhanced_Hard_Seed0",
   "protocol": "D2",
@@ -1347,65 +1347,66 @@ class EnhancedCSIModel(nn.Module):
 }
 \end{lstlisting}
 
-\section{结果可视化与分析工具}
+\section{缁撴灉鍙鍖栦笌鍒嗘瀽宸ュ叿}
 \label{sec:visualization}
 
-\subsection{综合性能分析图表}
+\subsection{缁煎悎鎬ц兘鍒嗘瀽鍥捐〃}
 \label{subsec:performance_visualization}
 
-项目开发了完整的可视化工具链，包括：
+椤圭洰寮€鍙戜簡瀹屾暣鐨勫彲瑙嗗寲宸ュ叿閾撅紝鍖呮嫭锛?
 
 \begin{enumerate}
-\item \textbf{性能条形图}：\texttt{scripts/plot\_d1\_bars.py}
-\item \textbf{重叠度散点图}：\texttt{scripts/plot\_d1\_overlap\_scatter.py}
-\item \textbf{跨域性能箱线图}：\texttt{scripts/plot\_d3\_folds\_box.py}
-\item \textbf{标签效率曲线}：\texttt{scripts/plot\_d4\_label\_efficiency.py}
-\item \textbf{可靠性曲线}：\texttt{scripts/plot\_reliability.py}
-\item \textbf{PCA特征空间分析}：\texttt{paper/figures/figure7\_pca\_analysis.py}
+\item \textbf{鎬ц兘鏉″舰鍥緘锛歕texttt{scripts/plot\_d1\_bars.py}
+\item \textbf{閲嶅彔搴︽暎鐐瑰浘}锛歕texttt{scripts/plot\_d1\_overlap\_scatter.py}
+\item \textbf{璺ㄥ煙鎬ц兘绠辩嚎鍥緘锛歕texttt{scripts/plot\_d3\_folds\_box.py}
+\item \textbf{鏍囩鏁堢巼鏇茬嚎}锛歕texttt{scripts/plot\_d4\_label\_efficiency.py}
+\item \textbf{鍙潬鎬ф洸绾縸锛歕texttt{scripts/plot\_reliability.py}
+\item \textbf{PCA鐗瑰緛绌洪棿鍒嗘瀽}锛歕texttt{paper/figures/figure7\_pca\_analysis.py}
 \end{enumerate}
 
-\section{实验结论与贡献总结}
+\section{瀹為獙缁撹涓庤础鐚€荤粨}
 \label{sec:conclusions}
 
-\subsection{主要实验发现}
+\subsection{涓昏瀹為獙鍙戠幇}
 \label{subsec:key_findings}
 
-本实验研究的主要发现包括：
+鏈疄楠岀爺绌剁殑涓昏鍙戠幇鍖呮嫭锛?
 
 \begin{enumerate}
-\item \textbf{物理指导生成的有效性}：合成数据能够有效支持模型训练，避免了过拟合到不现实的数据分布
-\item \textbf{Enhanced架构的优越性}：SE-Attention集成设计实现了最佳的性能和稳定性平衡
-\item \textbf{跨域泛化的突破}：首次实现了完美的LOSO-LORO一致性（83.0±0.1\%）
-\item \textbf{标签效率的革命性提升}：20\%标注数据达到98.6\%全监督性能
-\item \textbf{可信度评估的重要性}：校准分析揭示了模型置信度的质量差异
+\item \textbf{鐗╃悊鎸囧鐢熸垚鐨勬湁鏁堟€锛氬悎鎴愭暟鎹兘澶熸湁鏁堟敮鎸佹ā鍨嬭缁冿紝閬垮厤浜嗚繃鎷熷悎鍒颁笉鐜板疄鐨勬暟鎹垎甯?
+\item \textbf{Enhanced鏋舵瀯鐨勪紭瓒婃€锛歋E-Attention闆嗘垚璁捐瀹炵幇浜嗘渶浣崇殑鎬ц兘鍜岀ǔ瀹氭€у钩琛?
+\item \textbf{璺ㄥ煙娉涘寲鐨勭獊鐮磢锛氶娆″疄鐜颁簡瀹岀編鐨凩OSO-LORO涓€鑷存€э紙83.0卤0.1\%锛?
+\item \textbf{鏍囩鏁堢巼鐨勯潻鍛芥€ф彁鍗噠锛?0\%鏍囨敞鏁版嵁杈惧埌98.6\%鍏ㄧ洃鐫ｆ€ц兘
+\item \textbf{鍙俊搴﹁瘎浼扮殑閲嶈鎬锛氭牎鍑嗗垎鏋愭彮绀轰簡妯″瀷缃俊搴︾殑璐ㄩ噺宸紓
 \end{enumerate}
 
-\subsection{技术贡献与创新}
+\subsection{鎶€鏈础鐚笌鍒涙柊}
 \label{subsec:technical_contributions}
 
 \begin{itemize}
-\item \textbf{理论贡献}：建立了WiFi CSI HAR的物理指导合成数据生成理论框架
-\item \textbf{方法创新}：首次系统性地应用Sim2Real迁移学习到WiFi感知领域
-\item \textbf{架构设计}：提出了SE-Attention集成的Enhanced架构
-\item \textbf{评估协议}：建立了CDAE和STEA评估标准，填补了领域空白
-\item \textbf{工程实现}：开发了完整的实验管理和可视化工具链
+\item \textbf{鐞嗚璐＄尞}锛氬缓绔嬩簡WiFi CSI HAR鐨勭墿鐞嗘寚瀵煎悎鎴愭暟鎹敓鎴愮悊璁烘鏋?
+\item \textbf{鏂规硶鍒涙柊}锛氶娆＄郴缁熸€у湴搴旂敤Sim2Real杩佺Щ瀛︿範鍒癢iFi鎰熺煡棰嗗煙
+\item \textbf{鏋舵瀯璁捐}锛氭彁鍑轰簡SE-Attention闆嗘垚鐨凟nhanced鏋舵瀯
+\item \textbf{璇勪及鍗忚}锛氬缓绔嬩簡CDAE鍜孲TEA璇勪及鏍囧噯锛屽～琛ヤ簡棰嗗煙绌虹櫧
+\item \textbf{宸ョ▼瀹炵幇}锛氬紑鍙戜簡瀹屾暣鐨勫疄楠岀鐞嗗拰鍙鍖栧伐鍏烽摼
 \end{itemize}
 
-\subsection{实际应用价值}
+\subsection{瀹為檯搴旂敤浠峰€紏
 \label{subsec:practical_value}
 
 \begin{description}
-\item[成本降低] 80\%的标注成本降低使WiFi感知技术更易于产业化部署
-\item[泛化能力] 完美的跨域一致性解决了实际部署中的环境适应问题
-\item[部署效率] 标准化的评估协议加速了模型的实际应用验证过程
-\item[可信度保障] 校准分析为安全关键应用提供了可靠性保证
+\item[鎴愭湰闄嶄綆] 80\%鐨勬爣娉ㄦ垚鏈檷浣庝娇WiFi鎰熺煡鎶€鏈洿鏄撲簬浜т笟鍖栭儴缃?
+\item[娉涘寲鑳藉姏] 瀹岀編鐨勮法鍩熶竴鑷存€цВ鍐充簡瀹為檯閮ㄧ讲涓殑鐜閫傚簲闂
+\item[閮ㄧ讲鏁堢巼] 鏍囧噯鍖栫殑璇勪及鍗忚鍔犻€熶簡妯″瀷鐨勫疄闄呭簲鐢ㄩ獙璇佽繃绋?
+\item[鍙俊搴︿繚闅淽 鏍″噯鍒嗘瀽涓哄畨鍏ㄥ叧閿簲鐢ㄦ彁渚涗簡鍙潬鎬т繚璇?
 \end{description}
 
-\section{本章小结}
+\section{鏈珷灏忕粨}
 \label{sec:chapter_summary}
 
-本章详细记录了WiFi CSI人体活动识别的物理指导合成数据生成与可信评估框架的完整实验研究过程。通过D2、CDAE和STEA三个系统性评估协议，验证了物理指导合成数据生成方法的有效性，证明了Enhanced模型架构的优越性，实现了跨域泛化和标签效率的双重突破。
+鏈珷璇︾粏璁板綍浜哤iFi CSI浜轰綋娲诲姩璇嗗埆鐨勭墿鐞嗘寚瀵煎悎鎴愭暟鎹敓鎴愪笌鍙俊璇勪及妗嗘灦鐨勫畬鏁村疄楠岀爺绌惰繃绋嬨€傞€氳繃D2銆丆DAE鍜孲TEA涓変釜绯荤粺鎬ц瘎浼板崗璁紝楠岃瘉浜嗙墿鐞嗘寚瀵煎悎鎴愭暟鎹敓鎴愭柟娉曠殑鏈夋晥鎬э紝璇佹槑浜咵nhanced妯″瀷鏋舵瀯鐨勪紭瓒婃€э紝瀹炵幇浜嗚法鍩熸硾鍖栧拰鏍囩鏁堢巼鐨勫弻閲嶇獊鐮淬€?
 
-实验结果不仅在学术层面推进了WiFi感知领域的方法论进展，更在工程实践层面为WiFi感知技术的产业化部署提供了可行的解决方案。特别是20\%标注数据达到98.6\%全监督性能的突破，为资源受限环境下的部署提供了强有力的支持。
+瀹為獙缁撴灉涓嶄粎鍦ㄥ鏈眰闈㈡帹杩涗簡WiFi鎰熺煡棰嗗煙鐨勬柟娉曡杩涘睍锛屾洿鍦ㄥ伐绋嬪疄璺靛眰闈负WiFi鎰熺煡鎶€鏈殑浜т笟鍖栭儴缃叉彁渚涗簡鍙鐨勮В鍐虫柟妗堛€傜壒鍒槸20\%鏍囨敞鏁版嵁杈惧埌98.6\%鍏ㄧ洃鐫ｆ€ц兘鐨勭獊鐮达紝涓鸿祫婧愬彈闄愮幆澧冧笅鐨勯儴缃叉彁渚涗簡寮烘湁鍔涚殑鏀寔銆?
 
-这些实验工作为后续的研究和应用奠定了坚实的基础，同时建立了可重现、可扩展的实验框架，为领域内的进一步研究提供了有价值的工具和方法。
+杩欎簺瀹為獙宸ヤ綔涓哄悗缁殑鐮旂┒鍜屽簲鐢ㄥ瀹氫簡鍧氬疄鐨勫熀纭€锛屽悓鏃跺缓绔嬩簡鍙噸鐜般€佸彲鎵╁睍鐨勫疄楠屾鏋讹紝涓洪鍩熷唴鐨勮繘涓€姝ョ爺绌舵彁渚涗簡鏈変环鍊肩殑宸ュ叿鍜屾柟娉曘€?
+
