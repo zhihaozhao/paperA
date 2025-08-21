@@ -23,17 +23,23 @@
 % \usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers,sort&compress]{natbib}
-% pdfLaTeX Unicode compatibility
+% [UNICODE-PDFLATEX-BLOCK-BEGIN]
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{newunicodechar}
-\newunicodechar{}{--}
-\newunicodechar{}{---}
-\newunicodechar{}{$\times$}
-\newunicodechar{}{$files{\circ}$}
-\newunicodechar{}{$\pm$}
-\newunicodechar{µ}{$\mu$}
-\DeclareUnicodeCharacter{00A0}{~}
+\DeclareUnicodeCharacter{2013}{--}      % en-dash 
+\DeclareUnicodeCharacter{2014}{---}     % em-dash 
+\DeclareUnicodeCharacter{00D7}{$\times$}% 
+\DeclareUnicodeCharacter{00B0}{$files{\circ}$} % 
+\DeclareUnicodeCharacter{00B1}{$\pm$}   % 
+\DeclareUnicodeCharacter{00B5}{$\mu$}   % µ
+\DeclareUnicodeCharacter{03BC}{$\mu$}   % μ
+\DeclareUnicodeCharacter{2212}{-}       % 
+\DeclareUnicodeCharacter{00A0}{~}       % NBSP
+% [UNICODE-PDFLATEX-BLOCK-END]
+% pdfLaTeX Unicode compatibility
+\newunicodechar{}{$\times
+\newunicodechar{}{$\pm
+\newunicodechar{µ}{$\mu
 \DeclareUnicodeCharacter{FFFD}{}
 
 \usepackage{url}
@@ -1308,3 +1314,4 @@ XXX
 \vskip6pt
 
 \end{document}
+
