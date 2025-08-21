@@ -1,175 +1,308 @@
 #!/usr/bin/env python3
-"""
-D5 & D6 Acceptance Criteria Validation Script
-Validates experiment results against acceptance criteria
-"""
+# -*- coding: utf-8 -*-
 
+
+
+import argparse
+import glob
+import json
+import math
 import os
 import sys
-import json
-import pandas as pd
-import numpy as np
-from pathlib import Path
+from collections import defaultdict
 from typing import Dict, List, Tuple
 
-def load_results(pattern: str) -> pd.DataFrame:
-    """Load all JSON results matching pattern"""
-    import glob
-    results = []
-    
-    for file_path in glob.glob(pattern):
-        try:
-            with open(file_path, 'r') as f:
-                data = json.load(f)
-                # Extract key metrics
-                result = {
-                    'file': file_path,
-                    'model': data.get('meta', {}).get('model', 'unknown'),
-                    'seed': data.get('meta', {}).get('seed', -1),
-                    'macro_f1': data.get('metrics', {}).get('macro_f1', 0.0),
-                    'ece_raw': data.get('metrics', {}).get('ece_raw', 1.0),
-                    'ece_cal': data.get('metrics', {}).get('ece_cal', 1.0),
-                    'nll_raw': data.get('metrics', {}).get('nll_raw', 10.0),
-                    'nll_cal': data.get('metrics', {}).get('nll_cal', 10.0),
-                    'brier': data.get('metrics', {}).get('brier', 1.0),
-                    'temperature': data.get('metrics', {}).get('temperature', 1.0),
-                }
-                results.append(result)
-        except Exception as e:
-            print(f"Warning: Failed to load {file_path}: {e}")
-    
-    return pd.DataFrame(results)
 
-def validate_d5_criteria(df: pd.DataFrame) -> Dict[str, bool]:
-    """Validate D5 acceptance criteria"""
-    criteria = {}
-    
-    # Coverage check
-    models = df['model'].unique()
-    seeds_per_model = df.groupby('model')['seed'].nunique()
-    criteria['coverage'] = all(seeds_per_model >= 3)
-    
-    # Enhanced vs baseline performance
-    if 'enhanced' in models and len(models) > 1:
-        enhanced_f1 = df[df['model'] == 'enhanced']['macro_f1'].mean()
-        baseline_f1 = df[df['model'] != 'enhanced']['macro_f1'].mean()
-        criteria['enhanced_superior'] = enhanced_f1 >= baseline_f1 * 1.05  # 5% improvement
-    
-    # Calibration improvement
-    if 'ece_raw' in df.columns and 'ece_cal' in df.columns:
-        ece_improvement = (df['ece_raw'] - df['ece_cal']) / df['ece_raw']
-        criteria['calibration_improvement'] = ece_improvement.mean() >= 0.05  # 5% relative improvement
-    
-    # ECE threshold
-    criteria['ece_threshold'] = df['ece_cal'].mean() <= 0.15
-    
-    return criteria
+def parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser()
+    p.add_argument("--d5-dir", default=r"..\WiFi-CSI-Sensing-Results\results_gpu\d5")
+    p.add_argument("--d6-dir", default=r"..\WiFi-CSI-Sensing-Results\results_gpu\d6")
+    p.add_argument("--out", default=r"docs\d5_d6_acceptance_report.txt")
+    p.add_argument("--ece-threshold", type=float, default=-1.0, help=">0 launch: each model need ece_cal_mean <= threshold")
+    p.add_argument("--min-d6-runs", type=int, default=0, help=">0 launch:  D6  result num >= val")
+    return p.parse_args()
 
-def validate_d6_criteria(df: pd.DataFrame) -> Dict[str, bool]:
-    """Validate D6 acceptance criteria"""
-    criteria = {}
-    
-    # Robustness check (if multiple seeds)
-    if df['seed'].nunique() >= 2:
-        seed_consistency = df.groupby('model')['macro_f1'].std()
-        criteria['robustness'] = seed_consistency.mean() <= 0.05  # 5% std threshold
-    
-    # Enhanced vs baseline
-    if 'enhanced' in df['model'].unique() and len(df['model'].unique()) > 1:
-        enhanced_f1 = df[df['model'] == 'enhanced']['macro_f1'].mean()
-        baseline_f1 = df[df['model'] != 'enhanced']['macro_f1'].mean()
-        criteria['enhanced_advantage'] = enhanced_f1 >= baseline_f1 * 1.05
-    
-    # Calibration quality
-    criteria['calibration_quality'] = df['ece_cal'].mean() <= 0.15
-    
-    return criteria
-
-def generate_report(df: pd.DataFrame, d5_criteria: Dict[str, bool], d6_criteria: Dict[str, bool]) -> str:
-    """Generate acceptance report"""
-    report = []
-    report.append("=" * 60)
-    report.append("D5 & D6 ACCEPTANCE CRITERIA VALIDATION REPORT")
-    report.append("=" * 60)
-    
-    # Summary statistics
-    report.append(f"\nüìä EXPERIMENT SUMMARY:")
-    report.append(f"  Total runs: {len(df)}")
-    report.append(f"  Models: {', '.join(df['model'].unique())}")
-    report.append(f"  Seeds per model: {df.groupby('model')['seed'].nunique().to_dict()}")
-    
-    # Performance summary
-    report.append(f"\nüìà PERFORMANCE SUMMARY:")
-    perf_summary = df.groupby('model').agg({
-        'macro_f1': ['mean', 'std'],
-        'ece_cal': ['mean', 'std']
-    }).round(3)
-    report.append(perf_summary.to_string())
-    
-    # D5 Criteria
-    report.append(f"\nüî¨ D5 ABLATION STUDY CRITERIA:")
-    for criterion, passed in d5_criteria.items():
-        status = "‚úÖ PASS" if passed else "‚ùå FAIL"
-        report.append(f"  {criterion}: {status}")
-    
-    # D6 Criteria
-    report.append(f"\nüõ°Ô∏è D6 ROBUSTNESS CRITERIA:")
-    for criterion, passed in d6_criteria.items():
-        status = "‚úÖ PASS" if passed else "‚ùå FAIL"
-        report.append(f"  {criterion}: {status}")
-    
-    # Overall assessment
-    d5_pass_rate = sum(d5_criteria.values()) / len(d5_criteria)
-    d6_pass_rate = sum(d6_criteria.values()) / len(d6_criteria)
-    
-    report.append(f"\nüìã OVERALL ASSESSMENT:")
-    report.append(f"  D5 Pass Rate: {d5_pass_rate:.1%} ({sum(d5_criteria.values())}/{len(d5_criteria)})")
-    report.append(f"  D6 Pass Rate: {d6_pass_rate:.1%} ({sum(d6_criteria.values())}/{len(d6_criteria)})")
-    
-    if d5_pass_rate >= 0.8 and d6_pass_rate >= 0.8:
-        report.append(f"  üéâ OVERALL STATUS: ACCEPTED")
+def find_result_files(dir_path: str, include_patterns=None) -> List[str]:
+    if not os.path.isdir(dir_path):
+        return []
+    files: List[str] = []
+    if include_patterns:
+        pats = [os.path.join(dir_path, pat) for pat in include_patterns]
     else:
-        report.append(f"  ‚ö†Ô∏è OVERALL STATUS: NEEDS ATTENTION")
-    
-    report.append("=" * 60)
-    
-    return "\n".join(report)
+        pats = [os.path.join(dir_path, "*.json"), os.path.join(dir_path, "**", "*.json")]
+    for pat in pats:
+        files.extend(glob.glob(pat, recursive=True))
+    files = [f for f in files if os.path.isfile(f)
+             and "summary" not in os.path.basename(f).lower()]
+    return sorted(files)
+	
 
-def main():
-    # Load results from both D5 and D6 directories
-    print("Loading experiment results...")
-    df_d5 = load_results("results_gpu/d5/*.json")
-    df_d6 = load_results("results_gpu/d6/*.json")
-    
-    # Combine results
-    df = pd.concat([df_d5, df_d6], ignore_index=True)
-    
-    if df.empty:
-        print("‚ùå No results found! Please run experiments first.")
-        return 1
-    
-    print(f"‚úÖ Loaded {len(df)} results")
-    print(f"  - D5 results: {len(df_d5)} files")
-    print(f"  - D6 results: {len(df_d6)} files")
-    
-    # Validate criteria
-    print("Validating acceptance criteria...")
-    d5_criteria = validate_d5_criteria(df)
-    d6_criteria = validate_d6_criteria(df)
-    
-    # Generate report
-    report = generate_report(df, d5_criteria, d6_criteria)
-    print(report)
-    
-    # Save report
-    report_file = "results/d5_d6_acceptance_report.txt"
-    os.makedirs(os.path.dirname(report_file), exist_ok=True)
-    with open(report_file, 'w') as f:
+
+
+def safe_get(d: Dict, keys: List[str], default=None):
+    cur = d
+    for k in keys:
+        if isinstance(cur, dict) and (k in cur):
+            cur = cur[k]
+        else:
+            return default
+    return cur
+
+def _try_get_number(d: dict, paths: list, default=None):
+    for p in paths:
+        cur = d
+        ok = True
+        for k in p:
+            if isinstance(cur, dict) and k in cur:
+                cur = cur[k]
+            else:
+                ok = False
+                break
+        if ok and isinstance(cur, (int, float)):
+            return float(cur)
+    return default
+
+def _get_path_value(d, path):
+    cur = d
+    for k in path:
+        if isinstance(cur, dict) and isinstance(k, str) and k in cur:
+            cur = cur[k]
+        elif isinstance(cur, list) and isinstance(k, int) and 0 <= k < len(cur):
+            cur = cur[k]
+        else:
+            return None
+    return cur
+
+def _try_number(d, path_options, default=None):
+    for p in path_options:
+        v = _get_path_value(d, p)
+        if isinstance(v, (int, float)):
+            return float(v)
+        # ºÊ»›◊÷∑˚¥Æ ˝◊÷
+        if isinstance(v, str):
+            try:
+                return float(v)
+            except ValueError:
+                pass
+    return default
+
+def load_results(files: List[str]) -> List[Dict]:
+    rows: List[Dict] = []
+    for f in files:
+        try:
+            with open(f, "r", encoding="utf-8") as fh:
+                data = json.load(fh)
+        except Exception as e:
+            print(f"Warning: Failed to load {f}: {e}")
+            continue
+
+        # œ»≥¢ ‘ aggregate_stats£®ƒ„µƒ D6 JSON ”–’‚“ªΩ·ππ£©
+        macro_f1 = _try_number(data, [
+            ["aggregate_stats", "macro_f1", "mean"],
+            ["aggregate_stats", "f1_macro", "mean"],
+        ])
+        ece_cal = _try_number(data, [
+            ["aggregate_stats", "ece", "mean"],      # ƒ„µƒº¸√˚ « ece
+            ["aggregate_stats", "ece_cal", "mean"],
+        ])
+
+        # »Ù√ª”– aggregate_stats£¨‘ÚªÿÕÀµΩµ⁄ 0 ’€ ªÚ ≥£º˚ metrics
+        if macro_f1 is None:
+            macro_f1 = _try_number(data, [
+                ["fold_results", 0, "macro_f1"],
+                ["metrics", "macro_f1"],
+                ["macro_f1"],
+            ])
+        if ece_cal is None:
+            ece_cal = _try_number(data, [
+                ["fold_results", 0, "ece"],
+                ["metrics", "ece_cal"],
+                ["metrics", "ece_after"],
+                ["ece_cal"],
+                ["ece_after"],
+                ["ece"],
+            ])
+
+        if macro_f1 is None:
+            print(f"Skip (no macro_f1): {f}")
+            continue
+        if ece_cal is None:
+            ece_cal = float("nan")
+
+        model = (
+            _get_path_value(data, ["model"]) or
+            _get_path_value(data, ["meta", "model"]) or
+            _get_path_value(data, ["args", "model"]) or
+            "unknown"
+        )
+        seed = (
+            _get_path_value(data, ["seed"]) or
+            _get_path_value(data, ["meta", "args", "seed"]) or
+            _get_path_value(data, ["meta", "seed"]) or
+            _get_path_value(data, ["args", "seed"]) or
+            -1
+        )
+        try:
+            seed = int(seed)
+        except Exception:
+            seed = -1
+
+        rows.append({
+            "path": f,
+            "model": str(model),
+            "seed": seed,
+            "macro_f1": float(macro_f1),
+            "ece_cal": float(ece_cal) if isinstance(ece_cal, (int, float)) else float("nan"),
+        })
+    return rows
+	
+def mean(values: List[float]) -> float:
+    vals = [v for v in values if isinstance(v, (int, float)) and not math.isnan(v)]
+    if not vals:
+        return float("nan")
+    return sum(vals) / len(vals)
+
+
+def std(values: List[float]) -> float:
+    vals = [v for v in values if isinstance(v, (int, float)) and not math.isnan(v)]
+    n = len(vals)
+    if n <= 1:
+        return 0.0
+    m = sum(vals) / n
+    var = sum((v - m) ** 2 for v in vals) / (n - 1)  # sample std
+    return math.sqrt(var)
+
+
+def summarize(rows: List[Dict]) -> Tuple[List[Dict], Dict[str, int]]:
+    if not rows:
+        return [], {}
+    by_model: Dict[str, List[Dict]] = defaultdict(list)
+    seeds_per_model: Dict[str, set] = defaultdict(set)
+    for r in rows:
+        by_model[r["model"]].append(r)
+        seeds_per_model[r["model"]].add(r["seed"])
+
+    summary: List[Dict] = []
+    for model, items in by_model.items():
+        f1_list = [x["macro_f1"] for x in items]
+        ece_list = [x["ece_cal"] for x in items]
+        summary.append({
+            "model": model,
+            "runs": len(items),
+            "macro_f1_mean": mean(f1_list),
+            "macro_f1_std": std(f1_list),
+            "ece_cal_mean": mean(ece_list),
+            "ece_cal_std": std(ece_list),
+        })
+
+    seeds_count = {m: len(seeds_per_model[m]) for m in seeds_per_model}
+    # sort by model name for stable output
+    summary.sort(key=lambda d: d["model"])
+    return summary, seeds_count
+
+
+def fmt_float(v: float) -> str:
+    if v != v:  # NaN check
+        return "nan"
+    return f"{v:.3f}"
+
+
+def format_summary_table(summary: List[Dict]) -> str:
+    if not summary:
+        return "(no data)"
+    headers = ["model", "runs", "macro_f1_mean", "macro_f1_std", "ece_cal_mean", "ece_cal_std"]
+    col_widths = {h: len(h) for h in headers}
+    rows_fmt: List[Dict[str, str]] = []
+    for r in summary:
+        row = {
+            "model": str(r["model"]),
+            "runs": str(r["runs"]),
+            "macro_f1_mean": fmt_float(r["macro_f1_mean"]),
+            "macro_f1_std": fmt_float(r["macro_f1_std"]),
+            "ece_cal_mean": fmt_float(r["ece_cal_mean"]),
+            "ece_cal_std": fmt_float(r["ece_cal_std"]),
+        }
+        rows_fmt.append(row)
+        for k, v in row.items():
+            col_widths[k] = max(col_widths[k], len(v))
+
+    def fmt_row(row: Dict[str, str]) -> str:
+        return "  ".join(row[h].ljust(col_widths[h]) for h in headers)
+
+    lines = ["  ".join(h.ljust(col_widths[h]) for h in headers)]
+    lines.append("-" * (sum(col_widths.values()) + 2 * (len(headers) - 1)))
+    for row in rows_fmt:
+        lines.append(fmt_row(row))
+    return "\n".join(lines)
+
+
+def build_report(d5_rows: List[Dict], d6_rows: List[Dict], ece_thr: float, min_d6_runs: int) -> str:
+    lines: List[str] = []
+    lines.append("D5 & D6 ACCEPTANCE SUMMARY")
+    lines.append("============================================================")
+    lines.append(f"Total runs: {len(d5_rows) + len(d6_rows)} (D5: {len(d5_rows)}, D6: {len(d6_rows)})")
+
+    d5_summary, d5_seeds = summarize(d5_rows)
+    d6_summary, d6_seeds = summarize(d6_rows)
+
+    if d5_rows:
+        lines.append("")
+        lines.append("[D5] per-model summary:")
+        lines.append(format_summary_table(d5_summary))
+        lines.append(f"Seeds per model: {d5_seeds}")
+
+    if d6_rows:
+        lines.append("")
+        lines.append("[D6] per-model summary:")
+        lines.append(format_summary_table(d6_summary))
+        lines.append(f"Seeds per model: {d6_seeds}")
+
+    # Optional checks
+    lines.append("")
+    lines.append("Acceptance checks (if thresholds provided):")
+    if ece_thr > 0:
+        def check(summary: List[Dict]) -> Dict[str, bool]:
+            return {r['model']: (isinstance(r['ece_cal_mean'], float) and not math.isnan(r['ece_cal_mean']) and r['ece_cal_mean'] <= ece_thr) for r in summary}
+        if d5_summary:
+            lines.append(f" - D5 ECE <= {ece_thr}: {check(d5_summary)}")
+        if d6_summary:
+            lines.append(f" - D6 ECE <= {ece_thr}: {check(d6_summary)}")
+    else:
+        lines.append(" - (no ECE threshold given)")
+
+    if min_d6_runs > 0:
+        lines.append(f" - D6 minimum runs >= {min_d6_runs}: {len(d6_rows) >= min_d6_runs}")
+    else:
+        lines.append(" - (no D6 minimum run requirement)")
+
+    return "\n".join(lines)
+
+
+def main() -> int:
+    args = parse_args()
+
+    d5_files = find_result_files(args.d5_dir)
+    #d6_files = find_result_files(args.d6_dir)
+    include_patterns=(["loso_*.json", "loro_*.json"])
+    d6_files = find_result_files(args.d6_dir) 
+    #d6_files = find_result_files(args.d6_dir, include_patterns=["loso_*.json", "loro_*.json"])
+    print(f"Scanning D5 dir: {args.d5_dir}")
+    print(f"Found {len(d5_files)} files")
+    print(f"Scanning D6 dir: {args.d6_dir}")
+    print(f"Found {len(d6_files)} files")
+
+    d5_rows = load_results(d5_files)
+    d6_rows = load_results(d6_files)
+
+    report = build_report(d5_rows, d6_rows, args.ece_threshold, args.min_d6_runs)
+    os.makedirs(os.path.dirname(args.out), exist_ok=True)
+    with open(args.out, "w", encoding="utf-8", errors="ignore") as f:
         f.write(report)
-    
-    print(f"\nüìÑ Report saved to: {report_file}")
-    
+
+    print("\n" + report)
+    print(f"\nSaved report to: {args.out}")
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())

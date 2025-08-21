@@ -1,0 +1,26 @@
+D5 & D6 ACCEPTANCE SUMMARY
+============================================================
+Total runs: 128 (D5: 40, D6: 88)
+
+[D5] per-model summary:
+model           runs  macro_f1_mean  macro_f1_std  ece_cal_mean  ece_cal_std
+----------------------------------------------------------------------------
+bilstm          10    0.542          0.087         0.082         0.013      
+cnn             10    0.897          0.056         0.028         0.008      
+conformer_lite  10    0.908          0.072         0.027         0.014      
+enhanced        10    0.978          0.031         0.011         0.012      
+Seeds per model: {'bilstm': 5, 'cnn': 5, 'conformer_lite': 5, 'enhanced': 5}
+
+[D6] per-model summary:
+model           runs  macro_f1_mean  macro_f1_std  ece_cal_mean  ece_cal_std
+----------------------------------------------------------------------------
+bilstm          20    0.802          0.040         0.026         0.025      
+cnn             24    0.868          0.056         0.006         0.003      
+conformer_lite  20    0.634          0.332         0.019         0.018      
+enhanced        24    0.866          0.061         0.005         0.003      
+Seeds per model: {'bilstm': 5, 'cnn': 5, 'conformer_lite': 5, 'enhanced': 5}
+
+Acceptance checks (if thresholds provided):
+ - D5 ECE <= 0.03: {'bilstm': False, 'cnn': True, 'conformer_lite': True, 'enhanced': True}
+ - D6 ECE <= 0.03: {'bilstm': True, 'cnn': True, 'conformer_lite': True, 'enhanced': True}
+ - D6 minimum runs >= 16: True
