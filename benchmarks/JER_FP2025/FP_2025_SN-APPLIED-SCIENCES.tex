@@ -24,12 +24,13 @@
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers,sort&compress]{natbib}
 
+\usepackage{url}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}  % Use Input in the format of Algorithm  
 \renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm 
 
-\usepackage{threeparttable}%表格下面加标注
+\usepackage{threeparttable}%表格下面加标�?
 \usepackage{rotating}
 
 % Attempt to fix the \pdf@box issue: load graphicx with pdftex driver and color
@@ -42,13 +43,13 @@
 \usepackage{array, longtable, tabularx}
 %\usepackage{caption}
 
-\usepackage{cleveref} % 确保 cleveref 已加载
-\crefname{figure}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
-\Crefname{figure}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
-\crefname{table}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
-\Crefname{table}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
-\crefname{section}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
-\Crefname{section}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
+\usepackage{cleveref} % 确保 cleveref 已加�?
+\crefname{figure}{}{}% 设置 \cref �?figure 的引用格式为空（只留编号�?
+\Crefname{figure}{}{}% 设置 \Cref �?figure 的引用格式为空（只留编号�?
+\crefname{table}{}{}% 设置 \cref �?figure 的引用格式为空（只留编号�?
+\Crefname{table}{}{}% 设置 \Cref �?figure 的引用格式为空（只留编号�?
+\crefname{section}{}{}% 设置 \cref �?figure 的引用格式为空（只留编号�?
+\Crefname{section}{}{}% 设置 \Cref �?figure 的引用格式为空（只留编号�?
 \usepackage{float}
 \usepackage{array, longtable, tabularx}
 
@@ -81,7 +82,7 @@
 % \bookmark[named = FirstPage]{A in-depth Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
 %**************** If the title is short, stay on the first line use [mode = short_title] otherwise ******************
 %***************************************** use [mode = title] below ***************************************
-\title [mode = title]{Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots: Quantitative Synthesis, Gaps, and Deployment Roadmap}
+\title [mode = title]{Physics-Guided Synthetic WiFi CSI for Trustworthy HAR: Quantitative Synthesis and Practical Pathways}
 
 % Title mark notes if desired
 %\tnotemark[1,2]
@@ -183,7 +184,7 @@
 
 \begin{abstract} 
 This review synthesizes recent advances in autonomous fruit-picking robots with a focus on visual perception, path planning, and motion control. Following PRISMA guidelines, we systematically analyzed 137 studies published between 2015 and 2024. We critically compare learning-based perception approaches—especially YOLO- and R-CNN–family methods—under orchard-specific conditions (occlusion, variable lighting, small targets), and quantify trade-offs in accuracy and efficiency across representative platforms. We further examine perception-to-action integration for motion planning and control, summarizing success rate, harvest cycle time, and damage rate reported in field and greenhouse trials. Remaining challenges include robust multi-source data fusion and gentle manipulation at scale. We conclude with a research agenda and benchmark recommendations to accelerate reliable deployment.
-%The advent of autonomous fruit-picking robots has precipitated a paradigm shift in contemporary agriculture, with the potential to address the prevailing labour shortage and enhance harvesting efficiency. This review in-depth surveys recent progress in fruit-picking robotics, focusing on vision-based detection, learning-based strategies, arm motion planning, and collision avoidance. Employing a Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA)-based systematic methodology, over 130 influential studies from 2015–2024 were analysed. Recent advances in vision-based detection, including multi-sensor fusion and 3D data acquisition, have enhanced robots' ability to localise and identify fruits under complex agricultural conditions. 
+%The advent of autonomous fruit-picking robots has precipitated a paradigm shift in contemporary agriculture, with the potential to address the prevailing labour shortage and enhance harvesting efficiency. This review in-depth surveys recent progress in fruit-picking robotics, focusing on vision-based detection, learning-based strategies, arm motion planning, and collision avoidance. Employing a Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA)-based systematic methodology, over 130 influential studies from 2015�?024 were analysed. Recent advances in vision-based detection, including multi-sensor fusion and 3D data acquisition, have enhanced robots' ability to localise and identify fruits under complex agricultural conditions. 
 %Deep learning (DL) models, such as Regions with Convolutional Neural Networks (R-CNN) and You Only Look Once (YOLO) series, have demonstrated efficacy in enhancing real-time detection performance, particularly under occlusion and variable lighting.
 %The efficacy of deep learning (DL) models, such as the Regions with Convolutional Neural Networks (R-CNN) and You Only Look Once (YOLO) series, has been demonstrated in enhancing real-time detection performance, particularly in scenarios where there is occlusion and variable lighting. 
 Explicitly, learning-based approaches, including transfer learning and reinforcement learning (e.g., Deep Deterministic Policy Gradient (DDPG)), have facilitated the generalizability of robotic arm motion planning for collision-free harvesting. Innovative path-planning algorithms and robust control strategies further enable autonomous robots to navigate unstructured environments and compensate for real-time disturbances, increasing system reliability. 
@@ -486,9 +487,9 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \hline
 \cite{wang2016localisation} & 2016 & Binocular CCD + Laser rangefinder & Litchi & Unstructured & Visual features (RGB) + spatial calibration (laser) & High adaptability to illumination variations and occlusion (94\% matching rate for partial occlusion) & Processing time (3213 ms) \\ 
 \hline
-\cite{si2015location} & 2015 & Binocular CMOS + Laser rangefinder & Apple & Unstructured & Color segmentation (RGB) + depth calibration (laser) & Robust under varying light (97.9\% cloudy, 89.5\% backlight) & Limited to 400–1500 mm range  \\ 
+\cite{si2015location} & 2015 & Binocular CMOS + Laser rangefinder & Apple & Unstructured & Color segmentation (RGB) + depth calibration (laser) & Robust under varying light (97.9\% cloudy, 89.5\% backlight) & Limited to 400�?500 mm range  \\ 
 \hline
-\cite{luo2016vision} & 2016 & Binocular CMOS + Calibration board & Grape & Vineyard & Stereo matching (RGB) + parameter calibration & Real-time performance (<0.7 s) with 87\% detection rate & Limited to 350–1100 mm range  \\ 
+\cite{luo2016vision} & 2016 & Binocular CMOS + Calibration board & Grape & Vineyard & Stereo matching (RGB) + parameter calibration & Real-time performance (<0.7 s) with 87\% detection rate & Limited to 350�?100 mm range  \\ 
 \hline
 \cite{barnea2016colour} & 2016 & RGB camera + SwissRanger4000 & Pepper & Greenhouse & Highlight pruning (RGB) + 3D symmetry (depth) & Color-agnostic detection (mean average precision (mAP) 0.55), robust to occlusions & Slow processing (197 s per image)  \\ 
 \hline
@@ -518,7 +519,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 Among multi-sensor approaches, 3D stereo vision systems are essential by using dual cameras to estimate depth via triangulation, effectively mimicking human binocular vision. Early efforts include Wang et al.~\cite{wang2016localisation}, who developed a binocular stereo vision system for litchi localization, incorporating wavelet transforms and clustering methods to obtain high accuracy under natural lighting. Similarly, Si et al.~\cite{si2015location} advanced apple detection by enabling their stereo vision platform to recognize and localize multiple fruits simultaneously in variable environments. Luo et al.~\cite{luo2016vision} further demonstrated a grape-harvesting stereo system capable of quickly detecting cutting points and estimating yields with high efficiency.
 RGB-D cameras which combine color information with depth sensing using time-of-flight or structured light have also proven highly beneficial. Barnea et al.~\cite{barnea2016colour} presented an RGB-D-based 3D detection method capable of analyzing both shape and symmetry, which is effective for sweet pepper harvesting even under complex conditions. Nguyen et al.~\cite{nguyen2016detection} showed that integrating depth with RGB data significantly improves apple detection and localization, especially under occlusion. Kusumam et al.~\cite{kusumam20173d} and Andújar et al.~\cite{andujar2016using} extended these principles to broccoli and cauliflower, using mobile RGB-D platforms to deliver precise 3D crop measurements crucial for automated harvest scheduling.
 Sensor fusion extends beyond vision alone: for example, Gongal et al.~\cite{gongal2018apple} used a combination of color and time-of-flight 3D cameras to estimate apple size, demonstrating higher accuracy using pixel size information—an important step forward for volume estimation and crop management.
-The integration of visual sensors with advanced algorithms—such as DL models and inverse kinematics—further automates and optimizes fruit detection and harvesting. Onishi et al.~\cite{onishi2019automated} combined a stereo camera with an SSD DL model to gain high real-time detection accuracy, precisely guiding the robot’s arm through calculated movements.
+The integration of visual sensors with advanced algorithms—such as DL models and inverse kinematics—further automates and optimizes fruit detection and harvesting. Onishi et al.~\cite{onishi2019automated} combined a stereo camera with an SSD DL model to gain high real-time detection accuracy, precisely guiding the robot's arm through calculated movements.
 
 %Multi-modality data fusion plays a critical role in advancing agricultural robotics by enhancing perception accuracy and operational efficiency. 
 While multi-sensor systems, such as 3D stereo vision setups, have significantly advanced agricultural robotics by capturing richer environmental data, their effectiveness remains constrained when relying solely on homogeneous sensor inputs (e.g., visual data from dual cameras). To address this limitation, multi-modality data fusion has emerged as a logical next step, extending beyond the integration of similar sensors to combine fundamentally different types of data. This approach leverages the unique strengths of diverse modalities including visual, spectral, IoT-derived etc. to create a more in-depth and robust perceptual framework.
@@ -572,7 +573,7 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
-	\cite{sa2016deepfruits} \newline 2016 & Multi-class (sweet pepper, rock melon, apple, etc.) \newline Outdoor/glasshouse orchards & DeepFruits (Faster R-CNN with VGG-16) & Multi-modal (RGB+NIR) fusion for cross-fruit detection & - Fusion F1: 0.838 (sweet pepper) \newline - Apple F1: 0.938; strawberry F1: 0.948 \newline - Processing time: 341–393 ms/image \newline - Requires 10–100 training images per fruit & - Early fusion underperforms (F1=0.799) vs. late fusion \newline - NIR modality alone has lower F1 (0.797) than RGB (0.816) \newline - Missed detections for small fruits (scaled <50\% of training size) \\ \midrule
+	\cite{sa2016deepfruits} \newline 2016 & Multi-class (sweet pepper, rock melon, apple, etc.) \newline Outdoor/glasshouse orchards & DeepFruits (Faster R-CNN with VGG-16) & Multi-modal (RGB+NIR) fusion for cross-fruit detection & - Fusion F1: 0.838 (sweet pepper) \newline - Apple F1: 0.938; strawberry F1: 0.948 \newline - Processing time: 341�?93 ms/image \newline - Requires 10�?00 training images per fruit & - Early fusion underperforms (F1=0.799) vs. late fusion \newline - NIR modality alone has lower F1 (0.797) than RGB (0.816) \newline - Missed detections for small fruits (scaled <50\% of training size) \\ \midrule
 	
 	\cite{wan2020faster} \newline 2020 & Multi-class (apple, mango, orange) \newline Outdoor orchard & Improved Faster R-CNN (VGG-16) & Multi-class detection with optimized convolutional and pooling layers & - mAP=90.72\% across three classes \newline - Apple AP: 92.51\%, Orange AP: 90.73\% \newline - Processing speed: 58 ms/image \newline - Outperforms Faster R-CNN by 8.16\% in mAP & - Slower speed (40 ms/image) \newline - Trained on 100×100 pixel images (smaller than real-world orchard images) \newline - Limited to three fruit classes \\ \midrule
 
@@ -852,7 +853,7 @@ Motion control is a central pillar of fruit-picking robots, essential for ensuri
 %Path planning, a crucial element in the smooth navigation of autonomous robots while avoiding obstacles, is of paramount importance in the field of robotics
 %~\cite {Leong:2024_review}. Key algorithms in this area include A-star (A*) Algorithm, RRT, Dijkstra's Algorithm, and advanced DDPG algorithm~\cite{Loganathan:2023_amr}.
 % and  Deep Deterministic Policy Gradient.
-Path planning for fruit-harvesting bots involves mapping out efficient, collision-free routes from the robot’s current spot to the target fruit—think dodging branches while racing to that ripe apple~\cite {Leong:2024_review}. Ever wonder how a robot avoids turning a quick pick into a tangled mess? Enter classics like A* and RRT lay the groundwork, though newer twists add machine learning that let them handle surprises better on the fly.
+Path planning for fruit-harvesting bots involves mapping out efficient, collision-free routes from the robot's current spot to the target fruit—think dodging branches while racing to that ripe apple~\cite {Leong:2024_review}. Ever wonder how a robot avoids turning a quick pick into a tangled mess? Enter classics like A* and RRT lay the groundwork, though newer twists add machine learning that let them handle surprises better on the fly.
 %~\cite{Loganathan:2023_amr}.
 
 The A* algorithm, known for its efficiency in finding the shortest path from a start node to a target node while avoiding obstacles, is a reliable choice for grid-based environments. It combines uniform-cost and greedy best-first search features by using a heuristic to estimate the cost from a node to the goal. The primary equation for A* is:
@@ -906,7 +907,7 @@ After a path is found, it can be smoothed by checking and directly connecting no
 \text{isCollisionFree}(x_i, x_j) \quad \text{for} \quad x_i, x_j \in \text{Path}
 \end{equation}
 
-Dijkstra’s Algorithm is commonly used in structured environments like orchards or greenhouses where the layout allows for fixed route planning~\cite{silwal2017design, dijkstra1959note}. It is used to find the shortest paths from a source node to all other nodes in the graph. The update step in Dijkstra's algorithm is:
+Dijkstra's Algorithm is commonly used in structured environments like orchards or greenhouses where the layout allows for fixed route planning~\cite{silwal2017design, dijkstra1959note}. It is used to find the shortest paths from a source node to all other nodes in the graph. The update step in Dijkstra's algorithm is:
 \begin{equation}
 \begin{aligned}
 \text{for each } v \text{ adjacent to } u: \\
@@ -972,7 +973,7 @@ a_t = \mu(s_t|\theta^\mu) + \epsilon, \quad \epsilon \sim \text{Noise process}
 where \( \epsilon \) often comes from an Ornstein-Uhlenbeck process, providing temporally correlated exploration beneficial in physical control problems.
 
 \subsection{Advances in Motion Planning and Control for Robotic Fruit Harvesting}
-Motion planning in robotic harvesting involves determining the path the robot’s end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
+Motion planning in robotic harvesting involves determining the path the robot's end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
 
 \begin{table*}[htbp]
 \centering
