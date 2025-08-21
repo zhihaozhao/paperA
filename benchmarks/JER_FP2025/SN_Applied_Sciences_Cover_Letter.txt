@@ -1,19 +1,13 @@
 Editor-in-Chief
 SN Applied Sciences
 
-Subject: Submission of Review Manuscript "Autonomous Fruit-Picking Robots: Quantitative Synthesis and Practical Pathways"
+Subject: Submission of "Physics-Guided Synthetic WiFi CSI for Trustworthy HAR: Quantitative Synthesis and Practical Pathways"
 
 Dear Editor,
 
-We submit our application-oriented review to SN Applied Sciences.
+We present a Sim2Real experimental paper with physics-guided synthesis, quantitative label-efficiency analyses, and a reproducibility package.
 
-Highlights:
-- Quantitative synthesis across sensing/vision/control with unified benchmarks.
-- Practical pathways for deployment (datasets, metrics, scripts) and reproducibility package.
-- Identified gaps and research agenda for robust, scalable systems.
-
-Compliance:
-- Original work; all authors approve; AI tools used only for post-analysis polishing.
+Compliance: original; all authors approve.
 
 Sincerely,
-Zhihao Zhao (corresponding author)
+[Your Name], corresponding author
