@@ -182,14 +182,9 @@
 \nonumnote{E-mail address: \href{mailto:syazreen@usm.my}{syazreen@usm.my} (N.S. Ahmad).}
 
 \begin{abstract} 
-This review synthesizes recent advances in autonomous fruit-picking robots with a focus on visual perception, path planning, and motion control. Following PRISMA guidelines, we systematically analyzed 137 studies published between 2015 and 2024. We critically compare learning-based perception approaches—especially YOLO- and R-CNN–family methods—under orchard-specific conditions (occlusion, variable lighting, small targets), and quantify trade-offs in accuracy and efficiency across representative platforms. We further examine perception-to-action integration for motion planning and control, summarizing success rate, harvest cycle time, and damage rate reported in field and greenhouse trials. Remaining challenges include robust multi-source data fusion and gentle manipulation at scale. We conclude with a research agenda and benchmark recommendations to accelerate reliable deployment.
-%The advent of autonomous fruit-picking robots has precipitated a paradigm shift in contemporary agriculture, with the potential to address the prevailing labour shortage and enhance harvesting efficiency. This review comprehensively surveys recent progress in fruit-picking robotics, focusing on vision-based detection, learning-based strategies, arm motion planning, and collision avoidance. Employing a Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA)-based systematic methodology, over 130 influential studies from 2015–2024 were analysed. Recent advances in vision-based detection, including multi-sensor fusion and 3D data acquisition, have enhanced robots' ability to localise and identify fruits under complex agricultural conditions. 
-%Deep learning (DL) models, such as Regions with Convolutional Neural Networks (R-CNN) and You Only Look Once (YOLO) series, have demonstrated efficacy in enhancing real-time detection performance, particularly under occlusion and variable lighting.
-%The efficacy of deep learning (DL) models, such as the Regions with Convolutional Neural Networks (R-CNN) and You Only Look Once (YOLO) series, has been demonstrated in enhancing real-time detection performance, particularly in scenarios where there is occlusion and variable lighting. 
-Explicitly, learning-based approaches, including transfer learning and reinforcement learning (e.g., Deep Deterministic Policy Gradient (DDPG)), have facilitated the generalizability of robotic arm motion planning for collision-free harvesting. Innovative path-planning algorithms and robust control strategies further enable autonomous robots to navigate unstructured environments and compensate for real-time disturbances, increasing system reliability. 
-Despite these advances, challenges remain in multi-source data integration and delicate handling. This survey provides a comprehensive evaluation of technological strides, identifies research gaps in scalability and deployment, and proposes future directions to guide research and accelerate commercial adoption.
+This review synthesizes recent advances in autonomous fruit-picking robots with a focus on visual perception, path planning, and motion control. Following PRISMA guidelines, we systematically analyzed 137 studies published between 2015 and 2024. We critically compare learning-based perception approaches—especially YOLO- and R-CNN–family methods—under orchard-specific conditions (occlusion, variable lighting, small targets), and quantify trade-offs in accuracy and efficiency across representative platforms. We further examine perception-to-action integration for motion planning and control, summarizing success rate, harvest cycle time, and damage rate reported in field and greenhouse trials. 
 
-
+Learning-based approaches, including transfer learning and reinforcement learning (e.g., Deep Deterministic Policy Gradient), have enhanced the generalizability of robotic arm motion planning for collision-free harvesting. Innovative path-planning algorithms and robust control strategies enable autonomous robots to navigate unstructured environments and compensate for real-time disturbances, increasing system reliability. Despite these advances, persistent challenges remain in multi-source data integration, delicate fruit handling, and cost-effective scalability. This survey provides a comprehensive evaluation of technological progress, identifies critical research gaps in deployment and scalability, and proposes future directions to accelerate commercial adoption in diverse agricultural contexts.
 \end{abstract}
 
 % If any graphical abstract is needed
@@ -389,7 +384,7 @@ This survey follows the Preferred Reporting Items for Systematic Reviews and Met
 \end{figure}
 
 %Following PRISMA guidelines, our process began with database searches
-We combed through databases like Scopus, Web of Science (WoS) and ScienceDirect with keywords and phrases including in Table~\ref{tab:keywords} which lists the search strings employed, and combined terms such as "autonomous fruit picking," "robotic harvesting," "deep learning in orchard," to capture a broad range of studies from 2015 to 2024. This initial search yielded 3,430 records after removing duplicates.
+We systematically searched databases including Scopus, Web of Science (WoS), and ScienceDirect using keywords and phrases detailed in Table~\ref{tab:keywords}. The search strategy employed combined terms such as "autonomous fruit picking," "robotic harvesting," and "deep learning in orchard" to capture a comprehensive range of studies published between 2015 and 2024. This initial search yielded 3,430 records after removing duplicates.
 %We began our research by systematically searching three well-established scientific databases, Web of Science (WoS), ScienceDirect and Scopus, to assemble a comprehensive collection of publications related to autonomous fruit-picking robots. The keywords used for these searches are listed in Table~\ref{tab:keywords}. The search was limited to English-language articles published between 2015 and 2024. This process resulted in 2358 records from WoS, 536 from ScienceDirect and 2030 from Scopus, as well in 100 from Google Scholar and Connected Papers, for a combined total of 4924 records prior to screening. To further ensure the completeness of our dataset, we also performed supplementary searches via Google Scholar and the Connected Papers , yielding an additional 76 and 24 records, respectively. In total, 5024 publications were identified in this initial phase.
 
 %Of the 5024 records initially identified, a comprehensive screening process was conducted to ensure the quality and relevance of the included studies. First, duplicates were identified and removed, resulting in 3430 unique entries. Manual screening was then performed without the aid of automation tools. During the title screening phase, 3018 records were excluded based on apparent irrelevance to the review topic. The remaining studies underwent abstract screening, which further reduced the collection to 412 potentially relevant records. Finally, full-text reviews were conducted on these entries to assess their fit with the review criteria.
@@ -425,7 +420,7 @@ Exclusion criteria included:
 
 (3)Grey literature without rigorous peer review.
 
-After title and abstract screening, 412 records advanced to full-text review, resulting in 137 studies selected for in-depth analysis as detailed in Figure \ref{fig:prisma1}. This rigorous sift let us spotlight the most impactful work, from lab prototypes to field trials. 
+After title and abstract screening, 412 records advanced to full-text review, resulting in 137 studies selected for in-depth analysis as detailed in Figure \ref{fig:prisma1}. This rigorous selection process enabled us to identify the most impactful research, spanning from laboratory prototypes to field validation trials. 
 
 %The inclusion criteria for this review were as follows: (i) records describing fruit picking methods involving visual detection and segmentation; (ii) records focused on robot motion control applications such as path planning and collision avoidance; (iii) explicit statements regarding the motivation behind agricultural robot harvest; (iv) Records focused on the development, application, and evaluation of harvesting robots; (v) publications in the form of journal articles or conference proceedings; and (vi) empirical research based on experimental results rather than purely simulation-based studies.
 
@@ -791,23 +786,6 @@ $R^2$ >0.75 (e.g., 0.77) for crop forecasting \cite{underwood2016mapping}. Real-
 \end{tabular}
 \end{table*}
 
-\iffalse
-\begin{table*}[htbp]
-	\centering
-	\footnotesize 
-	\caption{Summary of Fruit Detection Approaches by Core Performances Metrics (2015-2024)} 
-	\label{tab:performance-metrics} 
-	\begin{tabular}{@{}p{1.5cm}p{2.5cm}p{5cm}p{4cm}p{2.5cm}@{}}
-	\toprule
-	\textbf{Metrics} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} & \textbf{References} \\ \midrule
-	\textbf{Reliability} & Handling illumination, occlusion, and overlap via color, 3D contour, and shape; improving ripeness recognition & - Color-based methods: 96\% detection rate for ripe tomatoes under varying light \cite{zhao2016detecting}. Contour analysis: 5.27\% relative error for occluded citrus \cite{lu2015detecting}. 3D depth integration: 82\% detection of occluded apples \cite{nguyen2016detection}. Ripeness classification: 94.29\% accuracy for tomatoes \cite{goel2015fuzzy} & - Color sensitivity to extreme backlighting \cite{liu2016method}. Contour ambiguity in dense grape clusters \cite{luo2016robust}. Limited generalization across fruit types \cite{li2021novel} & \cite{nguyen2016detection}, \cite{lu2015detecting}, \cite{liu2016method}, \cite{lin2020color}, \cite{majeed2020deep}, \cite{li2021novel}, \cite{luo2016robust}, \cite{mendes2016vine}, \cite{goel2015fuzzy}, \cite{zhao2016detecting}, \cite{pourdarbani2020automatic}, \cite{zhang2018deep}, \cite{longsheng2015kiwifruit} \\ \midrule
-	\textbf{Precision} & Precise cut-point \newline detection (stem/ peduncle), distinguishing similar plants (trunk/ mast), non-destructive picking & - Peduncle detection: AUC=0.71 for sweet peppers \cite{sa2017peduncle}. Cut-point localization: 81.66\% success rate for grapes \cite{luo2018vision}. Non-destructive grasp: Improved handling of thin-skinned fruits \cite{CHEN2024111082}. Pose estimation: 80\% grasping success for sweet peppers \cite{lehnert2016sweet} & - Stem occlusion reduces accuracy in dense canopies \cite{sa2017peduncle}. Difficulty distinguishing similar citrus varieties \cite{lin2020fruit}. High precision requires complex 3D sensors \cite{kusumam20173d} & \cite{kusumam20173d}, \cite{andujar2016using}, \cite{lehnert2016sweet}, \cite{bac2017performance}, \cite{mendes2016vine}, \cite{sa2017peduncle}, \cite{luo2018vision}, \cite{kirk2020b}, \cite{perez2018pattern}, \cite{liu2019mature}, \cite{pourdarbani2020automatic}, \cite{lin2020fruit}, \cite{luo2018vision}, \cite{peng2020semantic}, \cite{CHEN2024111082}\\ \midrule
-	\textbf{Rapidity} & Real-time operation, fast picking/counting, scalable yield estimation & - Inference speed: 28 ms/image for apples \cite{kang2020fast}. Picking cycle: 6.5 s/fruit for apples \cite{kang2020real}. Yield estimation: $R^2=0.77$ for almonds \cite{underwood2016mapping}. Real-time classification: <0.01s per date fruit \cite{altaheri2019date} & - Speed-accuracy trade-off (small fruit detection sacrificed) \cite{kang2020fast}. High computational demand limits edge deployment \cite{kang2019fruit}. Dynamic scenes (e.g., wind) increase counting error \cite{PAL2024104567} & \cite{onishi2019automated}, \cite{underwood2016mapping}, \cite{lin2019guava}, \cite{kang2019fruit}, \cite{kang2020fruit}, \cite{lin2019field}, \cite{xiang2019fruit}, \cite{mao2020automatic}, \cite{barth2016design}, \cite{birrell2020field}, \cite{kang2020real}, \cite{altaheri2019date},  \cite{kang2020fast},  \cite{PAL2024104567} \\ \bottomrule
-
-	\end{tabular}
-\end{table*}
-\fi
-
 Accurate ripeness recognition optimizes harvest timing. 
 Liu et al.~\cite{liu2019mature} integrated HOG and SVM with 92.15\% F1-score. 
 Pourdarbani et al.~\cite{pourdarbani2020automatic} fused ANN and spectral data for apples with 99.62\% rate.
@@ -1048,16 +1026,7 @@ In summary, sophisticated algorithms, multi-sensor fusion, and innovative end-ef
 \end{tabular}
 \end{table*}
 \fi
-\section{Recent Progress and Future Directions in Autonomous Fruit Harvesting Technologies}
 
-Recent progress in fruit-picking robots demonstrate significant progress in both vision detection and locomotion technologies, as well as addressing numerous operational challenges. In vision detection, the integration of DL models such as the R-CNN and YOLO series has notably improved detection accuracy and speed in complex environments. These models have fundamentally transformed the capacity of robots to detect and classify fruits amidst dense foliage and under varying light conditions. For instance, the robust detection capabilities of the YOLO series, particularly YOLOv3 and YOLOv4, have enabled more precise identification of fruits, reducing false positives and improving overall efficiency~\cite{mehta2016robust, kirk2020b}. The use of CNNs in these models facilitates high-speed processing, allowing robots to operate in real-time and adapt to dynamic changes in the environment.
-We contend that locomotion technologies, particularly in path planning and collision avoidance, have seen innovative applications of algorithms that ensure safety and efficiency. Autonomous robots equipped with sophisticated sensors such as LiDAR, RGB-D cameras, and ultrasonic sensors can create detailed maps of their surroundings. These maps are essential for dynamic path adjustments, which are critical in cluttered and unpredictable farm environments. The use of algorithms like the A* algorithm, Bi-RRT, and DDPG in these systems has advanced the robots' ability to navigate complex terrains safely and efficiently~\cite{yaguchi2016development, williams2020improvements}. Additionally, the integration of real-time data processing capabilities enables these robots to respond swiftly to obstacles, ensuring smooth and continuous operation.
-
-Notwithstanding these advancements, challenges such as occlusion and dense picking persist as significant hurdles, as previously mentioned in the preceding section. Recent approaches have begun to address these issues through the integration of advanced sensors and ML algorithms. These algorithms are designed to predict optimal picking points and adjust strategies accordingly. For example, the fusion of data from multiple sensors, including RGB-D and hyper-spectral cameras, has improved the robots' ability to perceive and understand their environment in greater detail~\cite{gene2019fruit, pourdarbani2020automatic}. ML algorithms, particularly those based on reinforcement learning, enable robots to learn from their experiences and refine their picking strategies over time.
-Scalability and efficiency have also been at the forefront of recent research. Studies have explored the use of multi-robot systems to increase the overall picking capacity and reduce the time required for harvesting. Coordinating multiple robots to work together harmoniously can significantly enhance productivity while ensuring that each robot operates efficiently and without interference. Furthermore, optimizing energy use and operational time has become a critical focus, with researchers developing algorithms that minimize energy consumption while maximizing operational efficiency~\cite{rayhana2020internet, martos2021ensuring}. These efforts are crucial for making robotic harvesting systems viable on a commercial scale, where cost-effectiveness and reliability are paramount.
-
-The ongoing evolution of fruit-picking robots is poised to further transform agricultural practices. Future research will likely continue to refine DL models for even greater accuracy and efficiency in fruit detection. Additionally, leaps in sensor technology and integration will enhance the robots' ability to navigate and operate in increasingly complex environments. The development of more sophisticated algorithms for path planning, collision avoidance, and energy optimization will ensure that these robots can operate autonomously with minimal human intervention. As these technologies mature, the adoption of robotic harvesting systems is expected to grow, offering sustainable and scalable solutions to meet the demands of modern agriculture.
-\fi
 
 \section{Current Status, Challenges, and Future Directions in Autonomous Fruit Harvesting}
 In recent years, the field of autonomous fruit harvesting has seen substantial progress, driven by the convergence of robotics, artificial intelligence, and sensor technologies as illustrated in Table~\ref{tab:trends_summary}. This evolution is crucial for addressing labor shortages and enhancing efficiency in agriculture.
@@ -1088,13 +1057,10 @@ The integration of DL models, especially the R-CNN and YOLO series, has revoluti
 
 In locomotion technologies, significant progress has been made in path planning and collision avoidance. Autonomous robots equipped with advanced sensors like LiDAR, RGB-D cameras, and ultrasonic sensors can generate detailed maps of their surroundings \cite{liu2024hierarchical}. Algorithms such as the A* algorithm, Bi-RRT, and DDPG are increasingly being used to enhance the robots' ability to navigate complex orchard terrains safely and efficiently \cite{gai2022fruit, rajendran2024towards}. Hierarchical trajectory planning allows robots to make informed decisions at different levels of granularity, first planning a high-level path through the orchard and then refining it at a local level to avoid specific obstacles while approaching the target fruit \cite{liu2024hierarchical}.
 
-\subsection{ Challenges and Future Trends }
-Even with these breakthroughs, robots aren't out of the woods yet. 
-Despite impressive strides, several challenges still trip up autonomous fruit-picking robots. Top ones? Handling occlusions, adapting to variable lighting and ensuring robustness in unstructured environments 
-% Occlusion and dense fruit arrangements still pose significant obstacles. Fruits hidden behind leaves or other fruits are difficult to detect, leading to missed harvests 
- \cite{hou2023overview, suresh2023selective}. The high cost of these autonomous systems remains a deterrent for many small-scale farmers \cite{zhang2024automatic}. The complexity of integrating different technologies, such as combining vision systems with robotic grippers and ensuring seamless communication between multiple robots in a coordinated harvesting scenario, also needs to be addressed \cite{li2023multi, rajendran2024towards}. Issues we've touched on earlier but that demand creative fixes. 
- 
- Future trends point to integrating advanced AI such as diffusion-based ones~\cite{heschl2024synthset} and sensor mashups that could nip challenges in the bud. Picture UAVs scouting orchards ahead ,then  sharing data with ground robots to plot smarter paths, potentially slashing energy use by 20\% in variable terrains. With rising temperatures altering fruit patterns, could this be the key to climate-resilient farming?
+\subsection{Challenges and Future Trends}
+Despite significant technological breakthroughs, autonomous fruit-picking robots continue to face substantial challenges that limit their widespread adoption. Primary obstacles include handling occlusions in dense foliage, adapting to variable lighting conditions, and ensuring robust performance in unstructured agricultural environments \cite{hou2023overview, suresh2023selective}. The high capital costs of these autonomous systems remain a significant barrier for small-scale farmers \cite{zhang2024automatic}. Additionally, the complexity of integrating disparate technologies—combining vision systems with robotic manipulators and ensuring seamless communication in multi-robot harvesting scenarios—presents ongoing technical challenges \cite{li2023multi, rajendran2024towards}.
+
+Future research directions emphasize the integration of advanced AI architectures, including diffusion-based models \cite{heschl2024synthset}, and multi-modal sensor fusion approaches. Promising developments include UAV-ground robot coordination systems that enable predictive path planning and optimize energy efficiency through intelligent task allocation. These integrated approaches are particularly relevant as climate change continues to alter fruit development patterns and orchard conditions, necessitating more adaptive and resilient robotic systems.
 
 %\subsection{ Future Trends}
 %Advanced Deep - Learning - based Perception
@@ -1115,7 +1081,13 @@ Scalability and cost-effectiveness will be at the forefront of future developmen
 
 
 \section{Conclusion}
-Ultimately, this review unveils the rapid evolution of autonomous fruit-picking robots, sparked by innovations in visual perception and motion control. That said, hurdles like occlusions won't vanish easily, but the integration of DL and robotics is poised to revolutionize sustainable agriculture.  As we move forward, prioritizing ethics—like fair data use in AI training—will ensure these bots benefit everyone, from mega-farms to family plots. From our viewpoint, the real game-changer will be affordable, adaptable systems that growers can count on-kicking off a greener farming landscape. Picture smallholders in developing regions deploying these bots to slash wast and ramp up yields-that's not just a vision, it's a call for researchers to make it happen. 
+This comprehensive survey has systematically analyzed the rapid evolution of autonomous fruit-picking robots, emphasizing critical advances in visual perception, motion control, and perception-action integration. Through systematic analysis of 137 recent studies (2015-2024) following PRISMA guidelines, we have identified significant technological breakthroughs while acknowledging persistent challenges that require sustained research attention.
+
+Key findings reveal that deep learning models, particularly the R-CNN and YOLO series, have substantially enhanced fruit detection capabilities in complex agricultural environments. The evolution from YOLOv8 to YOLO11 has demonstrated remarkable improvements in real-time performance, multi-task capabilities, and adaptation to diverse orchard conditions. Similarly, advances in motion planning algorithms, including hierarchical trajectory planning and reinforcement learning approaches, have enabled more sophisticated navigation and collision avoidance in unstructured environments.
+
+Despite these advances, significant challenges persist, including occlusion handling in dense foliage environments, scalability constraints, and cost-effectiveness barriers that limit adoption, particularly for small-scale agricultural operations. The integration of multi-sensor fusion approaches, UAV-enabled monitoring systems, and collaborative robotic frameworks represents promising directions for addressing these limitations.
+
+Looking forward, the field requires sustained focus on developing affordable, adaptable systems that can reliably operate across diverse agricultural contexts. Priority areas include advancing neural architecture search for task-specific optimization, implementing dynamic fusion algorithms for variable environments, and establishing standardized benchmarks for cross-study comparisons. The ultimate goal remains the development of commercially viable robotic harvesting systems that can enhance productivity while ensuring accessibility across different scales of agricultural operations, from large commercial farms to small-holder farming communities. 
 
 %Robotic fruit picking is advancing toward fully autonomous systems that thrive in varied farm settings. Notwithstanding the persistent challenges posed by occlusion, overcrowded canopies, and scaling costs, the field has witnessed steady advancements in vision and navigation, which hold considerable promise for addressing these issues. In the context of future planning, it is imperative to prioritize the integration of technology that is both affordable and sustainable. This technology should be adaptable to a variety of crops and practices.
 
@@ -1126,7 +1098,6 @@ Ultimately, this review unveils the rapid evolution of autonomous fruit-picking 
 
 \pdfbookmark[section]{Declaration of competing interest / Conflict of interest}{} % Include bookmark in the pdf (write the same name from the section below)
 
-\iffalse
 \section*{Nomenclature}\label{nomenclature} 
 \begin{table*}[htbp]
 \begin{center}
@@ -1168,76 +1139,6 @@ AUC		& area under the curve 												  & GPS		& Global Positioning System \\
 
 \end{center}
 \end{table*}
-
-\fi
-\section*{Nomenclature}\label{nomenclature} 
-
-
-
-\centering
-\resizebox{0.4\textwidth}{!}{%
-	\begin{tabular}{@{}p{2cm}p{5cm}}	\toprule
-	\textbf{Acronyms}  & \textbf{Descriptions} \\ \midrule
-  PRISMA & Preferred Reporting Items for Systematic Reviews and Meta-Analyses \\
-  WoS & Web of Science \\
-  IoT & Internet of Things \\
-  RS	  & remote sensing		\\
-  NIR     & Near-Infrared \\
-  ML		& machine learning \\
-  DL		& deep learning \\
-  RL		&  Reinforcement Learning \\
-  YOLO & You Only Look Once \\
-  CNNs & Convolutional Neural Networks \\
-  RNNs & recurrent neural networks \\
-  R-CNN & Regions with Convolutional Neural Networks \\
-%  VHF & Viewpoint Feature Histograms \\
-  SVM & Support Vector Machine \\
-  UAV	& unmanned aerial vehicles \\
-  GPS	& Global Positioning System \\
-  TOF & Time of Flight \\
-  AP		& Average Precision	 \\
-  mAP & mean Average Precision \\
-%  MTLS & Mobile Terrestrial Laser Scanner \\
-  OBIA & object-based image analysis \\
-%  UAVs & unmanned aerial vehicles \\
-  RGBVI & RGB-based vegetation index \\
-  RPN & Region Proposal Network \\
-  NIR & Near-Infrared \\
-  MS-FRCNN & multiple scale faster region-based convolutional neural network \\
-  RoI & Region of Interest \\
-  FPN & Feature Pyramid Network \\
-  GFPN & Gated Feature Pyramid Network \\
-  MIoU & mean intersection over union \\
-  ASPP & Atrous Spatial Pyramid Pooling \\
-  LSA & leaf segmentation algorithm \\
-  SSD & Single Shot MultiBox Detector \\
-  MSAC & M-estimator sample consensus \\
-  DOF & Degree of Freedom \\
-  HOG & Histograms of Oriented Gradients \\
-  LBP & Local Binary Patterns \\
-  MPCNN & Multi-Path Convolutional Neural Network \\
-%  FCR & False Color Removal \\
-  FRBCS & Fuzzy Rule-Based Classification System \\
-  ANN & artificial neural network \\
-  HTC	    & Hybrid Task Cascade \\
-  SA & simulated annealing \\
-  AUC		& area under the curve \\
-  CCR & correct classification rate \\
-  RRT & Rapidly-exploring Random Tree \\
-  A*	  & A-star algorithm	\\
-  Bi-RRT & Bidirectional Rapidly-exploring Random Tree \\
-  VFH & Vector Field Histogram \\
-  DWA & Dynamic Window Approach \\
-  DDPG & Deep Deterministic Policy Gradient \\
-  DQN & Deep Q-Network \\
-  TD & temporal difference \\
-  FPS & Frames Per Second \\
-  C2PSA	& Convolutional Block with Parallel Spatial Attention \\
-  
-
-\bottomrule
-	\end{tabular}
-}
 \section*{Declaration of competing interest}
 The authors declare that they have no known competing financial
 interests or personal relationships that could have appeared
