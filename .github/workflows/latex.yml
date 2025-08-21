@@ -1,0 +1,42 @@
+name: Build LaTeX PDFs (journals + thesis)
+
+on:
+  push:
+    branches:
+      - thesis/phd-dissertation-chapter
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up TeX Live
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: |
+            benchmarks/JER_FP2025/FP_2025_IEEE-ACCESS.tex
+            benchmarks/JER_FP2025/FP_2025_RAS.tex
+            benchmarks/JER_FP2025/FP_2025_BE.tex
+            benchmarks/JER_FP2025/FP_2025_SN-APPLIED-SCIENCES.tex
+            Thesis/main.tex
+          latexmk_use_xelatex: true
+          cache: true
+
+      - name: Upload journal PDFs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: journal-pdfs
+          path: |
+            benchmarks/JER_FP2025/*.pdf
+
+      - name: Upload thesis PDF
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thesis-pdf
+          path: |
+            Thesis/*.pdf
