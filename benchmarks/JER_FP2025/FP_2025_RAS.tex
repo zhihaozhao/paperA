@@ -23,6 +23,18 @@
 % \usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers,sort&compress]{natbib}
+% pdfLaTeX Unicode compatibility
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\newunicodechar{}{--}
+\newunicodechar{}{---}
+\newunicodechar{}{$\times$}
+\newunicodechar{}{$files{\circ}$}
+\newunicodechar{}{$\pm$}
+\newunicodechar{µ}{$\mu$}
+\DeclareUnicodeCharacter{00A0}{~}
+\DeclareUnicodeCharacter{FFFD}{}
 % [UNICODE-PDFLATEX-BLOCK-BEGIN]
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -1308,5 +1320,6 @@ XXX
 \vskip6pt
 
 \end{document}
+
 
 
