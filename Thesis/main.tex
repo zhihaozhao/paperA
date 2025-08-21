@@ -1,0 +1,187 @@
+% 博士论文 - WiFi CSI人体活动识别：物理指导的合成数据生成与可信评估框架
+% PhD Thesis - WiFi CSI Human Activity Recognition: Physics-Guided Synthetic Data Generation and Trustworthy Evaluation Framework
+
+\documentclass[12pt,a4paper,oneside]{book}
+
+% 中文支持
+\usepackage[UTF8]{ctex}
+\usepackage{xeCJK}
+
+% 数学和符号
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{physics}
+
+% 图表和表格
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{longtable}
+
+% 代码和算法
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{verbatim}
+
+% 引用和超链接
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[acronym]{glossaries}
+
+% 页面布局
+\usepackage{geometry}
+\geometry{left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+
+% 颜色和样式
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+
+% 自定义命令
+\newcommand{\figref}[1]{图\ref{#1}}
+\newcommand{\tabref}[1]{表\ref{#1}}
+\newcommand{\equref}[1]{式(\ref{#1})}
+\newcommand{\secref}[1]{第\ref{#1}节}
+\newcommand{\chapref}[1]{第\ref{#1}章}
+
+% 缩略词定义
+\newacronym{csi}{CSI}{Channel State Information}
+\newacronym{har}{HAR}{Human Activity Recognition}
+\newacronym{wifi}{WiFi}{Wireless Fidelity}
+\newacronym{loso}{LOSO}{Leave-One-Subject-Out}
+\newacronym{loro}{LORO}{Leave-One-Room-Out}
+\newacronym{cdae}{CDAE}{Cross-Domain Adaptation Evaluation}
+\newacronym{stea}{STEA}{Sim2Real Transfer Efficiency Assessment}
+\newacronym{cnn}{CNN}{Convolutional Neural Network}
+\newacronym{lstm}{LSTM}{Long Short-Term Memory}
+\newacronym{bilstm}{BiLSTM}{Bidirectional Long Short-Term Memory}
+\newacronym{se}{SE}{Squeeze-and-Excitation}
+\newacronym{ece}{ECE}{Expected Calibration Error}
+\newacronym{nll}{NLL}{Negative Log-Likelihood}
+
+\makeglossaries
+
+% 代码样式设置
+\lstset{
+    basicstyle=\footnotesize\ttfamily,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red}
+}
+
+% JSON语言定义
+\lstdefinelanguage{json}{
+    basicstyle=\ttfamily\footnotesize,
+    stringstyle=\color{red},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue}\bfseries,
+    morestring=[b]",
+    morestring=[b]',
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morekeywords={true,false,null}
+}
+
+\begin{document}
+
+% 设置页眉页脚
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% 设置行距
+\onehalfspacing
+
+% 标题页
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+
+{\Huge\bfseries WiFi CSI人体活动识别：\\物理指导的合成数据生成与可信评估框架}
+
+\vspace{1cm}
+
+{\Large\bfseries WiFi CSI Human Activity Recognition: Physics-Guided Synthetic Data Generation and Trustworthy Evaluation Framework}
+
+\vspace{2cm}
+
+{\large 
+博士学位论文章节\
+PhD Thesis Chapters
+}
+
+\vspace{2cm}
+
+{\large
+基于物理指导的合成数据生成方法，实现WiFi CSI人体活动识别的\\
+跨域泛化与标签效率提升研究
+}
+
+\vspace{2cm}
+
+{\large 
+作者：[学生姓名]\\
+导师：[导师姓名]\\
+学院：[学院名称]\\
+专业：[专业名称]
+}
+
+\vspace{2cm}
+
+{\large \today}
+
+\end{titlepage}
+
+% 目录
+\tableofcontents
+\newpage
+
+% 图表目录
+\listoffigures
+\listoftables
+\newpage
+
+% 缩略词表
+\printglossary[type=\acronymtype,title=缩略词表]
+\newpage
+
+% Review Chapter (English)
+\input{chapters/chapter_review_en}
+
+% Experiments Chapter (English)
+\input{chapters/chapter_experiments_en}
+
+% 附录
+\appendix
+\input{appendices/code_listings}
+\input{appendices/experiment_details}
+\input{appendices/results_tables}
+
+% 参考文献
+\bibliographystyle{IEEEtran}
+% 合并多个文献库：基础refs与DFHAR综述库
+\bibliography{references/refs,references/dfhar}
+
+\end{document}

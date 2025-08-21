@@ -28,18 +28,18 @@ __pycache__/
 .profile
 *.nbconvert.ipynb
 
-# ����Ŀ�����ʵ����
+# ����Ŀ�����ʵ�����?
 results/
 results_cpu/
 plots/
 tables/
-# ���㽫��־���� results/logs �£����� results/ �Ѱ������������Ŀ¼��
+# ���㽫��־���� results/logs �£����� results/ �Ѱ������������Ŀ¼��?
 logs/
 figs/
 chat/
 referenes/
 
-# ��ʱ���/�ϴ��ļ�
+# ��ʱ���?�ϴ��ļ�
 artifacts-*.zip
 *.tar
 *.tar.gz
@@ -49,7 +49,7 @@ artifacts-*.zip
 core
 core.*
 
-# ������Ȩ�أ��밴����ã�
+# ������Ȩ�أ��밴����ã�?
 data/
 datasets/
 weights/
@@ -112,6 +112,34 @@ paper/*.synctex.gz
 paper/*.nav
 paper/*.snm
 paper/*.vrb
+Thesis/*.pdf
+Thesis/*.aux
+Thesis/*.log
+Thesis/*.out
+Thesis/*.fdb_latexmk
+Thesis/*.fls
+Thesis/*.bbl
+Thesis/*.blg
+Thesis/*.toc
+Thesis/*.lof
+Thesis/*.lot
+Thesis/*.synctex*
+Thesis/appendices/*.aux
+Thesis/appendices/*.log
+
+benchmarks/JER_FP2025/*.aux
+benchmarks/JER_FP2025/*.log
+benchmarks/JER_FP2025/*.out
+benchmarks/JER_FP2025/*.bbl
+benchmarks/JER_FP2025/*.blg
+benchmarks/JER_FP2025/*.toc
+benchmarks/JER_FP2025/*.lof
+benchmarks/JER_FP2025/*.lot
+benchmarks/JER_FP2025/*.synctex*
+benchmarks/JER_FP2025/*.abs
+benchmarks/JER_FP2025/*.pdf
+benchmarks/JER_FP2025/reproducibility/*.png
+benchmarks/JER_FP2025/reproducibility/*.pdf
 
 # Generated figure files
 paper/figures/*.pdf
