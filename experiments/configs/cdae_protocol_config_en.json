@@ -1,0 +1,112 @@
+{
+  "protocol_name": "CDAE Protocol - Cross-Domain Adaptation Evaluation",
+  "protocol_version": "v2.0-en",
+  "description": "Evaluate model cross-subject and cross-environment generalization through LOSO and LORO protocols",
+  
+  "cross_domain_setup": {
+    "execute_loso": true,
+    "execute_loro": true,
+    "loso_subject_list": [1, 2, 3, 4, 5, 6, 7, 8],
+    "loro_room_list": [1, 2, 3, 4, 5],
+    "domain_identifiers": {
+      "subject_attributes": ["age", "gender", "height", "weight"],
+      "room_attributes": ["size", "furniture", "layout", "material"]
+    }
+  },
+  
+  "data_splitting": {
+    "loso_splitting_principle": "Strict separation by subject ID, avoiding data leakage",
+    "loro_splitting_principle": "Strict separation by room ID, fixed subjects",
+    "validation_ratio": 0.2,
+    "test_ratio": 0.2,
+    "time_window": 100,
+    "overlap_ratio": 0.5
+  },
+  
+  "model_configuration": {
+    "primary_test_model": "Enhanced",
+    "comparison_baselines": ["CNN", "BiLSTM", "Conformer"],
+    "parameter_capacity_matching": "±10% parameter range",
+    "initialization_strategy": "Xavier uniform",
+    "batch_normalization": true
+  },
+  
+  "training_protocol": {
+    "batch_size": 64,
+    "learning_rate": 1e-3,
+    "optimizer": "Adam",
+    "lr_scheduler": {
+      "strategy": "cosine_annealing",
+      "min_lr": 1e-6,
+      "warmup_epochs": 10
+    },
+    "max_epochs": 150,
+    "early_stop_patience": 25,
+    "gradient_clipping": 1.0
+  },
+  
+  "evaluation_metrics": {
+    "primary_metrics": ["macro_f1", "accuracy", "ece", "brier_score"],
+    "classification_metrics": ["precision", "recall", "f1_score"],
+    "calibration_metrics": ["ece", "mce", "brier", "reliability_curve"],
+    "statistical_tests": ["paired_t_test", "wilcoxon_signed_rank", "cohen_d"]
+  },
+  
+  "acceptance_criteria": {
+    "enhanced_model_requirements": {
+      "loso_f1": "≥0.83",
+      "loro_f1": "≥0.83", 
+      "consistency_check": "LOSO vs LORO difference < 1%",
+      "stability_requirement": "standard deviation < 0.005"
+    },
+    "cross_domain_generalization": {
+      "statistical_significance": "p < 0.05",
+      "effect_size": "Cohen's d > 0.5",
+      "confidence_interval": "95% CI excludes 0"
+    },
+    "calibration_performance": {
+      "ece_threshold": "< 0.05",
+      "brier_threshold": "< 0.15",
+      "reliability": "diagonal deviation < 10%"
+    }
+  },
+  
+  "confidence_intervals": {
+    "bootstrap_resampling": 1000,
+    "confidence_level": 0.95,
+    "bias_correction": "BCa method",
+    "parallel_computation": true
+  },
+  
+  "result_output": {
+    "detailed_logging": true,
+    "performance_curves": true,
+    "attention_visualization": true,
+    "statistical_report": true,
+    "latex_tables": true,
+    "output_directory": "experiments/results/cdae_protocol/"
+  },
+  
+  "experiment_management": {
+    "checkpoint_saving": "every 10 epochs",
+    "experiment_tagging": "timestamp + Git commit hash",
+    "version_control": "auto create experiment branch",
+    "resource_monitoring": true,
+    "exception_handling": "auto retry 3 times"
+  },
+  
+  "data_quality_control": {
+    "data_integrity": "MD5 checksum",
+    "label_consistency": "cross validation",
+    "outlier_detection": "IQR method",
+    "data_leakage_detection": "timestamp verification"
+  },
+  
+  "hardware_requirements": {
+    "min_gpu_memory_gb": 8,
+    "recommended_gpu_memory_gb": 16,
+    "cpu_cores": "≥8",
+    "memory_size_gb": "≥32",
+    "storage_space_gb": "≥50"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "protocol_name": "STEA Protocol - Sim2Real Transfer Efficiency Assessment",
+  "protocol_version": "v2.0-en",
+  "description": "Evaluate synthetic-to-real transfer learning efficiency for label-efficient deployment",
+  
+  "transfer_learning_setup": {
+    "label_ratio_list": [1, 5, 10, 20, 50, 100],
+    "full_supervision_baseline_f1": 0.833,
+    "target_efficiency_threshold": 0.90,
+    "key_breakthrough_point": {
+      "label_ratio": 20,
+      "target_f1": 0.82,
+      "relative_performance": "≥98.6%"
+    }
+  },
+  
+  "pretraining_phase": {
+    "synthetic_data": {
+      "data_path": "data/synthetic/pretraining/",
+      "sample_count": 50000,
+      "data_augmentation": ["noise_injection", "time_warping", "amplitude_scaling"],
+      "difficulty_gradient": "from easy to complex"
+    },
+    "training_config": {
+      "batch_size": 128,
+      "learning_rate": 1e-3,
+      "max_epochs": 100,
+      "early_stop_patience": 15,
+      "augmentation_probability": 0.3
+    }
+  },
+  
+  "finetuning_phase": {
+    "real_data": {
+      "data_root_directory": "data/real/labeled/",
+      "labeling_strategy": "random sampling + stratified sampling",
+      "class_balancing": "ensure minimum samples per class",
+      "quality_filtering": "confidence threshold > 0.9"
+    },
+    "finetuning_config": {
+      "batch_size": 32,
+      "learning_rate": 1e-4,
+      "learning_rate_decay": 0.1,
+      "max_epochs": 50,
+      "freezing_strategy": "freeze first two conv layers",
+      "regularization_enhancement": "L2 weight decay + Dropout"
+    }
+  },
+  
+  "label_sampling_strategies": {
+    "1%_labels": {
+      "total_samples": "~50",
+      "min_per_class": 10,
+      "sampling_method": "stratified_random",
+      "quality_requirement": "expert_validation"
+    },
+    "5%_labels": {
+      "total_samples": "~250", 
+      "min_per_class": 50,
+      "sampling_method": "diversity_sampling",
+      "coverage_scope": "all subjects and rooms"
+    },
+    "10%_labels": {
+      "total_samples": "~500",
+      "min_per_class": 100,
+      "sampling_method": "active_learning",
+      "uncertainty": "model confidence guided"
+    },
+    "20%_labels": {
+      "total_samples": "~1000",
+      "min_per_class": 200,
+      "sampling_method": "representative_sampling",
+      "key_milestone": "breakthrough point validation"
+    }
+  },
+  
+  "evaluation_protocol": {
+    "performance_metrics": {
+      "primary": ["macro_f1", "micro_f1", "accuracy"],
+      "calibration": ["ece", "brier", "nll", "reliability_curve"],
+      "efficiency": ["training_time", "convergence_epochs", "sample_efficiency"]
+    },
+    "statistical_analysis": {
+      "significance_testing": "paired_t_test",
+      "effect_size": "cohen_d",
+      "confidence_intervals": "Bootstrap 95% CI",
+      "multiple_comparisons": "Bonferroni correction"
+    }
+  },
+  
+  "acceptance_criteria": {
+    "label_efficiency_targets": {
+      "10%_labels": "≥90% full supervision performance",
+      "20%_labels": "≥95% full supervision performance", 
+      "key_breakthrough": "20% labels > 80% absolute F1 threshold"
+    },
+    "transfer_quality": {
+      "convergence_speed": "≤50 epochs to reach best performance",
+      "performance_stability": "CV < 2% for last 10 epochs",
+      "domain_adaptation": "source pretraining > random initialization"
+    },
+    "engineering_practicality": {
+      "training_time": "≤2 hours per label ratio",
+      "memory_usage": "≤8GB GPU",
+      "model_size": "≤20MB"
+    }
+  },
+  
+  "ablation_studies": {
+    "ablation_experiments": {
+      "no_pretraining": "direct training on real data",
+      "cnn_only_pretraining": "without Enhanced architecture",
+      "no_confidence_regularization": "standard cross-entropy loss",
+      "fixed_learning_rate": "without cosine annealing"
+    },
+    "other_transfer_methods": {
+      "domain_adaptation": "DANN, CORAL",
+      "meta_learning": "MAML, Reptile", 
+      "self_supervised": "SimCLR, MoCo",
+      "semi_supervised": "FixMatch, MixMatch"
+    }
+  },
+  
+  "data_management": {
+    "preprocessing": {
+      "normalization": "Z-score standardization",
+      "denoising": "wavelet denoising",
+      "resampling": "1000Hz unified sampling rate",
+      "format_conversion": "complex to magnitude-phase"
+    },
+    "version_control": {
+      "data_versioning": "DVC management",
+      "annotation_versioning": "expert consistency validation",
+      "metadata": "JSON format recording",
+      "integrity_check": "automated validation scripts"
+    }
+  },
+  
+  "reproducibility_guarantee": {
+    "random_seeds": [42, 123, 456, 789, 1024, 2048, 4096, 8192],
+    "environment_fixation": "requirements.txt version locking",
+    "hardware_specification": "record GPU model and driver version",
+    "experiment_scripts": "version control all scripts",
+    "result_validation": "independent run verification"
+  }
+}

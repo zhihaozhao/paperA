@@ -1,0 +1,4 @@
+ref_id,year,fruit,environment,task,method,platform,map50,small_ap,fps,success_rate,cycle_time_s,damage_rate,occlusion_level,lighting,dataset_public,code_public,notes
+Hou2023,2023,apple,outdoor,detection,YOLOv5s,Jetson TX2,0.90,0.82,31,, , ,medium,direct sun,no,no,reported mAP only; no execution metrics
+Yu2019,2019,strawberry,greenhouse,segmentation,Mask R-CNN,RTX 2080,0.96,0.88,8,0.74,0.82,0.05,high,mixed,yes,yes,field tests with safety region
+Jun2021,2021,tomato,greenhouse,complete,YOLOv3+TCU,Jetson TX2,0.91,0.85,18,0.84,5.87,0.15,medium,indoor light,partly,yes,cluster success drops at 4 fruits

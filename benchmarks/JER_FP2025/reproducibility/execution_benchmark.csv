@@ -1,0 +1,4 @@
+fruit,effector,planner,env,success_rate,cycle_time_s,damage_rate
+apple,soft gripper,RRT*,outdoor,0.74,12.5,0.06
+strawberry,cutting unit,visual servo,greenhouse,0.84,5.9,0.15
+cherry,suction+blade,priority planner,outdoor,0.76,9.8,0.08

@@ -1,0 +1,88 @@
+{
+  "protocol_name": "D2 Protocol - Synthetic Data Robustness Validation",
+  "protocol_version": "v2.0-en",
+  "description": "Validate synthetic data generator effectiveness and model robustness through 540 configuration combinations",
+  
+  "experiment_setup": {
+    "test_model_list": ["Enhanced", "CNN", "BiLSTM", "Conformer"],
+    "random_seed_list": [42, 123, 456, 789, 1024, 2048, 4096, 8192],
+    "repeat_experiments": 8,
+    "parallel_processes": 4
+  },
+  
+  "data_configuration": {
+    "synthetic_data_root": "data/synthetic/",
+    "data_file_format": ".npy",
+    "sequence_length": 100,
+    "csi_dimensions": [114, 3, 3],
+    "activity_classes": ["sitting", "standing", "walking", "falling"]
+  },
+  
+  "signal_parameter_sweep": {
+    "snr_db": [5, 10, 15, 20, 25, 30],
+    "multipath_count": [3, 5, 8, 12, 15],
+    "carrier_frequency_offset_hz": [-50, -25, 0, 25, 50],
+    "phase_noise_rad": [0.01, 0.05, 0.1, 0.2]
+  },
+  
+  "activity_parameter_sweep": {
+    "activity_overlap": [0.0, 0.1, 0.3, 0.5, 0.7],
+    "motion_amplitude_m": [0.5, 1.0, 1.5, 2.0],
+    "duration_s": [2, 5, 10, 15]
+  },
+  
+  "environment_parameter_sweep": {
+    "room_size_m2": [[3, 3], [5, 5], [8, 8], [10, 10]],
+    "obstacle_density": [0.0, 0.1, 0.3, 0.5],
+    "wall_material": ["wood", "concrete", "metal"]
+  },
+  
+  "training_hyperparameters": {
+    "batch_size": 64,
+    "initial_learning_rate": 1e-3,
+    "weight_decay": 1e-4,
+    "max_training_epochs": 200,
+    "early_stop_patience": 20,
+    "lr_scheduler": "cosine_annealing",
+    "optimizer": "Adam",
+    "gradient_clipping": 1.0
+  },
+  
+  "confidence_regularization": {
+    "lambda_candidates": [1e-4, 5e-4, 1e-3, 5e-3, 1e-2],
+    "tuning_method": "grid_search",
+    "validation_metric": "ECE + Brier Score",
+    "target_ece": 0.05
+  },
+  
+  "acceptance_criteria": {
+    "minimum_f1_threshold": 0.75,
+    "enhanced_model_advantage": "≥3% relative improvement",
+    "robustness_requirement": "CV < 5%",
+    "statistical_significance": "p < 0.05",
+    "confidence_calibration": "ECE < 0.05"
+  },
+  
+  "output_configuration": {
+    "save_checkpoints": true,
+    "save_attention_weights": true,
+    "generate_visualizations": true,
+    "output_formats": ["JSON", "CSV", "NPZ"],
+    "results_directory": "experiments/results/d2_protocol/"
+  },
+  
+  "resource_limits": {
+    "max_gpu_memory_gb": 24,
+    "max_training_time_hours": 72,
+    "max_storage_space_gb": 100,
+    "cpu_cores": 16
+  },
+  
+  "quality_control": {
+    "data_integrity_check": true,
+    "model_parameter_validation": true,
+    "result_consistency_check": true,
+    "statistical_tests": "paired t-test + Wilcoxon signed-rank test",
+    "multiple_comparison_correction": "Bonferroni correction"
+  }
+}

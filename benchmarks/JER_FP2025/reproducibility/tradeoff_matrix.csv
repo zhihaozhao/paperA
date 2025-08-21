@@ -1,0 +1,7 @@
+method,scene,metric,value
+YOLOv5s,outdoor,map50,0.90
+YOLOv5s,outdoor,fps,31
+YOLOv4-tiny,outdoor,map50,0.91
+YOLOv4-tiny,outdoor,fps,86
+MaskRCNN,greenhouse,map50,0.95
+MaskRCNN,greenhouse,fps,8
