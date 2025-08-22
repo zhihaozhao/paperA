@@ -48,18 +48,19 @@
 This review provides comprehensive quantitative benchmarking of visual perception and motion control algorithms for autonomous fruit-picking robots, analyzing 56 studies published between 2015 and 2024. We present experimental validation of algorithm family performance characteristics, including R-CNN, YOLO, hybrid approaches, and traditional methods across diverse agricultural environments. Statistical analysis reveals significant performance hierarchies with YOLO algorithms achieving optimal balance (90.9% accuracy, 84ms processing) for real-time commercial deployment, while R-CNN approaches provide superior precision (90.7% accuracy) for quality-critical applications. Motion planning analysis demonstrates success rates ranging from 58-92% across different algorithmic approaches, with DDPG and reinforcement learning showing enhanced adaptability for unstructured environments. Despite technological advances, persistent challenges remain in multi-sensor fusion, cost-effective scalability, and delicate fruit handling for commercial agricultural adoption.
 \end{abstract}
 
-\begin{IEEEkeywords}
+\begin{keywords}
 Agricultural robotics, autonomous fruit picking, computer vision, deep learning, motion planning, perception-action integration, R-CNN, YOLO, robotic harvesting, machine learning.
-\end{IEEEkeywords}
+\end{keywords}
 
 \titlepgskip=-21pt
 
 \maketitle
 
 \section{Introduction}
-Agricultural systems worldwide face unprecedented challenges including persistent labor shortages, escalating operational costs, and increasing demands for sustainable harvesting methodologies. Autonomous fruit-picking robots present a technologically advanced solution, leveraging artificial intelligence, computer vision, and robotic systems to enhance harvesting efficiency while addressing workforce limitations. This comprehensive review systematically examines the current technological readiness and performance capabilities of autonomous fruit-picking systems relative to human harvesting benchmarks.
+Farms worldwide are grappling with labor shortages, skyrocketing costs, and demands for sustainable methods. Autonomous fruit-picking robots offer a promising answer, drawing on AI, vision tech, and robotics that could streamline harvests while ease worker burdens. Just how close are we to robots that rival human pickers? This review dives in. 
+%Autonomous fruit-picking robots are revolutionizing agriculture by tackling labor shortages, rising costs, and the push for greater harvesting efficiency. These systems draw on cutting-edge tools like computer vision, machine learning (ML), robotics, and Internet of Things (IoT) to navigate varied farm settings, gently handle produce, and support human workers. 
 
-Recent technological breakthroughs in machine learning (ML), deep learning (DL), and multi-sensor fusion have significantly enhanced robotic systems' capabilities for object detection, localization, and precise manipulation. These developments have been systematically reviewed and summarized in Table ~\ref{tab:survey_summary}, demonstrating substantial progress in addressing traditional limitations in end-to-end system integration.
+Recent breakthroughs in machine learning (ML), deep learning (DL) and sensor fusion have enhanced robots' capacity to discern, localize, and manipulate objects with greater precision. These developments have been reviewed and summarized in Table ~\ref{tab:survey_summary}. They have also addressed deficiencies in end-to-end integration.
 %The advent of autonomous fruit-picking robots signifies a substantial advancement in agricultural technology, precipitated by the necessity to address labor shortages, escalating costs, and the demand for enhanced efficiency in fruit production.
 %Rapid advancements in robotics and artificial intelligence have catalyzed substantial interest in developing fruit-picking robots. These robots promise to revolutionize agricultural practices by automating labor-intensive fruit harvesting. Fruit-picking robots are autonomous systems engineered to identify, locate, and harvest fruits from various trees and plants. 
 %These systems leverage advanced technologies, including computer vision, machine learning (ML), robotics, and the Internet of Things (IoT), to operate efficiently in diverse agricultural environments, handle fruits delicately, and complement human labor.
@@ -133,7 +134,12 @@ and interconnections with environmental factors
 \footnotesize
 \caption{Expanded Review Scope and Core Contributions of Major Fruit-Picking Robot Survey Papers}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{0.03\textwidth}p{0.075\textwidth}*{7}{>{\centering\arraybackslash}p{0.07\textwidth}}p{0.22\textwidth}}
+\begin{tabular}{
+    p{0.03\textwidth}  % Ref.
+    p{0.075\textwidth}  % Year Range
+    *{7}{>{\centering\arraybackslash}p{0.07\textwidth}} % Focus Scope x7
+    p{0.22\textwidth}   % Summary
+}
 \hline
 \multirow{2}{*}{\textbf{Ref.}}
 & \multirow{2}{*}{\textbf{Range}}
@@ -862,7 +868,7 @@ Scalability and cost-effectiveness will be at the forefront of future developmen
 
 
 \section{Conclusion}
-This comprehensive survey has systematically analyzed the rapid evolution of autonomous fruit-picking robots, emphasizing critical advances in visual perception, motion control, and perception-action integration. Through systematic analysis of 56 recent studies (2015-2024) following PRISMA guidelines, we have identified significant technological breakthroughs while acknowledging persistent challenges that require sustained research attention.
+This comprehensive survey has systematically analyzed the rapid evolution of autonomous fruit-picking robots, emphasizing critical advances in visual perception, motion control, and perception-action integration. Through systematic analysis of 137 recent studies (2015-2024) following PRISMA guidelines, we have identified significant technological breakthroughs while acknowledging persistent challenges that require sustained research attention.
 
 Key findings reveal that deep learning models, particularly the R-CNN and YOLO series, have substantially enhanced fruit detection capabilities in complex agricultural environments. The evolution from YOLOv8 to YOLO11 has demonstrated remarkable improvements in real-time performance, multi-task capabilities, and adaptation to diverse orchard conditions. Similarly, advances in motion planning algorithms, including hierarchical trajectory planning and reinforcement learning approaches, have enabled more sophisticated navigation and collision avoidance in unstructured environments.
 
@@ -935,7 +941,7 @@ This work was supported by the Shandong Province Educational Research Project: G
 \hyphenpenalty=10000 % Almost no hypenation in biblio (higher value means less hypenation)
 %% Loading bibliography style file
 %\bibliographystyle{model1-num-names}
-\bibliographystyle{IEEEtran} 	
+\bibliographystyle{elsarticle-num} 	
 % \bibliographystyle{cas-model2-names}
 % \bibliographystyle{elsarticle-harv} 				
 % Loading bibliography database
