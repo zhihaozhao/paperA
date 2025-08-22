@@ -18,7 +18,8 @@
 %% double column output.
 
 %\documentclass[a4paper,fleqn,longmktitle]{cas-dc}
-\documentclass[journal]{IEEEtran}
+%\documentclass[journal]{IEEEtran}
+\documentclass{ieeeaccess}
 
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}  % Required for mathematical symbols
@@ -61,14 +62,8 @@
 % Removed \tsc definitions that cause compilation errors 
 
 \begin{document}
-%\history{Date of publication xxxx 00, 0000, date of current version xxxx 00, 0000.}
-% Elsevier-specific commands commented out for universal compatibility
-%\shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
-%\shortauthors{Author 1 and N.S. Ahmad}  
-%\footmarks{\url{https://doi.org/10.1016/j.jer.20xx.xx.xxx}\\
-%    0952-1976/\begingroup\tiny{©}\endgroup~2025 Elsevier B.V.\\
-%    This is an open access article under the CC BY-NC-ND license (\url{http://creativecommons.org/licenses/by-nc-nd/4.0/}).
-%}
+\history{Date of publication xxxx 00, 0000, date of current version xxxx 00, 0000.}
+\doi{10.1109/ACCESS.2024.0429000}
 
 
 % \bookmark[named = FirstPage]{A Comprehensive Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
@@ -86,31 +81,20 @@
 %   to fill through the whole text width and overflow into
 %   another line in the footnotes area of the first page.}
 
-\author[1,2]{Zhihao Zhao}[type=author, 
-                        auid=000,bioid=1,
-                        ]
-% \ead{wangshoude@usm.my}
-%\%credit{Conceptualization of this study, Methodology}
+\author{\uppercase{Zhihao Zhao}\authorrefmark{1},
+\uppercase{Yanxiang Zhao}\authorrefmark{2},
+\uppercase{Nur Syazreen Ahmad}\authorrefmark{1}}
 
-%\address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
+\address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia (e-mail: zzhaoooooo@gmail.com, syazreen@usm.my)}
+\address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
 
-\author[3]{Yanxiang Zhao}
-\author[1]{Nur Syazreen Ahmad}[type=author, 
-                        auid=001,bioid=2,
-                        orcid=0000-0001-7511-2910
-                        ]
-%\fnmark[1]
-%\%cormark[1]
-% \ead{syazreen@usm.my}
-%\%credit{Data curation, Writing-Original draft preparation}
+\tfootnote{This work was supported in part by research grants from Universiti Sains Malaysia.}
 
-%\address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
-%\address[3]{Central South University, Changsha, Hunan, 410083, China}
+\markboth
+{Zhao \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
+{Zhao \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
 
-%\markboth{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
-%{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
-
-%\corresp{Corresponding author: Nur Syazreen Ahmad (e-mail: syazreen@usm.my).}
+\corresp{Corresponding author: Nur Syazreen Ahmad (e-mail: syazreen@usm.my).}
 % \author[1,3]{CV Radhakrishnan}[type=editor, 
 %                         auid=000,bioid=1,
 %                         prefix=Sir,
@@ -199,10 +183,6 @@
 %\%accepted {xx Month 20xx}
 %\%online {xx Month 20xx}
 
-\begin{IEEEkeywords}
-Agricultural robotics, autonomous fruit picking, computer vision, deep learning, motion planning, perception-action integration, R-CNN, YOLO, robotic harvesting, machine learning
-\end{IEEEkeywords}
-
 \maketitle
 
 \begin{abstract}
@@ -214,10 +194,9 @@ Agricultural robotics, autonomous fruit picking, computer vision, deep learning,
 \end{IEEEkeywords}
 
 \section{Introduction}
-Farms worldwide are grappling with labor shortages, skyrocketing costs, and demands for sustainable methods. Autonomous fruit-picking robots offer a promising answer, drawing on AI, vision tech, and robotics that could streamline harvests while ease worker burdens. Just how close are we to robots that rival human pickers? This review dives in. 
-%Autonomous fruit-picking robots are revolutionizing agriculture by tackling labor shortages, rising costs, and the push for greater harvesting efficiency. These systems draw on cutting-edge tools like computer vision, machine learning (ML), robotics, and Internet of Things (IoT) to navigate varied farm settings, gently handle produce, and support human workers. 
+Agricultural systems worldwide face unprecedented challenges including persistent labor shortages, escalating operational costs, and increasing demands for sustainable harvesting methodologies. Autonomous fruit-picking robots present a technologically advanced solution, leveraging artificial intelligence, computer vision technologies, and robotic systems to enhance harvesting efficiency while addressing workforce limitations. This comprehensive review systematically examines the current technological readiness and performance capabilities of autonomous fruit-picking systems relative to human harvesting benchmarks.
 
-Recent breakthroughs in machine learning (ML), deep learning (DL) and sensor fusion have enhanced robots' capacity to discern, localize, and manipulate objects with greater precision. These developments have been reviewed and summarized in Table ~\ref{tab:survey_summary}. They have also addressed deficiencies in end-to-end integration.
+Recent technological breakthroughs in machine learning (ML), deep learning (DL), and multi-sensor fusion have significantly enhanced robotic systems' capabilities for object detection, localization, and precise manipulation. These developments have been systematically reviewed and summarized in Table ~\ref{tab:survey_summary}, demonstrating substantial progress in addressing traditional limitations in end-to-end system integration.
 %The advent of autonomous fruit-picking robots signifies a substantial advancement in agricultural technology, precipitated by the necessity to address labor shortages, escalating costs, and the demand for enhanced efficiency in fruit production.
 %Rapid advancements in robotics and artificial intelligence have catalyzed substantial interest in developing fruit-picking robots. These robots promise to revolutionize agricultural practices by automating labor-intensive fruit harvesting. Fruit-picking robots are autonomous systems engineered to identify, locate, and harvest fruits from various trees and plants. 
 %These systems leverage advanced technologies, including computer vision, machine learning (ML), robotics, and the Internet of Things (IoT), to operate efficiently in diverse agricultural environments, handle fruits delicately, and complement human labor.
@@ -1111,4 +1090,5 @@ This work was supported by the Shandong Province Educational Research Project: G
 
 \vskip6pt
 
+\EOD
 \end{document}
