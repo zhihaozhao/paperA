@@ -329,7 +329,7 @@ class MetaAnalysisExperiments:
                 print(f"  • Environmental impact significant: p={env_anova['p_value']:.3f}")
         
         # Save results
-        with open('meta_analysis_results.json', 'w') as f:
+        with open('meta_analysis_results.json', 'w', encoding='utf-8') as f:
             # Convert numpy types to native Python types for JSON serialization
             json_results = {}
             for key, value in self.results.items():

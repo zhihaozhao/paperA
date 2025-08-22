@@ -57,7 +57,7 @@ class MetaAnalysisFigureGenerator:
         """Load data and analysis results"""
         try:
             self.df = pd.read_csv(self.data_file)
-            with open(self.results_file, 'r') as f:
+            with open(self.results_file, 'r', encoding='utf-8') as f:
                 self.results = json.load(f)
             print(f"Loaded data: {len(self.df)} studies")
             return True

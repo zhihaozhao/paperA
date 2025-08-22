@@ -210,7 +210,7 @@ class LiteratureDataExtractor:
                 'fruit_types': self.processed_data['fruit_type'].value_counts().to_dict()
             }
             
-            with open(summary_path, 'w') as f:
+            with open(summary_path, 'w', encoding='utf-8') as f:
                 json.dump(summary, f, indent=2)
             print(f"Summary saved to {summary_path}")
         else:

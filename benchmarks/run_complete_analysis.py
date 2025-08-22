@@ -226,7 +226,7 @@ class CompletePipeline:
 """
         
         report_file = self.output_dir / 'integration_report.md'
-        with open(report_file, 'w') as f:
+        with open(report_file, 'w', encoding='utf-8') as f:
             f.write(report_content)
         
         print(f"✅ INTEGRATION REPORT CREATED")
