@@ -154,7 +154,7 @@ class CompletePipeline:
         if matlab_script.exists():
             print("MATLAB script available for additional analysis:")
             print(f"  📄 Script: {matlab_script}")
-                         print(f"  🚀 Run: matlab -batch \"cd('{benchmarks_dir}'); motion_control_analysis\"")
+            print(f"  🚀 Run: matlab -batch \"cd('{benchmarks_dir}'); motion_control_analysis\"")
             print("  ⚠️  Requires MATLAB with Statistics Toolbox")
         
         return True
