@@ -18,7 +18,7 @@
 %% double column output.
 
 %\documentclass[a4paper,fleqn,longmktitle]{cas-dc}
-\documentclass{ieeeaccess}
+\documentclass[journal]{IEEEtran}
 
 \usepackage{cite}
 
@@ -102,10 +102,10 @@
 \address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
 \address[3]{Central South University, Changsha, Hunan, 410083, China}
 
-\markboth{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
-{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
+%\markboth{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
+%{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
 
-\corresp{Corresponding author: Nur Syazreen Ahmad (e-mail: syazreen@usm.my).}
+%\corresp{Corresponding author: Nur Syazreen Ahmad (e-mail: syazreen@usm.my).}
 % \author[1,3]{CV Radhakrishnan}[type=editor, 
 %                         auid=000,bioid=1,
 %                         prefix=Sir,
@@ -198,13 +198,9 @@ Learning-based approaches, including transfer learning and reinforcement learnin
 %\%accepted {xx Month 20xx}
 %\%online {xx Month 20xx}
 
-\begin{keywords}
- Autonomous Fruit-Picking Robots,
-Regions with Convolutional Neural Networks (R-CNN),
-You Only Look Once (YOLO),
-Motion Planning,
-Transfer Learning.
-\end{keywords}
+\begin{IEEEkeywords}
+Agricultural robotics, autonomous fruit picking, computer vision, deep learning, motion planning, perception-action integration, R-CNN, YOLO, robotic harvesting, machine learning
+\end{IEEEkeywords}
 
 \maketitle
 
@@ -1042,7 +1038,7 @@ This work was supported by the Shandong Province Educational Research Project: G
 % \printcredits
 \clearpage
 % It is suggested to add the DOI of the each possible reference using the url site style as in the given example.
-\pdfbookmark[section]{References}{} % Include bookmark in the pdf
+%\pdfbookmark[section]{References}{} % Include bookmark in the pdf
 \hyphenpenalty=10000 % Almost no hypenation in biblio (higher value means less hypenation)
 %% Loading bibliography style file
 %\bibliographystyle{model1-num-names}
