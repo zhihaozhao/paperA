@@ -484,14 +484,18 @@ Figure~\ref{fig:meta_analysis_ieee} presents our comprehensive experimental vali
 \begin{figure*}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{fig_comprehensive_meta_analysis.pdf}
-\caption{Quantitative meta-analysis of visual perception algorithms across 56 studies (2015-2024).}
+\caption{Quantitative performance benchmarks and experimental validation (56 studies).}
 \label{fig:meta_analysis_ieee}
 \end{figure*}
 
 \subsection{Experimental Validation and Quantitative Performance Benchmarks}
-Our rigorous experimental validation provides comprehensive quantitative evidence for algorithm performance characteristics across diverse agricultural applications. The benchmarking reveals significant performance differences among algorithm families, with statistical testing confirming the superiority of modern deep learning approaches over traditional computer vision methods. YOLO algorithms demonstrate exceptional performance optimization, achieving 90.9% detection accuracy with 84ms processing latency that enables real-time autonomous operations. This combination of high accuracy and computational efficiency represents a breakthrough in practical deployment capabilities for commercial fruit-picking systems.
+Figure~\ref{fig:meta_analysis_ieee} provides comprehensive experimental validation of algorithm performance across diverse agricultural deployment scenarios. The quantitative analysis reveals how different algorithm families have evolved to serve distinct operational requirements in autonomous fruit-picking systems. Each family demonstrates unique optimization characteristics that reflect fundamental trade-offs between detection accuracy, computational efficiency, and environmental robustness.
 
-Comparative analysis reveals distinct algorithm family characteristics that inform deployment strategies for different agricultural scenarios. R-CNN approaches achieve the highest detection precision at 90.7% accuracy, though requiring 226ms computational cycles that may constrain real-time applications. The precision advantage makes R-CNN methods particularly valuable for quality-critical operations where detection errors carry significant economic consequences. Traditional methods, while achieving lower average accuracy (83.7%), provide computational efficiency and interpretability benefits that remain relevant for resource-constrained agricultural environments. Hybrid approaches demonstrate balanced performance across multiple criteria, suggesting their utility for adaptive systems requiring consistent operation across variable environmental conditions.
+The experimental evidence confirms that algorithm family selection significantly impacts deployment success across different agricultural contexts. YOLO algorithms achieve exceptional performance optimization through end-to-end architecture design, delivering 90.9% detection accuracy with 84ms processing latency that enables real-time autonomous operations in commercial harvesting scenarios. This performance breakthrough addresses critical deployment barriers that previously limited autonomous agricultural systems to controlled environments.
+
+R-CNN approaches demonstrate alternative optimization strategies focused on detection precision rather than processing speed. These methods achieve 90.7% accuracy through multi-stage processing architectures that require 226ms computational cycles. While this latency constrains real-time applications, the precision advantage proves valuable for quality-critical operations where detection errors carry significant economic consequences. Hybrid approaches bridge traditional computer vision robustness with modern deep learning capabilities, achieving balanced performance that adapts effectively to variable environmental conditions encountered in diverse agricultural settings.
+
+Table~\ref{tab:ieee_meta_summary} consolidates these experimental findings into quantitative benchmarks for evidence-based algorithm selection in commercial fruit-picking applications.
 
 Table~\ref{tab:ieee_meta_summary} presents comprehensive experimental validation results with statistical significance testing, confidence intervals, and performance trend analysis for evidence-based algorithm selection in commercial fruit-picking applications.
 
