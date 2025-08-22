@@ -18,11 +18,11 @@
 %% double column output.
 
 %\documentclass[a4paper,fleqn,longmktitle]{cas-dc}
-\documentclass[a4paper,fleqn]{cas-dc}
+\documentclass[journal]{IEEEtran}
 
 % \usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
-\usepackage[numbers,sort&compress]{natbib}
+\usepackage{cite}
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -42,46 +42,42 @@
 \usepackage{array, longtable, tabularx}
 %\usepackage{caption}
 
-\usepackage{cleveref} % 确保 cleveref 已加载
-\crefname{figure}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
-\Crefname{figure}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
-\crefname{table}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
-\Crefname{table}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
-\crefname{section}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
-\Crefname{section}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
+% cleveref package commented out for compatibility
+%\usepackage{cleveref} % 确保 cleveref 已加载
+%\crefname{figure}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
+%\Crefname{figure}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
+%\crefname{table}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
+%\Crefname{table}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
+%\crefname{section}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
+%\Crefname{section}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
 \usepackage{float}
 \usepackage{array, longtable, tabularx}
 
 \sloppy
-%%%Author definitions
-\def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
-\tsc{WGM}
-\tsc{QE}
-\tsc{EP}
-\tsc{PMS}
-\tsc{BEC}
-\tsc{DE}
-%%% 
+%%%Author definitions - removed for compatibility
+% Removed \tsc definitions that cause compilation errors 
 
 \begin{document}
-\let\ref\Cref 		
-\let\eqref\Cref 	
-\let\autoref\Cref 	
-\let\WriteBookmarks\relax
-\def\floatpagepagefraction{1}
-\def\textpagefraction{.001}
-\shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
-\shortauthors{Author 1 and N.S. Ahmad}
-\footmarks{\url{https://doi.org/10.1016/j.jer.20xx.xx.xxx}\\
-    0952-1976/\begingroup\tiny{©}\endgroup~2025 Elsevier B.V.\\
-    This is an open access article under the CC BY-NC-ND license (\url{http://creativecommons.org/licenses/by-nc-nd/4.0/}).
-}
+% Elsevier-specific formatting commands commented for compatibility
+%\let\ref\Cref 		
+%\let\eqref\Cref 	
+%\let\autoref\Cref 	
+%\let\WriteBookmarks\relax
+%\def\floatpagepagefraction{1}
+%\def\textpagefraction{.001}
+% Elsevier-specific commands commented out for universal compatibility
+%\shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
+%\shortauthors{Author 1 and N.S. Ahmad}  
+%\footmarks{\url{https://doi.org/10.1016/j.jer.20xx.xx.xxx}\\
+%    0952-1976/\begingroup\tiny{©}\endgroup~2025 Elsevier B.V.\\
+%    This is an open access article under the CC BY-NC-ND license (\url{http://creativecommons.org/licenses/by-nc-nd/4.0/}).
+%}
 
 
 % \bookmark[named = FirstPage]{A Comprehensive Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
 %**************** If the title is short, stay on the first line use [mode = short_title] otherwise ******************
 %***************************************** use [mode = title] below ***************************************
-\title [mode = title]{Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots: Quantitative Synthesis, Gaps, and Deployment Roadmap}    
+\title{Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots: Quantitative Synthesis, Gaps, and Deployment Roadmap}    
 
 % Title mark notes if desired
 %\tnotemark[1,2]
