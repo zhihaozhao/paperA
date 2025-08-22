@@ -78,8 +78,8 @@ class MetaAnalysisFigureGenerator:
         print("Creating Figure 4: Visual Detection Meta-Analysis...")
         
         fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-        fig.suptitle('Visual Detection Performance Meta-Analysis (137 Studies, 2015-2024)', 
-                    fontsize=16, fontweight='bold')
+        fig.suptitle('Visual Detection Performance Meta-Analysis (56 Studies, 2015-2024)', 
+                    fontsize=16, fontweight='bold', y=0.98)
         
         # Panel A: Performance Evolution Over Time
         ax1 = axes[0, 0]
@@ -127,7 +127,7 @@ class MetaAnalysisFigureGenerator:
         ax2.set_ylabel('Detection Accuracy (%)')
         ax2.set_title('(B) Algorithm Family Performance Comparison')
         ax2.grid(True, alpha=0.3)
-        plt.setp(ax2.get_xticklabels(), rotation=45, ha='right')
+        plt.setp(ax2.get_xticklabels(), rotation=45, ha='right', fontsize=10)
         
         # Panel C: Speed vs Accuracy Trade-off
         ax3 = axes[1, 0]
@@ -150,6 +150,10 @@ class MetaAnalysisFigureGenerator:
         ax3.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
         ax3.grid(True, alpha=0.3)
         
+        # Fix x-axis label overlap
+        ax3.tick_params(axis='x', rotation=45, labelsize=10)
+        ax3.locator_params(axis='x', nbins=6)  # Limit number of x-axis ticks
+        
         # Panel D: Environmental Performance Heatmap
         ax4 = axes[1, 1]
         
@@ -164,7 +168,10 @@ class MetaAnalysisFigureGenerator:
             ax4.set_xlabel('Algorithm Family')
             ax4.set_ylabel('Environment Type')
         
-        plt.tight_layout()
+        # Adjust spacing to prevent overlaps
+        plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Leave space for suptitle and x-labels
+        plt.subplots_adjust(hspace=0.4, wspace=0.4)  # Increase spacing between subplots
+        
         plt.savefig('fig_meta_analysis_visual_detection.png', dpi=300, bbox_inches='tight')
         plt.savefig('fig_meta_analysis_visual_detection.pdf', bbox_inches='tight')
         print("Figure 4 saved: fig_meta_analysis_visual_detection.png/.pdf")
