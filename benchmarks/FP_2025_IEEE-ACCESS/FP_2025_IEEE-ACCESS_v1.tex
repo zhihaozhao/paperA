@@ -18,11 +18,10 @@
 %% double column output.
 
 %\documentclass[a4paper,fleqn,longmktitle]{cas-dc}
-\documentclass[a4paper,fleqn]{cas-dc}
+\documentclass[journal]{IEEEtran}
 
-% \usepackage[authoryear,longnamesfirst]{natbib}
-%\usepackage[authoryear]{natbib}
-\usepackage[numbers,sort&compress]{natbib}
+% IEEE packages
+\usepackage{cite}
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -81,7 +80,7 @@
 % \bookmark[named = FirstPage]{A Comprehensive Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
 %**************** If the title is short, stay on the first line use [mode = short_title] otherwise ******************
 %***************************************** use [mode = title] below ***************************************
-\title [mode = title]{Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots: Quantitative Synthesis, Gaps, and Deployment Roadmap}    
+\title [mode = title]{Advances in Autonomous Fruit-Picking Robots: Methodologies, Technologies, and Challenges}    
 
 % Title mark notes if desired
 %\tnotemark[1,2]
@@ -186,6 +185,10 @@ This review synthesizes recent advances in autonomous fruit-picking robots with 
 
 Learning-based approaches, including transfer learning and reinforcement learning (e.g., Deep Deterministic Policy Gradient), have enhanced the generalizability of robotic arm motion planning for collision-free harvesting. Innovative path-planning algorithms and robust control strategies enable autonomous robots to navigate unstructured environments and compensate for real-time disturbances, increasing system reliability. Despite these advances, persistent challenges remain in multi-source data integration, delicate fruit handling, and cost-effective scalability. This survey provides a comprehensive evaluation of technological progress, identifies critical research gaps in deployment and scalability, and proposes future directions to accelerate commercial adoption in diverse agricultural contexts.
 \end{abstract}
+
+\begin{IEEEkeywords}
+Agricultural robotics, autonomous fruit picking, computer vision, deep learning, motion planning, perception-action integration, R-CNN, YOLO, robotic harvesting, machine learning
+\end{IEEEkeywords}
 
 % If any graphical abstract is needed
 %\begin{graphicalabstract}
@@ -1100,7 +1103,7 @@ This work was supported by the Shandong Province Educational Research Project: G
 \hyphenpenalty=10000 % Almost no hypenation in biblio (higher value means less hypenation)
 %% Loading bibliography style file
 %\bibliographystyle{model1-num-names}
-\bibliographystyle{elsarticle-num} 	
+\bibliographystyle{IEEEtran} 	
 % \bibliographystyle{cas-model2-names}
 % \bibliographystyle{elsarticle-harv} 				
 % Loading bibliography database
