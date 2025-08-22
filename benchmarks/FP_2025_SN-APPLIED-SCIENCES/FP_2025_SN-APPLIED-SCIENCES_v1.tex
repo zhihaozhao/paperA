@@ -81,7 +81,7 @@
 % \bookmark[named = FirstPage]{A Comprehensive Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
 %**************** If the title is short, stay on the first line use [mode = short_title] otherwise ******************
 %***************************************** use [mode = title] below ***************************************
-\title [mode = title]{Systematic Review of Autonomous Fruit-Picking Technologies: From Perception to Action in Agricultural Robotics}    
+\title [mode = title]{Advances in Autonomous Fruit-Picking Robots: Methodologies, Technologies, and Challenges}    
 
 % Title mark notes if desired
 %\tnotemark[1,2]
@@ -181,14 +181,10 @@
 
 \nonumnote{E-mail address: \href{mailto:syazreen@usm.my}{syazreen@usm.my} (N.S. Ahmad).}
 
-\begin{abstract}
-\textbf{Background:} Agricultural sectors globally face critical challenges including labor shortages and escalating operational costs, driving the need for autonomous fruit-picking robotic solutions. Despite significant technological advances, comprehensive systematic reviews examining the integration of perception systems with motion control in agricultural robotics remain limited.
+\begin{abstract} 
+This review synthesizes recent advances in autonomous fruit-picking robots with a focus on visual perception, path planning, and motion control. Following PRISMA guidelines, we systematically analyzed 137 studies published between 2015 and 2024. We critically compare learning-based perception approaches—especially YOLO- and R-CNN–family methods—under orchard-specific conditions (occlusion, variable lighting, small targets), and quantify trade-offs in accuracy and efficiency across representative platforms. We further examine perception-to-action integration for motion planning and control, summarizing success rate, harvest cycle time, and damage rate reported in field and greenhouse trials. 
 
-\textbf{Methods:} This systematic review follows PRISMA guidelines to analyze 137 peer-reviewed studies published between 2015 and 2024. We systematically searched Scopus, Web of Science, and ScienceDirect databases using predefined inclusion/exclusion criteria. We critically examined learning-based perception approaches (R-CNN and YOLO families) and motion planning algorithms, quantifying performance trade-offs across diverse orchard conditions.
-
-\textbf{Results:} Deep learning models demonstrated substantial improvements in fruit detection capabilities, with YOLO series achieving 84-99\% detection accuracy and R-CNN family showing superior instance segmentation performance. Motion planning algorithms, including A*, Bi-RRT, and DDPG, exhibited success rates ranging from 58-92\% in field applications. Harvesting cycle times varied from 4-24 seconds across different fruits and environmental conditions. However, significant challenges persist in occlusion handling, multi-sensor fusion, and cost-effective scalability.
-
-\textbf{Conclusions:} While substantial technological progress has been achieved in individual components, integration of perception-to-action pipelines remains a critical challenge. Future research priorities include developing neural architecture search methods, implementing adaptive fusion algorithms, and establishing standardized benchmarks to accelerate commercial deployment across diverse agricultural contexts.
+Learning-based approaches, including transfer learning and reinforcement learning (e.g., Deep Deterministic Policy Gradient), have enhanced the generalizability of robotic arm motion planning for collision-free harvesting. Innovative path-planning algorithms and robust control strategies enable autonomous robots to navigate unstructured environments and compensate for real-time disturbances, increasing system reliability. Despite these advances, persistent challenges remain in multi-source data integration, delicate fruit handling, and cost-effective scalability. This survey provides a comprehensive evaluation of technological progress, identifies critical research gaps in deployment and scalability, and proposes future directions to accelerate commercial adoption in diverse agricultural contexts.
 \end{abstract}
 
 % If any graphical abstract is needed
@@ -210,7 +206,11 @@
 \online {xx Month 20xx}
 
 \begin{keywords}
-Agricultural robotics, Computer vision, Deep learning, Motion planning, Systematic review, Autonomous systems
+ Autonomous Fruit-Picking Robots,
+Regions with Convolutional Neural Networks (R-CNN),
+You Only Look Once (YOLO),
+Motion Planning,
+Transfer Learning.
 \end{keywords}
 
 \maketitle
@@ -345,25 +345,7 @@ This work & 2015-2024
 \label{tab:survey_summary}
 \end{table*}
 
-\iffalse
-Existing reviews summarized in Table~\ref{tab:survey_summary} have laid valuable groundwork in autonomous fruit-picking robotics, however, they predominantly focus on fragmented components: individual sensor deployments (e.g., IoT or remote sensing in isolation \cite{mohamed2021smart,martos2021ensuring}), standalone model advancements (e.g., MTA-YOLACT for segmentation \cite{li2023mta}), or single-algorithm path planning (e.g., hierarchical trajectory methods \cite{liu2024hierarchical}). 
-%While these works have advanced understanding of multi-sensor fusion, DL-based detection, and motion control techniques, 
-They lack a critical systems-level perspective—failing to address how these components interact as an integrated ecosystem.
-Notably, prior reviews overlook three pivotal gaps: (1) they rarely explore how multi-sensor fusion (e.g., LiDAR-vision integration \cite{liu2024hierarchical}) can be strategically paired with DL models to enhance robustness against real-world variability like occlusion or lighting changes; (2) they insufficiently connect visual perception (e.g., ripeness detection \cite{hou2023overview}) to context-aware motion planning tailored for unstructured orchards; and (3) they neglect the end-to-end optimization of collaborative systems (e.g., multi-arm coordination \cite{li2023multi}) that bridge perception, planning, and actuation.
 
-This survey addresses these limitations by adopting a holistic "perception-action" framework. It uniquely emphasizes the synergistic integration of: (1) multi-modality sensor fusion (combining IoT, remote sensing, and vision \cite{mohamed2021smart,martos2021ensuring,liu2024hierarchical}) with DL models (e.g., evolved YOLO architectures) to mitigate detection fragility in dynamic environments; (2) visual perception outputs (e.g., fruit stem localization \cite{li2023mta}) with adaptive path planning (e.g., LiDAR-fused trajectory optimization \cite{liu2024hierarchical}) for seamless operation in unstructured terrain; and (3) collaborative robotics principles \cite{lytridis2021overview,li2023multi} with system-level efficiency analysis to address scalability challenges.
-
-
-The core contributions of this survey are thus:
-\begin{itemize}
-\item A systematic analysis of how multi-sensor fusion strategies can be optimally aligned with DL models to enhance detection robustness across diverse agricultural scenarios, filling the gap in fragmented sensor-model discussions.
-\item  A comprehensive quantitative analysis on fruit detection models, systematically comparing architectural trade-offs in accuracy (e.g., 87.83\%-99.5\% AP and efficiency (e.g., 5 ms-0.467 s per image) across diverse agricultural scenarios, and establishing decision frameworks for model selection based on specific orchard characteristics (such as greenhouse/outdoor environments, fruit density, and lighting conditions).
-\item A systematic dissection of three core performance metrics (reliability, precision, rapidity) in fruit detection over the past decade, quantifying their strengths (e.g., 96\% detection rate for ripe tomatoes via color-based methods, 28 ms/image inference speed for apples) and limitations (e.g., 5.27\% relative error in occluded citrus contour analysis, speed-accuracy trade-off in small fruit detection), while establishing interconnections between metrics to guide holistic performance optimization in agricultural robotics.
-\item A comprehensive synthesis of robotic motion control systems for fruit harvesting , spanning diverse fruits (apple, sweet pepper, strawberry, etc.) and control strategies (multi-DOF manipulators, dual-arm coordination, visual servoing), which quantifies performance gaps (e.g., 18-84\% success rate variance, 4-24 s cycle time range) and identifies critical interconnections between motion planning algorithms, environmental complexity, and harvesting efficiency to guide robotic system optimization in unstructured agricultural settings.
-%\item An integrated exploration of perception-to-action pipelines, connecting visual insights to motion planning algorithms specifically tailored for orchard complexity.
-%\item A critical evaluation of collaborative robotic systems that unify multi-arm coordination with cost-effective design principles, addressing scalability barriers overlooked in prior component-focused reviews.
-\end{itemize}
-\fi
 
 The main structure of this paper is outlined in Figure \ref{fig:struct}; accordingly, the remainder of the review is organized as follows. Section II describes the overall methodology, including the search strategy, paper selection, and synthesis of findings. Section III provides a synthesis and comparative discussion of data acquisition approaches through multi-sensor fusion.
 %analysis of existing fruit-picking methodologies, focusing on emerging challenges, the evolution of AI vision methods, and strategies to overcome limitations in detection and motion planning. 
@@ -675,35 +657,6 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 
 	\end{tabular}
 \end{table*}
-	
-\iffalse
-\begin{table*}[H]
-	\centering
-	\footnotesize 
-	\caption{Summary of YOLO Family Approaches for Fruit-Picking since 2019 (part 2)} 
-	\label{tab:yolo-based} 
-	\begin{tabular}{p{0.03\linewidth} p{0.03\linewidth} p{0.06\linewidth} p{0.06\linewidth} p{0.12\linewidth} p{0.12\linewidth} p{0.12\linewidth} p{0.28\linewidth}}
-	\toprule
-	\textbf{Ref.} & \textbf{Year} & \textbf{Fruit Type} & \textbf{Model Type} & \textbf{Main Gap} & \textbf{Performance} & \textbf{Datasets} & \textbf{Key Insights} \\ \midrule
-\cite{liu2020yolo}  & 2021 & Tomato & YOLOv3 & Detection across growth stages & Effective in complex environments & Farming environments & Optimized for agricultural applications, real-time capable \\ \midrule
-\cite{lawal2021tomato} & 2023 & Tomato & Modified YOLOv3 & Greenhouse environment & SSD MobileNet v2 top performer & Greenhouse dataset & Compares SSD and YOLO models \\ \midrule
-\cite{gai2023detection} & 2023 & Cherry & Improved YOLO-v4 & Detection in varying conditions & High AP & Controlled conditions & Elevated with DenseNet; circular bounding boxes \\ \midrule
-\cite{kuznetsova2020using} & 2023 & Apple & YOLOv3 & Pre-/Post-Processing & High efficiency & Orchard dataset & Advanced pre-/post-processing \\ \midrule
-\cite{magalhaes2021evaluating} & 2023 & Tomato & YOLO & Greenhouse accuracy & Superior detection & Controlled conditions & Improved accuracy and speed \\ \midrule
-\cite{li2021real} & 2023 & Grape & YOLOv4-Tiny & Complex background & F1-score 90.47\% & Vineyard images & Real-time, low computational cost \\ \midrule
-\cite{tang2023fruit} & 2023 & Camellia oleifera & YOLOv4-Tiny & Precise positioning & AP 92.07\% & Orchard dataset & Combines DL with stereo vision \\ \midrule
-\cite{sozzi2022automatic} & 2023 & Grape & YOLOv3, YOLOv4, YOLOv5 & Bunch detection & Best F1-score 0.77 & Vineyard dataset & Effective in vineyard settings \\ \midrule
-\cite{jun2021towards} & 2021 & Tomato & YOLOv3 with RGB-D sensors & Accurate and efficient harvesting in greenhouses & 95\% detection precision; 5.9 seconds per tomato & 770 images from greenhouse environment & Combines 3D perception and a novel end-effector design to enhance efficiency and reduce fruit damage during harvesting. \\ \midrule
-\cite{yu2020real} & 2020 & Strawberry & R-YOLO & Localization in narrow spaces & Recognition rate 94.43\%, Recall 93.46\% & Ridge-planting strawberry fields & Utilizes rotated YOLO for precise localization; optimizes real-time performance on embedded systems \\  \midrule
-\cite{bresilla2019single}& 2019 & Apple, Pear & Modified YOLO & Real-time detection in complex backgrounds & Over 90\% accuracy, 20+ FPS & Orchard images & Optimizes YOLO for fast, accurate fruit detection suitable for robotic harvesting \\  \midrule
-\cite{yu2024object} & 2024 & Citrus & Improved YOLOv5 & Leaf occlusion, overlapping fruits, and variable lighting conditions  &  A high detection precision of 95.83\% and a mAP of 79.68\% & Orchard dataset & Refined the YOLOv5 model by introducing receptive field convolutions with full 3D weights (RFCF), addressing the limitations from parameter sharing in traditional convolution operations and thus improving detection accuracy.. \\ \midrule  
-\cite{ZHOU2024110} & 2024 & \textit{C. oleifera} & YOLOv8x & 3D positioning for robotic harvesting & mAP50: 0.96 & Annotated \textit{C. oleifera} dataset (1012) & Integration of depth cues with advanced 2D detection delivers sub-centimeter positioning accuracy for harvesting robots. \\ \midrule 
-\cite{ZHANG2024108780} & 2024 & Fruit tree trunk & Improved YOLOv5 & Trunk detection for orchard operation robots & mAP=97.1\% & Natural orchard (1354 images) & Hybrid attention modules bolster trunk recognition under variable illumination and occlusion conditions. \\ \midrule  
-\cite{ZHANG2024108836} & 2024 & Citrus & MFAF-YOLO & Real-time detection in complex citrus orchards & mAP=90.2\%, AP (First priority): 93.2\%, AP (Second priority): 87.3\% & Real-field citrus images & Multi-frequency attention mechanisms dynamically adapt to different citrus growth stages and environmental conditions. \\ \midrule  
-\cite{LU2024108721} & 2024 & Citrus & Yolo-FD & Citrus peel defect and fruit morphology detection & mAP=98.7\%, Morphology Accuracy: 91.42\% & N/A & Dual-branch design enables simultaneous defect detection and morphological analysis for refined quality control. \\ \bottomrule
-\end{tabular}
-\end{table*}
-\fi
 \subsection{Segmentation Techniques: Enhancing Precision in Complex Environments}
 %Recent advancements in DL have notably improved fruit detection and segmentation, addressing longstanding challenges in agricultural robotics such as varying lighting, occlusion, and complex backgrounds. Through continual development and the adaptation of neural network architectures, segmentation networks now support enhanced autonomy and operational performance in fruit-picking robots.
 Transitioning from bounding-box-based detection in YOLO to more granular analysis, semantic and instance segmentation techniques further refine visual perception by classifying pixels and segmenting individual instances. Unlike earlier subsections that focused on detection pipelines, this part emphasizes segmentation's role in enabling robots to assess fruit maturity and plan occlusion-aware paths.
