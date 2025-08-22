@@ -562,19 +562,6 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 \begin{table*}[htbp]
 	\centering
 	\footnotesize 
-	\addtocounter{table}{-1}
-	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024 (part 2)} 
-	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
-	\toprule
-	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
-
-	\cite{chu2021deep} \newline 2021 & Apples (Gala, Blondee) \newline Outdoor non-structural orchard & Suppression Mask R-CNN (ResNet-101-FPN) & Robust detection under varying lighting and occlusion for robotic harvesting & - F1-score: 0.905 (C1 configuration) \newline - Precision: 0.880, Recall: 0.931 (C1) \newline - Detection time: 0.25 s/frame \newline - Outperforms Mask R-CNN (ResNet152) by 0.047 in F1-score & - Back lighting reduces precision (0.84 vs. 0.89 under overcast) \newline - Missed detections in heavy occlusion (example shows 3 missed apples) \newline - Relies on manual rectangular annotation (1,500 images) \\ \midrule
-	\cite{gao2020multi} \newline 2020 & Apples (Scifresh) \newline Outdoor non-structural orchard (SNAP system) & Faster R-CNN (VGG16) & Multi-class detection (non-occluded, leaf-occluded, branch/wire-occluded, fruit-occluded) for robotic harvesting strategy & - mAP=0.879 across four classes \newline - AP for non-occluded: 0.909; branch/wire-occluded: 0.858 \newline - Processing time: 0.241 s/image \newline - Outperforms ZFNet by 8.6\% in mAP & - Lowest AP for fruit-occluded class (0.848) \newline - Detection speed 1.5x slower than ZFNet (0.167 s/image) \newline - Missed detection of branch/wire-occluded fruits in dense canopies \\ \midrule
-	\cite{ge2019fruit} \newline 2019 & Strawberries \newline Table-top cultivation (structured environment) & Mask R-CNN (ResNet101) + safety region algorithms & 3D localization and safe manipulation region identification (strap/table avoidance) & - Ripe strawberry AP: 0.90; F1-score: 0.94 (confidence=0.9) \newline - Safe region accuracy: 96.9\% (strap), 97.3\% (table) \newline - Picking success rate: 74.1\% (optimized localization) \newline - Total processing time: 0.82 s/image & - Unripe strawberry AP lower (0.72) than ripe \newline - Original strap mask method accuracy only 83.7\% \newline - Picking rate drops to 51.8\% with raw point localization \newline - Limited to structured table-top environments \\ 
-
-	\bottomrule
-	\end{tabular}
-\end{table*}
 
 
 Developments like Mask R-CNN ~\cite{he2017mask} extended this capability for pixel-level segmentation as shown in Figure ~\ref{fig:mask_rcnn}. A key insight is the addition of the mask prediction branch, which enhances segmentation accuracy by 15-20\% in occluded orchard scenes, directly supporting improved robotic path planning,
@@ -659,22 +646,6 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 \begin{table*}[htbp]
 	\centering
 	\footnotesize 
-	\addtocounter{table}{-1}
-	\caption{Summary of YOLO Family Approaches for Fruit-Picking since 2019 (part 2)} 
-	%\addtocounter{table}{-1}
-	%\addtocounter{table}{-1}
-	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
-	\toprule
-	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
-	 \cite{yu2024object} \newline 2024 & Citrus \newline Natural orchard & YOLOv5-citrus & Multi-channel information fusion + state classification & - 2.8\% higher in mAP than original YOLOv5 \newline - Precision 3.7\% higher than original YOLOv5 \newline - 3D positioning error: (1.97 mm, 0.36 mm, 9.63 mm) & - Training requires 4200 images (700 original + 3500 augmented) \newline - Severe occlusion may misclassify "difficult-to-pick" fruits \newline - Slightly slower inference due to added modules (no specific speed given) \\ \midrule
-	\cite{ZHOU2024110} \newline 2024 & Camellia oleifera \newline Outdoor orchard & YOLOv8x + binocular vision & 3D positioning of grabbing points via transfer learning & - mAP$_{50}$=0.96 (full dataset); 0.95 with 200 samples (transfer learning) \newline - 3D coordinate error <2.1 cm on all axes \newline - 5 FPS on Jetson Orin & - Severe branch occlusion reduces recall by 5.05\% \newline - Shading increases positioning error by 0.044 mm \newline - Requires 150 epochs for convergence \\ \midrule
-	\cite{ZHANG2024108780} \newline 2024 & Tree trunks, person, mast \newline Natural orchard & Improved YOLOv5 & GhostNet V2 + SIoU + Coordinate Attention (CA) & - mAP=97.1\%, 198.2 ms/image \newline - Model size reduced by 43.6\% (7.7 MB) \newline - DBSCAN clustering accuracy=89.2\% & - Supporter AP (94.7\%) 3.2\% lower than tree trunks \newline - Overexposure increases false negatives by 5\% \newline - Requires 350 epochs for convergence \\ \midrule
-	\cite{ZHANG2024108836} \newline 2024 & Citrus \newline Complex orchard & MFAF-YOLO (modified YOLOv5s) & Multi-scale feature adaptive fusion + K-means++ anchor boxes & - mAP=90.2\%, FPS=86.2 \newline - First priority AP=93.2\%, Second priority AP=87.3\% \newline - Model size=10.7 MB (26.2\% smaller than YOLOv5s) & - Dense citrus clusters reduce recall by 8\% \newline - Foggy conditions decrease mAP by 2.1\% \newline - Dual detection heads miss 0.8\% of large fruits \\ \midrule
-	\cite{LU2024108721} \newline 2024 & Citrus \newline Complex orchard & MFAF-YOLO (extended) & Res-Attn module + priority-based detection & - Robust to 7 augmentation types (fog, noise, etc.) \newline - Field test success rate=91\% for first priority fruits \newline - 11.6 ms/image inference time & - Immature citrus false detection rate=3.5\% \newline - Stem detection error affects picking precision \newline - MobileNetV3-YOLOv5s is 10\% faster but 4.8\% lower mAP \\ \bottomrule
-
-
-	\end{tabular}
-\end{table*}
 	
 \iffalse
 \begin{table*}[H]
@@ -923,11 +894,21 @@ a_t = \mu(s_t|\theta^\mu) + \epsilon, \quad \epsilon \sim \text{Noise process}
 where \( \epsilon \) often comes from an Ornstein-Uhlenbeck process, providing temporally correlated exploration beneficial in physical control problems.
 
 \subsection{Advances in Motion Planning and Control for Robotic Fruit Harvesting}
-Motion planning in robotic harvesting involves determining the path the robot’s end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
+Motion planning in robotic harvesting involves determining the path the robot’s end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. Figure~\ref{fig:motion_planning_analysis} provides systematic analysis of robotic motion planning architectures, algorithmic performance characteristics, and field deployment considerations essential for autonomous robotic system development.
+
+\begin{figure*}[htbp]
+\centering
+% Note: Run create_section_v_figure.py to generate this figure
+\includegraphics[width=0.85\textwidth]{fig_motion_planning_analysis.pdf}
+\caption{Advanced robotic motion planning analysis for autonomous harvesting systems: (a) Robotic system architecture integrating perception subsystems with motion planning modules and control execution layers, (b) Algorithmic performance evaluation comparing success rates versus computational requirements for classical and learning-based approaches, (c) Temporal evolution of motion planning methodologies from traditional graph-based methods to advanced reinforcement learning techniques, (d) Environmental performance validation across diverse field conditions demonstrating robotic system adaptability. Comprehensive analysis supporting robotic system design and algorithm selection for autonomous agricultural applications.}
+\label{fig:motion_planning_analysis}
+\end{figure*}
+
+The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
 
 \begin{table*}[htbp]
 \centering
-\footnotesize
+\small
 \caption{Summary of Robotic Motion Control for Fruit Harvesting (2015-2024)}
 \label{tab:motion-control-based}
 \begin{tabular}{p{0.025\linewidth} p{0.025\linewidth} p{0.055\linewidth} p{0.2\linewidth} p{0.135\linewidth} p{0.175\linewidth} p{0.2\linewidth}}
@@ -980,6 +961,17 @@ In recent years, the field of autonomous fruit harvesting has seen substantial p
 %Vision Detection Advancements
 The integration of DL models, especially the R-CNN and YOLO series, has revolutionized fruit detection \cite{hou2023overview, suresh2023selective}. The rapid development of YOLO versions in 2024, such as YOLOv8, YOLOv9, YOLOv10, and YOLO11, has significantly improved performance. YOLOv8 introduced an anchor-free detection method and a unified multi-task framework, enabling more accurate detection of small fruits and better adaptation to complex agricultural scenarios \cite{li2023mta}. YOLOv9 improved performance through the PGI framework and GELAN architecture, optimizing information flow within the model. YOLOv10, with its anchor-free training and innovative architectural elements like space - channel decoupled downsampling and large-kernel convolutions, streamlined the training-to-deployment process. The latest YOLO11 improved feature extraction and introduced optimized training processes, keeping a better balance between detection speed and accuracy. These refinements have significantly elevated the ability of fruit-picking robots to identify fruits amidst dense foliage and under varying light conditions, reducing false positives and improving overall detection efficiency.
 %Locomotion and Path Planning Innovations
+
+Figure~\ref{fig:future_directions_roadmap} provides strategic analysis of technology readiness levels, research priorities, and innovation roadmaps essential for advancing autonomous robotic systems toward commercial agricultural deployment.
+
+\begin{figure*}[htbp]
+\centering
+% Note: Run create_section_v_figure.py to generate this figure
+\includegraphics[width=0.85\textwidth]{fig_future_directions_roadmap.pdf}
+\caption{Strategic technology advancement roadmap for autonomous agricultural robotics: (a) Current technology readiness assessment for key robotic system components, (b) Research priority analysis balancing commercial impact against development complexity, (c) Innovation timeline projecting major technological milestones from 2024-2030, (d) Challenge-solution integration framework addressing critical barriers to commercial robotic deployment. Comprehensive strategic analysis supporting evidence-based research planning and technology investment decisions for autonomous agricultural systems.}
+\label{fig:future_directions_roadmap}
+\end{figure*}
+
 \begin{table*}[htbp]
   \centering
   \caption{Summary of Recent Breakthroughs, Challenges, and Future Trends in Autonomous Fruit Harvesting}
