@@ -60,8 +60,8 @@
 \usepackage{array, longtable, tabularx}
 
 \sloppy
-%%%Author definitions
-\def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
+%%%Author definitions - Commented for IEEEtran compatibility
+% \def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
 % \tsc{WGM}
 % \tsc{QE}
 % \tsc{EP}
@@ -71,12 +71,13 @@
 %%% 
 
 \begin{document}
-\let\ref\Cref 		
-\let\eqref\Cref 	
-\let\autoref\Cref 	
-\let\WriteBookmarks\relax
-\def\floatpagepagefraction{1}
-\def\textpagefraction{.001}
+% Elsevier-specific commands commented for IEEEtran compatibility
+% \let\ref\Cref 		
+% \let\eqref\Cref 	
+% \let\autoref\Cref 	
+% \let\WriteBookmarksrelax
+% \def\floatpagepagefraction{1}
+% \def\textpagefraction{.001}
 % \shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
 % \shortauthors{Author 1 and N.S. Ahmad}
 % \footmarks{\url{https://doi.org/10.1016/j.jer.20xx.xx.xxx}\\
@@ -116,12 +117,13 @@ syazreen@usm.my}}
 
 % \address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
 
-\author[3]{Yanxiang Zhao}
-\author[1]{Nur Syazreen Ahmad}[type=author, 
-                        auid=001,bioid=2,
-                        orcid=0000-0001-7511-2910
-                        ]
-%\fnmark[1]
+% Elsevier author format commented out for IEEEtran compatibility
+% \author[3]{Yanxiang Zhao}
+% \author[1]{Nur Syazreen Ahmad}[type=author, 
+%                         auid=001,bioid=2,
+%                         orcid=0000-0001-7511-2910
+%                         ]
+% \fnmark[1]
 % \cormark[1]
 % \ead{syazreen@usm.my}
 % \credit{Data curation, Writing-Original draft preparation}
