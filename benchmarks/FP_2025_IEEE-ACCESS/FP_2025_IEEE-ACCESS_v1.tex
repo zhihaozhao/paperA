@@ -26,6 +26,7 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{url}
 
 % \usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
@@ -38,6 +39,9 @@
 
 \usepackage{threeparttable}%表格下面加标注
 \usepackage{rotating}
+\usepackage{multirow}  % Required for \multirow in tables
+\usepackage{array}     % Required for \cline in tables
+\usepackage{booktabs}  % Required for \bottomrule, \toprule, \midrule
 
 % Attempt to fix the \pdf@box issue: load graphicx with pdftex driver and color
 %\usepackage[pdftex]{graphicx}
@@ -81,9 +85,9 @@
 % \shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
 % \shortauthors{Author 1 and N.S. Ahmad}
 % \footmarks{\url{https://doi.org/10.1016/j.jer.20xx.xx.xxx}\\
-    0952-1976/\begingroup\tiny{©}\endgroup~2025 Elsevier B.V.\\
-    This is an open access article under the CC BY-NC-ND license (\url{http://creativecommons.org/licenses/by-nc-nd/4.0/}).
-}
+%    0952-1976/\begingroup\tiny{©}\endgroup~2025 Elsevier B.V.\\
+%    This is an open access article under the CC BY-NC-ND license (\url{http://creativecommons.org/licenses/by-nc-nd/4.0/}).
+% }
 
 
 % \bookmark[named = FirstPage]{A Comprehensive Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
@@ -222,13 +226,7 @@ Learning-based approaches, including transfer learning and reinforcement learnin
 % \accepted {xx Month 20xx}
 % \online {xx Month 20xx}
 
-\begin{keywords}
- Autonomous Fruit-Picking Robots,
-Regions with Convolutional Neural Networks (R-CNN),
-You Only Look Once (YOLO),
-Motion Planning,
-Transfer Learning.
-\end{keywords}
+% Duplicate keywords environment removed - already exists after maketitle
 
 \maketitle
 
@@ -321,14 +319,14 @@ and interconnections with environmental factors
 & \multirow{2}{*}{\textbf{Range}}
 & \multicolumn{7}{c}{\textbf{Focus Scope}}
 & \multirow{2}{*}{\textbf{Trends}} \\
-\cline{3-9}
-&& \footnotesize Percep. Sensors
-& \footnotesize Machine Vision
-& \footnotesize Motion Planning
-& \footnotesize End-Effectors
-& \footnotesize Mechanical Automation
-& \footnotesize System Integration
-& \footnotesize Field Adaptation
+%\cline{3-9}  % Commented out for compatibility
+&& Sensors
+& Vision
+& Motion
+& End-Eff.
+& Mech.
+& System
+& Field
 & \\
 \hline
 \cite{hou2023overview}      & 2001-2022
