@@ -133,9 +133,9 @@ class SimpleMetaAnalysis:
         """Create comprehensive analysis figure"""
         print("\n=== CREATING COMPREHENSIVE FIGURE ===")
         
-        fig, axes = plt.subplots(2, 3, figsize=(16, 10))
-        fig.suptitle('Fruit-Picking Robot Literature Meta-Analysis (49 Studies, 2015-2024)', 
-                    fontsize=16, fontweight='bold')
+        fig, axes = plt.subplots(2, 3, figsize=(16, 12))
+        # Removed main title to prevent overlap with subplot titles
+        # Individual subplot titles provide sufficient identification
         
         # Panel A: Performance Evolution
         ax1 = axes[0, 0]
@@ -199,8 +199,11 @@ class SimpleMetaAnalysis:
             ax3.set_xlabel('Processing Speed (ms/image)')
             ax3.set_ylabel('Detection Accuracy (%)')
             ax3.set_title('(C) Speed-Accuracy Trade-off')
-            ax3.legend()
+            ax3.legend(loc='upper right', fontsize=9)
             ax3.grid(True, alpha=0.3)
+            # Fix x-axis label spacing
+            ax3.tick_params(axis='x', rotation=0, labelsize=9)
+            plt.setp(ax3.get_xticklabels(), ha='center')
         
         # Panel D: Environmental Performance
         ax4 = axes[1, 0]
@@ -252,11 +255,14 @@ class SimpleMetaAnalysis:
             ax6.set_title('(F) Performance by Fruit Type')
             ax6.grid(True, alpha=0.3)
         
-        plt.tight_layout()
+        # Improved spacing to prevent overlaps
+        plt.tight_layout(pad=3.0, h_pad=4.0, w_pad=3.0)
         
         # Save figure
-        plt.savefig('fig_comprehensive_meta_analysis.png', dpi=300, bbox_inches='tight')
-        plt.savefig('fig_comprehensive_meta_analysis.pdf', bbox_inches='tight')
+        plt.savefig('fig_comprehensive_meta_analysis.png', dpi=300, bbox_inches='tight', 
+                   pad_inches=0.2)
+        plt.savefig('fig_comprehensive_meta_analysis.pdf', bbox_inches='tight', 
+                   pad_inches=0.2)
         print("✅ Comprehensive figure saved: fig_comprehensive_meta_analysis.png/.pdf")
         plt.close()
     
