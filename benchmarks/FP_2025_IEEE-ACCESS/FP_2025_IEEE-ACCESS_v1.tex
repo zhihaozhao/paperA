@@ -89,93 +89,19 @@
 %   to fill through the whole text width and overflow into
 %   another line in the footnotes area of the first page.}
 
-\author[1,2]{Zhihao Zhao}[type=author, 
-                        auid=000,bioid=1,
-                        ]
-% \ead{wangshoude@usm.my}
-\credit{Conceptualization of this study, Methodology}
+\author{\IEEEauthorblockN{Zhihao Zhao\IEEEauthorrefmark{1}\IEEEauthorrefmark{2}, 
+Yanxiang Zhao\IEEEauthorrefmark{3}, and 
+Nur Syazreen Ahmad\IEEEauthorrefmark{1}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Electronic Engineering, 
+Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
+\IEEEauthorblockA{\IEEEauthorrefmark{2}YanTai Engineering and Technology College, 
+264006 YanTai, Shandong, China}
+\IEEEauthorblockA{\IEEEauthorrefmark{3}Central South University, 
+Changsha, Hunan, 410083, China}}
 
-\address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
-
-\author[3]{Yanxiang Zhao}
-\author[1]{Nur Syazreen Ahmad}[type=author, 
-                        auid=001,bioid=2,
-                        orcid=0000-0001-7511-2910
-                        ]
-%\fnmark[1]
-\cormark[1]
-% \ead{syazreen@usm.my}
-\credit{Data curation, Writing-Original draft preparation}
-
-\address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
-\address[3]{Central South University, Changsha, Hunan, 410083, China}
-% \author[1,3]{CV Radhakrishnan}[type=editor, 
-%                         auid=000,bioid=1,
-%                         prefix=Sir,
-%                         %role=Researcher,
-%                         %orcid=0000-0001-7511-2910
-%                         ]
-% \cormark[1]
-% %\fnmark[1]								% URL related footnote marking
-% \ead{cvr_1@tug.org.in}
-% %\ead[url]{www.cvr.cc, cvr@sayahna.org} % Author URL 
-
-% \credit{Conceptualization of this study, Methodology, Software}
-
-% \address[1]{Elsevier B.V., Radarweg 29, 1043 NX Amsterdam, The Netherlands}
-
-% \author[2,3]{Han Theh Thanh}[style=chinese]
-
-% \author[2,3]{CV Rajagopal}[
-%    %role=Co-ordinator,
-%    suffix=Jr,
-%    ]
-% %\fnmark[2]								% URL related footnote marking
-% \ead{cvr3@sayahna.org}
-% %\ead[URL]{www.sayahna.org}				% Author URL
-
-% \credit{Data curation, Writing - Original draft preparation}
-
-% \address[2]{Sayahna Foundation, Jagathy, Trivandrum 695014, India}
-
-% \author
-% [1,3]
-% {Rishi T.} % If the author's name hits "Check for updates" button, use \\ at the break point of his/her name like {\\Rishi T.} or {First Middle\\ Lastname}
-% % NOTE: Compile first without \\ then the proper separation again afterwards !!! (Not doing so, results unwanted footnote and Credit authorship contribution at the very end with \credit command if used.)
-% \cormark[2]
-% %\fnmark[1,3]							% URL related footnote marking
-% \ead{rishi@stmdocs.in}
-% %\ead[URL]{www.stmdocs.in}				% Author URL
-
-% \address[3]{STM Document Engineering Pvt Ltd., Mepukada,
-%     Malayinkil, Trivandrum 695571, India}
-
-% \author[4]{ \\Salih Baris Ozturk} % Author's name hits "Check for updates" button, \\ is used at the break point of his name. If \\ is desired at the beginning of the name, place a space just before the \\ as in the above example.
-% % NOTE: Compile first without \\ and the space, then the proper separation again afterwards !!! (Not doing so, results unwanted footnote and Credit authorship contribution at the very end with \credit command if used.)
-% %\cormark[1]
-% \ead{ozturksb@itu.edu.tr}
-
-% \address[4]{Istanbul Technical University, Department of Electrical Engineering,
-% 	Maslak, Istanbul 34469, Turkey}
-
-\credit{Modification for the final layout}
-
-\cortext[1]{Corresponding author.}
-% \cortext[cor2]{Principal corresponding author.}
-% \fntext[1]{E-mail address: \href{mailto:syazreen@usm.my}{syazreen@usm.my} (N.S. Ahmad).}
-%\fntext[fn2]{Another author footnote, this is a very long footnote and
-%  it should be a really long footnote. But this footnote is not yet
-%  sufficiently long enough to make two lines of footnote text.}
-
-%\nonumnote{This note has no numbers. In this work we demonstrate $a_b$
-%  the formation Y\_1 of a new type of polariton on the interface
-%  between a cuprous oxide slab and a polystyrene micro-sphere placed
-%  on the slab. The evanescent field of the resonant whispering 
-%  gallery mode (\WGM) of the micro sphere has a substantial 
-%  gradient, and therefore effectively couples with the
-%  quadrupole $1S$ excitons in cuprous oxide.}
-
-\nonumnote{E-mail address: \href{mailto:syazreen@usm.my}{syazreen@usm.my} (N.S. Ahmad).}
+\markboth{IEEE ACCESS, VOL. XX, NO. XX, 2025}%
+{Zhao \MakeLowercase{\textit{et al.}}: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
+% All Elsevier-specific author commands removed for IEEEtran compatibility
 
 \begin{abstract} 
 This review synthesizes recent advances in autonomous fruit-picking robots with a focus on visual perception, path planning, and motion control. Following PRISMA guidelines, we systematically analyzed 137 studies published between 2015 and 2024. We critically compare learning-based perception approaches—especially YOLO- and R-CNN–family methods—under orchard-specific conditions (occlusion, variable lighting, small targets), and quantify trade-offs in accuracy and efficiency across representative platforms. We further examine perception-to-action integration for motion planning and control, summarizing success rate, harvest cycle time, and damage rate reported in field and greenhouse trials. 
@@ -201,28 +127,18 @@ Learning-based approaches, including transfer learning and reinforcement learnin
 \accepted {xx Month 20xx}
 \online {xx Month 20xx}
 
-\begin{keywords}
- Autonomous Fruit-Picking Robots,
-Regions with Convolutional Neural Networks (R-CNN),
-You Only Look Once (YOLO),
-Motion Planning,
-Transfer Learning.
-\end{keywords}
+\begin{IEEEkeywords}
+Agricultural robotics, autonomous fruit picking, computer vision, deep learning, motion planning, perception-action integration, R-CNN, YOLO, robotic harvesting, machine learning
+\end{IEEEkeywords}
 
 \maketitle
 
 \section{Introduction}
-Farms worldwide are grappling with labor shortages, skyrocketing costs, and demands for sustainable methods. Autonomous fruit-picking robots offer a promising answer, drawing on AI, vision tech, and robotics that could streamline harvests while ease worker burdens. Just how close are we to robots that rival human pickers? This review dives in. 
-%Autonomous fruit-picking robots are revolutionizing agriculture by tackling labor shortages, rising costs, and the push for greater harvesting efficiency. These systems draw on cutting-edge tools like computer vision, machine learning (ML), robotics, and Internet of Things (IoT) to navigate varied farm settings, gently handle produce, and support human workers. 
+Agricultural sectors globally face critical challenges including labor shortages, escalating operational costs, and increasing demands for sustainable production methods. Autonomous fruit-picking robotic systems present a transformative solution, integrating advanced artificial intelligence, computer vision technologies, and sophisticated robotic manipulation to enhance harvesting efficiency while reducing human labor dependency.
 
-Recent breakthroughs in machine learning (ML), deep learning (DL) and sensor fusion have enhanced robots' capacity to discern, localize, and manipulate objects with greater precision. These developments have been reviewed and summarized in Table ~\ref{tab:survey_summary}. They have also addressed deficiencies in end-to-end integration.
-%The advent of autonomous fruit-picking robots signifies a substantial advancement in agricultural technology, precipitated by the necessity to address labor shortages, escalating costs, and the demand for enhanced efficiency in fruit production.
-%Rapid advancements in robotics and artificial intelligence have catalyzed substantial interest in developing fruit-picking robots. These robots promise to revolutionize agricultural practices by automating labor-intensive fruit harvesting. Fruit-picking robots are autonomous systems engineered to identify, locate, and harvest fruits from various trees and plants. 
-%These systems leverage advanced technologies, including computer vision, machine learning (ML), robotics, and the Internet of Things (IoT), to operate efficiently in diverse agricultural environments, handle fruits delicately, and complement human labor.
-%These systems leverage a suite of advanced technologies, including computer vision, machine learning (ML), robotics, and Internet of Things (IoT). The aim is to create robots that can operate efficiently in various agricultural environments, handle fruits delicately to avoid damage, and work alongside human labor to enhance productivity. 
-%like Figure~\ref{fig:fruit_picking_robot_overview}.
-%Recent advancements in deep learning (DL) and sensor fusion have facilitated the development of sophisticated perception and motion control mechanisms, enabling robots to detect, localize, and harvest fruits with increasing precision.
- Figure ~\ref{fig:struct} illustrates the general architecture of an autonomous fruit-picking robot, highlighting key components such as visual sensors for detection, manipulator arms for grasping, and navigation systems for mobility. This advancement has been particularly evident in addressing challenges such as occlusion, variable lighting, and unstructured orchards.
+Recent breakthroughs in machine learning (ML), deep learning (DL) and sensor fusion have enhanced robots' capacity to discern, localize, and manipulate objects with greater precision. These developments have been reviewed and summarized in Table~\ref{tab:survey_summary}. They have also addressed deficiencies in end-to-end integration.
+
+Figure~\ref{fig:struct} illustrates the general architecture of an autonomous fruit-picking robot, highlighting key components such as visual sensors for detection, manipulator arms for grasping, and navigation systems for mobility. This advancement has been particularly evident in addressing challenges such as occlusion, variable lighting, and unstructured orchards.
 
 Existing literature reviews have laid the groundwork for understanding strides in autonomous fruit-picking technologies as summarized in Table~\ref{tab:survey_summary}. These recent surveys, all published since 2021, have collectively advanced the field by addressing various aspects of robotic systems, though they often exhibit limitations in scope and integration.
 For instance, Hou et al. \cite{hou2023overview} focused on the integration of deep learning (DL) with multi-sensor vision systems, emphasizing perception sensors and machine vision to enhance fruit detection in unstructured environments. While this work provided valuable insights into AI-driven fusion and trends in field robustness, it overlooked broader system integration and actuation mechanisms. Similarly, Navas et al. \cite{navas2021soft} specialized in soft and bionic gripper designs, advancing understanding of adaptive handling for delicate fruits from a mechanical perspective, but neglected upstream components like perception or downstream integration, resulting in a siloed approach.
@@ -464,7 +380,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 Among multi-sensor approaches, 3D stereo vision systems are essential by using dual cameras to estimate depth via triangulation, effectively mimicking human binocular vision. Early efforts include Wang et al.~\cite{wang2016localisation}, who developed a binocular stereo vision system for litchi localization, incorporating wavelet transforms and clustering methods to obtain high accuracy under natural lighting. Similarly, Si et al.~\cite{si2015location} advanced apple detection by enabling their stereo vision platform to recognize and localize multiple fruits simultaneously in variable environments. Luo et al.~\cite{luo2016vision} further demonstrated a grape-harvesting stereo system capable of quickly detecting cutting points and estimating yields with high efficiency.
 RGB-D cameras which combine color information with depth sensing using time-of-flight or structured light have also proven highly beneficial. Barnea et al.~\cite{barnea2016colour} presented an RGB-D-based 3D detection method capable of analyzing both shape and symmetry, which is effective for sweet pepper harvesting even under complex conditions. Nguyen et al.~\cite{nguyen2016detection} showed that integrating depth with RGB data significantly improves apple detection and localization, especially under occlusion. Kusumam et al.~\cite{kusumam20173d} and Andújar et al.~\cite{andujar2016using} extended these principles to broccoli and cauliflower, using mobile RGB-D platforms to deliver precise 3D crop measurements crucial for automated harvest scheduling.
 Sensor fusion extends beyond vision alone: for example, Gongal et al.~\cite{gongal2018apple} used a combination of color and time-of-flight 3D cameras to estimate apple size, demonstrating higher accuracy using pixel size information—an important step forward for volume estimation and crop management.
-The integration of visual sensors with advanced algorithms—such as DL models and inverse kinematics—further automates and optimizes fruit detection and harvesting. Onishi et al.~\cite{onishi2019automated} combined a stereo camera with an SSD DL model to gain high real-time detection accuracy, precisely guiding the robot’s arm through calculated movements.
+The integration of visual sensors with advanced algorithms—such as DL models and inverse kinematics—further automates and optimizes fruit detection and harvesting. Onishi et al.~\cite{onishi2019automated} combined a stereo camera with an SSD DL model to gain high real-time detection accuracy, precisely guiding the robot's arm through calculated movements.
 
 %Multi-modality data fusion plays a critical role in advancing agricultural robotics by enhancing perception accuracy and operational efficiency. 
 While multi-sensor systems, such as 3D stereo vision setups, have significantly advanced agricultural robotics by capturing richer environmental data, their effectiveness remains constrained when relying solely on homogeneous sensor inputs (e.g., visual data from dual cameras). To address this limitation, multi-modality data fusion has emerged as a logical next step, extending beyond the integration of similar sensors to combine fundamentally different types of data. This approach leverages the unique strengths of diverse modalities including visual, spectral, IoT-derived etc. to create a more comprehensive and robust perceptual framework.
@@ -752,7 +668,7 @@ Motion control is a central pillar of fruit-picking robots, essential for ensuri
 %Path planning, a crucial element in the smooth navigation of autonomous robots while avoiding obstacles, is of paramount importance in the field of robotics
 %~\cite {Leong:2024_review}. Key algorithms in this area include A-star (A*) Algorithm, RRT, Dijkstra's Algorithm, and advanced DDPG algorithm~\cite{Loganathan:2023_amr}.
 % and  Deep Deterministic Policy Gradient.
-Path planning for fruit-harvesting bots involves mapping out efficient, collision-free routes from the robot’s current spot to the target fruit—think dodging branches while racing to that ripe apple~\cite {Leong:2024_review}. Ever wonder how a robot avoids turning a quick pick into a tangled mess? Enter classics like A* and RRT lay the groundwork, though newer twists add machine learning that let them handle surprises better on the fly.
+Path planning for fruit-harvesting bots involves mapping out efficient, collision-free routes from the robot's current spot to the target fruit—think dodging branches while racing to that ripe apple~\cite {Leong:2024_review}. Ever wonder how a robot avoids turning a quick pick into a tangled mess? Enter classics like A* and RRT lay the groundwork, though newer twists add machine learning that let them handle surprises better on the fly.
 %~\cite{Loganathan:2023_amr}.
 
 The A* algorithm, known for its efficiency in finding the shortest path from a start node to a target node while avoiding obstacles, is a reliable choice for grid-based environments. It combines uniform-cost and greedy best-first search features by using a heuristic to estimate the cost from a node to the goal. The primary equation for A* is:
@@ -806,7 +722,7 @@ After a path is found, it can be smoothed by checking and directly connecting no
 \text{isCollisionFree}(x_i, x_j) \quad \text{for} \quad x_i, x_j \in \text{Path}
 \end{equation}
 
-Dijkstra’s Algorithm is commonly used in structured environments like orchards or greenhouses where the layout allows for fixed route planning~\cite{silwal2017design, dijkstra1959note}. It is used to find the shortest paths from a source node to all other nodes in the graph. The update step in Dijkstra's algorithm is:
+Dijkstra's Algorithm is commonly used in structured environments like orchards or greenhouses where the layout allows for fixed route planning~\cite{silwal2017design, dijkstra1959note}. It is used to find the shortest paths from a source node to all other nodes in the graph. The update step in Dijkstra's algorithm is:
 \begin{equation}
 \begin{aligned}
 \text{for each } v \text{ adjacent to } u: \\
@@ -872,7 +788,7 @@ a_t = \mu(s_t|\theta^\mu) + \epsilon, \quad \epsilon \sim \text{Noise process}
 where \( \epsilon \) often comes from an Ornstein-Uhlenbeck process, providing temporally correlated exploration beneficial in physical control problems.
 
 \subsection{Advances in Motion Planning and Control for Robotic Fruit Harvesting}
-Motion planning in robotic harvesting involves determining the path the robot’s end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
+Motion planning in robotic harvesting involves determining the path the robot's end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
 
 \begin{table*}[htbp]
 \centering
