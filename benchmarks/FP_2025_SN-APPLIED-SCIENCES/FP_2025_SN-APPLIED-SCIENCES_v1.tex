@@ -272,7 +272,7 @@ and interconnections with environmental factors
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.55\textwidth]{fig_struct2.png}
+    \includegraphics[width=0.9\textwidth]{fig_struct2.png}
     \caption{The perception-action framework of autonomous Fruit-Picking robots.}
     \label{fig:struct}
 \end{figure}
@@ -347,7 +347,7 @@ This survey follows the Preferred Reporting Items for Systematic Reviews and Met
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{fig_prisma1.png}
+    \includegraphics[width=0.95\textwidth]{fig_prisma1.png}
     \caption{ PRISMA flowchart illustrating the literature selection process for the survey on autonomous fruit-picking robots. 
     %Flow diagram depicting the identification and selection of publications to be included in this review.
     }
@@ -361,10 +361,11 @@ We systematically searched databases including Scopus, Web of Science (WoS), and
 %Of the 5024 records initially identified, a comprehensive screening process was conducted to ensure the quality and relevance of the included studies. First, duplicates were identified and removed, resulting in 3430 unique entries. Manual screening was then performed without the aid of automation tools. During the title screening phase, 3018 records were excluded based on apparent irrelevance to the review topic. The remaining studies underwent abstract screening, which further reduced the collection to 412 potentially relevant records. Finally, full-text reviews were conducted on these entries to assess their fit with the review criteria.
 
 \begin{table}[ht]
-\scriptsize
+\small
 \caption{Keywords and Criteria Used in Preliminary Database Search.} 
 \label{tab:keywords} 
-\begin{tabular}{p{0.3\linewidth} p{0.5\linewidth}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{3.5cm} p{8cm}}
 \hline
 \textbf{Criteria} & \textbf{Terms} \\ \hline
 \textbf{Database}  &  Web of Science, Scopus, ScienceDirect \\
@@ -407,7 +408,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 %Consequently, fruit-picking robots inevitably depend on multi-sensor fusion to acquire these diverse features, as illustrated in Figure~\ref{fig:camera}. Furthermore, the synergy among different modalities effectively reduces measurement range errors, enhances robustness, adaptability, and precision under illumination variations and occlusion, shortens picking time, and improves real-time performance.
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=0.52\textwidth]{fig_camera1.png}
+\includegraphics[width=0.9\textwidth]{fig_camera1.png}
 \caption{Overview and comparison of four mainstream visual data acquisition methods, highlighting their key performance characteristics for object detection.}
 \label{fig:camera}
 \end{figure}
@@ -483,7 +484,7 @@ The R-CNN family has been well known in establishing robust instance segmentatio
 %The advancement of fruit-picking robotics has been significantly bolstered by the application of object detection and segmentation models such as the R-CNN family, Mask R-CNN, and YOLO. Each of these technologies addresses the challenges of complex agricultural environments, enhancing both the accuracy and efficiency of fruit localization, identification, and harvesting decisions. Over time, these models have evolved to balance detection precision with real-time computational demands, making them increasingly suitable for automated agricultural applications.
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=0.5\textwidth]{fig_rcnn1.png}
+\includegraphics[width=0.85\textwidth]{fig_rcnn1.png}
 \caption{The performance of R-CNN family for object detection.}
 \label{fig:performance_rcnn}
 \end{figure}
@@ -498,17 +499,18 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=0.5\textwidth]{fig_maskRcnn.png}
+\includegraphics[width=0.85\textwidth]{fig_maskRcnn.png}
 \caption{The Mask R-CNN framework for apples detection.~\cite{he2017mask}}
 \label{fig:mask_rcnn}
 \end{figure}
 
 \begin{table*}[htbp]
 	\centering
-	\footnotesize 
-	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024 (part 1)} 
+	\small
+	\caption{Summary of R-CNN Family Approaches for Fruit Detection in 2015-2024} 
 	\label{tab:RCNN-based} 
-	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{p{1.5cm}p{1.8cm}p{1.5cm}p{2.8cm}p{4.2cm}p{4.5cm}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
 	\cite{sa2016deepfruits} \newline 2016 & Multi-class (sweet pepper, rock melon, apple, etc.) \newline Outdoor/glasshouse orchards & DeepFruits (Faster R-CNN with VGG-16) & Multi-modal (RGB+NIR) fusion for cross-fruit detection & - Fusion F1: 0.838 (sweet pepper) \newline - Apple F1: 0.938; strawberry F1: 0.948 \newline - Processing time: 341–393 ms/image \newline - Requires 10–100 training images per fruit & - Early fusion underperforms (F1=0.799) vs. late fusion \newline - NIR modality alone has lower F1 (0.797) than RGB (0.816) \newline - Missed detections for small fruits (scaled <50\% of training size) \\ \midrule
@@ -532,10 +534,10 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 
 \begin{table*}[htbp]
 	\centering
-	\footnotesize 
-	\addtocounter{table}{-1}
-	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024 (part 2)} 
-	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
+	\small
+	\caption{Summary of R-CNN Family Approaches for Fruit Detection in 2015-2024 (continued)} 
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{p{1.5cm}p{1.8cm}p{1.5cm}p{2.8cm}p{4.2cm}p{4.5cm}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
 
@@ -571,7 +573,7 @@ The YOLO series is predicated on the strengths of the instance segmentation R-CN
 %After exploring the applications of R-CNN family models in fruit picking, another prominent research direction in the field of computer-vision-enabled agricultural automation is the YOLO series as illustrated in Figure~\ref{fig:yolo}. While the R-CNN family emphasizes iterative refinement and multi-stage processing, YOLO's single-stage detection framework offers real-time performance, making it an attractive alternative for dynamic fruit-picking scenarios.
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=0.5\textwidth]{fig_yolo.png}
+\includegraphics[width=0.85\textwidth]{fig_yolo.png}
 \caption{The YOLO Series Roadmap.}
 \label{fig:yolo}
 \end{figure}
@@ -605,10 +607,11 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 
 \begin{table*}[htbp]
 	\centering
-	\footnotesize 
-	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019 (part 1)} 
+	\small
+	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019} 
 	\label{tab:yolo-based}
-	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{p{1.5cm}p{1.8cm}p{1.5cm}p{2.8cm}p{4.2cm}p{4.5cm}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
 	
@@ -629,12 +632,10 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 
 \begin{table*}[htbp]
 	\centering
-	\footnotesize 
-	\addtocounter{table}{-1}
-	\caption{Summary of YOLO Family Approaches for Fruit-Picking since 2019 (part 2)} 
-	%\addtocounter{table}{-1}
-	%\addtocounter{table}{-1}
-	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
+	\small
+	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019} 
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{p{1.5cm}p{1.8cm}p{1.5cm}p{2.8cm}p{4.2cm}p{4.5cm}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
 	 \cite{yu2024object} \newline 2024 & Citrus \newline Natural orchard & YOLOv5-citrus & Multi-channel information fusion + state classification & - 2.8\% higher in mAP than original YOLOv5 \newline - Precision 3.7\% higher than original YOLOv5 \newline - 3D positioning error: (1.97 mm, 0.36 mm, 9.63 mm) & - Training requires 4200 images (700 original + 3500 augmented) \newline - Severe occlusion may misclassify "difficult-to-pick" fruits \newline - Slightly slower inference due to added modules (no specific speed given) \\ \midrule
@@ -694,7 +695,7 @@ Then there's rapidity: we're talking pick cycles under 7 seconds per fruit to ma
 %This framework clarifies how these quantifiable indicators drive progress in overcoming challenges like illumination variability, occlusion, and computational efficiency.
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=0.57\textwidth]{fig_performance.png}
+\includegraphics[width=0.9\textwidth]{fig_performance.png}
 \caption{The Core Performances of Fruit-Picking.}
 \label{fig:performance}
 \end{figure}
@@ -715,10 +716,11 @@ Kang et al.~\cite{kang2020real}  combined Mobile-DasNet with PointNet for apple 
 
 \begin{table*}[htbp]
 \centering
-\footnotesize
+\small
 \caption{Summary of Fruit Detection Approaches by Core Performance Metrics (2015-2024)}
 \label{tab:performance-metrics}
-\begin{tabular}{@{}p{1.5cm}p{2.5cm}p{5cm}p{4cm}p{2.5cm}@{}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{1.8cm}p{2.8cm}p{4.5cm}p{3.5cm}p{3cm}}
 \toprule
 \textbf{Metrics} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} & \textbf{References} \\ \midrule
 \textbf{Reliability} & Handling illumination, occlusion, and overlap via color, 3D contour, and shape; improving ripeness recognition & - Color-based ripeness: 94.29\% accuracy for tomatoes using hue-saturation metrics \cite{goel2015fuzzy}. Contour analysis: Relative error <6\% (e.g., 5.27\%) for occluded citrus edges \cite{lu2015detecting}. Ripeness evaluation: >94\% accuracy (e.g., 94.41\% precision) for binary/multi-stage classification \cite{liu2019mature}. 3D depth: 82\% detection rate for occluded apples \cite{nguyen2016detection} & - Color methods sensitive to lighting variations \cite{zhao2016detecting}. Contour detection struggles with dense occlusions \cite{lu2015detecting}. Limited ripeness generalization across environments \cite{goel2015fuzzy} & \cite{nguyen2016detection}, \cite{lu2015detecting}, \cite{mendes2016vine}, \cite{goel2015fuzzy}, \cite{zhao2016detecting}, \cite{pourdarbani2020automatic}, \cite{zhang2018deep}, \cite{longsheng2015kiwifruit}, \cite{liu2019mature} \\ \midrule
