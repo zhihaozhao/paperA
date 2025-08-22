@@ -871,10 +871,11 @@ Motion planning in robotic harvesting involves determining the path the robot’
 
 \begin{table*}[htbp]
 \centering
-\footnotesize
+\small
 \caption{Summary of Robotic Motion Control for Fruit Harvesting (2015-2024)}
 \label{tab:motion-control-based}
-\begin{tabular}{p{0.025\linewidth} p{0.025\linewidth} p{0.055\linewidth} p{0.2\linewidth} p{0.135\linewidth} p{0.175\linewidth} p{0.2\linewidth}}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{p{1.2cm}p{0.8cm}p{1.5cm}p{3cm}p{2.5cm}p{3cm}p{3.5cm}}
 \toprule
 \textbf{Ref.} & \textbf{Year} & \textbf{Fruit} & \textbf{Motion Control} & \textbf{Main Challenges} & \textbf{Performance Metrics} & \textbf{Key Insights} \\ \midrule
 \cite{silwal2017design} & 2017 & Apple & Seven DOF manipulator with optimized path planning and collision avoidance & Navigating complex, unstructured orchard environments & 84\% picking success; average cycle time 7.6 s; commercial orchard trials & Path optimization reduces collisions in real-world apple harvesting \\ \midrule
