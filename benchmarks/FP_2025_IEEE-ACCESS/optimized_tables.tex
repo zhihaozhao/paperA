@@ -1,0 +1,61 @@
+\begin{table}[htbp]
+\centering
+\tiny
+\caption{Visual Detection Algorithm Families: Performance Characteristics and Deployment Suitability (56 Studies, 2015-2024)}
+\label{tab:algorithm_comparison}
+\begin{tabular}{p{1.8cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.5cm}p{1.5cm}p{1.8cm}p{1.2cm}}
+\toprule
+\textbf{Algorithm} & \textbf{Accuracy} & \textbf{Speed} & \textbf{Real-time} & \textbf{Environment} & \textbf{Complexity} & \textbf{Key Innovation} & \textbf{Studies} \\
+\textbf{Family} & \textbf{(\%)} & \textbf{(ms)} & \textbf{Capable} & \textbf{Robustness} & \textbf{Level} & \textbf{Focus} & \textbf{(n)} \\
+\midrule
+YOLO & 90.9$\pm$8.3 & 84 & \checkmark & *** & Medium & Single-stage detection & 16 \\
+R-CNN & 90.7$\pm$2.4 & 226 & $\times$ & ** & High & Precision segmentation & 7 \\
+Hybrid & 87.1$\pm$9.1 & Variable & $\sim$ & **** & Variable & Multi-modal fusion & 17 \\
+Traditional & 83.7$\pm$7.5 & Fast & \checkmark & * & Low & Interpretable methods & 16 \\
+\midrule
+\multicolumn{8}{l}{\textbf{Legend:} \checkmark=Yes, $\times$=No, $\sim$=Partial; *=Poor, **=Fair, ***=Good, ****=Excellent} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp] 
+\centering
+\tiny
+\caption{Motion Control Approaches: System Integration and Performance Characteristics (2015-2024)}
+\label{tab:motion_control_comparison}
+\begin{tabular}{p{1.5cm}p{1.5cm}p{1.2cm}p{1.2cm}p{1.5cm}p{1.8cm}p{1.5cm}p{1.2cm}}
+\toprule
+\textbf{Control} & \textbf{Success} & \textbf{Cycle} & \textbf{DOF} & \textbf{Obstacle} & \textbf{Environment} & \textbf{Key Advantage} & \textbf{Studies} \\
+\textbf{Method} & \textbf{Rate (\%)} & \textbf{Time (s)} & \textbf{Support} & \textbf{Avoidance} & \textbf{Adaptability} & & \textbf{(n)} \\
+\midrule
+A*/Dijkstra & 84-89 & 6.5-8.9 & 3-7 DOF & *** & ** & Path optimization & 8 \\
+RRT/Bi-RRT & 72-86 & 7.6-11.2 & 6-7 DOF & **** & *** & Rapid exploration & 6 \\
+DDPG/RL & 58-92 & 4.0-24.0 & 3-6 DOF & ** & **** & Adaptive learning & 4 \\
+Traditional & 68-95 & 5.8-12.5 & 3-5 DOF & * & * & Simple control & 12 \\
+\midrule
+\multicolumn{8}{l}{\textbf{Performance Ranges:} Success rate, cycle time from field trials; DOF=Degrees of Freedom} \\
+\multicolumn{8}{l}{\textbf{Rating Scale:} *=Limited, **=Moderate, ***=Good, ****=Excellent performance} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\tiny  
+\caption{Environmental Performance and Deployment Readiness Across Algorithm Families (2015-2024)}
+\label{tab:deployment_readiness}
+\begin{tabular}{p{1.5cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.5cm}p{1.5cm}p{1.8cm}p{1.2cm}}
+\toprule
+\textbf{Algorithm} & \textbf{Greenhouse} & \textbf{Outdoor} & \textbf{Commercial} & \textbf{Cost} & \textbf{Deployment} & \textbf{Primary} & \textbf{Trend} \\
+\textbf{Family} & \textbf{Performance} & \textbf{Robustness} & \textbf{Readiness} & \textbf{Efficiency} & \textbf{Maturity} & \textbf{Application} & \textbf{(2019-24)} \\
+\midrule
+YOLO & **** & *** & **** & *** & High & Commercial harvesting & \textbf{$\uparrow$} \\
+R-CNN & **** & ** & *** & ** & Medium & Quality-critical ops & $\rightarrow$ \\
+Hybrid & *** & **** & ** & ** & Medium & Adaptive systems & $\uparrow$ \\
+Traditional & ** & * & * & **** & Low & Resource-constrained & $\downarrow$ \\
+\midrule
+\multicolumn{8}{l}{\textbf{Rating Scale:} *=Poor/Limited, **=Fair, ***=Good, ****=Excellent} \\
+\multicolumn{8}{l}{\textbf{Trends:} $\uparrow$=Growing, $\rightarrow$=Stable, $\downarrow$=Declining adoption (2019-2024)} \\
+\bottomrule
+\end{tabular}
+\end{table}

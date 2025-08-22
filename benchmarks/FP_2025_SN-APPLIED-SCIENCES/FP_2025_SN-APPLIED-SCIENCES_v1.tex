@@ -556,22 +556,29 @@ Our statistical analysis identifies several key research directions for continue
 
 The comprehensive meta-analysis establishes quantitative baselines for future research and provides statistical evidence for technology selection decisions in autonomous fruit-picking systems. These insights form the foundation for understanding how visual perception integrates with motion control systems to achieve complete autonomous harvesting capabilities.
 
-\begin{table*}[htbp]
-	\centering
-	\small
-	\caption{Summary of R-CNN Family Approaches for Fruit Detection in 2015-2024 (continued)} 
-	\renewcommand{\arraystretch}{1.3}
-	\begin{tabular}{p{1cm}p{1.2cm}p{1cm}p{2cm}p{2.5cm}p{2.8cm}}
-	\toprule
-	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
+\begin{table}[htbp]
+\centering
+\tiny
+\caption{Visual Detection Algorithm Families: Performance Characteristics and Deployment Suitability (56 Studies, 2015-2024)}
+\label{tab:algorithm_comparison}
+\begin{tabular}{p{1.8cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.5cm}p{1.5cm}p{1.8cm}p{1.2cm}}
+\toprule
+\textbf{Algorithm} & \textbf{Accuracy} & \textbf{Speed} & \textbf{Real-time} & \textbf{Environment} & \textbf{Complexity} & \textbf{Key Innovation} & \textbf{Studies} \\
+\textbf{Family} & \textbf{(\%)} & \textbf{(ms)} & \textbf{Capable} & \textbf{Robustness} & \textbf{Level} & \textbf{Focus} & \textbf{(n)} \\
+\midrule
+YOLO & 90.9$\pm$8.3 & 84 & \checkmark & *** & Medium & Single-stage detection & 16 \\
+R-CNN & 90.7$\pm$2.4 & 226 & $\times$ & ** & High & Precision segmentation & 7 \\
+Hybrid & 87.1$\pm$9.1 & Variable & $\sim$ & **** & Variable & Multi-modal fusion & 17 \\
+Traditional & 83.7$\pm$7.5 & Fast & \checkmark & * & Low & Interpretable methods & 16 \\
+\midrule
+\multicolumn{8}{l}{\textbf{Legend:} \checkmark=Yes, $\times$=No, $\sim$=Partial; *=Poor, **=Fair, ***=Good, ****=Excellent} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-	\cite{chu2021deep} \newline 2021 & Apples (Gala, Blondee) \newline Outdoor non-structural orchard & Suppression Mask R-CNN (ResNet-101-FPN) & Robust detection under varying lighting and occlusion for robotic harvesting & - F1-score: 0.905 (C1 configuration) \newline - Precision: 0.880, Recall: 0.931 (C1) \newline - Detection time: 0.25 s/frame \newline - Outperforms Mask R-CNN (ResNet152) by 0.047 in F1-score & - Back lighting reduces precision (0.84 vs. 0.89 under overcast) \newline - Missed detections in heavy occlusion (example shows 3 missed apples) \newline - Relies on manual rectangular annotation (1,500 images) \\ \midrule
-	\cite{gao2020multi} \newline 2020 & Apples (Scifresh) \newline Outdoor non-structural orchard (SNAP system) & Faster R-CNN (VGG16) & Multi-class detection (non-occluded, leaf-occluded, branch/wire-occluded, fruit-occluded) for robotic harvesting strategy & - mAP=0.879 across four classes \newline - AP for non-occluded: 0.909; branch/wire-occluded: 0.858 \newline - Processing time: 0.241 s/image \newline - Outperforms ZFNet by 8.6\% in mAP & - Lowest AP for fruit-occluded class (0.848) \newline - Detection speed 1.5x slower than ZFNet (0.167 s/image) \newline - Missed detection of branch/wire-occluded fruits in dense canopies \\ \midrule
-	\cite{ge2019fruit} \newline 2019 & Strawberries \newline Table-top cultivation (structured environment) & Mask R-CNN (ResNet101) + safety region algorithms & 3D localization and safe manipulation region identification (strap/table avoidance) & - Ripe strawberry AP: 0.90; F1-score: 0.94 (confidence=0.9) \newline - Safe region accuracy: 96.9\% (strap), 97.3\% (table) \newline - Picking success rate: 74.1\% (optimized localization) \newline - Total processing time: 0.82 s/image & - Unripe strawberry AP lower (0.72) than ripe \newline - Original strap mask method accuracy only 83.7\% \newline - Picking rate drops to 51.8\% with raw point localization \newline - Limited to structured table-top environments \\ 
+The algorithm family analysis demonstrates clear performance hierarchies and deployment characteristics. YOLO algorithms emerge as optimal for commercial deployment with excellent speed-accuracy balance, while R-CNN approaches excel in precision-critical applications. Hybrid methods offer superior environmental robustness, and traditional approaches remain valuable for resource-constrained scenarios.
 
-	\bottomrule
-	\end{tabular}
-\end{longtable}
+This consolidated analysis replaces detailed individual paper enumeration with systematic algorithm family characteristics, providing more actionable insights for technology selection in autonomous fruit-picking systems.
 
 
 Developments like Mask R-CNN ~\cite{he2017mask} extended this capability for pixel-level segmentation as shown in Figure ~\ref{fig:mask_rcnn}. A key insight is the addition of the mask prediction branch, which enhances segmentation accuracy by 15-20\% in occluded orchard scenes, directly supporting improved robotic path planning,
