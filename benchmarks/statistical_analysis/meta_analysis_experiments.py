@@ -28,7 +28,14 @@ class MetaAnalysisExperiments:
         self.results = {}
         
         # Set publication-quality plotting style
-        plt.style.use('seaborn-v0_8-whitegrid')
+        try:
+            plt.style.use('seaborn-v0_8-whitegrid')
+        except OSError:
+            try:
+                plt.style.use('seaborn-whitegrid')
+            except OSError:
+                plt.style.use('default')
+                print("Using default matplotlib style (seaborn not available)")
         sns.set_palette("husl")
         
     def load_data(self):
@@ -367,12 +374,31 @@ class MetaAnalysisExperiments:
         if not self.load_data():
             return None
         
-        # Run all experiments
-        self.experiment_1_performance_distribution()
-        self.experiment_2_correlation_analysis()
-        self.experiment_3_temporal_trends()
-        self.experiment_4_environmental_impact()
-        self.experiment_5_adoption_patterns()
+        # Run all experiments with error handling
+        try:
+            self.experiment_1_performance_distribution()
+        except Exception as e:
+            print(f"Warning: Experiment 1 failed: {e}")
+        
+        try:
+            self.experiment_2_correlation_analysis()
+        except Exception as e:
+            print(f"Warning: Experiment 2 failed: {e}")
+        
+        try:
+            self.experiment_3_temporal_trends()
+        except Exception as e:
+            print(f"Warning: Experiment 3 failed: {e}")
+        
+        try:
+            self.experiment_4_environmental_impact()
+        except Exception as e:
+            print(f"Warning: Experiment 4 failed: {e}")
+        
+        try:
+            self.experiment_5_adoption_patterns()
+        except Exception as e:
+            print(f"Warning: Experiment 5 failed: {e}")
         
         # Generate summary
         return self.generate_summary_report()

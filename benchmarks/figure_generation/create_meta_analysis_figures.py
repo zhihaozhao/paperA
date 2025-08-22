@@ -57,12 +57,20 @@ class MetaAnalysisFigureGenerator:
         """Load data and analysis results"""
         try:
             self.df = pd.read_csv(self.data_file)
-            with open(self.results_file, 'r', encoding='utf-8') as f:
-                self.results = json.load(f)
             print(f"Loaded data: {len(self.df)} studies")
+            
+            # Try to load results, but continue if not available
+            try:
+                with open(self.results_file, 'r', encoding='utf-8') as f:
+                    self.results = json.load(f)
+                print("Statistical results loaded successfully")
+            except FileNotFoundError:
+                print("Statistical results not found - will generate figures with data only")
+                self.results = None
+            
             return True
         except Exception as e:
-            print(f"Error loading data/results: {e}")
+            print(f"Error loading data: {e}")
             return False
     
     def create_figure_4_visual_detection_analysis(self):
