@@ -18,11 +18,9 @@
 %% double column output.
 
 %\documentclass[a4paper,fleqn,longmktitle]{cas-dc}
-\documentclass[a4paper,fleqn]{cas-dc}
+\documentclass{ieeeaccess}
 
-% \usepackage[authoryear,longnamesfirst]{natbib}
-%\usepackage[authoryear]{natbib}
-\usepackage[numbers,sort&compress]{natbib}
+\usepackage{cite}
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -58,13 +56,7 @@
 % Removed \tsc definitions that cause compilation errors 
 
 \begin{document}
-% Elsevier-specific formatting commands commented for compatibility
-%\let\ref\Cref 		
-%\let\eqref\Cref 	
-%\let\autoref\Cref 	
-%\let\WriteBookmarks\relax
-%\def\floatpagepagefraction{1}
-%\def\textpagefraction{.001}
+\history{Date of publication xxxx 00, 0000, date of current version xxxx 00, 0000.}
 % Elsevier-specific commands commented out for universal compatibility
 %\shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
 %\shortauthors{Author 1 and N.S. Ahmad}  
@@ -77,7 +69,7 @@
 % \bookmark[named = FirstPage]{A Comprehensive Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
 %**************** If the title is short, stay on the first line use [mode = short_title] otherwise ******************
 %***************************************** use [mode = title] below ***************************************
-\title [mode = title]{Advances in Autonomous Fruit-Picking Robots: Methodologies, Technologies, and Challenges}    
+\title{Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots: Quantitative Synthesis, Gaps, and Deployment Roadmap}    
 
 % Title mark notes if desired
 %\tnotemark[1,2]
@@ -93,7 +85,7 @@
                         auid=000,bioid=1,
                         ]
 % \ead{wangshoude@usm.my}
-\credit{Conceptualization of this study, Methodology}
+%\%credit{Conceptualization of this study, Methodology}
 
 \address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
 
@@ -103,24 +95,29 @@
                         orcid=0000-0001-7511-2910
                         ]
 %\fnmark[1]
-\cormark[1]
+%\%cormark[1]
 % \ead{syazreen@usm.my}
-\credit{Data curation, Writing-Original draft preparation}
+%\%credit{Data curation, Writing-Original draft preparation}
 
 \address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
 \address[3]{Central South University, Changsha, Hunan, 410083, China}
+
+\markboth{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
+{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
+
+\corresp{Corresponding author: Nur Syazreen Ahmad (e-mail: syazreen@usm.my).}
 % \author[1,3]{CV Radhakrishnan}[type=editor, 
 %                         auid=000,bioid=1,
 %                         prefix=Sir,
 %                         %role=Researcher,
 %                         %orcid=0000-0001-7511-2910
 %                         ]
-% \cormark[1]
+% \%cormark[1]
 % %\fnmark[1]								% URL related footnote marking
 % \ead{cvr_1@tug.org.in}
 % %\ead[url]{www.cvr.cc, cvr@sayahna.org} % Author URL 
 
-% \credit{Conceptualization of this study, Methodology, Software}
+% \%credit{Conceptualization of this study, Methodology, Software}
 
 % \address[1]{Elsevier B.V., Radarweg 29, 1043 NX Amsterdam, The Netherlands}
 
@@ -134,7 +131,7 @@
 % \ead{cvr3@sayahna.org}
 % %\ead[URL]{www.sayahna.org}				% Author URL
 
-% \credit{Data curation, Writing - Original draft preparation}
+% \%credit{Data curation, Writing - Original draft preparation}
 
 % \address[2]{Sayahna Foundation, Jagathy, Trivandrum 695014, India}
 
@@ -142,7 +139,7 @@
 % [1,3]
 % {Rishi T.} % If the author's name hits "Check for updates" button, use \\ at the break point of his/her name like {\\Rishi T.} or {First Middle\\ Lastname}
 % % NOTE: Compile first without \\ then the proper separation again afterwards !!! (Not doing so, results unwanted footnote and Credit authorship contribution at the very end with \credit command if used.)
-% \cormark[2]
+% \%cormark[2]
 % %\fnmark[1,3]							% URL related footnote marking
 % \ead{rishi@stmdocs.in}
 % %\ead[URL]{www.stmdocs.in}				% Author URL
@@ -152,16 +149,16 @@
 
 % \author[4]{ \\Salih Baris Ozturk} % Author's name hits "Check for updates" button, \\ is used at the break point of his name. If \\ is desired at the beginning of the name, place a space just before the \\ as in the above example.
 % % NOTE: Compile first without \\ and the space, then the proper separation again afterwards !!! (Not doing so, results unwanted footnote and Credit authorship contribution at the very end with \credit command if used.)
-% %\cormark[1]
+% %\%cormark[1]
 % \ead{ozturksb@itu.edu.tr}
 
 % \address[4]{Istanbul Technical University, Department of Electrical Engineering,
 % 	Maslak, Istanbul 34469, Turkey}
 
-\credit{Modification for the final layout}
+%\%credit{Modification for the final layout}
 
-\cortext[1]{Corresponding author.}
-% \cortext[cor2]{Principal corresponding author.}
+%\%cortext[1]{Corresponding author.}
+% \%cortext[cor2]{Principal corresponding author.}
 % \fntext[1]{E-mail address: \href{mailto:syazreen@usm.my}{syazreen@usm.my} (N.S. Ahmad).}
 %\fntext[fn2]{Another author footnote, this is a very long footnote and
 %  it should be a really long footnote. But this footnote is not yet
@@ -196,10 +193,10 @@ Learning-based approaches, including transfer learning and reinforcement learnin
 %\end{highlights}
 
 % Article history - Should only be set by an editor
-\received {xx Month 20xx}
-\revised {xx Month 20xx}
-\accepted {xx Month 20xx}
-\online {xx Month 20xx}
+%\%received {xx Month 20xx}
+%\%revised {xx Month 20xx}
+%\%accepted {xx Month 20xx}
+%\%online {xx Month 20xx}
 
 \begin{keywords}
  Autonomous Fruit-Picking Robots,
@@ -1049,7 +1046,7 @@ This work was supported by the Shandong Province Educational Research Project: G
 \hyphenpenalty=10000 % Almost no hypenation in biblio (higher value means less hypenation)
 %% Loading bibliography style file
 %\bibliographystyle{model1-num-names}
-\bibliographystyle{elsarticle-num} 	
+\bibliographystyle{IEEEtran} 	
 % \bibliographystyle{cas-model2-names}
 % \bibliographystyle{elsarticle-harv} 				
 % Loading bibliography database
