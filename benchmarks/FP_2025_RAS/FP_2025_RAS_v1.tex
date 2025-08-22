@@ -491,14 +491,14 @@ Figure~\ref{fig:ras_meta_analysis} presents our systematic algorithmic analysis 
 \begin{figure*}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{fig_comprehensive_meta_analysis.pdf}
-\caption{Algorithmic analysis of visual perception systems for field robotics applications across 56 studies (2015-2024). Statistical validation for robotic system selection with computational efficiency and environmental robustness assessment.}
+\caption{Algorithmic analysis of visual perception systems for field robotics across 56 studies (2015-2024).}
 \label{fig:ras_meta_analysis}
 \end{figure*}
 
-\subsection{Robotic System Integration and Performance Characteristics}
-Our algorithmic analysis reveals distinct computational and integration characteristics for autonomous robotic systems. YOLO-family algorithms demonstrate optimal characteristics for real-time robotic perception with 90.9\%$\pm$8.3\% detection accuracy and 84ms computational latency, enabling 12 Hz perception-action cycles suitable for dynamic harvesting operations.
+\subsection{Algorithmic Integration for Autonomous Robotic Systems}
+The integration of visual perception algorithms into autonomous robotic systems presents unique computational and architectural challenges that significantly influence deployment success. Our systematic analysis reveals fundamental differences in algorithm family characteristics that directly impact robotic system design decisions. YOLO-family algorithms demonstrate exceptional suitability for real-time robotic perception, achieving 90.9% detection accuracy with 84ms computational latency that enables continuous perception-action cycles at 12 Hz frequency. This high-frequency operation is essential for dynamic harvesting tasks where robots must respond rapidly to environmental changes and obstacle configurations in unstructured orchard environments.
 
-R-CNN approaches, while achieving comparable detection performance (90.7\%$\pm$2.4\%), require 226ms computational cycles that limit system responsiveness but provide enhanced precision for quality-critical robotic operations. Hybrid perception systems (87.1\%$\pm$9.1\% accuracy) offer balanced performance with adaptive capabilities suitable for variable field conditions.
+Comparative algorithmic analysis reveals distinct computational trade-offs that influence robotic system architecture decisions. R-CNN approaches achieve comparable detection performance at 90.7% accuracy but require 226ms computational cycles that constrain system responsiveness in dynamic scenarios. However, this computational investment yields enhanced detection precision that proves valuable for quality-critical robotic operations where false positive rates must be minimized. The precision advantage becomes particularly important in premium fruit production where mechanical damage from incorrect detections carries significant economic consequences. Hybrid perception systems demonstrate balanced performance characteristics with adaptive capabilities that enable consistent operation across variable field conditions, though with increased algorithmic complexity that may challenge real-time implementation on resource-constrained robotic platforms.
 
 Table~\ref{tab:ras_algorithmic_analysis} presents comprehensive algorithmic characteristics analysis for robotic system integration, including computational requirements, real-time performance capabilities, and field deployment considerations.
 

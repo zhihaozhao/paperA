@@ -479,19 +479,17 @@ Through systematic data extraction and statistical analysis, we identified four 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{fig_comprehensive_meta_analysis.pdf}
-\caption{Comprehensive meta-analysis of fruit-picking robot performance across 56 studies (2015-2024) revealing algorithm family performance hierarchies and optimal deployment strategies.}
+\caption{Meta-analysis of visual detection performance across 56 studies (2015-2024).}
 \label{fig:meta_analysis}
 \end{figure}
 
 
 \subsection{Statistical Evidence and Performance Analysis}
-Our meta-analysis of 56 studies reveals significant quantitative insights into visual perception performance across different algorithm families. Statistical analysis demonstrates clear performance hierarchies and temporal evolution patterns that inform evidence-based technology selection for autonomous fruit-picking applications.
+Our comprehensive analysis of 56 studies reveals significant insights into visual perception performance across diverse agricultural environments. The data demonstrates clear performance hierarchies among algorithm families, with modern deep learning approaches substantially outperforming traditional computer vision methods. YOLO and R-CNN families achieve superior detection capabilities, with mean accuracies of 90.9% and 90.7% respectively, compared to 83.7% for traditional approaches. This performance advantage extends beyond simple accuracy metrics, as contemporary algorithms also demonstrate enhanced robustness across environmental conditions that vary substantially in real-world orchard settings.
 
-\textbf{Algorithm Family Performance:} YOLO and R-CNN families demonstrate superior performance with mean accuracies of 90.9\%$\pm$8.3\% and 90.7\%$\pm$2.4\% respectively, significantly outperforming traditional methods (83.7\%$\pm$7.5\%, p<0.001). Hybrid approaches achieve intermediate performance (87.1\%$\pm$9.1\%) while offering enhanced robustness across diverse environmental conditions.
+The temporal evolution of detection technologies shows sustained improvement over the analyzed decade. Regression analysis indicates a consistent annual improvement rate of 0.216% per year, with projected accuracy reaching 89.1% by 2025. However, this trend suggests approaching theoretical limits in controlled environments, indicating that future research will likely emphasize robustness enhancement and environmental adaptation rather than pure accuracy optimization. The data reveals interesting adoption patterns, with YOLO algorithms gaining prominence since 2019 due to their superior real-time capabilities.
 
-\textbf{Temporal Evolution:} Our regression analysis reveals a consistent annual improvement rate of +0.216\% per year (R²=0.019), with projected 2025 accuracy reaching 89.13\%. This trend indicates sustained technological advancement despite approaching performance saturation in controlled environments.
-
-\textbf{Speed-Accuracy Trade-offs:} Statistical analysis reveals optimal performance regions where YOLO family algorithms achieve superior balance (84ms processing time vs 90.9\% accuracy), while R-CNN approaches prioritize accuracy over speed (226ms vs 90.7\% accuracy). Traditional methods demonstrate variable speed performance but consistently lower accuracy baselines.
+Algorithm selection involves critical trade-offs between detection accuracy and computational efficiency that significantly impact deployment feasibility. YOLO family algorithms achieve an optimal balance with 84ms processing time while maintaining 90.9% accuracy, making them particularly suitable for real-time harvesting operations where responsiveness is paramount. In contrast, R-CNN approaches prioritize precision over speed, requiring 226ms processing time to achieve 90.7% accuracy. This performance characteristic makes R-CNN methods more appropriate for quality-critical applications where processing latency is less constraining than detection precision. Traditional methods, while showing lower overall accuracy, offer computational efficiency and interpretability advantages that remain valuable for resource-constrained deployment scenarios.
 
 \textbf{Environmental Impact Analysis:} Our statistical analysis demonstrates significant environmental effects on algorithm performance. Greenhouse environments consistently yield higher detection accuracies across all algorithm families, while outdoor orchard conditions present greater variability due to uncontrolled lighting and weather factors.
 
