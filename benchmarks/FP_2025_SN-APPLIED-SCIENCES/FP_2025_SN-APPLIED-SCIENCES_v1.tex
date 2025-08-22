@@ -27,6 +27,7 @@
 \usepackage{booktabs}  % Required for \bottomrule, \toprule, \midrule
 \usepackage{multirow}  % Required for \multirow in tables
 \usepackage{array}     % Required for \cline in tables
+usepackage{longtable}     % Required for long tables with page breaks
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -284,9 +285,9 @@ and interconnections with environmental factors
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{
     p{1.5cm}  % Ref.
-    p{2cm}    % Year Range  
-    p{1.2cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.2cm} % Focus Scope x7
-    p{3.5cm}  % Summary
+    p{1.5cm}    % Year Range  
+    p{0.8cm}p{0.8cm}p{0.8cm}p{0.8cm}p{0.8cm}p{0.8cm}p{0.8cm} % Focus Scope x7
+    p{2.5cm}  % Summary
 }
 \hline
 \multirow{2}{*}{\textbf{Ref.}}
@@ -332,7 +333,7 @@ This work & 2015-2024
 \hline
 \end{tabular}
 \label{tab:survey_summary}
-\end{table*}
+\end{longtable}
 
 
 
@@ -453,7 +454,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \hline
 %\cite{sadeghian2025reliability} & 2025 & LiDAR+6×cameras & - & Autonomous driving (fruit-picking extension) & BEV space fusion; STFA for temporal consistency; CW-MCA with reliability scores & mAP=70.6\%; robust to sensor malfunctions (LiDAR FOV limitation/50\% drop) & Designed for driving, needs adaptation to orchard dynamics & 3D object detection for mobile picking robots \\ \hline
 \end{tabular}
-\end{table*}
+\end{longtable}
 
 Among multi-sensor approaches, 3D stereo vision systems are essential by using dual cameras to estimate depth via triangulation, effectively mimicking human binocular vision. Early efforts include Wang et al.~\cite{wang2016localisation}, who developed a binocular stereo vision system for litchi localization, incorporating wavelet transforms and clustering methods to obtain high accuracy under natural lighting. Similarly, Si et al.~\cite{si2015location} advanced apple detection by enabling their stereo vision platform to recognize and localize multiple fruits simultaneously in variable environments. Luo et al.~\cite{luo2016vision} further demonstrated a grape-harvesting stereo system capable of quickly detecting cutting points and estimating yields with high efficiency.
 RGB-D cameras which combine color information with depth sensing using time-of-flight or structured light have also proven highly beneficial. Barnea et al.~\cite{barnea2016colour} presented an RGB-D-based 3D detection method capable of analyzing both shape and symmetry, which is effective for sweet pepper harvesting even under complex conditions. Nguyen et al.~\cite{nguyen2016detection} showed that integrating depth with RGB data significantly improves apple detection and localization, especially under occlusion. Kusumam et al.~\cite{kusumam20173d} and Andújar et al.~\cite{andujar2016using} extended these principles to broccoli and cauliflower, using mobile RGB-D platforms to deliver precise 3D crop measurements crucial for automated harvest scheduling.
@@ -478,7 +479,7 @@ Through systematic data extraction and statistical analysis, we identified four 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{fig_comprehensive_meta_analysis.pdf}
-\caption{Comprehensive meta-analysis of fruit-picking robot performance across 56 studies (2015-2024). Statistical analysis reveals YOLO and R-CNN superiority (90.9\% and 90.7\% accuracy respectively) with YOLO demonstrating optimal speed-accuracy balance for real-time applications.}
+\caption{Comprehensive meta-analysis of fruit-picking robot performance across 56 studies (2015-2024) revealing algorithm family performance hierarchies and optimal deployment strategies.}
 \label{fig:meta_analysis}
 \end{figure}
 
@@ -570,7 +571,7 @@ The comprehensive meta-analysis establishes quantitative baselines for future re
 
 	\bottomrule
 	\end{tabular}
-\end{table*}
+\end{longtable}
 
 
 Developments like Mask R-CNN ~\cite{he2017mask} extended this capability for pixel-level segmentation as shown in Figure ~\ref{fig:mask_rcnn}. A key insight is the addition of the mask prediction branch, which enhances segmentation accuracy by 15-20\% in occluded orchard scenes, directly supporting improved robotic path planning,
@@ -651,7 +652,7 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 	\cite{yu2020real} \newline 2020 & Strawberry \newline Ridge-planting greenhouse & R-YOLO (rotated YOLOv3) & Rotated bounding boxes for picking point localization & - Precision=94.43\%, recall=93.46\% \newline - 18 FPS on Jetson TX2 \newline - Harvest success rate=84.35\% (vs. 72.74\% for YOLOv3) & - Unripe fruit F1 (91.11\%) 4.7\% lower than ripe \newline - Curved stems cause $\pm$2 mm localization error \newline - Malformed fruits increase error to 4 mm \\ \midrule
 
 	\end{tabular}
-\end{table*}
+\end{longtable}
 
 \begin{table*}[htbp]
 	\centering
@@ -669,7 +670,7 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 
 
 	\end{tabular}
-\end{table*}
+\end{longtable}
 \subsection{Segmentation Techniques: Enhancing Precision in Complex Environments}
 %Recent advancements in DL have notably improved fruit detection and segmentation, addressing longstanding challenges in agricultural robotics such as varying lighting, occlusion, and complex backgrounds. Through continual development and the adaptation of neural network architectures, segmentation networks now support enhanced autonomy and operational performance in fruit-picking robots.
 Transitioning from bounding-box-based detection in YOLO to more granular analysis, semantic and instance segmentation techniques further refine visual perception by classifying pixels and segmenting individual instances. Unlike earlier subsections that focused on detection pipelines, this part emphasizes segmentation's role in enabling robots to assess fruit maturity and plan occlusion-aware paths.
@@ -751,7 +752,7 @@ Kang et al.~\cite{kang2020real}  combined Mobile-DasNet with PointNet for apple 
 \textbf{Rapidity} & Real-time operation, fast picking/counting, scalable yield estimation & - Pick time: Average <7 s/fruit (e.g., 6.5 s) for high-throughput apple harvesting \cite{kang2020real}. Yield estimation: Predictive 
 $R^2$ >0.75 (e.g., 0.77) for crop forecasting \cite{underwood2016mapping}. Real-time counting: <0.01 s/fruit (implying >100 FPS) with error <2\% \cite{altaheri2019date}. Field trials: >90\% end-to-end success \cite{birrell2020field} & - Trade-off between speed and accuracy for small/distant fruits \cite{kang2020real}. High computational needs limit real-time deployment on low-end hardware \cite{altaheri2019date}. Dynamic factors (e.g., motion) increase errors in counting \cite{underwood2016mapping} & \cite{underwood2016mapping}, \cite{lin2019guava}, \cite{kang2019fruit}, \cite{kang2020real}, \cite{altaheri2019date}, \cite{birrell2020field} \\ \bottomrule
 \end{tabular}
-\end{table*}
+\end{longtable}
 
 Accurate ripeness recognition optimizes harvest timing. 
 Liu et al.~\cite{liu2019mature} integrated HOG and SVM with 92.15\% F1-score. 
@@ -921,7 +922,7 @@ Motion planning in robotic harvesting involves determining the path the robot’
 \cite{burks2021engineering} & 2021 & Citrus & End-effector motion advances with engineering review  & Gentle handling and speed & Success >90\% in designs; reduced bruising & Engineering insights optimize citrus motion control \\ 
 \bottomrule
 \end{tabular}
-\end{table*}
+\end{longtable}
 
 Studies like Silwal et al.~\cite{silwal2017design} and Lehnert et al.~\cite{lehnert2017autonomous} highlight multi-DOF manipulators for tackling orchard complexity. For apples, Silwal's seven DOF manipulators hit an 84\% picking success rate, with 7.6-second cycles, proving reliable path planning in open fields. Lehnert's sweet pepper robot, pairing differential drive with a seven-DOF arm, reached 58\% success in trials, excelling in controlled greenhouses—though lower rates underscore ongoing occlusion challenges.
 In contrast, Arad et al.~\cite{arad2020development} focused on integrating autonomous navigation with a vision-guided manipulator for sweet pepper harvesting. Their system, tested extensively in commercial greenhouses, gained a cycle time of 24 seconds per fruit with success rates ranging from 18\% to 61\%. This study highlights the importance of comprehensive field tests to validate the integration of navigation, manipulation, and vision systems in real-world settings.
@@ -967,7 +968,7 @@ The integration of DL models, especially the R-CNN and YOLO series, has revoluti
     \bottomrule
   \end{tabular}
   \label{tab:trends_summary}
-\end{table*}
+\end{longtable}
 
 In locomotion technologies, significant progress has been made in path planning and collision avoidance. Autonomous robots equipped with advanced sensors like LiDAR, RGB-D cameras, and ultrasonic sensors can generate detailed maps of their surroundings \cite{liu2024hierarchical}. Algorithms such as the A* algorithm, Bi-RRT, and DDPG are increasingly being used to enhance the robots' ability to navigate complex orchard terrains safely and efficiently \cite{gai2022fruit, rajendran2024towards}. Hierarchical trajectory planning allows robots to make informed decisions at different levels of granularity, first planning a high-level path through the orchard and then refining it at a local level to avoid specific obstacles while approaching the target fruit \cite{liu2024hierarchical}.
 
@@ -1052,7 +1053,7 @@ AUC		& area under the curve 												  & GPS		& Global Positioning System \\
 }
 
 \end{center}
-\end{table*}
+\end{longtable}
 \section*{Declaration of competing interest}
 The authors declare that they have no known competing financial
 interests or personal relationships that could have appeared
