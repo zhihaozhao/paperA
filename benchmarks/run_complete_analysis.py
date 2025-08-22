@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 import subprocess
 import json
+import pandas as pd
+from datetime import datetime
 
 # Add script directories to path
 benchmarks_dir = Path(__file__).parent
@@ -170,7 +172,7 @@ class CompletePipeline:
 ## 📊 Data Processing Summary
 - **Source file**: {self.tex_file_path}
 - **Output directory**: {self.output_dir}
-- **Execution time**: {pd.Timestamp.now()}
+ - **Execution time**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
 ## 📈 Generated Files
 
