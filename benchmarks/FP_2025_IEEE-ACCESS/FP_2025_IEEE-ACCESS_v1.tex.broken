@@ -1,0 +1,123 @@
+%% 
+%% Copyright 2019-2020 Elsevier Ltd
+%% 
+%% This file is part of the 'CAS Bundle'.
+%% --------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version. The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'CAS Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+%% Template article for cas-dc documentclass for 
+%% double column output.
+
+\documentclass[conference]{IEEEtran}
+
+% IEEE Access packages
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+% \usepackage{algorithmic} % Commented out to prevent conflict with algpseudocode
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{url}
+
+% \usepackage[authoryear,longnamesfirst]{natbib}
+%\usepackage[authoryear]{natbib}
+\usepackage[numbers,sort&compress]{natbib}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}  % Use Input in the format of Algorithm  
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm 
+
+\usepackage{threeparttable}%表格下面加标注
+\usepackage{rotating}
+\usepackage{multirow}  % Required for \multirow in tables
+\usepackage{array}     % Required for \cline in tables
+\usepackage{booktabs}  % Required for \bottomrule, \toprule, \midrule
+
+% Attempt to fix the \pdf@box issue: load graphicx with pdftex driver and color
+%\usepackage[pdftex]{graphicx}
+%\usepackage{color}
+
+% Now load hyperref (also with pdftex driver to be consistent? Actually, hyperref will use the driver automatically)
+%\usepackage{hyperref}
+\usepackage{float}
+\usepackage{array, longtable, tabularx}
+%\usepackage{caption}
+
+\usepackage{cleveref} % 确保 cleveref 已加载
+\crefname{figure}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
+\Crefname{figure}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
+\crefname{table}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
+\Crefname{table}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
+\crefname{section}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
+\Crefname{section}{}{}% 设置 \Cref 对 figure 的引用格式为空（只留编号）
+\usepackage{float}
+\usepackage{array, longtable, tabularx}
+
+\sloppy
+%%%Author definitions - Commented for IEEEtran compatibility
+% \def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
+% \tsc{WGM}
+% \tsc{QE}
+% \tsc{EP}
+% \tsc{PMS}
+% \tsc{BEC}
+% \tsc{DE}
+%%% 
+
+\begin{document}
+% Elsevier-specific commands commented for IEEEtran compatibility
+% \let\ref\Cref 		
+% \let\eqref\Cref 	
+% \let\autoref\Cref 	
+% \let\WriteBookmarksrelax
+% \def\floatpagepagefraction{1}
+% \def\textpagefraction{.001}
+% \shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
+% \shortauthors{Author 1 and N.S. Ahmad}
+% \footmarks{\url{https://doi.org/10.1016/j.jer.20xx.xx.xxx}\\
+%    0952-1976/\begingroup\tiny{©}\endgroup~2025 Elsevier B.V.\\
+%    This is an open access article under the CC BY-NC-ND license (\url{http://creativecommons.org/licenses/by-nc-nd/4.0/}).
+% }
+
+
+% \bookmark[named = FirstPage]{A Comprehensive Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
+%**************** If the title is short, stay on the first line use [mode = short_title] otherwise ******************
+%***************************************** use [mode = title] below ***************************************
+\title{Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots: Quantitative Synthesis, Gaps, and Deployment Roadmap}
+
+% Title mark notes if desired
+%\tnotemark[1,2]
+
+%\tnotetext[1]{This document is the results of the research
+%   project funded by the National Science Foundation.}
+
+%\tnotetext[2]{The second title footnote which is a longer text matter
+%   to fill through the whole text width and overflow into
+%   another line in the footnotes area of the first page.}
+
+\author{\IEEEauthorblockN{Zhihao Zhao}
+\IEEEauthorblockA{\textit{School of Electrical and Electronic Engineering} \\
+\textit{Universiti Sains Malaysia}\\
+Nibong Tebal, Malaysia \\
+zzhaoooooo@gmail.com}
+\and
+\IEEEauthorblockN{Nur Syazreen Ahmad}
+\IEEEauthorblockA{\textit{School of Electrical and Electronic Engineering} \\
+\textit{Universiti Sains Malaysia}\\
+Nibong Tebal, Malaysia \\
+syazreen@usm.my}}
+
+% \credit{Conceptualization of this study, Methodology}
+
+% \address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
+
