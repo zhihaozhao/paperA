@@ -904,7 +904,17 @@ Multi-threaded architectures separate perception, planning, and control processe
 
 Network-based coordination for multi-robot systems requires efficient communication protocols that minimize latency while ensuring coordination safety. Distributed consensus algorithms enable fleet-wide coordination with logarithmic communication complexity, making them scalable for large orchard operations with multiple autonomous harvesters. Graph neural network approaches for distributed motion planning in multi-robot agricultural systems provide novel coordination protocols that significantly improve scalability and efficiency .
 
-Motion planning in robotic harvesting involves determining the path the robot's end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
+Motion planning in robotic harvesting involves determining the path the robot's end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. Figure~\ref{fig:motion_planning_analysis} provides comprehensive visualization of motion planning system architectures, algorithm performance comparisons, and environmental impact analysis, demonstrating the systematic evolution from traditional approaches to advanced methods in agricultural robotics.
+
+\begin{figure*}[htbp]
+\centering
+% Note: Run create_section_v_figure.py to generate this figure
+\includegraphics[width=0.85\textwidth]{fig_motion_planning_analysis.pdf}
+\caption{Comprehensive motion planning analysis for autonomous fruit harvesting: (a) System architecture showing perception-planning-control integration with agricultural environment feedback loops, (b) Algorithm performance trade-offs comparing success rates versus computation time for A*, RRT*, DDPG, Bi-RRT, and DWA approaches, (c) Motion planning algorithm adoption timeline from 2015-2024 showing evolution from traditional to reinforcement learning methods, (d) Environmental performance analysis demonstrating success rate variations across greenhouse, structured orchard, unstructured orchard, and open field conditions. Statistical analysis based on systematic review of motion control implementations for agricultural robotics systems.}
+\label{fig:motion_planning_analysis}
+\end{figure*}
+
+The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
 
 \begin{table*}[htbp]
 \centering
@@ -988,6 +998,16 @@ In locomotion technologies, significant progress has been made in path planning 
 Despite significant technological breakthroughs, autonomous fruit-picking robots continue to face substantial challenges that limit their widespread adoption. Primary obstacles include handling occlusions in dense foliage, adapting to variable lighting conditions, and ensuring robust performance in unstructured agricultural environments \cite{hou2023overview, suresh2023selective}. The high capital costs of these autonomous systems remain a significant barrier for small-scale farmers \cite{zhang2024automatic}. Additionally, the complexity of integrating disparate technologies—combining vision systems with robotic manipulators and ensuring seamless communication in multi-robot harvesting scenarios—presents ongoing technical challenges \cite{li2023multi, rajendran2024towards}.
 
 Future research directions emphasize the integration of advanced AI architectures, including diffusion-based models \cite{heschl2024synthset}, and multi-modal sensor fusion approaches. Promising developments include UAV-ground robot coordination systems that enable predictive path planning and optimize energy efficiency through intelligent task allocation. These integrated approaches are particularly relevant as climate change continues to alter fruit development patterns and orchard conditions, necessitating more adaptive and resilient robotic systems.
+
+Figure~\ref{fig:future_directions_roadmap} presents a comprehensive analysis of current technology readiness levels, research priorities, innovation timelines, and challenge-solution integration strategies for advancing autonomous fruit harvesting toward commercial deployment.
+
+\begin{figure*}[htbp]
+\centering
+% Note: Run create_section_v_figure.py to generate this figure
+\includegraphics[width=0.85\textwidth]{fig_future_directions_roadmap.pdf}
+\caption{Strategic roadmap for autonomous fruit harvesting technology advancement: (a) Current technology readiness levels showing computer vision (TRL 8), motion planning (TRL 6), multi-robot coordination (TRL 4), and commercial deployment (TRL 3), (b) Research priority matrix plotting commercial impact versus research difficulty for key challenge areas, (c) Innovation timeline roadmap from 2024-2030 showing projected milestones from YOLO integration through universal adoption, (d) Challenge-solution integration mapping linking occlusion handling, real-time constraints, environmental variability, and cost effectiveness with corresponding technological solutions. Strategic analysis supporting evidence-based research planning and commercial deployment decisions.}
+\label{fig:future_directions_roadmap}
+\end{figure*}
 
 %\subsection{ Future Trends}
 %Advanced Deep - Learning - based Perception
