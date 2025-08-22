@@ -21,6 +21,7 @@
 \documentclass[journal]{IEEEtran}
 
 \usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}  % Required for mathematical symbols
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -29,6 +30,8 @@
 
 \usepackage{threeparttable}%表格下面加标注
 \usepackage{rotating}
+\usepackage{multirow}  % Required for \multirow in tables
+\usepackage{booktabs}  % Required for \bottomrule, \toprule, \midrule
 
 % Attempt to fix the \pdf@box issue: load graphicx with pdftex driver and color
 %\usepackage[pdftex]{graphicx}
@@ -87,7 +90,7 @@
 % \ead{wangshoude@usm.my}
 %\%credit{Conceptualization of this study, Methodology}
 
-\address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
+%\address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
 
 \author[3]{Yanxiang Zhao}
 \author[1]{Nur Syazreen Ahmad}[type=author, 
@@ -99,8 +102,8 @@
 % \ead{syazreen@usm.my}
 %\%credit{Data curation, Writing-Original draft preparation}
 
-\address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
-\address[3]{Central South University, Changsha, Hunan, 410083, China}
+%\address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
+%\address[3]{Central South University, Changsha, Hunan, 410083, China}
 
 %\markboth{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
 %{Author \headeretal: Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots}
