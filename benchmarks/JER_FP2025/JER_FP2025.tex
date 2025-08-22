@@ -972,60 +972,6 @@ Sepúlveda et al.\cite{sepulveda2020robotic} demonstrated the effectiveness of d
 
 In summary, sophisticated algorithms, multi-sensor fusion, and innovative end-effector designs have driven robotic path planning and motion control developments for fruit harvesting. RL, particularly DDPG and deep RL approaches, has shown promise in enhancing the adaptability and efficiency of these systems, as seen in recent works like Zhang and Verbiest. Integrating advanced vision systems, robust control mechanisms, and multi-robot coordination continues to optimising precise, efficient, and reliable robotic harvesting operations. These developments, supported by comprehensive reviews from Burks and Blok, highlight autonomous technologies' ongoing evolution and potential to transform agricultural practices.
 %In summary, sophisticated algorithms, multi-sensor fusion, and innovative end-effector designs have driven robotic path planning and motion control advancements for fruit harvesting. Reinforcement learning, particularly DDPG, has shown promise in enhancing the adaptability and efficiency of these systems. Integrating advanced vision systems and robust control mechanisms continues to play a critical role in achieving precise, efficient, and reliable robotic harvesting operations. These developments highlight autonomous technologies' ongoing evolution and potential to transform agricultural practices.
-\iffalse
-
-\iffalse
-\begin{table*}   
-	\centering
-	\footnotesize 
-	\caption{Summary of Robotic Path Planning for Fruit Harvesting in 2015-2024(part1)} 
-	\label{tab:path-planning-based}
-	\begin{tabular}{p{0.025\linewidth} p{0.025\linewidth} p{0.055\linewidth} p{0.16\linewidth} p{0.135\linewidth} p{0.175\linewidth} p{0.255\linewidth}}
-\toprule
-\textbf{Ref.} & \textbf{Year} & \textbf{Fruit} & \textbf{Motion Control} & \textbf{Main Challenges} & \textbf{Performance Metrics} & \textbf{Key Insights} \\ \midrule
-
-\cite{silwal2017design} & 2017 & Apple & Seven DOF manipulator with path optimization & Navigating complex orchard environments & 84\% picking success, average cycle time 7.6 s, in commercial orchard & Demonstrates effective path planning and manipulation within a complex, unstructured environment \\ \midrule
-\cite{arad2020development} & 2020 & Sweet Pepper & Autonomous navigation and manipulator movement integrated with vision system & Handling variability in greenhouse environment & Cycle time of 24s; 18\%-61\% success rate, in commercial greenhouse & First extensive field test of sweet pepper harvesting robot showing integration of navigation, manipulation, and vision \\ \midrule
-\cite{xiong2020autonomous} & 2020 & Strawberry & Dual-arm system with obstacle-separation algorithm & Navigating and operating in polytunnels & 6.1 s manipulation in single-arm mode, in field tests & Demonstrates successful integration of navigation and manipulation in a complex agricultural environment \\ \midrule
-\cite{williams2019robotic} & 2019 & Kiwifruit & Dynamic scheduling for multi-arm coordination & Efficient harvesting in commercial orchards & Successful field trials, high efficiency in commercial orchards & Highlights integration of advanced vision and robotic arms for efficient harvesting \\ \midrule
-%\cite{mehta2014vision} & 2014 & Citrus & Cooperative visual servo controller with dual-camera system & Precision in cluttered environments & High precision and control in manipulator movement & Effective in real-world tests & Advanced visual servo control system significantly enhances robotic citrus harvesting efficiency \\ \midrule
-\cite{xiong2019development} & 2019 & Strawberry & Integrated mobile platform with manual control & Adaptability to positional inaccuracies & Cycle time of 7.5 s; 96.8\% success in isolation, 53.6\% success rate in field& Novel gripper design enhances efficiency and reduces cycle times in strawberry harvesting \\ \midrule
-\cite{lehnert2017autonomous} & 2017 & Sweet Pepper & Custom differential drive and 7DOF manipulator with advanced motion planning & Autonomous navigation and effective fruit detachment & Field trials showed up to 58\% harvesting success, in protected structured environments & Demonstrates the integration of mobility, manipulation, and vision systems for effective autonomous harvesting \\ \midrule
-\cite{hariharanautobot} & 2021 & General crop & Utilizes a suite of sensors and automated systems for navigation and task execution in precision farming & Integrating comprehensive automation in traditional farming & Automated various farming tasks significantly reducing manual labor & Demonstrates the potential of robotic systems in enhancing efficiency and precision in farming operations, with significant automation in seeding, pest management, and irrigation. \\ \midrule
-\cite{ling2019dual} & 2019 & Tomato & Dual-arm coordination with binocular vision for navigation and collision avoidance in dense vegetation & Efficiently coordinating dual robotic arms in non-structured environments, managing collision risks & 87.5\% harvesting success rate; less than 10 mm positioning error, over 96\% of target tomatoes correctly detected at 10 fps & Demonstrates effective dual-arm collaboration using advanced vision and control systems to enhance robotic harvesting efficiency and accuracy in complex environments. \\ \midrule
-\cite{lin2021collision} & 2021 & Guava & Recurrent DDPG for real-time and dynamic collision-free path planning & Navigating complex, unstructured environments typical in guava orchards & High success rate in simulation (90.90\%); planning time 29 ms, in field tests & Demonstrates the effectiveness of integrating recurrent neural networks with DDPG to enhance adaptability and efficiency in path planning for agricultural robots. \\ \midrule
-\cite{sepulveda2020robotic} & 2020 & Aubergine & Dual-arm coordination with SVM and planning algorithms & Handling occlusions and coordinating dual-arm movements in unstructured environments & 91.67\% success rate, 26 seconds per fruit in controlled lab tests & Demonstrates the effectiveness of dual-arm robots in mimicking human movements to enhance efficiency and precision in agricultural harvesting. \\ \midrule
-\cite{de2018development} & 2018 & Strawberry & Autonomous navigation with RGB camera detection & Labor shortage, minimizing fruit damage & 4 seconds per strawberry; 70\% picking efficiency, greenhouse environment tests & Demonstrates a fully autonomous robot capable of efficient strawberry harvesting, addressing labor shortages and optimizing the picking process. \\ \midrule
-\cite{li2016characterizing} & 2016 & Apple & Analysis of manual and robotic picking patterns using a three-finger gripper & Minimizing fruit damage while maintaining picking efficiency & Robotic patterns had higher pressure, more bruising than manual picking in Laboratory tests  & Identified a robotic picking pattern that mimicked manual picking, suggesting potential for low-damage robotic harvesters. \\  \midrule
-\cite{hohimer2019design} & 2019 & Apple & Five degrees-of-freedom robotic arm with 3D-printed soft-robotic end-effector & Efficient and gentle fruit harvesting in orchards & 67\% detachment success rate; 7.3 seconds per apple, in a commercial orchard during the 2017 harvest season & Demonstrates the potential of 3D-printed soft-robotic materials to reduce labor costs and improve harvesting efficiency while minimizing fruit bruising. \\ \midrule
-\cite{bac2016analysis} & 2016 & Sweet-Pepper & Bi-RRT algorithm for path planning & Efficient motion planning in dense obstacle environments & 63\% goal configuration success; 64\% motion planning success, simulation-based on greenhouse measurements & Optimizing end-effector dimensions and crop structure significantly improves collision-free motion planning success. \\ 
-\bottomrule
-\end{tabular}
-\end{table*}
-\begin{table*} 
-	\centering
-	\footnotesize 
-	\addtocounter{table}{-1} 
-	\caption{Summary of Robotic Path Planning for Fruit Harvesting in 2015-2024(part2)} 
-	%\begin{tabular}{@{}p{0.5cm} p{0.6cm} p{1.2cm} p{2.4cm} p{2.2cm} p{2.2cm} p{2cm} p{3.1cm}@{}}
-	%\toprule
-	%\begin{tabular}{p{0.025\linewidth} p{0.025\linewidth} p{0.055\linewidth} p{0.13\linewidth} p{0.12\linewidth} p{0.12\linewidth} p{0.12\linewidth} p{0.24\linewidth}}
-	%{@{}p{0.4cm}p{0.4cm}p{1.4cm}p{1.4cm}p{2cm}p{2cm}p{2cm}p{4.5cm}@{}}
-	\begin{tabular}{p{0.025\linewidth} p{0.025\linewidth} p{0.055\linewidth} p{0.16\linewidth} p{0.135\linewidth} p{0.175\linewidth} p{0.255\linewidth}}
-\toprule
-\textbf{Ref.} & \textbf{Year} & \textbf{Fruit} & \textbf{Motion Control} & \textbf{Main Challenges} & \textbf{Performance Metrics} & \textbf{Key Insights} \\ \midrule
-	%{@{}p{0.4cm}p{0.4cm}p{1.4cm}p{1.4cm}p{2cm}p{2cm}p{2cm}p{4.5cm}@{}}
-
-
-\cite{mehta2016robust} & 2016 & Citrus & Visual servo control for motion planning under disturbances & Unknown fruit motion, disturbance compensation & Stable operation with improved efficiency with artificial citrus fruit & Development of a robust controller that ensures stable operation and compensates for disturbances in unstructured environments \\ \midrule
-\cite{williams2020improvements} & 2019 & Kiwifruit & Improved end-effector design, advanced vision system & High cycle time, fruit loss rate & Harvesting 51\% of 1,456 kiwifruit, 5.5 s/fruit cycle time, in orchards & Significant improvements in harvesting efficiency but needs further reduction in fruit loss rate \\ \midrule
-\cite{mu2020design} & 2020 & Kiwifruit & Integrated grabbing, picking, and unloading & Efficient and gentle handling of kiwifruit & Success rate: 94.2\%, Picking time: 4-5s/fruit, field tests with 240 samples & Efficient integration of all picking stages into a single mechanism \\ \midrule
-\cite{longsheng2015development} & 2015 & Kiwifruit & Rotating Enveloper & Non-destructive picking of clustered fruits & Success rate: 96\%, Avg. picking time: 22s. Field trials & Effective separation and non-destructive picking \\ \midrule
-\cite{yaguchi2016development} & 2016 & Tomato & Rotational Plucking Gripper & Robust detection and picking under varying conditions & Success rate: 60\%, Avg. picking time: 23s, in real farm conditions & Combination of visual detection and mechanical design for improved performance \\
-\bottomrule
-\end{tabular}
-\end{table*}
-\fi
 
 
 \section{Current Status, Challenges, and Future Directions in Autonomous Fruit Harvesting}
