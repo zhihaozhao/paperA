@@ -7,16 +7,22 @@ Complete pipeline for transforming literature review into data-driven meta-analy
 
 ## 📁 **Directory Structure**
 ```
-scripts/
+benchmarks/
 ├── README.md                           # This file
 ├── run_complete_analysis.py            # Master pipeline script
 ├── data_extraction/
 │   └── literature_data_extractor.py    # Extract data from LaTeX tables
 ├── statistical_analysis/
 │   └── meta_analysis_experiments.py    # Statistical experiments & tests
-└── figure_generation/
-    ├── create_meta_analysis_figures.py # Python high-order figures
-    └── motion_control_analysis.m       # MATLAB supplementary analysis
+├── figure_generation/
+│   ├── create_meta_analysis_figures.py # Python high-order figures
+│   └── motion_control_analysis.m       # MATLAB supplementary analysis
+├── FP_2025_IEEE-ACCESS/                # IEEE Access journal version
+├── FP_2025_SN-APPLIED-SCIENCES/        # SN Applied Sciences version
+├── FP_2025_RAS/                        # RAS journal version
+├── FP_2025_DISCOVER-ROBOTICS/          # Discover Robotics version
+├── templates/                          # Official journal templates
+└── sn-article-template/                # Springer Nature template
 ```
 
 ---
@@ -26,19 +32,21 @@ scripts/
 ### **Option 1: Complete Pipeline (Recommended)**
 ```bash
 cd /workspace/benchmarks
-python scripts/run_complete_analysis.py --tex-file FP_2025_SN-APPLIED-SCIENCES/FP_2025_SN-APPLIED-SCIENCES_v1.tex
+python run_complete_analysis.py --tex-file FP_2025_SN-APPLIED-SCIENCES/FP_2025_SN-APPLIED-SCIENCES_v1.tex
 ```
 
 ### **Option 2: Step-by-Step Execution**
 ```bash
+cd /workspace/benchmarks
+
 # Step 1: Extract data
-python scripts/data_extraction/literature_data_extractor.py
+python data_extraction/literature_data_extractor.py
 
 # Step 2: Statistical analysis  
-python scripts/statistical_analysis/meta_analysis_experiments.py
+python statistical_analysis/meta_analysis_experiments.py
 
 # Step 3: Generate figures
-python scripts/figure_generation/create_meta_analysis_figures.py
+python figure_generation/create_meta_analysis_figures.py
 
 # Step 4: MATLAB analysis (optional)
 matlab -batch "motion_control_analysis"
@@ -101,7 +109,9 @@ pip install pandas numpy matplotlib seaborn scipy scikit-learn
 
 ### **1. Extract Data Only:**
 ```python
-from data_extraction.literature_data_extractor import LiteratureDataExtractor
+import sys
+sys.path.append('/workspace/benchmarks/data_extraction')
+from literature_data_extractor import LiteratureDataExtractor
 
 extractor = LiteratureDataExtractor('paper.tex')
 data = extractor.extract_all_data()
@@ -110,7 +120,9 @@ extractor.save_data('output.csv')
 
 ### **2. Generate Specific Figure:**
 ```python
-from figure_generation.create_meta_analysis_figures import MetaAnalysisFigureGenerator
+import sys
+sys.path.append('/workspace/benchmarks/figure_generation')
+from create_meta_analysis_figures import MetaAnalysisFigureGenerator
 
 generator = MetaAnalysisFigureGenerator('data.csv', 'results.json')
 generator.create_figure_4_visual_detection_analysis()
@@ -118,7 +130,9 @@ generator.create_figure_4_visual_detection_analysis()
 
 ### **3. Run Statistical Tests:**
 ```python
-from statistical_analysis.meta_analysis_experiments import MetaAnalysisExperiments
+import sys
+sys.path.append('/workspace/benchmarks/statistical_analysis')
+from meta_analysis_experiments import MetaAnalysisExperiments
 
 analyzer = MetaAnalysisExperiments('data.csv')
 results = analyzer.run_all_experiments()

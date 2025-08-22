@@ -15,10 +15,10 @@ import subprocess
 import json
 
 # Add script directories to path
-script_dir = Path(__file__).parent
-sys.path.append(str(script_dir / 'data_extraction'))
-sys.path.append(str(script_dir / 'statistical_analysis'))
-sys.path.append(str(script_dir / 'figure_generation'))
+benchmarks_dir = Path(__file__).parent
+sys.path.append(str(benchmarks_dir / 'data_extraction'))
+sys.path.append(str(benchmarks_dir / 'statistical_analysis'))
+sys.path.append(str(benchmarks_dir / 'figure_generation'))
 
 class CompletePipeline:
     """Master pipeline for complete meta-analysis"""
@@ -149,12 +149,12 @@ class CompletePipeline:
         print("STEP 4: MATLAB ANALYSIS (OPTIONAL)")
         print("=" * 60)
         
-        matlab_script = script_dir / 'figure_generation' / 'motion_control_analysis.m'
+        matlab_script = benchmarks_dir / 'figure_generation' / 'motion_control_analysis.m'
         
         if matlab_script.exists():
             print("MATLAB script available for additional analysis:")
             print(f"  📄 Script: {matlab_script}")
-            print(f"  🚀 Run: matlab -batch \"cd('{script_dir.parent}'); motion_control_analysis\"")
+                         print(f"  🚀 Run: matlab -batch \"cd('{benchmarks_dir}'); motion_control_analysis\"")
             print("  ⚠️  Requires MATLAB with Statistics Toolbox")
         
         return True
