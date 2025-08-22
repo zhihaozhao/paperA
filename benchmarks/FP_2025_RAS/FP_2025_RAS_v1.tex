@@ -469,7 +469,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 Among multi-sensor approaches, 3D stereo vision systems are essential by using dual cameras to estimate depth via triangulation, effectively mimicking human binocular vision. Early efforts include Wang et al.~\cite{wang2016localisation}, who developed a binocular stereo vision system for litchi localization, incorporating wavelet transforms and clustering methods to obtain high accuracy under natural lighting. Similarly, Si et al.~\cite{si2015location} advanced apple detection by enabling their stereo vision platform to recognize and localize multiple fruits simultaneously in variable environments. Luo et al.~\cite{luo2016vision} further demonstrated a grape-harvesting stereo system capable of quickly detecting cutting points and estimating yields with high efficiency.
 RGB-D cameras which combine color information with depth sensing using time-of-flight or structured light have also proven highly beneficial. Barnea et al.~\cite{barnea2016colour} presented an RGB-D-based 3D detection method capable of analyzing both shape and symmetry, which is effective for sweet pepper harvesting even under complex conditions. Nguyen et al.~\cite{nguyen2016detection} showed that integrating depth with RGB data significantly improves apple detection and localization, especially under occlusion. Kusumam et al.~\cite{kusumam20173d} and Andújar et al.~\cite{andujar2016using} extended these principles to broccoli and cauliflower, using mobile RGB-D platforms to deliver precise 3D crop measurements crucial for automated harvest scheduling.
 Sensor fusion extends beyond vision alone: for example, Gongal et al.~\cite{gongal2018apple} used a combination of color and time-of-flight 3D cameras to estimate apple size, demonstrating higher accuracy using pixel size information—an important step forward for volume estimation and crop management.
-The integration of visual sensors with advanced algorithms—such as DL models and inverse kinematics—further automates and optimizes fruit detection and harvesting. Onishi et al.~\cite{onishi2019automated} combined a stereo camera with an SSD DL model to gain high real-time detection accuracy, precisely guiding the robot’s arm through calculated movements.
+The integration of visual sensors with advanced algorithms—such as DL models and inverse kinematics—further automates and optimizes fruit detection and harvesting. Onishi et al.~\cite{onishi2019automated} combined a stereo camera with an SSD DL model to gain high real-time detection accuracy, precisely guiding the robot's arm through calculated movements.
 
 %Multi-modality data fusion plays a critical role in advancing agricultural robotics by enhancing perception accuracy and operational efficiency. 
 While multi-sensor systems, such as 3D stereo vision setups, have significantly advanced agricultural robotics by capturing richer environmental data, their effectiveness remains constrained when relying solely on homogeneous sensor inputs (e.g., visual data from dual cameras). To address this limitation, multi-modality data fusion has emerged as a logical next step, extending beyond the integration of similar sensors to combine fundamentally different types of data. This approach leverages the unique strengths of diverse modalities including visual, spectral, IoT-derived etc. to create a more comprehensive and robust perceptual framework.
@@ -795,7 +795,7 @@ Motion control is a central pillar of fruit-picking robots, essential for ensuri
 %Path planning, a crucial element in the smooth navigation of autonomous robots while avoiding obstacles, is of paramount importance in the field of robotics
 %~\cite {Leong:2024_review}. Key algorithms in this area include A-star (A*) Algorithm, RRT, Dijkstra's Algorithm, and advanced DDPG algorithm~\cite{Loganathan:2023_amr}.
 % and  Deep Deterministic Policy Gradient.
-Path planning for fruit-harvesting bots involves mapping out efficient, collision-free routes from the robot’s current spot to the target fruit—think dodging branches while racing to that ripe apple~\cite {Leong:2024_review}. Ever wonder how a robot avoids turning a quick pick into a tangled mess? Enter classics like A* and RRT lay the groundwork, though newer twists add machine learning that let them handle surprises better on the fly.
+Path planning for fruit-harvesting bots involves mapping out efficient, collision-free routes from the robot's current spot to the target fruit—think dodging branches while racing to that ripe apple~\cite {Leong:2024_review}. Ever wonder how a robot avoids turning a quick pick into a tangled mess? Enter classics like A* and RRT lay the groundwork, though newer twists add machine learning that let them handle surprises better on the fly.
 %~\cite{Loganathan:2023_amr}.
 
 The A* algorithm, known for its efficiency in finding the shortest path from a start node to a target node while avoiding obstacles, is a reliable choice for grid-based environments. It combines uniform-cost and greedy best-first search features by using a heuristic to estimate the cost from a node to the goal. The primary equation for A* is:
@@ -849,7 +849,7 @@ After a path is found, it can be smoothed by checking and directly connecting no
 \text{isCollisionFree}(x_i, x_j) \quad \text{for} \quad x_i, x_j \in \text{Path}
 \end{equation}
 
-Dijkstra’s Algorithm is commonly used in structured environments like orchards or greenhouses where the layout allows for fixed route planning~\cite{silwal2017design, dijkstra1959note}. It is used to find the shortest paths from a source node to all other nodes in the graph. The update step in Dijkstra's algorithm is:
+Dijkstra's Algorithm is commonly used in structured environments like orchards or greenhouses where the layout allows for fixed route planning~\cite{silwal2017design, dijkstra1959note}. It is used to find the shortest paths from a source node to all other nodes in the graph. The update step in Dijkstra's algorithm is:
 \begin{equation}
 \begin{aligned}
 \text{for each } v \text{ adjacent to } u: \\
@@ -915,7 +915,35 @@ a_t = \mu(s_t|\theta^\mu) + \epsilon, \quad \epsilon \sim \text{Noise process}
 where \( \epsilon \) often comes from an Ornstein-Uhlenbeck process, providing temporally correlated exploration beneficial in physical control problems.
 
 \subsection{Advances in Motion Planning and Control for Robotic Fruit Harvesting}
-Motion planning in robotic harvesting involves determining the path the robot’s end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
+Modern autonomous fruit-picking systems require sophisticated motion planning frameworks that integrate perception, kinematics, dynamics, and control theory to achieve reliable field performance. The complexity of agricultural environments—characterized by unpredictable obstacle configurations, dynamic lighting conditions, and delicate manipulation requirements—demands robust algorithmic solutions that can operate within stringent real-time constraints while maintaining high success rates.
+
+\textbf{Kinematic and Dynamic Modeling for Agricultural Manipulation}
+
+Robotic fruit harvesting presents unique kinematic challenges due to the varied spatial configurations of fruit targets and the need for gentle manipulation to prevent damage. Most contemporary systems employ redundant manipulators (6-7 DOF) to provide sufficient workspace coverage and singularity avoidance in cluttered orchard environments. The kinematic modeling frameworks must account for both forward kinematics for end-effector positioning and inverse kinematics for joint trajectory generation, with particular attention to computational efficiency for real-time implementation.
+
+Dynamic modeling becomes particularly critical for accurate motion control in field conditions where external disturbances (wind loading, ground vibrations, moving branches) significantly affect manipulator performance. Recent advances integrate adaptive dynamic models that can compensate for payload variations and environmental uncertainties, enabling more robust control performance across diverse harvesting scenarios. The incorporation of disturbance observers and adaptive control schemes allows systems to maintain precision even under challenging field conditions.
+
+\textbf{Advanced Path Planning Algorithms and Real-Time Implementation}
+
+Contemporary motion planning approaches for agricultural robotics can be categorized into sampling-based methods (RRT*, PRM), optimization-based techniques (trajectory optimization, quadratic programming), and learning-based algorithms (deep reinforcement learning, imitation learning). Each approach offers distinct advantages for different operational requirements and environmental constraints, with recent research focusing on hybrid approaches that combine multiple paradigms for enhanced robustness.
+
+Sampling-based planners, particularly Rapidly-exploring Random Trees (RRT) and their asymptotically optimal variants (RRT*), have demonstrated effectiveness in handling high-dimensional configuration spaces with complex obstacle geometries. The probabilistic completeness guarantees of these algorithms make them particularly suitable for agricultural environments where obstacle configurations are unpredictable. However, real-time performance requirements necessitate careful tuning of sampling strategies and tree expansion policies to maintain computational efficiency while ensuring solution quality.
+
+Optimization-based approaches formulate motion planning as constrained optimization problems, enabling direct incorporation of kinematic constraints, dynamic limitations, and task-specific objectives such as energy minimization and trajectory smoothness. These methods excel in generating optimal trajectories but face computational challenges in complex environments with multiple moving obstacles. Recent developments in convex relaxation techniques and sequential quadratic programming have improved convergence properties for real-time applications.
+
+\textbf{Reinforcement Learning and Adaptive Control Integration}
+
+The integration of deep reinforcement learning (DRL) with traditional control theory represents a paradigm shift in agricultural robotics motion planning. Deep Deterministic Policy Gradient (DDPG) and Proximal Policy Optimization (PPO) algorithms enable continuous control policies that can adapt to environmental variations and improve performance through field experience. The ability to learn from trial-and-error interactions allows these systems to handle scenarios that are difficult to model analytically.
+
+Recurrent neural network architectures within RL frameworks enable temporal reasoning and memory retention, crucial for sequential manipulation tasks and handling partially observable environments. This temporal modeling capability proves particularly valuable in agricultural settings where sensor occlusions and measurement uncertainties are prevalent, allowing the system to make informed decisions based on historical observations.
+
+\textbf{Multi-Robot Coordination and Distributed Control}
+
+As agricultural operations scale toward fleet-based autonomous systems, multi-robot motion planning becomes essential for efficient orchard management. Distributed control algorithms must coordinate multiple manipulators while avoiding inter-robot collisions and optimizing overall harvesting efficiency. Graph-theoretic approaches and consensus-based protocols enable decentralized coordination that scales effectively with fleet size.
+
+The coordination challenges extend beyond simple path planning to include task allocation, load balancing, and communication protocol design. Recent research explores auction-based algorithms for dynamic task distribution and formation control techniques for maintaining optimal robot spacing during harvesting operations.
+
+Motion planning in robotic harvesting involves determining the path the robot's end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
 
 \begin{table*}[htbp]
 \centering
