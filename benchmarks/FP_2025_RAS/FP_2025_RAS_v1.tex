@@ -284,21 +284,21 @@ and interconnections with environmental factors
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.55\textwidth]{fig_struct2.png}
+    \includegraphics[width=0.48\textwidth]{fig_struct2.png}
     \caption{The perception-action framework of autonomous Fruit-Picking robots.}
     \label{fig:struct}
 \end{figure}
 
 \begin{table*}[htbp]
 \centering
-\tiny
+\small
 \caption{Expanded Review Scope and Core Contributions of Major Fruit-Picking Robot Survey Papers}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{
-    p{0.03\textwidth}  % Ref.
-    p{0.075\textwidth}  % Year Range
-    *{7}{>{\centering\arraybackslash}p{0.07\textwidth}} % Focus Scope x7
-    p{0.22\textwidth}   % Summary
+    p{0.025\textwidth}  % Ref.
+    p{0.07\textwidth}  % Year Range
+    *{7}{>{\centering\arraybackslash}p{0.06\textwidth}} % Focus Scope x7
+    p{0.19\textwidth}   % Summary
 }
 \hline
 \multirow{2}{*}{\textbf{Ref.}}
@@ -307,12 +307,12 @@ and interconnections with environmental factors
 & \multirow{2}{*}{\textbf{Trends}} \\
 %\cline{3-9}  % Commented out for document class compatibility
 && \tiny Percep. Sensors
-& \tiny Machine Vision
-& \tiny Motion Planning
-& \tiny End-Effectors
-& \tiny Mechanical Automation
-& \tiny System Integration
-& \tiny Field Adaptation
+& Vision
+& Motion
+& End-Eff.
+& Mech.
+& System
+& Field
 & \\
 \hline
 \cite{hou2023overview}      & 2001-2022
@@ -373,7 +373,7 @@ We systematically searched databases including Scopus, Web of Science (WoS), and
 %Of the 5024 records initially identified, a comprehensive screening process was conducted to ensure the quality and relevance of the included studies. First, duplicates were identified and removed, resulting in 3430 unique entries. Manual screening was then performed without the aid of automation tools. During the title screening phase, 3018 records were excluded based on apparent irrelevance to the review topic. The remaining studies underwent abstract screening, which further reduced the collection to 412 potentially relevant records. Finally, full-text reviews were conducted on these entries to assess their fit with the review criteria.
 
 \begin{table}[ht]
-\scriptsize
+\small
 \caption{Keywords and Criteria Used in Preliminary Database Search.} 
 \label{tab:keywords} 
 \begin{tabular}{p{0.3\linewidth} p{0.5\linewidth}}
@@ -425,7 +425,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \end{figure}
 
 \begin{table*}[ht]
-\scriptsize
+\small
 \centering
 \caption{Multi-Sensor Fusion and Multi-Modality Synergy in Orchard Applications} 
 \label{tab:dataset}
@@ -490,8 +490,8 @@ Figure~\ref{fig:ras_meta_analysis} presents our systematic algorithmic analysis 
 
 \begin{figure*}[htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{fig_comprehensive_meta_analysis.pdf}
-\caption{Algorithmic analysis for field robotics systems (56 studies).}
+\includegraphics[width=0.85\textwidth]{fig_comprehensive_meta_analysis.pdf}
+\caption{Advanced algorithmic analysis for robotic systems: (a) Performance distribution by algorithm family, (b) Temporal evolution patterns, (c) Accuracy-latency optimization, (d) Environmental robustness analysis, (e) Algorithm deployment trends, (f) Real-time performance characterization. Comprehensive evaluation based on 56 studies (2015-2024) for field robotics applications and autonomous system development.}
 \label{fig:ras_meta_analysis}
 \end{figure*}
 
@@ -555,8 +555,8 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 
 \begin{table*}[htbp]
 	\centering
-	\tiny 
-	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024 (part 1)} 
+	\small
+	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024} 
 	\label{tab:RCNN-based} 
 	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
 	\toprule
@@ -582,9 +582,9 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 
 \begin{table*}[htbp]
 	\centering
-	\tiny 
+	\small
 	\addtocounter{table}{-1}
-	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024 (part 2)} 
+	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024} 
 	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
@@ -655,8 +655,8 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 
 \begin{table*}[htbp]
 	\centering
-	\tiny 
-	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019 (part 1)} 
+	\small
+	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019} 
 	\label{tab:yolo-based}
 	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
 	\toprule
@@ -679,9 +679,9 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 
 \begin{table*}[htbp]
 	\centering
-	\tiny 
+	\small
 	\addtocounter{table}{-1}
-	\caption{Summary of YOLO Family Approaches for Fruit-Picking since 2019 (part 2)} 
+	\caption{Summary of YOLO Family Approaches for Fruit-Picking since 2019} 
 	%\addtocounter{table}{-1}
 	%\addtocounter{table}{-1}
 	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
@@ -744,7 +744,7 @@ Then there's rapidity: we're talking pick cycles under 7 seconds per fruit to ma
 %This framework clarifies how these quantifiable indicators drive progress in overcoming challenges like illumination variability, occlusion, and computational efficiency.
 \begin{figure}[hbtp]
 \centering
-\includegraphics[width=0.57\textwidth]{fig_performance.png}
+\includegraphics[width=0.5\textwidth]{fig_performance.png}
 \caption{The Core Performances of Fruit-Picking.}
 \label{fig:performance}
 \end{figure}
@@ -765,7 +765,7 @@ Kang et al.~\cite{kang2020real}  combined Mobile-DasNet with PointNet for apple 
 
 \begin{table*}[htbp]
 \centering
-\tiny
+\small
 \caption{Summary of Fruit Detection Approaches by Core Performance Metrics (2015-2024)}
 \label{tab:performance-metrics}
 \begin{tabular}{@{}p{1.5cm}p{2.5cm}p{5cm}p{4cm}p{2.5cm}@{}}
@@ -947,7 +947,7 @@ Motion planning in robotic harvesting involves determining the path the robot's 
 
 \begin{table*}[htbp]
 \centering
-\tiny
+\small
 \caption{Summary of Robotic Motion Control for Fruit Harvesting (2015-2024)}
 \label{tab:motion-control-based}
 \begin{tabular}{p{0.025\linewidth} p{0.025\linewidth} p{0.055\linewidth} p{0.2\linewidth} p{0.135\linewidth} p{0.175\linewidth} p{0.2\linewidth}}
