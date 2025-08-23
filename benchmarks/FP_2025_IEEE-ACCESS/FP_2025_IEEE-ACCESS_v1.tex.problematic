@@ -17,8 +17,15 @@
 %% Template article for cas-dc documentclass for 
 %% double column output.
 
-%\documentclass[a4paper,fleqn,longmktitle]{cas-dc}
-\documentclass[a4paper,fleqn]{cas-dc}
+\documentclass[conference]{IEEEtran}
+
+% IEEE Access packages
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+% \usepackage{algorithmic} % Commented to prevent conflict with algpseudocode
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
 
 % \usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
@@ -31,6 +38,10 @@
 
 \usepackage{threeparttable}%表格下面加标注
 \usepackage{rotating}
+\usepackage{multirow}  % Required for \multirow in tables
+\usepackage{array}     % Required for table formatting
+\usepackage{booktabs}  % Required for \toprule, \midrule, \bottomrule
+\usepackage{url}       % Required for \url commands
 
 % Attempt to fix the \pdf@box issue: load graphicx with pdftex driver and color
 %\usepackage[pdftex]{graphicx}
@@ -70,9 +81,9 @@
 \let\WriteBookmarks\relax
 \def\floatpagepagefraction{1}
 \def\textpagefraction{.001}
-% \shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
-% \shortauthors{Author 1 and N.S. Ahmad}
-% \footmarks{\url{https://doi.org/10.1016/j.jer.20xx.xx.xxx}\\
+\shorttitle{Journal of Engineering Research xx (20xx) xxxxxx}
+\shortauthors{Author 1 and N.S. Ahmad}
+\footmarks{\url{https://doi.org/10.1016/j.jer.20xx.xx.xxx}\\
     0952-1976/\begingroup\tiny{©}\endgroup~2025 Elsevier B.V.\\
     This is an open access article under the CC BY-NC-ND license (\url{http://creativecommons.org/licenses/by-nc-nd/4.0/}).
 }
@@ -81,7 +92,7 @@
 % \bookmark[named = FirstPage]{A Comprehensive Survey on UWB-Based NLOS Identification and Ranging Error Mitigation Using CIR Features and Raw Sequences} % Title bookmark used in the pdf
 %**************** If the title is short, stay on the first line use [mode = short_title] otherwise ******************
 %***************************************** use [mode = title] below ***************************************
-\title [mode = title]{Field-Robotics Benchmarks for Autonomous Fruit Picking: Perception-to-Action Integration, Quantitative Trade-offs, and Deployment Guidance}    
+\title{Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots: Quantitative Synthesis, Gaps, and Deployment Roadmap}
 
 % Title mark notes if desired
 %\tnotemark[1,2]
@@ -93,13 +104,21 @@
 %   to fill through the whole text width and overflow into
 %   another line in the footnotes area of the first page.}
 
-\author[1,2]{Zhihao Zhao}[type=author, 
-                        auid=000,bioid=1,
-                        ]
-% \ead{wangshoude@usm.my}
-% \credit{Conceptualization of this study, Methodology}
+\author{\IEEEauthorblockN{Zhihao Zhao}
+\IEEEauthorblockA{\textit{School of Electrical and Electronic Engineering} \\
+\textit{Universiti Sains Malaysia}\\
+Nibong Tebal, Malaysia \\
+email@usm.my}
+\and
+\IEEEauthorblockN{Nur Syazreen Ahmad}
+\IEEEauthorblockA{\textit{School of Electrical and Electronic Engineering} \\
+\textit{Universiti Sains Malaysia}\\
+Nibong Tebal, Malaysia \\
+syazreen@usm.my}}
 
-% \address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
+\credit{Conceptualization of this study, Methodology}
+
+\address[1]{School of Electrical and Electronic Engineering, Universiti Sains Malaysia, 14300 Nibong Tebal, Penang, Malaysia}
 
 \author[3]{Yanxiang Zhao}
 \author[1]{Nur Syazreen Ahmad}[type=author, 
@@ -107,12 +126,12 @@
                         orcid=0000-0001-7511-2910
                         ]
 %\fnmark[1]
-% \cormark[1]
+\cormark[1]
 % \ead{syazreen@usm.my}
-% \credit{Data curation, Writing-Original draft preparation}
+\credit{Data curation, Writing-Original draft preparation}
 
-% \address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
-% \address[3]{Central South University, Changsha, Hunan, 410083, China}
+\address[2]{YanTai Engineering and Technology College, 264006 YanTai, Shandong, China}
+\address[3]{Central South University, Changsha, Hunan, 410083, China}
 % \author[1,3]{CV Radhakrishnan}[type=editor, 
 %                         auid=000,bioid=1,
 %                         prefix=Sir,
@@ -124,7 +143,7 @@
 % \ead{cvr_1@tug.org.in}
 % %\ead[url]{www.cvr.cc, cvr@sayahna.org} % Author URL 
 
-% % \credit{Conceptualization of this study, Methodology, Software}
+% \credit{Conceptualization of this study, Methodology, Software}
 
 % \address[1]{Elsevier B.V., Radarweg 29, 1043 NX Amsterdam, The Netherlands}
 
@@ -138,7 +157,7 @@
 % \ead{cvr3@sayahna.org}
 % %\ead[URL]{www.sayahna.org}				% Author URL
 
-% % \credit{Data curation, Writing - Original draft preparation}
+% \credit{Data curation, Writing - Original draft preparation}
 
 % \address[2]{Sayahna Foundation, Jagathy, Trivandrum 695014, India}
 
@@ -162,9 +181,9 @@
 % \address[4]{Istanbul Technical University, Department of Electrical Engineering,
 % 	Maslak, Istanbul 34469, Turkey}
 
-% \credit{Modification for the final layout}
+\credit{Modification for the final layout}
 
-% \cortext[1]{Corresponding author.}
+\cortext[1]{Corresponding author.}
 % \cortext[cor2]{Principal corresponding author.}
 % \fntext[1]{E-mail address: \href{mailto:syazreen@usm.my}{syazreen@usm.my} (N.S. Ahmad).}
 %\fntext[fn2]{Another author footnote, this is a very long footnote and
@@ -179,7 +198,7 @@
 %  gradient, and therefore effectively couples with the
 %  quadrupole $1S$ excitons in cuprous oxide.}
 
-% \nonumnote{E-mail address: \href{mailto:syazreen@usm.my}{syazreen@usm.my} (N.S. Ahmad).}
+\nonumnote{E-mail address: \href{mailto:syazreen@usm.my}{syazreen@usm.my} (N.S. Ahmad).}
 
 \begin{abstract} 
 This review synthesizes recent advances in autonomous fruit-picking robots with a focus on visual perception, path planning, and motion control. Following PRISMA guidelines, we systematically analyzed 137 studies published between 2015 and 2024. We critically compare learning-based perception approaches—especially YOLO- and R-CNN–family methods—under orchard-specific conditions (occlusion, variable lighting, small targets), and quantify trade-offs in accuracy and efficiency across representative platforms. We further examine perception-to-action integration for motion planning and control, summarizing success rate, harvest cycle time, and damage rate reported in field and greenhouse trials. 
@@ -200,10 +219,10 @@ Learning-based approaches, including transfer learning and reinforcement learnin
 %\end{highlights}
 
 % Article history - Should only be set by an editor
-% \received {xx Month 20xx}
-% \revised {xx Month 20xx}
-% \accepted {xx Month 20xx}
-% \online {xx Month 20xx}
+\received {xx Month 20xx}
+\revised {xx Month 20xx}
+\accepted {xx Month 20xx}
+\online {xx Month 20xx}
 
 \begin{keywords}
  Autonomous Fruit-Picking Robots,
@@ -486,7 +505,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 Among multi-sensor approaches, 3D stereo vision systems are essential by using dual cameras to estimate depth via triangulation, effectively mimicking human binocular vision. Early efforts include Wang et al.~\cite{wang2016localisation}, who developed a binocular stereo vision system for litchi localization, incorporating wavelet transforms and clustering methods to obtain high accuracy under natural lighting. Similarly, Si et al.~\cite{si2015location} advanced apple detection by enabling their stereo vision platform to recognize and localize multiple fruits simultaneously in variable environments. Luo et al.~\cite{luo2016vision} further demonstrated a grape-harvesting stereo system capable of quickly detecting cutting points and estimating yields with high efficiency.
 RGB-D cameras which combine color information with depth sensing using time-of-flight or structured light have also proven highly beneficial. Barnea et al.~\cite{barnea2016colour} presented an RGB-D-based 3D detection method capable of analyzing both shape and symmetry, which is effective for sweet pepper harvesting even under complex conditions. Nguyen et al.~\cite{nguyen2016detection} showed that integrating depth with RGB data significantly improves apple detection and localization, especially under occlusion. Kusumam et al.~\cite{kusumam20173d} and Andújar et al.~\cite{andujar2016using} extended these principles to broccoli and cauliflower, using mobile RGB-D platforms to deliver precise 3D crop measurements crucial for automated harvest scheduling.
 Sensor fusion extends beyond vision alone: for example, Gongal et al.~\cite{gongal2018apple} used a combination of color and time-of-flight 3D cameras to estimate apple size, demonstrating higher accuracy using pixel size information—an important step forward for volume estimation and crop management.
-The integration of visual sensors with advanced algorithms—such as DL models and inverse kinematics—further automates and optimizes fruit detection and harvesting. Onishi et al.~\cite{onishi2019automated} combined a stereo camera with an SSD DL model to gain high real-time detection accuracy, precisely guiding the robot’s arm through calculated movements.
+The integration of visual sensors with advanced algorithms—such as DL models and inverse kinematics—further automates and optimizes fruit detection and harvesting. Onishi et al.~\cite{onishi2019automated} combined a stereo camera with an SSD DL model to gain high real-time detection accuracy, precisely guiding the robot's arm through calculated movements.
 
 %Multi-modality data fusion plays a critical role in advancing agricultural robotics by enhancing perception accuracy and operational efficiency. 
 While multi-sensor systems, such as 3D stereo vision setups, have significantly advanced agricultural robotics by capturing richer environmental data, their effectiveness remains constrained when relying solely on homogeneous sensor inputs (e.g., visual data from dual cameras). To address this limitation, multi-modality data fusion has emerged as a logical next step, extending beyond the integration of similar sensors to combine fundamentally different types of data. This approach leverages the unique strengths of diverse modalities including visual, spectral, IoT-derived etc. to create a more comprehensive and robust perceptual framework.
@@ -562,6 +581,19 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 \begin{table*}[htbp]
 	\centering
 	\footnotesize 
+	\addtocounter{table}{-1}
+	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024 (part 2)} 
+	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
+	\toprule
+	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
+
+	\cite{chu2021deep} \newline 2021 & Apples (Gala, Blondee) \newline Outdoor non-structural orchard & Suppression Mask R-CNN (ResNet-101-FPN) & Robust detection under varying lighting and occlusion for robotic harvesting & - F1-score: 0.905 (C1 configuration) \newline - Precision: 0.880, Recall: 0.931 (C1) \newline - Detection time: 0.25 s/frame \newline - Outperforms Mask R-CNN (ResNet152) by 0.047 in F1-score & - Back lighting reduces precision (0.84 vs. 0.89 under overcast) \newline - Missed detections in heavy occlusion (example shows 3 missed apples) \newline - Relies on manual rectangular annotation (1,500 images) \\ \midrule
+	\cite{gao2020multi} \newline 2020 & Apples (Scifresh) \newline Outdoor non-structural orchard (SNAP system) & Faster R-CNN (VGG16) & Multi-class detection (non-occluded, leaf-occluded, branch/wire-occluded, fruit-occluded) for robotic harvesting strategy & - mAP=0.879 across four classes \newline - AP for non-occluded: 0.909; branch/wire-occluded: 0.858 \newline - Processing time: 0.241 s/image \newline - Outperforms ZFNet by 8.6\% in mAP & - Lowest AP for fruit-occluded class (0.848) \newline - Detection speed 1.5x slower than ZFNet (0.167 s/image) \newline - Missed detection of branch/wire-occluded fruits in dense canopies \\ \midrule
+	\cite{ge2019fruit} \newline 2019 & Strawberries \newline Table-top cultivation (structured environment) & Mask R-CNN (ResNet101) + safety region algorithms & 3D localization and safe manipulation region identification (strap/table avoidance) & - Ripe strawberry AP: 0.90; F1-score: 0.94 (confidence=0.9) \newline - Safe region accuracy: 96.9\% (strap), 97.3\% (table) \newline - Picking success rate: 74.1\% (optimized localization) \newline - Total processing time: 0.82 s/image & - Unripe strawberry AP lower (0.72) than ripe \newline - Original strap mask method accuracy only 83.7\% \newline - Picking rate drops to 51.8\% with raw point localization \newline - Limited to structured table-top environments \\ 
+
+	\bottomrule
+	\end{tabular}
+\end{table*}
 
 
 Developments like Mask R-CNN ~\cite{he2017mask} extended this capability for pixel-level segmentation as shown in Figure ~\ref{fig:mask_rcnn}. A key insight is the addition of the mask prediction branch, which enhances segmentation accuracy by 15-20\% in occluded orchard scenes, directly supporting improved robotic path planning,
@@ -646,6 +678,22 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 \begin{table*}[htbp]
 	\centering
 	\footnotesize 
+	\addtocounter{table}{-1}
+	\caption{Summary of YOLO Family Approaches for Fruit-Picking since 2019 (part 2)} 
+	%\addtocounter{table}{-1}
+	%\addtocounter{table}{-1}
+	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
+	\toprule
+	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
+	 \cite{yu2024object} \newline 2024 & Citrus \newline Natural orchard & YOLOv5-citrus & Multi-channel information fusion + state classification & - 2.8\% higher in mAP than original YOLOv5 \newline - Precision 3.7\% higher than original YOLOv5 \newline - 3D positioning error: (1.97 mm, 0.36 mm, 9.63 mm) & - Training requires 4200 images (700 original + 3500 augmented) \newline - Severe occlusion may misclassify "difficult-to-pick" fruits \newline - Slightly slower inference due to added modules (no specific speed given) \\ \midrule
+	\cite{ZHOU2024110} \newline 2024 & Camellia oleifera \newline Outdoor orchard & YOLOv8x + binocular vision & 3D positioning of grabbing points via transfer learning & - mAP$_{50}$=0.96 (full dataset); 0.95 with 200 samples (transfer learning) \newline - 3D coordinate error <2.1 cm on all axes \newline - 5 FPS on Jetson Orin & - Severe branch occlusion reduces recall by 5.05\% \newline - Shading increases positioning error by 0.044 mm \newline - Requires 150 epochs for convergence \\ \midrule
+	\cite{ZHANG2024108780} \newline 2024 & Tree trunks, person, mast \newline Natural orchard & Improved YOLOv5 & GhostNet V2 + SIoU + Coordinate Attention (CA) & - mAP=97.1\%, 198.2 ms/image \newline - Model size reduced by 43.6\% (7.7 MB) \newline - DBSCAN clustering accuracy=89.2\% & - Supporter AP (94.7\%) 3.2\% lower than tree trunks \newline - Overexposure increases false negatives by 5\% \newline - Requires 350 epochs for convergence \\ \midrule
+	\cite{ZHANG2024108836} \newline 2024 & Citrus \newline Complex orchard & MFAF-YOLO (modified YOLOv5s) & Multi-scale feature adaptive fusion + K-means++ anchor boxes & - mAP=90.2\%, FPS=86.2 \newline - First priority AP=93.2\%, Second priority AP=87.3\% \newline - Model size=10.7 MB (26.2\% smaller than YOLOv5s) & - Dense citrus clusters reduce recall by 8\% \newline - Foggy conditions decrease mAP by 2.1\% \newline - Dual detection heads miss 0.8\% of large fruits \\ \midrule
+	\cite{LU2024108721} \newline 2024 & Citrus \newline Complex orchard & MFAF-YOLO (extended) & Res-Attn module + priority-based detection & - Robust to 7 augmentation types (fog, noise, etc.) \newline - Field test success rate=91\% for first priority fruits \newline - 11.6 ms/image inference time & - Immature citrus false detection rate=3.5\% \newline - Stem detection error affects picking precision \newline - MobileNetV3-YOLOv5s is 10\% faster but 4.8\% lower mAP \\ \bottomrule
+
+
+	\end{tabular}
+\end{table*}
 	
 \iffalse
 \begin{table*}[H]
@@ -774,7 +822,7 @@ Motion control is a central pillar of fruit-picking robots, essential for ensuri
 %Path planning, a crucial element in the smooth navigation of autonomous robots while avoiding obstacles, is of paramount importance in the field of robotics
 %~\cite {Leong:2024_review}. Key algorithms in this area include A-star (A*) Algorithm, RRT, Dijkstra's Algorithm, and advanced DDPG algorithm~\cite{Loganathan:2023_amr}.
 % and  Deep Deterministic Policy Gradient.
-Path planning for fruit-harvesting bots involves mapping out efficient, collision-free routes from the robot’s current spot to the target fruit—think dodging branches while racing to that ripe apple~\cite {Leong:2024_review}. Ever wonder how a robot avoids turning a quick pick into a tangled mess? Enter classics like A* and RRT lay the groundwork, though newer twists add machine learning that let them handle surprises better on the fly.
+Path planning for fruit-harvesting bots involves mapping out efficient, collision-free routes from the robot's current spot to the target fruit—think dodging branches while racing to that ripe apple~\cite {Leong:2024_review}. Ever wonder how a robot avoids turning a quick pick into a tangled mess? Enter classics like A* and RRT lay the groundwork, though newer twists add machine learning that let them handle surprises better on the fly.
 %~\cite{Loganathan:2023_amr}.
 
 The A* algorithm, known for its efficiency in finding the shortest path from a start node to a target node while avoiding obstacles, is a reliable choice for grid-based environments. It combines uniform-cost and greedy best-first search features by using a heuristic to estimate the cost from a node to the goal. The primary equation for A* is:
@@ -828,7 +876,7 @@ After a path is found, it can be smoothed by checking and directly connecting no
 \text{isCollisionFree}(x_i, x_j) \quad \text{for} \quad x_i, x_j \in \text{Path}
 \end{equation}
 
-Dijkstra’s Algorithm is commonly used in structured environments like orchards or greenhouses where the layout allows for fixed route planning~\cite{silwal2017design, dijkstra1959note}. It is used to find the shortest paths from a source node to all other nodes in the graph. The update step in Dijkstra's algorithm is:
+Dijkstra's Algorithm is commonly used in structured environments like orchards or greenhouses where the layout allows for fixed route planning~\cite{silwal2017design, dijkstra1959note}. It is used to find the shortest paths from a source node to all other nodes in the graph. The update step in Dijkstra's algorithm is:
 \begin{equation}
 \begin{aligned}
 \text{for each } v \text{ adjacent to } u: \\
@@ -894,21 +942,11 @@ a_t = \mu(s_t|\theta^\mu) + \epsilon, \quad \epsilon \sim \text{Noise process}
 where \( \epsilon \) often comes from an Ornstein-Uhlenbeck process, providing temporally correlated exploration beneficial in physical control problems.
 
 \subsection{Advances in Motion Planning and Control for Robotic Fruit Harvesting}
-Motion planning in robotic harvesting involves determining the path the robot’s end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. Figure~\ref{fig:motion_planning_analysis} provides systematic analysis of robotic motion planning architectures, algorithmic performance characteristics, and field deployment considerations essential for autonomous robotic system development.
-
-\begin{figure*}[htbp]
-\centering
-% Note: Run create_section_v_figure.py to generate this figure
-\includegraphics[width=0.85\textwidth]{fig_motion_planning_analysis.pdf}
-\caption{Advanced robotic motion planning analysis for autonomous harvesting systems: (a) Robotic system architecture integrating perception subsystems with motion planning modules and control execution layers, (b) Algorithmic performance evaluation comparing success rates versus computational requirements for classical and learning-based approaches, (c) Temporal evolution of motion planning methodologies from traditional graph-based methods to advanced reinforcement learning techniques, (d) Environmental performance validation across diverse field conditions demonstrating robotic system adaptability. Comprehensive analysis supporting robotic system design and algorithm selection for autonomous agricultural applications.}
-\label{fig:motion_planning_analysis}
-\end{figure*}
-
-The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
+Motion planning in robotic harvesting involves determining the path the robot's end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Summary of Robotic Motion Control for Fruit Harvesting (2015-2024)}
 \label{tab:motion-control-based}
 \begin{tabular}{p{0.025\linewidth} p{0.025\linewidth} p{0.055\linewidth} p{0.2\linewidth} p{0.135\linewidth} p{0.175\linewidth} p{0.2\linewidth}}
@@ -936,52 +974,6 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \end{tabular}
 \end{table*}
 
-\begin{table*}[htbp]
-\centering
-\small
-\caption{Enhanced Motion Control Algorithm Performance Analysis for Autonomous Robotic Systems (2015-2024): Statistical summary of 16 key studies showing algorithm family performance characteristics, advantages, limitations, and optimal deployment scenarios for evidence-based selection in advanced robotic systems for agricultural automation.}
-\label{tab:motion_control_enhanced}
-\begin{tabular}{p{2.5cm}p{1.2cm}p{1.8cm}p{2.2cm}p{2.5cm}p{2cm}p{3cm}}
-\toprule
-\textbf{Algorithm Family} & \textbf{Studies} & \textbf{Success Rate} & \textbf{Cycle Time} & \textbf{Key Advantages} & \textbf{Limitations} & \textbf{Best Applications} \\
-\midrule
-\textbf{Deep RL} & 3 & 90.4\% $\pm$ 2.1 & 5.2s $\pm$ 2.8 & Real-time adaptation, continuous learning, high accuracy in dynamic environments & Training complexity, computational requirements & Unstructured orchards, variable conditions \\
-\midrule
-\textbf{Vision-based} & 4 & 73.1\% $\pm$ 15.2 & 7.8s $\pm$ 1.2 & Robust perception integration, adaptive to visual feedback & Light sensitivity, occlusion challenges & Greenhouse environments, controlled lighting \\
-\midrule
-\textbf{Classical} & 6 & 70.8\% $\pm$ 9.4 & 9.7s $\pm$ 3.2 & Reliable performance, well-tested algorithms, predictable behavior & Limited adaptability, static planning & Structured orchards, known environments \\
-\midrule
-\textbf{Multi-robot} & 2 & 70.0\% $\pm$ 0 & 10.0s $\pm$ 0 & Scalable operations, distributed coordination & Coordination complexity, communication overhead & Large-scale harvesting operations \\
-\midrule
-\textbf{Hybrid/Adaptive} & 1 & 75.0\% & 7.5s & Balanced performance, adaptive to conditions & Implementation complexity, parameter tuning & Mixed environments, variable crops \\
-\bottomrule
-\end{tabular}
-\end{table*}
-
-\begin{table*}[htbp]
-\centering
-\small
-\caption{Motion Control Key Performance Indicators and Advanced Robotics Research Trends (2015-2024)}
-\label{tab:motion_control_kpis}
-\begin{tabular}{p{3cm}p{2.5cm}p{3cm}p{6cm}}
-\toprule
-\textbf{Performance Metric} & \textbf{Best Achievement} & \textbf{Study Reference} & \textbf{Technical Significance} \\
-\midrule
-\textbf{Highest Success Rate} & 92.0\% & Verbiest et al. (2022) & RL-based collision-free planning with end-effector adaptation \\
-\midrule
-\textbf{Fastest Processing} & 29ms planning time & Lin et al. (2021) & Recurrent DDPG enabling real-time collision-free path planning \\
-\midrule
-\textbf{Commercial Validation} & 84\% in real orchards & Silwal et al. (2017) & Seven DOF manipulator with optimized path planning \\
-\midrule
-\textbf{Multi-environment} & Greenhouse \& Field & Vougioukas (2019) & Multi-robot coordination reducing operation times by 30\% \\
-\midrule
-\textbf{Precision Control} & <10mm positioning error & Ling et al. (2019) & Dual-arm coordination with binocular vision for tomatoes \\
-\bottomrule
-\end{tabular}
-\end{table*}
-
-Table~\ref{tab:motion_control_enhanced} provides comprehensive statistical analysis of algorithm family performance for autonomous robotic systems, revealing that Deep RL approaches achieve optimal performance characteristics (90.4\% success rate, 5.2s cycle time) for advanced agricultural robotics, significantly outperforming classical methods (70.8\% success rate, 9.7s cycle time). Table~\ref{tab:motion_control_kpis} highlights key performance breakthroughs that demonstrate the technological advancement trajectory toward commercial viability in robotics and autonomous systems, with the fastest processing achieving 29ms planning times and highest success rates reaching 92\% in real-world robotic applications.
-
 Studies like Silwal et al.~\cite{silwal2017design} and Lehnert et al.~\cite{lehnert2017autonomous} highlight multi-DOF manipulators for tackling orchard complexity. For apples, Silwal's seven DOF manipulators hit an 84\% picking success rate, with 7.6-second cycles, proving reliable path planning in open fields. Lehnert's sweet pepper robot, pairing differential drive with a seven-DOF arm, reached 58\% success in trials, excelling in controlled greenhouses—though lower rates underscore ongoing occlusion challenges.
 In contrast, Arad et al.~\cite{arad2020development} focused on integrating autonomous navigation with a vision-guided manipulator for sweet pepper harvesting. Their system, tested extensively in commercial greenhouses, gained a cycle time of 24 seconds per fruit with success rates ranging from 18\% to 61\%. This study highlights the importance of comprehensive field tests to validate the integration of navigation, manipulation, and vision systems in real-world settings.
 Xiong et al.~\cite{xiong2020autonomous} and Ling et al.~\cite{ling2019dual} explored the use of dual-arm systems for complex environments. Xiong's dual-arm strawberry harvesting robot utilized an obstacle-separation algorithm, shortening a picking speed of 6.1 seconds per fruit in single-arm mode and demonstrating high efficiency in field tests. Ling's system, which uses both arms and binocular vision to pick tomatoes, was 87.5\% successful. It had an error of less than 10 mm in position, showing that the two arms work well together to be more efficient and accurate in areas with a lot of plants.
@@ -1007,17 +999,6 @@ In recent years, the field of autonomous fruit harvesting has seen substantial p
 %Vision Detection Advancements
 The integration of DL models, especially the R-CNN and YOLO series, has revolutionized fruit detection \cite{hou2023overview, suresh2023selective}. The rapid development of YOLO versions in 2024, such as YOLOv8, YOLOv9, YOLOv10, and YOLO11, has significantly improved performance. YOLOv8 introduced an anchor-free detection method and a unified multi-task framework, enabling more accurate detection of small fruits and better adaptation to complex agricultural scenarios \cite{li2023mta}. YOLOv9 improved performance through the PGI framework and GELAN architecture, optimizing information flow within the model. YOLOv10, with its anchor-free training and innovative architectural elements like space - channel decoupled downsampling and large-kernel convolutions, streamlined the training-to-deployment process. The latest YOLO11 improved feature extraction and introduced optimized training processes, keeping a better balance between detection speed and accuracy. These refinements have significantly elevated the ability of fruit-picking robots to identify fruits amidst dense foliage and under varying light conditions, reducing false positives and improving overall detection efficiency.
 %Locomotion and Path Planning Innovations
-
-Figure~\ref{fig:future_directions_roadmap} provides strategic analysis of technology readiness levels, research priorities, and innovation roadmaps essential for advancing autonomous robotic systems toward commercial agricultural deployment.
-
-\begin{figure*}[htbp]
-\centering
-% Note: Run create_section_v_figure.py to generate this figure
-\includegraphics[width=0.85\textwidth]{fig_future_directions_roadmap.pdf}
-\caption{Strategic technology advancement roadmap for autonomous agricultural robotics: (a) Current technology readiness assessment for key robotic system components, (b) Research priority analysis balancing commercial impact against development complexity, (c) Innovation timeline projecting major technological milestones from 2024-2030, (d) Challenge-solution integration framework addressing critical barriers to commercial robotic deployment. Comprehensive strategic analysis supporting evidence-based research planning and technology investment decisions for autonomous agricultural systems.}
-\label{fig:future_directions_roadmap}
-\end{figure*}
-
 \begin{table*}[htbp]
   \centering
   \caption{Summary of Recent Breakthroughs, Challenges, and Future Trends in Autonomous Fruit Harvesting}

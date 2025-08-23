@@ -1,0 +1,151 @@
+ 10746490
+Ahmad:2023_bnb
+altaheri2019date
+andujar2016using
+arad2020development
+ Arrouch:2022b
+bac2016analysis
+barnea2016colour
+barth2016design
+barth2018data
+BioInspiredAlgorithmsReference
+birrell2020field
+blok2022review
+bochkovskiy2020yolov4
+borenstein1991vfh
+bresilla2019single
+burks2021engineering
+cai2018cascade
+chen2019hybrid
+chen2024mlp
+chu2021deep
+ dijkstra1959note
+feng2018
+fox1997dynamic
+fu2018kiwifruit
+fu2020faster
+gai2022fruit
+gai2023detection
+gao2020multi
+ge2019fruit
+ge2024multi
+gene2019fruit
+gene2019multi
+girshick2014rcnn
+girshick2015fast
+goel2015fuzzy
+gongal2018apple
+he2017mask
+heschl2024synthset
+horng2019smart
+hou2023overview
+jia2020detection
+jun2021towards
+kang2019fruit
+kang2020fast
+ kang2020fruit
+kang2020real
+ khanam2410yolov11
+kirk2020b
+koenig2015comparative
+kusumam20173d
+kuznetsova2020using
+lalander2015vermicomposting
+lavalle1998rapidly
+lawal2021tomato
+lehnert2016sweet
+lehnert2017autonomous
+li2020detection
+ li2021novel
+li2021real
+li2022yolov6
+ li2023mta
+li2023mta
+ li2023multi
+li2023multi
+lili2017development
+lillicrap2015continuous
+lin2019guava
+lin2020color
+lin2021collision
+ling2019dual
+liu2016method
+liu2019mature
+liu2020yolo
+ liu2024hierarchical
+liu2024hierarchical
+Loganathan:2023_amr
+ Loganathan:2024_hho_avoa
+longsheng2015kiwifruit
+lu2015detecting
+LU2024108721
+luo2016robust
+luo2016vision
+luo2018vision
+lytridis2021overview
+magalhaes2021evaluating
+majeed2020deep
+ mark2019ethics
+ martos2021ensuring
+martos2021ensuring
+mehta2016robust
+mendes2016vine
+mingyou2024orchard
+mohamed2021smart
+ mu2020intact
+mu2020intact
+ navas2021soft
+navas2021soft
+nguyen2016detection
+onishi2019automated
+page2021prisma
+peng2018general
+peng2020semantic
+pereira2019deep
+perez2018pattern
+pourdarbani2020automatic
+qiao2021detectors
+rahnemoonfar2017deep
+ rajendran2024towards
+rajendran2024towards
+redmon2018yolov3
+ren2015faster
+ronneberger2015u
+sa2016deepfruits
+sa2017peduncle
+sadeghian2025reliability
+sepulveda2020robotic
+si2015location
+silwal2017design
+sozzi2022automatic
+ suresh2023selective
+suresh2023selective
+tang2023fruit
+ Teo:2020
+tu2020passion
+underwood2016mapping
+verbiest2022path
+vougioukas2019orchestra
+wan2020faster
+wang2016localisation
+wang2017robust
+wang2023yolov7
+ wang2024yolov10
+williams2019robotic
+williams2020improvements
+xie2021segformer
+xiong2019development
+xiong2020autonomous
+yaseen2024yolov9
+yu2019fruit
+yu2020real
+yu2024object
+zhang2023deep
+ZHANG2024108780
+ZHANG2024108836
+ zhang2024automatic
+zhang2024automatic
+zhao2016detecting
+zhao2016robust
+zhou2022intelligent
+ZHOU2024110

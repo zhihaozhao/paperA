@@ -288,10 +288,10 @@ and interconnections with environmental factors
 \caption{Expanded Review Scope and Core Contributions of Major Fruit-Picking Robot Survey Papers}
 \renewcommand{\arraystretch}{1.3}
 \begin{tabular}{
-    p{1.5cm}  % Ref.
-    p{1.5cm}    % Year Range  
-    p{0.8cm}p{0.8cm}p{0.8cm}p{0.8cm}p{0.8cm}p{0.8cm}p{0.8cm} % Focus Scope x7
-    p{2.5cm}  % Summary
+    p{0.025\textwidth}  % Ref.
+    p{0.025\textwidth}    % Year Range  
+    p{0.06\textwidth}p{0.06\textwidth}p{0.06\textwidth}p{0.06\textwidth}p{0.06\textwidth}p{0.06\textwidth}p{0.06\textwidth} % Focus Scope x7
+    p{0.19\textwidth}  % Summary
 }
 \hline
 \multirow{2}{*}{\textbf{Ref.}}
@@ -424,7 +424,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \caption{Advanced multi-sensor fusion architectures and multi-modality data integration for precision orchard applications: Comprehensive analysis of sensor integration strategies including visual sensors (RGB, depth cameras), environmental sensors (LiDAR, ultrasonic), and IoT-enabled monitoring systems. The figure exhibits structured approaches to multi-modal data fusion, highlighting synergistic benefits of combining heterogeneous sensor data for enhanced perception accuracy, environmental awareness, and robust decision-making in dynamic agricultural environments.} 
 \label{tab:dataset}
 \renewcommand{\arraystretch}{1.4}
-\begin{tabular}{p{1.2cm}p{0.8cm}p{2.5cm}p{1cm}p{1.3cm}p{3cm}p{4cm}p{2.5cm}}
+\begin{tabular}{p{1.2cm}p{0.06\textwidth}p{0.19\textwidth}p{1cm}p{1.3cm}p{3cm}p{4cm}p{0.19\textwidth}}
 \hline
 %\textbf{Ref.} & \textbf{Year} & \textbf{Sensor Fusion} & \textbf{Fruit} & \textbf{Orchard} & \textbf{Multi-Modality Synergy} & \textbf{Key Advantages} & \textbf{Limitations} & \textbf{Application} \\ 
 \textbf{Ref.} & \textbf{Year} & \textbf{Sensor Fusion} & \textbf{Fruit} & \textbf{Orchard} & \textbf{Multi-Modality Synergy} & \textbf{Strengths} & \textbf{Limitations} \\ 
@@ -433,7 +433,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \hline
 \cite{si2015location} & 2015 & Binocular CMOS + Laser rangefinder & Apple & Unstructured & Color segmentation (RGB) + depth calibration (laser) & Robust under varying light (97.9\% cloudy, 89.5\% backlight) & Limited to 400–1500 mm range  \\ 
 \hline
-\cite{luo2016vision} & 2016 & Binocular CMOS + Calibration board & Grape & Vineyard & Stereo matching (RGB) + parameter calibration & Real-time performance (<0.7 s) with 87\% detection rate & Limited to 350–1100 mm range  \\ 
+\cite{luo2016vision} & 2016 & Binocular CMOS + Calibration board & Grape & Vineyard & Stereo matching (RGB) + parameter calibration & Real-time performance ($$<0.7$$ s) with 87\% detection rate & Limited to 350–1100 mm range  \\ 
 \hline
 \cite{barnea2016colour} & 2016 & RGB camera + SwissRanger4000 & Pepper & Greenhouse & Highlight pruning (RGB) + 3D symmetry (depth) & Color-agnostic detection (mean average precision (mAP) 0.55), robust to occlusions & Slow processing (197 s per image)  \\ 
 \hline
@@ -506,7 +506,7 @@ Table~\ref{tab:meta_analysis_summary} presents the comprehensive statistical sum
 \caption{Meta-Analysis Summary: Algorithm Family Performance Statistics (56 Studies, 2015-2024)}
 \label{tab:meta_analysis_summary}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{2cm}p{1.5cm}p{2cm}p{2cm}p{1.5cm}p{2cm}}
+\begin{tabular}{p{2cm}p{0.025\textwidth}p{2cm}p{2cm}p{0.025\textwidth}p{2cm}}
 \toprule
 \textbf{Algorithm} & \textbf{Studies} & \textbf{Accuracy (\%)} & \textbf{Speed (ms)} & \textbf{Period} & \textbf{Trend} \\
 \midrule
@@ -564,7 +564,7 @@ The comprehensive meta-analysis establishes quantitative baselines for future re
 \small
 \caption{Visual Detection Algorithm Families: Performance Characteristics and Deployment Suitability (56 Studies, 2015-2024)}
 \label{tab:algorithm_comparison}
-\begin{tabular}{p{1.8cm}p{1.2cm}p{1.2cm}p{1.2cm}p{1.5cm}p{1.5cm}p{1.8cm}p{1.2cm}}
+\begin{tabular}{p{1.8cm}p{1.2cm}p{1.2cm}p{1.2cm}p{0.025\textwidth}p{0.025\textwidth}p{1.8cm}p{1.2cm}}
 \toprule
 \textbf{Algorithm} & \textbf{Accuracy} & \textbf{Speed} & \textbf{Real-time} & \textbf{Environment} & \textbf{Complexity} & \textbf{Key Innovation} & \textbf{Studies} \\
 \textbf{Family} & \textbf{(\%)} & \textbf{(ms)} & \textbf{Capable} & \textbf{Robustness} & \textbf{Level} & \textbf{Focus} & \textbf{(n)} \\
@@ -642,10 +642,10 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 \begin{table*}[htbp]
 	\centering
 	\small
-	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019} 
+	\caption{Comprehensive evaluation of YOLO algorithm family implementations for real-time fruit detection: systematic analysis of architectural innovations, computational efficiency improvements, and deployment characteristics across diverse agricultural applications since 2019, demonstrating evolution from YOLOv3 through YOLOv11 with detailed performance metrics, processing speed optimization, and field validation results for autonomous agricultural systems.} 
 	\label{tab:yolo-based}
 	\renewcommand{\arraystretch}{1.3}
-	\begin{tabular}{p{1cm}p{1.2cm}p{1cm}p{2cm}p{2.5cm}p{2.8cm}}
+	\begin{tabular}{p{1cm}p{1.2cm}p{1cm}p{2cm}p{0.19\textwidth}p{2.8cm}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
 	
@@ -667,13 +667,13 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 \begin{table*}[htbp]
 	\centering
 	\small
-	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019} 
+	\caption{Comprehensive evaluation of YOLO algorithm family implementations for real-time fruit detection: systematic analysis of architectural innovations, computational efficiency improvements, and deployment characteristics across diverse agricultural applications since 2019, demonstrating evolution from YOLOv3 through YOLOv11 with detailed performance metrics, processing speed optimization, and field validation results for autonomous agricultural systems.} 
 	\renewcommand{\arraystretch}{1.3}
-	\begin{tabular}{p{1cm}p{1.2cm}p{1cm}p{2cm}p{2.5cm}p{2.8cm}}
+	\begin{tabular}{p{1cm}p{1.2cm}p{1cm}p{2cm}p{0.19\textwidth}p{2.8cm}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
 	 \cite{yu2024object} \newline 2024 & Citrus \newline Natural orchard & YOLOv5-citrus & Multi-channel information fusion + state classification & - 2.8\% higher in mAP than original YOLOv5 \newline - Precision 3.7\% higher than original YOLOv5 \newline - 3D positioning error: (1.97 mm, 0.36 mm, 9.63 mm) & - Training requires 4200 images (700 original + 3500 augmented) \newline - Severe occlusion may misclassify "difficult-to-pick" fruits \newline - Slightly slower inference due to added modules (no specific speed given) \\ \midrule
-	\cite{ZHOU2024110} \newline 2024 & Camellia oleifera \newline Outdoor orchard & YOLOv8x + binocular vision & 3D positioning of grabbing points via transfer learning & - mAP$_{50}$=0.96 (full dataset); 0.95 with 200 samples (transfer learning) \newline - 3D coordinate error <2.1 cm on all axes \newline - 5 FPS on Jetson Orin & - Severe branch occlusion reduces recall by 5.05\% \newline - Shading increases positioning error by 0.044 mm \newline - Requires 150 epochs for convergence \\ \midrule
+	\cite{ZHOU2024110} \newline 2024 & Camellia oleifera \newline Outdoor orchard & YOLOv8x + binocular vision & 3D positioning of grabbing points via transfer learning & - mAP$_{50}$=0.96 (full dataset); 0.95 with 200 samples (transfer learning) \newline - 3D coordinate error $<2.1$ cm on all axes \newline - 5 FPS on Jetson Orin & - Severe branch occlusion reduces recall by 5.05\% \newline - Shading increases positioning error by 0.044 mm \newline - Requires 150 epochs for convergence \\ \midrule
 	\cite{ZHANG2024108780} \newline 2024 & Tree trunks, person, mast \newline Natural orchard & Improved YOLOv5 & GhostNet V2 + SIoU + Coordinate Attention (CA) & - mAP=97.1\%, 198.2 ms/image \newline - Model size reduced by 43.6\% (7.7 MB) \newline - DBSCAN clustering accuracy=89.2\% & - Supporter AP (94.7\%) 3.2\% lower than tree trunks \newline - Overexposure increases false negatives by 5\% \newline - Requires 350 epochs for convergence \\ \midrule
 	\cite{ZHANG2024108836} \newline 2024 & Citrus \newline Complex orchard & MFAF-YOLO (modified YOLOv5s) & Multi-scale feature adaptive fusion + K-means++ anchor boxes & - mAP=90.2\%, FPS=86.2 \newline - First priority AP=93.2\%, Second priority AP=87.3\% \newline - Model size=10.7 MB (26.2\% smaller than YOLOv5s) & - Dense citrus clusters reduce recall by 8\% \newline - Foggy conditions decrease mAP by 2.1\% \newline - Dual detection heads miss 0.8\% of large fruits \\ \midrule
 	\cite{LU2024108721} \newline 2024 & Citrus \newline Complex orchard & MFAF-YOLO (extended) & Res-Attn module + priority-based detection & - Robust to 7 augmentation types (fog, noise, etc.) \newline - Field test success rate=91\% for first priority fruits \newline - 11.6 ms/image inference time & - Immature citrus false detection rate=3.5\% \newline - Stem detection error affects picking precision \newline - MobileNetV3-YOLOv5s is 10\% faster but 4.8\% lower mAP \\ \bottomrule
@@ -747,10 +747,10 @@ Kang et al.~\cite{kang2020real}  combined Mobile-DasNet with PointNet for apple 
 \begin{table*}[htbp]
 \centering
 \small
-\caption{Summary of Fruit Detection Approaches by Core Performance Metrics (2015-2024)}
+\caption{Comprehensive performance analysis of fruit detection algorithms with core metrics evaluation: systematic comparison of detection accuracy, processing efficiency, reliability measures, and deployment feasibility across diverse agricultural environments and fruit types (2015-2024), providing quantitative guidelines for algorithm selection in autonomous harvesting applications.}
 \label{tab:performance-metrics}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{1.2cm}p{2cm}p{3cm}p{2.5cm}p{2cm}}
+\begin{tabular}{p{1.2cm}p{2cm}p{3cm}p{0.19\textwidth}p{2cm}}
 \toprule
 \textbf{Metrics} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} & \textbf{References} \\ \midrule
 \textbf{Reliability} & Handling illumination, occlusion, and overlap via color, 3D contour, and shape; improving ripeness recognition & - Color-based ripeness: 94.29\% accuracy for tomatoes using hue-saturation metrics \cite{goel2015fuzzy}. Contour analysis: Relative error <6\% (e.g., 5.27\%) for occluded citrus edges \cite{lu2015detecting}. Ripeness evaluation: >94\% accuracy (e.g., 94.41\% precision) for binary/multi-stage classification \cite{liu2019mature}. 3D depth: 82\% detection rate for occluded apples \cite{nguyen2016detection} & - Color methods sensitive to lighting variations \cite{zhao2016detecting}. Contour detection struggles with dense occlusions \cite{lu2015detecting}. Limited ripeness generalization across environments \cite{goel2015fuzzy} & \cite{nguyen2016detection}, \cite{lu2015detecting}, \cite{mendes2016vine}, \cite{goel2015fuzzy}, \cite{zhao2016detecting}, \cite{pourdarbani2020automatic}, \cite{zhang2018deep}, \cite{longsheng2015kiwifruit}, \cite{liu2019mature} \\ \midrule
@@ -910,15 +910,25 @@ Electronic control frameworks provide systematic approaches for ensuring stabili
 
 Computational validation methodologies for electronic agricultural systems require systematic comparison of theoretical algorithm models with empirical sensor system performance to establish computational model accuracy and identify electronic system limitations. The computational challenge involves integrating advanced computer vision algorithms with sophisticated electronic sensor networks, demanding innovative computational solutions that can reliably process agricultural data within real-time constraints and electronic system specifications.
 
-Motion planning in robotic harvesting involves determining the path the robot's end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
+Motion planning in robotic harvesting involves determining the path the robot's end-effector (e.g., a gripper or cutting tool) should take to reach, grasp, and sever the fruit from the plant. This process is crucial for efficient and precise harvesting while avoiding damage to the fruit and the plant. Figure~\ref{fig:motion_planning_analysis} provides comprehensive visualization of motion planning system architectures, algorithm performance comparisons, and environmental impact analysis.
+
+\begin{figure*}[htbp]
+\centering
+% Note: Run create_section_v_figure.py to generate this figure
+\includegraphics[width=0.85\textwidth]{fig_motion_planning_analysis.pdf}
+\caption{Comprehensive motion planning analysis: (a) System architecture, (b) Algorithm performance trade-offs, (c) Adoption timeline, (d) Environmental performance analysis.}
+\label{fig:motion_planning_analysis}
+\end{figure*}
+
+The studies summarized in Table \ref{tab:motion-control-based} highlight various approaches and challenges in robotic path planning for fruit harvesting from 2015 to 2024.
 
 \begin{table*}[htbp]
 \centering
 \small
-\caption{Summary of Robotic Motion Control for Fruit Harvesting (2015-2024)}
+\caption{Comprehensive analysis of robotic motion control and path planning approaches for autonomous fruit harvesting: systematic evaluation of motion planning algorithms, control strategies, end-effector coordination, and performance metrics across diverse orchard environments and fruit types (2015-2024), demonstrating technological evolution from traditional path planning to advanced reinforcement learning approaches.}
 \label{tab:motion-control-based}
 \renewcommand{\arraystretch}{1.3}
-\begin{tabular}{p{1.2cm}p{0.8cm}p{1.5cm}p{3cm}p{2.5cm}p{3cm}p{3.5cm}}
+\begin{tabular}{p{1.2cm}p{0.06\textwidth}p{0.025\textwidth}p{3cm}p{0.19\textwidth}p{3cm}p{3.5cm}}
 \toprule
 \textbf{Ref.} & \textbf{Year} & \textbf{Fruit} & \textbf{Motion Control} & \textbf{Main Challenges} & \textbf{Performance Metrics} & \textbf{Key Insights} \\ \midrule
 \cite{silwal2017design} & 2017 & Apple & Seven DOF manipulator with optimized path planning and collision avoidance & Navigating complex, unstructured orchard environments & 84\% picking success; average cycle time 7.6 s; commercial orchard trials & Path optimization reduces collisions in real-world apple harvesting \\ \midrule
@@ -1016,6 +1026,16 @@ The integration of DL models, especially the R-CNN and YOLO series, has revoluti
 %Locomotion and Path Planning Innovations
 \begin{table*}[htbp]
   \centering
+Figure~\ref{fig:future_directions_roadmap} provides strategic analysis of technology readiness levels and innovation roadmaps.
+
+\begin{figure*}[htbp]
+\centering
+% Note: Run create_section_v_figure.py to generate this figure
+\includegraphics[width=0.85\textwidth]{fig_future_directions_roadmap.pdf}
+\caption{Strategic roadmap analysis: (a) Technology readiness levels, (b) Research priorities, (c) Innovation timeline, (d) Challenge-solution integration.}
+\label{fig:future_directions_roadmap}
+\end{figure*}
+
   \caption{Summary of Recent Breakthroughs, Challenges, and Future Trends in Autonomous Fruit Harvesting}
   \begin{tabular}{p{0.10\textwidth}p{0.28\textwidth}p{0.24\textwidth}p{0.29\textwidth}}
     \toprule

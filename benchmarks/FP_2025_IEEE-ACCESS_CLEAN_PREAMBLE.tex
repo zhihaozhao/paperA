@@ -1,0 +1,65 @@
+% Clean IEEE Access Preamble - No Conflicts
+\documentclass[conference]{IEEEtran}
+
+% Essential packages in proper order
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{url}
+
+% Table packages (before natbib to avoid conflicts)
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+% Bibliography (after table packages)
+\usepackage[numbers,sort&compress]{natbib}
+
+% Algorithm packages (after natbib)
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+% Float package last
+\usepackage{float}
+
+% NO cleveref (conflicts with natbib in IEEEtran)
+% NO duplicate array package
+% NO conflicting packages
+
+\sloppy
+
+\begin{document}
+
+\title{Perception-to-Action Benchmarks for Autonomous Fruit-Picking Robots: Quantitative Synthesis, Gaps, and Deployment Roadmap}
+
+\author{\IEEEauthorblockN{Zhihao Zhao}
+\IEEEauthorblockA{\textit{School of Electrical and Electronic Engineering} \\
+\textit{Universiti Sains Malaysia}\\
+Nibong Tebal, Malaysia \\
+zzhaoooooo@gmail.com}
+\and
+\IEEEauthorblockN{Nur Syazreen Ahmad}
+\IEEEauthorblockA{\textit{School of Electrical and Electronic Engineering} \\
+\textit{Universiti Sains Malaysia}\\
+Nibong Tebal, Malaysia \\
+syazreen@usm.my}}
+
+\maketitle
+
+\begin{abstract}
+This review provides comprehensive quantitative benchmarking of visual perception and motion control algorithms for autonomous fruit-picking robots, analyzing 56 studies published between 2015 and 2024. We present experimental validation of algorithm family performance characteristics, including R-CNN, YOLO, hybrid approaches, and traditional methods across diverse agricultural environments. Statistical analysis reveals significant performance hierarchies with YOLO algorithms achieving optimal balance (90.9% accuracy, 84ms processing) for real-time commercial deployment, while R-CNN approaches provide superior precision (90.7% accuracy) for quality-critical applications. Motion planning analysis demonstrates success rates ranging from 58-92% across different algorithmic approaches, with DDPG and reinforcement learning showing enhanced adaptability for unstructured environments. Despite technological advances, persistent challenges remain in multi-sensor fusion, cost-effective scalability, and delicate fruit handling for commercial agricultural adoption.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Agricultural robotics, autonomous fruit picking, computer vision, deep learning, motion planning, perception-action integration, R-CNN, YOLO, robotic harvesting, machine learning
+\end{IEEEkeywords}
+
+% CONTENT STARTS HERE - insert sections after this line
