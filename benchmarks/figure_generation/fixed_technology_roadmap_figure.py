@@ -91,8 +91,8 @@ def create_figure_10():
                                xy=(year, trl), 
                                xytext=(10, 15), 
                                textcoords='offset points',
-                               fontsize=7, alpha=0.6,
-                               bbox=dict(boxstyle='round,pad=0.2', 
+                               fontsize=9, alpha=0.7,
+                               bbox=dict(boxstyle='round,pad=0.3', 
                                        facecolor=colors[i], alpha=0.3))
     
     # Add TRL level descriptions as horizontal lines
@@ -111,7 +111,7 @@ def create_figure_10():
     for trl_level, description in trl_descriptions.items():
         ax1.axhline(y=trl_level, color='gray', linestyle='--', alpha=0.3)
         ax1.text(2014.2, trl_level, f'TRL {trl_level}', 
-                rotation=0, va='center', ha='right', fontsize=8, fontweight='bold')
+                rotation=0, va='center', ha='right', fontsize=10, fontweight='bold')
     
     ax1.set_title('Technology Readiness Level Progression (2015-2024)', fontweight='bold', pad=20)
     ax1.set_xlabel('Year')
@@ -171,9 +171,9 @@ def create_figure_10():
     for i in range(len(data)):
         for j in range(len(years)):
             if tech_matrix[i, j] > 0:
-                text = ax3.text(j, i, f'{int(tech_matrix[i, j])}',
-                               ha="center", va="center", color="black", 
-                               fontweight='bold', fontsize=9)
+                            text = ax3.text(j, i, f'{int(tech_matrix[i, j])}',
+                           ha="center", va="center", color="black", 
+                           fontweight='bold', fontsize=10)
     
     ax3.set_title('Technology Maturity Evolution', fontweight='bold')
     ax3.set_xlabel('Year')

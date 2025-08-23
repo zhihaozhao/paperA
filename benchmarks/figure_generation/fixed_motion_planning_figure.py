@@ -89,7 +89,7 @@ def create_figure_9():
         ax2.scatter(data['processing_times'][i], data['adaptability'][i], 
                    s=150, alpha=0.7, color=colors_dict[alg], label=alg)
         ax2.annotate(alg, (data['processing_times'][i], data['adaptability'][i]),
-                    xytext=(5, 5), textcoords='offset points', fontsize=9)
+                    xytext=(5, 5), textcoords='offset points', fontsize=10)
     
     ax2.set_title('Processing Time vs Adaptability Trade-off', fontweight='bold')
     ax2.set_xlabel('Processing Time (ms)')
