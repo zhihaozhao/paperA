@@ -133,7 +133,7 @@ def create_figure_9():
         Line2D([0], [0], linestyle='None', marker='^', color='w', markerfacecolor='gray', 
                markersize=8, label='Triangle: PPO/Dijkstra')
     ]
-    ax2.legend(handles=legend_elements, loc='upper left', fontsize=8, frameon=True, fancybox=True)
+    ax2.legend(handles=legend_elements, loc='lower right', fontsize=8, frameon=True, fancybox=True)
     
     # Add quadrant labels
     ax2.axhline(y=75, color='gray', linestyle='--', alpha=0.5)
