@@ -81,18 +81,19 @@ def create_figure_10():
                 marker='o', linewidth=3, markersize=8, 
                 label=tech, color=colors[i], alpha=0.8)
         
-        # Add milestone annotations at key points
-        for j, (year, trl, milestone) in enumerate(zip(tech_data['years'][::2], 
-                                                      tech_data['trl_levels'][::2], 
-                                                      tech_data['milestones'][::2])):
-            if j % 2 == 0:  # Annotate every other point to avoid clutter
-                ax1.annotate(milestone, 
-                           xy=(year, trl), 
-                           xytext=(10, 15), 
-                           textcoords='offset points',
-                           fontsize=8, alpha=0.7,
-                           bbox=dict(boxstyle='round,pad=0.3', 
-                                   facecolor=colors[i], alpha=0.3))
+        # Add milestone annotations at key points (only for select technologies to reduce clutter)
+        if tech in ['Computer Vision', 'Motion Planning', 'AI/ML Integration']:
+            for j, (year, trl, milestone) in enumerate(zip(tech_data['years'][::3], 
+                                                          tech_data['trl_levels'][::3], 
+                                                          tech_data['milestones'][::3])):
+                if j < 2:  # Only first 2 annotations per technology
+                    ax1.annotate(milestone, 
+                               xy=(year, trl), 
+                               xytext=(10, 15), 
+                               textcoords='offset points',
+                               fontsize=7, alpha=0.6,
+                               bbox=dict(boxstyle='round,pad=0.2', 
+                                       facecolor=colors[i], alpha=0.3))
     
     # Add TRL level descriptions as horizontal lines
     trl_descriptions = {
@@ -109,13 +110,13 @@ def create_figure_10():
     
     for trl_level, description in trl_descriptions.items():
         ax1.axhline(y=trl_level, color='gray', linestyle='--', alpha=0.3)
-        ax1.text(2014.5, trl_level, f'TRL {trl_level}', 
-                rotation=0, va='center', ha='right', fontsize=9, fontweight='bold')
+        ax1.text(2014.2, trl_level, f'TRL {trl_level}', 
+                rotation=0, va='center', ha='right', fontsize=8, fontweight='bold')
     
     ax1.set_title('Technology Readiness Level Progression (2015-2024)', fontweight='bold', pad=20)
     ax1.set_xlabel('Year')
     ax1.set_ylabel('Technology Readiness Level (TRL)')
-    ax1.set_xlim(2014.5, 2024.5)
+    ax1.set_xlim(2013.8, 2024.5)
     ax1.set_ylim(0.5, 9.5)
     ax1.legend(loc='center left', bbox_to_anchor=(1.02, 0.5), frameon=True, fancybox=True)
     ax1.grid(True, alpha=0.3)
@@ -179,7 +180,7 @@ def create_figure_10():
     
     # Adjust layout
     plt.tight_layout()
-    plt.subplots_adjust(top=0.88, right=0.85, hspace=0.40)
+    plt.subplots_adjust(top=0.85, right=0.85, hspace=0.45, left=0.12)
     
     # Save high-quality figures
     plt.savefig('figure10_technology_roadmap.png', dpi=300, bbox_inches='tight', facecolor='white')
