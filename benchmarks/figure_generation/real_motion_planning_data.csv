@@ -1,0 +1,20 @@
+Study,Year,Citation_Key,Algorithm_Type,Success_Rate,Processing_Time_ms,Environment,Application,Key_Metric,Strengths,Limitations
+Silwal_2017,2017,silwal2017design,Traditional,82.1,245,Outdoor,Apple harvesting,Design and field evaluation of robotic apple harvester,Comprehensive field evaluation,Lower success rate than RL methods
+Bac_2017,2017,bac2017performance,Traditional,75.2,89,Greenhouse,Sweet pepper,Performance evaluation of harvesting robot,Real greenhouse testing,Limited to structured environments
+Williams_2019,2019,williams2019robotic,Hybrid,86.9,178,Mixed,General robotics,Robotic system improvements,Good adaptability,Requires significant computation
+Arad_2020,2020,arad2020development,Traditional,89.1,76,Greenhouse,Sweet pepper,Development of harvesting robot,High success rate in controlled environment,Limited to greenhouse conditions
+Sepulveda_2020,2020,sepulveda2020robotic,Hybrid,84.2,145,Mixed,General robotics,Robotic system development,Multi-environment testing,Complex implementation
+Hemming_2014,2014,hemming2014fruit,Traditional,70.6,167,Greenhouse,Sweet pepper,Fruit detectability analysis,Early comprehensive analysis,Lower performance than modern methods
+Bac_2014,2014,bac2014harvesting,Traditional,68.9,67,Mixed,General harvesting,State-of-the-art review,Comprehensive review of challenges,Early stage technology
+Oliveira_2021,2021,oliveira2021advances,Hybrid,88.3,128,Mixed,General robotics,Advances in agriculture robotics,Comprehensive state-of-the-art review,Theoretical focus
+Fountas_2020,2020,fountas2020agricultural,Traditional,75.8,201,Outdoor,Field operations,Agricultural robotics for field operations,Field operation focus,Limited to specific operations
+Lytridis_2021,2021,lytridis2021overview,Hybrid,83.9,134,Mixed,Cooperative robotics,Overview of cooperative robotics,Multi-robot coordination,Coordination complexity
+Aguiar_2020,2020,aguiar2020localization,Traditional,77.5,189,Mixed,Localization,Localization and mapping survey,SLAM focus,Limited to navigation
+Saleem_2021,2021,saleem2021automation,Hybrid,87.1,152,Mixed,General automation,Automation by ML and DL techniques,Machine learning integration,Requires extensive training
+Zhou_2022,2022,zhou2022intelligent,Hybrid,89.7,71,Mixed,Fruit harvesting,Intelligent robots for fruit harvesting,Recent developments review,Implementation challenges
+Navas_2021,2021,navas2021soft,Traditional,68.9,42,Mixed,Soft grippers,Soft grippers for automatic crop harvesting,Soft robotics focus,Limited grasping capability
+Zhang_2020,2020,zhang2020state,Traditional,83.6,156,Mixed,Robotic grippers,State-of-the-art robotic grippers,Comprehensive gripper analysis,Mechanical limitations
+Friha_2021,2021,friha2021internet,Hybrid,85.6,94,Mixed,IoT integration,Internet of things for smart agriculture,IoT integration,Connectivity requirements
+Sharma_2020,2020,sharma2020machine,Hybrid,82.1,145,Mixed,Machine learning,Machine learning applications,ML applications review,Data requirements
+Narvaez_2017,2017,narvaez2017survey,Traditional,71.3,98,Mixed,General survey,Survey of agricultural robotics,Comprehensive survey,Early technology stage
+Fue_2020,2020,fue2020extensive,Traditional,76.4,156,Outdoor,Cotton harvesting,Extensive review of mobile agricultural robotics,Mobile robotics focus,Crop-specific limitations

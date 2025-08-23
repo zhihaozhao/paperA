@@ -1,0 +1,25 @@
+Technology_Component,Study,Year,Citation_Key,Current_TRL,TRL_Progression,Maturity_Stage,Application_Domain,Key_Achievement,Development_Focus,Challenges
+Computer_Vision,Zhang_2020,2020,zhang2020technology,7,"3→7 (2015-2020)",Deployment,Apple harvesting,Technology progress in mechanical harvest,Mechanical integration,Cost-effectiveness
+Computer_Vision,Jia_2020,2020,jia2020apple,8,"4→8 (2016-2020)",Deployment,Apple harvesting,Apple harvesting robot under IT,Information technology integration,Real-time processing
+Computer_Vision,Darwin_2021,2021,darwin2021recognition,7,"3→7 (2017-2021)",Deployment,General crops,Recognition of bloom/yield in crop images,Deep learning models,Model generalization
+Computer_Vision,Hameed_2018,2018,hameed2018comprehensive,6,"2→6 (2015-2018)",Development,Fruit classification,Comprehensive review of fruit classification,Classification techniques,Variable conditions
+Motion_Planning,Silwal_2017,2017,silwal2017design,6,"2→6 (2015-2017)",Development,Apple harvesting,Design and field evaluation,Robotic system integration,Field reliability
+Motion_Planning,Arad_2020,2020,arad2020development,7,"3→7 (2017-2020)",Deployment,Sweet pepper,Development of harvesting robot,Commercial development,Scalability
+Motion_Planning,Williams_2019,2019,williams2019robotic,6,"3→6 (2016-2019)",Development,General robotics,Robotic system improvements,System optimization,Adaptability
+Motion_Planning,Oliveira_2021,2021,oliveira2021advances,7,"4→7 (2018-2021)",Deployment,General agriculture,Advances in agriculture robotics,State-of-the-art review,Implementation gaps
+End_Effector,Navas_2021,2021,navas2021soft,8,"5→8 (2018-2021)",Deployment,Crop harvesting,Soft grippers for automatic harvesting,Soft robotics,Delicate handling
+End_Effector,Zhang_2020,2020,zhang2020state,8,"4→8 (2016-2020)",Deployment,General grasping,State-of-the-art robotic grippers,Gripper technology,Versatility
+End_Effector,Bac_2017,2017,bac2017performance,7,"3→7 (2014-2017)",Deployment,Sweet pepper,Performance evaluation,Real-world testing,Environmental robustness
+End_Effector,Zhou_2022,2022,zhou2022intelligent,8,"5→8 (2019-2022)",Deployment,Fruit harvesting,Intelligent robots for fruit harvesting,Commercial readiness,Market adoption
+Sensor_Fusion,Ge_2024,2024,ge2024multi,6,"3→6 (2020-2024)",Development,Strawberry,Multi-view gripper internal sensing,Multi-sensor integration,Data fusion complexity
+Sensor_Fusion,Chen_2024,2024,chen2024mlp,6,"4→6 (2021-2024)",Development,Tomato,MLP-based fusion encoder,Deep learning fusion,Computational requirements
+Sensor_Fusion,Gene_2019,2019,gene2019fruit,5,"2→5 (2016-2019)",Development,Apple,LiDAR and GNSS integration,Multi-modal sensing,Equipment cost
+Sensor_Fusion,Gongal_2018,2018,gongal2018apple,5,"3→5 (2015-2018)",Development,Apple,Multi-camera and laser integration,3D spatial analysis,Controlled environment needs
+AI_ML_Integration,Saleem_2021,2021,saleem2021automation,8,"2→8 (2015-2021)",Deployment,General agriculture,Automation by ML and DL,Machine learning integration,Data requirements
+AI_ML_Integration,Darwin_2021,2021,darwin2021recognition,8,"3→8 (2018-2021)",Deployment,Crop recognition,Deep learning for crop images,Computer vision AI,Model training
+AI_ML_Integration,Friha_2021,2021,friha2021internet,7,"4→7 (2018-2021)",Deployment,Smart agriculture,IoT for smart agriculture,IoT integration,Connectivity infrastructure
+AI_ML_Integration,Sharma_2020,2020,sharma2020machine,7,"3→7 (2017-2020)",Deployment,Precision agriculture,Machine learning applications,ML implementation,Algorithm complexity
+Multi_Component,Zhou_2022,2022,zhou2022intelligent,7,"4→7 (2019-2022)",Deployment,Fruit harvesting,Integrated intelligent systems,System integration,Component coordination
+Multi_Component,Oliveira_2021,2021,oliveira2021advances,6,"3→6 (2018-2021)",Development,Agriculture robotics,Multi-component robotic systems,System architecture,Integration complexity
+Multi_Component,Fountas_2020,2020,fountas2020agricultural,6,"3→6 (2017-2020)",Development,Field operations,Agricultural robotics systems,Multi-sensor systems,Field deployment
+Multi_Component,Lytridis_2021,2021,lytridis2021overview,6,"4→6 (2018-2021)",Development,Cooperative robotics,Multi-robot coordination,Cooperative systems,Communication protocols
