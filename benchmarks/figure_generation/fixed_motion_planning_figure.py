@@ -87,8 +87,8 @@ def create_figure_9():
     
     # Custom annotation positioning to prevent overlaps
     annotation_offsets = {
-        'DDPG': (5, 5), 'A3C': (5, -15), 'PPO': (-15, 5), 'SAC': (-15, -15),
-        'RRT*': (5, 5), 'PRM': (5, -15), 'Dijkstra': (5, 5), 'Hybrid-RL': (15, -15)
+        'DDPG': (8, 12), 'A3C': (5, -18), 'PPO': (-25, 8), 'SAC': (-30, -18),
+        'RRT*': (5, 5), 'PRM': (5, -15), 'Dijkstra': (5, 5), 'Hybrid-RL': (25, -25)
     }
     
     for i, alg in enumerate(data['algorithms']):
@@ -108,10 +108,10 @@ def create_figure_9():
     # Add quadrant labels
     ax2.axhline(y=75, color='gray', linestyle='--', alpha=0.5)
     ax2.axvline(x=100, color='gray', linestyle='--', alpha=0.5)
-    ax2.text(25, 80, 'High Adaptability\nFast Processing', ha='center', va='center',
-             bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.5))
-    ax2.text(175, 80, 'High Adaptability\nSlow Processing', ha='center', va='center',
-             bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.5))
+    ax2.text(25, 85, 'High Adaptability\nFast Processing', ha='center', va='center',
+             bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.4), fontsize=9)
+    ax2.text(175, 70, 'High Adaptability\nSlow Processing', ha='center', va='center',
+             bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.4), fontsize=9)
     
     # Subplot 3: Learning Convergence (RL algorithms only)
     rl_algorithms = ['DDPG', 'A3C', 'PPO', 'SAC', 'Hybrid-RL']
