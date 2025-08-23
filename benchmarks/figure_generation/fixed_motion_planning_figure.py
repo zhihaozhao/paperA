@@ -56,7 +56,7 @@ def create_figure_9():
     # Create figure with 2x2 subplots
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(14, 10))
     fig.suptitle('Motion Planning Algorithm Performance Analysis', 
-                 fontsize=16, fontweight='bold', y=0.95)
+                 fontsize=16, fontweight='bold', y=0.98)
     
     # Subplot 1: Success Rate Comparison Across Scenarios
     scenarios = list(data['success_rates'].keys())
@@ -154,7 +154,7 @@ def create_figure_9():
     
     # Adjust layout
     plt.tight_layout()
-    plt.subplots_adjust(top=0.92, hspace=0.3, wspace=0.3)
+    plt.subplots_adjust(top=0.90, hspace=0.35, wspace=0.3)
     
     # Save high-quality figures
     plt.savefig('figure9_motion_planning.png', dpi=300, bbox_inches='tight', facecolor='white')

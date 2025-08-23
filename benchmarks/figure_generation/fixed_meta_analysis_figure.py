@@ -71,7 +71,7 @@ def create_figure_4():
     # Create 2x2 subplot layout
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(14, 10))
     fig.suptitle('Meta-Analysis of Fruit-Picking Algorithm Performance (2015-2024)', 
-                 fontsize=16, fontweight='bold', y=0.95)
+                 fontsize=16, fontweight='bold', y=0.98)
     
     # Sub-figure A: Algorithm Family Performance Distribution
     algorithm_stats = df.groupby('Algorithm_Family').agg({
@@ -163,7 +163,7 @@ def create_figure_4():
     
     # Adjust layout and save
     plt.tight_layout()
-    plt.subplots_adjust(top=0.92, hspace=0.3, wspace=0.3)
+    plt.subplots_adjust(top=0.90, hspace=0.35, wspace=0.3)
     
     # Save high-quality figure
     plt.savefig('figure4_meta_analysis.png', dpi=300, bbox_inches='tight', facecolor='white')

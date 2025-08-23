@@ -71,7 +71,7 @@ def create_figure_10():
     ax3 = plt.subplot2grid((3, 2), (2, 1))
     
     fig.suptitle('Technology Readiness Level Roadmap for Autonomous Fruit-Picking Systems', 
-                 fontsize=16, fontweight='bold', y=0.95)
+                 fontsize=16, fontweight='bold', y=0.98)
     
     # Plot 1: TRL Progression Timeline
     colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFA07A']
@@ -179,7 +179,7 @@ def create_figure_10():
     
     # Adjust layout
     plt.tight_layout()
-    plt.subplots_adjust(top=0.92, right=0.85)
+    plt.subplots_adjust(top=0.90, right=0.85, hspace=0.35)
     
     # Save high-quality figures
     plt.savefig('figure10_technology_roadmap.png', dpi=300, bbox_inches='tight', facecolor='white')
