@@ -50,18 +50,18 @@ def create_figure4_support_table():
         ],
         
         'Ref': [
-            '\\cite{sa2016deepfruits,bargoti2017image}',
-            '\\cite{wan2020faster,koirala2019deep,tian2019apple}',
-            '\\cite{fu2020faster,jia2020detection,chen2020fruit}',
-            '\\cite{xiong2020improved,liu2020recognition,zhang2020multi}',
-            '\\cite{genemola2020fruit,kang2020fast,tang2020recognition}',
-            '\\cite{tang2020recognition,li2021apple,wang2021tomato}',
-            '\\cite{kang2020fast,zhao2021strawberry,liu2021citrus}',
-            '\\cite{li2021apple,zhang2021grape,chen2021peach}',
-            '\\cite{wang2021tomato,kumar2022mango,singh2022orange}',
-            '\\cite{zhang2022strawberry,patel2022blueberry,brown2022cherry}',
-            '\\cite{liu2023citrus,anderson2023kiwi,davis2023pear}',
-            '\\cite{kumar2024mango,garcia2024avocado,miller2024plum}'
+            '\\cite{sa2016deepfruits,bac2017performance}',
+            '\\cite{wan2020faster,jia2020detection}',
+            '\\cite{fu2020faster,fu2018kiwifruit}',
+            '\\cite{liu2020yolo,zhang2018deep}',
+            '\\cite{gene2019fruit,kang2020fast}',
+            '\\cite{tang2020recognition,li2020detection}',
+            '\\cite{kang2020fruit,luo2018vision}',
+            '\\cite{li2020detection,yu2019fruit}',
+            '\\cite{majeed2020deep,chu2021deep}',
+            '\\cite{gai2023detection,tang2023fruit}',
+            '\\cite{pereira2019deep,gongal2018apple}',
+            '\\cite{kang2019fruit,ge2019fruit}'
         ]
     }
     
@@ -108,18 +108,18 @@ def create_figure9_support_table():
         ],
         
         'Ref': [
-            '\\cite{silwal2017design,bac2017performance,davidson2017robotic}',
-            '\\cite{williams2019motion,lemsalu2018path,font2019obstacle}',
-            '\\cite{arad2020development,hemming2020robot,bulanon2020machine}',
-            '\\cite{zheng2021robotic,mu2020motion,dimeas2021adaptive}',
-            '\\cite{chen2019path,mehta2019trajectory,zhao2019optimal}',
-            '\\cite{anderson2018motion,luo2018dynamic,wang2018collision}',
-            '\\cite{davis2021end,miller2021multi,johnson2021sensor}',
-            '\\cite{miller2021multi,taylor2021adaptive,wilson2021learning}',
-            '\\cite{johnson2018sensor,parker2019advanced,smith2019intelligent}',
-            '\\cite{parker2024advanced,roberts2023reinforcement,quinn2024deep}',
-            '\\cite{roberts2022reinforcement,nelson2022q,olson2022policy}',
-            '\\cite{taylor2023adaptive,young2023neural,xavier2023hierarchical}'
+            '\\cite{silwal2017design,bac2017performance}',
+            '\\cite{williams2019robotic,sepulveda2020robotic}',
+            '\\cite{arad2020development,hemming2014fruit}',
+            '\\cite{bac2014harvesting,bac2016analysis}',
+            '\\cite{williams2020improvements,Ahmad:2018_access}',
+            '\\cite{verbiest2022path,mahmud2020robotics}',
+            '\\cite{oliveira2021advances,fountas2020agricultural}',
+            '\\cite{lytridis2021overview,aguiar2020localization}',
+            '\\cite{saleem2021automation,zhou2022intelligent}',
+            '\\cite{navas2021soft,zhang2020state}',
+            '\\cite{friha2021internet,sharma2020machine}',
+            '\\cite{narvaez2017survey,fue2020extensive}'
         ]
     }
     
