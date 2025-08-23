@@ -85,11 +85,18 @@ def create_figure_9():
         'RRT*': '#FFA07A', 'PRM': '#98D8C8', 'Dijkstra': '#F7DC6F', 'Hybrid-RL': '#BB8FCE'
     }
     
+    # Custom annotation positioning to prevent overlaps
+    annotation_offsets = {
+        'DDPG': (5, 5), 'A3C': (5, -15), 'PPO': (-15, 5), 'SAC': (-15, -15),
+        'RRT*': (5, 5), 'PRM': (5, -15), 'Dijkstra': (5, 5), 'Hybrid-RL': (15, -15)
+    }
+    
     for i, alg in enumerate(data['algorithms']):
         ax2.scatter(data['processing_times'][i], data['adaptability'][i], 
                    s=150, alpha=0.7, color=colors_dict[alg], label=alg)
+        offset = annotation_offsets.get(alg, (5, 5))
         ax2.annotate(alg, (data['processing_times'][i], data['adaptability'][i]),
-                    xytext=(5, 5), textcoords='offset points', fontsize=10)
+                    xytext=offset, textcoords='offset points', fontsize=10)
     
     ax2.set_title('Processing Time vs Adaptability Trade-off', fontweight='bold')
     ax2.set_xlabel('Processing Time (ms)')
