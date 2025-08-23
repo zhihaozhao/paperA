@@ -85,7 +85,7 @@ def create_figure_4():
     
     bars = ax1.bar(algorithms, accuracy_means, yerr=accuracy_stds, 
                    capsize=5, alpha=0.8, color=['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4'])
-    ax1.set_title('(A) Algorithm Family Accuracy Comparison', fontweight='bold')
+    ax1.set_title('(a) Algorithm Family Accuracy Comparison', fontweight='bold')
     ax1.set_ylabel('Accuracy (%)')
     ax1.set_ylim(0, 100)
     ax1.grid(True, alpha=0.3)
@@ -111,7 +111,7 @@ def create_figure_4():
     ax2.plot(yearly_performance['Year'], p(yearly_performance['Year']), 
              "--", alpha=0.8, color='#2C3E50', linewidth=2)
     
-    ax2.set_title('(B) Temporal Performance Evolution', fontweight='bold')
+    ax2.set_title('(b) Temporal Performance Evolution', fontweight='bold')
     ax2.set_xlabel('Publication Year')
     ax2.set_ylabel('Mean Accuracy (%)')
     ax2.grid(True, alpha=0.3)
@@ -125,7 +125,7 @@ def create_figure_4():
         ax3.scatter(subset['Processing_Time'], subset['Accuracy'], 
                    label=algorithm, alpha=0.7, s=100, color=colors[algorithm])
     
-    ax3.set_title('(C) Accuracy-Speed Trade-off Analysis', fontweight='bold')
+    ax3.set_title('(c) Accuracy-Speed Trade-off Analysis', fontweight='bold')
     ax3.set_xlabel('Processing Time (ms)')
     ax3.set_ylabel('Accuracy (%)')
     ax3.legend(loc='upper right', frameon=True, fancybox=True, shadow=True)
