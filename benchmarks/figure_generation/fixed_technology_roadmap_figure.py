@@ -74,12 +74,14 @@ def create_figure_10():
                  fontsize=16, fontweight='bold', y=0.98)
     
     # Plot 1: TRL Progression Timeline
-    colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFA07A']
+    colors = ['#FF0000', '#0000FF', '#00AA00', '#FF8C00', '#8A2BE2']  # Red, Blue, Green, Orange, Purple
+    line_styles = ['-', '--', '-.', ':', '-']  # Different line styles for better distinction
+    markers = ['o', 's', '^', 'D', 'v']  # Different markers for each line
     
     for i, (tech, tech_data) in enumerate(data.items()):
         ax1.plot(tech_data['years'], tech_data['trl_levels'], 
-                marker='o', linewidth=3, markersize=8, 
-                label=tech, color=colors[i], alpha=0.8)
+                marker=markers[i], linewidth=3, markersize=8, linestyle=line_styles[i],
+                label=tech, color=colors[i], alpha=0.9)
         
         # Add milestone annotations at key points (only for select technologies to reduce clutter)
         if tech in ['Computer Vision', 'Motion Planning', 'AI/ML Integration']:
