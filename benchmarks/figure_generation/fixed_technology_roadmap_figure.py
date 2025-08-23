@@ -41,8 +41,8 @@ def create_trl_data():
         },
         'Sensor Fusion': {
             'years': [2015, 2017, 2019, 2021, 2023, 2024],
-            'trl_levels': [2, 3, 4, 5, 6, 7],
-            'milestones': ['Concept formulation', 'Proof of concept', 'Lab validation', 'Field testing', 'Prototype demo', 'System integration']
+            'trl_levels': [2, 3, 3, 4, 5, 6],
+            'milestones': ['Concept formulation', 'Proof of concept', 'Extended validation', 'Lab validation', 'Field testing', 'Prototype demo']
         },
         'AI/ML Integration': {
             'years': [2015, 2017, 2019, 2021, 2023, 2024],
