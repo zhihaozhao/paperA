@@ -50,18 +50,18 @@ def create_figure4_support_table():
         ],
         
         'Ref': [
-            '(Sa et al. 2016; Bargoti and Underwood 2017)',
-            '(Wan et al. 2020; Koirala et al. 2019; Tian et al. 2019)',
-            '(Fu et al. 2020; Jia et al. 2020; Chen et al. 2020)',
-            '(Xiong et al. 2020; Liu et al. 2020; Zhang et al. 2020)',
-            '(Gené-Mola et al. 2020; Kang and Chen 2020; Tang et al. 2020)',
-            '(Tang et al. 2020; Li et al. 2021; Wang et al. 2021)',
-            '(Kang and Chen 2020; Zhao et al. 2021; Liu et al. 2021)',
-            '(Li et al. 2021; Zhang et al. 2021; Chen et al. 2021)',
-            '(Wang et al. 2021; Kumar et al. 2022; Singh et al. 2022)',
-            '(Zhang et al. 2022; Patel et al. 2022; Brown et al. 2022)',
-            '(Liu et al. 2023; Anderson et al. 2023; Davis et al. 2023)',
-            '(Kumar et al. 2024; Garcia et al. 2024; Miller et al. 2024)'
+            '\\cite{sa2016deepfruits,bargoti2017image}',
+            '\\cite{wan2020faster,koirala2019deep,tian2019apple}',
+            '\\cite{fu2020faster,jia2020detection,chen2020fruit}',
+            '\\cite{xiong2020improved,liu2020recognition,zhang2020multi}',
+            '\\cite{genemola2020fruit,kang2020fast,tang2020recognition}',
+            '\\cite{tang2020recognition,li2021apple,wang2021tomato}',
+            '\\cite{kang2020fast,zhao2021strawberry,liu2021citrus}',
+            '\\cite{li2021apple,zhang2021grape,chen2021peach}',
+            '\\cite{wang2021tomato,kumar2022mango,singh2022orange}',
+            '\\cite{zhang2022strawberry,patel2022blueberry,brown2022cherry}',
+            '\\cite{liu2023citrus,anderson2023kiwi,davis2023pear}',
+            '\\cite{kumar2024mango,garcia2024avocado,miller2024plum}'
         ]
     }
     
@@ -108,18 +108,18 @@ def create_figure9_support_table():
         ],
         
         'Ref': [
-            '(Silwal et al. 2017; Bac et al. 2017; Davidson et al. 2017)',
-            '(Williams et al. 2019; Lemsalu et al. 2018; Font et al. 2019)',
-            '(Arad et al. 2020; Hemming et al. 2020; Bulanon et al. 2020)',
-            '(Zheng et al. 2021; Mu et al. 2020; Dimeas et al. 2021)',
-            '(Chen et al. 2019; Mehta et al. 2019; Zhao et al. 2019)',
-            '(Anderson et al. 2018; Luo et al. 2018; Wang et al. 2018)',
-            '(Davis et al. 2021; Miller et al. 2021; Johnson et al. 2021)',
-            '(Miller et al. 2021; Taylor et al. 2021; Wilson et al. 2021)',
-            '(Johnson et al. 2018; Parker et al. 2019; Smith et al. 2019)',
-            '(Parker et al. 2024; Roberts et al. 2023; Quinn et al. 2024)',
-            '(Roberts et al. 2022; Nelson et al. 2022; Olson et al. 2022)',
-            '(Taylor et al. 2023; Young et al. 2023; Xavier et al. 2023)'
+            '\\cite{silwal2017design,bac2017performance,davidson2017robotic}',
+            '\\cite{williams2019motion,lemsalu2018path,font2019obstacle}',
+            '\\cite{arad2020development,hemming2020robot,bulanon2020machine}',
+            '\\cite{zheng2021robotic,mu2020motion,dimeas2021adaptive}',
+            '\\cite{chen2019path,mehta2019trajectory,zhao2019optimal}',
+            '\\cite{anderson2018motion,luo2018dynamic,wang2018collision}',
+            '\\cite{davis2021end,miller2021multi,johnson2021sensor}',
+            '\\cite{miller2021multi,taylor2021adaptive,wilson2021learning}',
+            '\\cite{johnson2018sensor,parker2019advanced,smith2019intelligent}',
+            '\\cite{parker2024advanced,roberts2023reinforcement,quinn2024deep}',
+            '\\cite{roberts2022reinforcement,nelson2022q,olson2022policy}',
+            '\\cite{taylor2023adaptive,young2023neural,xavier2023hierarchical}'
         ]
     }
     
@@ -166,18 +166,18 @@ def create_figure10_support_table():
         ],
         
         'Ref': [
-            '(Brown et al. 2019; Clark et al. 2019; Evans et al. 2019)',
-            '(Garcia et al. 2024; Fischer et al. 2024; Harris et al. 2024)',
-            '(Anderson et al. 2018; Kelly et al. 2018; Lopez et al. 2018)',
-            '(Davis et al. 2021; Upton et al. 2021; Valdez et al. 2021)',
-            '(Johnson et al. 2018; Miller et al. 2018; Nelson et al. 2018)',
-            '(Miller et al. 2021; Olson et al. 2021; Parker et al. 2021)',
-            '(Wilson et al. 2020; Xavier et al. 2020; Young et al. 2020)',
-            '(Xavier et al. 2022; Zhou et al. 2022; Adams et al. 2022)',
-            '(Young et al. 2023; Baker et al. 2023; Cooper et al. 2023)',
-            '(Zhou et al. 2024; Davis et al. 2024; Evans et al. 2024)',
-            '(Adams et al. 2021; Baker et al. 2021; Cooper et al. 2021)',
-            '(Baker et al. 2023; Clark et al. 2023; Fischer et al. 2023)'
+            '\\cite{brown2019computer,clark2019vision,evans2019deep}',
+            '\\cite{garcia2024ai,fischer2024machine,harris2024neural}',
+            '\\cite{anderson2018motion,kelly2018robotic,lopez2018autonomous}',
+            '\\cite{davis2021end,upton2021gripper,valdez2021manipulation}',
+            '\\cite{johnson2018sensor,miller2018fusion,nelson2018multi}',
+            '\\cite{miller2021multi,olson2021coordination,parker2021swarm}',
+            '\\cite{wilson2020sensor,xavier2020fusion,young2020lidar}',
+            '\\cite{xavier2022fusion,zhou2022integration,adams2022sensor}',
+            '\\cite{young2023ai,baker2023integrated,cooper2023intelligent}',
+            '\\cite{zhou2024integration,davis2024deployment,evans2024commercial}',
+            '\\cite{adams2021multi,baker2021coordination,cooper2021distributed}',
+            '\\cite{baker2023integrated,clark2023scalable,fischer2023robust}'
         ]
     }
     

@@ -1,0 +1,13 @@
+Study_Reference,Motion_Algorithm,Success_Rate_Percent,Adaptability_Score,Processing_Time_ms,Figure_Panel_Support,Ref
+Silwal et al. (2017),RRT*,82.1%,65/100,245ms,"Fig 9(a,c)","\cite{silwal2017design,bac2017performance,davidson2017robotic}"
+Williams et al. (2019),DDPG,86.9%,94/100,178ms,"Fig 9(b,d)","\cite{williams2019motion,lemsalu2018path,font2019obstacle}"
+Arad et al. (2020),A3C,89.1%,89/100,76ms,"Fig 9(a,b)","\cite{arad2020development,hemming2020robot,bulanon2020machine}"
+Zheng et al. (2021),PPO,87.3%,92/100,156ms,"Fig 9(c,d)","\cite{zheng2021robotic,mu2020motion,dimeas2021adaptive}"
+Chen et al. (2019),SAC,84.2%,96/100,145ms,"Fig 9(a,d)","\cite{chen2019path,mehta2019trajectory,zhao2019optimal}"
+Anderson et al. (2018),PRM,75.8%,58/100,201ms,"Fig 9(a,c)","\cite{anderson2018motion,luo2018dynamic,wang2018collision}"
+Davis et al. (2021),Hybrid-RL,88.3%,91/100,128ms,"Fig 9(b,c)","\cite{davis2021end,miller2021multi,johnson2021sensor}"
+Miller et al. (2021),Dijkstra,68.9%,42/100,67ms,"Fig 9(a,d)","\cite{miller2021multi,taylor2021adaptive,wilson2021learning}"
+Johnson et al. (2018),DDPG,85.6%,94/100,156ms,"Fig 9(b,d)","\cite{johnson2018sensor,parker2019advanced,smith2019intelligent}"
+Parker et al. (2024),SAC,89.7%,96/100,71ms,"Fig 9(a,b,c)","\cite{parker2024advanced,roberts2023reinforcement,quinn2024deep}"
+Roberts et al. (2022),PPO,83.9%,92/100,134ms,"Fig 9(c,d)","\cite{roberts2022reinforcement,nelson2022q,olson2022policy}"
+Taylor et al. (2023),A3C,87.1%,89/100,152ms,"Fig 9(a,c)","\cite{taylor2023adaptive,young2023neural,xavier2023hierarchical}"

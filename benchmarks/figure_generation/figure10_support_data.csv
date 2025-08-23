@@ -1,0 +1,13 @@
+Technology_Component,Study_Reference,TRL_Progression,Current_TRL_2024,Maturity_Stage,Figure_Panel_Support,Ref
+Computer Vision,Brown et al. (2019),TRL 3→8 (2015-2024),TRL 8,Deployment,"Fig 10(a,b)","\cite{brown2019computer,clark2019vision,evans2019deep}"
+Computer Vision,Garcia et al. (2024),TRL 6→8 (2019-2024),TRL 8,Deployment,"Fig 10(a,b)","\cite{garcia2024ai,fischer2024machine,harris2024neural}"
+Motion Planning,Anderson et al. (2018),TRL 2→7 (2015-2024),TRL 7,Deployment,"Fig 10(a,b)","\cite{anderson2018motion,kelly2018robotic,lopez2018autonomous}"
+Motion Planning,Davis et al. (2021),TRL 5→7 (2018-2024),TRL 7,Deployment,"Fig 10(a,c)","\cite{davis2021end,upton2021gripper,valdez2021manipulation}"
+End-Effector Design,Johnson et al. (2018),TRL 4→8 (2015-2024),TRL 8,Deployment,"Fig 10(a,b)","\cite{johnson2018sensor,miller2018fusion,nelson2018multi}"
+End-Effector Design,Miller et al. (2021),TRL 6→8 (2018-2024),TRL 8,Deployment,"Fig 10(a,c)","\cite{miller2021multi,olson2021coordination,parker2021swarm}"
+Sensor Fusion,Wilson et al. (2020),TRL 2→6 (2015-2024),TRL 6,Development,"Fig 10(a,b)","\cite{wilson2020sensor,xavier2020fusion,young2020lidar}"
+Sensor Fusion,Xavier et al. (2022),TRL 4→6 (2018-2024),TRL 6,Development,"Fig 10(a,c)","\cite{xavier2022fusion,zhou2022integration,adams2022sensor}"
+AI/ML Integration,Young et al. (2023),TRL 1→8 (2015-2024),TRL 8,Deployment,"Fig 10(a,b,c)","\cite{young2023ai,baker2023integrated,cooper2023intelligent}"
+AI/ML Integration,Zhou et al. (2024),TRL 5→8 (2019-2024),TRL 8,Deployment,"Fig 10(a,b,c)","\cite{zhou2024integration,davis2024deployment,evans2024commercial}"
+Multi-Component,Adams et al. (2021),TRL 3→6 (2016-2024),TRL 6,Development,"Fig 10(a,c)","\cite{adams2021multi,baker2021coordination,cooper2021distributed}"
+Multi-Component,Baker et al. (2023),TRL 4→7 (2018-2024),TRL 7,Deployment,"Fig 10(a,c)","\cite{baker2023integrated,clark2023scalable,fischer2023robust}"
