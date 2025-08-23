@@ -1,0 +1,21 @@
+Study,Year,Citation_Key,Algorithm_Family,Fruit_Type,Environment,Accuracy_Precision,Processing_Time_ms,F1_Score,mAP,Success_Rate,Key_Metric
+Sa_2016,2016,sa2016deepfruits,R-CNN,Multi-class,Outdoor/Greenhouse,84.8,393,0.838,,,F1: 0.838-0.948
+Wan_2020,2020,wan2020faster,R-CNN,Multi-class,Outdoor,90.7,58,,90.72,,mAP: 90.72%
+Fu_2020,2020,fu2020faster,R-CNN,Apple,Outdoor,89.3,181,,,,"AP=0.893, processing time=0.181 s/image"
+Tu_2020,2020,tu2020passion,R-CNN,Passion fruit,Outdoor,93.1,,,,,F1-score: from 0.885 to 0.946
+Fu_2018,2018,fu2018kiwifruit,R-CNN,Kiwifruit,Outdoor,92.3,274,,,,"Overall recognition rate: 92.3%, Separated: 96.7%"
+Gene_2019,2019,gene2019multi,R-CNN,Apple,Outdoor,94.8,73.5,0.898,94.8,,F1-score: 0.898; AP: 94.8%
+Mu_2020,2020,mu2020intact,R-CNN,Tomato,Greenhouse,87.83,370,,,,"AP (IoU>=0.5): 87.83% on test dataset"
+Yu_2019,2019,yu2019fruit,R-CNN,Strawberry,Outdoor,95.78,125,,,95.41,Detection AP: 95.78%; Recall: 95.41%
+Jia_2020,2020,jia2020detection,R-CNN,Apple,Outdoor,97.31,,,,95.70,"Overall precision: 97.31%, recall: 95.70%"
+Chu_2021,2021,chu2021deep,R-CNN,Apple,Outdoor,88.0,250,0.905,,,F1-score: 0.905
+Gao_2020,2020,gao2020multi,R-CNN,Apple,Outdoor,87.9,241,,,,"mAP=0.879 across four classes"
+Ge_2019,2019,ge2019fruit,R-CNN,Strawberry,Table-top,90.0,820,0.94,,,Ripe strawberry AP: 0.90; F1-score: 0.94
+Liu_2020,2020,liu2020yolo,YOLO,Tomato,Greenhouse,96.4,54,93.91,96.4,,"AP=96.4%, F1=93.91%"
+Lawal_2021,2021,lawal2021tomato,YOLO,Tomato,Greenhouse,99.5,52,97.9,99.5,,"YOLO-Tomato-C: AP=99.5%, F1: 97.9%"
+Gai_2023,2023,gai2023detection,YOLO,Cherry,Outdoor,94.7,467,94.7,,95.8,"F1=0.947, IOU=0.856"
+Kang_2020a,2020,kang2020fruit,YOLO,Apple,Outdoor,92.31,,,,,High detection rate (92.31%)
+Kang_2020b,2020,kang2020fast,YOLO,Apple,Outdoor,,,,,,Fast implementation of real-time fruit detection
+Li_2021,2021,li2021real,YOLO,Grape,Outdoor,91.08,12.34,90.47,91.08,,"mAP=91.08%, F1=90.47%"
+Tang_2023,2023,tang2023fruit,YOLO,Camellia,Outdoor,92.07,31,,92.07,,"AP=92.07%, detection time=31 ms/image"
+Gene_2019b,2019,gene2019fruit,Multi-sensor,Apple,Commercial,87.5,,,,,"Sunlight-insensitive with 87.5% localization success"
