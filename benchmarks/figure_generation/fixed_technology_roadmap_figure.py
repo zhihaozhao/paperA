@@ -113,7 +113,7 @@ def create_figure_10():
         ax1.text(2014.2, trl_level, f'TRL {trl_level}', 
                 rotation=0, va='center', ha='right', fontsize=10, fontweight='bold')
     
-    ax1.set_title('Technology Readiness Level Progression (2015-2024)', fontweight='bold', pad=20)
+    ax1.set_title('(a) Technology Readiness Level Progression (2015-2024)', fontweight='bold', pad=20)
     ax1.set_xlabel('Year')
     ax1.set_ylabel('Technology Readiness Level (TRL)')
     ax1.set_xlim(2013.8, 2024.5)
@@ -126,7 +126,7 @@ def create_figure_10():
     tech_names = list(data.keys())
     
     bars = ax2.barh(tech_names, current_trls, color=colors, alpha=0.8)
-    ax2.set_title('Current TRL Status (2024)', fontweight='bold')
+    ax2.set_title('(b) Current TRL Status (2024)', fontweight='bold')
     ax2.set_xlabel('Technology Readiness Level')
     ax2.set_xlim(0, 9)
     ax2.grid(True, alpha=0.3)
@@ -175,7 +175,7 @@ def create_figure_10():
                            ha="center", va="center", color="black", 
                            fontweight='bold', fontsize=10)
     
-    ax3.set_title('Technology Maturity Evolution', fontweight='bold')
+    ax3.set_title('(c) Technology Maturity Evolution', fontweight='bold')
     ax3.set_xlabel('Year')
     
     # Adjust layout

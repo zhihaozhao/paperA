@@ -70,7 +70,7 @@ def create_figure_9():
         bars = ax1.bar(x + offset, data['success_rates'][scenario], width, 
                       label=scenario.replace('_', ' '), alpha=0.8, color=colors[i])
     
-    ax1.set_title('Success Rates Across Different Scenarios', fontweight='bold')
+    ax1.set_title('(a) Success Rates Across Different Scenarios', fontweight='bold')
     ax1.set_xlabel('Motion Planning Algorithms')
     ax1.set_ylabel('Success Rate (%)')
     ax1.set_xticks(x)
@@ -98,7 +98,7 @@ def create_figure_9():
         ax2.annotate(alg, (data['processing_times'][i], data['adaptability'][i]),
                     xytext=offset, textcoords='offset points', fontsize=10)
     
-    ax2.set_title('Processing Time vs Adaptability Trade-off', fontweight='bold')
+    ax2.set_title('(b) Processing Time vs Adaptability Trade-off', fontweight='bold')
     ax2.set_xlabel('Processing Time (ms)')
     ax2.set_ylabel('Adaptability Score')
     ax2.grid(True, alpha=0.3)
@@ -119,7 +119,7 @@ def create_figure_9():
     rl_colors = [colors_dict[alg] for alg in rl_algorithms]
     
     bars = ax3.bar(rl_algorithms, rl_convergence, alpha=0.8, color=rl_colors)
-    ax3.set_title('Learning Convergence Speed (RL Algorithms)', fontweight='bold')
+    ax3.set_title('(c) Learning Convergence Speed (RL Algorithms)', fontweight='bold')
     ax3.set_xlabel('Reinforcement Learning Algorithms')
     ax3.set_ylabel('Epochs to 90% Performance')
     ax3.grid(True, alpha=0.3)
@@ -157,7 +157,7 @@ def create_figure_9():
             text = ax4.text(j, i, f'{performance_matrix[i, j]:.1f}%',
                            ha="center", va="center", color="black", fontweight='bold')
     
-    ax4.set_title('Performance Heatmap Across Scenarios', fontweight='bold')
+    ax4.set_title('(d) Performance Heatmap Across Scenarios', fontweight='bold')
     
     # Adjust layout
     plt.tight_layout()

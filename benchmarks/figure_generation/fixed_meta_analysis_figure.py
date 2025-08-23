@@ -154,7 +154,7 @@ def create_figure_4():
     
     env_performance.plot(kind='bar', ax=ax4, width=0.8, 
                         color=['#FF6B6B', 'orange', '#4ECDC4', '#96CEB4'])
-    ax4.set_title('(D) Environment-Specific Success Rates', fontweight='bold')
+    ax4.set_title('(d) Environment-Specific Success Rates', fontweight='bold')
     ax4.set_xlabel('Operating Environment')
     ax4.set_ylabel('Success Rate (%)')
     ax4.legend(title='Algorithm Family', bbox_to_anchor=(1.05, 1), loc='upper left')
