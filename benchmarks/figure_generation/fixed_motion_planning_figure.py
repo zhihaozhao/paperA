@@ -80,9 +80,20 @@ def create_figure_9():
     ax1.set_ylim(0, 100)
     
     # Subplot 2: Processing Time vs Adaptability Trade-off
-    colors_dict = {
-        'DDPG': '#FF6B6B', 'A3C': '#4ECDC4', 'PPO': '#45B7D1', 'SAC': '#96CEB4',
-        'RRT*': '#FFA07A', 'PRM': '#98D8C8', 'Dijkstra': '#F7DC6F', 'Hybrid-RL': '#BB8FCE'
+    # Group algorithms by type for clearer visualization
+    rl_algorithms = ['DDPG', 'A3C', 'PPO', 'SAC', 'Hybrid-RL']
+    traditional_algorithms = ['RRT*', 'PRM', 'Dijkstra']
+    
+    # Use different markers and colors for algorithm types
+    algorithm_styles = {
+        'DDPG': {'marker': 'o', 'color': '#FF4444', 'label': 'RL: DDPG'},
+        'A3C': {'marker': 's', 'color': '#FF4444', 'label': 'RL: A3C'},
+        'PPO': {'marker': '^', 'color': '#FF4444', 'label': 'RL: PPO'},
+        'SAC': {'marker': 'D', 'color': '#FF4444', 'label': 'RL: SAC'},
+        'Hybrid-RL': {'marker': 'v', 'color': '#FF4444', 'label': 'RL: Hybrid'},
+        'RRT*': {'marker': 'o', 'color': '#4444FF', 'label': 'Traditional: RRT*'},
+        'PRM': {'marker': 's', 'color': '#4444FF', 'label': 'Traditional: PRM'},
+        'Dijkstra': {'marker': '^', 'color': '#4444FF', 'label': 'Traditional: Dijkstra'}
     }
     
     # Custom annotation positioning to prevent overlaps - aggressive spacing
@@ -92,8 +103,10 @@ def create_figure_9():
     }
     
     for i, alg in enumerate(data['algorithms']):
+        style = algorithm_styles[alg]
         ax2.scatter(data['processing_times'][i], data['adaptability'][i], 
-                   s=150, alpha=0.7, color=colors_dict[alg], label=alg)
+                   s=120, alpha=0.8, marker=style['marker'], color=style['color'], 
+                   edgecolors='black', linewidth=1)
         offset = annotation_offsets.get(alg, (5, 5))
         ax2.annotate(alg, (data['processing_times'][i], data['adaptability'][i]),
                     xytext=offset, textcoords='offset points', fontsize=9, fontweight='bold')
@@ -104,6 +117,23 @@ def create_figure_9():
     ax2.grid(True, alpha=0.3)
     ax2.set_xlim(0, 200)
     ax2.set_ylim(0, 100)
+    
+    # Add legend explaining the markers and colors
+    from matplotlib.patches import Patch
+    from matplotlib.lines import Line2D
+    legend_elements = [
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#FF4444', 
+               markersize=10, markeredgecolor='black', label='RL Algorithms'),
+        Line2D([0], [0], marker='s', color='w', markerfacecolor='#4444FF', 
+               markersize=10, markeredgecolor='black', label='Traditional Algorithms'),
+        Line2D([0], [0], linestyle='None', marker='o', color='w', markerfacecolor='gray', 
+               markersize=8, label='Circle: DDPG/RRT*'),
+        Line2D([0], [0], linestyle='None', marker='s', color='w', markerfacecolor='gray', 
+               markersize=8, label='Square: A3C/PRM'),
+        Line2D([0], [0], linestyle='None', marker='^', color='w', markerfacecolor='gray', 
+               markersize=8, label='Triangle: PPO/Dijkstra')
+    ]
+    ax2.legend(handles=legend_elements, loc='upper left', fontsize=8, frameon=True, fancybox=True)
     
     # Add quadrant labels
     ax2.axhline(y=75, color='gray', linestyle='--', alpha=0.5)
