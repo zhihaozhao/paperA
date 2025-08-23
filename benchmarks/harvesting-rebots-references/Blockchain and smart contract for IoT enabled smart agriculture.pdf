@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+       <title>PeerJ - <p>It looks like you're trying to download a Article PDF, please click <a href='/articles/cs-407.pdf'>HERE</a> to continue or visit the original <a href='/articles/cs-407'>Article</a> here.<p>"</title>
+	<link href="https://s3.amazonaws.com/static.peerj.com/css/5fcdfb7.css" rel="stylesheet" media="all" />
+	<link rel="shortcut icon" href="https://s3.amazonaws.com/static.peerj.com/images/favicon.ico" />
+	<link rel="apple-touch-icon" href="https://s3.amazonaws.com/static.peerj.com/images/apple-touch-icon.png"/>
+</head>
+	<body data-twttr-rendered="true">
+	<div class="wrapper">
+						<div class="container" id="contentblock">
+									<div class="row" style="margin-top:50px">
+	<div class="span3 offset1">
+		<img src="https://s3.amazonaws.com/static.peerj.com/images/launch/monkeyError.png" width="250px">
+	</div>
+	<div class="span7">
+
+			<h1 style="color:#4D90FE">Oh no!</h1>
+			<h2 style="color:#4D90FE"><p>It looks like you're trying to download a Article PDF, please click <a href='/articles/cs-407.pdf'>HERE</a> to continue or visit the original <a href='/articles/cs-407'>Article</a> here.<p></h2>
+				<p>
+                If you'd like a status update, please check our twitter feed <a href="http://twitter.com/thePeerJ">@thePeerJ</a> or alternatively, you can email <span class="label label-info">support</span>@peerj.com and we'll let you know.
+				</p>
+	</div>
+</div>
+		</div>
+		<div class="push"><!--//--></div>
+	</div> <!--/end wrapper /-->
+
+</body></html>
