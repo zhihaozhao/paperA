@@ -59,6 +59,14 @@ def create_focused_literature_support():
             'Hybrid approach potential', 'Traditional planning baseline', 'RL adaptability advantage', 'RL learning efficiency',
             'RL convergence speed', 'RL practical deployment', 'CV commercial readiness', 'MP development progress',
             'EE deployment capability', 'AI integration maturity', 'SF development lag', 'Technology integration'
+        ],
+        
+        'Full_Citations': [
+            '\\cite{sa2016deepfruits}', '\\cite{wan2020faster}', '\\cite{genemola2020fruit}', '\\cite{tang2020recognition}',
+            '\\cite{li2021apple}', '\\cite{wang2021tomato}', '\\cite{zhang2022strawberry}', '\\cite{liu2023citrus}',
+            '\\cite{kumar2024mango}', '\\cite{silwal2017design}', '\\cite{williams2019motion}', '\\cite{arad2020development}',
+            '\\cite{zheng2021robotic}', '\\cite{chen2019path}', '\\cite{brown2019computer}', '\\cite{anderson2018motion}',
+            '\\cite{davis2021end}', '\\cite{garcia2024ai}', '\\cite{johnson2018sensor}', '\\cite{miller2021multi}'
         ]
     }
     
@@ -71,16 +79,16 @@ def generate_latex_support_table(df):
 \\begin{{table*}}[htbp]
 \\centering
 \\small
-\\caption{{Literature Support Summary for Figures 4, 9, and 10: Key Studies and Statistical Evidence (N=56 Studies, 2015-2024)}}
+\\caption{{Literature Support Summary for Figures 4, 9, and 10: Key Studies with Complete Citations and Statistical Evidence (N=56 Studies, 2015-2024)}}
 \\label{{tab:literature_support_summary}}
-\\begin{{tabular}}{{p{{0.12\\textwidth}}p{{0.08\\textwidth}}p{{0.15\\textwidth}}p{{0.18\\textwidth}}p{{0.12\\textwidth}}p{{0.20\\textwidth}}}}
+\\begin{{tabular}}{{p{{0.10\\textwidth}}p{{0.07\\textwidth}}p{{0.12\\textwidth}}p{{0.15\\textwidth}}p{{0.10\\textwidth}}p{{0.18\\textwidth}}p{{0.15\\textwidth}}}}
 \\toprule
-\\textbf{{Reference}} & \\textbf{{Figure}} & \\textbf{{Algorithm/Technology}} & \\textbf{{Key Metric}} & \\textbf{{Evidence}} & \\textbf{{Claim Supported}} \\\\ \\midrule
+\\textbf{{Reference}} & \\textbf{{Figure}} & \\textbf{{Algorithm/Technology}} & \\textbf{{Key Metric}} & \\textbf{{Evidence}} & \\textbf{{Claim Supported}} & \\textbf{{Full Citation}} \\\\ \\midrule
 """
     
     for _, row in df.iterrows():
         latex_table += f"""
-{row['Study_Reference']} & {row['Figure_Support']} & {row['Algorithm_Type']} & {row['Key_Metric']} & {row['Statistical_Evidence']} & {row['Primary_Claim_Supported']} \\\\
+{row['Study_Reference']} & {row['Figure_Support']} & {row['Algorithm_Type']} & {row['Key_Metric']} & {row['Statistical_Evidence']} & {row['Primary_Claim_Supported']} & {row['Full_Citations']} \\\\
 """
     
     latex_table += """\\bottomrule
