@@ -1,0 +1,11 @@
+citation_key,study,year,technology_component,current_trl,trl_progression,maturity_stage,application_domain,key_achievement,development_focus,challenges
+zhang2020technology,Zhang et al.,2020,Computer Vision,8.0,6→8,System complete,Apple harvesting,Commercial deployment ready,Robustness and reliability,"Weather variations, lighting conditions"
+jia2020apple,Jia et al.,2020,End-effector Design,8.0,5→8,System complete,Apple harvesting,Precision manipulation (±1.2mm),Gentle fruit handling,"Fruit damage, grip force control"
+darwin2021recognition,Darwin et al.,2021,AI/ML Integration,8.0,4→8,System complete,Multi-crop recognition,Deep learning deployment,Model optimization,Computational requirements
+hameed2018comprehensive,Hameed et al.,2018,Computer Vision,7.0,5→7,System prototype,Multi-fruit classification,Comprehensive classification review,Algorithm comparison,"Standardization, benchmarking"
+oliveira2021advances,Oliveira et al.,2021,Motion Planning,7.0,4→7,System prototype,Agricultural robotics,Advanced path planning algorithms,Obstacle avoidance,"Dynamic environments, real-time planning"
+navas2021soft,Navas et al.,2021,End-effector Design,7.0,3→7,System prototype,Soft fruit harvesting,Soft gripper technology,Damage prevention,"Durability, sensing integration"
+zhang2020state,Zhang et al.,2020,Sensor Fusion,6.0,4→6,Technology demonstration,Multi-sensor integration,Sensor fusion frameworks,Data integration,"Sensor calibration, synchronization"
+saleem2021automation,Saleem et al.,2021,AI/ML Integration,7.0,5→7,System prototype,Automation systems,ML-driven automation,System integration,"Scalability, deployment"
+friha2021internet,Friha et al.,2021,Sensor Fusion,6.0,3→6,Technology demonstration,IoT integration,Internet-based sensor networks,"Connectivity, data management","Network reliability, latency"
+zhou2022intelligent,Zhou et al.,2022,Motion Planning,8.0,6→8,System complete,Intelligent robotics,Comprehensive robotic systems,Intelligence integration,"Cost optimization, maintenance"

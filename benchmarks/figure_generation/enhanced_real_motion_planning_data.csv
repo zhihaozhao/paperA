@@ -1,0 +1,4 @@
+citation_key,study,year,algorithm_type,success_rate,processing_time_ms,environment,application,key_metric,strengths,limitations,figure_support
+silwal2017design,Silwal et al.,2017,Traditional,82.1,245.0,Orchard,Apple harvesting,Success rate,"Robust mechanical design, field-tested","Slower processing, traditional approach","Fig 9(a,c)"
+bac2017performance,Bac et al.,2017,Traditional,75.2,89.0,Greenhouse,Sweet pepper harvesting,Success rate,"Fast processing, greenhouse optimized","Lower success rate, limited to peppers","Fig 9(a,c)"
+arad2020development,Arad et al.,2020,Traditional,89.1,76.0,Greenhouse,Sweet pepper harvesting,Success rate,"High success rate, optimized for peppers",Limited to controlled environments,"Fig 9(a,b)"

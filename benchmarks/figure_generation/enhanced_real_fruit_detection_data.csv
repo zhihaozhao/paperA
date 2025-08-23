@@ -1,0 +1,7 @@
+citation_key,study,year,algorithm_family,fruit_type,accuracy_precision,processing_time_ms,f1_score,map_score,success_rate,environment,key_metric,strengths,limitations,application,figure_support
+sa2016deepfruits,Sa et al.,2016,R-CNN,Multi-class,84.8,393.0,0.838,,84.8,Outdoor/Greenhouse,F1-score,"RGB+NIR fusion, multi-class detection","Early fusion limitations, small fruit misdetections",Multi-fruit detection,"Fig 4(a,c)"
+wan2020faster,Wan et al.,2020,R-CNN,Multi-class,90.7,58.0,,90.72,90.7,Outdoor,mAP,"Optimized conv/pooling, fast processing","Small training images, limited to 3 classes",Multi-fruit detection,"Fig 4(a,c)"
+fu2020faster,Fu et al.,2020,R-CNN,Apple,89.3,181.0,,89.3,89.3,Outdoor,AP,"RGB+depth filtering, VGG16 backbone",Kinect V2 sensitive to sunlight,Apple detection,"Fig 4(a,c)"
+fu2018kiwifruit,Fu et al.,2018,R-CNN,Kiwifruit,92.3,274.0,,,92.3,Outdoor,Recognition rate,"Clustered fruit detection, separated vs occluded",Lower accuracy for occluded fruits (14.2% gap),Kiwifruit harvesting,"Fig 4(a,c)"
+gene2019multi,Gené-Mola et al.,2019,R-CNN,Apple,94.8,73.0,0.898,94.8,94.8,Outdoor,AP,Multi-modal fusion (RGB+depth+intensity),Depth sensor degrades under direct sunlight,Apple detection,"Fig 4(a,b,d)"
+liu2020yolo,Liu et al.,2020,YOLO,Tomato,96.4,54.0,,96.4,96.4,Greenhouse,mAP,"Real-time processing, high accuracy",Limited to controlled greenhouse environment,Tomato detection,"Fig 4(a,b,d)"
