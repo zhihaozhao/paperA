@@ -144,11 +144,11 @@ def create_figure_9():
              bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.3), fontsize=8)
     
     # Subplot 3: Learning Convergence (RL algorithms only)
-    rl_algorithms = ['DDPG', 'A3C', 'PPO', 'SAC', 'Hybrid-RL']
-    rl_convergence = [data['convergence_epochs'][i] for i, alg in enumerate(data['algorithms']) if alg in rl_algorithms]
-    rl_colors = [colors_dict[alg] for alg in rl_algorithms]
+    rl_algorithms_subplot3 = ['DDPG', 'A3C', 'PPO', 'SAC', 'Hybrid-RL']
+    rl_convergence = [data['convergence_epochs'][i] for i, alg in enumerate(data['algorithms']) if alg in rl_algorithms_subplot3]
+    rl_colors = [algorithm_styles[alg]['color'] for alg in rl_algorithms_subplot3]
     
-    bars = ax3.bar(rl_algorithms, rl_convergence, alpha=0.8, color=rl_colors)
+    bars = ax3.bar(rl_algorithms_subplot3, rl_convergence, alpha=0.8, color=rl_colors)
     ax3.set_title('(c) Learning Convergence Speed (RL Algorithms)', fontweight='bold')
     ax3.set_xlabel('Reinforcement Learning Algorithms')
     ax3.set_ylabel('Epochs to 90% Performance')
