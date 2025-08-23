@@ -75,7 +75,7 @@ def create_figure_9():
     ax1.set_ylabel('Success Rate (%)')
     ax1.set_xticks(x)
     ax1.set_xticklabels(data['algorithms'], rotation=45, ha='right')
-    ax1.legend(loc='upper right', frameon=True, fancybox=True)
+    ax1.legend(loc='lower left', frameon=True, fancybox=True)
     ax1.grid(True, alpha=0.3)
     ax1.set_ylim(0, 100)
     
@@ -108,9 +108,9 @@ def create_figure_9():
     # Add quadrant labels
     ax2.axhline(y=75, color='gray', linestyle='--', alpha=0.5)
     ax2.axvline(x=100, color='gray', linestyle='--', alpha=0.5)
-    ax2.text(25, 85, 'High Adaptability\nFast Processing', ha='center', va='center',
+    ax2.text(25, 80, 'High Adaptability\nFast Processing', ha='center', va='center',
              bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.5))
-    ax2.text(175, 85, 'High Adaptability\nSlow Processing', ha='center', va='center',
+    ax2.text(175, 80, 'High Adaptability\nSlow Processing', ha='center', va='center',
              bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.5))
     
     # Subplot 3: Learning Convergence (RL algorithms only)
