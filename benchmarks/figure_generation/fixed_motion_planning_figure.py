@@ -85,10 +85,10 @@ def create_figure_9():
         'RRT*': '#FFA07A', 'PRM': '#98D8C8', 'Dijkstra': '#F7DC6F', 'Hybrid-RL': '#BB8FCE'
     }
     
-    # Custom annotation positioning to prevent overlaps
+    # Custom annotation positioning to prevent overlaps - aggressive spacing
     annotation_offsets = {
-        'DDPG': (8, 12), 'A3C': (5, -18), 'PPO': (-25, 8), 'SAC': (-30, -18),
-        'RRT*': (5, 5), 'PRM': (5, -15), 'Dijkstra': (5, 5), 'Hybrid-RL': (25, -25)
+        'DDPG': (15, 20), 'A3C': (-35, -25), 'PPO': (-40, 15), 'SAC': (-45, 5),
+        'RRT*': (8, 8), 'PRM': (8, -20), 'Dijkstra': (8, 8), 'Hybrid-RL': (35, -30)
     }
     
     for i, alg in enumerate(data['algorithms']):
@@ -96,7 +96,7 @@ def create_figure_9():
                    s=150, alpha=0.7, color=colors_dict[alg], label=alg)
         offset = annotation_offsets.get(alg, (5, 5))
         ax2.annotate(alg, (data['processing_times'][i], data['adaptability'][i]),
-                    xytext=offset, textcoords='offset points', fontsize=10)
+                    xytext=offset, textcoords='offset points', fontsize=9, fontweight='bold')
     
     ax2.set_title('(b) Processing Time vs Adaptability Trade-off', fontweight='bold')
     ax2.set_xlabel('Processing Time (ms)')
@@ -110,8 +110,8 @@ def create_figure_9():
     ax2.axvline(x=100, color='gray', linestyle='--', alpha=0.5)
     ax2.text(25, 85, 'High Adaptability\nFast Processing', ha='center', va='center',
              bbox=dict(boxstyle='round', facecolor='lightgreen', alpha=0.4), fontsize=9)
-    ax2.text(175, 70, 'High Adaptability\nSlow Processing', ha='center', va='center',
-             bbox=dict(boxstyle='round', facecolor='yellow', alpha=0.4), fontsize=9)
+    ax2.text(175, 65, 'High Adaptability\nSlow Processing', ha='center', va='center',
+             bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.3), fontsize=8)
     
     # Subplot 3: Learning Convergence (RL algorithms only)
     rl_algorithms = ['DDPG', 'A3C', 'PPO', 'SAC', 'Hybrid-RL']
