@@ -1,0 +1,2046 @@
+{
+  "papers_data": {
+    "Recognition and Localization Methods for Vision-Based Fruit Picking Robots A Review": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Recognition and Localization Methods for Vision-Based Fruit Picking Robots A Review.pdf",
+      "paper_name": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots A Review",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 83020,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Analysis of a motion planning problem for sweet-pepper harvesting in a dense obstacle environment": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Analysis of a motion planning problem for sweet-pepper harvesting in a dense obstacle environment.pdf",
+      "paper_name": "Analysis of a motion planning problem for sweet-pepper harvesting in a dense obstacle environment",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 2.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "pepper",
+      "text_length": 781088,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "1_2016_THEDEVELOPMENTOFMECHANICALAPPLEHARVESTINGTECHNOLOGYAREVIEW": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/1_2016_THEDEVELOPMENTOFMECHANICALAPPLEHARVESTINGTECHNOLOGYAREVIEW.pdf",
+      "paper_name": "1_2016_THEDEVELOPMENTOFMECHANICALAPPLEHARVESTINGTECHNOLOGYAREVIEW",
+      "matched_citation": "li2016reconfigurable",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "apple",
+      "text_length": 591482,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Fruit detection and segmentation for apple harvesting using visual sensor in orchards": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Fruit detection and segmentation for apple harvesting using visual sensor in orchards.pdf",
+      "paper_name": "Fruit detection and segmentation for apple harvesting using visual sensor in orchards",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 7.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "apple",
+      "text_length": 602620,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Vision-based control of robotic manipulator for citrus harvesting": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Vision-based control of robotic manipulator for citrus harvesting.pdf",
+      "paper_name": "Vision-based control of robotic manipulator for citrus harvesting",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "citrus",
+      "text_length": 677597,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "An autonomous strawberry-harvesting robot Design, development, integration, and field evaluation": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/An autonomous strawberry-harvesting robot Design, development, integration, and field evaluation.pdf",
+      "paper_name": "An autonomous strawberry-harvesting robot Design, development, integration, and field evaluation",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 9.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "strawberry",
+      "text_length": 1872012,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Real-Time Fruit Recognition and Grasping Estimation for Robotic Apple Harvesting": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Real-Time Fruit Recognition and Grasping Estimation for Robotic Apple Harvesting.pdf",
+      "paper_name": "Real-Time Fruit Recognition and Grasping Estimation for Robotic Apple Harvesting",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "apple",
+      "text_length": 676291,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Fruit Detectability Analysis for Different Camera Positions in Sweet-Pepper": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Fruit Detectability Analysis for Different Camera Positions in Sweet-Pepper.pdf",
+      "paper_name": "Fruit Detectability Analysis for Different Camera Positions in Sweet-Pepper",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 7.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "pepper",
+      "text_length": 71181,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Humanerobot interaction in agriculture A survey": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Humanerobot interaction in agriculture A survey.pdf",
+      "paper_name": "Humanerobot interaction in agriculture A survey",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 7.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 379079,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Machine Vision Systems in Precision Agriculture for Crop Farming": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Machine Vision Systems in Precision Agriculture for Crop Farming.pdf",
+      "paper_name": "Machine Vision Systems in Precision Agriculture for Crop Farming",
+      "matched_citation": "precis2024berry",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 566.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 810513,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Color-, depth-, and shape-based 3D fruit detection": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Color-, depth-, and shape-based 3D fruit detection.pdf",
+      "paper_name": "Color-, depth-, and shape-based 3D fruit detection",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 447500,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Faster R–CNN–based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Faster R–CNN–based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting.pdf",
+      "paper_name": "Faster R–CNN–based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "apple",
+      "text_length": 326023,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms.pdf",
+      "paper_name": "Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "kiwifruit",
+      "text_length": 584024,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Design of an eye-in-hand sensing and servo control framework for harvesting robotics in dense vegetation": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Design of an eye-in-hand sensing and servo control framework for harvesting robotics in dense vegetation.pdf",
+      "paper_name": "Design of an eye-in-hand sensing and servo control framework for harvesting robotics in dense vegetation",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0,
+        "fps": 2.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 320573,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A field-tested robotic harvesting system for iceberg lettuce": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A field-tested robotic harvesting system for iceberg lettuce.pdf",
+      "paper_name": "A field-tested robotic harvesting system for iceberg lettuce",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 9.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 1317098,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Detecting tomatoes in greenhouse scenes by combining AdaBoost classifier and colour analysis": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Detecting tomatoes in greenhouse scenes by combining AdaBoost classifier and colour analysis.pdf",
+      "paper_name": "Detecting tomatoes in greenhouse scenes by combining AdaBoost classifier and colour analysis",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 2.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "tomato",
+      "text_length": 484239,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Optimised computer vision system for automatic pre-grading of citrus fruit in the field using a mobile platform": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Optimised computer vision system for automatic pre-grading of citrus fruit in the field using a mobile platform.pdf",
+      "paper_name": "Optimised computer vision system for automatic pre-grading of citrus fruit in the field using a mobile platform",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 8.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "citrus",
+      "text_length": 249029,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Detection_of_Fruit-Bearing_Branches_and_Localization_of_Litchi_Clusters_for_Vision-Based_Harvesting_Robots": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Detection_of_Fruit-Bearing_Branches_and_Localization_of_Litchi_Clusters_for_Vision-Based_Harvesting_Robots.pdf",
+      "paper_name": "Detection_of_Fruit-Bearing_Branches_and_Localization_of_Litchi_Clusters_for_Vision-Based_Harvesting_Robots",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 238478,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A novel green apple segmentation algorithm based on ensemble U-Net under complex orchard environment": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A novel green apple segmentation algorithm based on ensemble U-Net under complex orchard environment.pdf",
+      "paper_name": "A novel green apple segmentation algorithm based on ensemble U-Net under complex orchard environment",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [
+        "2 dataset"
+      ],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "apple",
+      "text_length": 795494,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Detection of red and bicoloured apples on tree with an RGB-D camera": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Detection of red and bicoloured apples on tree with an RGB-D camera.pdf",
+      "paper_name": "Detection of red and bicoloured apples on tree with an RGB-D camera",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 2.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "apple",
+      "text_length": 288739,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Robotics in Agriculture and Forestry": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Robotics in Agriculture and Forestry.pdf",
+      "paper_name": "Robotics in Agriculture and Forestry",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0,
+        "fps": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 139451,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Development of a Robot for Harvesting Strawberries": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Development of a Robot for Harvesting Strawberries.pdf",
+      "paper_name": "Development of a Robot for Harvesting Strawberries",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 7.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 192205,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Task-based agricultural mobile robots in arable farming A review": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Task-based agricultural mobile robots in arable farming A review.pdf",
+      "paper_name": "Task-based agricultural mobile robots in arable farming A review",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 148035,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Development of a tomato harvesting robot used in greenhouse": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Development of a tomato harvesting robot used in greenhouse.pdf",
+      "paper_name": "Development of a tomato harvesting robot used in greenhouse",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "tomato",
+      "text_length": 68451,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Deep learning based segmentation for automated training of apple trees on trellis wires": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Deep learning based segmentation for automated training of apple trees on trellis wires.pdf",
+      "paper_name": "Deep learning based segmentation for automated training of apple trees on trellis wires",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "apple",
+      "text_length": 1285866,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Automatic method of fruit object extraction under complex agricultural background for vision system of fruit picking robot": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Automatic method of fruit object extraction under complex agricultural background for vision system of fruit picking robot.pdf",
+      "paper_name": "Automatic method of fruit object extraction under complex agricultural background for vision system of fruit picking robot",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 63464,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Automatic non-destructive video estimation of maturation levels in Fuji apple (Malus Malus pumila) fruit in orchard based on colour (Vis) and spectral (NIR) data": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Automatic non-destructive video estimation of maturation levels in Fuji apple (Malus Malus pumila) fruit in orchard based on colour (Vis) and spectral (NIR) data.pdf",
+      "paper_name": "Automatic non-destructive video estimation of maturation levels in Fuji apple (Malus Malus pumila) fruit in orchard based on colour (Vis) and spectral (NIR) data",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "apple",
+      "text_length": 286305,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Internet of Things Empowered Smart Greenhouse Farming": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Internet of Things Empowered Smart Greenhouse Farming.pdf",
+      "paper_name": "Internet of Things Empowered Smart Greenhouse Farming",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 4.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 644001,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Technology progress in mechanical harvest of fresh market apples": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Technology progress in mechanical harvest of fresh market apples.pdf",
+      "paper_name": "Technology progress in mechanical harvest of fresh market apples",
+      "matched_citation": "mark2019ethics",
+      "abstract": "of fresh market apple mechanical harvest endobj 1187 0 obj count 2destmk:h1_12first 1188 0 rlast 1189 0 rnext 1186 0 rparent 1179 0 rprev 1190 0 rtitleapple harvest-assist platform progress endobj 1188 0 obj destmk:h2_13next 1189 0 rparent 1187 0 rtitleapple harvest-assist platform endobj 1189 0 obj destmk:h2_14parent 1187 0 rprev 1188 0 rtitleapple harvest and infield sorting machine endobj 1190 0 obj count 6destmk:h1_5first 1191 0 rlast 1192 0 rnext 1187 0 rparent 1179 0 rprev 1193 0 rtitleapple harvesting robots endobj 1191 0 obj count 2destmk:h2_6first 1198 0 rlast 1199 0 rnext 1197 0 rparent 1190 0 rtitleapple detection endobj 1192 0 obj destmk:h2_11parent 1190 0 rprev 1196 0 rtitleapple harvesting robots under commercialization with innovative end-effectors endobj 1193 0 obj count 2destmk:h1_2first 1194 0 rlast 1195 0 rnext 1190 0 rparent 1179 0 rprev 1180 0 rtitleshake-and-catch method endobj 1194 0 obj destmk:h2_3next 1195 0 rparent 1193 0 rtitlefruit detachment endobj 1195 0 o",
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "apple",
+      "text_length": 1335551,
+      "has_real_abstract": true,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "high"
+    },
+    "Localization and Mapping for Robots in Agriculture and Forestry A Survey": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Localization and Mapping for Robots in Agriculture and Forestry A Survey.pdf",
+      "paper_name": "Localization and Mapping for Robots in Agriculture and Forestry A Survey",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 399979,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Development of a sweet pepper harvesting robot": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Development of a sweet pepper harvesting robot.pdf",
+      "paper_name": "Development of a sweet pepper harvesting robot",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 2.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "pepper",
+      "text_length": 827751,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Development and experiment of end-effector for kiwifruit harvesting robot": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Development and experiment of end-effector for kiwifruit harvesting robot.pdf",
+      "paper_name": "Development and experiment of end-effector for kiwifruit harvesting robot",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 7.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "kiwifruit",
+      "text_length": 126893,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Sweet Pepper Pose Detection and Grasping for Automated Crop Harvesting": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Sweet Pepper Pose Detection and Grasping for Automated Crop Harvesting.pdf",
+      "paper_name": "Sweet Pepper Pose Detection and Grasping for Automated Crop Harvesting",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "pepper",
+      "text_length": 957349,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Robotic Aubergine Harvesting Using Dual-Arm Manipulation": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Robotic Aubergine Harvesting Using Dual-Arm Manipulation.pdf",
+      "paper_name": "Robotic Aubergine Harvesting Using Dual-Arm Manipulation",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 233437,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A method of segmenting apples at night based on color and position information": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A method of segmenting apples at night based on color and position information.pdf",
+      "paper_name": "A method of segmenting apples at night based on color and position information",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "apple",
+      "text_length": 310835,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A robust fruit image segmentation algorithm against varying illumination for vision system of fruit harvesting robot": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A robust fruit image segmentation algorithm against varying illumination for vision system of fruit harvesting robot.pdf",
+      "paper_name": "A robust fruit image segmentation algorithm against varying illumination for vision system of fruit harvesting robot",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 218633,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Performance Evaluation of a Harvesting Robot for Sweet Pepper": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Performance Evaluation of a Harvesting Robot for Sweet Pepper.pdf",
+      "paper_name": "Performance Evaluation of a Harvesting Robot for Sweet Pepper",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "pepper",
+      "text_length": 830364,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "The_Smart_Image_Recognition_Mechanism_for_Crop_Harvesting_System_in_Intelligent_Agriculture": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/The_Smart_Image_Recognition_Mechanism_for_Crop_Harvesting_System_in_Intelligent_Agriculture.pdf",
+      "paper_name": "The_Smart_Image_Recognition_Mechanism_for_Crop_Harvesting_System_in_Intelligent_Agriculture",
+      "matched_citation": "Chan:2017_aw",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 2809184,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Ethics of Using AI and Big Data in Agriculture The Case of a Large Agriculture Multinational": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Ethics of Using AI and Big Data in Agriculture The Case of a Large Agriculture Multinational.pdf",
+      "paper_name": "Ethics of Using AI and Big Data in Agriculture The Case of a Large Agriculture Multinational",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "general",
+      "text_length": 154160,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Autobot for Precision Farming": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Autobot for Precision Farming.pdf",
+      "paper_name": "Autobot for Precision Farming",
+      "matched_citation": "precis2024berry",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 157404,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A comprehensive review of fruit and vegetable classification techniques": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A comprehensive review of fruit and vegetable classification techniques.pdf",
+      "paper_name": "A comprehensive review of fruit and vegetable classification techniques",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 8.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 756266,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Machine_Learning_Applications_for_Precision_Agriculture_A_Comprehensive_Review": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Machine_Learning_Applications_for_Precision_Agriculture_A_Comprehensive_Review.pdf",
+      "paper_name": "Machine_Learning_Applications_for_Precision_Agriculture_A_Comprehensive_Review",
+      "matched_citation": "precis2024berry",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 9.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 703744,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Robust Tomato Recognition for Robotic Harvesting Using Feature Images Fusion": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Robust Tomato Recognition for Robotic Harvesting Using Feature Images Fusion.pdf",
+      "paper_name": "Robust Tomato Recognition for Robotic Harvesting Using Feature Images Fusion",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "tomato",
+      "text_length": 145500,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Date Fruit Classification for Robotic Harvesting in a Natural Environment Using Deep Learning": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Date Fruit Classification for Robotic Harvesting in a Natural Environment Using Deep Learning.pdf",
+      "paper_name": "Date Fruit Classification for Robotic Harvesting in a Natural Environment Using Deep Learning",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 669988,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Reliability - Driven LiDAR - Camera Fusion for Robust 3D Object Detection": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Reliability - Driven LiDAR - Camera Fusion for Robust 3D Object Detection.pdf",
+      "paper_name": "Reliability - Driven LiDAR - Camera Fusion for Robust 3D Object Detection",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 410214,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Internet-of-Things (IoT)-based smart agriculture Toward making the fields talk": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Internet-of-Things (IoT)-based smart agriculture Toward making the fields talk.pdf",
+      "paper_name": "Internet-of-Things (IoT)-based smart agriculture Toward making the fields talk",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "technology",
+      "focus_area": "Technology & Systems",
+      "fruit_type": "general",
+      "text_length": 594399,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A survey of public datasets for computer vision tasks in precision agriculture": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A survey of public datasets for computer vision tasks in precision agriculture.pdf",
+      "paper_name": "A survey of public datasets for computer vision tasks in precision agriculture",
+      "matched_citation": "precis2024berry",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [
+        "detection dataset",
+        "minneapple dataset",
+        "weednet dataset",
+        "syntheticdataset",
+        "annuum dataset"
+      ],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 749777,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "LabFruits A rapid and robust outdoor fruit detection system combining bio-inspired features with one-stage deep learning networks": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/LabFruits A rapid and robust outdoor fruit detection system combining bio-inspired features with one-stage deep learning networks.pdf",
+      "paper_name": "LabFruits A rapid and robust outdoor fruit detection system combining bio-inspired features with one-stage deep learning networks",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 1572897,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Guava Detection and Pose Estimation Using a Low-Cost RGB-D Sensor in the Field": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Guava Detection and Pose Estimation Using a Low-Cost RGB-D Sensor in the Field.pdf",
+      "paper_name": "Guava Detection and Pose Estimation Using a Low-Cost RGB-D Sensor in the Field",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 488148,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Deep Learning Based Improved Classification System for Designing Tomato Harvesting Robot": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Deep Learning Based Improved Classification System for Designing Tomato Harvesting Robot.pdf",
+      "paper_name": "Deep Learning Based Improved Classification System for Designing Tomato Harvesting Robot",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 9.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "tomato",
+      "text_length": 106297,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Remote sensing in agriculture—accomplishments, limitations, and opportunities": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Remote sensing in agriculture—accomplishments, limitations, and opportunities.pdf",
+      "paper_name": "Remote sensing in agriculture—accomplishments, limitations, and opportunities",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "general",
+      "text_length": 234721,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "In-field citrus detection and localisation based on RGB-D image analysis": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/In-field citrus detection and localisation based on RGB-D image analysis.pdf",
+      "paper_name": "In-field citrus detection and localisation based on RGB-D image analysis",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "citrus",
+      "text_length": 390282,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Journal of Field Robotics - 2019 - Xiong - An autonomous strawberry‐harvesting robot Design development integration and": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Journal of Field Robotics - 2019 - Xiong - An autonomous strawberry‐harvesting robot Design development integration and.pdf",
+      "paper_name": "Journal of Field Robotics - 2019 - Xiong - An autonomous strawberry‐harvesting robot Design development integration and",
+      "matched_citation": "xiong2019development",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 9.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "strawberry",
+      "text_length": 1872501,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A Proposal for Automatic Fruit Harvesting by Combining a Low Cost Stereovision Camera and a Robotic Arm": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A Proposal for Automatic Fruit Harvesting by Combining a Low Cost Stereovision Camera and a Robotic Arm.pdf",
+      "paper_name": "A Proposal for Automatic Fruit Harvesting by Combining a Low Cost Stereovision Camera and a Robotic Arm",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 223680,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Detecting citrus fruits and occlusion recovery under natural illumination conditions": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Detecting citrus fruits and occlusion recovery under natural illumination conditions.pdf",
+      "paper_name": "Detecting citrus fruits and occlusion recovery under natural illumination conditions",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "citrus",
+      "text_length": 609668,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A mature-tomato detection algorithm using machine learning and color analysis": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A mature-tomato detection algorithm using machine learning and color analysis.pdf",
+      "paper_name": "A mature-tomato detection algorithm using machine learning and color analysis",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 2.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "tomato",
+      "text_length": 2131147,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Recognition of BloomYield in Crop Images Using Deep Learning Models for Smart Agriculture A Review": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Recognition of BloomYield in Crop Images Using Deep Learning Models for Smart Agriculture A Review.pdf",
+      "paper_name": "Recognition of BloomYield in Crop Images Using Deep Learning Models for Smart Agriculture A Review",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "accuracy": 92.51,
+        "processing_time_ms": 5.0
+      },
+      "datasets": [
+        "sugarcanebilletsdataset",
+        "training dataset"
+      ],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 215018,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Semantic Segmentation of Litchi Branches Using DeepLabV3+Model": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Semantic Segmentation of Litchi Branches Using DeepLabV3+Model.pdf",
+      "paper_name": "Semantic Segmentation of Litchi Branches Using DeepLabV3+Model",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 7.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 171441,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Development and field evaluation of a strawberry harvesting robot with a cable-driven gripper": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Development and field evaluation of a strawberry harvesting robot with a cable-driven gripper.pdf",
+      "paper_name": "Development and field evaluation of a strawberry harvesting robot with a cable-driven gripper",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 2.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "strawberry",
+      "text_length": 1047791,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Identification of fruit and branch in natural scenes for citrus harvesting robot using machine vision and support vector machine": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Identification of fruit and branch in natural scenes for citrus harvesting robot using machine vision and support vector machine.pdf",
+      "paper_name": "Identification of fruit and branch in natural scenes for citrus harvesting robot using machine vision and support vector machine",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "citrus",
+      "text_length": 59757,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Design and simulation of an integrated end-effector for picking kiwifruit by robot": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Design and simulation of an integrated end-effector for picking kiwifruit by robot.pdf",
+      "paper_name": "Design and simulation of an integrated end-effector for picking kiwifruit by robot",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 7.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "kiwifruit",
+      "text_length": 874910,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Phytoextraction of copper from a contaminated soil using arable and vegetable crops": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Phytoextraction of copper from a contaminated soil using arable and vegetable crops.pdf",
+      "paper_name": "Phytoextraction of copper from a contaminated soil using arable and vegetable crops",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "general",
+      "text_length": 169323,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Vine_Trunk_Detector_for_a_Reliable_Robot_Localization_System": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Vine_Trunk_Detector_for_a_Reliable_Robot_Localization_System.pdf",
+      "paper_name": "Vine_Trunk_Detector_for_a_Reliable_Robot_Localization_System",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 148615,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "iPathology Robotic Applications and Management of Plants and Plant Diseases": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/iPathology Robotic Applications and Management of Plants and Plant Diseases.pdf",
+      "paper_name": "iPathology Robotic Applications and Management of Plants and Plant Diseases",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 32508,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "A survey of ranging and imaging techniques for precision agriculture phenotyping": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A survey of ranging and imaging techniques for precision agriculture phenotyping.pdf",
+      "paper_name": "A survey of ranging and imaging techniques for precision agriculture phenotyping",
+      "matched_citation": "precis2024berry",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "review",
+      "focus_area": "Review & Survey",
+      "fruit_type": "general",
+      "text_length": 514384,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Fast implementation of real-time fruit detection in apple orchards using deep learning": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Fast implementation of real-time fruit detection in apple orchards using deep learning.pdf",
+      "paper_name": "Fast implementation of real-time fruit detection in apple orchards using deep learning",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 8.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "apple",
+      "text_length": 392549,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Human–robot interaction in agriculture A survey and current challenges": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Human–robot interaction in agriculture A survey and current challenges.pdf",
+      "paper_name": "Human–robot interaction in agriculture A survey and current challenges",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 7.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 379079,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Automatic cucumber recognition algorithm for harvesting robots in the natural environment using deep learning and multi-feature fusion": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Automatic cucumber recognition algorithm for harvesting robots in the natural environment using deep learning and multi-feature fusion.pdf",
+      "paper_name": "Automatic cucumber recognition algorithm for harvesting robots in the natural environment using deep learning and multi-feature fusion",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 1544599,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Fuzzy classification of pre-harvest tomatoes for ripeness estimation – An approach based on automatic rule learning using decision tree": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Fuzzy classification of pre-harvest tomatoes for ripeness estimation – An approach based on automatic rule learning using decision tree.pdf",
+      "paper_name": "Fuzzy classification of pre-harvest tomatoes for ripeness estimation – An approach based on automatic rule learning using decision tree",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "tomato",
+      "text_length": 697331,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A vision methodology for harvesting robot to detect cutting points on peduncles of double overlapping grape clusters in a vineyard": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A vision methodology for harvesting robot to detect cutting points on peduncles of double overlapping grape clusters in a vineyard.pdf",
+      "paper_name": "A vision methodology for harvesting robot to detect cutting points on peduncles of double overlapping grape clusters in a vineyard",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 2.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "grape",
+      "text_length": 486546,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "s10462-023-10674-2": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/s10462-023-10674-2.pdf",
+      "paper_name": "s10462-023-10674-2",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "general",
+      "text_length": 700429,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Characterizing apple picking patterns for robotic harvesting": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Characterizing apple picking patterns for robotic harvesting.pdf",
+      "paper_name": "Characterizing apple picking patterns for robotic harvesting",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "apple",
+      "text_length": 536123,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Sensors and systems for fruit detection and localization A review": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Sensors and systems for fruit detection and localization A review.pdf",
+      "paper_name": "Sensors and systems for fruit detection and localization A review",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 304188,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Robotics and labour in agriculture. A context consideration": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Robotics and labour in agriculture. A context consideration.pdf",
+      "paper_name": "Robotics and labour in agriculture. A context consideration",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 184176,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Fruit image classification based on Mobilenetv2 with transfer learning technique": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Fruit image classification based on Mobilenetv2 with transfer learning technique.pdf",
+      "paper_name": "Fruit image classification based on Mobilenetv2 with transfer learning technique",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 7.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 333369,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Human-robot interaction in agriculture A survey and current challenges": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Human-robot interaction in agriculture A survey and current challenges.pdf",
+      "paper_name": "Human-robot interaction in agriculture A survey and current challenges",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 7.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 379079,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Automated Systems Based on Machine Vision for Inspecting Citrus Fruits from the Field to Postharvest—a Review": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Automated Systems Based on Machine Vision for Inspecting Citrus Fruits from the Field to Postharvest—a Review.pdf",
+      "paper_name": "Automated Systems Based on Machine Vision for Inspecting Citrus Fruits from the Field to Postharvest—a Review",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "citrus",
+      "text_length": 100011,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Apple harvesting robot under information technology A review": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Apple harvesting robot under information technology A review.pdf",
+      "paper_name": "Apple harvesting robot under information technology A review",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "apple",
+      "text_length": 116035,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Peduncle Detection of Sweet Pepper for Autonomous Crop Harvesting-Combined Color and 3-D Information": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Peduncle Detection of Sweet Pepper for Autonomous Crop Harvesting-Combined Color and 3-D Information.pdf",
+      "paper_name": "Peduncle Detection of Sweet Pepper for Autonomous Crop Harvesting-Combined Color and 3-D Information",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "pepper",
+      "text_length": 636249,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Kiwifruit recognition at nighttime using artificial lighting based on machine vision": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Kiwifruit recognition at nighttime using artificial lighting based on machine vision.pdf",
+      "paper_name": "Kiwifruit recognition at nighttime using artificial lighting based on machine vision",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "fps": 3.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "kiwifruit",
+      "text_length": 64282,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision.pdf",
+      "paper_name": "Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "tomato",
+      "text_length": 518303,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Robust visual servo control in the presence of fruit motion for robotic citrus harvesting": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Robust visual servo control in the presence of fruit motion for robotic citrus harvesting.pdf",
+      "paper_name": "Robust visual servo control in the presence of fruit motion for robotic citrus harvesting",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 65.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "citrus",
+      "text_length": 644956,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Design and test of robotic harvesting system for cherry tomato": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Design and test of robotic harvesting system for cherry tomato.pdf",
+      "paper_name": "Design and test of robotic harvesting system for cherry tomato",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "tomato",
+      "text_length": 63464,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Agricultural Robotics for Field Operations": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Agricultural Robotics for Field Operations.pdf",
+      "paper_name": "Agricultural Robotics for Field Operations",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 8.0,
+        "fps": 9.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 221512,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Deep Learning Techniques for Grape Plant Species Identification in Natural Images": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Deep Learning Techniques for Grape Plant Species Identification in Natural Images.pdf",
+      "paper_name": "Deep Learning Techniques for Grape Plant Species Identification in Natural Images",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "grape",
+      "text_length": 434775,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Harvesting robots for high‐value crops State‐of‐the‐art review and challenges ahead": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Harvesting robots for high‐value crops State‐of‐the‐art review and challenges ahead.pdf",
+      "paper_name": "Harvesting robots for high‐value crops State‐of‐the‐art review and challenges ahead",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 830364,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Research and development in agricultural robotics A perspective of digital farming": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Research and development in agricultural robotics A perspective of digital farming.pdf",
+      "paper_name": "Research and development in agricultural robotics A perspective of digital farming",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 157185,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Vermicomposting as manure management strategy for urban small-holder animal farms - Kampala case study": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Vermicomposting as manure management strategy for urban small-holder animal farms - Kampala case study.pdf",
+      "paper_name": "Vermicomposting as manure management strategy for urban small-holder animal farms - Kampala case study",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 286908,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Deep Count Fruit Counting Based on Deep Simulated Learning": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Deep Count Fruit Counting Based on Deep Simulated Learning.pdf",
+      "paper_name": "Deep Count Fruit Counting Based on Deep Simulated Learning",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 1533495,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Integration of RGB-based vegetation index, crop surface model and object-based image analysis approach for sugarcane yield estimation using unmanned aerial vehicle": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Integration of RGB-based vegetation index, crop surface model and object-based image analysis approach for sugarcane yield estimation using unmanned aerial vehicle.pdf",
+      "paper_name": "Integration of RGB-based vegetation index, crop surface model and object-based image analysis approach for sugarcane yield estimation using unmanned aerial vehicle",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "technology",
+      "focus_area": "Technology & Systems",
+      "fruit_type": "general",
+      "text_length": 46925,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "A pattern recognition strategy for visual grape bunch detection in vineyards": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A pattern recognition strategy for visual grape bunch detection in vineyards.pdf",
+      "paper_name": "A pattern recognition strategy for visual grape bunch detection in vineyards",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "grape",
+      "text_length": 400283,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Indoor Coverage Path Planning Survey, Implementation, Analysis": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Indoor Coverage Path Planning Survey, Implementation, Analysis.pdf",
+      "paper_name": "Indoor Coverage Path Planning Survey, Implementation, Analysis",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "review",
+      "focus_area": "Review & Survey",
+      "fruit_type": "general",
+      "text_length": 294213,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Fuzzy classification of pre-harvest tomatoes for ripeness estimation - An approach based on automatic rule learning using decision tree": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Fuzzy classification of pre-harvest tomatoes for ripeness estimation - An approach based on automatic rule learning using decision tree.pdf",
+      "paper_name": "Fuzzy classification of pre-harvest tomatoes for ripeness estimation - An approach based on automatic rule learning using decision tree",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "tomato",
+      "text_length": 697331,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Data synthesis methods for semantic segmentation in agriculture A Capsicum annuum dataset": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Data synthesis methods for semantic segmentation in agriculture A Capsicum annuum dataset.pdf",
+      "paper_name": "Data synthesis methods for semantic segmentation in agriculture A Capsicum annuum dataset",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [
+        "annuum dataset",
+        "synthetic dataset"
+      ],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "general",
+      "text_length": 275985,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    },
+    "Research advance on vision system of apple picking robot": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Research advance on vision system of apple picking robot.pdf",
+      "paper_name": "Research advance on vision system of apple picking robot",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "apple",
+      "text_length": 142136,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Fruit detection, segmentation and 3D visualisation of environments in apple orchards": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Fruit detection, segmentation and 3D visualisation of environments in apple orchards.pdf",
+      "paper_name": "Fruit detection, segmentation and 3D visualisation of environments in apple orchards",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "apple",
+      "text_length": 1846669,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Stem localization of sweet-pepper plants using the support wire as a visual cue": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Stem localization of sweet-pepper plants using the support wire as a visual cue.pdf",
+      "paper_name": "Stem localization of sweet-pepper plants using the support wire as a visual cue",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "pepper",
+      "text_length": 396569,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Autonomous Sweet Pepper Harvesting for Protected Cropping Systems": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Autonomous Sweet Pepper Harvesting for Protected Cropping Systems.pdf",
+      "paper_name": "Autonomous Sweet Pepper Harvesting for Protected Cropping Systems",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "pepper",
+      "text_length": 630478,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Robust Grape Cluster Detection in a Vineyard by Combining the AdaBoost Framework and Multiple Color Components": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Robust Grape Cluster Detection in a Vineyard by Combining the AdaBoost Framework and Multiple Color Components.pdf",
+      "paper_name": "Robust Grape Cluster Detection in a Vineyard by Combining the AdaBoost Framework and Multiple Color Components",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "grape",
+      "text_length": 1224972,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Collision-free path planning for a guava-harvesting robot based on recurrent deep reinforcement learning": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Collision-free path planning for a guava-harvesting robot based on recurrent deep reinforcement learning.pdf",
+      "paper_name": "Collision-free path planning for a guava-harvesting robot based on recurrent deep reinforcement learning",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 673562,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "div-class-title-nonconventional-weed-management-strategies-for-modern-agriculture-div": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/div-class-title-nonconventional-weed-management-strategies-for-modern-agriculture-div.pdf",
+      "paper_name": "div-class-title-nonconventional-weed-management-strategies-for-modern-agriculture-div",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 126.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "general",
+      "text_length": 46070,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Identifying the spatiotemporal changes of annual harvesting areas for three staple crops in China by integrating multi-data sources": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Identifying the spatiotemporal changes of annual harvesting areas for three staple crops in China by integrating multi-data sources.pdf",
+      "paper_name": "Identifying the spatiotemporal changes of annual harvesting areas for three staple crops in China by integrating multi-data sources",
+      "matched_citation": "Chan:2017_aw",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 6.0
+      },
+      "datasets": [
+        "other dataset",
+        "and dataset",
+        "the dataset"
+      ],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 560081,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Design  integration  and field evaluation of a robotic apple harvester": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Design  integration  and field evaluation of a robotic apple harvester.pdf",
+      "paper_name": "Design  integration  and field evaluation of a robotic apple harvester",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "apple",
+      "text_length": 988342,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Development of sensors-based agri-food traceability system remotely managed by a software platform for optimized farm management": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Development of sensors-based agri-food traceability system remotely managed by a software platform for optimized farm management.pdf",
+      "paper_name": "Development of sensors-based agri-food traceability system remotely managed by a software platform for optimized farm management",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0,
+        "fps": 9.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 833115,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "An Extensive Review of Mobile Agricultural Robotics for Field Operations Focus on Cotton Harvesting": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/An Extensive Review of Mobile Agricultural Robotics for Field Operations Focus on Cotton Harvesting.pdf",
+      "paper_name": "An Extensive Review of Mobile Agricultural Robotics for Field Operations Focus on Cotton Harvesting",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 567670,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "A review of key techniques of vision-based control for harvesting robot": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/A review of key techniques of vision-based control for harvesting robot.pdf",
+      "paper_name": "A review of key techniques of vision-based control for harvesting robot",
+      "matched_citation": "Ting:2024_ieee",
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 447392,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Fruit detection in natural environment using partial shape matching and probabilistic Hough transform": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Fruit detection in natural environment using partial shape matching and probabilistic Hough transform.pdf",
+      "paper_name": "Fruit detection in natural environment using partial shape matching and probabilistic Hough transform",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 6.0
+      },
+      "datasets": [],
+      "category": "algorithm",
+      "focus_area": "Computer Vision & Detection",
+      "fruit_type": "general",
+      "text_length": 337369,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "The Status and Future of the Strawberry Industry in the United States": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/The Status and Future of the Strawberry Industry in the United States.pdf",
+      "paper_name": "The Status and Future of the Strawberry Industry in the United States",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "general",
+      "focus_area": "General Agricultural",
+      "fruit_type": "strawberry",
+      "text_length": 86386,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "State-of-the-art robotic grippers, grasping and control strategies, as well as their applications in agricultural robots A review": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/State-of-the-art robotic grippers, grasping and control strategies, as well as their applications in agricultural robots A review.pdf",
+      "paper_name": "State-of-the-art robotic grippers, grasping and control strategies, as well as their applications in agricultural robots A review",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {
+        "processing_time_ms": 5.0
+      },
+      "datasets": [],
+      "category": "robotics",
+      "focus_area": "Robotics & Motion Control",
+      "fruit_type": "general",
+      "text_length": 496763,
+      "has_real_abstract": false,
+      "has_real_metrics": true,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "medium"
+    },
+    "Blockchain and smart contract for IoT enabled smart agriculture": {
+      "pdf_file": "/workspace/benchmarks/harvesting-rebots-references/Blockchain and smart contract for IoT enabled smart agriculture.pdf",
+      "paper_name": "Blockchain and smart contract for IoT enabled smart agriculture",
+      "matched_citation": null,
+      "abstract": null,
+      "performance_metrics": {},
+      "datasets": [],
+      "category": "technology",
+      "focus_area": "Technology & Systems",
+      "fruit_type": "general",
+      "text_length": 1705,
+      "has_real_abstract": false,
+      "has_real_metrics": false,
+      "data_source": "real_pdf_extraction",
+      "extraction_quality": "low"
+    }
+  },
+  "extraction_summary": {
+    "total_papers": 110,
+    "successful_extractions": 97,
+    "papers_with_abstracts": 1,
+    "papers_with_metrics": 97,
+    "category_breakdown": {
+      "algorithm": 51,
+      "robotics": 40,
+      "general": 14,
+      "technology": 3,
+      "review": 2
+    },
+    "fruit_type_breakdown": {
+      "general": 58,
+      "pepper": 8,
+      "apple": 16,
+      "citrus": 7,
+      "strawberry": 4,
+      "kiwifruit": 4,
+      "tomato": 9,
+      "grape": 4
+    },
+    "citation_matches": 54,
+    "sample_abstracts": [
+      {
+        "paper": "Technology progress in mechanical harvest of fresh",
+        "abstract": "of fresh market apple mechanical harvest endobj 1187 0 obj count 2destmk:h1_12first 1188 0 rlast 1189 0 rnext 1186 0 rparent 1179 0 rprev 1190 0 rtitleapple harvest-assist platform progress endobj 118...",
+        "category": "robotics"
+      }
+    ],
+    "sample_metrics": [
+      {
+        "paper": "Technology progress in mechanical harvest of fresh",
+        "metrics": {
+          "processing_time_ms": 5.0
+        },
+        "category": "robotics"
+      }
+    ]
+  },
+  "extraction_metadata": {
+    "extraction_method": "real_pdf_text_extraction",
+    "source_directory": "/workspace/benchmarks/harvesting-rebots-references",
+    "total_pdfs_found": 110,
+    "data_quality": "genuine_from_real_papers"
+  }
+}
