@@ -99,7 +99,7 @@ YOLO optimal balance (Fig 4a) & ANOVA F-test & F=12.45, p<0.001 & Highly signifi
 R-CNN precision advantage (Fig 4c) & Two-sample t-test & t=4.23, p<0.01 & Significant & 12 R-CNN studies (2016-2023) \\\\
 RL adaptability (Fig 9b) & Mann-Whitney U & U=89.5, p<0.05 & Significant & 8 RL studies (2019-2024) \\\\
 TRL progression (Fig 10a) & Correlation analysis & r=0.87, p<0.001 & Highly significant & 56 studies across all technologies \\\\
-Technology maturity (Fig 10b) & Chi-square test & χ²=15.8, p<0.01 & Significant & Current assessment (2024) \\\\
+Technology maturity (Fig 10b) & Chi-square test & chi-sq=15.8, p<0.01 & Significant & Current assessment (2024) \\\\
 \\bottomrule
 \\end{tabular}
 \\end{table*}
@@ -128,7 +128,7 @@ def main():
     df.to_csv('literature_support_summary.csv', index=False)
     print("✅ Support data saved to: literature_support_summary.csv")
     
-    with open('literature_support_table.tex', 'w') as f:
+    with open('literature_support_table.tex', 'w', encoding='utf-8') as f:
         f.write(latex_table)
     print("✅ LaTeX table saved to: literature_support_table.tex")
     
