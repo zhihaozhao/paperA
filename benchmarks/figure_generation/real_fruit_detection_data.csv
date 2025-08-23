@@ -17,7 +17,7 @@ Gai_2023,2023,gai2023detection,YOLO,Cherry,Outdoor,94.7,467,94.7,,95.8,,F1=0.947
 Kuznetsova_2020,2020,kuznetsova2020using,YOLO,Apple,Outdoor,92.2,19,,,,90.8,Precision=92.2%; Recall=90.8%; 19 ms/fruit,Green apple recall 10.1% lower than red; Backlight reduces precision 5.3%
 Li_2021,2021,li2021real,YOLO,Grape,Outdoor,91.08,12.34,90.47,91.08,,,mAP=91.08%; F1=90.47%; 81 FPS,Severe occlusion reduces F1 by 6.5%; Model size 33% larger
 Tang_2023,2023,tang2023fruit,YOLO,Camellia,Outdoor,92.07,31,,92.07,,,AP=92.07%; Positioning error: 23.568±7.420 mm,Severe occlusion reduces recall by 5.05%; Requires stereo matching
-Sozzi_2022,2022,sozzi2022automatic,YOLO,Grape,Outdoor,77.0,31.25,0.77,,,,,YOLOv4: F1=0.77; 32 FPS; Bunch count error: 13.3%,Detection accuracy drops 8% under direct sunlight
+Sozzi_2022,2022,sozzi2022automatic,YOLO,Grape,Outdoor,77.0,31.25,0.77,,,,YOLOv4: F1=0.77; 32 FPS; Bunch count error: 13.3%,Detection accuracy drops 8% under direct sunlight
 Jun_2021,2021,jun2021towards,YOLO,Tomato,Greenhouse,80.0,5870,,90.82,,,Precision=0.80; Recall=0.91; mAP=0.9082; Cycle time=5.87s,Cluster harvest success drops from 100% to 41.67%
 Yu_2020,2020,yu2020real,YOLO,Strawberry,Greenhouse,94.43,55.56,,,,84.35,Precision=94.43%; Recall=93.46%; Harvest success: 84.35%,Unripe fruit F1 4.7% lower; Curved stems cause ±2mm error
 Yu_2024,2024,yu2024object,YOLO,Citrus,Outdoor,96.8,,,96.8,,,2.8% higher mAP than YOLOv5; 3D positioning error: (1.97mm 0.36mm 9.63mm),Training requires 4200 images; Severe occlusion may misclassify
