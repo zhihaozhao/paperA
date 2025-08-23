@@ -163,7 +163,7 @@ def create_figure_4():
     
     # Adjust layout and save
     plt.tight_layout()
-    plt.subplots_adjust(top=0.90, hspace=0.35, wspace=0.3)
+    plt.subplots_adjust(top=0.88, hspace=0.40, wspace=0.3)
     
     # Save high-quality figure
     plt.savefig('figure4_meta_analysis.png', dpi=300, bbox_inches='tight', facecolor='white')

@@ -179,7 +179,7 @@ def create_figure_10():
     
     # Adjust layout
     plt.tight_layout()
-    plt.subplots_adjust(top=0.90, right=0.85, hspace=0.35)
+    plt.subplots_adjust(top=0.88, right=0.85, hspace=0.40)
     
     # Save high-quality figures
     plt.savefig('figure10_technology_roadmap.png', dpi=300, bbox_inches='tight', facecolor='white')

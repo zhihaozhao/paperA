@@ -154,7 +154,7 @@ def create_figure_9():
     
     # Adjust layout
     plt.tight_layout()
-    plt.subplots_adjust(top=0.90, hspace=0.35, wspace=0.3)
+    plt.subplots_adjust(top=0.88, hspace=0.40, wspace=0.3)
     
     # Save high-quality figures
     plt.savefig('figure9_motion_planning.png', dpi=300, bbox_inches='tight', facecolor='white')
