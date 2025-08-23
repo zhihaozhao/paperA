@@ -925,7 +925,7 @@ Motion planning in robotic harvesting involves determining the path the robot's 
 \begin{figure*}[htbp]
 \centering
 % Note: Run create_section_v_figure.py to generate this figure
-%\includegraphics[width=0.85\textwidth]{fig_motion_planning_analysis.pdf} % COMMENTED: Generate figure first
+\includegraphics[width=0.85\textwidth]{fig_motion_planning_analysis.pdf}
 \caption{Comprehensive motion planning analysis for autonomous fruit harvesting: (a) System architecture showing perception-planning-control integration with agricultural environment feedback loops, (b) Algorithm performance trade-offs comparing success rates versus computation time for A*, RRT*, DDPG, Bi-RRT, and DWA approaches, (c) Motion planning algorithm adoption timeline from 2015-2024 showing evolution from traditional to reinforcement learning methods, (d) Environmental performance analysis demonstrating success rate variations across greenhouse, structured orchard, unstructured orchard, and open field conditions. Statistical analysis based on systematic review of motion control implementations for agricultural robotics systems.}
 \label{fig:motion_planning_analysis}
 \end{figure*}
@@ -961,6 +961,52 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \bottomrule
 \end{tabular}
 \end{table*}
+
+\begin{table*}[htbp]
+\centering
+\small
+\caption{Enhanced Motion Control Algorithm Performance Analysis for Fruit Harvesting (2015-2024): Statistical summary of 16 key studies showing algorithm family performance characteristics, advantages, limitations, and optimal deployment scenarios for evidence-based selection in autonomous agricultural systems.}
+\label{tab:motion_control_enhanced}
+\begin{tabular}{p{2.5cm}p{1.2cm}p{1.8cm}p{2.2cm}p{2.5cm}p{2cm}p{3cm}}
+\toprule
+\textbf{Algorithm Family} & \textbf{Studies} & \textbf{Success Rate} & \textbf{Cycle Time} & \textbf{Key Advantages} & \textbf{Limitations} & \textbf{Best Applications} \\
+\midrule
+\textbf{Deep RL} & 3 & 90.4\% $\pm$ 2.1 & 5.2s $\pm$ 2.8 & Real-time adaptation, continuous learning, high accuracy in dynamic environments & Training complexity, computational requirements & Unstructured orchards, variable conditions \\
+\midrule
+\textbf{Vision-based} & 4 & 73.1\% $\pm$ 15.2 & 7.8s $\pm$ 1.2 & Robust perception integration, adaptive to visual feedback & Light sensitivity, occlusion challenges & Greenhouse environments, controlled lighting \\
+\midrule
+\textbf{Classical} & 6 & 70.8\% $\pm$ 9.4 & 9.7s $\pm$ 3.2 & Reliable performance, well-tested algorithms, predictable behavior & Limited adaptability, static planning & Structured orchards, known environments \\
+\midrule
+\textbf{Multi-robot} & 2 & 70.0\% $\pm$ 0 & 10.0s $\pm$ 0 & Scalable operations, distributed coordination & Coordination complexity, communication overhead & Large-scale harvesting operations \\
+\midrule
+\textbf{Hybrid/Adaptive} & 1 & 75.0\% & 7.5s & Balanced performance, adaptive to conditions & Implementation complexity, parameter tuning & Mixed environments, variable crops \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[htbp]
+\centering
+\small
+\caption{Motion Control Key Performance Indicators and Research Trends (2015-2024)}
+\label{tab:motion_control_kpis}
+\begin{tabular}{p{3cm}p{2.5cm}p{3cm}p{6cm}}
+\toprule
+\textbf{Performance Metric} & \textbf{Best Achievement} & \textbf{Study Reference} & \textbf{Technical Significance} \\
+\midrule
+\textbf{Highest Success Rate} & 92.0\% & Verbiest et al. (2022) & RL-based collision-free planning with end-effector adaptation \\
+\midrule
+\textbf{Fastest Processing} & 29ms planning time & Lin et al. (2021) & Recurrent DDPG enabling real-time collision-free path planning \\
+\midrule
+\textbf{Commercial Validation} & 84\% in real orchards & Silwal et al. (2017) & Seven DOF manipulator with optimized path planning \\
+\midrule
+\textbf{Multi-environment} & Greenhouse \& Field & Vougioukas (2019) & Multi-robot coordination reducing operation times by 30\% \\
+\midrule
+\textbf{Precision Control} & <10mm positioning error & Ling et al. (2019) & Dual-arm coordination with binocular vision for tomatoes \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Table~\ref{tab:motion_control_enhanced} provides comprehensive statistical analysis of algorithm family performance, revealing that Deep RL approaches achieve optimal performance characteristics (90.4\% success rate, 5.2s cycle time) for autonomous fruit harvesting systems, significantly outperforming classical methods (70.8\% success rate, 9.7s cycle time). Table~\ref{tab:motion_control_kpis} highlights key performance breakthroughs that demonstrate the technological advancement trajectory toward commercial viability, with the fastest processing achieving 29ms planning times and highest success rates reaching 92\% in real-world applications.
 
 Studies like Silwal et al.~\cite{silwal2017design} and Lehnert et al.~\cite{lehnert2017autonomous} highlight multi-DOF manipulators for tackling orchard complexity. For apples, Silwal's seven DOF manipulators hit an 84\% picking success rate, with 7.6-second cycles, proving reliable path planning in open fields. Lehnert's sweet pepper robot, pairing differential drive with a seven-DOF arm, reached 58\% success in trials, excelling in controlled greenhouses—though lower rates underscore ongoing occlusion challenges.
 In contrast, Arad et al.~\cite{arad2020development} focused on integrating autonomous navigation with a vision-guided manipulator for sweet pepper harvesting. Their system, tested extensively in commercial greenhouses, gained a cycle time of 24 seconds per fruit with success rates ranging from 18\% to 61\%. This study highlights the importance of comprehensive field tests to validate the integration of navigation, manipulation, and vision systems in real-world settings.

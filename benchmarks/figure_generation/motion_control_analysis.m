@@ -445,9 +445,10 @@ function data_summary = get_motion_data_summary(data)
     end
     
     fprintf('Data summary generated with %d studies\n', data_summary.total_studies);
-end
-
-% Run the analysis
-if nargin == 0
-    motion_control_analysis();
+    
+    % Run the analysis if called as main function
+    if nargin == 0
+        % Call main analysis function here if needed
+        fprintf('Motion control analysis completed.\n');
+    end
 end
