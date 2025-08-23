@@ -370,11 +370,11 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 \begin{table*}[htbp]
 	\centering
 	\footnotesize 
-	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024 (part 1)} 
+	\caption{R-CNN Family Performance in Agricultural Applications: Key Studies and Metrics (2015-2024)} 
 	\label{tab:RCNN-based} 
-	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
+	\begin{tabular}{@{}p{0.03\textwidth}p{0.08\textwidth}p{0.1\textwidth}p{0.18\textwidth}p{0.28\textwidth}p{0.28\textwidth}@{}}
 	\toprule
-	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
+	\textbf{Reference} & \textbf{Fruit Type} & \textbf{R-CNN Variant} & \textbf{Technical Innovation} & \textbf{Performance Metrics} & \textbf{Key Limitations} \\ \midrule
 	\cite{sa2016deepfruits} \newline 2016 & Multi-class (sweet pepper, rock melon, apple, etc.) \newline Outdoor/glasshouse orchards & DeepFruits (Faster R-CNN with VGG-16) & Multi-modal (RGB+NIR) fusion for cross-fruit detection & - Fusion F1: 0.838 (sweet pepper) \newline - Apple F1: 0.938; strawberry F1: 0.948 \newline - Processing time: 341–393 ms/image \newline - Requires 10–100 training images per fruit & - Early fusion underperforms (F1=0.799) vs. late fusion \newline - NIR modality alone has lower F1 (0.797) than RGB (0.816) \newline - Missed detections for small fruits (scaled <50\% of training size) \\ \midrule
 	
 	\cite{wan2020faster} \newline 2020 & Multi-class (apple, mango, orange) \newline Outdoor orchard & Improved Faster R-CNN (VGG-16) & Multi-class detection with optimized convolutional and pooling layers & - mAP=90.72\% across three classes \newline - Apple AP: 92.51\%, Orange AP: 90.73\% \newline - Processing speed: 58 ms/image \newline - Outperforms Faster R-CNN by 8.16\% in mAP & - Slower speed (40 ms/image) \newline - Trained on 100×100 pixel images (smaller than real-world orchard images) \newline - Limited to three fruit classes \\ \midrule
@@ -470,11 +470,11 @@ Overall, the YOLO series has significantly contributed to real-time object detec
 \begin{table*}[htbp]
 	\centering
 	\footnotesize 
-	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019 (part 1)} 
+	\caption{YOLO Family Performance in Real-Time Fruit Detection: Comparative Analysis (2019-2024)} 
 	\label{tab:yolo-based}
-	\begin{tabular}{@{}p{0.025\textwidth}p{0.094\textwidth}p{0.084\textwidth}p{0.15\textwidth}p{0.25\textwidth}p{0.26\textwidth}@{}}
+	\begin{tabular}{@{}p{0.03\textwidth}p{0.08\textwidth}p{0.1\textwidth}p{0.18\textwidth}p{0.28\textwidth}p{0.28\textwidth}@{}}
 	\toprule
-	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
+	\textbf{Reference} & \textbf{Fruit Type} & \textbf{YOLO Variant} & \textbf{Technical Enhancement} & \textbf{Performance Results} & \textbf{Current Constraints} \\ \midrule
 	
 	\cite{liu2020yolo} \newline 2020 & Tomato \newline Greenhouse & YOLO-Tomato (YOLOv3 + dense architecture) & Circular bounding box for occlusion handling & - AP=96.4\%, F1=93.91\% \newline - Detection time: 54 ms/image \newline - Sunlight recall: 93.22\%; shading recall: 92.94\% & - Severe occlusion recall (90.10\%) 4.48\% lower than slight occlusion \newline - Unripe tomato precision (91.2\%) 3.5\% lower than ripe \newline - Requires 160 epochs for convergence \\ \midrule
 	\cite{lawal2021tomato} \newline 2021 & Tomato \newline Greenhouse & YOLO-Tomato-A/B/C (modified YOLOv3) & SPP and Mish activation for small targets & - YOLO-Tomato-C: AP=99.5\%, 52 ms/image \newline - F1-score: 97.9\% (vs. 93.9\% for baseline YOLOv3) \newline - 2.1\% higher AP than YOLOv4 on 0.25 ratio images & - Model size increases by 15\% with SPP \newline - Training requires 50,000 iterations (about 12 hours) \newline - Green tomato precision drops by 3.1\% vs. red \\ \midrule
@@ -609,15 +609,14 @@ Kang et al.~\cite{kang2020real}  combined Mobile-DasNet with PointNet for apple 
 \begin{table*}[htbp]
 \centering
 \footnotesize
-\caption{Summary of Fruit Detection Approaches by Core Performance Metrics (2015-2024)}
+\caption{Core Performance Metrics in Fruit Detection: Key Approaches and Representative Studies (2015-2024)}
 \label{tab:performance-metrics}
-\begin{tabular}{@{}p{1.5cm}p{2.5cm}p{5cm}p{4cm}p{2.5cm}@{}}
+\begin{tabular}{@{}p{1.8cm}p{3cm}p{4.5cm}p{4.2cm}p{2.5cm}@{}}
 \toprule
-\textbf{Metrics} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} & \textbf{References} \\ \midrule
-\textbf{Reliability} & Handling illumination, occlusion, and overlap via color, 3D contour, and shape; improving ripeness recognition & - Color-based ripeness: 94.29\% accuracy for tomatoes using hue-saturation metrics \cite{goel2015fuzzy}. Contour analysis: Relative error <6\% (e.g., 5.27\%) for occluded citrus edges \cite{lu2015detecting}. Ripeness evaluation: >94\% accuracy (e.g., 94.41\% precision) for binary/multi-stage classification \cite{liu2019mature}. 3D depth: 82\% detection rate for occluded apples \cite{nguyen2016detection} & - Color methods sensitive to lighting variations \cite{zhao2016detecting}. Contour detection struggles with dense occlusions \cite{lu2015detecting}. Limited ripeness generalization across environments \cite{goel2015fuzzy} & \cite{nguyen2016detection}, \cite{lu2015detecting}, \cite{mendes2016vine}, \cite{goel2015fuzzy}, \cite{zhao2016detecting}, \cite{pourdarbani2020automatic}, \cite{zhang2018deep}, \cite{longsheng2015kiwifruit}, \cite{liu2019mature} \\ \midrule
-\textbf{Precision} & Precise cut-point detection (stem/peduncle), distinguishing similar plants (trunk/mast), non-destructive picking & - Pick-point detection: Localization error <2 cm for non-destructive grasping \cite{lehnert2016sweet}. Stem/peduncle localization: Recall rates >90\% to minimize damage \cite{mendes2016vine}. Overall precision: AUC=0.71 for peduncle detection in peppers \cite{sa2017peduncle}. Cut-point success: 81.66\% rate for grapes \cite{luo2018vision} & - Reduced accuracy due to stem occlusion in dense canopies \cite{sa2017peduncle}. Challenges distinguishing similar varieties without 3D sensors \cite{lin2020fruit}. High precision demands advanced hardware \cite{kusumam20173d} & \cite{kusumam20173d}, \cite{lehnert2016sweet}, \cite{bac2017performance}, \cite{mendes2016vine}, \cite{sa2017peduncle}, \cite{luo2018vision}, \cite{perez2018pattern}, \cite{liu2019mature}, \cite{pourdarbani2020automatic}, \cite{lin2020fruit}, \cite{CHEN2024111082} \\ \midrule
-\textbf{Rapidity} & Real-time operation, fast picking/counting, scalable yield estimation & - Pick time: Average <7 s/fruit (e.g., 6.5 s) for high-throughput apple harvesting \cite{kang2020real}. Yield estimation: Predictive 
-$R^2$ >0.75 (e.g., 0.77) for crop forecasting \cite{underwood2016mapping}. Real-time counting: <0.01 s/fruit (implying >100 FPS) with error <2\% \cite{altaheri2019date}. Field trials: >90\% end-to-end success \cite{birrell2020field} & - Trade-off between speed and accuracy for small/distant fruits \cite{kang2020real}. High computational needs limit real-time deployment on low-end hardware \cite{altaheri2019date}. Dynamic factors (e.g., motion) increase errors in counting \cite{underwood2016mapping} & \cite{underwood2016mapping}, \cite{lin2019guava}, \cite{kang2019fruit}, \cite{kang2020real}, \cite{altaheri2019date}, \cite{birrell2020field} \\ \bottomrule
+\textbf{Performance \newline Metric} & \textbf{Technical Focus} & \textbf{Best Achievements} & \textbf{Current Limitations} & \textbf{Key References} \\ \midrule
+\textbf{Reliability} & Color-based ripeness detection, 3D contour analysis, occlusion handling & 94.29\% tomato ripeness accuracy \cite{goel2015fuzzy}; 5.27\% relative error in occluded citrus contour \cite{lu2015detecting}; 82\% detection rate for occluded apples \cite{nguyen2016detection} & Lighting sensitivity in color methods; dense occlusion challenges; limited cross-environment generalization & \cite{goel2015fuzzy}, \cite{lu2015detecting}, \cite{nguyen2016detection}, \cite{zhao2016detecting}, \cite{liu2019mature} \\ \midrule
+\textbf{Precision} & Stem/peduncle localization, cut-point detection, non-destructive grasping & <2cm localization error for grasping \cite{lehnert2016sweet}; >90\% recall for stem detection \cite{mendes2016vine}; 81.66\% cut-point success \cite{luo2018vision} & Stem occlusion in dense canopies; variety distinction without 3D sensors; hardware complexity requirements & \cite{lehnert2016sweet}, \cite{mendes2016vine}, \cite{sa2017peduncle}, \cite{luo2018vision}, \cite{kusumam20173d} \\ \midrule
+\textbf{Rapidity} & Real-time processing, high-throughput harvesting, yield estimation & 6.5s average cycle time \cite{kang2020real}; >100 FPS processing \cite{altaheri2019date}; R²=0.77 yield prediction \cite{underwood2016mapping} & Speed-accuracy trade-offs; computational constraints on edge devices; motion-induced counting errors & \cite{kang2020real}, \cite{altaheri2019date}, \cite{underwood2016mapping}, \cite{birrell2020field}, \cite{lin2019guava} \\ \bottomrule
 \end{tabular}
 \end{table*}
 
