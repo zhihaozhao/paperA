@@ -56,7 +56,9 @@ def create_chapter4_vision_analysis():
     speed_data = [58, 84, 92, 95, 71, 83, 94, 128]
     algorithm_labels = ['Faster R-CNN', 'YOLOv4', 'YOLOv5', 'YOLO Custom', 'YOLOv8', 'YOLOv9', 'Mask R-CNN', 'Hybrid']
     
-    scatter = ax3.scatter(speed_data, accuracy_data, s=100, c=colors[:len(speed_data)], alpha=0.7, edgecolors='black', linewidth=1)
+    # 扩展颜色数组以匹配数据点数量
+    extended_colors = ['#E74C3C', '#3498DB', '#2ECC71', '#F39C12', '#9B59B6', '#1ABC9C', '#F1C40F', '#E67E22']
+    scatter = ax3.scatter(speed_data, accuracy_data, s=100, c=extended_colors, alpha=0.7, edgecolors='black', linewidth=1)
     ax3.set_xlabel('Processing Time (ms)')
     ax3.set_ylabel('Accuracy (%)')
     ax3.set_title('(c) Real-time Processing Capability Analysis')
