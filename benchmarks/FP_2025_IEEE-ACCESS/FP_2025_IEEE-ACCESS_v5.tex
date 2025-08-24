@@ -482,19 +482,19 @@ The meta-analysis results shown in Figure~\ref{fig:meta_analysis_ieee} are suppo
 \label{tab:algorithm_comparison} 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\linewidth}{
->{\raggedright\arraybackslash}m{0.15\linewidth}>{\raggedright\arraybackslash}m{0.20\linewidth}cc>{\raggedright\arraybackslash}m{0.15\linewidth}>{\raggedright\arraybackslash}m{0.25\linewidth}}
+>{\raggedright\arraybackslash}m{0.12\linewidth}>{\raggedright\arraybackslash}m{0.16\linewidth}cc>{\raggedright\arraybackslash}m{0.10\linewidth}>{\raggedright\arraybackslash}m{0.12\linewidth}>{\raggedright\arraybackslash}m{0.20\linewidth}}
 \toprule
-\textbf{Performance Category} & \textbf{Performance Criteria} & \textbf{Studies} & \textbf{Avg Performance} & \textbf{Representative Algorithms} & \textbf{References} \\ \midrule
+\textbf{Performance Category} & \textbf{Criteria} & \textbf{Studies} & \textbf{Avg Perf.} & \textbf{Avg Dataset} & \textbf{Main Environments} & \textbf{References} \\ \midrule
 
 
 
-\textbf{Fast High-Accuracy} & Time $\leq$80ms, Accuracy $\geq$90\% & 8 & 93.2\% / 44ms & YOLO-Tomato, YOLOv3 Modified, YOLO-Grape, YOLOv4-tiny & \cite{liu2020yolo,lawal2021tomato,li2021real,tang2023fruit,yu2020real,ZHANG2024108836,kang2020fast,wan2020faster} \\ \midrule
+\textbf{Fast High-Accuracy} & Time $\leq$80ms, Acc. $\geq$90\% & 8 & 93.2\% / 44ms & n=1038 & Greenhouse, Orchard, Vineyard & \cite{liu2020yolo,lawal2021tomato,li2021real,tang2023fruit,yu2020real,ZHANG2024108836,kang2020fast,wan2020faster} \\ \midrule
 
-\textbf{Fast Moderate-Accuracy} & Time $\leq$80ms, Accuracy $<$90\% & 3 & 81.4\% / 53ms & SSD MobileNet, AdaBoost, SVM methods & \cite{magalhaes2021evaluating,zhao2016detecting,wei2014automatic} \\ \midrule
+\textbf{Fast Moderate-Accuracy} & Time $\leq$80ms, Acc. $<$90\% & 3 & 81.4\% / 53ms & n=410 & Greenhouse, Field & \cite{magalhaes2021evaluating,zhao2016detecting,wei2014automatic} \\ \midrule
 
-\textbf{Slow High-Accuracy} & Time $>$80ms, Accuracy $\geq$90\% & 12 & 93.4\% / 219ms & R-CNN variants, Advanced YOLO, Optimized methods & \cite{zhang2020state,gene2019multi,peng2018general,goel2015fuzzy,onishi2019automated,saleem2021automation,tu2020passion,jia2020detection,yu2019fruit,gai2023detection,fu2018kiwifruit,chu2021deep} \\ \midrule
+\textbf{Slow High-Accuracy} & Time $>$80ms, Acc. $\geq$90\% & 12 & 93.4\% / 244ms & n=818 & Outdoor, Orchard, General & \cite{zhang2020state,gene2019multi,peng2018general,goel2015fuzzy,onishi2019automated,saleem2021automation,tu2020passion,jia2020detection,yu2019fruit,gai2023detection,fu2018kiwifruit,chu2021deep} \\ \midrule
 
-\textbf{Slow Moderate-Accuracy} & Time $>$80ms, Accuracy $<$90\% & 9 & 87.8\% / 159ms & Traditional methods, Early systems & \cite{fu2020faster,tang2020recognition,hameed2018comprehensive,williams2019robotic,xiong2020autonomous,li2020detection,mavridou2019machine,sa2016deepfruits,ge2019fruit} \\
+\textbf{Slow Moderate-Accuracy} & Time $>$80ms, Acc. $<$90\% & 9 & 88.1\% / 224ms & n=636 & Outdoor, Laboratory, General & \cite{fu2020faster,tang2020recognition,hameed2018comprehensive,williams2019robotic,xiong2020autonomous,li2020detection,mavridou2019machine,sa2016deepfruits,ge2019fruit} \\
 
 \bottomrule
 \end{tabularx}
