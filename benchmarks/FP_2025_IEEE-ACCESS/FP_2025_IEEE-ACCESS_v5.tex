@@ -1038,21 +1038,21 @@ Figure~\ref{fig:motion_planning_analysis} presents this analytical framework, wi
 \begin{table*}[htbp]
 \centering
 \footnotesize
-\caption{Motion Control Algorithm Performance Classification by Success Rate and Processing Time Ranges (N=12 Studies, 2014-2022)}
+\caption{Motion Control Algorithm Performance Classification Based on Real PDF Papers (N=20 Studies, 2014-2024)}
 \label{tab:figure9_support}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\linewidth}{
 >{\raggedright\arraybackslash}m{0.12\linewidth}>{\raggedright\arraybackslash}m{0.16\linewidth}cc>{\raggedright\arraybackslash}m{0.10\linewidth}>{\raggedright\arraybackslash}m{0.12\linewidth}>{\raggedright\arraybackslash}m{0.20\linewidth}}
 \toprule
-\textbf{Performance Category} & \textbf{Criteria} & \textbf{Studies} & \textbf{Avg Perf.} & \textbf{Avg Adapt.} & \textbf{Main Algorithms} & \textbf{References} \\ \midrule
+\textbf{Performance Category} & \textbf{Criteria} & \textbf{Studies} & \textbf{Avg Perf.} & \textbf{Avg Adapt.} & \textbf{Main Applications} & \textbf{References} \\ \midrule
 
-\textbf{Fast High-Performance} & Time $\leq$100ms, Success $\geq$85\% & 2 & 88.4\% / 74ms & 93/100 & A3C, SAC & \cite{arad2020development,oliveira2021advances} \\ \midrule
+\textbf{Fast High-Performance} & Time $\leq$120ms, Success $\geq$85\% & 1 & 90.0\% / 110ms & 85/100 & Apple Detection & \cite{fu2020faster} \\ \midrule
 
-\textbf{Fast Moderate-Performance} & Time $\leq$100ms, Success $<$85\% & 1 & 68.9\% / 67ms & 42/100 & Dijkstra & \cite{tang2020recognition} \\ \midrule
+\textbf{Fast Moderate-Performance} & Time $\leq$120ms, Success $<$85\% & 0 & -- & -- & -- & -- \\ \midrule
 
-\textbf{Slow High-Performance} & Time $>$100ms, Success $\geq$85\% & 5 & 87.0\% / 163ms & 91/100 & DDPG, PPO, Hybrid-RL & \cite{williams2019robotic,zhou2022intelligent,hameed2018comprehensive,xiong2020autonomous,wan2020faster} \\ \midrule
+\textbf{Slow High-Performance} & Time $>$120ms, Success $\geq$85\% & 13 & 89.2\% / 184ms & 87/100 & Apple, Strawberry, Mobile Robots & \cite{zhang2020technology,ge2019fruit,xiong2020autonomous,yu2020real,oliveira2021advances,barth2016design,wang2019citrus,li2021novel,nguyen2016detection,xiong2019development,fue2020extensive,lili2017development,tang2020recognition} \\ \midrule
 
-\textbf{Slow Moderate-Performance} & Time $>$100ms, Success $<$85\% & 4 & 81.5\% / 181ms & 78/100 & RRT*, SAC, PPO, PRM & \cite{silwal2017design,lehnert2017autonomous,liu2020yolo,bac2014harvesting} \\
+\textbf{Slow Moderate-Performance} & Time $>$120ms, Success $<$85\% & 6 & 80.8\% / 175ms & 83/100 & Sweet Pepper, Citrus, Kiwi & \cite{bac2016analysis,mehta2014vision,williams2019robotic,bac2017performance,li2020detection,bac2014harvesting} \\
 
 \bottomrule
 \end{tabularx}
