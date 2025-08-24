@@ -1,0 +1,48 @@
+\begin{table*}[htbp]
+\centering
+\footnotesize
+\caption{Meta-Analysis of Vision Detection Algorithms: Performance Characteristics and Deployment Guidelines}
+\label{tab:vision_meta_analysis}
+\begin{tabular}{@{}p{0.15\textwidth}p{0.12\textwidth}p{0.12\textwidth}p{0.08\textwidth}p{0.20\textwidth}p{0.15\textwidth}p{0.15\textwidth}@{}}
+\toprule
+\textbf{Algorithm Family} & \textbf{Accuracy Range} & \textbf{Speed Range (s/img)} & \textbf{Studies} & \textbf{Key Advantages} & \textbf{Primary Limitations} & \textbf{Optimal Deployment} \\
+\midrule
+
+\textbf{R-CNN Family} & 
+83.8\%-96.2\% & 
+0.12-0.82 & 
+N=12 & 
+High precision detection, robust occlusion handling, multi-stage refinement \cite{sa2016deepfruits,wan2020faster,yu2019fruit} & 
+Computational complexity, slower inference, memory intensive \cite{fu2020faster,mu2020intact} & 
+Quality-critical harvesting, complex environments, precision agriculture \\
+\midrule
+
+\textbf{YOLO Family} & 
+63.4\%-99.5\% & 
+0.005-0.47 & 
+N=16 & 
+Real-time processing, single-stage architecture, mobile deployment \cite{liu2020yolo,lawal2021tomato,li2021real} & 
+Lower precision, small object challenges, occlusion sensitivity \cite{magalhaes2021evaluating,sozzi2022automatic} & 
+Real-time systems, resource constraints, high-throughput operations \\
+\midrule
+
+\textbf{Segmentation} & 
+80.0\%-95.0\% & 
+0.15-0.35 & 
+N=8 & 
+Pixel-level precision, contour detection, ripeness assessment \cite{barth2018data,kang2019fruit,li2020detection} & 
+Processing overhead, annotation complexity, domain specificity \cite{majeed2020deep,luo2018vision} & 
+Precision harvesting, fruit grading, quality assessment \\
+\midrule
+
+\textbf{Hybrid Approaches} & 
+88.3\%-94.8\% & 
+0.08-0.25 & 
+N=6 & 
+Balanced performance, multi-modal fusion, adaptive thresholding \cite{gene2019multi,kirk2020b,feng2018} & 
+Implementation complexity, sensor requirements, calibration needs \cite{lin2020color,rahnemoonfar2017deep} & 
+Multi-sensor platforms, adaptive systems, research applications \\
+
+\bottomrule
+\end{tabular}
+\end{table*}
