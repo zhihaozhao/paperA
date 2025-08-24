@@ -627,9 +627,10 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 \begin{table*}[!htb]
 	\centering
 	\small
+	\renewcommand{\arraystretch}{1.3}
 	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024} 
 	\label{tab:RCNN-based} 
-	\begin{tabular}{p{0.018\textwidth}p{0.065\textwidth}p{0.060\textwidth}p{0.105\textwidth}p{0.185\textwidth}p{0.195\textwidth}}
+	\begin{tabular}{p{0.03\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.12\textwidth}p{0.22\textwidth}p{0.25\textwidth}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
 	\cite{sa2016deepfruits} \newline 2016 & Multi-class \newline Outdoor/greenhouse & DeepFruits \newline (Faster R-CNN) & RGB+NIR fusion & F1: 0.838-0.948 \newline 341–393 ms/image & Early fusion limitations \newline Small fruit misdetections \\ \midrule
@@ -656,9 +657,10 @@ ewline(ResNet-101) & Detection of highly occluded immature tomatoes; counting, l
 \begin{table*}[!htb]
 	\centering
 	\small
+	\renewcommand{\arraystretch}{1.3}
 	\addtocounter{table}{-1}
 	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024} 
-	\begin{tabular}{p{0.018\textwidth}p{0.065\textwidth}p{0.060\textwidth}p{0.105\textwidth}p{0.185\textwidth}p{0.195\textwidth}}
+	\begin{tabular}{p{0.03\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.12\textwidth}p{0.22\textwidth}p{0.25\textwidth}}
 	\toprule
 	\textbf{Ref. \newline /Year} & \textbf{Fruit \newline /Orchard} & \textbf{Model} & 			\textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} \\ \midrule
 
@@ -1094,9 +1096,10 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \begin{table*}[htbp]
 \centering
 \small
+\renewcommand{\arraystretch}{1.2}
 \caption{Summary of Robotic Motion Control for Fruit Harvesting (2015-2024)}
 \label{tab:motion-control-based}
-\begin{tabular}{p{0.025\textwidth} p{0.025\textwidth} p{0.05\textwidth} p{0.18\textwidth} p{0.13\textwidth} p{0.17\textwidth} p{0.19\textwidth}}
+\begin{tabular}{p{0.04\textwidth} p{0.04\textwidth} p{0.07\textwidth} p{0.20\textwidth} p{0.15\textwidth} p{0.19\textwidth} p{0.23\textwidth}}
 \toprule
 \textbf{Ref.} & \textbf{Year} & \textbf{Fruit} & \textbf{Motion Control} & \textbf{Main Challenges} & \textbf{Performance Metrics} & \textbf{Key Insights} \\ \midrule
 \cite{silwal2017design} & 2017 & Apple & Seven DOF manipulator with optimized path planning and collision avoidance & Navigating complex, unstructured orchard environments & 84\% picking success; average cycle time 7.6 s; commercial orchard trials & Path optimization reduces collisions in real-world apple harvesting \\ \midrule
@@ -1124,9 +1127,10 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \begin{table*}[htbp]
 \centering
 \small
+\renewcommand{\arraystretch}{1.2}
 \caption{Enhanced Motion Control Algorithm Performance Analysis for Fruit Harvesting (2015-2024): Statistical summary of 16 key studies showing algorithm family performance characteristics, advantages, limitations, and optimal deployment scenarios for evidence-based selection in autonomous agricultural systems.}
 \label{tab:motion_control_enhanced}
-\begin{tabular}{p{0.15\textwidth}p{0.08\textwidth}p{0.12\textwidth}p{0.15\textwidth}p{0.18\textwidth}p{0.12\textwidth}p{0.20\textwidth}}
+\begin{tabular}{p{0.14\textwidth}p{0.07\textwidth}p{0.11\textwidth}p{0.14\textwidth}p{0.17\textwidth}p{0.11\textwidth}p{0.19\textwidth}}
 \toprule
 \textbf{Algorithm Family} & \textbf{Studies} & \textbf{Success Rate} & \textbf{Cycle Time} & \textbf{Key Advantages} & \textbf{Limitations} & \textbf{Best Applications} \\
 \midrule
@@ -1146,9 +1150,10 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \begin{table*}[htbp]
 \centering
 \small
+\renewcommand{\arraystretch}{1.2}
 \caption{Motion Control Key Performance Indicators and Research Trends (2015-2024)}
 \label{tab:motion_control_kpis}
-\begin{tabular}{p{0.20\textwidth}p{0.18\textwidth}p{0.22\textwidth}p{0.40\textwidth}}
+\begin{tabular}{p{0.18\textwidth}p{0.17\textwidth}p{0.20\textwidth}p{0.37\textwidth}}
 \toprule
 \textbf{Performance Metric} & \textbf{Best Achievement} & \textbf{Study Reference} & \textbf{Technical Significance} \\
 \midrule
