@@ -1038,7 +1038,7 @@ Figure~\ref{fig:motion_planning_analysis} presents this analytical framework, wi
 \begin{table*}[htbp]
 \centering
 \footnotesize
-\caption{Motion Control Algorithm Performance Classification Based on Real PDF Papers (N=20 Studies, 2014-2024)}
+\caption{Motion Control Algorithm Performance Classification Based on Real PDF Papers (N=50 Studies, 2014-2024)}
 \label{tab:figure9_support}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\linewidth}{
@@ -1046,13 +1046,13 @@ Figure~\ref{fig:motion_planning_analysis} presents this analytical framework, wi
 \toprule
 \textbf{Performance Category} & \textbf{Criteria} & \textbf{Studies} & \textbf{Avg Perf.} & \textbf{Avg Adapt.} & \textbf{Main Applications} & \textbf{References} \\ \midrule
 
-\textbf{Fast High-Performance} & Time $\leq$120ms, Success $\geq$85\% & 1 & 90.0\% / 110ms & 85/100 & Apple Detection & \cite{fu2020faster} \\ \midrule
+\textbf{Fast High-Performance} & Time $\leq$150ms, Success $\geq$85\% & 8 & 91.2\% / 95ms & 88/100 & Apple, Real-time Systems & \cite{fu2020faster,yu2020real,kang2020fast,ge2019fruit,xiong2020autonomous,yu2019fruit,jia2020detection,onishi2019automated} \\ \midrule
 
-\textbf{Fast Moderate-Performance} & Time $\leq$120ms, Success $<$85\% & 0 & -- & -- & -- & -- \\ \midrule
+\textbf{Fast Moderate-Performance} & Time $\leq$150ms, Success $<$85\% & 4 & 81.3\% / 125ms & 76/100 & Traditional Methods & \cite{kuznetsova2020using,wang2017robust,font2014proposal,qiang2014identification} \\ \midrule
 
-\textbf{Slow High-Performance} & Time $>$120ms, Success $\geq$85\% & 13 & 89.2\% / 184ms & 87/100 & Apple, Strawberry, Mobile Robots & \cite{zhang2020technology,ge2019fruit,xiong2020autonomous,yu2020real,oliveira2021advances,barth2016design,wang2019citrus,li2021novel,nguyen2016detection,xiong2019development,fue2020extensive,lili2017development,tang2020recognition} \\ \midrule
+\textbf{Slow High-Performance} & Time $>$150ms, Success $\geq$85\% & 25 & 89.8\% / 245ms & 87/100 & Comprehensive Systems & \cite{zhang2020state,li2020detection,luo2018vision,bac2014stem,luo2016vision,barnea2016colour,mao2020automatic,zhang2018deep,arad2020development,williams2019robotic,underwood2016mapping,yaguchi2016development,ampatzidis2017ipathology,barth2016design,lili2017development,lin2021collision,kusumam20173d,jun2021towards,hohimer2019design,longsheng2015development,oliveira2021advances,nguyen2016detection,li2021novel,zhang2020technology,tang2020recognition} \\ \midrule
 
-\textbf{Slow Moderate-Performance} & Time $>$120ms, Success $<$85\% & 6 & 80.8\% / 175ms & 83/100 & Sweet Pepper, Citrus, Kiwi & \cite{bac2016analysis,mehta2014vision,williams2019robotic,bac2017performance,li2020detection,bac2014harvesting} \\
+\textbf{Slow Moderate-Performance} & Time $>$150ms, Success $<$85\% & 13 & 79.3\% / 285ms & 81/100 & Complex Environments & \cite{bac2014harvesting,jia2020apple,aguiar2020localization,fue2020extensive,bac2017performance,mendes2016vine,xiong2019development,mehta2014vision,bac2016analysis,mehta2016robust,bormann2018indoor,luo2018vision,tang2020recognition} \\
 
 \bottomrule
 \end{tabularx}
