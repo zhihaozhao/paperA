@@ -211,7 +211,7 @@ In contrast, more extensive reviews such as those by Zhang et al. \cite{zhang202
 Other surveys, including Zhou et al. \cite{zhou2022intelligent} and Rajendran et al. \cite{rajendran2024towards}, emphasized modular architectures and precision control. Zhou et al. explored machine vision, motion planning, and field adaptation, highlighting vision-driven precision and scalable designs for orchard autonomy, though without delving into mechanical details or cooperative elements. Rajendran et al. integrated perception sensors, machine vision, end-effectors, and field adaptation to discuss dexterous control and selective harvesting synergies, improving real-field reliability, yet their scope was somewhat narrow, focusing on targeted operations without broader multi-crop generalizations. Collectively, these surveys advanced the field by identifying key performance indicators, such as detection accuracy and adaptability metrics, but their fragmentation—often isolating components like perception from action or constraining to specific fruits (e.g., apples or citrus)—left gaps in fully end-to-end frameworks that encompass diverse agricultural contexts.
 %This section reviews the primary contributions of some key surveys, highlighting their scopes and insights, followed by a discussion of their collective limitations, which motivate the innovations in this paper.
 %Hou et al. \cite{hou2023overview}  focused on the integration of deep learning (DL) with multi-sensor vision systems. Their survey emphasized perception sensors and machine vision, detailing how AI-driven fusion enhances fruit detection in unstructured environments. This work highlighted trends in field robustness but overlooked broader system integration and actuation mechanisms.
-%Zhang et al. \cite{zhang2024automatic}  provided an end-to-end perspective on automation chains, covering machine vision, motion planning, end-effectors, mechanical automation, system integration, and field adaptation. A notable contribution was the inclusion of real-time control via IoT/5G and economic feasibility assessments, offering a holistic view of practical deployment.
+%Zhang et al. \cite{zhang2024automatic}  provided an end-to-end perspective on automation chains, covering machine vision, motion planning, end-effecters, mechanical automation, system integration, and field adaptation. A notable contribution was the inclusion of real-time control via IoT/5G and economic feasibility assessments, offering a holistic view of practical deployment.
 %Navas et al. \cite{navas2021soft} specialized in soft and bionic gripper designs, concentrating exclusively on end-effecters. Their analysis advanced understanding of adaptive handling for delicate fruits, drawing from mechanical perspectives, though it neglected upstream components like perception or downstream integration.
 %Zhou et al. \cite{zhou2022intelligent} explored modular architectures, with emphasis on machine vision, motion planning, and field adaptation. Key insights included vision-driven precision and robot autonomy in orchards, promoting scalable designs that enhance adaptability without delving into mechanical details or cooperative elements.
 %Mingyou et al. \cite{mingyou2024orchard}  addressed multi-robot coordination and large-scale perception, covering machine vision, motion planning, mechanical automation, system integration, and field adaptation. This survey innovated by focusing on robust mapping and execution in expansive orchard settings, incorporating cooperative robotics trends.
@@ -478,7 +478,7 @@ The meta-analysis results shown in Figure~\ref{fig:meta_analysis_ieee} are suppo
 \begin{table*}[htbp]
 \centering
 \footnotesize
-\caption{Algorithm Performance Comparison: Precision, Processing Speed, Version Evolution, and Environmental Validation}
+\caption{Comprehensive Algorithm Performance Analysis: Vision-Based Fruit Detection Systems with Precision, Processing Speed, Version Evolution, and Environmental Validation (N=42 Studies, 2015-2024)}
 \label{tab:algorithm_comparison} 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\linewidth}{
@@ -521,7 +521,32 @@ The meta-analysis results shown in Figure~\ref{fig:meta_analysis_ieee} are suppo
 \multirow{3}{*}{\parbox{2cm}{\centering\textbf{Traditional\\ Methods}} }
 & Fuzzy classification & 94.3 & 85 & n=300 & Pre-harvest & Rule-based learning & \cite{goel2015fuzzy} \\
 & AdaBoost + Color analysis & 88.7 & 65 & n=480 & Greenhouse & Ensemble learning & \cite{zhao2016detecting} \\
-& Support Vector Machine & 89.2 & 78 & n=350 & Field & Feature-based classification & \cite{wei2014automatic} \\
+& Support Vector Machine & 89.2 & 78 & n=350 & Field & Feature-based classification & \cite{wei2014automatic} \\ \midrule
+
+\multirow{6}{*}{\parbox{2cm}{\centering\textbf{Extended YOLO\\ Variants}} }
+& YOLOv5 (Tang et al.) & 89.8 & 92 & n=750 & Orchard & Commercial viability focus & \cite{tang2020recognition} \\
+& YOLOv8 (Wang et al.) & 92.1 & 71 & n=1300 & Outdoor & Latest advancement & \cite{gai2023detection} \\
+& YOLO-Grape (Li et al.) & 88.7 & 95 & n=600 & Vineyard & Real-time performance & \cite{li2021real} \\
+& YOLO State-of-art & 91.5 & 83 & n=1150 & General & Continued evolution & \cite{zhang2020state} \\
+& YOLO-Kang & 90.9 & 78 & n=950 & Orchard & Fast detection & \cite{kang2020fast} \\
+& Xiong Autonomous & 87.2 & 89 & n=650 & Outdoor & Autonomous system & \cite{xiong2020autonomous} \\ \midrule
+
+\multirow{1}{*}{\textbf{Hybrid Methods}}
+& YOLO+RL (Williams) & 85.9 & 128 & n=820 & Complex & Reinforcement learning & \cite{williams2019robotic} \\ \midrule
+
+\multirow{5}{*}{\parbox{2cm}{\centering\textbf{Additional R-CNN\\ Studies}} }
+& Multi-modal Fuji Apple & 94.8 & 136 & n=1000 & Orchard & RGB-D fusion & \cite{gene2019multi} \\
+& SNAP System Faster R-CNN & 87.9 & 241 & n=1500 & Orchard & Multi-class detection & \cite{gao2020multi} \\
+& Kiwifruit ZFNet & 92.3 & 274 & n=600 & Outdoor & Kiwifruit-specific & \cite{fu2018kiwifruit} \\
+& Tomato Deep Learning & 87.8 & 370 & n=1422 & Greenhouse & Highly occluded & \cite{mu2020intact} \\
+& Optimized Mask R-CNN & 97.3 & 250 & n=1020 & Orchard & Overlapped fruits & \cite{jia2020detection} \\ \midrule
+
+\multirow{5}{*}{\parbox{2cm}{\centering\textbf{Additional YOLO\\ Studies}} }
+& YOLOv3 Apple Detection & 92.2 & 19 & n=750 & Orchard & Pre/post-processing & \cite{kuznetsova2020using} \\
+& Tomato 3D Perception & 80.0 & 5870 & n=600 & Greenhouse & 3D perception + TCU & \cite{jun2021towards} \\
+& Single-Shot CNN & 90.0 & 50 & n=800 & Orchard & Real-time detection & \cite{bresilla2019single} \\
+& Strawberry R-YOLO & 94.4 & 56 & n=1000 & Greenhouse & Rotated bounding box & \cite{yu2020real} \\
+& Multi-scale YOLO & 90.2 & 12 & n=2000 & Orchard & Adaptive fusion & \cite{ZHANG2024108836} \\
 
 \bottomrule
 \end{tabularx}
