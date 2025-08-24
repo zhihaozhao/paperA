@@ -52,21 +52,32 @@ def create_chapter4_vision_analysis():
     ax2.set_ylim(80, 95)
     
     # (c) Real-time Processing Capability Analysis
-    accuracy_data = [90.7, 91.2, 89.8, 88.7, 92.1, 91.5, 87.8, 85.9]
-    speed_data = [58, 84, 92, 95, 71, 83, 94, 128]
-    algorithm_labels = ['Faster R-CNN', 'YOLOv4', 'YOLOv5', 'YOLO Custom', 'YOLOv8', 'YOLOv9', 'Mask R-CNN', 'Hybrid']
+    # 原始数据，去掉异常值（处理时间超长的点）
+    accuracy_data = [90.7, 91.2, 89.8, 88.7, 92.1, 91.5, 87.8]  # 去掉85.9的异常点
+    speed_data = [58, 84, 92, 95, 71, 83, 94]  # 去掉128ms的异常点
+    algorithm_labels = ['Faster R-CNN', 'YOLOv4', 'YOLOv5', 'YOLO Custom', 'YOLOv8', 'YOLOv9', 'Mask R-CNN']
     
-    # 扩展颜色数组以匹配数据点数量
-    extended_colors = ['#E74C3C', '#3498DB', '#2ECC71', '#F39C12', '#9B59B6', '#1ABC9C', '#F1C40F', '#E67E22']
-    scatter = ax3.scatter(speed_data, accuracy_data, s=100, c=extended_colors, alpha=0.7, edgecolors='black', linewidth=1)
+    # 高对比度颜色数组，增强区分度
+    high_contrast_colors = ['#FF0000', '#0000FF', '#00AA00', '#FF8800', '#AA00AA', '#00AAAA', '#AAAA00']
+    scatter = ax3.scatter(speed_data, accuracy_data, s=120, c=high_contrast_colors, alpha=0.8, edgecolors='black', linewidth=2)
+    
+    # 添加算法标签
+    for i, label in enumerate(algorithm_labels):
+        ax3.annotate(label, (speed_data[i], accuracy_data[i]), xytext=(5, 5), 
+                    textcoords="offset points", fontsize=8, ha='left', va='bottom')
+    
     ax3.set_xlabel('Processing Time (ms)')
     ax3.set_ylabel('Accuracy (%)')
     ax3.set_title('(c) Real-time Processing Capability Analysis')
     ax3.grid(True, alpha=0.3)
     
+    # 设置坐标轴范围：y轴从70%开始，x轴到5000为止
+    ax3.set_ylim(70, 95)
+    ax3.set_xlim(0, 5000)
+    
     # 添加理想区域标注
-    ax3.axhline(y=90, color='green', linestyle='--', alpha=0.5, label='Target Accuracy')
-    ax3.axvline(x=100, color='orange', linestyle='--', alpha=0.5, label='Real-time Threshold')
+    ax3.axhline(y=90, color='darkgreen', linestyle='--', alpha=0.7, linewidth=2, label='Target Accuracy')
+    ax3.axvline(x=100, color='darkorange', linestyle='--', alpha=0.7, linewidth=2, label='Real-time Threshold')
     ax3.legend()
     
     # (d) Environmental Robustness Comparison
