@@ -1,0 +1,48 @@
+Paper_ID,Title,Year,Main_Challenges,TRL_Level,Research_Type,Performance_Metrics,Innovation_Level,Commercial_Potential,Data_Source,Citation,Authors
+analysis_paper_1,Kiwifruit detection in field images using Faster R-CNN with ZFNet,2018,"Accuracy, Speed, Reliability, Environment, Integration",TRL 4-6,Development,"89.3%, 82.5%, 85.6%",Medium,Medium,Abstract analysis,"@article{fu2018kiwifruit,
+  title={Kiwifruit detection in field images using Faster R-CNN with ZFNet},
+  author={Fu, Longsheng and Feng, Yali and Majeed, Yaqoob and Zhang, Xin and Zhang, Jing and Karkee, Manoj and Zhang, Qin},
+  journal={IFAC-PapersOnLine},
+  volume={51},
+  number={17},
+  pages={45--50},
+  year={2018},
+  publisher={Elsevier}
+}
+","Fu, LS; Feng, YL; Majeed, Y; Zhang, X; Zhang, J; Karkee, M; Zhang, Q"
+analysis_paper_2,Evaluating the Single-Shot MultiBox Detector and YOLO Deep Learning Models for the Detection of Toma...,2021,"Speed, Integration",TRL 1-3,Development,"66.15%, 51.46%, 16.44 ms",High,Medium,Abstract analysis,"@article{magalhaes2021evaluating,
+  title={Evaluating the single-shot multibox detector and YOLO deep learning models for the detection of tomatoes in a greenhouse},
+  author={Magalh{\~a}es, Sandro Augusto and Castro, Lu{\'\i}s and Moreira, Germano and Dos Santos, Filipe Neves and Cunha, M{\'a}rio and Dias, Jorge and Moreira, Ant{\'o}nio Paulo},
+  journal={Sensors},
+  volume={21},
+  number={10},
+  pages={3569},
+  year={2021},
+  publisher={MDPI}
+}
+","Magalhaes, SA; Castro, L; Moreira, G; dos Santos, FN; Cunha, M; Dias, J; Moreira, AP"
+analysis_paper_3,Automated Detection of Branch Shaking Locations for Robotic Cherry Harvesting Using Machine Vision,2017,"Cost, Accuracy, Integration",TRL 4-6,Development,"92.9%, 86.6%, 92.3%",Medium,Medium,Abstract analysis,,"Amatya, S; Karkee, M; Zhang, Q; Whiting, MD"
+analysis_paper_4,Adaptive Image Thresholding of Yellow Peppers for a Harvesting Robot,2018,"Reliability, Environment",TRL 1-3,Development,"87%, 50%, 91.5%",Medium,Medium,Abstract analysis,,"Ostovar, A; Ringdahl, O; Hellstr?m, T"
+analysis_paper_5,Recognition and localization system of the robot for harvesting Hangzhou White Chrysanthemums,2018,"Accuracy, Speed, Integration",TRL 1-3,Integration,85%,Medium,Medium,Abstract analysis,,"Yang, QH; Chang, C; Bao, GJ; Fan, J; Xun, Y"
+analysis_paper_6,An end-effector for robotic cotton harvesting,2022,"Speed, Environment, Integration",TRL 4-6,Development,"60%, 85%",High,Medium,Abstract analysis,,"Gharakhani, H; Thomasson, JA; Lu, YZ"
+analysis_paper_7,Agriculture is the main driver of deforestation in Tanzania,2020,"Cost, Integration",TRL 1-3,Development,"89%, 69%, 35%",High,Medium,Abstract analysis,,
+analysis_paper_8,Cadmium concentration and its typical input and output fluxes in agricultural soil downstream of a h...,2021,"Environment, Integration",TRL 1-3,Development,"95.5%, 56.95%, 42.53%",High,Medium,Abstract analysis,,
+analysis_paper_9,Extraction of visual navigation directrix for harvesting operation in short-stalked and close-planti...,2017,"Accuracy, Speed, Reliability, Environment, Scalability",TRL 4-6,Development,"81.3%, 83.4%, 45%",Medium,Medium,Abstract analysis,,
+analysis_paper_10,Task planning of multi-arm harvesting robots for high-density dwarf orchards; [°«»¯ÃÜÖ²¹ûÔ°¶à±Û²ÉÕª»...,2021,"Speed, Integration",TRL 4-6,Development,"40.9%, 54.98%, 110.69%",High,Medium,Abstract analysis,,
+analysis_paper_11,Design and experiment of tomato picking end-effector based on non-destructive pneumatic clamping con...,2021,"Speed, Integration",TRL 4-6,Development,"40%, 96.03%, 1.58%",High,Medium,Abstract analysis,,
+analysis_paper_12,Motion planning method and experiments of tomato bunch harvesting manipulator; [·¬ÇÑ´®ÊÕ»úÐµ±ÛÔË¶¯¹æ...,2021,"Accuracy, Speed, Environment",TRL 1-3,Development,"31.23%, 53.23%, 19.29%",High,Medium,Abstract analysis,,
+analysis_paper_13,Design and test of small-scale sorting machine for agricultural products,2015,"Cost, Accuracy, Speed, Scalability",TRL 4-6,Development,"91.66%, 94.79%, 97.39%",Medium,Medium,Abstract analysis,,
+analysis_paper_14,Automatic recognition algorithm of field operation status based on spatial track of agricultural mac...,2015,"Accuracy, Speed, Integration",TRL 4-6,Development,89%,Medium,Medium,Abstract analysis,,
+analysis_paper_15,Effects of different machine-harvested cotton planting patterns and planting densities on soil hydro...,2020,Integration,TRL 1-3,Development,"8.3%, 9.9%, 17.5%",High,Medium,Abstract analysis,,
+analysis_paper_16,Method of haze-removal based on dark channel prior in visual system of apple harvest robot,2016,"Accuracy, Speed, Environment, Integration, Scalability",TRL 4-6,Integration,"36.46 ms, 126.43 ms, 28.58 ms",Medium,Medium,Abstract analysis,,
+analysis_paper_17,Fusion of the lightweight network and visual attention mechanism to detect apples in orchard environ...,2022,"Accuracy, Speed, Environment, Integration",TRL 4-6,Development,"94.88%, 10.06 ms, 20.03%",High,Medium,Abstract analysis,,
+analysis_paper_18,Tapping error analysis and precision control of fixed tapping robot; [¹Ì¶¨Ê½¸î½º»úÆ÷ÈË¸î½ºÎó²î·ÖÎöÓë...,2021,"Cost, Accuracy, Speed, Integration",TRL 4-6,Development,"63%, 36%, 4.11%",High,Medium,Abstract analysis,,
+analysis_paper_19,Parameters' optimization and verification for processing tomato fruit-seedling separation,2015,"Accuracy, Speed",TRL 4-6,Development,"96.27%, 2.12%, 5%",Medium,Medium,Abstract analysis,,
+analysis_paper_20,"Selection of spring maize varieties suitable for high-density planting, high-yield and grain mechani...",2020,"Cost, Speed, Reliability, Integration",TRL 1-3,Development,"3.6%, 24.8%, 26.99%",High,Medium,Abstract analysis,,
+analysis_paper_21,Unstructured road extraction and roadside fruit recognition in grape orchards based on a synchronous...,2023,"Accuracy, Speed, Environment, Integration",TRL 1-3,Development,"88.9%, 89.7%, 93.4%",High,Medium,Abstract analysis,,
+analysis_paper_22,Energy-harvesting experiment of a broadband magnetic-floating energy harvester under diverse vibrati...,2020,"Reliability, Integration",TRL 1-3,Development,"2.85%, 9.85%, 39.74%",High,Medium,Abstract analysis,,
+analysis_paper_23,Communication method for combine harvester group using Lora technology; [»ùÓÚ LoRa ¼¼ÊõµÄÁªºÏÊÕ»ñ»úÈ...,2022,"Cost, Speed, Integration, Scalability",TRL 4-6,Development,"90%, 10 ms, 99.3%",High,Medium,Abstract analysis,,
+analysis_paper_24,Method for locating picking points of grape clusters using multi-object recognition; [»ùÓÚ¶àÄ¿±êÊ¶±ð...,2023,"Accuracy, Speed, Environment",TRL 1-3,Development,"88%, 90%, 92.3%",High,Medium,Abstract analysis,,
+analysis_paper_25,Effects of machine-harvested cotton planting pattern on the efficacy of chemical defoliant applicati...,2022,"Speed, Environment, Integration",TRL 1-3,Development,"2.60%, 61.00%, 3.22%",High,Medium,Abstract analysis,,
+analysis_paper_26,Detection of the wheat-harvesting boundary in wheat field based on multi-texture fusion; [»ùÓÚ¶àÎÆÀí...,2023,"Cost, Speed, Environment",TRL 1-3,Development,"0.53 seconds, 49.52%, 10%",High,Medium,Abstract analysis,,
+analysis_paper_27,DESIGN AND EXPERIMENT OF CLAMPING-PULL-OFF APPLE PICKING ROBOT; [¼Ð³Ö-À­¶ÏÊ½Æ»¹û²ÉÕª»úÆ÷ÈËÉè¼ÆÓëÊµÑé...,2023,"Speed, Integration",TRL 4-6,Development,"7.59 seconds, 86.67%, 5.13%",High,Medium,Abstract analysis,,
