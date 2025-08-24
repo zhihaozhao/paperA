@@ -1,0 +1,24 @@
+{
+  "total_selected_papers": 134,
+  "papers_with_abstract": 134,
+  "papers_with_performance": 1,
+  "extracted_papers": [
+    {
+      "title": "Automatic recognition algorithm of field operation status based on spatial track of agricultural machinery and corresponding experiment",
+      "year": "2015",
+      "abstract": "With development and wide application of modern information technology as presented by the Internet of things, the position monitoring of operation process of agricultural machinery has been realized easily. But the existing remote monitoring system for agricultural machinery has only realized the remote storage, display and simple analysis. It is difficult to meet the requirements of fine management and intelligent data processing of agricultural machinery. In this paper, combining with the characteristics of the space track of agricultural machinery, the methods of clustering in data mining and spatial data analysis method were used to study automatic segmentation algorithm of field operation area based on spatial track of agricultural machinery. The procedure is as follows: firstly, data preprocessing, including velocity threshold and projection transformation methods, is preparing for further gridding and density slicing for the next step; secondly, spatial track of agricultural machinery was gridded; thirdly, density slicing removed low density cell-grids and preserved high density cell-grids; fourthly, spatial partition tree and spatial index are constructed, which is able to accelerating query speed of spatial nearest neighbors; finally, the cluster analysis is executed to connect high density cell-grids adjacently. The automatic identification of typical agricultural machinery operation method was designed and achieved. The quantitative analysis of the agricultural machinery operation divisions within the field operation time, transfer time and idle time of the agricultural machinery operation were divided and analyzed quantitatively. From May 27, 2012 to June 20, 2012, which is the season of wheat harvest, in order to verify the state of agricultural machinery operation cut automatic identification algorithm, the agricultural machinery tests were carried out in the Shijia Agricultural Machinery Cooperation in Xuchang City, Henan Province. Nine wheat harvesters, installing the embedded vehicle terminal based on GPS (positioning accuracy: 10 m, velocity measurement precision: 0.1 m/s) and GPRS (general packet radio service), were selected to do real harvesting task to produce spatial track data of agricultural machinery. The data collected by embedded vehicle terminal was used to verify the state of agricultural machinery operation cut automatic identification algorithm above. It showed that the accuracy of clustering algorithm based on spatial index and density slicing was above 89% in agricultural machinery test. After comparing clustering algorithm used in this paper with K-Means clustering algorithm and DBSCAN clustering algorithm, it is found that the clustering algorithm used in this paper has the best time efficiency, and the K-Means algorithm is better, and the DBSCAN algorithm has the worst run-time efficiency. It is shown that the construction of spatial partition tree and spatial index is very effective to accelerating query speed of spatial nearest neighbors, so it improves the clustering algorithm efficiency. But the current algorithm model is sensitive to the parameters of grid size and density threshold. The parameter setting depends on statistical analysis of spatial track of agricultural machinery. The grid size and density threshold are closely related to equipment width, working speed of agricultural machinery, and the frequency of GPS data uploading. The study direction in future is how to establish the quantitative relationship among the above parameters. ?, 2015, Chinese Society of Agricultural Engineering. All right reserved.",
+      "metrics": {
+        "accuracy": [
+          "10"
+        ],
+        "precision": [
+          "0.1"
+        ]
+      },
+      "fruit_veg": "",
+      "algorithm": "",
+      "citation": "",
+      "authors": ""
+    }
+  ]
+}
