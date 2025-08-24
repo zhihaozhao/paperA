@@ -351,7 +351,8 @@ We systematically searched databases including Scopus, Web of Science (WoS), and
 \small
 \caption{Algorithm Performance Comparison: Precision, Processing Speed, Version Evolution, and Environmental Validation}
 \label{tab:algorithm_comparison} 
-\begin{tabular}{p{0.10\textwidth}p{0.12\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.10\textwidth}p{0.08\textwidth}p{0.12\textwidth}p{0.20\textwidth}}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{0.09\textwidth}p{0.11\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.10\textwidth}p{0.08\textwidth}p{0.11\textwidth}p{0.22\textwidth}}
 \toprule
 \textbf{Algorithm Family} & \textbf{Version/Model} & \textbf{Accuracy (\%)} & \textbf{Processing Time (ms)} & \textbf{Sample Size} & \textbf{Environment} & \textbf{Evolution Features} & \textbf{References} \\ \midrule
 
@@ -438,8 +439,9 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \centering
 \caption{Comprehensive Multi-Sensor Fusion Architectures and Multi-Modality Data Integration for Precision Orchard Applications (N=35 Studies, 2015-2024)} 
 \label{tab:dataset}
+\renewcommand{\arraystretch}{1.2}
 %\begin{tabular}{p{0.02\textwidth}p{0.02\textwidth}p{0.10\textwidth}p{0.04\textwidth}p{0.07\textwidth}p{0.16\textwidth}p{0.18\textwidth}p{0.12\textwidth}p{0.10\textwidth}}
-\begin{tabular}{p{0.02\textwidth}p{0.02\textwidth}p{0.13\textwidth}p{0.04\textwidth}p{0.07\textwidth}p{0.16\textwidth}p{0.23\textwidth}p{0.14\textwidth}}
+\begin{tabular}{p{0.04\textwidth}p{0.04\textwidth}p{0.14\textwidth}p{0.06\textwidth}p{0.08\textwidth}p{0.18\textwidth}p{0.24\textwidth}p{0.14\textwidth}}
 \hline
 %\textbf{Ref.} & \textbf{Year} & \textbf{Sensor Fusion} & \textbf{Fruit} & \textbf{Orchard} & \textbf{Multi-Modality Synergy} & \textbf{Key Advantages} & \textbf{Limitations} & \textbf{Application} \\ 
 \textbf{Ref.} & \textbf{Year} & \textbf{Sensor Fusion} & \textbf{Fruit} & \textbf{Orchard} & \textbf{Multi-Modality Synergy} & \textbf{Strengths} & \textbf{Limitations} \\ 
@@ -577,8 +579,8 @@ Table~\ref{tab:ieee_meta_summary} consolidates these comprehensive experimental 
 \small
 \caption{Experimental Validation Summary: Algorithm Performance Benchmarks with Statistical Analysis (56 Studies, 2015-2024)}
 \label{tab:ieee_meta_summary}
-\renewcommand{\arraystretch}{1.0}
-\begin{tabular}{p{0.18\textwidth}p{0.06\textwidth}p{0.18\textwidth}p{0.16\textwidth}p{0.18\textwidth}p{0.24\textwidth}}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{0.16\textwidth}p{0.06\textwidth}p{0.17\textwidth}p{0.15\textwidth}p{0.16\textwidth}p{0.22\textwidth}}
 \toprule
 \textbf{Algorithm} & \textbf{n} & \textbf{Accuracy (\%)} & \textbf{Speed (ms)} & \textbf{Period} & \textbf{Trend} \\
 \midrule
@@ -836,7 +838,8 @@ Kang et al.~\cite{kang2020real}  combined Mobile-DasNet with PointNet for apple 
 \small
 \caption{Summary of Fruit Detection Approaches by Core Performance Metrics (2015-2024)}
 \label{tab:performance-metrics}
-\begin{tabular}{@{}p{0.12\textwidth}p{0.18\textwidth}p{0.35\textwidth}p{0.25\textwidth}p{0.10\textwidth}@{}}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{0.11\textwidth}p{0.16\textwidth}p{0.32\textwidth}p{0.23\textwidth}p{0.10\textwidth}@{}}
 \toprule
 \textbf{Metrics} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} & \textbf{References} \\ \midrule
 \textbf{Reliability} & Handling illumination, occlusion, and overlap via color, 3D contour, and shape; improving ripeness recognition & - Color-based ripeness: 94.29\% accuracy for tomatoes using hue-saturation metrics \cite{goel2015fuzzy}. Contour analysis: Relative error <6\% (e.g., 5.27\%) for occluded citrus edges \cite{lu2015detecting}. Ripeness evaluation: >94\% accuracy (e.g., 94.41\% precision) for binary/multi-stage classification \cite{liu2019mature}. 3D depth: 82\% detection rate for occluded apples \cite{nguyen2016detection} & - Color methods sensitive to lighting variations \cite{zhao2016detecting}. Contour detection struggles with dense occlusions \cite{lu2015detecting}. Limited ripeness generalization across environments \cite{goel2015fuzzy} & \cite{nguyen2016detection}, \cite{lu2015detecting}, \cite{mendes2016vine}, \cite{goel2015fuzzy}, \cite{zhao2016detecting}, \cite{pourdarbani2020automatic}, \cite{zhang2018deep}, \cite{longsheng2015kiwifruit}, \cite{liu2019mature} \\ \midrule
