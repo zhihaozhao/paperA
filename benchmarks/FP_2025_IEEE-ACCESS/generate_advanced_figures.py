@@ -296,7 +296,7 @@ class AdvancedFigureGenerator:
                 text = ax4.text(j, i, f'{performance_matrix[i, j]:.2f}',
                                ha="center", va="center", color="black", fontweight='bold')
         
-        ax4.set_title('Performance Matrix Heatmap\n(Real Data Based)', fontweight='bold')
+        ax4.set_title('Performance Matrix Heatmap\n(Comprehensive Analysis)', fontweight='bold')
         plt.colorbar(im, ax=ax4)
         
         plt.tight_layout()

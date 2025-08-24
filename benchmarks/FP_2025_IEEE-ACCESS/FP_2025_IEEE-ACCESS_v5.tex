@@ -453,7 +453,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \cite{koenig2015comparative} & 2015 & LiDAR (Riegl VZ-400) + Hyperspectral system & Barley & Post-harvest & Geometric features (LiDAR) + radiometric calibration (hyperspectral) & High classification precision (99\%) for post-harvest growth & Requires Spectralon calibration target  \\ 
 \hline
 %\cite{li2023multi} & 2023 & 4×Intel RealSense D435i RGBD cameras & Apple & SNAP orchard (dwarf dense) & RGB+depth via multi-task DCNN; frustum-based point cloud processing; global fruit map fusion & Reduced median position error by 44.43\%; 71.28-80.45\% harvest success; 5.8-6.7s cycle time & Limited by arm reachable range; high computation for MFF-Net & Apple robotic harvesting \\ \hline
-\cite{ge2024multi} & 2024 & 2×custom RGB cameras (640×480, 120° FOV) & Straw- berry & Polytunnel & Multi-view gripper internal sensing; MiniNet regression for ripeness quantification & MAE=4.8\% (Huber loss); 6.5ms inference time; full-view coverage & Annotation subjectivity; coefficient determination for fusion needs improvement \\
+\cite{ge2024multi} & 2024 & 2×custom RGB cameras (640×480, 120° FOV) & Strawberry & Polytunnel & Multi-view gripper internal sensing; MiniNet regression for ripeness quantification & MAE=4.8\% (Huber loss); 6.5ms inference time; full-view coverage & Annotation subjectivity; coefficient determination for fusion needs improvement \\
 \hline
 \cite{chen2024mlp} & 2024 & Azure Kinect (RGB+depth+ NIR) & Tomato & Greenhouse & MLP-based fusion encoder (RGB+depth+NIR); YOLO-DNA framework & mAP@0.5=98.13\%; 37.12 Frame Per Second (FPS); robust to illumination variations & MLP computation slower on GPU; needs more data for generalization  \\
 \hline
