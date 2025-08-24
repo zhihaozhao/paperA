@@ -1,0 +1,162 @@
+Paper_ID,Title,Year,Quality_Score,Quality_Grade,Citation_Complete,Multi_Author,Detailed_Title,Quantitative_Results,Detailed_Algorithm,Multimodal_Data,Algorithm_Family,Has_Performance_Data,Authors,Algorithm_Detail,Data_Modality,Research_Impact_Indicator
+EVAL_001,Fruit detection for strawberry harvesting robot in non-struc...,2019,90,A,True,True,True,True,True,False,Mask R-CNN,Yes,"Yu, Y; Zhang, KL; Yang, L; Zhang, DX","Mask-RCNN,Resnet50 backbone",,High
+EVAL_002,Deep Count: Fruit Counting Based on Deep Simulated Learning,2017,80,A,True,True,True,True,False,False,Other,Yes,"Rahnemoonfar, M; Sheppard, C",Inception-ResNet,,High
+EVAL_003,Detection and segmentation of overlapped fruits based on opt...,2020,80,A,True,True,True,True,False,False,Mask R-CNN,Yes,"Jia, WK; Tian, YY; Luo, R; Zhang, ZH; Lian, J; Zheng, YJ",Mask-RCNN,,High
+EVAL_004,Detecting tomatoes in greenhouse scenes by combining AdaBoos...,2016,80,A,True,True,True,partial,True,False,Other,Yes,"Zhao, YS; Gong, L; Zhou, B; Huang, YX; Liu, CL",adaboost classifier and color,,High
+EVAL_005,DeepFruits: A Fruit Detection System Using Deep Neural Netwo...,2016,75,B,True,True,True,False,True,True,Faster R-CNN,Yes,"Sa, I; Ge, ZY; Dayoub, F; Upcroft, B; Perez, T; McCool, C","Faster R-CNN
+transfer learning","RGB,NIR",Medium
+EVAL_006,Faster R-CNN for multi-class fruit detection using a robotic...,2020,65,B,True,True,True,False,True,False,Faster R-CNN,No,"Wan, SH; Goudos, S","Faster R-CNN
+transfer learning",,Medium
+EVAL_007,Detection of red and bicoloured apples on tree with an RGB-D...,2016,65,B,True,True,True,partial,False,False,Not specified,Yes,"Nguyen, TT; Vandevoorde, K; Wouters, N; Kayacan, E; De Baerdemaeker, JG; Saeys, W",,RGB-D,Medium
+EVAL_008,Kiwifruit detection in field images using Faster R-CNN with ...,2018,65,B,True,True,True,False,True,False,Faster R-CNN,No,"Fu, LS; Feng, YL; Majeed, Y; Zhang, X; Zhang, J; Karkee, M; Zhang, Q",Faster R-CNN with ZFNET,,Medium
+EVAL_009,Fuzzy classification of pre-harvest tomatoes for ripeness es...,2015,65,B,True,True,True,False,True,False,Other,No,"Goel, N; Sehgal, P",fuzzy classification and desion tree,,Medium
+EVAL_010,Fruit Image Classification Based on MobileNetV2 with Transfe...,2019,65,B,True,True,True,False,True,False,Other,No,"Xiang, Q; Wang, XD; Li, R; Zhang, GL; Lai, J; Hu, QS",mobileNetV2 transfer learning,,Medium
+EVAL_011,Harvesting Robots for High-value Crops: State-of-the-art Rev...,2014,60,B,True,True,True,partial,False,False,N/A,No,"Bac, CW; van Henten, EJ; Hemming, J; Edan, Y",,,Medium
+EVAL_012,"Design, integration, and field evaluation of a robotic apple...",2017,60,B,True,True,True,partial,False,False,Not specified,Yes,"Silwal, A; Davidson, JR; Karkee, M; Mo, CK; Zhang, Q; Lewis, K",,,Medium
+EVAL_013,"Robotic kiwifruit harvesting using machine vision, convoluti...",2019,60,B,True,True,True,False,False,False,Other,Yes,"Williams, HAM; Jones, MH; Nejati, M; Seabright, MJ; Bell, J; Penhall, ND; Barnett, JJ; Duke, MD; Sca...",deep neural networks,3D,Medium
+EVAL_014,Faster R-CNN-based apple detection in dense-foliage fruiting...,2020,60,B,True,True,True,False,False,False,Faster R-CNN,Yes,"Fu, LS; Majeed, Y; Zhang, X; Karkee, M; Zhang, Q",Faster R-CNN,Kinect V2 sensor,Medium
+EVAL_015,"Fruit detection, segmentation and 3D visualisation of enviro...",2020,60,B,True,True,True,False,False,False,Other,Yes,"Kang, HW; Chen, C",DaSNet-v2,3D,Medium
+EVAL_016,"Color-, depth-, and shape-based 3D fruit detection",2020,60,B,True,True,True,False,False,False,Other,Yes,"Lin, GH; Tang, YH; Zou, XJ; Xiong, JT; Fang, YM",SVM,3D,Medium
+EVAL_017,Passion fruit detection and counting based on multiple scale...,2020,60,B,True,True,True,False,False,False,Faster R-CNN,No,"Tu, SQ; Pang, J; Liu, HF; Zhuang, N; Chen, Y; Zheng, C; Wan, H; Xue, YJ",Faster R-CNN,RGB-D,Medium
+EVAL_018,YOLO-Tomato: A Robust Algorithm for Tomato Detection Based o...,2020,55,C,True,True,True,False,False,False,YOLOv3,No,"Liu, GX; Nouaze, JC; Mbouembe, PLT; Kim, JH",YOLOv3,,Low
+EVAL_019,A detection algorithm for cherry fruits based on the improve...,2023,55,C,True,True,True,False,False,False,YOLOv4,Yes,"Gai, RL; Chen, N; Yuan, H",improved YOLOv4,,Low
+EVAL_020,Using YOLOv3 Algorithm with Pre- and Post-Processing for App...,2020,55,C,True,True,True,False,False,False,YOLOv3,Yes,"Kuznetsova, A; Maleva, T; Soloviev, V",YOLOv3,,Low
+EVAL_021,Single-Shot Convolution Neural Networks for Real-Time Fruit ...,2019,55,C,True,True,True,False,False,False,CNN,Yes,"Bresilla, K; Perulli, GD; Boini, A; Morandi, B; Grappadelli, LC; Manfrini, L",single-shot CNN,,Low
+EVAL_022,A comprehensive review of fruit and vegetable classification...,2018,55,C,True,True,True,False,False,False,CNN,No,"Hameed, K; Chai, D; Rassau, A","SVM,KNN,CNN",,Low
+EVAL_023,Fruit detection in natural environment using partial shape m...,2020,55,C,True,True,True,False,False,False,Other,No,"Lin, GC; Tang, YC; Zou, XJ; Cheng, JB; Xiong, JT",Hough transform,,Low
+EVAL_024,Date Fruit Classification for Robotic Harvesting in a Natura...,2019,55,C,True,True,True,False,False,False,Other,No,"Altaheri, H; Alsulaiman, M; Muhammad, G",deep learning,,Low
+EVAL_025,Robust Tomato Recognition for Robotic Harvesting Using Featu...,2016,55,C,True,True,True,False,False,False,Other,No,"Zhao, YS; Gong, L; Huang, YX; Liu, CL",images fusion,,Low
+EVAL_026,An automated fruit harvesting robot by using deep learning,2019,55,C,True,True,True,False,False,False,Other,No,"Onishi, Y; Yoshida, T; Kurita, H; Fukao, T; Arihara, H; Iwai, A",deep learning,,Low
+EVAL_027,Deep learning-based apple detection using a suppression mask...,2021,55,C,True,True,True,False,False,False,Mask R-CNN,No,"Chu, PY; Li, ZJ; Lammers, K; Lu, RF; Liu, XM",Mask-RCNN,,Low
+EVAL_028,Evaluating the Single-Shot MultiBox Detector and YOLO Deep L...,2021,55,C,True,True,True,False,False,False,YOLO,No,"Magalhaes, SA; Castro, L; Moreira, G; dos Santos, FN; Cunha, M; Dias, J; Moreira, AP","single-shot, YOLO",,Low
+EVAL_029,Automatic cucumber recognition algorithm for harvesting robo...,2020,55,C,True,True,True,False,False,False,Other,No,"Mao, SH; Li, YH; Ma, Y; Zhang, BH; Zhou, J; Wang, K",deep learning,,Low
+EVAL_030,Deep Learning Based Improved Classification System for Desig...,2018,55,C,True,True,True,False,False,False,Other,No,"Zhang, L; Jia, JD; Gui, G; Ha, X; Gao, WL; Wang, MJ",deep learning,,Low
+EVAL_031,Semantic Segmentation of Litchi Branches Using DeepLabV3+Mod...,2020,55,C,True,True,True,False,False,False,Other,No,"Peng, HX; Xue, C; Shao, YY; Chen, KY; Xiong, JT; Xie, ZH; Zhang, LH",deeplabV3,,Low
+EVAL_032,A novel green apple segmentation algorithm based on ensemble...,2021,55,C,True,True,True,False,False,False,Other,No,"Li, QW; Jia, WK; Sun, ML; Hou, SJ; Zheng, YJ",ensember U-net,,Low
+EVAL_033,A real-time table grape detection method based on improved Y...,2021,55,C,True,True,True,False,False,False,YOLOv4,No,"Li, HP; Li, CY; Li, GB; Chen, LX",YOLOv4-tiny,,Low
+EVAL_034,Deep Learning Techniques for Grape Plant Species Identificat...,2019,55,C,True,True,True,False,False,False,Other,No,"Pereira, CS; Morais, R; Reis, MJCS",deep learning,,Low
+EVAL_035,Development of a sweet pepper harvesting robot,2020,50,C,True,True,True,False,False,False,Not specified,Yes,"Arad, B; Balendonck, J; Barth, R; Ben-Shahar, O; Edan, Y; Hellstr?m, T; Hemming, J; Kurtser, P; Ring...",,RGB-D,Low
+EVAL_036,Tomato detection based on modified YOLOv3 framework,2021,50,C,True,False,True,False,False,False,YOLOv3,Yes,"Lawal, MO",YOLOv3,,Low
+EVAL_037,Vision-based control of robotic manipulator for citrus harve...,2014,50,C,True,True,True,False,False,False,Not specified,Yes,"Mehta, SS; Burks, TF",,3D,Low
+EVAL_038,Development and field evaluation of a strawberry harvesting ...,2019,50,C,True,True,True,False,False,False,Not specified,Yes,"Xiong, Y; Peng, C; Grimstad, L; From, PJ; Isler, V",,RGB-D,Low
+EVAL_039,"Mapping almond orchard canopy volume, flowers, fruit and yie...",2016,50,C,True,True,True,False,False,False,Not specified,No,"Underwood, JP; Hung, C; Whelan, B; Sukkarieh, S",,3D,Low
+EVAL_040,Data synthesis methods for semantic segmentation in agricult...,2018,50,C,True,True,True,False,False,False,Not specified,No,"Barth, R; IJsselmuiden, J; Hemming, J; Van Henten, EJ",,3D,Low
+EVAL_041,Guava Detection and Pose Estimation Using a Low-Cost RGB-D S...,2019,50,C,True,True,True,False,False,False,Not specified,Yes,"Lin, GC; Tang, YC; Zou, XJ; Xiong, JT; Li, JH",,RGB-D,Low
+EVAL_042,Localisation of litchi in an unstructured environment using ...,2016,50,C,True,True,True,False,False,False,Not specified,No,"Wang, CL; Zou, XJ; Tang, YC; Luo, LF; Feng, WX",,bionocular,Low
+EVAL_043,Location of apples in trees using stereoscopic vision,2015,50,C,True,True,True,False,False,False,Not specified,No,"Si, YS; Gang, L; Juan, F",,3D,Low
+EVAL_044,Colour-agnostic shape-based 3D fruit detection for crop harv...,2016,50,C,True,True,True,False,False,False,Not specified,No,"Barnea, E; Mairon, R; Ben-Shahar, O",,3D,Low
+EVAL_045,Dual-arm cooperation and implementing for robotic harvesting...,2019,50,C,True,True,True,False,False,False,Not specified,No,"Ling, X; Zhao, YS; Gong, L; Liu, CL; Wang, T",,bionocular,Low
+EVAL_046,A Proposal for Automatic Fruit Harvesting by Combining a Low...,2014,50,C,True,True,True,False,False,False,Not specified,No,"Font, D; Pallej¨¤, T; Tresanchez, M; Runcan, D; Moreno, J; Mart¨ªnez, D; Teixid¨®, M; Palac¨ªn, J",,3D,Low
+EVAL_047,In-field citrus detection and localisation based on RGB-D im...,2019,50,C,True,True,True,False,False,False,Not specified,No,"Lin, GC; Tang, YC; Zou, XJ; Li, JH; Xiong, JT",,RGB-D,Low
+EVAL_048,"3D-vision based detection, localization, and sizing of brocc...",2017,50,C,True,True,True,False,False,False,Not specified,No,"Kusumam, K; Krajn¨ªk, T; Pearson, S; Duckett, T; Cielniak, G",,3D,Low
+EVAL_049,"Towards an Efficient Tomato Harvesting Robot: 3D Perception,...",2021,50,C,True,True,True,False,False,False,Not specified,No,"Jun, J; Kim, J; Seol, J; Kim, J; Il Son, H",,3D,Low
+EVAL_050,Using depth cameras to extract structural parameters to asse...,2016,50,C,True,True,True,False,False,False,N/A,No,"And¨²jar, D; Ribeiro, A; Fern¨¢ndez-Quintanilla, C; Dorado, J",,3D,Low
+EVAL_051,Sensors and systems for fruit detection and localization: A ...,2015,45,C,True,True,True,False,False,False,Not specified,No,"Gongal, A; Amatya, S; Karkee, M; Zhang, Q; Lewis, K",,,Low
+EVAL_052,Recognition and Localization Methods for Vision-Based Fruit ...,2020,45,C,True,True,True,False,False,False,Not specified,No,"Tang, YC; Chen, MY; Wang, CL; Luo, LF; Li, JH; Lian, GP; Zou, XJ",,,Low
+EVAL_053,A review of key techniques of vision-based control for harve...,2016,45,C,True,True,True,False,False,False,Not specified,No,"Zhao, YS; Gong, L; Huang, YX; Liu, CL",,,Low
+EVAL_054,Research and development in agricultural robotics: A perspec...,2018,45,C,True,True,True,False,False,False,N/A,No,"Shamshiri, RR; Weltzien, C; Hameed, IA; Yule, IJ; Grift, TE; Balasundram, SK; Pitonakova, L; Ahmad, ...",,,Low
+EVAL_055,"An autonomous strawberry-harvesting robot: Design, developme...",2020,45,C,True,True,True,False,False,False,Not specified,Yes,"Xiong, Y; Ge, YY; Grimstad, L; From, PJ",,,Low
+EVAL_056,Human-robot interaction in agriculture: A survey and current...,2019,45,C,True,True,True,False,False,False,N/A,No,"Vasconez, JP; Kantor, GA; Cheein, FAA",,,Low
+EVAL_057,Autonomous Sweet Pepper Harvesting for Protected Cropping Sy...,2017,45,C,True,True,True,False,False,False,Not specified,Yes,"Lehnert, C; English, A; McCool, C; Tow, AW; Perez, T",,,Low
+EVAL_058,Nonconventional Weed Management Strategies for Modern Agricu...,2015,45,C,True,True,True,False,False,False,N/A,No,"Bajwa, AA; Mahajan, G; Chauhan, BS",,,Low
+EVAL_059,A survey of public datasets for computer vision tasks in pre...,2020,45,C,True,True,True,False,False,False,Not specified,No,"Lu, YZ; Young, S",,,Low
+EVAL_060,Performance Evaluation of a Harvesting Robot for Sweet Peppe...,2017,45,C,True,True,True,False,False,False,N/A,No,"Bac, CW; Hemming, J; van Tuijl, BAJ; Barth, R; Wais, E; van Henten, EJ",,,Low
+EVAL_061,Machine Vision Systems in Precision Agriculture for Crop Far...,2019,45,C,True,True,True,False,False,False,Not specified,No,"Mavridou, E; Vrochidou, E; Papakostas, GA; Pachidis, T; Kaburlasos, VG",,,Low
+EVAL_062,Agricultural Robotics for Field Operations,2020,45,C,True,True,True,False,False,False,Not specified,No,"Fountas, S; Mylonas, N; Malounas, I; Rodias, E; Santos, CH; Pekkeriet, E",,,Low
+EVAL_063,Advances in Agriculture Robotics: A State-of-the-Art Review ...,2021,45,C,True,True,True,False,False,False,Not specified,No,"Oliveira, LFP; Moreira, AP; Silva, MF",,,Low
+EVAL_064,Robotics and labour in agriculture. A context consideration,2019,45,C,True,True,True,False,False,False,N/A,No,"Marinoudi, V; Sorensen, CG; Pearson, S; Bochtis, D",,,Low
+EVAL_065,Development of An Autonomous Tomato Harvesting Robot with Ro...,2016,45,C,True,True,True,False,False,False,Not specified,Yes,"Yaguchi, H; Nagahama, K; Hasegawa, T; Inaba, M",,,Low
+EVAL_066,Detection of Fruit-Bearing Branches and Localization of Litc...,2020,45,C,True,True,True,False,False,False,Not specified,Yes,"Li, JH; Tang, YC; Zou, XJ; Lin, GC; Wang, HJ",,,Low
+EVAL_067,Automatic method of fruit object extraction under complex ag...,2014,45,C,True,True,True,False,False,False,Not specified,No,"Wei, XQ; Jia, K; Lan, JH; Li, YW; Zeng, YL; Wang, CM",,,Low
+EVAL_068,Smart farming for improving agricultural management,2021,45,C,True,True,True,False,False,False,Not specified,No,"Mohamed, ES; Belal, A; Abd-Elmabod, SK; El-Shirbeny, MA; Gad, A; Zahran, MB",,,Low
+EVAL_069,Design and test of robotic harvesting system for cherry toma...,2018,45,C,True,True,True,False,False,False,N/A,No,"Feng, QC; Zou, W; Fan, PF; Zhang, CF; Wang, X",,,Low
+EVAL_070,iPathology: Robotic Applications and Management of Plants an...,2017,45,C,True,True,True,False,False,False,Not specified,No,"Ampatzidis, Y; De Bellis, L; Luvisi, A",,,Low
+EVAL_071,A field-tested robotic harvesting system for iceberg lettuce,2020,45,C,True,True,True,False,False,False,Not specified,No,"Birrell, S; Hughes, J; Cai, JY; Iida, F",,,Low
+EVAL_072,Deep learning based segmentation for automated training of a...,2020,45,C,True,True,True,False,False,False,Not specified,No,"Majeed, Y; Zhang, J; Zhang, X; Fu, LS; Karkee, M; Zhang, Q; Whiting, MD",,,Low
+EVAL_073,The Status and Future of the Strawberry Industry in the Unit...,2019,45,C,True,True,True,False,False,False,N/A,No,"Samtani, JB; Rom, CR; Friedrich, H; Fennimore, SA; Finn, CE; Petran, A; Wallace, RW; Pritts, MP; Fer...",,,Low
+EVAL_074,Vision-based extraction of spatial information in grape clus...,2016,45,C,True,True,True,False,False,False,Not specified,No,"Luo, LF; Tang, YC; Zou, XJ; Ye, M; Feng, WX; Li, GQ",,,Low
+EVAL_075,A vision methodology for harvesting robot to detect cutting ...,2018,45,C,True,True,True,False,False,False,Not specified,No,"Luo, LF; Tang, YC; Lu, QH; Chen, X; Zhang, P; Zou, XJ",,,Low
+EVAL_076,Real-Time Fruit Recognition and Grasping Estimation for Robo...,2020,45,C,True,True,True,False,False,False,Not specified,No,"Kang, HW; Zhou, HY; Wang, X; Chen, C",,,Low
+EVAL_077,Design of an eye-in-hand sensing and servo control framework...,2016,45,C,True,True,True,False,False,False,Not specified,No,"Barth, R; Hemming, J; van Henten, EJ",,,Low
+EVAL_078,Development of a tomato harvesting robot used in greenhouse,2017,45,C,True,True,True,False,False,False,Not specified,No,"Wang, LL; Zhao, B; Fan, JW; Hu, XA; Wei, S; Li, YS; Zhou, QB; Wei, CF",,,Low
+EVAL_079,Soft Grippers for Automatic Crop Harvesting: A Review,2021,45,C,True,True,True,False,False,False,N/A,No,"Navas, E; Fern¨¢ndez, R; Sep¨²lveda, D; Armada, M; Gonzalez-de-Santos, P",,,Low
+EVAL_080,Intelligent robots for fruit harvesting: recent developments...,2022,45,C,True,True,True,False,False,False,N/A,No,"Zhou, HY; Wang, X; Au, W; Kang, HW; Chen, C",,,Low
+EVAL_081,Robust Grape Cluster Detection in a Vineyard by Combining th...,2016,45,C,True,True,True,False,False,False,Not specified,No,"Luo, LF; Tang, YC; Zou, XJ; Wang, CL; Zhang, P; Feng, WX",,,Low
+EVAL_082,Robotics in Agriculture and Forestry,2016,45,C,True,True,True,False,False,False,N/A,No,"Bergerman, M; Billingsley, J; Reid, J; van Henten, E",,,Low
+EVAL_083,Collision-free path planning for a guava-harvesting robot ba...,2021,45,C,True,True,True,False,False,False,Not specified,No,"Lin, GC; Zhu, LX; Li, JH; Zou, XJ; Tang, YC",,,Low
+EVAL_084,Real-Time Visual Localization of the Picking Points for a Ri...,2020,45,C,True,True,True,False,False,False,Not specified,No,"Yu, Y; Zhang, KL; Liu, H; Yang, L; Zhang, DX",,,Low
+EVAL_085,Robotic Aubergine Harvesting Using Dual-Arm Manipulation,2020,45,C,True,True,True,False,False,False,N/A,No,"Sep¨²lveda, D; Fern¨¢ndez, R; Navas, E; Armada, M; Gonz¨¢lez-De-Santos, P",,,Low
+EVAL_086,Recognition of Bloom/Yield in Crop Images Using Deep Learnin...,2021,45,C,True,True,True,False,False,False,Not specified,No,"Darwin, B; Dharmaraj, P; Prince, S; Popescu, DE; Hemanth, DJ",,,Low
+EVAL_087,Identification of fruit and branch in natural scenes for cit...,2014,45,C,True,True,True,False,False,False,Not specified,No,"Qiang, L; Cai, JR; Bin, L; Lie, D; Zhang, YJ",,,Low
+EVAL_088,Stem localization of sweet-pepper plants using the support w...,2014,45,C,True,True,True,False,False,False,Not specified,No,"Bac, CW; Hemming, J; van Henten, EJ",,,Low
+EVAL_089,Apple harvesting robot under information technology: A revie...,2020,45,C,True,True,True,False,False,False,Not specified,No,"Jia, WK; Zhang, Y; Lian, J; Zheng, YJ; Zhao, D; Li, CJ",,,Low
+EVAL_090,Kiwifruit recognition at nighttime using artificial lighting...,2015,45,C,True,True,True,False,False,False,Not specified,No,"Fu, LS; Wang, B; Cui, YJ; Su, S; Gejima, Y; Kobayashi, T",,,Low
+EVAL_091,Vine trunk detector for a reliable robot localization system,2016,45,C,True,True,True,False,False,False,N/A,No,"Mendes, J; dos Santos, FN; Ferraz, N; Couto, P; Morais, R",,,Low
+EVAL_092,Technology progress in mechanical harvest of fresh market ap...,2020,45,C,True,True,True,False,False,False,N/A,No,"Zhang, Z; Igathinathane, C; Li, J; Cen, H; Lu, Y; Flores, P",,,Low
+EVAL_093,Fruit Localization and Environment Perception for Strawberry...,2019,45,C,True,True,True,False,False,False,Not specified,No,"Ge, YY; Xiong, Y; Tenorio, GL; From, PJ",,,Low
+EVAL_094,A pattern recognition strategy for visual grape bunch detect...,2018,45,C,True,True,True,False,False,False,Not specified,No,"P¨¦rez-Zavala, R; Torres-Torriti, M; Cheein, FA; Troni, G",,,Low
+EVAL_095,Development of a Robot for Harvesting Strawberries,2018,45,C,True,True,True,False,False,False,N/A,No,"De Preter, A; Anthonis, J; De Baerdemaeker, J",,,Low
+EVAL_096,Task-based agricultural mobile robots in arable farming: A r...,2017,45,C,True,True,True,False,False,False,N/A,No,"Aravind, KR; Raja, P; P¨¦rez-Ruiz, M",,,Low
+EVAL_097,Characterizing apple picking patterns for robotic harvesting,2016,45,C,True,True,True,False,False,False,N/A,No,"Li, J; Karkee, M; Zhang, Q; Xiao, KH; Feng, T",,,Low
+EVAL_098,An Overview of Cooperative Robotics in Agriculture,2021,45,C,True,True,True,False,False,False,N/A,No,"Lytridis, C; Kaburlasos, VG; Pachidis, T; Manios, M; Vrochidou, E; Kalampokas, T; Chatzistamatis, S",,,Low
+EVAL_099,Localization and Mapping for Robots in Agriculture and Fores...,2020,45,C,True,True,True,False,False,False,N/A,No,"Aguiar, AS; dos Santos, FN; Cunha, JB; Sobreira, H; Sousa, AJ",,,Low
+EVAL_100,The Smart Image Recognition Mechanism for Crop Harvesting Sy...,2020,45,C,True,True,True,False,False,False,Not specified,No,"Horng, GJ; Liu, MX; Chen, CC",,,Low
+EVAL_101,A robust fruit image segmentation algorithm against varying ...,2017,45,C,True,True,True,False,False,False,Not specified,No,"Wang, CL; Tang, YC; Zou, XJ; SiTu, WM; Feng, WX",,,Low
+EVAL_102,Detecting citrus fruits and occlusion recovery under natural...,2015,45,C,True,True,True,False,False,False,Not specified,No,"Lu, J; Sang, N",,,Low
+EVAL_103,DESIGN AND FIELD EVALUATION OF A ROBOTIC APPLE HARVESTING SY...,2019,45,C,True,True,True,False,False,False,N/A,No,"Hohimer, CJ; Wang, H; Bhusal, S; Miller, J; Mo, C; Karkee, M",,,Low
+EVAL_104,THE DEVELOPMENT OF MECHANICAL APPLE HARVESTING TECHNOLOGY: A...,2016,45,C,True,True,True,False,False,False,N/A,No,"Zhang, Z; Heinemann, PH; Liu, J; Baugher, TA; Schupp, JR",,,Low
+EVAL_105,Fruit Detectability Analysis for Different Camera Positions ...,2014,45,C,True,True,True,False,False,False,N/A,No,"Hemming, J; Ruizendaal, J; Hofstee, JW; van Henten, EJ",,,Low
+EVAL_106,Analysis of a motion planning problem for sweet-pepper harve...,2016,45,C,True,True,True,False,False,False,N/A,No,"Bac, CW; Roorda, T; Reshef, R; Berman, S; Hemming, J; van Henten, EJ",,,Low
+EVAL_107,Robust visual servo control in the presence of fruit motion ...,2016,45,C,True,True,True,False,False,False,N/A,No,"Mehta, SS; MacKunis, W; Burks, TF",,,Low
+EVAL_108,Improvements to and large-scale evaluation of a robotic kiwi...,2020,45,C,True,True,True,False,False,False,Not specified,No,"Williams, H; Ting, C; Nejati, M; Jones, MH; Penhall, N; Lim, J; Seabright, M; Bell, J; Ahn, HS; Scar...",,,Low
+EVAL_109,"Indoor Coverage Path Planning: Survey, Implementation, Analy...",2018,45,C,True,True,True,False,False,False,N/A,No,"Bormann, R; Jordan, F; Hampp, J; H?gele, M",,,Low
+EVAL_110,Sweet Pepper Pose Detection and Grasping for Automated Crop ...,2016,45,C,True,True,True,False,False,False,Not specified,No,"Lehnert, C; Sa, I; McCool, C; Uperoft, B; Perez, T",,,Low
+EVAL_111,Optimised computer vision system for automatic pre-grading o...,2014,45,C,True,True,True,False,False,False,Not specified,No,"Cubero, S; Aleixos, N; Albert, F; Torregrosa, A; Ortiz, C; Garc¨ªa-Navarrete, O; Blasco, J",,,Low
+EVAL_112,An Extensive Review of Mobile Agricultural Robotics for Fiel...,2020,45,C,True,True,True,False,False,False,N/A,No,"Fue, KG; Porter, WM; Barnes, EM; Rains, GC",,,Low
+EVAL_113,A method of segmenting apples at night based on color and po...,2016,45,C,True,True,True,False,False,False,Not specified,No,"Liu, XY; Zhao, D; Jia, WK; Ruan, CZ; Tang, SP; Shen, T",,,Low
+EVAL_114,Faster R¨CCNN¨Cbased apple detection in dense-foliage fruiti...,2020,45,C,True,False,True,False,False,False,Faster R-CNN,No,,Faster R-CNN,RGB-D,Low
+EVAL_115,Fruit detection and positioning technology for a Camellia ol...,2023,40,C,True,False,True,False,False,False,YOLOv4,No,,YOLOv4-tiny,,Low
+EVAL_116,Fast implementation of real-time fruit detection in apple or...,2020,40,C,True,False,True,False,False,False,Other,No,,deep learning,,Low
+EVAL_117,Multi-class fruit-on-plant detection for apple in SNAP syste...,2020,40,C,True,False,True,False,False,False,Faster R-CNN,No,,Faster R-CNN,,Low
+EVAL_118,Automatic Bunch Detection in White Grape Varieties Using YOL...,2022,40,C,True,False,True,False,False,False,YOLOv3,No,,"YOLOv3,YOLOv4,YOLOv5",,Low
+EVAL_119,Ethics of Using AI and Big Data in Agriculture: The Case of ...,2019,40,C,True,False,True,False,False,False,Not specified,No,Ryan Mark,,,Low
+EVAL_120,Fuzzy classification of pre-harvest tomatoes for ripeness es...,2015,40,C,True,False,True,False,False,False,Other,No,"Goel, N; Sehgal, P",fuzzy classification and desion tree,,Low
+EVAL_121,Human¨Crobot interaction in agriculture: A survey and curren...,2019,40,C,True,False,True,False,False,False,N/A,No,Juan P. Vasconez and George A. Kantor and Fernando A. {Auat Cheein},,,Low
+EVAL_122,Automatic non-destructive video estimation of maturation lev...,2020,40,C,True,False,True,False,False,False,Not specified,No,Razieh Pourdarbani and Sajad Sabzi and Davood Kalantari and Rouhollah Karimzadeh and Elham Ilbeygi a...,,,Low
+EVAL_123,A comprehensive review of fruit and vegetable classification...,2018,40,C,True,False,True,False,False,False,CNN,No,"Hameed, K; Chai, D; Rassau, A","SVM,KNN,CNN",,Low
+EVAL_124,Autobot for Precision Farming,2017,35,D,True,True,False,False,False,False,N/A,No,"Abu Basim, NM; Hariharan, GA; Solomon, N; DevaDharshini, U; Banu, NR; Saranghan, M; Vignajeth, KK",,,Low
+EVAL_125,Internet-of-Things (IoT)-based smart agriculture: Toward mak...,2019,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_126,Automation in Agriculture by Machine and Deep Learning Techn...,2021,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_127,Cleaning the River Ganga: Impact of lockdown on water qualit...,2020,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_128,"Remote sensing in agriculture¡ªaccomplishments, limitations,...",2020,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_129,Internet of Things for the Future of Smart Agriculture: A Co...,2021,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_130,"State-of-the-art robotic grippers, grasping and control stra...",2020,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_131,Multi-modal deep learning for Fuji apple detection using RGB...,2019,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_132,Machine Learning Applications for Precision Agriculture: A C...,2021,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_133,Fruit detection and segmentation for apple harvesting using ...,2019,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_134,Identifying the spatiotemporal changes of annual harvesting ...,2020,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_135,Automated Systems Based on Machine Vision for Inspecting Cit...,2016,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_136,Internet of Things Empowered Smart Greenhouse Farming,2020,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_137,Blockchain and smart contract for IoT enabled smart agricult...,2021,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_138,Research Progress Analysis of Robotic Harvesting Technologie...,2017,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_139,Apple fruit size estimation using a 3D machine vision system,2018,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_140,Fast Recognition Method for Tomatoes under Complex Environme...,2020,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_141,Peduncle Detection of Sweet Pepper for Autonomous Crop Harve...,2017,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_142,Design and simulation of an integrated end-effector for pick...,2020,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_143,Image recognition method of multi-cluster kiwifruit in field...,2018,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_144,General improved SSD model for picking object recognition of...,2018,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_145,Vermicomposting as manure management strategy for urban smal...,2015,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_146,A survey of ranging and imaging techniques for precision agr...,2017,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_147,L*a*b*Fruits: A rapid and robust outdoor fruit detection sys...,2020,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_148,Ensuring agricultural sustainability through remote sensing ...,2021,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_149,Phytoextraction of copper from a contaminated soil using ara...,2019,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_150,Research advance on vision system of apple picking robot,2017,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_151,Fruit detection in an apple orchard using a mobile terrestri...,2019,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_152,Comparative classification analysis of post-harvest growth d...,2015,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_153,Intact detection of highly occluded immature tomatoes on pla...,2020,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_154,"Integration of RGB-based vegetation index, crop surface mode...",2021,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_155,A mature-tomato detection algorithm using machine learning a...,2019,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_156,Citrus Detection Method in Night Environment Based on Improv...,2020,30,D,True,False,True,False,False,False,Not specified,No,,,,Low
+EVAL_157,Development and experiment of end-effector for kiwifruit har...,2015,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_158,Development of sensors-based agri-food traceability system r...,2020,30,D,True,False,True,False,False,False,N/A,No,,,,Low
+EVAL_159,Robotics and Automation in Agriculture: Present and Future A...,2020,30,D,True,False,True,False,False,False,N/A,No,,,,Low

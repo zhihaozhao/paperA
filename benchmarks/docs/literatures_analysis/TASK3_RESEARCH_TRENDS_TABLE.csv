@@ -1,0 +1,11 @@
+Year,Total_Papers,Top_Algorithm,Top_Modality,Performance_Reporting_Rate,Innovation_Index,Average_Quality_Score,Research_Phase,Key_Characteristics,Future_Potential,Research_Gaps
+2014,8,N/A (0),N/A (0),25.0%,0.12,48.1,Foundation,Foundational research,Medium,Algorithm innovation
+2015,10,其他 (1),N/A (0),0.0%,0.00,45.0,Foundation,"Alg:其他, Mod:N/A",Developing,Performance evaluation
+2016,22,其他 (2),RGB (2),18.2%,0.05,49.5,Foundation,"Alg:其他, Mod:RGB",Medium,Algorithm innovation
+2017,14,其他 (1),N/A (0),28.6%,0.07,43.9,Mature,"Alg:其他, Mod:N/A",Medium,Algorithm innovation
+2018,14,CNN (1),N/A (0),0.0%,0.21,45.7,Mature,"Alg:CNN, Mod:N/A",Medium,Performance evaluation
+2019,25,其他 (5),RGB (3),20.0%,0.16,46.6,Mature,"Alg:其他, Mod:RGB",Medium,Algorithm innovation
+2020,44,R-CNN系列 (6),RGB (3),18.2%,0.20,44.4,Current Focus,"Alg:R-CNN系列, Mod:RGB",Medium,Quality improvement
+2021,18,YOLO系列 (3),N/A (0),5.6%,0.44,42.8,Current Focus,"Alg:YOLO系列, Mod:N/A",Medium,Performance evaluation
+2022,2,YOLO系列 (1),N/A (0),0.0%,0.50,42.5,Current Focus,"Alg:YOLO系列, Mod:N/A",Medium,Performance evaluation
+2023,2,YOLO系列 (2),N/A (0),50.0%,1.00,47.5,Current Focus,"Alg:YOLO系列, Mod:N/A",High,Quality improvement

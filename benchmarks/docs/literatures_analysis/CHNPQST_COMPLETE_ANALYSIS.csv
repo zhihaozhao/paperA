@@ -1,0 +1,343 @@
+Paper_ID,C_Citation_Key,C_Full_Citation,H_Authors,N_Title,P_Performance_Raw,P_Accuracy,P_Precision,P_Recall,Q_Algorithm_Raw,Q_Algorithm_Family,S_Data_Modality,T_Year,Has_Performance_Data,Has_Algorithm_Data,Data_Completeness_Score
+chnpqst_001,sa2016deepfruits,"@article{sa2016deepfruits,
+  title={Deepfruits: A fruit detection system using deep neural networks}...","Sa, I; Ge, ZY; Dayoub, F; Upcroft, B; Perez, T; McCool, C",DeepFruits: A Fruit Detection System Using Deep Neural Networks,Recall performances improving from 0.807 to 0.838 for the detection of sweet pepper.,N/A,N/A,N/A,"Faster R-CNN
+transfer learning",Faster R-CNN,"RGB,NIR",2016,Yes,Yes,7
+chnpqst_002,bac2014harvesting,"@article{bac2014harvesting,
+  title={Harvesting robots for high-value crops: State-of-the-art review...","Bac, CW; van Henten, EJ; Hemming, J; Edan, Y",Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead,"localization success was 85%, detachment success was 75%, harvest success was 66%, fruit damage was 5%, peduncle damage was 45%, and cycle time was 33 s",N/A,N/A,N/A,,Not specified,,2014,Yes,No,5
+chnpqst_003,gongal2015sensors,"@article{gongal2015sensors,
+  title={Sensors and systems for fruit detection and localization: A rev...","Gongal, A; Amatya, S; Karkee, M; Zhang, Q; Lewis, K",Sensors and systems for fruit detection and localization: A review,,N/A,N/A,N/A,,Not specified,,2015,No,No,4
+chnpqst_004,yu2019fruit,"@article{yu2019fruit,
+  title={Fruit detection for strawberry harvesting robot in non-structural env...","Yu, Y; Zhang, KL; Yang, L; Zhang, DX",Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN,"An average detection precision rate of 95.78%, the recall rate was 95.41%.",N/A,95.78%,N/A,"Mask-RCNN,Resnet50 backbone",Mask R-CNN,,2019,Yes,Yes,6
+chnpqst_005,rahnemoonfar2017deep,"@article{rahnemoonfar2017deep,
+  title={Deep count: fruit counting based on deep simulated learning}...","Rahnemoonfar, M; Sheppard, C",Deep Count: Fruit Counting Based on Deep Simulated Learning,a 91% average test accuracy on real images and 93% on synthetic images.,N/A,N/A,N/A,Inception-ResNet,Other,,2017,Yes,Yes,6
+chnpqst_006,tang2020recognition,"@article{tang2020recognition,
+  title={Recognition and localization methods for vision-based fruit p...","Tang, YC; Chen, MY; Wang, CL; Luo, LF; Li, JH; Lian, GP; Zou, XJ",Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_007,wan2020faster,"@article{wan2020faster,
+  title={Faster R-CNN for multi-class fruit detection using a robotic vision...","Wan, SH; Goudos, S",Faster R-CNN for multi-class fruit detection using a robotic vision system,,N/A,N/A,N/A,"Faster R-CNN
+transfer learning",Faster R-CNN,,2020,No,Yes,5
+chnpqst_008,zhao2016review,"@article{zhao2016review,
+  title={A review of key techniques of vision-based control for harvesting ...","Zhao, YS; Gong, L; Huang, YX; Liu, CL",A review of key techniques of vision-based control for harvesting robot,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_009,r2018research,"@article{r2018research,
+  title={Research and development in agricultural robotics: A perspective of...","Shamshiri, RR; Weltzien, C; Hameed, IA; Yule, IJ; Grift, TE; Balasundram, SK; Pitonakova, L; Ahmad, D; Chowdhary, G",Research and development in agricultural robotics: A perspective of digital farming,,N/A,N/A,N/A,,Not specified,,2018,No,No,4
+chnpqst_010,liu2020yolo,"@article{liu2020yolo,
+  title={YOLO-tomato: A robust algorithm for tomato detection based on YOLOv3}...","Liu, GX; Nouaze, JC; Mbouembe, PLT; Kim, JH",YOLO-Tomato: A Robust Algorithm for Tomato Detection Based on YOLOv3,,N/A,N/A,N/A,YOLOv3,YOLOv3,,2020,No,Yes,5
+chnpqst_011,silwal2017design,"@article{silwal2017design,
+  title={Design, integration, and field evaluation of a robotic apple har...","Silwal, A; Davidson, JR; Karkee, M; Mo, CK; Zhang, Q; Lewis, K","Design, integration, and field evaluation of a robotic apple harvester","Localization time of 1.5s, a picking time of 6s; a success pick rate of 84%.",N/A,N/A,N/A,,Not specified,,2017,Yes,No,5
+chnpqst_012,arad2020development,"@article{arad2020development,
+  title={Development of a sweet pepper harvesting robot},
+  author={Ar...","Arad, B; Balendonck, J; Barth, R; Ben-Shahar, O; Edan, Y; Hellstr?m, T; Hemming, J; Kurtser, P; Ringdahl, O; Tielen, T; van Tuijl, B",Development of a sweet pepper harvesting robot,Picking time of 24s and 15s in field and lab respectively; a success rate of 61\%,N/A,N/A,N/A,,Not specified,RGB-D,2020,Yes,No,6
+chnpqst_013,xiong2020autonomous,"@article{xiong2020autonomous,
+  title={An autonomous strawberry-harvesting robot: Design, developmen...","Xiong, Y; Ge, YY; Grimstad, L; From, PJ","An autonomous strawberry-harvesting robot: Design, development, integration, and field evaluation","picking time of 4.6s, a success rate from 75\% to 100\%.",N/A,N/A,N/A,,Not specified,,2020,Yes,No,5
+chnpqst_014,jia2020detection,"@article{jia2020detection,
+  title={Detection and segmentation of overlapped fruits based on optimiz...","Jia, WK; Tian, YY; Luo, R; Zhang, ZH; Lian, J; Zheng, YJ",Detection and segmentation of overlapped fruits based on optimized mask R-CNN application in apple harvesting robot,"The Precision Rate has reached 97.31%, and the Recall Rate has reached 95.70%.",N/A,N/A,N/A,Mask-RCNN,Mask R-CNN,,2020,Yes,Yes,6
+chnpqst_015,williams2019robotic,"@article{williams2019robotic,
+  title={Robotic kiwifruit harvesting using machine vision, convolutio...","Williams, HAM; Jones, MH; Nejati, M; Seabright, MJ; Bell, J; Penhall, ND; Barnett, JJ; Duke, MD; Scarfe, AJ; Ahn, HS; Lim, J; MacDonald, BA","Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms","picking time of 5.5s, a success rate of 51\%.",N/A,N/A,N/A,deep neural networks,Other,3D,2019,Yes,Yes,7
+chnpqst_016,lawal2021tomato,"@article{lawal2021tomato,
+  title={Tomato detection based on modified YOLOv3 framework},
+  author={L...","Lawal, MO",Tomato detection based on modified YOLOv3 framework,"picking time of 44ms, a success rate of over 98\%.",N/A,N/A,N/A,YOLOv3,YOLOv3,,2021,Yes,Yes,6
+chnpqst_017,vasconez2019human,"@article{vasconez2019human,
+  title={Human--robot interaction in agriculture: A survey and current c...","Vasconez, JP; Kantor, GA; Cheein, FAA",Human-robot interaction in agriculture: A survey and current challenges,,N/A,N/A,N/A,,Not specified,,2019,No,No,4
+chnpqst_018,mehta2014vision,"@article{mehta2014vision,
+  title={Vision-based control of robotic manipulator for citrus harvesting...","Mehta, SS; Burks, TF",Vision-based control of robotic manipulator for citrus harvesting,accuracy of controller is 15mm,N/A,N/A,N/A,,Not specified,3D,2014,Yes,No,6
+chnpqst_019,xiong2019development,"@article{xiong2019development,
+  title={Development and field evaluation of a strawberry harvesting ...","Xiong, Y; Peng, C; Grimstad, L; From, PJ; Isler, V",Development and field evaluation of a strawberry harvesting robot with a cable-driven gripper,"picking time of 7.5s, a success rate of 59\% in cluster.",N/A,N/A,N/A,,Not specified,RGB-D,2019,Yes,No,6
+chnpqst_020,lehnert2017autonomous,"@article{lehnert2017autonomous,
+  title={Autonomous sweet pepper harvesting for protected cropping s...","Lehnert, C; English, A; McCool, C; Tow, AW; Perez, T",Autonomous Sweet Pepper Harvesting for Protected Cropping Systems,"the success rate of 46\%,58\%,90\% in unmodified, modified and favorable cultivar respectively.",N/A,N/A,N/A,,Not specified,,2017,Yes,No,5
+chnpqst_021,bajwa2015nonconventional,"@article{bajwa2015nonconventional,
+  title={Nonconventional weed management strategies for modern ag...","Bajwa, AA; Mahajan, G; Chauhan, BS",Nonconventional Weed Management Strategies for Modern Agriculture,,N/A,N/A,N/A,,Not specified,,2015,No,No,4
+chnpqst_022,lu2020survey,"@article{lu2020survey,
+  title={A survey of public datasets for computer vision tasks in precision a...","Lu, YZ; Young, S",A survey of public datasets for computer vision tasks in precision agriculture,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_023,bac2017performance,"@article{bac2017performance,
+  title={Performance evaluation of a harvesting robot for sweet pepper}...","Bac, CW; Hemming, J; van Tuijl, BAJ; Barth, R; Wais, E; van Henten, EJ",Performance Evaluation of a Harvesting Robot for Sweet Pepper,26\% and 33\% with two end-effector respectively.,N/A,N/A,N/A,,Not specified,,2017,Yes,No,5
+chnpqst_024,mavridou2019machine,"@article{mavridou2019machine,
+  title={Machine vision systems in precision agriculture for crop farm...","Mavridou, E; Vrochidou, E; Papakostas, GA; Pachidis, T; Kaburlasos, VG",Machine Vision Systems in Precision Agriculture for Crop Farming,,N/A,N/A,N/A,,Not specified,,2019,No,No,4
+chnpqst_025,fountas2020agricultural,"@article{fountas2020agricultural,
+  title={Agricultural robotics for field operations},
+  author={Fo...","Fountas, S; Mylonas, N; Malounas, I; Rodias, E; Santos, CH; Pekkeriet, E",Agricultural Robotics for Field Operations,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_026,oliveira2021advances,"@article{oliveira2021advances,
+  title={Advances in agriculture robotics: A state-of-the-art review ...","Oliveira, LFP; Moreira, AP; Silva, MF",Advances in Agriculture Robotics: A State-of-the-Art Review and Challenges Ahead,,N/A,N/A,N/A,,Not specified,,2021,No,No,4
+chnpqst_027,underwood2016mapping,"@article{underwood2016mapping,
+  title={Mapping almond orchard canopy volume, flowers, fruit and yie...","Underwood, JP; Hung, C; Whelan, B; Sukkarieh, S","Mapping almond orchard canopy volume, flowers, fruit and yield using lidar and vision sensors",,N/A,N/A,N/A,,Not specified,3D,2016,No,No,5
+chnpqst_028,marinoudi2019robotics,"@article{marinoudi2019robotics,
+  title={Robotics and labour in agriculture. A context consideration...","Marinoudi, V; Sorensen, CG; Pearson, S; Bochtis, D",Robotics and labour in agriculture. A context consideration,,N/A,N/A,N/A,,Not specified,,2019,No,No,4
+chnpqst_029,fu2020faster,"@article{fu2020faster,
+  title={Faster R--CNN--based apple detection in dense-foliage fruiting-wall ...","Fu, LS; Majeed, Y; Zhang, X; Karkee, M; Zhang, Q",Faster R-CNN-based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting,a precision of 0.893,N/A,0.893%,N/A,Faster R-CNN,Faster R-CNN,Kinect V2 sensor,2020,Yes,Yes,7
+chnpqst_030,gai2023detection,"@article{gai2023detection,
+  title={A detection algorithm for cherry fruits based on the improved YO...","Gai, RL; Chen, N; Yuan, H",A detection algorithm for cherry fruits based on the improved YOLO-v4 model,an accuracy of 0.15 higher than that of YOLOv4,0.15%,N/A,N/A,improved YOLOv4,YOLOv4,,2023,Yes,Yes,6
+chnpqst_031,kuznetsova2020using,"@article{kuznetsova2020using,
+  title={Using YOLOv3 algorithm with pre-and post-processing for apple...","Kuznetsova, A; Maleva, T; Soloviev, V",Using YOLOv3 Algorithm with Pre- and Post-Processing for Apple Detection in Fruit-Harvesting Robot,a detecion time of 19ms and error rate of 7.8\% in mistake and 9.2\% in unrecognization.,N/A,N/A,N/A,YOLOv3,YOLOv3,,2020,Yes,Yes,6
+chnpqst_032,kang2020fruit,"@article{kang2020fruit,
+  title={Fruit detection, segmentation and 3D visualisation of environments ...","Kang, HW; Chen, C","Fruit detection, segmentation and 3D visualisation of environments in apple orchards","DaSNet-v2 with resnet-18 achieves 0.85, 0.87 and 0.866 on recall and precision of detection, and accuracy of instance segmentation on fruits, and 0.775 on the accuracy of branches segmentation, respectively.",N/A,N/A,N/A,DaSNet-v2,Other,3D,2020,Yes,Yes,7
+chnpqst_033,lin2020color,"@article{lin2020color,
+  title={Color-, depth-, and shape-based 3D fruit detection},
+  author={Lin, ...","Lin, GH; Tang, YH; Zou, XJ; Xiong, JT; Fang, YM","Color-, depth-, and shape-based 3D fruit detection","For the pepper, eggplant, and guava datasets, the detection precision was 0.864, 0.886, and 0.888, and the recall was 0.889, 0.762, and 0.812, respectively.",N/A,N/A,N/A,SVM,Other,3D,2020,Yes,Yes,7
+chnpqst_034,barth2018data,"@article{barth2018data,
+  title={Data synthesis methods for semantic segmentation in agriculture: A ...","Barth, R; IJsselmuiden, J; Hemming, J; Van Henten, EJ",Data synthesis methods for semantic segmentation in agriculture: A Capsicum annuum dataset,,N/A,N/A,N/A,,Not specified,3D,2018,No,No,5
+chnpqst_035,nguyen2016detection,"@article{nguyen2016detection,
+  title={Detection of red and bicoloured apples on tree with an RGB-D ...","Nguyen, TT; Vandevoorde, K; Wouters, N; Kayacan, E; De Baerdemaeker, JG; Saeys, W",Detection of red and bicoloured apples on tree with an RGB-D camera,100% of the fully visible apples and 82% of the partially occluded apples,N/A,N/A,N/A,,Not specified,RGB-D,2016,Yes,No,6
+chnpqst_036,yaguchi2016development,"@inproceedings{yaguchi2016development,
+  title={Development of an autonomous tomato harvesting robot...","Yaguchi, H; Nagahama, K; Hasegawa, T; Inaba, M",Development of An Autonomous Tomato Harvesting Robot with Rotational Plucking Gripper,Picking time of 23s,N/A,N/A,N/A,,Not specified,,2016,Yes,No,5
+chnpqst_037,bresilla2019single,"@article{bresilla2019single,
+  title={Single-shot convolution neural networks for real-time fruit de...","Bresilla, K; Perulli, GD; Boini, A; Morandi, B; Grappadelli, LC; Manfrini, L",Single-Shot Convolution Neural Networks for Real-Time Fruit Detection Within the Tree,Over 90\% fruit detection,N/A,N/A,N/A,single-shot CNN,CNN,,2019,Yes,Yes,6
+chnpqst_038,lin2019guava,"@article{lin2019guava,
+  title={Guava detection and pose estimation using a low-cost RGB-D sensor in...","Lin, GC; Tang, YC; Zou, XJ; Xiong, JT; Li, JH",Guava Detection and Pose Estimation Using a Low-Cost RGB-D Sensor in the Field,"the precision and recall of guava fruit detection were 0.983 and 0.948,execution time of 0.565s",N/A,N/A,N/A,,Not specified,RGB-D,2019,Yes,No,6
+chnpqst_039,li2020detection,"@article{li2020detection,
+  title={Detection of fruit-bearing branches and localization of litchi cl...","Li, JH; Tang, YC; Zou, XJ; Lin, GC; Wang, HJ",Detection of Fruit-Bearing Branches and Localization of Litchi Clusters for Vision-Based Harvesting Robots,"an accuracy of 83.3\%, detection time of 0.464s",83.3%,N/A,N/A,,Not specified,,2020,Yes,No,5
+chnpqst_040,zhao2016detecting,"@article{zhao2016detecting,
+  title={Detecting tomatoes in greenhouse scenes by combining AdaBoost c...","Zhao, YS; Gong, L; Zhou, B; Huang, YX; Liu, CL",Detecting tomatoes in greenhouse scenes by combining AdaBoost classifier and colour analysis,over 96% of ripe tomatoes,N/A,N/A,N/A,adaboost classifier and color,Other,,2016,Yes,Yes,6
+chnpqst_041,hameed2018comprehensive,"@article{hameed2018comprehensive,
+  title={A comprehensive review of fruit and vegetable classificat...","Hameed, K; Chai, D; Rassau, A",A comprehensive review of fruit and vegetable classification techniques,,N/A,N/A,N/A,"SVM,KNN,CNN",CNN,,2018,No,Yes,5
+chnpqst_042,lin2020fruit,"@article{lin2020fruit,
+  title={Fruit detection in natural environment using partial shape matching ...","Lin, GC; Tang, YC; Zou, XJ; Cheng, JB; Xiong, JT",Fruit detection in natural environment using partial shape matching and probabilistic Hough transform,,N/A,N/A,N/A,Hough transform,Other,,2020,No,Yes,5
+chnpqst_043,wei2014automatic,"@article{wei2014automatic,
+  title={Automatic method of fruit object extraction under complex agricu...","Wei, XQ; Jia, K; Lan, JH; Li, YW; Zeng, YL; Wang, CM",Automatic method of fruit object extraction under complex agricultural background for vision system of fruit picking robot,,N/A,N/A,N/A,,Not specified,,2014,No,No,4
+chnpqst_044,mohamed2021smart,"@article{mohamed2021smart,
+  title={Smart farming for improving agricultural management},
+  author={...","Mohamed, ES; Belal, A; Abd-Elmabod, SK; El-Shirbeny, MA; Gad, A; Zahran, MB",Smart farming for improving agricultural management,,N/A,N/A,N/A,,Not specified,,2021,No,No,4
+chnpqst_045,mohamed2021smart,"@article{mohamed2021smart,
+  title={Smart farming for improving agricultural management},
+  author={...","Feng, QC; Zou, W; Fan, PF; Zhang, CF; Wang, X",Design and test of robotic harvesting system for cherry tomato,,N/A,N/A,N/A,,Not specified,,2018,No,No,4
+chnpqst_046,ampatzidis2017ipathology,"@article{ampatzidis2017ipathology,
+  title={iPathology: robotic applications and management of plant...","Ampatzidis, Y; De Bellis, L; Luvisi, A",iPathology: Robotic Applications and Management of Plants and Plant Diseases,,N/A,N/A,N/A,,Not specified,,2017,No,No,4
+chnpqst_047,birrell2020field,"@article{birrell2020field,
+  title={A field-tested robotic harvesting system for iceberg lettuce},
+ ...","Birrell, S; Hughes, J; Cai, JY; Iida, F",A field-tested robotic harvesting system for iceberg lettuce,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_048,tu2020passion,"@article{tu2020passion,
+  title={Passion fruit detection and counting based on multiple scale faster...","Tu, SQ; Pang, J; Liu, HF; Zhuang, N; Chen, Y; Zheng, C; Wan, H; Xue, YJ",Passion fruit detection and counting based on multiple scale faster R-CNN using RGB-D images,,N/A,N/A,N/A,Faster R-CNN,Faster R-CNN,RGB-D,2020,No,Yes,6
+chnpqst_049,hariharanautobot,"@article{hariharanautobot,
+  title={Autobot for Precision Farming},
+  author={Hariharan, Abhishek an...","Abu Basim, NM; Hariharan, GA; Solomon, N; DevaDharshini, U; Banu, NR; Saranghan, M; Vignajeth, KK",Autobot for Precision Farming,,N/A,N/A,N/A,,Not specified,,2017,No,No,4
+chnpqst_050,majeed2020deep,"@article{majeed2020deep,
+  title={Deep learning based segmentation for automated training of apple t...","Majeed, Y; Zhang, J; Zhang, X; Fu, LS; Karkee, M; Zhang, Q; Whiting, MD",Deep learning based segmentation for automated training of apple trees on trellis wires,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_051,altaheri2019date,"@article{altaheri2019date,
+  title={Date fruit classification for robotic harvesting in a natural en...","Altaheri, H; Alsulaiman, M; Muhammad, G",Date Fruit Classification for Robotic Harvesting in a Natural Environment Using Deep Learning,,N/A,N/A,N/A,deep learning,Other,,2019,No,Yes,5
+chnpqst_052,wang2016localisation,"@article{wang2016localisation,
+  title={Localisation of litchi in an unstructured environment using ...","Wang, CL; Zou, XJ; Tang, YC; Luo, LF; Feng, WX",Localisation of litchi in an unstructured environment using binocular stereo vision,,N/A,N/A,N/A,,Not specified,bionocular,2016,No,No,5
+chnpqst_053,si2015location,"@article{si2015location,
+  title={Location of apples in trees using stereoscopic vision},
+  author={...","Si, YS; Gang, L; Juan, F",Location of apples in trees using stereoscopic vision,,N/A,N/A,N/A,,Not specified,3D,2015,No,No,5
+chnpqst_054,samtani2019status,"@article{samtani2019status,
+  title={The status and future of the strawberry industry in the United ...","Samtani, JB; Rom, CR; Friedrich, H; Fennimore, SA; Finn, CE; Petran, A; Wallace, RW; Pritts, MP; Fernandez, G; Chase, CA; Kubota, C; Bergefurd, B",The Status and Future of the Strawberry Industry in the United States,,N/A,N/A,N/A,,Not specified,,2019,No,No,4
+chnpqst_055,luo2016vision,"@article{luo2016vision,
+  title={Vision-based extraction of spatial information in grape clusters fo...","Luo, LF; Tang, YC; Zou, XJ; Ye, M; Feng, WX; Li, GQ",Vision-based extraction of spatial information in grape clusters for harvesting robots,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_056,luo2018vision,"@article{luo2018vision,
+  title={A vision methodology for harvesting robot to detect cutting points ...","Luo, LF; Tang, YC; Lu, QH; Chen, X; Zhang, P; Zou, XJ",A vision methodology for harvesting robot to detect cutting points on peduncles of double overlapping grape clusters in a vineyard,,N/A,N/A,N/A,,Not specified,,2018,No,No,4
+chnpqst_057,fu2018kiwifruit,"@article{fu2018kiwifruit,
+  title={Kiwifruit detection in field images using Faster R-CNN with ZFNet...","Fu, LS; Feng, YL; Majeed, Y; Zhang, X; Zhang, J; Karkee, M; Zhang, Q",Kiwifruit detection in field images using Faster R-CNN with ZFNet,,N/A,N/A,N/A,Faster R-CNN with ZFNET,Faster R-CNN,,2018,No,Yes,5
+chnpqst_058,kang2020real,"@article{kang2020real,
+  title={Real-time fruit recognition and grasping estimation for robotic appl...","Kang, HW; Zhou, HY; Wang, X; Chen, C",Real-Time Fruit Recognition and Grasping Estimation for Robotic Apple Harvesting,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_059,barnea2016colour,"@article{barnea2016colour,
+  title={Colour-agnostic shape-based 3D fruit detection for crop harvesti...","Barnea, E; Mairon, R; Ben-Shahar, O",Colour-agnostic shape-based 3D fruit detection for crop harvesting robots,,N/A,N/A,N/A,,Not specified,3D,2016,No,No,5
+chnpqst_060,barth2016design,"@article{barth2016design,
+  title={Design of an eye-in-hand sensing and servo control framework for ...","Barth, R; Hemming, J; van Henten, EJ",Design of an eye-in-hand sensing and servo control framework for harvesting robotics in dense vegetation,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_061,lili2017development,"@article{lili2017development,
+  title={Development of a tomato harvesting robot used in greenhouse},...","Wang, LL; Zhao, B; Fan, JW; Hu, XA; Wei, S; Li, YS; Zhou, QB; Wei, CF",Development of a tomato harvesting robot used in greenhouse,,N/A,N/A,N/A,,Not specified,,2017,No,No,4
+chnpqst_062,navas2021soft,"@article{navas2021soft,
+  title={Soft grippers for automatic crop harvesting: A review},
+  author={N...","Navas, E; Fern¨¢ndez, R; Sep¨²lveda, D; Armada, M; Gonzalez-de-Santos, P",Soft Grippers for Automatic Crop Harvesting: A Review,,N/A,N/A,N/A,,Not specified,,2021,No,No,4
+chnpqst_063,goel2015fuzzy,"@article{goel2015fuzzy,
+  title={Fuzzy classification of pre-harvest tomatoes for ripeness estimatio...","Goel, N; Sehgal, P",Fuzzy classification of pre-harvest tomatoes for ripeness estimation - An approach based on automatic rule learning using decision tree,,N/A,N/A,N/A,fuzzy classification and desion tree,Other,,2015,No,Yes,5
+chnpqst_064,zhou2022intelligent,"@article{zhou2022intelligent,
+  title={Intelligent robots for fruit harvesting: Recent developments ...","Zhou, HY; Wang, X; Au, W; Kang, HW; Chen, C",Intelligent robots for fruit harvesting: recent developments and future challenges,,N/A,N/A,N/A,,Not specified,,2022,No,No,4
+chnpqst_065,ling2019dual,"@article{ling2019dual,
+  title={Dual-arm cooperation and implementing for robotic harvesting tomato ...","Ling, X; Zhao, YS; Gong, L; Liu, CL; Wang, T",Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision,,N/A,N/A,N/A,,Not specified,bionocular,2019,No,No,5
+chnpqst_066,luo2016robust,"@article{luo2016robust,
+  title={Robust grape cluster detection in a vineyard by combining the AdaBo...","Luo, LF; Tang, YC; Zou, XJ; Wang, CL; Zhang, P; Feng, WX",Robust Grape Cluster Detection in a Vineyard by Combining the AdaBoost Framework and Multiple Color Components,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_067,zhao2016robust,"@article{zhao2016robust,
+  title={Robust tomato recognition for robotic harvesting using feature ima...","Zhao, YS; Gong, L; Huang, YX; Liu, CL",Robust Tomato Recognition for Robotic Harvesting Using Feature Images Fusion,,N/A,N/A,N/A,images fusion,Other,,2016,No,Yes,5
+chnpqst_068,billingsley2008robotics,"@article{billingsley2008robotics,
+  title={Robotics in Agriculture and Forestry.},
+  author={Billing...","Bergerman, M; Billingsley, J; Reid, J; van Henten, E",Robotics in Agriculture and Forestry,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_069,lin2021collision,"@article{lin2021collision,
+  title={Collision-free path planning for a guava-harvesting robot based ...","Lin, GC; Zhu, LX; Li, JH; Zou, XJ; Tang, YC",Collision-free path planning for a guava-harvesting robot based on recurrent deep reinforcement learning,,N/A,N/A,N/A,,Not specified,,2021,No,No,4
+chnpqst_070,yu2020real,"@article{yu2020real,
+  title={Real-time visual localization of the picking points for a ridge-planti...","Yu, Y; Zhang, KL; Liu, H; Yang, L; Zhang, DX",Real-Time Visual Localization of the Picking Points for a Ridge-Planting Strawberry Harvesting Robot,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_071,onishi2019automated,"@article{onishi2019automated,
+  title={An automated fruit harvesting robot by using deep learning},
+...","Onishi, Y; Yoshida, T; Kurita, H; Fukao, T; Arihara, H; Iwai, A",An automated fruit harvesting robot by using deep learning,,N/A,N/A,N/A,deep learning,Other,,2019,No,Yes,5
+chnpqst_072,font2014proposal,"@article{font2014proposal,
+  title={A proposal for automatic fruit harvesting by combining a low cos...","Font, D; Pallej¨¤, T; Tresanchez, M; Runcan, D; Moreno, J; Mart¨ªnez, D; Teixid¨®, M; Palac¨ªn, J",A Proposal for Automatic Fruit Harvesting by Combining a Low Cost Stereovision Camera and a Robotic Arm,,N/A,N/A,N/A,,Not specified,3D,2014,No,No,5
+chnpqst_073,sepulveda2020robotic,"@article{sepulveda2020robotic,
+  title={Robotic aubergine harvesting using dual-arm manipulation},
+ ...","Sep¨²lveda, D; Fern¨¢ndez, R; Navas, E; Armada, M; Gonz¨¢lez-De-Santos, P",Robotic Aubergine Harvesting Using Dual-Arm Manipulation,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_074,chu2021deep,"@article{chu2021deep,
+  title={Deep learning-based apple detection using a suppression mask R-CNN},
+...","Chu, PY; Li, ZJ; Lammers, K; Lu, RF; Liu, XM",Deep learning-based apple detection using a suppression mask R-CNN,,N/A,N/A,N/A,Mask-RCNN,Mask R-CNN,,2021,No,Yes,5
+chnpqst_075,darwin2021recognition,"@article{darwin2021recognition,
+  title={Recognition of bloom/yield in crop images using deep learni...","Darwin, B; Dharmaraj, P; Prince, S; Popescu, DE; Hemanth, DJ",Recognition of Bloom/Yield in Crop Images Using Deep Learning Models for Smart Agriculture: A Review,,N/A,N/A,N/A,,Not specified,,2021,No,No,4
+chnpqst_076,qiang2014identification,"@article{qiang2014identification,
+  title={Identification of fruit and branch in natural scenes for ...","Qiang, L; Cai, JR; Bin, L; Lie, D; Zhang, YJ",Identification of fruit and branch in natural scenes for citrus harvesting robot using machine vision and support vector machine,,N/A,N/A,N/A,,Not specified,,2014,No,No,4
+chnpqst_077,magalhaes2021evaluating,"@article{magalhaes2021evaluating,
+  title={Evaluating the single-shot multibox detector and YOLO dee...","Magalhaes, SA; Castro, L; Moreira, G; dos Santos, FN; Cunha, M; Dias, J; Moreira, AP",Evaluating the Single-Shot MultiBox Detector and YOLO Deep Learning Models for the Detection of Tomatoes in a Greenhouse,,N/A,N/A,N/A,"single-shot, YOLO",YOLO,,2021,No,Yes,5
+chnpqst_078,bac2014stem,"@article{bac2014stem,
+  title={Stem localization of sweet-pepper plants using the support wire as a ...","Bac, CW; Hemming, J; van Henten, EJ",Stem localization of sweet-pepper plants using the support wire as a visual cue,,N/A,N/A,N/A,,Not specified,,2014,No,No,4
+chnpqst_079,lin2019field,"@article{lin2019field,
+  title={In-field citrus detection and localisation based on RGB-D image anal...","Lin, GC; Tang, YC; Zou, XJ; Li, JH; Xiong, JT",In-field citrus detection and localisation based on RGB-D image analysis,,N/A,N/A,N/A,,Not specified,RGB-D,2019,No,No,5
+chnpqst_080,jia2020apple,"@article{jia2020apple,
+  title={Apple harvesting robot under information technology: A review},
+  au...","Jia, WK; Zhang, Y; Lian, J; Zheng, YJ; Zhao, D; Li, CJ",Apple harvesting robot under information technology: A review,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_081,longsheng2015kiwifruit,"@article{longsheng2015kiwifruit,
+  title={Kiwifruit recognition at nighttime using artificial lighti...","Fu, LS; Wang, B; Cui, YJ; Su, S; Gejima, Y; Kobayashi, T",Kiwifruit recognition at nighttime using artificial lighting based on machine vision,,N/A,N/A,N/A,,Not specified,,2015,No,No,4
+chnpqst_082,mendes2016vine,"@inproceedings{mendes2016vine,
+  title={Vine trunk detector for a reliable robot localization system...","Mendes, J; dos Santos, FN; Ferraz, N; Couto, P; Morais, R",Vine trunk detector for a reliable robot localization system,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_083,zhang2020technology,"@article{zhang2020technology,
+  title={Technology progress in mechanical harvest of fresh market app...","Zhang, Z; Igathinathane, C; Li, J; Cen, H; Lu, Y; Flores, P",Technology progress in mechanical harvest of fresh market apples,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_084,mao2020automatic,"@article{mao2020automatic,
+  title={Automatic cucumber recognition algorithm for harvesting robots i...","Mao, SH; Li, YH; Ma, Y; Zhang, BH; Zhou, J; Wang, K",Automatic cucumber recognition algorithm for harvesting robots in the natural environment using deep learning and multi-feature fusion,,N/A,N/A,N/A,deep learning,Other,,2020,No,Yes,5
+chnpqst_085,ge2019fruit,"@article{ge2019fruit,
+  title={Fruit localization and environment perception for strawberry harvesti...","Ge, YY; Xiong, Y; Tenorio, GL; From, PJ",Fruit Localization and Environment Perception for Strawberry Harvesting Robots,,N/A,N/A,N/A,,Not specified,,2019,No,No,4
+chnpqst_086,perez2018pattern,"@article{perez2018pattern,
+  title={A pattern recognition strategy for visual grape bunch detection ...","P¨¦rez-Zavala, R; Torres-Torriti, M; Cheein, FA; Troni, G",A pattern recognition strategy for visual grape bunch detection in vineyards,,N/A,N/A,N/A,,Not specified,,2018,No,No,4
+chnpqst_087,de2018development,"@article{de2018development,
+  title={Development of a robot for harvesting strawberries},
+  author={...","De Preter, A; Anthonis, J; De Baerdemaeker, J",Development of a Robot for Harvesting Strawberries,,N/A,N/A,N/A,,Not specified,,2018,No,No,4
+chnpqst_088,zhang2018deep,"@article{zhang2018deep,
+  title={Deep learning based improved classification system for designing to...","Zhang, L; Jia, JD; Gui, G; Ha, X; Gao, WL; Wang, MJ",Deep Learning Based Improved Classification System for Designing Tomato Harvesting Robot,,N/A,N/A,N/A,deep learning,Other,,2018,No,Yes,5
+chnpqst_089,peng2020semantic,"@article{peng2020semantic,
+  title={Semantic segmentation of litchi branches using DeepLabV3+ model}...","Peng, HX; Xue, C; Shao, YY; Chen, KY; Xiong, JT; Xie, ZH; Zhang, LH",Semantic Segmentation of Litchi Branches Using DeepLabV3+Model,,N/A,N/A,N/A,deeplabV3,Other,,2020,No,Yes,5
+chnpqst_090,aravind2017task,"@article{aravind2017task,
+  title={Task-based agricultural mobile robots in arable farming: A review...","Aravind, KR; Raja, P; P¨¦rez-Ruiz, M",Task-based agricultural mobile robots in arable farming: A review,,N/A,N/A,N/A,,Not specified,,2017,No,No,4
+chnpqst_091,li2016characterizing,"@article{li2016characterizing,
+  title={Characterizing apple picking patterns for robotic harvesting...","Li, J; Karkee, M; Zhang, Q; Xiao, KH; Feng, T",Characterizing apple picking patterns for robotic harvesting,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_092,li2021novel,"@article{li2021novel,
+  title={A novel green apple segmentation algorithm based on ensemble U-Net un...","Li, QW; Jia, WK; Sun, ML; Hou, SJ; Zheng, YJ",A novel green apple segmentation algorithm based on ensemble U-Net under complex orchard environment,,N/A,N/A,N/A,ensember U-net,Other,,2021,No,Yes,5
+chnpqst_093,kusumam20173d,"@article{kusumam20173d,
+  title={3D-vision based detection, localization, and sizing of broccoli hea...","Kusumam, K; Krajn¨ªk, T; Pearson, S; Duckett, T; Cielniak, G","3D-vision based detection, localization, and sizing of broccoli heads in the field",,N/A,N/A,N/A,,Not specified,3D,2017,No,No,5
+chnpqst_094,lytridis2021overview,"@article{lytridis2021overview,
+  title={An overview of cooperative robotics in agriculture},
+  autho...","Lytridis, C; Kaburlasos, VG; Pachidis, T; Manios, M; Vrochidou, E; Kalampokas, T; Chatzistamatis, S",An Overview of Cooperative Robotics in Agriculture,,N/A,N/A,N/A,,Not specified,,2021,No,No,4
+chnpqst_095,xiang2019fruit,"@inproceedings{xiang2019fruit,
+  title={Fruit image classification based on Mobilenetv2 with transfe...","Xiang, Q; Wang, XD; Li, R; Zhang, GL; Lai, J; Hu, QS",Fruit Image Classification Based on MobileNetV2 with Transfer Learning Technique,,N/A,N/A,N/A,mobileNetV2 transfer learning,Other,,2019,No,Yes,5
+chnpqst_096,jun2021towards,"@article{jun2021towards,
+  title={Towards an efficient tomato harvesting robot: 3d perception, manip...","Jun, J; Kim, J; Seol, J; Kim, J; Il Son, H","Towards an Efficient Tomato Harvesting Robot: 3D Perception, Manipulation, and End-Effector",,N/A,N/A,N/A,,Not specified,3D,2021,No,No,5
+chnpqst_097,aguiar2020localization,"@article{aguiar2020localization,
+  title={Localization and mapping for robots in agriculture and for...","Aguiar, AS; dos Santos, FN; Cunha, JB; Sobreira, H; Sousa, AJ",Localization and Mapping for Robots in Agriculture and Forestry: A Survey,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_098,andujar2016using,"@article{andujar2016using,
+  title={Using depth cameras to extract structural parameters to assess t...","And¨²jar, D; Ribeiro, A; Fern¨¢ndez-Quintanilla, C; Dorado, J",Using depth cameras to extract structural parameters to assess the growth state and yield of cauliflower crops,,N/A,N/A,N/A,,Not specified,3D,2016,No,No,5
+chnpqst_099,horng2019smart,"@article{horng2019smart,
+  title={The smart image recognition mechanism for crop harvesting system i...","Horng, GJ; Liu, MX; Chen, CC",The Smart Image Recognition Mechanism for Crop Harvesting System in Intelligent Agriculture,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_100,wang2017robust,"@article{wang2017robust,
+  title={A robust fruit image segmentation algorithm against varying illumi...","Wang, CL; Tang, YC; Zou, XJ; SiTu, WM; Feng, WX",A robust fruit image segmentation algorithm against varying illumination for vision system of fruit harvesting robot,,N/A,N/A,N/A,,Not specified,,2017,No,No,4
+chnpqst_101,lu2015detecting,"@article{lu2015detecting,
+  title={Detecting citrus fruits and occlusion recovery under natural illu...","Lu, J; Sang, N",Detecting citrus fruits and occlusion recovery under natural illumination conditions,,N/A,N/A,N/A,,Not specified,,2015,No,No,4
+chnpqst_102,hohimer2019design,"@article{hohimer2019design,
+  title={Design and field evaluation of a robotic apple harvesting syste...","Hohimer, CJ; Wang, H; Bhusal, S; Miller, J; Mo, C; Karkee, M",DESIGN AND FIELD EVALUATION OF A ROBOTIC APPLE HARVESTING SYSTEM WITH A 3D-PRINTED SOFT-ROBOTIC END-EFFECTOR,,N/A,N/A,N/A,,Not specified,,2019,No,No,4
+chnpqst_103,zhang2016development,"@article{zhang2016development,
+  title={The development of mechanical apple harvesting technology: A...","Zhang, Z; Heinemann, PH; Liu, J; Baugher, TA; Schupp, JR",THE DEVELOPMENT OF MECHANICAL APPLE HARVESTING TECHNOLOGY: A REVIEW,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_104,li2021real,"@article{li2021real,
+  title={A real-time table grape detection method based on improved YOLOv4-tiny...","Li, HP; Li, CY; Li, GB; Chen, LX",A real-time table grape detection method based on improved YOLOv4-tiny network in complex background,,N/A,N/A,N/A,YOLOv4-tiny,YOLOv4,,2021,No,Yes,5
+chnpqst_105,hemming2014fruit,"@article{hemming2014fruit,
+  title={Fruit detectability analysis for different camera positions in s...","Hemming, J; Ruizendaal, J; Hofstee, JW; van Henten, EJ",Fruit Detectability Analysis for Different Camera Positions in Sweet-Pepper,,N/A,N/A,N/A,,Not specified,,2014,No,No,4
+chnpqst_106,pereira2019deep,"@article{pereira2019deep,
+  title={Deep learning techniques for grape plant species identification i...","Pereira, CS; Morais, R; Reis, MJCS",Deep Learning Techniques for Grape Plant Species Identification in Natural Images,,N/A,N/A,N/A,deep learning,Other,,2019,No,Yes,5
+chnpqst_107,bac2016analysis,"@article{bac2016analysis,
+  title={Analysis of a motion planning problem for sweet-pepper harvesting...","Bac, CW; Roorda, T; Reshef, R; Berman, S; Hemming, J; van Henten, EJ",Analysis of a motion planning problem for sweet-pepper harvesting in a dense obstacle environment,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_108,mehta2016robust,"@article{mehta2016robust,
+  title={Robust visual servo control in the presence of fruit motion for r...","Mehta, SS; MacKunis, W; Burks, TF",Robust visual servo control in the presence of fruit motion for robotic citrus harvesting,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_109,williams2020improvements,"@article{williams2020improvements,
+  title={Improvements to and large-scale evaluation of a robotic ...","Williams, H; Ting, C; Nejati, M; Jones, MH; Penhall, N; Lim, J; Seabright, M; Bell, J; Ahn, HS; Scarfe, A; Duke, M; MacDonald, B",Improvements to and large-scale evaluation of a robotic kiwifruit harvester,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_110,bormann2018indoor,"@inproceedings{bormann2018indoor,
+  title={Indoor coverage path planning: Survey, implementation, an...","Bormann, R; Jordan, F; Hampp, J; H?gele, M","Indoor Coverage Path Planning: Survey, Implementation, Analysis",,N/A,N/A,N/A,,Not specified,,2018,No,No,4
+chnpqst_111,lehnert2016sweet,"@inproceedings{lehnert2016sweet,
+  title={Sweet pepper pose detection and grasping for automated cro...","Lehnert, C; Sa, I; McCool, C; Uperoft, B; Perez, T",Sweet Pepper Pose Detection and Grasping for Automated Crop Harvesting,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_112,cubero2014optimised,"@article{cubero2014optimised,
+  title={Optimised computer vision system for automatic pre-grading of...","Cubero, S; Aleixos, N; Albert, F; Torregrosa, A; Ortiz, C; Garc¨ªa-Navarrete, O; Blasco, J",Optimised computer vision system for automatic pre-grading of citrus fruit in the field using a mobile platform,,N/A,N/A,N/A,,Not specified,,2014,No,No,4
+chnpqst_113,fue2020extensive,"@article{fue2020extensive,
+  title={An extensive review of mobile agricultural robotics for field op...","Fue, KG; Porter, WM; Barnes, EM; Rains, GC",An Extensive Review of Mobile Agricultural Robotics for Field Operations: Focus on Cotton Harvesting,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_114,liu2016method,"@article{liu2016method,
+  title={A method of segmenting apples at night based on color and position ...","Liu, XY; Zhao, D; Jia, WK; Ruan, CZ; Tang, SP; Shen, T",A method of segmenting apples at night based on color and position information,,N/A,N/A,N/A,,Not specified,,2016,No,No,4
+chnpqst_115,tang2023fruit,"@article{tang2023fruit,
+  title={Fruit detection and positioning technology for a Camellia oleifera ...",,Fruit detection and positioning technology for a Camellia oleifera C. Abel orchard based on improved YOLOv4-tiny model and binocular stereo vision,,N/A,N/A,N/A,YOLOv4-tiny,YOLOv4,,2023,No,Yes,4
+chnpqst_116,ayaz2019internet,"@article{ayaz2019internet,
+  title={Internet-of-Things (IoT)-based smart agriculture: Toward making ...",,Internet-of-Things (IoT)-based smart agriculture: Toward making the fields talk,,N/A,N/A,N/A,,Not specified,,2019,No,No,3
+chnpqst_117,fu2020faster,"@article{fu2020faster,
+  title={Faster R--CNN--based apple detection in dense-foliage fruiting-wall ...",,Faster R¨CCNN¨Cbased apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting,,N/A,N/A,N/A,Faster R-CNN,Faster R-CNN,RGB-D,2020,No,Yes,5
+chnpqst_118,saleem2021automation,"@article{saleem2021automation,
+  title={Automation in agriculture by machine and deep learning techn...",,Automation in Agriculture by Machine and Deep Learning Techniques: A Review of Recent Developments,,N/A,N/A,N/A,,Not specified,,2021,No,No,3
+chnpqst_119,dutta2020cleaning,"@article{dutta2020cleaning,
+  title={Cleaning the River Ganga: Impact of lockdown on water quality a...",,Cleaning the River Ganga: Impact of lockdown on water quality and future implications on river rejuvenation strategies,,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_120,kang2020fast,"@article{kang2020fast,
+  title={Fast implementation of real-time fruit detection in apple orchards u...",,Fast implementation of real-time fruit detection in apple orchards using deep learning,,N/A,N/A,N/A,deep learning,Other,,2020,No,Yes,4
+chnpqst_121,khanal2020remote,"@article{khanal2020remote,
+  title={Remote sensing in agriculture¡ªaccomplishments, limitations, and...",,"Remote sensing in agriculture¡ªaccomplishments, limitations, and opportunities",,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_122,friha2021internet,"@article{friha2021internet,
+  title={Internet of things for the future of smart agriculture: A compr...",,Internet of Things for the Future of Smart Agriculture: A Comprehensive Survey of Emerging Technologies,,N/A,N/A,N/A,,Not specified,,2021,No,No,3
+chnpqst_123,gao2020multi,"@article{gao2020multi,
+  title={Multi-class fruit-on-plant detection for apple in SNAP system using ...",,Multi-class fruit-on-plant detection for apple in SNAP system using Faster R-CNN,,N/A,N/A,N/A,Faster R-CNN,Faster R-CNN,,2020,No,Yes,4
+chnpqst_124,sozzi2022automatic,"@article{sozzi2022automatic,
+  title={Automatic bunch detection in white grape varieties using YOLOv...",,"Automatic Bunch Detection in White Grape Varieties Using YOLOv3, YOLOv4, and YOLOv5 Deep Learning Algorithms",,N/A,N/A,N/A,"YOLOv3,YOLOv4,YOLOv5",YOLOv3,,2022,No,Yes,4
+chnpqst_125,zhang2020state,"@article{zhang2020state,
+  title={State-of-the-art robotic grippers, grasping and control strategies...",,"State-of-the-art robotic grippers, grasping and control strategies, as well as their applications in agricultural robots: A review",,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_126,gene2019multi,"@article{gene2019multi,
+  title={Multi-modal deep learning for Fuji apple detection using RGB-D came...",,Multi-modal deep learning for Fuji apple detection using RGB-D cameras and their radiometric capabilities,,N/A,N/A,N/A,,Not specified,,2019,No,No,3
+chnpqst_127,sharma2020machine,"@article{sharma2020machine,
+  title={Machine learning applications for precision agriculture: A comp...",,Machine Learning Applications for Precision Agriculture: A Comprehensive Review,,N/A,N/A,N/A,,Not specified,,2021,No,No,3
+chnpqst_128,kang2019fruit,"@article{kang2019fruit,
+  title={Fruit detection and segmentation for apple harvesting using visual ...",,Fruit detection and segmentation for apple harvesting using visual sensor in orchards,,N/A,N/A,N/A,,Not specified,,2019,No,No,3
+chnpqst_129,luo2020identifying,"@article{luo2020identifying,
+  title={Identifying the spatiotemporal changes of annual harvesting ar...",,Identifying the spatiotemporal changes of annual harvesting areas for three staple crops in China by integrating multi-data sources,,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_130,cubero2016automated,"@article{cubero2016automated,
+  title={Automated systems based on machine vision for inspecting citr...",,Automated Systems Based on Machine Vision for Inspecting Citrus Fruits from the Field to Postharvest¡ªa Review,,N/A,N/A,N/A,,Not specified,,2016,No,No,3
+chnpqst_131,rayhana2020internet,"@article{rayhana2020internet,
+  title={Internet of things empowered smart greenhouse farming},
+  aut...",,Internet of Things Empowered Smart Greenhouse Farming,,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_132,pranto2021blockchain,"@article{pranto2021blockchain,
+  title={Blockchain and smart contract for IoT enabled smart agricult...",,Blockchain and smart contract for IoT enabled smart agriculture,,N/A,N/A,N/A,,Not specified,,2021,No,No,3
+chnpqst_133,liu2017research,"@article{liu2017research,
+  title={Research progress analysis of robotic harvesting technologies in ...",,Research Progress Analysis of Robotic Harvesting Technologies in Greenhouse,,N/A,N/A,N/A,,Not specified,,2017,No,No,3
+chnpqst_134,gongal2018apple,"@article{gongal2018apple,
+  title={Apple fruit size estimation using a 3D machine vision system},
+  ...",,Apple fruit size estimation using a 3D machine vision system,,N/A,N/A,N/A,,Not specified,,2018,No,No,3
+chnpqst_135,Áõ·¼2020»ùÓÚ¸Ä½øÐÍ,"@article{Áõ·¼2020»ùÓÚ¸Ä½øÐÍ,
+  title={»ùÓÚ¸Ä½øÐÍ YOLO µÄ¸´ÔÓ»·¾³ÏÂ·¬ÇÑ¹ûÊµ¿ìËÙÊ¶±ð·½·¨},
+  author={Á...",,Fast Recognition Method for Tomatoes under Complex Environments Based on Improved YOLO; [»ùÓÚ¸Ä½øÐÍYOLOµÄ¸´ÔÓ»·¾³ÏÂ·¬ÇÑ¹ûÊµ¿ìËÙÊ¶±ð·½·¨],,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_136,sa2017peduncle,"@article{sa2017peduncle,
+  title={Peduncle detection of sweet pepper for autonomous crop harvesting¡...",,Peduncle Detection of Sweet Pepper for Autonomous Crop Harvesting-Combined Color and 3-D Information,,N/A,N/A,N/A,,Not specified,,2017,No,No,3
+chnpqst_137,mu2020design,"@article{mu2020design,
+  title={Design and simulation of an integrated end-effector for picking kiwi...",,Design and simulation of an integrated end-effector for picking kiwifruit by robot,,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_138,fu2018image,"@article{fu2018image,
+  title={Image recognition method of multi-cluster kiwifruit in field based on...",,Image recognition method of multi-cluster kiwifruit in field based on convolutional neural networks,,N/A,N/A,N/A,,Not specified,,2018,No,No,3
+chnpqst_139,peng2018general,"@article{peng2018general,
+  title={General improved SSD model for picking object recognition of mult...",,General improved SSD model for picking object recognition of multiple fruits in natural environment; [×ÔÈ»»·¾³ÏÂ¶àÀàË®¹û²ÉÕªÄ¿±êÊ¶±ðµÄÍ¨ÓÃ¸Ä½øSSDÄ£ÐÍ],,N/A,N/A,N/A,,Not specified,,2018,No,No,3
+chnpqst_140,lalander2015vermicomposting,"@article{lalander2015vermicomposting,
+  title={Vermicomposting as manure management strategy for urb...",,Vermicomposting as manure management strategy for urban small-holder animal farms - Kampala case study,,N/A,N/A,N/A,,Not specified,,2015,No,No,3
+chnpqst_141,narvaez2017survey,"@article{narvaez2017survey,
+  title={A survey of ranging and imaging techniques for precision agricu...",,A survey of ranging and imaging techniques for precision agriculture phenotyping,,N/A,N/A,N/A,,Not specified,,2017,No,No,3
+chnpqst_142,kirk2020b,"@article{kirk2020b,
+  title={L* a* b* fruits: A rapid and robust outdoor fruit detection system comb...",,L*a*b*Fruits: A rapid and robust outdoor fruit detection system combining bio-inspired features with one-stage deep learning networks,,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_143,martos2021ensuring,"@article{martos2021ensuring,
+  title={Ensuring agricultural sustainability through remote sensing in...",,Ensuring agricultural sustainability through remote sensing in the era of agriculture 5.0,,N/A,N/A,N/A,,Not specified,,2021,No,No,3
+chnpqst_144,napoli2019phytoextraction,"@article{napoli2019phytoextraction,
+  title={Phytoextraction of copper from a contaminated soil usin...",,Phytoextraction of copper from a contaminated soil using arable and vegetable crops,,N/A,N/A,N/A,,Not specified,,2019,No,No,3
+chnpqst_145,wang2017research,"@article{wang2017research,
+  title={Research advance on vision system of apple picking robot},
+  aut...",,Research advance on vision system of apple picking robot,,N/A,N/A,N/A,,Not specified,,2017,No,No,3
+chnpqst_146,gene2019fruit,"@article{gene2019fruit,
+  title={Fruit detection in an apple orchard using a mobile terrestrial lase...",,Fruit detection in an apple orchard using a mobile terrestrial laser scanner,,N/A,N/A,N/A,,Not specified,,2019,No,No,3
+chnpqst_147,koenig2015comparative,"@article{koenig2015comparative,
+  title={Comparative classification analysis of post-harvest growth ...",,Comparative classification analysis of post-harvest growth detection from terrestrial LiDAR point clouds in precision agriculture,,N/A,N/A,N/A,,Not specified,,2015,No,No,3
+chnpqst_148,mu2020intact,"@article{mu2020intact,
+  title={Intact detection of highly occluded immature tomatoes on plants usin...",,Intact detection of highly occluded immature tomatoes on plants using deep learning techniques,,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_149,sumesh2021integration,"@article{sumesh2021integration,
+  title={Integration of RGB-based vegetation index, crop surface mod...",,"Integration of RGB-based vegetation index, crop surface model and object-based image analysis approach for sugarcane yield estimation using unmanned aerial vehicle",,N/A,N/A,N/A,,Not specified,,2021,No,No,3
+chnpqst_150,liu2019mature,"@article{liu2019mature,
+  title={A mature-tomato detection algorithm using machine learning and colo...",,A mature-tomato detection algorithm using machine learning and color analysis,,N/A,N/A,N/A,,Not specified,,2019,No,No,3
+chnpqst_151,ÐÜ¿¡ÌÎ2020»ùÓÚ¸Ä½ø,"@article{ÐÜ¿¡ÌÎ2020»ùÓÚ¸Ä½ø,
+  title={»ùÓÚ¸Ä½ø YOLO v3 ÍøÂçµÄÒ¹¼ä»·¾³¸ÌéÙÊ¶±ð·½·¨},
+  author={ÐÜ¿¡ÌÎ...",,Citrus Detection Method in Night Environment Based on Improved YOLO v3 Network; [»ùÓÚ¸Ä½øYOLO v3ÍøÂçµÄÒ¹¼ä»·¾³¸ÌéÙÊ¶±ð·½·¨],,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_152,longsheng2015development,"@article{longsheng2015development,
+  title={Development and experiment of end-effector for kiwifruit...",,Development and experiment of end-effector for kiwifruit harvesting robot,,N/A,N/A,N/A,,Not specified,,2015,No,No,3
+chnpqst_153,visconti2020development,"@article{visconti2020development,
+  title={Development of sensors-based agri-food traceability syste...",,Development of sensors-based agri-food traceability system remotely managed by a software platform for optimized farm management,,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_154,mahmud2020robotics,"@article{mahmud2020robotics,
+  title={Robotics and automation in agriculture: present and future app...",,Robotics and Automation in Agriculture: Present and Future Applications,,N/A,N/A,N/A,,Not specified,,2020,No,No,3
+chnpqst_155,mark2019ethics,"@article{mark2019ethics,
+  title={Ethics of using AI and big data in agriculture: The case of a larg...",Ryan Mark,Ethics of Using AI and Big Data in Agriculture: The Case of a Large Agriculture Multinational,,N/A,N/A,N/A,,Not specified,,2019,No,No,4
+chnpqst_156,goel2015fuzzy,"@article{goel2015fuzzy,
+  title={Fuzzy classification of pre-harvest tomatoes for ripeness estimatio...",Nidhi Goel and Priti Sehgal,Fuzzy classification of pre-harvest tomatoes for ripeness estimation ¨C An approach based on automatic rule learning using decision tree,,N/A,N/A,N/A,,Not specified,,2015,No,No,4
+chnpqst_157,vasconez2019human,"@article{vasconez2019human,
+  title={Human--robot interaction in agriculture: A survey and current c...",Juan P. Vasconez and George A. Kantor and Fernando A. {Auat Cheein},Human¨Crobot interaction in agriculture: A survey and current challenges,,N/A,N/A,N/A,,Not specified,,2019,No,No,4
+chnpqst_158,pourdarbani2020automatic,"@article{pourdarbani2020automatic,
+  title={Automatic non-destructive video estimation of maturation...",Razieh Pourdarbani and Sajad Sabzi and Davood Kalantari and Rouhollah Karimzadeh and Elham Ilbeygi and Juan I. Arribas,Automatic non-destructive video estimation of maturation levels in Fuji apple (Malus Malus pumila) fruit in orchard based on colour (Vis) and spectral (NIR) data,,N/A,N/A,N/A,,Not specified,,2020,No,No,4
+chnpqst_159,hameed2018comprehensive,"@article{hameed2018comprehensive,
+  title={A comprehensive review of fruit and vegetable classificat...",Khurram Hameed and Douglas Chai and Alexander Rassau,A comprehensive review of fruit and vegetable classification?techniques,,N/A,N/A,N/A,,Not specified,,2018,No,No,4

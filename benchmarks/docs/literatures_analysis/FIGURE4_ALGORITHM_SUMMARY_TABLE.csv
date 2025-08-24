@@ -1,0 +1,9 @@
+Algorithm_Family,Total_Papers,Papers_with_Performance,Performance_Rate,Year_Range,Percentage_of_Total
+Not specified,77,10,13.0%,2014-2021,67.5%
+Other,17,5,29.4%,2015-2021,14.9%
+Faster R-CNN,7,2,28.6%,2016-2020,6.1%
+YOLOv3,4,2,50.0%,2020-2022,3.5%
+Mask R-CNN,3,2,66.7%,2019-2021,2.6%
+YOLOv4,3,1,33.3%,2021-2023,2.6%
+CNN,2,1,50.0%,2018-2019,1.8%
+YOLO,1,0,0.0%,2021-2021,0.9%

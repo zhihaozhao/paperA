@@ -1,0 +1,204 @@
+{
+  "generation_date": "2024-12-19",
+  "total_papers_analyzed": 159,
+  "chnpqst_completeness": {
+    "C": {
+      "column": "C_Citation",
+      "non_empty": 159,
+      "total": 159,
+      "completeness_rate": 100.0
+    },
+    "H": {
+      "column": "H_Authors",
+      "non_empty": 119,
+      "total": 159,
+      "completeness_rate": 74.84276729559748
+    },
+    "N": {
+      "column": "N_Article Title",
+      "non_empty": 159,
+      "total": 159,
+      "completeness_rate": 100.0
+    },
+    "P": {
+      "column": "P_Performance",
+      "non_empty": 25,
+      "total": 159,
+      "completeness_rate": 15.723270440251572
+    },
+    "Q": {
+      "column": "Q_Learning Algorithm",
+      "non_empty": 37,
+      "total": 159,
+      "completeness_rate": 23.270440251572328
+    },
+    "S": {
+      "column": "S_Data Modality",
+      "non_empty": 23,
+      "total": 159,
+      "completeness_rate": 14.465408805031446
+    },
+    "T": {
+      "column": "T_Publication Year",
+      "non_empty": 159,
+      "total": 159,
+      "completeness_rate": 100.0
+    }
+  },
+  "author_collaboration": {
+    "papers_with_authors": 119,
+    "average_authors_per_paper": 9.605042016806722,
+    "collaboration_distribution": {
+      "Large Team (7+)": 89,
+      "Medium Team (4-6)": 24,
+      "Small Team (2-3)": 1,
+      "Single Author": 5
+    },
+    "top_prolific_authors": {
+      "J": 43,
+      "Zhang": 27,
+      "M": 26,
+      "C": 21,
+      "T": 20,
+      "Li": 18,
+      "Y": 17,
+      "L": 16,
+      "Wang": 16,
+      "A": 15
+    }
+  },
+  "algorithm_evolution": {
+    "2016": {
+      "Faster R-CNN": 1,
+      "Other": 2
+    },
+    "2019": {
+      "Mask R-CNN": 1,
+      "Other": 5,
+      "CNN": 1
+    },
+    "2017": {
+      "Other": 1
+    },
+    "2020": {
+      "Faster R-CNN": 5,
+      "YOLOv3": 2,
+      "Mask R-CNN": 1,
+      "Other": 6
+    },
+    "2021": {
+      "YOLOv3": 1,
+      "Mask R-CNN": 1,
+      "YOLO": 1,
+      "Other": 1,
+      "YOLOv4": 1
+    },
+    "2023": {
+      "YOLOv4": 2
+    },
+    "2018": {
+      "CNN": 1,
+      "Faster R-CNN": 1,
+      "Other": 1
+    },
+    "2015": {
+      "Other": 1
+    },
+    "2022": {
+      "YOLOv3": 1
+    }
+  },
+  "performance_analysis": {
+    "papers_with_performance": 25,
+    "performance_metrics_summary": {
+      "accuracy": {
+        "count": 2,
+        "average": 41.725,
+        "range": [
+          0.15,
+          83.3
+        ]
+      },
+      "precision": {
+        "count": 2,
+        "average": 48.3365,
+        "range": [
+          0.893,
+          95.78
+        ]
+      },
+      "other_percentages": {
+        "count": 13,
+        "average": 88.93846153846154,
+        "range": [
+          66.0,
+          100.0
+        ]
+      }
+    }
+  },
+  "data_modality_analysis": {
+    "modality_distribution": {
+      "RGB": 8,
+      "NIR": 1,
+      "Depth": 19
+    },
+    "multimodal_combinations": {
+      "NIR+RGB": 1,
+      "Depth+RGB": 7,
+      "Depth": 12
+    }
+  },
+  "temporal_trends": {
+    "year_distribution": {
+      "2016": 22,
+      "2014": 8,
+      "2015": 10,
+      "2019": 25,
+      "2017": 14,
+      "2020": 44,
+      "2018": 14,
+      "2021": 18,
+      "2023": 2,
+      "2022": 2
+    },
+    "algorithm_trends_by_year": {
+      "2016": {
+        "R-CNN系列": 1,
+        "其他": 2
+      },
+      "2019": {
+        "R-CNN系列": 1,
+        "其他": 5,
+        "CNN": 1
+      },
+      "2017": {
+        "其他": 1
+      },
+      "2020": {
+        "R-CNN系列": 6,
+        "YOLO系列": 2,
+        "其他": 6
+      },
+      "2021": {
+        "YOLO系列": 3,
+        "R-CNN系列": 1,
+        "其他": 1
+      },
+      "2023": {
+        "YOLO系列": 2
+      },
+      "2018": {
+        "CNN": 1,
+        "R-CNN系列": 1,
+        "其他": 1
+      },
+      "2015": {
+        "其他": 1
+      },
+      "2022": {
+        "YOLO系列": 1
+      }
+    }
+  }
+}

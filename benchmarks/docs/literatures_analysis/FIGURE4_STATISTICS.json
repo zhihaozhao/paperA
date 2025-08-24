@@ -1,0 +1,50 @@
+{
+  "generation_date": "2024-12-19",
+  "total_papers": 114,
+  "algorithm_distribution": {
+    "Not specified": 77,
+    "Other": 17,
+    "Faster R-CNN": 7,
+    "YOLOv3": 4,
+    "Mask R-CNN": 3,
+    "YOLOv4": 3,
+    "CNN": 2,
+    "YOLO": 1
+  },
+  "year_distribution": {
+    "2014": 6,
+    "2015": 7,
+    "2016": 15,
+    "2017": 10,
+    "2018": 10,
+    "2019": 19,
+    "2020": 32,
+    "2021": 12,
+    "2022": 1,
+    "2023": 2
+  },
+  "papers_with_performance": 23,
+  "performance_rate": "20.2%",
+  "top_5_algorithms": {
+    "Not specified": 77,
+    "Other": 17,
+    "Faster R-CNN": 7,
+    "YOLOv3": 4,
+    "Mask R-CNN": 3
+  },
+  "data_completeness": {
+    "Algorithm_Info": 37,
+    "Performance_Data": 23,
+    "Year_Info": 114,
+    "Fruit_Veg_Info": 63
+  },
+  "year_range": "2014-2023",
+  "crop_diversity": 20,
+  "top_crops": {
+    "General": 51,
+    "apples": 13,
+    "tomato": 11,
+    "grape": 6,
+    "sweet pepper": 5
+  }
+}
