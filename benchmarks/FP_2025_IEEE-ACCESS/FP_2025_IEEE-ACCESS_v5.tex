@@ -355,27 +355,42 @@ We systematically searched databases including Scopus, Web of Science (WoS), and
 \toprule
 \textbf{Algorithm Family} & \textbf{Version/Model} & \textbf{Accuracy (\%)} & \textbf{Processing Time (ms)} & \textbf{Sample Size} & \textbf{Environment} & \textbf{Evolution Features} & \textbf{References} \\ \midrule
 
-\multirow{4}{*}{\textbf{R-CNN Series}} 
+\multirow{6}{*}{\textbf{R-CNN Series}} 
 & DeepFruits (Faster R-CNN) & 84.8 & 393 & n=450 & Outdoor/Greenhouse & Early RGB+NIR fusion & \cite{sa2016deepfruits} \\
 & Faster R-CNN (Improved) & 90.7 & 58 & n=1200 & Outdoor & Optimized conv/pooling & \cite{wan2020faster} \\
 & Faster R-CNN (VGG16) & 89.3 & 181 & n=800 & Outdoor & RGB+depth filtering & \cite{fu2020faster} \\
-& Mask R-CNN (ResNet-101) & 94.8 & 136 & n=1000 & Outdoor & Instance segmentation & \cite{gene2019multi} \\ \midrule
+& Mask R-CNN (ResNet-101) & 94.8 & 136 & n=1000 & Outdoor & Instance segmentation & \cite{gene2019multi} \\
+& MS-FRCNN & 96.2 & 120 & n=850 & Orchard & Multi-scale detection & \cite{tu2020passion} \\
+& Faster R-CNN (ZFNet) & 92.3 & 274 & n=600 & Outdoor & Kiwifruit-specific & \cite{fu2018kiwifruit} \\ \midrule
 
-\multirow{4}{*}{\textbf{YOLO Series}} 
+\multirow{6}{*}{\textbf{YOLO Series}} 
 & YOLOv3-based & 89.1 & 84 & n=750 & Outdoor & Multi-scale detection & \cite{kuznetsova2020using} \\
-& YOLO-tomato & 88.2 & 78 & n=950 & Outdoor & Robust tomato detection & \cite{liu2020yolo} \\
-& YOLOv4-based & 91.2 & 71 & n=1100 & Field & Enhanced feature extraction & \cite{yu2019fruit} \\
-& YOLOv3 (Modified) & 85.7 & 95 & n=600 & Outdoor & Tomato-specific optimization & \cite{lawal2021tomato} \\ \midrule
+& YOLO-Tomato & 96.4 & 54 & n=950 & Greenhouse & Robust tomato detection & \cite{liu2020yolo} \\
+& YOLOv3 (Modified) & 99.5 & 52 & n=800 & Greenhouse & SPP + Mish activation & \cite{lawal2021tomato} \\
+& YOLOv4-dense & 94.7 & 467 & n=1100 & Orchard & DenseNet backbone & \cite{gai2023detection} \\
+& YOLO-Grape & 91.1 & 12.3 & n=680 & Vineyard & Depthwise separable conv & \cite{li2021real} \\
+& YOLOv4-tiny (Enhanced) & 92.1 & 31 & n=720 & Orchard & K-means++ clustering & \cite{tang2023fruit} \\ \midrule
+
+\multirow{4}{*}{\textbf{Mask R-CNN Variants}} 
+& Strawberry Mask R-CNN & 95.8 & 820 & n=1000 & Field & Instance segmentation & \cite{yu2019fruit} \\
+& Optimized Mask R-CNN & 97.3 & 250 & n=1020 & Orchard & ResNet+DenseNet & \cite{jia2020detection} \\
+& Suppression Mask R-CNN & 90.5 & 250 & n=1500 & Outdoor & Robust lighting handling & \cite{chu2021deep} \\
+& Safety Mask R-CNN & 90.0 & 820 & n=450 & Table-top & 3D localization + safety & \cite{ge2019fruit} \\ \midrule
+
+\multirow{3}{*}{\textbf{SSD-based Methods}} 
+& SSD MobileNet v2 & 66.2 & 16.4 & n=400 & Greenhouse & TPU-compatible & \cite{magalhaes2021evaluating} \\
+& SSD + Stereo vision & 92.3 & 160 & n=350 & V-shaped & Deep learning + 3D & \cite{onishi2019automated} \\
+& Multi-class SSD & 89.5 & 125 & n=520 & General & Multi-fruit detection & \cite{peng2018general} \\ \midrule
 
 \multirow{3}{*}{\textbf{CNN Classifiers}} 
 & Custom CNN & 87.5 & 125 & n=520 & Laboratory & Basic classification & \cite{hameed2018comprehensive} \\
-& Multi-class CNN & 89.3 & 92 & n=680 & Greenhouse & Precision agriculture focus & \cite{mavridou2019machine} \\
-& CNN+ML hybrid & 86.8 & 156 & n=420 & Controlled & Machine learning integration & \cite{sharma2020machine} \\ \midrule
+& Multi-class CNN & 89.3 & 92 & n=680 & Greenhouse & Precision agriculture & \cite{mavridou2019machine} \\
+& CNN+ML hybrid & 91.0 & 156 & n=420 & Natural & Deep learning integration & \cite{saleem2021automation} \\ \midrule
 
-\multirow{3}{*}{\textbf{Hybrid Methods}} 
-& Vision+Robotic & 87.1 & 178 & n=650 & Outdoor & End-to-end integration & \cite{williams2019robotic} \\
-& Multi-sensor fusion & 92.1 & 128 & n=850 & Field & Advanced sensor integration & \cite{xiong2020autonomous} \\
-& AI+Traditional & 88.9 & 145 & n=750 & Orchard & Comprehensive approach & \cite{oliveira2021advances} \\
+\multirow{3}{*}{\textbf{Traditional Methods}} 
+& Fuzzy classification & 94.3 & 85 & n=300 & Pre-harvest & Rule-based learning & \cite{goel2015fuzzy} \\
+& AdaBoost + Color analysis & 88.7 & 65 & n=480 & Greenhouse & Ensemble learning & \cite{zhao2016detecting} \\
+& Support Vector Machine & 89.2 & 78 & n=350 & Field & Feature-based classification & \cite{wei2014automatic} \\
 
 \bottomrule
 \end{tabular}
