@@ -1038,37 +1038,24 @@ Figure~\ref{fig:motion_planning_analysis} presents this analytical framework, wi
 \begin{table*}[htbp]
 \centering
 \footnotesize
-\caption{Literature Evidence Supporting Figure 9 (Motion Planning Performance): Algorithm Analysis}
+\caption{Motion Control Algorithm Performance Classification by Success Rate and Processing Time Ranges (N=12 Studies, 2014-2022)}
 \label{tab:figure9_support}
-\begin{tabular}{p{0.12\linewidth}p{0.10\linewidth}p{0.08\linewidth}p{0.10\linewidth}p{0.10\linewidth}p{0.10\linewidth}p{0.28\linewidth}}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{
+>{\raggedright\arraybackslash}m{0.12\linewidth}>{\raggedright\arraybackslash}m{0.16\linewidth}cc>{\raggedright\arraybackslash}m{0.10\linewidth}>{\raggedright\arraybackslash}m{0.12\linewidth}>{\raggedright\arraybackslash}m{0.20\linewidth}}
 \toprule
-\textbf{Study} & \textbf{Motion Algorithm} & \textbf{Success Rate} & \textbf{Adaptability} & \textbf{Processing Time} & \textbf{Figure Support} & \textbf{Ref} \\ \midrule
+\textbf{Performance Category} & \textbf{Criteria} & \textbf{Studies} & \textbf{Avg Perf.} & \textbf{Avg Adapt.} & \textbf{Main Algorithms} & \textbf{References} \\ \midrule
 
-Silwal et al. (2017) & RRT* & 82.1\% & 65/100 & 245ms & Fig 9(a,c) & \cite{silwal2017design,arad2020development,mehta2014vision} \\
+\textbf{Fast High-Performance} & Time $\leq$100ms, Success $\geq$85\% & 2 & 88.4\% / 74ms & 93/100 & A3C, SAC & \cite{arad2020development,oliveira2021advances} \\ \midrule
 
-Williams et al. (2019) & DDPG & 86.9\% & 94/100 & 178ms & Fig 9(b,d) & \cite{williams2019robotic,lehnert2017autonomous,mehta2014vision} \\
+\textbf{Fast Moderate-Performance} & Time $\leq$100ms, Success $<$85\% & 1 & 68.9\% / 67ms & 42/100 & Dijkstra & \cite{tang2020recognition} \\ \midrule
 
-Arad et al. (2020) & A3C & 89.1\% & 89/100 & 76ms & Fig 9(a,b) & \cite{arad2020development,xiong2020autonomous,williams2019robotic} \\
+\textbf{Slow High-Performance} & Time $>$100ms, Success $\geq$85\% & 5 & 87.0\% / 163ms & 91/100 & DDPG, PPO, Hybrid-RL & \cite{williams2019robotic,zhou2022intelligent,hameed2018comprehensive,xiong2020autonomous,wan2020faster} \\ \midrule
 
-Zhou et al. (2022) & PPO & 87.3\% & 92/100 & 156ms & Fig 9(c,d) & \cite{zhou2022intelligent,saleem2021automation,mahmud2020robotics} \\
+\textbf{Slow Moderate-Performance} & Time $>$100ms, Success $<$85\% & 4 & 81.5\% / 181ms & 78/100 & RRT*, SAC, PPO, PRM & \cite{silwal2017design,lehnert2017autonomous,liu2020yolo,bac2014harvesting} \\
 
-Lehnert et al. (2017) & SAC & 84.2\% & 96/100 & 145ms & Fig 9(a,d) & \cite{lehnert2017autonomous,williams2019robotic,mehta2014vision} \\
-
-Bac et al. (2014) & PRM & 75.8\% & 58/100 & 201ms & Fig 9(a,c) & \cite{bac2014harvesting,fountas2020agricultural,aguiar2020localization} \\
-
-Xiong et al. (2020) & Hybrid-RL & 88.3\% & 91/100 & 128ms & Fig 9(b,c) & \cite{xiong2020autonomous,xiong2019development,navas2021soft} \\
-
-Tang et al. (2020) & Dijkstra & 68.9\% & 42/100 & 67ms & Fig 9(a,d) & \cite{tang2020recognition,darwin2021recognition,mavridou2019machine} \\
-
-Hameed et al. (2018) & DDPG & 85.6\% & 94/100 & 156ms & Fig 9(b,d) & \cite{hameed2018comprehensive,sharma2020machine,mohamed2021smart} \\
-
-Oliveira et al. (2021) & SAC & 89.7\% & 96/100 & 71ms & Fig 9(a,b,c) & \cite{oliveira2021advances,r2018research,lytridis2021overview} \\
-
-Liu et al. (2020) & PPO & 83.9\% & 92/100 & 134ms & Fig 9(c,d) & \cite{liu2020yolo,lawal2021tomato,yu2019fruit} \\
-
-Wan et al. (2020) & A3C & 87.1\% & 89/100 & 152ms & Fig 9(a,c) & \cite{wan2020faster,jia2020detection,chu2021deep} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table*}
 
 The performance differences observed across algorithm families require statistical validation to ensure robust conclusions. Table~\ref{tab:statistical_summary} presents formal statistical tests supporting our key claims, including ANOVA analysis for algorithm family differences, correlation analysis for temporal trends, and significance testing for technology maturity assessments.
