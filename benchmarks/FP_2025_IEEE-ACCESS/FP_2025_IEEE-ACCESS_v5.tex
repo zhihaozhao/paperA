@@ -267,7 +267,8 @@ and interconnections with environmental factors
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
 \caption{Expanded Review Scope and Core Contributions of Major Fruit-Picking Robot Survey Papers}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{
@@ -345,7 +346,8 @@ We systematically searched databases including Scopus, Web of Science (WoS), and
 
 \begin{table}[htbp]
 \centering
-\small
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
 \caption{Keywords and Criteria Used in Preliminary Database Search}
 \label{tab:keywords}
 \renewcommand{\arraystretch}{1.2}
@@ -354,13 +356,13 @@ We systematically searched databases including Scopus, Web of Science (WoS), and
 \textbf{Criteria} & \textbf{Terms} \\
 \midrule
 \textbf{Database} & Web of Science, Scopus, ScienceDirect \\
-\midrule
+%\midrule
 \textbf{Search Field} & Title, Keywords and Abstract \\
-\midrule
+%\midrule
 \textbf{Keywords} & fruit-picking robot or autonomous fruit-picking robot or robotics harvesting or harvesting robot or deep learning in orchard \\
-\midrule
+%\midrule
 \textbf{Language} & English \\
-\midrule
+%\midrule
 \textbf{Publication Date} & From 2015 TO 2024 \\
 \bottomrule
 \end{tabular}
@@ -408,7 +410,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \end{figure}
 
 \begin{table*}[ht]
-\small
+\footnotesize
 \centering
 \caption{Comprehensive Multi-Sensor Fusion Architectures and Multi-Modality Data Integration for Precision Orchard Applications (N=35 Studies, 2015-2024)} 
 \label{tab:dataset}
@@ -475,16 +477,17 @@ The meta-analysis results shown in Figure~\ref{fig:meta_analysis_ieee} are suppo
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Algorithm Performance Comparison: Precision, Processing Speed, Version Evolution, and Environmental Validation}
 \label{tab:algorithm_comparison} 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}m{0.10\linewidth}>{\raggedright\arraybackslash}m{0.12\linewidth}cc>{\raggedright\arraybackslash}m{0.08\linewidth}c>{\raggedright\arraybackslash}m{0.15\linewidth}>{\raggedright\arraybackslash}m{0.20\linewidth}}
+\begin{tabularx}{\linewidth}{
+>{\raggedright\arraybackslash}m{0.10\linewidth}>{\raggedright\arraybackslash}m{0.18\linewidth}>{\raggedright\arraybackslash}m{0.06\linewidth}>{\raggedright\arraybackslash}m{0.06\linewidth}>{\raggedright\arraybackslash}m{0.06\linewidth}>{\raggedright\arraybackslash}m{0.08\linewidth}>{\raggedright\arraybackslash}m{0.20\linewidth}>{\raggedright\arraybackslash}m{0.08\linewidth}}
 \toprule
-\textbf{Algorithm Family} & \textbf{Version/Model} & \textbf{Accuracy (\%)} & \textbf{Processing Time (ms)} & \textbf{Sample Size} & \textbf{Environment} & \textbf{Evolution Features} & \textbf{References} \\ \midrule
+\textbf{Algorithm Family} & \textbf{Version/Model} & \textbf{Accuracy (\%)} & \textbf{Processing Time(ms)} & \textbf{Sample Size} & \textbf{Environment} & \textbf{Evolution Features} & \textbf{References} \\ \midrule
 
 \multirow{6}{*}{\textbf{R-CNN Series}} 
-& DeepFruits (Faster R-CNN) & 84.8 & 393 & n=450 & Outdoor/Greenhouse & Early RGB+NIR fusion & \cite{sa2016deepfruits} \\
+& DeepFruits (Faster R-CNN) & 84.8 & 393 & n=450 & Outdoor /Greenhouse & Early RGB+NIR fusion & \cite{sa2016deepfruits} \\
 & Faster R-CNN (Improved) & 90.7 & 58 & n=1200 & Outdoor & Optimized conv/pooling & \cite{wan2020faster} \\
 & Faster R-CNN (VGG16) & 89.3 & 181 & n=800 & Outdoor & RGB+depth filtering & \cite{fu2020faster} \\
 & Mask R-CNN (ResNet-101) & 94.8 & 136 & n=1000 & Outdoor & Instance segmentation & \cite{gene2019multi} \\
@@ -499,13 +502,13 @@ The meta-analysis results shown in Figure~\ref{fig:meta_analysis_ieee} are suppo
 & YOLO-Grape & 91.1 & 12.3 & n=680 & Vineyard & Depthwise separable conv & \cite{li2021real} \\
 & YOLOv4-tiny (Enhanced) & 92.1 & 31 & n=720 & Orchard & K-means++ clustering & \cite{tang2023fruit} \\ \midrule
 
-\multirow{4}{*}{\textbf{Mask R-CNN Variants}} 
+\multirow{4}{*}{\parbox{2cm}{\centering\textbf{Mask R-CNN\\Variants}}} 
 & Strawberry Mask R-CNN & 95.8 & 820 & n=1000 & Field & Instance segmentation & \cite{yu2019fruit} \\
 & Optimized Mask R-CNN & 97.3 & 250 & n=1020 & Orchard & ResNet+DenseNet & \cite{jia2020detection} \\
 & Suppression Mask R-CNN & 90.5 & 250 & n=1500 & Outdoor & Robust lighting handling & \cite{chu2021deep} \\
 & Safety Mask R-CNN & 90.0 & 820 & n=450 & Table-top & 3D localization + safety & \cite{ge2019fruit} \\ \midrule
 
-\multirow{3}{*}{\textbf{SSD-based Methods}} 
+\multirow{3}{*}{\parbox{2cm}{\centering\textbf{SSD-based \\ Methods}} }
 & SSD MobileNet v2 & 66.2 & 16.4 & n=400 & Greenhouse & TPU-compatible & \cite{magalhaes2021evaluating} \\
 & SSD + Stereo vision & 92.3 & 160 & n=350 & V-shaped & Deep learning + 3D & \cite{onishi2019automated} \\
 & Multi-class SSD & 89.5 & 125 & n=520 & General & Multi-fruit detection & \cite{peng2018general} \\ \midrule
@@ -515,7 +518,7 @@ The meta-analysis results shown in Figure~\ref{fig:meta_analysis_ieee} are suppo
 & Multi-class CNN & 89.3 & 92 & n=680 & Greenhouse & Precision agriculture & \cite{mavridou2019machine} \\
 & CNN+ML hybrid & 91.0 & 156 & n=420 & Natural & Deep learning integration & \cite{saleem2021automation} \\ \midrule
 
-\multirow{3}{*}{\textbf{Traditional Methods}} 
+\multirow{3}{*}{\parbox{2cm}{\centering\textbf{Traditional\\ Methods}} }
 & Fuzzy classification & 94.3 & 85 & n=300 & Pre-harvest & Rule-based learning & \cite{goel2015fuzzy} \\
 & AdaBoost + Color analysis & 88.7 & 65 & n=480 & Greenhouse & Ensemble learning & \cite{zhao2016detecting} \\
 & Support Vector Machine & 89.2 & 78 & n=350 & Field & Feature-based classification & \cite{wei2014automatic} \\
@@ -535,7 +538,7 @@ The meta-analysis results shown in Figure~\ref{fig:meta_analysis_ieee} are suppo
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Literature Support Summary for Figures 9 and 10: Key Studies and Statistical Evidence (N=44 Studies, 2015-2024)}
 \label{tab:literature_support_summary}
 \begin{tabular}{p{0.12\textwidth}p{0.08\textwidth}p{0.15\textwidth}p{0.18\textwidth}p{0.12\textwidth}p{0.20\textwidth}}
@@ -598,11 +601,11 @@ Table~\ref{tab:ieee_meta_summary} consolidates these comprehensive experimental 
 
 \begin{table}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Experimental Validation Summary: Algorithm Performance Benchmarks with Statistical Analysis (56 Studies, 2015-2024)}
 \label{tab:ieee_meta_summary}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}m{0.15\linewidth}cccc>{\raggedright\arraybackslash}m{0.15\linewidth}}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}m{0.15\linewidth}cccc>{\raggedright\arraybackslash}m{0.15\linewidth}}
 \toprule
 \textbf{Algorithm} & \textbf{n} & \textbf{Accuracy (\%)} & \textbf{Speed (ms)} & \textbf{Period} & \textbf{Trend} \\
 \midrule
@@ -650,7 +653,7 @@ Recent research has extended Faster R-CNN to incorporate additional modalities a
 \iffalse
 \begin{table*}[!htb]
 	\centering
-	\small
+	\footnotesize
 	\renewcommand{\arraystretch}{1.3}
 	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024} 
 	\label{tab:RCNN-based} 
@@ -680,7 +683,7 @@ ewline(ResNet-101) & Detection of highly occluded immature tomatoes; counting, l
 
 \begin{table*}[!htb]
 	\centering
-	\small
+	\footnotesize
 	\renewcommand{\arraystretch}{1.3}
 	\addtocounter{table}{-1}
 	\caption{Summary of R-CNN Family Approaches for Fruit-Picking in 2015-2024} 
@@ -754,7 +757,7 @@ The evolutionary development of the YOLO series has fundamentally transformed re
 \iffalse
 \begin{table*}[htbp]
 	\centering
-	\small
+	\footnotesize
 	\caption{Summary of YOLO Family Approaches for Fruit Detection since 2019} 
 	\label{tab:yolo-based}
 	\begin{tabular}{@{}p{0.02\textwidth}p{0.08\textwidth}p{0.07\textwidth}p{0.13\textwidth}p{0.22\textwidth}p{0.23\textwidth}@{}}
@@ -778,7 +781,7 @@ The evolutionary development of the YOLO series has fundamentally transformed re
 
 \begin{table*}[htbp]
 	\centering
-	\small
+	\footnotesize
 	\addtocounter{table}{-1}
 	\caption{Summary of YOLO Family Approaches for Fruit-Picking since 2019} 
 	%\addtocounter{table}{-1}
@@ -857,7 +860,7 @@ Kang et al.~\cite{kang2020real}  combined Mobile-DasNet with PointNet for apple 
 \iffalse
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Summary of Fruit Detection Approaches by Core Performance Metrics (2015-2024)}
 \label{tab:performance-metrics}
 \renewcommand{\arraystretch}{1.2}
@@ -1061,10 +1064,10 @@ Figure~\ref{fig:motion_planning_analysis} presents this analytical framework, wi
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Literature Evidence Supporting Figure 9 (Motion Planning Performance): Algorithm Analysis}
 \label{tab:figure9_support}
-\begin{tabular}{p{0.12\textwidth}p{0.10\textwidth}p{0.08\textwidth}p{0.10\textwidth}p{0.10\textwidth}p{0.10\textwidth}p{0.28\textwidth}}
+\begin{tabular}{p{0.12\linewidth}p{0.10\linewidth}p{0.08\linewidth}p{0.10\linewidth}p{0.10\linewidth}p{0.10\linewidth}p{0.28\linewidth}}
 \toprule
 \textbf{Study} & \textbf{Motion Algorithm} & \textbf{Success Rate} & \textbf{Adaptability} & \textbf{Processing Time} & \textbf{Figure Support} & \textbf{Ref} \\ \midrule
 
@@ -1100,10 +1103,10 @@ The performance differences observed across algorithm families require statistic
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Statistical Summary Supporting Figure Claims: Algorithm Performance and Technology Maturity}
 \label{tab:statistical_summary}
-\begin{tabular}{p{0.20\textwidth}p{0.15\textwidth}p{0.15\textwidth}p{0.15\textwidth}p{0.25\textwidth}}
+\begin{tabular}{p{0.20\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.25\linewidth}}
 \toprule
 \textbf{Figure Claim} & \textbf{Statistical Test} & \textbf{Result} & \textbf{Significance} & \textbf{Literature Support} \\ \midrule
 YOLO optimal balance (Fig 4a) & ANOVA F-test & F=12.45, p<0.001 & Highly significant & 16 YOLO studies (2020-2024) \\
@@ -1120,11 +1123,11 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \iffalse
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \renewcommand{\arraystretch}{1.2}
 \caption{Summary of Robotic Motion Control for Fruit Harvesting (2015-2024)}
 \label{tab:motion-control-based}
-\begin{tabular}{p{0.04\textwidth} p{0.04\textwidth} p{0.07\textwidth} p{0.20\textwidth} p{0.15\textwidth} p{0.19\textwidth} p{0.23\textwidth}}
+\begin{tabular}{p{0.04\linewidth} p{0.04\linewidth} p{0.07\linewidth} p{0.20\linewidth} p{0.15\linewidth} p{0.19\linewidth} p{0.23\linewidth}}
 \toprule
 \textbf{Ref.} & \textbf{Year} & \textbf{Fruit} & \textbf{Motion Control} & \textbf{Main Challenges} & \textbf{Performance Metrics} & \textbf{Key Insights} \\ \midrule
 \cite{silwal2017design} & 2017 & Apple & Seven DOF manipulator with optimized path planning and collision avoidance & Navigating complex, unstructured orchard environments & 84\% picking success; average cycle time 7.6 s; commercial orchard trials & Path optimization reduces collisions in real-world apple harvesting \\ \midrule
@@ -1151,7 +1154,7 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \renewcommand{\arraystretch}{1.2}
 \caption{Enhanced Motion Control Algorithm Performance Analysis for Fruit Harvesting (2015-2024): Statistical summary of 16 key studies showing algorithm family performance characteristics, advantages, limitations, and optimal deployment scenarios for evidence-based selection in autonomous agricultural systems.}
 \label{tab:motion_control_enhanced}
@@ -1174,7 +1177,7 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \renewcommand{\arraystretch}{1.2}
 \caption{Motion Control Key Performance Indicators and Research Trends (2015-2024)}
 \label{tab:motion_control_kpis}
@@ -1262,7 +1265,7 @@ To systematically assess the technological maturity and development trajectory o
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Literature Evidence Supporting Critical Analysis in Figure 10: Research Problems, Limitations, and Deployment Barriers (N=20 Studies, 2014-2024)}
 \label{tab:figure10_support}
 \begin{tabular}{p{0.11\textwidth}p{0.14\textwidth}p{0.21\textwidth}p{0.09\textwidth}p{0.08\textwidth}p{0.24\textwidth}}
@@ -1315,7 +1318,7 @@ R Shamshiri et al. (2018) & Digital Farming Barriers & Integration challenges be
 
 \begin{table*}[htbp]
 \centering
-\small
+\footnotesize
 \caption{Vision Model Performance Evidence: Key Studies Supporting Meta-Analysis with Quantitative Performance Metrics}
 \label{tab:figure4_support}
 \begin{tabular}{p{0.12\textwidth}p{0.10\textwidth}p{0.08\textwidth}p{0.10\textwidth}p{0.08\textwidth}p{0.10\textwidth}p{0.30\textwidth}}
