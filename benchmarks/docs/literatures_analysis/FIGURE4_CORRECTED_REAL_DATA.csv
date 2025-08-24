@@ -1,0 +1,163 @@
+Paper_ID,Title,Year,Algorithm_Family,Algorithm_Detail,Fruit_Veg,Accuracy_Percent,Precision_Percent,Recall_Percent,F1_Score,Processing_Time_ms,FPS,Additional_Metrics,Performance_Description,Data_Source,Citation,Has_Real_Performance_Data
+vision_paper_001,DeepFruits: A Fruit Detection System Using Deep Neural Networks,2016,Other,"Faster R-CNN
+transfer learning",sweet pepper,N/A,N/A,N/A,N/A,N/A,N/A,N/A,Recall performances improving from 0.807 to 0.838 for the detection of sweet pepper.,User classified CSV data,"@article{sa2016deepfruits,
+  title={Deepfruits: A fruit detection system using deep neural networks}...",No
+vision_paper_002,Faster R-CNN for multi-class fruit detection using a robotic vision system,2020,Other,"Faster R-CNN
+transfer learning",General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{wan2020faster,
+  title={Faster R-CNN for multi-class fruit detection using a robotic vision...",No
+vision_paper_003,Faster R-CNN-based apple detection in dense-foliage fruiting-wall trees using RGB and depth features...,2020,Other,Faster R-CNN,apples,N/A,0.893,N/A,N/A,N/A,N/A,N/A,a precision of 0.893,User classified CSV data,"@article{fu2020faster,
+  title={Faster R--CNN--based apple detection in dense-foliage fruiting-wall ...",Yes
+vision_paper_004,Passion fruit detection and counting based on multiple scale faster R-CNN using RGB-D images,2020,Other,Faster R-CNN,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{tu2020passion,
+  title={Passion fruit detection and counting based on multiple scale faster...",No
+vision_paper_005,Kiwifruit detection in field images using Faster R-CNN with ZFNet,2018,Other,Faster R-CNN with ZFNET,kiwifruit,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{fu2018kiwifruit,
+  title={Kiwifruit detection in field images using Faster R-CNN with ZFNet...",No
+vision_paper_006,Faster R¨CCNN¨Cbased apple detection in dense-foliage fruiting-wall trees using RGB and depth featur...,2020,Other,Faster R-CNN,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{fu2020faster,
+  title={Faster R--CNN--based apple detection in dense-foliage fruiting-wall ...",No
+vision_paper_007,Multi-class fruit-on-plant detection for apple in SNAP system using Faster R-CNN,2020,Other,Faster R-CNN,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{gao2020multi,
+  title={Multi-class fruit-on-plant detection for apple in SNAP system using ...",No
+vision_paper_008,Sensors and systems for fruit detection and localization: A review,2015,Other,Not specified,"apples,pears,and citrus",N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{gongal2015sensors,
+  title={Sensors and systems for fruit detection and localization: A rev...",No
+vision_paper_009,Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review,2020,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{tang2020recognition,
+  title={Recognition and localization methods for vision-based fruit p...",No
+vision_paper_010,A review of key techniques of vision-based control for harvesting robot,2016,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{zhao2016review,
+  title={A review of key techniques of vision-based control for harvesting ...",No
+vision_paper_011,"Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms",2019,Other,deep neural networks,kiwifruit,N/A,N/A,N/A,N/A,N/A,N/A,N/A,"picking time of 5.5s, a success rate of 51\%.",User classified CSV data,"@article{williams2019robotic,
+  title={Robotic kiwifruit harvesting using machine vision, convolutio...",No
+vision_paper_012,Vision-based control of robotic manipulator for citrus harvesting,2014,Other,Not specified,citrus,N/A,N/A,N/A,N/A,N/A,N/A,N/A,accuracy of controller is 15mm,User classified CSV data,"@article{mehta2014vision,
+  title={Vision-based control of robotic manipulator for citrus harvesting...",No
+vision_paper_013,A survey of public datasets for computer vision tasks in precision agriculture,2020,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{lu2020survey,
+  title={A survey of public datasets for computer vision tasks in precision a...",No
+vision_paper_014,Machine Vision Systems in Precision Agriculture for Crop Farming,2019,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{mavridou2019machine,
+  title={Machine vision systems in precision agriculture for crop farm...",No
+vision_paper_015,"Mapping almond orchard canopy volume, flowers, fruit and yield using lidar and vision sensors",2016,Other,Not specified,almond,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{underwood2016mapping,
+  title={Mapping almond orchard canopy volume, flowers, fruit and yie...",No
+vision_paper_016,"Fruit detection, segmentation and 3D visualisation of environments in apple orchards",2020,Other,DaSNet-v2,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,"DaSNet-v2 with resnet-18 achieves 0.85, 0.87 and 0.866 on recall and precision of detection, and accuracy of instance segmentation on fruits, and 0.775 on the accuracy of branches segmentation, respec...",User classified CSV data,"@article{kang2020fruit,
+  title={Fruit detection, segmentation and 3D visualisation of environments ...",No
+vision_paper_017,"Color-, depth-, and shape-based 3D fruit detection",2020,Other,SVM,"spherical or cylindrical fruits.the pepper, eggplant, and guava datasets",N/A,N/A,N/A,N/A,N/A,N/A,N/A,"For the pepper, eggplant, and guava datasets, the detection precision was 0.864, 0.886, and 0.888, and the recall was 0.889, 0.762, and 0.812, respectively.",User classified CSV data,"@article{lin2020color,
+  title={Color-, depth-, and shape-based 3D fruit detection},
+  author={Lin, ...",No
+vision_paper_018,Data synthesis methods for semantic segmentation in agriculture: A Capsicum annuum dataset,2018,Other,Not specified,Capsicum,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{barth2018data,
+  title={Data synthesis methods for semantic segmentation in agriculture: A ...",No
+vision_paper_019,Detection of red and bicoloured apples on tree with an RGB-D camera,2016,Other,Not specified,apples,N/A,N/A,N/A,N/A,N/A,N/A,"100, 82",100% of the fully visible apples and 82% of the partially occluded apples,User classified CSV data,"@article{nguyen2016detection,
+  title={Detection of red and bicoloured apples on tree with an RGB-D ...",Yes
+vision_paper_020,Guava Detection and Pose Estimation Using a Low-Cost RGB-D Sensor in the Field,2019,Other,Not specified,guava,N/A,N/A,N/A,N/A,N/A,N/A,N/A,"the precision and recall of guava fruit detection were 0.983 and 0.948,execution time of 0.565s",User classified CSV data,"@article{lin2019guava,
+  title={Guava detection and pose estimation using a low-cost RGB-D sensor in...",No
+vision_paper_021,Detection of Fruit-Bearing Branches and Localization of Litchi Clusters for Vision-Based Harvesting ...,2020,Other,Not specified,Litch,83.3,N/A,N/A,N/A,N/A,N/A,N/A,"an accuracy of 83.3\%, detection time of 0.464s",User classified CSV data,"@article{li2020detection,
+  title={Detection of fruit-bearing branches and localization of litchi cl...",Yes
+vision_paper_022,Fruit detection in natural environment using partial shape matching and probabilistic Hough transfor...,2020,Other,Hough transform,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{lin2020fruit,
+  title={Fruit detection in natural environment using partial shape matching ...",No
+vision_paper_023,Automatic method of fruit object extraction under complex agricultural background for vision system ...,2014,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{wei2014automatic,
+  title={Automatic method of fruit object extraction under complex agricu...",No
+vision_paper_024,Deep learning based segmentation for automated training of apple trees on trellis wires,2020,Other,Not specified,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{majeed2020deep,
+  title={Deep learning based segmentation for automated training of apple t...",No
+vision_paper_025,Localisation of litchi in an unstructured environment using binocular stereo vision,2016,Other,Not specified,Litch,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{wang2016localisation,
+  title={Localisation of litchi in an unstructured environment using ...",No
+vision_paper_026,Location of apples in trees using stereoscopic vision,2015,Other,Not specified,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{si2015location,
+  title={Location of apples in trees using stereoscopic vision},
+  author={...",No
+vision_paper_027,Vision-based extraction of spatial information in grape clusters for harvesting robots,2016,Other,Not specified,grape,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{luo2016vision,
+  title={Vision-based extraction of spatial information in grape clusters fo...",No
+vision_paper_028,A vision methodology for harvesting robot to detect cutting points on peduncles of double overlappin...,2018,Other,Not specified,grape,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{luo2018vision,
+  title={A vision methodology for harvesting robot to detect cutting points ...",No
+vision_paper_029,Real-Time Fruit Recognition and Grasping Estimation for Robotic Apple Harvesting,2020,Other,Not specified,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{kang2020real,
+  title={Real-time fruit recognition and grasping estimation for robotic appl...",No
+vision_paper_030,Colour-agnostic shape-based 3D fruit detection for crop harvesting robots,2016,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{barnea2016colour,
+  title={Colour-agnostic shape-based 3D fruit detection for crop harvesti...",No
+vision_paper_031,Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision,2019,Other,Not specified,tomato,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{ling2019dual,
+  title={Dual-arm cooperation and implementing for robotic harvesting tomato ...",No
+vision_paper_032,Robust Grape Cluster Detection in a Vineyard by Combining the AdaBoost Framework and Multiple Color ...,2016,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{luo2016robust,
+  title={Robust grape cluster detection in a vineyard by combining the AdaBo...",No
+vision_paper_033,Robust Tomato Recognition for Robotic Harvesting Using Feature Images Fusion,2016,Other,images fusion,tomato,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{zhao2016robust,
+  title={Robust tomato recognition for robotic harvesting using feature ima...",No
+vision_paper_034,A Proposal for Automatic Fruit Harvesting by Combining a Low Cost Stereovision Camera and a Robotic ...,2014,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{font2014proposal,
+  title={A proposal for automatic fruit harvesting by combining a low cos...",No
+vision_paper_035,Recognition of Bloom/Yield in Crop Images Using Deep Learning Models for Smart Agriculture: A Review,2021,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{darwin2021recognition,
+  title={Recognition of bloom/yield in crop images using deep learni...",No
+vision_paper_036,Identification of fruit and branch in natural scenes for citrus harvesting robot using machine visio...,2014,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{qiang2014identification,
+  title={Identification of fruit and branch in natural scenes for ...",No
+vision_paper_037,In-field citrus detection and localisation based on RGB-D image analysis,2019,Other,Not specified,citrus,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{lin2019field,
+  title={In-field citrus detection and localisation based on RGB-D image anal...",No
+vision_paper_038,Kiwifruit recognition at nighttime using artificial lighting based on machine vision,2015,Other,Not specified,kiwifruit,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{longsheng2015kiwifruit,
+  title={Kiwifruit recognition at nighttime using artificial lighti...",No
+vision_paper_039,Automatic cucumber recognition algorithm for harvesting robots in the natural environment using deep...,2020,Other,deep learning,cucumber,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{mao2020automatic,
+  title={Automatic cucumber recognition algorithm for harvesting robots i...",No
+vision_paper_040,A pattern recognition strategy for visual grape bunch detection in vineyards,2018,Other,Not specified,grape,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{perez2018pattern,
+  title={A pattern recognition strategy for visual grape bunch detection ...",No
+vision_paper_041,Semantic Segmentation of Litchi Branches Using DeepLabV3+Model,2020,Other,deeplabV3,Litch,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{peng2020semantic,
+  title={Semantic segmentation of litchi branches using DeepLabV3+ model}...",No
+vision_paper_042,A novel green apple segmentation algorithm based on ensemble U-Net under complex orchard environment,2021,Other,ensember U-net,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{li2021novel,
+  title={A novel green apple segmentation algorithm based on ensemble U-Net un...",No
+vision_paper_043,"3D-vision based detection, localization, and sizing of broccoli heads in the field",2017,Other,Not specified,broccoli head,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{kusumam20173d,
+  title={3D-vision based detection, localization, and sizing of broccoli hea...",No
+vision_paper_044,The Smart Image Recognition Mechanism for Crop Harvesting System in Intelligent Agriculture,2020,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{horng2019smart,
+  title={The smart image recognition mechanism for crop harvesting system i...",No
+vision_paper_045,A robust fruit image segmentation algorithm against varying illumination for vision system of fruit ...,2017,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{wang2017robust,
+  title={A robust fruit image segmentation algorithm against varying illumi...",No
+vision_paper_046,Sweet Pepper Pose Detection and Grasping for Automated Crop Harvesting,2016,Other,Not specified,sweet pepper,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@inproceedings{lehnert2016sweet,
+  title={Sweet pepper pose detection and grasping for automated cro...",No
+vision_paper_047,Optimised computer vision system for automatic pre-grading of citrus fruit in the field using a mobi...,2014,Other,Not specified,citrus,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{cubero2014optimised,
+  title={Optimised computer vision system for automatic pre-grading of...",No
+vision_paper_048,Fast implementation of real-time fruit detection in apple orchards using deep learning,2020,Other,deep learning,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{kang2020fast,
+  title={Fast implementation of real-time fruit detection in apple orchards u...",No
+vision_paper_049,Multi-modal deep learning for Fuji apple detection using RGB-D cameras and their radiometric capabil...,2019,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{gene2019multi,
+  title={Multi-modal deep learning for Fuji apple detection using RGB-D came...",No
+vision_paper_050,Fruit detection and segmentation for apple harvesting using visual sensor in orchards,2019,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{kang2019fruit,
+  title={Fruit detection and segmentation for apple harvesting using visual ...",No
+vision_paper_051,Automated Systems Based on Machine Vision for Inspecting Citrus Fruits from the Field to Postharvest...,2016,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{cubero2016automated,
+  title={Automated systems based on machine vision for inspecting citr...",No
+vision_paper_052,Apple fruit size estimation using a 3D machine vision system,2018,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{gongal2018apple,
+  title={Apple fruit size estimation using a 3D machine vision system},
+  ...",No
+vision_paper_053,Fast Recognition Method for Tomatoes under Complex Environments Based on Improved YOLO; [»ùÓÚ¸Ä½øÐÍY...,2020,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{Áõ·¼2020»ùÓÚ¸Ä½øÐÍ,
+  title={»ùÓÚ¸Ä½øÐÍ YOLO µÄ¸´ÔÓ»·¾³ÏÂ·¬ÇÑ¹ûÊµ¿ìËÙÊ¶±ð·½·¨},
+  author={Á...",No
+vision_paper_054,Peduncle Detection of Sweet Pepper for Autonomous Crop Harvesting-Combined Color and 3-D Information,2017,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{sa2017peduncle,
+  title={Peduncle detection of sweet pepper for autonomous crop harvesting¡...",No
+vision_paper_055,Image recognition method of multi-cluster kiwifruit in field based on convolutional neural networks,2018,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{fu2018image,
+  title={Image recognition method of multi-cluster kiwifruit in field based on...",No
+vision_paper_056,General improved SSD model for picking object recognition of multiple fruits in natural environment;...,2018,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{peng2018general,
+  title={General improved SSD model for picking object recognition of mult...",No
+vision_paper_057,L*a*b*Fruits: A rapid and robust outdoor fruit detection system combining bio-inspired features with...,2020,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{kirk2020b,
+  title={L* a* b* fruits: A rapid and robust outdoor fruit detection system comb...",No
+vision_paper_058,Research advance on vision system of apple picking robot,2017,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{wang2017research,
+  title={Research advance on vision system of apple picking robot},
+  aut...",No
+vision_paper_059,Fruit detection in an apple orchard using a mobile terrestrial laser scanner,2019,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{gene2019fruit,
+  title={Fruit detection in an apple orchard using a mobile terrestrial lase...",No
+vision_paper_060,Comparative classification analysis of post-harvest growth detection from terrestrial LiDAR point cl...,2015,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{koenig2015comparative,
+  title={Comparative classification analysis of post-harvest growth ...",No
+vision_paper_061,Intact detection of highly occluded immature tomatoes on plants using deep learning techniques,2020,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{mu2020intact,
+  title={Intact detection of highly occluded immature tomatoes on plants usin...",No
+vision_paper_062,A mature-tomato detection algorithm using machine learning and color analysis,2019,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{liu2019mature,
+  title={A mature-tomato detection algorithm using machine learning and colo...",No
+vision_paper_063,Citrus Detection Method in Night Environment Based on Improved YOLO v3 Network; [»ùÓÚ¸Ä½øYOLO v3ÍøÂç...,2020,Other,Not specified,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{ÐÜ¿¡ÌÎ2020»ùÓÚ¸Ä½ø,
+  title={»ùÓÚ¸Ä½ø YOLO v3 ÍøÂçµÄÒ¹¼ä»·¾³¸ÌéÙÊ¶±ð·½·¨},
+  author={ÐÜ¿¡ÌÎ...",No
+vision_paper_064,Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN,2019,Other,"Mask-RCNN,Resnet50 backbone",strawberry,N/A,95.78,N/A,N/A,N/A,N/A,"95.78, 95.41","An average detection precision rate of 95.78%, the recall rate was 95.41%.",User classified CSV data,"@article{yu2019fruit,
+  title={Fruit detection for strawberry harvesting robot in non-structural env...",Yes
+vision_paper_065,Detection and segmentation of overlapped fruits based on optimized mask R-CNN application in apple h...,2020,Other,Mask-RCNN,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,"97.31, 95.70","The Precision Rate has reached 97.31%, and the Recall Rate has reached 95.70%.",User classified CSV data,"@article{jia2020detection,
+  title={Detection and segmentation of overlapped fruits based on optimiz...",Yes
+vision_paper_066,Deep learning-based apple detection using a suppression mask R-CNN,2021,Other,Mask-RCNN,General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{chu2021deep,
+  title={Deep learning-based apple detection using a suppression mask R-CNN},
+...",No
+vision_paper_067,YOLO-Tomato: A Robust Algorithm for Tomato Detection Based on YOLOv3,2020,Other,YOLOv3,tomato,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{liu2020yolo,
+  title={YOLO-tomato: A robust algorithm for tomato detection based on YOLOv3}...",No
+vision_paper_068,Tomato detection based on modified YOLOv3 framework,2021,Other,YOLOv3,tomato,N/A,N/A,N/A,N/A,N/A,N/A,N/A,"picking time of 44ms, a success rate of over 98\%.",User classified CSV data,"@article{lawal2021tomato,
+  title={Tomato detection based on modified YOLOv3 framework},
+  author={L...",No
+vision_paper_069,Using YOLOv3 Algorithm with Pre- and Post-Processing for Apple Detection in Fruit-Harvesting Robot,2020,Other,YOLOv3,apples,N/A,N/A,N/A,N/A,N/A,N/A,N/A,a detecion time of 19ms and error rate of 7.8\% in mistake and 9.2\% in unrecognization.,User classified CSV data,"@article{kuznetsova2020using,
+  title={Using YOLOv3 algorithm with pre-and post-processing for apple...",No
+vision_paper_070,"Automatic Bunch Detection in White Grape Varieties Using YOLOv3, YOLOv4, and YOLOv5 Deep Learning Al...",2022,Other,"YOLOv3,YOLOv4,YOLOv5",grape,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{sozzi2022automatic,
+  title={Automatic bunch detection in white grape varieties using YOLOv...",No
+vision_paper_071,A detection algorithm for cherry fruits based on the improved YOLO-v4 model,2023,Other,improved YOLOv4,cherry,0.15,N/A,N/A,N/A,N/A,N/A,N/A,an accuracy of 0.15 higher than that of YOLOv4,User classified CSV data,"@article{gai2023detection,
+  title={A detection algorithm for cherry fruits based on the improved YO...",Yes
+vision_paper_072,A real-time table grape detection method based on improved YOLOv4-tiny network in complex background,2021,Other,YOLOv4-tiny,grape,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{li2021real,
+  title={A real-time table grape detection method based on improved YOLOv4-tiny...",No
+vision_paper_073,Fruit detection and positioning technology for a Camellia oleifera C. Abel orchard based on improved...,2023,Other,YOLOv4-tiny,Camellia oleifera,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{tang2023fruit,
+  title={Fruit detection and positioning technology for a Camellia oleifera ...",No
+vision_paper_074,Single-Shot Convolution Neural Networks for Real-Time Fruit Detection Within the Tree,2019,Other,single-shot CNN,"apples,pears",N/A,N/A,N/A,N/A,N/A,N/A,N/A,Over 90\% fruit detection,User classified CSV data,"@article{bresilla2019single,
+  title={Single-shot convolution neural networks for real-time fruit de...",No
+vision_paper_075,A comprehensive review of fruit and vegetable classification techniques,2018,Other,"SVM,KNN,CNN",General/Mixed,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{hameed2018comprehensive,
+  title={A comprehensive review of fruit and vegetable classificat...",No
+vision_paper_076,Evaluating the Single-Shot MultiBox Detector and YOLO Deep Learning Models for the Detection of Toma...,2021,Other,"single-shot, YOLO",tomato,N/A,N/A,N/A,N/A,N/A,N/A,N/A,,User classified CSV data,"@article{magalhaes2021evaluating,
+  title={Evaluating the single-shot multibox detector and YOLO dee...",No
