@@ -257,7 +257,8 @@ def create_chapter6_critical_analysis():
     ax3.set_xlabel('Year')
     ax3.set_ylabel('Expected Maturity Level (TRL)')
     ax3.set_title('(c) Strategic Innovation Roadmap (2024-2030)')
-    ax3.legend()
+    # 修复图例重叠问题 - 调整位置到右上角并设置更好的参数
+    ax3.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0, framealpha=0.9, fontsize=8)
     ax3.grid(True, alpha=0.3)
     ax3.set_ylim(4, 10)
     
