@@ -1,0 +1,760 @@
+{
+  "total_pdfs": 166,
+  "motion_control_pdfs": 124,
+  "categories": {
+    "robotics": 39,
+    "tomato": 16,
+    "citrus": 9,
+    "apple": 26,
+    "general": 14,
+    "motion_planning": 5,
+    "strawberry": 8,
+    "pepper": 7
+  },
+  "detailed_list": [
+    {
+      "filename": "An Overview of the Application of Machine Vision in Recognitin and Localization of fruit and vegetable harvesting robot.pdf",
+      "path": "./Table1Review/An Overview of the Application of Machine Vision in Recognitin and Localization of fruit and vegetable harvesting robot.pdf",
+      "size_mb": 49.3,
+      "category": "robotics"
+    },
+    {
+      "filename": "MLP - based multimodal tomato detection in complex scenarios Insights from task - specific analysis of feature fusion architectures.pdf",
+      "path": "./Table3Sensor/MLP - based multimodal tomato detection in complex scenarios Insights from task - specific analysis of feature fusion architectures.pdf",
+      "size_mb": 38.4,
+      "category": "tomato"
+    },
+    {
+      "filename": "Multi-scale feature adaptive fusion model for real-time detection in complex citrus orchard environments.pdf",
+      "path": "./Table5YOLO/Multi-scale feature adaptive fusion model for real-time detection in complex citrus orchard environments.pdf",
+      "size_mb": 36.9,
+      "category": "citrus"
+    },
+    {
+      "filename": "Design of citrus peel defect and fruit morphology detection method based on machine vision.pdf",
+      "path": "./Table5YOLO/Design of citrus peel defect and fruit morphology detection method based on machine vision.pdf",
+      "size_mb": 36.9,
+      "category": "citrus"
+    },
+    {
+      "filename": "A mature-tomato detection algorithm using machine learning and color analysis.pdf",
+      "path": "./A mature-tomato detection algorithm using machine learning and color analysis.pdf",
+      "size_mb": 26.6,
+      "category": "tomato"
+    },
+    {
+      "filename": "Fruit detection, segmentation and 3D visualisation of environments in apple orchards.pdf",
+      "path": "./Fruit detection, segmentation and 3D visualisation of environments in apple orchards.pdf",
+      "size_mb": 21.2,
+      "category": "apple"
+    },
+    {
+      "filename": "3D-vision based detection, localization, and sizing of broccoli heads in the field.pdf",
+      "path": "./Table3Sensor/3D-vision based detection, localization, and sizing of broccoli heads in the field.pdf",
+      "size_mb": 21.1,
+      "category": "general"
+    },
+    {
+      "filename": "Towards autonomous selective harvesting A review of robot perception, robot design, motion planning and control.pdf",
+      "path": "./Table1Review/Towards autonomous selective harvesting A review of robot perception, robot design, motion planning and control.pdf",
+      "size_mb": 21.0,
+      "category": "motion_planning"
+    },
+    {
+      "filename": "Automatic cucumber recognition algorithm for harvesting robots in the natural environment using deep learning and multi-feature fusion.pdf",
+      "path": "./Automatic cucumber recognition algorithm for harvesting robots in the natural environment using deep learning and multi-feature fusion.pdf",
+      "size_mb": 18.1,
+      "category": "robotics"
+    },
+    {
+      "filename": "Technology progress in mechanical harvest of fresh market apples.pdf",
+      "path": "./Technology progress in mechanical harvest of fresh market apples.pdf",
+      "size_mb": 15.0,
+      "category": "apple"
+    },
+    {
+      "filename": "An improved obstacle separation method using deep learning for object detection and tracking in a hybrid visual control loop for fruit picking in clusters.pdf",
+      "path": "./Table1Review/rem/An improved obstacle separation method using deep learning for object detection and tracking in a hybrid visual control loop for fruit picking in clusters.pdf",
+      "size_mb": 14.6,
+      "category": "general"
+    },
+    {
+      "filename": "Deep learning based segmentation for automated training of apple trees on trellis wires.pdf",
+      "path": "./Deep learning based segmentation for automated training of apple trees on trellis wires.pdf",
+      "size_mb": 14.5,
+      "category": "apple"
+    },
+    {
+      "filename": "Robust Grape Cluster Detection in a Vineyard by Combining the AdaBoost Framework and Multiple Color Components.pdf",
+      "path": "./Robust Grape Cluster Detection in a Vineyard by Combining the AdaBoost Framework and Multiple Color Components.pdf",
+      "size_mb": 14.3,
+      "category": "general"
+    },
+    {
+      "filename": "A field-tested robotic harvesting system for iceberg lettuce.pdf",
+      "path": "./A field-tested robotic harvesting system for iceberg lettuce.pdf",
+      "size_mb": 12.0,
+      "category": "robotics"
+    },
+    {
+      "filename": "Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN.pdf",
+      "path": "./Table4RCNN/Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN.pdf",
+      "size_mb": 12.0,
+      "category": "strawberry"
+    },
+    {
+      "filename": "A field-tested robotic harvesting system for iceberg lettuce.pdf",
+      "path": "./Table6Performance/A field-tested robotic harvesting system for iceberg lettuce.pdf",
+      "size_mb": 12.0,
+      "category": "robotics"
+    },
+    {
+      "filename": "MTA-YOLACT Multitask-aware network on fruit bunch identification for cherry tomato robotic harvesting.pdf",
+      "path": "./Table1Review/rem/MTA-YOLACT Multitask-aware network on fruit bunch identification for cherry tomato robotic harvesting.pdf",
+      "size_mb": 11.6,
+      "category": "tomato"
+    },
+    {
+      "filename": "Development and field evaluation of a strawberry harvesting robot with a cable-driven gripper.pdf",
+      "path": "./Development and field evaluation of a strawberry harvesting robot with a cable-driven gripper.pdf",
+      "size_mb": 11.2,
+      "category": "strawberry"
+    },
+    {
+      "filename": "An autonomous strawberry-harvesting robot Design, development, integration, and field evaluation.pdf",
+      "path": "./An autonomous strawberry-harvesting robot Design, development, integration, and field evaluation.pdf",
+      "size_mb": 11.1,
+      "category": "strawberry"
+    },
+    {
+      "filename": "Journal of Field Robotics - 2019 - Xiong - An autonomous strawberry‐harvesting robot Design development integration and.pdf",
+      "path": "./Journal of Field Robotics - 2019 - Xiong - An autonomous strawberry‐harvesting robot Design development integration and.pdf",
+      "size_mb": 11.1,
+      "category": "strawberry"
+    },
+    {
+      "filename": "Automatic Bunch Detection in White Grape Varieties Using YOLOv3, YOLOv4, and YOLOv5 Deep Learning Algorithms.pdf",
+      "path": "./Table5YOLO/Automatic Bunch Detection in White Grape Varieties Using YOLOv3, YOLOv4, and YOLOv5 Deep Learning Algorithms.pdf",
+      "size_mb": 10.8,
+      "category": "general"
+    },
+    {
+      "filename": "A multi - arm robot system for efficient apple harvesting Perception, task plan and control.pdf",
+      "path": "./Table1Review/rem/A multi - arm robot system for efficient apple harvesting Perception, task plan and control.pdf",
+      "size_mb": 10.4,
+      "category": "apple"
+    },
+    {
+      "filename": "3D positioning of Camellia oleifera fruit-grabbing points for robotic harvesting.pdf",
+      "path": "./Table5YOLO/3D positioning of Camellia oleifera fruit-grabbing points for robotic harvesting.pdf",
+      "size_mb": 9.3,
+      "category": "robotics"
+    },
+    {
+      "filename": "Intact detection of highly occluded immature tomatoes on plants using deep learning techniques.pdf",
+      "path": "./Table4RCNN/Intact detection of highly occluded immature tomatoes on plants using deep learning techniques.pdf",
+      "size_mb": 9.2,
+      "category": "tomato"
+    },
+    {
+      "filename": "Hierarchical Tri-manual Planning for Vision-assisted Fruit Harvesting with Quadrupedal Robots.pdf",
+      "path": "./Table1Review/rem/Hierarchical Tri-manual Planning for Vision-assisted Fruit Harvesting with Quadrupedal Robots.pdf",
+      "size_mb": 8.8,
+      "category": "motion_planning"
+    },
+    {
+      "filename": "A novel green apple segmentation algorithm based on ensemble U-Net under complex orchard environment.pdf",
+      "path": "./A novel green apple segmentation algorithm based on ensemble U-Net under complex orchard environment.pdf",
+      "size_mb": 8.3,
+      "category": "apple"
+    },
+    {
+      "filename": "Date Fruit Classification for Robotic Harvesting in a Natural Environment Using Deep Learning.pdf",
+      "path": "./Date Fruit Classification for Robotic Harvesting in a Natural Environment Using Deep Learning.pdf",
+      "size_mb": 8.3,
+      "category": "robotics"
+    },
+    {
+      "filename": "Design  integration  and field evaluation of a robotic apple harvester.pdf",
+      "path": "./Design  integration  and field evaluation of a robotic apple harvester.pdf",
+      "size_mb": 7.8,
+      "category": "apple"
+    },
+    {
+      "filename": "Sweet Pepper Pose Detection and Grasping for Automated Crop Harvesting.pdf",
+      "path": "./Sweet Pepper Pose Detection and Grasping for Automated Crop Harvesting.pdf",
+      "size_mb": 7.5,
+      "category": "pepper"
+    },
+    {
+      "filename": "Collision-free path planning for a guava-harvesting robot based on recurrent deep reinforcement learning.pdf",
+      "path": "./Collision-free path planning for a guava-harvesting robot based on recurrent deep reinforcement learning.pdf",
+      "size_mb": 7.3,
+      "category": "motion_planning"
+    },
+    {
+      "filename": "Autonomous Sweet Pepper Harvesting for Protected Cropping Systems.pdf",
+      "path": "./Autonomous Sweet Pepper Harvesting for Protected Cropping Systems.pdf",
+      "size_mb": 7.2,
+      "category": "pepper"
+    },
+    {
+      "filename": "Performance Evaluation of a Harvesting Robot for Sweet Pepper.pdf",
+      "path": "./Performance Evaluation of a Harvesting Robot for Sweet Pepper.pdf",
+      "size_mb": 6.9,
+      "category": "pepper"
+    },
+    {
+      "filename": "Harvesting robots for high‐value crops State‐of‐the‐art review and challenges ahead.pdf",
+      "path": "./Harvesting robots for high‐value crops State‐of‐the‐art review and challenges ahead.pdf",
+      "size_mb": 6.9,
+      "category": "robotics"
+    },
+    {
+      "filename": "Using YOLOv3 Algorithm with Pre- and Post-Processing for Apple Detection in Fruit-Harvesting Robot.pdf",
+      "path": "./Table5YOLO/Using YOLOv3 Algorithm with Pre- and Post-Processing for Apple Detection in Fruit-Harvesting Robot.pdf",
+      "size_mb": 6.8,
+      "category": "apple"
+    },
+    {
+      "filename": "1_2016_THEDEVELOPMENTOFMECHANICALAPPLEHARVESTINGTECHNOLOGYAREVIEW.pdf",
+      "path": "./1_2016_THEDEVELOPMENTOFMECHANICALAPPLEHARVESTINGTECHNOLOGYAREVIEW.pdf",
+      "size_mb": 6.7,
+      "category": "apple"
+    },
+    {
+      "filename": "Fruit detection and segmentation for apple harvesting using visual sensor in orchards.pdf",
+      "path": "./Fruit detection and segmentation for apple harvesting using visual sensor in orchards.pdf",
+      "size_mb": 6.7,
+      "category": "apple"
+    },
+    {
+      "filename": "Real-Time Fruit Recognition and Grasping Estimation for Robotic Apple Harvesting.pdf",
+      "path": "./Real-Time Fruit Recognition and Grasping Estimation for Robotic Apple Harvesting.pdf",
+      "size_mb": 6.7,
+      "category": "apple"
+    },
+    {
+      "filename": "Mapping almond orchard canopy volume, flowers, fruit and yield using lidar and vision sensors.pdf",
+      "path": "./Table3Sensor/Mapping almond orchard canopy volume, flowers, fruit and yield using lidar and vision sensors.pdf",
+      "size_mb": 6.7,
+      "category": "general"
+    },
+    {
+      "filename": "Evaluating the Single-Shot MultiBox Detector and YOLO Deep Learning Models for the Detection of Tomatoes in a Greenhouse.pdf",
+      "path": "./Table5YOLO/Evaluating the Single-Shot MultiBox Detector and YOLO Deep Learning Models for the Detection of Tomatoes in a Greenhouse.pdf",
+      "size_mb": 6.5,
+      "category": "tomato"
+    },
+    {
+      "filename": "The_Smart_Image_Recognition_Mechanism_for_Crop_Harvesting_System_in_Intelligent_Agriculture.pdf",
+      "path": "./The_Smart_Image_Recognition_Mechanism_for_Crop_Harvesting_System_in_Intelligent_Agriculture.pdf",
+      "size_mb": 6.3,
+      "category": "general"
+    },
+    {
+      "filename": "Peduncle Detection of Sweet Pepper for Autonomous Crop Harvesting-Combined Color and 3-D Information.pdf",
+      "path": "./Peduncle Detection of Sweet Pepper for Autonomous Crop Harvesting-Combined Color and 3-D Information.pdf",
+      "size_mb": 6.3,
+      "category": "pepper"
+    },
+    {
+      "filename": "An Overview of Cooperative Robotics in Agriculture.pdf",
+      "path": "./Table1Review/rem/An Overview of Cooperative Robotics in Agriculture.pdf",
+      "size_mb": 5.8,
+      "category": "robotics"
+    },
+    {
+      "filename": "An Extensive Review of Mobile Agricultural Robotics for Field Operations Focus on Cotton Harvesting.pdf",
+      "path": "./An Extensive Review of Mobile Agricultural Robotics for Field Operations Focus on Cotton Harvesting.pdf",
+      "size_mb": 5.6,
+      "category": "robotics"
+    },
+    {
+      "filename": "Deep Learning Techniques for Grape Plant Species Identification in Natural Images.pdf",
+      "path": "./Deep Learning Techniques for Grape Plant Species Identification in Natural Images.pdf",
+      "size_mb": 5.1,
+      "category": "general"
+    },
+    {
+      "filename": "A real-time table grape detection method based on improved YOLOv4-tiny network in complex background.pdf",
+      "path": "./Table5YOLO/A real-time table grape detection method based on improved YOLOv4-tiny network in complex background.pdf",
+      "size_mb": 5.0,
+      "category": "general"
+    },
+    {
+      "filename": "Localization and Mapping for Robots in Agriculture and Forestry A Survey.pdf",
+      "path": "./Localization and Mapping for Robots in Agriculture and Forestry A Survey.pdf",
+      "size_mb": 4.9,
+      "category": "robotics"
+    },
+    {
+      "filename": "Design and simulation of an integrated end-effector for picking kiwifruit by robot.pdf",
+      "path": "./Design and simulation of an integrated end-effector for picking kiwifruit by robot.pdf",
+      "size_mb": 4.7,
+      "category": "robotics"
+    },
+    {
+      "filename": "Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms.pdf",
+      "path": "./Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms.pdf",
+      "size_mb": 4.6,
+      "category": "robotics"
+    },
+    {
+      "filename": "State-of-the-art robotic grippers, grasping and control strategies, as well as their applications in agricultural robots A review.pdf",
+      "path": "./State-of-the-art robotic grippers, grasping and control strategies, as well as their applications in agricultural robots A review.pdf",
+      "size_mb": 4.6,
+      "category": "robotics"
+    },
+    {
+      "filename": "Fast implementation of real-time fruit detection in apple orchards using deep learning.pdf",
+      "path": "./Fast implementation of real-time fruit detection in apple orchards using deep learning.pdf",
+      "size_mb": 4.4,
+      "category": "apple"
+    },
+    {
+      "filename": "Tomato detection based on modified YOLOv3 framework.pdf",
+      "path": "./Table5YOLO/Tomato detection based on modified YOLOv3 framework.pdf",
+      "size_mb": 4.4,
+      "category": "tomato"
+    },
+    {
+      "filename": "A pattern recognition strategy for visual grape bunch detection in vineyards.pdf",
+      "path": "./A pattern recognition strategy for visual grape bunch detection in vineyards.pdf",
+      "size_mb": 4.3,
+      "category": "general"
+    },
+    {
+      "filename": "Identifying the spatiotemporal changes of annual harvesting areas for three staple crops in China by integrating multi-data sources.pdf",
+      "path": "./Identifying the spatiotemporal changes of annual harvesting areas for three staple crops in China by integrating multi-data sources.pdf",
+      "size_mb": 4.1,
+      "category": "general"
+    },
+    {
+      "filename": "Orchard-Wide Visual Perception and Autonomous Operation of Fruit Picking Robots_ A Review.pdf",
+      "path": "./Table1Review/Orchard-Wide Visual Perception and Autonomous Operation of Fruit Picking Robots_ A Review.pdf",
+      "size_mb": 3.9,
+      "category": "robotics"
+    },
+    {
+      "filename": "Intelligent robots for fruit harvesting recent developments and future challenges.pdf",
+      "path": "./Table1Review/Intelligent robots for fruit harvesting recent developments and future challenges.pdf",
+      "size_mb": 3.8,
+      "category": "robotics"
+    },
+    {
+      "filename": "Vision-based extraction of spatial information in grape clusters for harvesting robots.pdf",
+      "path": "./Table3Sensor/Vision-based extraction of spatial information in grape clusters for harvesting robots.pdf",
+      "size_mb": 3.7,
+      "category": "robotics"
+    },
+    {
+      "filename": "Multi-class fruit-on-plant detection for apple in SNAP system using Faster R-CNN.pdf",
+      "path": "./Table4RCNN/Multi-class fruit-on-plant detection for apple in SNAP system using Faster R-CNN.pdf",
+      "size_mb": 3.5,
+      "category": "apple"
+    },
+    {
+      "filename": "Detecting tomatoes in greenhouse scenes by combining AdaBoost classifier and colour analysis.pdf",
+      "path": "./Detecting tomatoes in greenhouse scenes by combining AdaBoost classifier and colour analysis.pdf",
+      "size_mb": 3.4,
+      "category": "tomato"
+    },
+    {
+      "filename": "Development of a sweet pepper harvesting robot.pdf",
+      "path": "./Development of a sweet pepper harvesting robot.pdf",
+      "size_mb": 3.3,
+      "category": "pepper"
+    },
+    {
+      "filename": "YOLO-Tomato A Robust Algorithm for Tomato Detection Based on YOLOv3.pdf",
+      "path": "./Table5YOLO/YOLO-Tomato A Robust Algorithm for Tomato Detection Based on YOLOv3.pdf",
+      "size_mb": 3.3,
+      "category": "tomato"
+    },
+    {
+      "filename": "Fruit Localization and Environment Perception for Strawberry Harvesting Robots.pdf",
+      "path": "./Table4RCNN/Fruit Localization and Environment Perception for Strawberry Harvesting Robots.pdf",
+      "size_mb": 3.2,
+      "category": "strawberry"
+    },
+    {
+      "filename": "Deep learning-based apple detection using a suppression mask R-CNN.pdf",
+      "path": "./Table4RCNN/Deep learning-based apple detection using a suppression mask R-CNN.pdf",
+      "size_mb": 3.2,
+      "category": "apple"
+    },
+    {
+      "filename": "A vision methodology for harvesting robot to detect cutting points on peduncles of double overlapping grape clusters in a vineyard.pdf",
+      "path": "./A vision methodology for harvesting robot to detect cutting points on peduncles of double overlapping grape clusters in a vineyard.pdf",
+      "size_mb": 3.1,
+      "category": "robotics"
+    },
+    {
+      "filename": "Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision.pdf",
+      "path": "./Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision.pdf",
+      "size_mb": 3.1,
+      "category": "tomato"
+    },
+    {
+      "filename": "Indoor Coverage Path Planning Survey, Implementation, Analysis.pdf",
+      "path": "./Indoor Coverage Path Planning Survey, Implementation, Analysis.pdf",
+      "size_mb": 3.1,
+      "category": "motion_planning"
+    },
+    {
+      "filename": "Fruit detection in an apple orchard using a mobile terrestrial laser scanner.pdf",
+      "path": "./Table3Sensor/Fruit detection in an apple orchard using a mobile terrestrial laser scanner.pdf",
+      "size_mb": 3.1,
+      "category": "apple"
+    },
+    {
+      "filename": "Multi - view gripper internal sensing for the regression of strawberry ripeness using a mini - convolutional neural network for robotic harvesting.pdf",
+      "path": "./Table3Sensor/Multi - view gripper internal sensing for the regression of strawberry ripeness using a mini - convolutional neural network for robotic harvesting.pdf",
+      "size_mb": 3.0,
+      "category": "strawberry"
+    },
+    {
+      "filename": "An automated fruit harvesting robot by using deep learning.pdf",
+      "path": "./Table3Sensor/An automated fruit harvesting robot by using deep learning.pdf",
+      "size_mb": 3.0,
+      "category": "robotics"
+    },
+    {
+      "filename": "Analysis of a motion planning problem for sweet-pepper harvesting in a dense obstacle environment.pdf",
+      "path": "./Analysis of a motion planning problem for sweet-pepper harvesting in a dense obstacle environment.pdf",
+      "size_mb": 2.8,
+      "category": "pepper"
+    },
+    {
+      "filename": "In-field citrus detection and localisation based on RGB-D image analysis.pdf",
+      "path": "./In-field citrus detection and localisation based on RGB-D image analysis.pdf",
+      "size_mb": 2.8,
+      "category": "citrus"
+    },
+    {
+      "filename": "Soft Grippers for Automatic Crop Harvesting A Review.pdf",
+      "path": "./Table1Review/Soft Grippers for Automatic Crop Harvesting A Review.pdf",
+      "size_mb": 2.8,
+      "category": "general"
+    },
+    {
+      "filename": "Faster R–CNN–based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting.pdf",
+      "path": "./Faster R–CNN–based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting.pdf",
+      "size_mb": 2.7,
+      "category": "apple"
+    },
+    {
+      "filename": "Detecting citrus fruits and occlusion recovery under natural illumination conditions.pdf",
+      "path": "./Detecting citrus fruits and occlusion recovery under natural illumination conditions.pdf",
+      "size_mb": 2.7,
+      "category": "citrus"
+    },
+    {
+      "filename": "Faster R-CNN-based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting.pdf",
+      "path": "./Table4RCNN/Faster R-CNN-based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting.pdf",
+      "size_mb": 2.7,
+      "category": "apple"
+    },
+    {
+      "filename": "Optimised computer vision system for automatic pre-grading of citrus fruit in the field using a mobile platform.pdf",
+      "path": "./Optimised computer vision system for automatic pre-grading of citrus fruit in the field using a mobile platform.pdf",
+      "size_mb": 2.6,
+      "category": "citrus"
+    },
+    {
+      "filename": "Detection of red and bicoloured apples on tree with an RGB-D camera.pdf",
+      "path": "./Detection of red and bicoloured apples on tree with an RGB-D camera.pdf",
+      "size_mb": 2.5,
+      "category": "apple"
+    },
+    {
+      "filename": "Towards an Efficient Tomato Harvesting Robot 3D Perception, Manipulation, and End-Effector.pdf",
+      "path": "./Table5YOLO/Towards an Efficient Tomato Harvesting Robot 3D Perception, Manipulation, and End-Effector.pdf",
+      "size_mb": 2.5,
+      "category": "tomato"
+    },
+    {
+      "filename": "A Proposal for Automatic Fruit Harvesting by Combining a Low Cost Stereovision Camera and a Robotic Arm.pdf",
+      "path": "./A Proposal for Automatic Fruit Harvesting by Combining a Low Cost Stereovision Camera and a Robotic Arm.pdf",
+      "size_mb": 2.4,
+      "category": "robotics"
+    },
+    {
+      "filename": "Robust visual servo control in the presence of fruit motion for robotic citrus harvesting.pdf",
+      "path": "./Robust visual servo control in the presence of fruit motion for robotic citrus harvesting.pdf",
+      "size_mb": 2.4,
+      "category": "citrus"
+    },
+    {
+      "filename": "Real-Time Visual Localization of the Picking Points for a Ridge-Planting Strawberry Harvesting Robot.pdf",
+      "path": "./Table5YOLO/Real-Time Visual Localization of the Picking Points for a Ridge-Planting Strawberry Harvesting Robot.pdf",
+      "size_mb": 2.4,
+      "category": "strawberry"
+    },
+    {
+      "filename": "Robotic Aubergine Harvesting Using Dual-Arm Manipulation.pdf",
+      "path": "./Robotic Aubergine Harvesting Using Dual-Arm Manipulation.pdf",
+      "size_mb": 2.3,
+      "category": "robotics"
+    },
+    {
+      "filename": "Agricultural Robotics for Field Operations.pdf",
+      "path": "./Agricultural Robotics for Field Operations.pdf",
+      "size_mb": 2.3,
+      "category": "robotics"
+    },
+    {
+      "filename": "Automatic non-destructive video estimation of maturation levels in Fuji apple (Malus Malus pumila) fruit in orchard based on colour (Vis) and spectral (NIR) data.pdf",
+      "path": "./Automatic non-destructive video estimation of maturation levels in Fuji apple (Malus Malus pumila) fruit in orchard based on colour (Vis) and spectral (NIR) data.pdf",
+      "size_mb": 2.2,
+      "category": "apple"
+    },
+    {
+      "filename": "Design of an eye-in-hand sensing and servo control framework for harvesting robotics in dense vegetation.pdf",
+      "path": "./Design of an eye-in-hand sensing and servo control framework for harvesting robotics in dense vegetation.pdf",
+      "size_mb": 2.1,
+      "category": "robotics"
+    },
+    {
+      "filename": "Colour-agnostic shape-based 3D fruit detection for crop harvesting robots.pdf",
+      "path": "./Table3Sensor/Colour-agnostic shape-based 3D fruit detection for crop harvesting robots.pdf",
+      "size_mb": 2.1,
+      "category": "robotics"
+    },
+    {
+      "filename": "Detection_of_Fruit-Bearing_Branches_and_Localization_of_Litchi_Clusters_for_Vision-Based_Harvesting_Robots.pdf",
+      "path": "./Detection_of_Fruit-Bearing_Branches_and_Localization_of_Litchi_Clusters_for_Vision-Based_Harvesting_Robots.pdf",
+      "size_mb": 2.0,
+      "category": "robotics"
+    },
+    {
+      "filename": "Robust Tomato Recognition for Robotic Harvesting Using Feature Images Fusion.pdf",
+      "path": "./Robust Tomato Recognition for Robotic Harvesting Using Feature Images Fusion.pdf",
+      "size_mb": 1.9,
+      "category": "tomato"
+    },
+    {
+      "filename": "Stem localization of sweet-pepper plants using the support wire as a visual cue.pdf",
+      "path": "./Stem localization of sweet-pepper plants using the support wire as a visual cue.pdf",
+      "size_mb": 1.9,
+      "category": "pepper"
+    },
+    {
+      "filename": "Fuzzy classification of pre-harvest tomatoes for ripeness estimation – An approach based on automatic rule learning using decision tree.pdf",
+      "path": "./Fuzzy classification of pre-harvest tomatoes for ripeness estimation – An approach based on automatic rule learning using decision tree.pdf",
+      "size_mb": 1.8,
+      "category": "tomato"
+    },
+    {
+      "filename": "Fuzzy classification of pre-harvest tomatoes for ripeness estimation - An approach based on automatic rule learning using decision tree.pdf",
+      "path": "./Fuzzy classification of pre-harvest tomatoes for ripeness estimation - An approach based on automatic rule learning using decision tree.pdf",
+      "size_mb": 1.8,
+      "category": "tomato"
+    },
+    {
+      "filename": "Humanerobot interaction in agriculture A survey.pdf",
+      "path": "./Humanerobot interaction in agriculture A survey.pdf",
+      "size_mb": 1.7,
+      "category": "robotics"
+    },
+    {
+      "filename": "Development and experiment of end-effector for kiwifruit harvesting robot.pdf",
+      "path": "./Development and experiment of end-effector for kiwifruit harvesting robot.pdf",
+      "size_mb": 1.7,
+      "category": "robotics"
+    },
+    {
+      "filename": "Human–robot interaction in agriculture A survey and current challenges.pdf",
+      "path": "./Human–robot interaction in agriculture A survey and current challenges.pdf",
+      "size_mb": 1.7,
+      "category": "robotics"
+    },
+    {
+      "filename": "Human-robot interaction in agriculture A survey and current challenges.pdf",
+      "path": "./Human-robot interaction in agriculture A survey and current challenges.pdf",
+      "size_mb": 1.7,
+      "category": "robotics"
+    },
+    {
+      "filename": "Research and development in agricultural robotics A perspective of digital farming.pdf",
+      "path": "./Research and development in agricultural robotics A perspective of digital farming.pdf",
+      "size_mb": 1.7,
+      "category": "robotics"
+    },
+    {
+      "filename": "Research advance on vision system of apple picking robot.pdf",
+      "path": "./Research advance on vision system of apple picking robot.pdf",
+      "size_mb": 1.7,
+      "category": "apple"
+    },
+    {
+      "filename": "Robotics in Agriculture and Forestry.pdf",
+      "path": "./Robotics in Agriculture and Forestry.pdf",
+      "size_mb": 1.6,
+      "category": "robotics"
+    },
+    {
+      "filename": "Development of a Robot for Harvesting Strawberries.pdf",
+      "path": "./Development of a Robot for Harvesting Strawberries.pdf",
+      "size_mb": 1.6,
+      "category": "robotics"
+    },
+    {
+      "filename": "Location of apples in trees using stereoscopic vision.pdf",
+      "path": "./Table3Sensor/Location of apples in trees using stereoscopic vision.pdf",
+      "size_mb": 1.6,
+      "category": "apple"
+    },
+    {
+      "filename": "A robust fruit image segmentation algorithm against varying illumination for vision system of fruit harvesting robot.pdf",
+      "path": "./A robust fruit image segmentation algorithm against varying illumination for vision system of fruit harvesting robot.pdf",
+      "size_mb": 1.5,
+      "category": "robotics"
+    },
+    {
+      "filename": "Vision-based control of robotic manipulator for citrus harvesting.pdf",
+      "path": "./Vision-based control of robotic manipulator for citrus harvesting.pdf",
+      "size_mb": 1.4,
+      "category": "citrus"
+    },
+    {
+      "filename": "Vine_Trunk_Detector_for_a_Reliable_Robot_Localization_System.pdf",
+      "path": "./Vine_Trunk_Detector_for_a_Reliable_Robot_Localization_System.pdf",
+      "size_mb": 1.4,
+      "category": "robotics"
+    },
+    {
+      "filename": "Multi-modal deep learning for Fuji apple detection using RGB-D cameras and their radiometric capabilities.pdf",
+      "path": "./Table4RCNN/Multi-modal deep learning for Fuji apple detection using RGB-D cameras and their radiometric capabilities.pdf",
+      "size_mb": 1.4,
+      "category": "apple"
+    },
+    {
+      "filename": "Detection and segmentation of overlapped fruits based on optimized mask R-CNN application in apple harvesting robot.pdf",
+      "path": "./Table4RCNN/Detection and segmentation of overlapped fruits based on optimized mask R-CNN application in apple harvesting robot.pdf",
+      "size_mb": 1.4,
+      "category": "apple"
+    },
+    {
+      "filename": "A method of segmenting apples at night based on color and position information.pdf",
+      "path": "./A method of segmenting apples at night based on color and position information.pdf",
+      "size_mb": 1.3,
+      "category": "apple"
+    },
+    {
+      "filename": "A review of key techniques of vision-based control for harvesting robot.pdf",
+      "path": "./A review of key techniques of vision-based control for harvesting robot.pdf",
+      "size_mb": 1.3,
+      "category": "robotics"
+    },
+    {
+      "filename": "Apple fruit size estimation using a 3D machine vision system.pdf",
+      "path": "./Table3Sensor/Apple fruit size estimation using a 3D machine vision system.pdf",
+      "size_mb": 1.2,
+      "category": "apple"
+    },
+    {
+      "filename": "Kiwifruit detection in field images using Faster R-CNN with ZFNet.pdf",
+      "path": "./Table4RCNN/Kiwifruit detection in field images using Faster R-CNN with ZFNet.pdf",
+      "size_mb": 1.2,
+      "category": "general"
+    },
+    {
+      "filename": "Task-based agricultural mobile robots in arable farming A review.pdf",
+      "path": "./Task-based agricultural mobile robots in arable farming A review.pdf",
+      "size_mb": 1.1,
+      "category": "robotics"
+    },
+    {
+      "filename": "Deep Learning Based Improved Classification System for Designing Tomato Harvesting Robot.pdf",
+      "path": "./Deep Learning Based Improved Classification System for Designing Tomato Harvesting Robot.pdf",
+      "size_mb": 1.1,
+      "category": "tomato"
+    },
+    {
+      "filename": "Robotics and labour in agriculture. A context consideration.pdf",
+      "path": "./Robotics and labour in agriculture. A context consideration.pdf",
+      "size_mb": 1.1,
+      "category": "robotics"
+    },
+    {
+      "filename": "Characterizing apple picking patterns for robotic harvesting.pdf",
+      "path": "./Characterizing apple picking patterns for robotic harvesting.pdf",
+      "size_mb": 1.0,
+      "category": "apple"
+    },
+    {
+      "filename": "Automated Systems Based on Machine Vision for Inspecting Citrus Fruits from the Field to Postharvest—a Review.pdf",
+      "path": "./Automated Systems Based on Machine Vision for Inspecting Citrus Fruits from the Field to Postharvest—a Review.pdf",
+      "size_mb": 1.0,
+      "category": "citrus"
+    },
+    {
+      "filename": "Sensors and systems for fruit detection and localization A review.pdf",
+      "path": "./Sensors and systems for fruit detection and localization A review.pdf",
+      "size_mb": 0.9,
+      "category": "general"
+    },
+    {
+      "filename": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots A Review.pdf",
+      "path": "./Recognition and Localization Methods for Vision-Based Fruit Picking Robots A Review.pdf",
+      "size_mb": 0.8,
+      "category": "robotics"
+    },
+    {
+      "filename": "Apple harvesting robot under information technology A review.pdf",
+      "path": "./Apple harvesting robot under information technology A review.pdf",
+      "size_mb": 0.8,
+      "category": "apple"
+    },
+    {
+      "filename": "Faster R-CNN for multi-class fruit detection using a robotic vision system.pdf",
+      "path": "./Table4RCNN/Faster R-CNN for multi-class fruit detection using a robotic vision system.pdf",
+      "size_mb": 0.7,
+      "category": "robotics"
+    },
+    {
+      "filename": "Development of a tomato harvesting robot used in greenhouse.pdf",
+      "path": "./Development of a tomato harvesting robot used in greenhouse.pdf",
+      "size_mb": 0.6,
+      "category": "tomato"
+    },
+    {
+      "filename": "Automatic method of fruit object extraction under complex agricultural background for vision system of fruit picking robot.pdf",
+      "path": "./Automatic method of fruit object extraction under complex agricultural background for vision system of fruit picking robot.pdf",
+      "size_mb": 0.6,
+      "category": "robotics"
+    },
+    {
+      "filename": "Kiwifruit recognition at nighttime using artificial lighting based on machine vision.pdf",
+      "path": "./Kiwifruit recognition at nighttime using artificial lighting based on machine vision.pdf",
+      "size_mb": 0.6,
+      "category": "general"
+    },
+    {
+      "filename": "Design and test of robotic harvesting system for cherry tomato.pdf",
+      "path": "./Design and test of robotic harvesting system for cherry tomato.pdf",
+      "size_mb": 0.6,
+      "category": "tomato"
+    },
+    {
+      "filename": "Identification of fruit and branch in natural scenes for citrus harvesting robot using machine vision and support vector machine.pdf",
+      "path": "./Identification of fruit and branch in natural scenes for citrus harvesting robot using machine vision and support vector machine.pdf",
+      "size_mb": 0.5,
+      "category": "citrus"
+    },
+    {
+      "filename": "The Status and Future of the Strawberry Industry in the United States.pdf",
+      "path": "./The Status and Future of the Strawberry Industry in the United States.pdf",
+      "size_mb": 0.3,
+      "category": "strawberry"
+    },
+    {
+      "filename": "iPathology Robotic Applications and Management of Plants and Plant Diseases.pdf",
+      "path": "./iPathology Robotic Applications and Management of Plants and Plant Diseases.pdf",
+      "size_mb": 0.2,
+      "category": "motion_planning"
+    }
+  ]
+}
