@@ -16,7 +16,7 @@ import os
 
 # 输出路径配置
 OUTPUT_DIR = "."  # 当前目录，用户可修改为自己的路径
-FIGURE_PREFIX = "figure"  # 图片文件名前缀
+FIGURE_PREFIX = "v5_"  # 图片文件名前缀，按照tex版本号命名
 
 # 图片格式配置
 SAVE_FORMATS = ['pdf', 'png']  # 保存的格式
@@ -128,7 +128,7 @@ def create_figure4_vision_analysis():
     ax4.set_ylim(75, 95)
     
     plt.tight_layout()
-    save_figure(fig, "4_meta_analysis")
+    save_figure(fig, "vision_meta_fig4")
     plt.close()
     print("✅ Figure 4 生成完成")
 
@@ -220,7 +220,7 @@ def create_figure9_robotics_analysis():
     ax4.set_ylim(70, 95)
     
     plt.tight_layout()
-    save_figure(fig, "9_motion_planning")
+    save_figure(fig, "motion_control_fig9")
     plt.close()
     print("✅ Figure 9 生成完成")
 
@@ -357,7 +357,7 @@ def create_figure10_critical_analysis():
     ax4.axhline(y=50, color='gray', linestyle='--', alpha=0.5, label='Balance Line')
     
     plt.tight_layout()
-    save_figure(fig, "10_technology_roadmap")
+    save_figure(fig, "critical_analysis_fig10")
     plt.close()
     print("✅ Figure 10 生成完成")
 
@@ -392,9 +392,9 @@ def main():
         print("=" * 60)
         print("生成的文件:")
         for fmt in SAVE_FORMATS:
-            print(f"  - {FIGURE_PREFIX}4_meta_analysis.{fmt}")
-            print(f"  - {FIGURE_PREFIX}9_motion_planning.{fmt}")
-            print(f"  - {FIGURE_PREFIX}10_technology_roadmap.{fmt}")
+            print(f"  - {FIGURE_PREFIX}vision_meta_fig4.{fmt}")
+            print(f"  - {FIGURE_PREFIX}motion_control_fig9.{fmt}")
+            print(f"  - {FIGURE_PREFIX}critical_analysis_fig10.{fmt}")
         print("=" * 60)
         
     except Exception as e:
