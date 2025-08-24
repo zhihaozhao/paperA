@@ -433,11 +433,10 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \label{fig:camera}
 \end{figure}
 
-\iffalse
 \begin{table*}[ht]
 \small
 \centering
-\caption{Advanced multi-sensor fusion architectures and multi-modality data integration for precision orchard applications: Comprehensive analysis of sensor integration strategies including visual sensors (RGB, depth cameras), environmental sensors (LiDAR, ultrasonic), and IoT-enabled monitoring systems. The figure exhibits structured approaches to multi-modal data fusion, highlighting synergistic benefits of combining heterogeneous sensor data for enhanced perception accuracy, environmental awareness, and robust decision-making in dynamic agricultural environments.} 
+\caption{Comprehensive Multi-Sensor Fusion Architectures and Multi-Modality Data Integration for Precision Orchard Applications (N=35 Studies, 2015-2024)} 
 \label{tab:dataset}
 %\begin{tabular}{p{0.02\textwidth}p{0.02\textwidth}p{0.10\textwidth}p{0.04\textwidth}p{0.07\textwidth}p{0.16\textwidth}p{0.18\textwidth}p{0.12\textwidth}p{0.10\textwidth}}
 \begin{tabular}{p{0.02\textwidth}p{0.02\textwidth}p{0.13\textwidth}p{0.04\textwidth}p{0.07\textwidth}p{0.16\textwidth}p{0.23\textwidth}p{0.14\textwidth}}
@@ -475,7 +474,6 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 %\cite{sadeghian2025reliability} & 2025 & LiDAR+6×cameras & - & Autonomous driving (fruit-picking extension) & BEV space fusion; STFA for temporal consistency; CW-MCA with reliability scores & mAP=70.6\%; robust to sensor malfunctions (LiDAR FOV limitation/50\% drop) & Designed for driving, needs adaptation to orchard dynamics & 3D object detection for mobile picking robots \\ \hline
 \end{tabular}
 \end{table*}
-\fi
 
 Among multi-sensor approaches, 3D stereo vision systems are essential by using dual cameras to estimate depth via triangulation, effectively mimicking human binocular vision. Early efforts include Wang et al.~\cite{wang2016localisation}, who developed a binocular stereo vision system for litchi localization, incorporating wavelet transforms and clustering methods to obtain high accuracy under natural lighting. Similarly, Si et al.~\cite{si2015location} advanced apple detection by enabling their stereo vision platform to recognize and localize multiple fruits simultaneously in variable environments. Luo et al.~\cite{luo2016vision} further demonstrated a grape-harvesting stereo system capable of quickly detecting cutting points and estimating yields with high efficiency.
 RGB-D cameras which combine color information with depth sensing using time-of-flight or structured light have also proven highly beneficial. Barnea et al.~\cite{barnea2016colour} presented an RGB-D-based 3D detection method capable of analyzing both shape and symmetry, which is effective for sweet pepper harvesting even under complex conditions. Nguyen et al.~\cite{nguyen2016detection} showed that integrating depth with RGB data significantly improves apple detection and localization, especially under occlusion. Kusumam et al.~\cite{kusumam20173d} and Andújar et al.~\cite{andujar2016using} extended these principles to broccoli and cauliflower, using mobile RGB-D platforms to deliver precise 3D crop measurements crucial for automated harvest scheduling.
