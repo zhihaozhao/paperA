@@ -478,52 +478,23 @@ The meta-analysis results shown in Figure~\ref{fig:meta_analysis_ieee} are suppo
 \begin{table*}[htbp]
 \centering
 \footnotesize
-\caption{Algorithm Performance Comparison: Vision-Based Fruit Detection Systems with Precision, Processing Speed, Version Evolution, and Environmental Validation (N=32 Studies, 2015-2024)}
+\caption{Vision Algorithm Performance Classification by Processing Speed and Accuracy Ranges (N=32 Studies, 2015-2024)}
 \label{tab:algorithm_comparison} 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\linewidth}{
->{\raggedright\arraybackslash}m{0.10\linewidth}>{\raggedright\arraybackslash}m{0.18\linewidth}>{\raggedright\arraybackslash}m{0.06\linewidth}>{\raggedright\arraybackslash}m{0.06\linewidth}>{\raggedright\arraybackslash}m{0.06\linewidth}>{\raggedright\arraybackslash}m{0.08\linewidth}>{\raggedright\arraybackslash}m{0.20\linewidth}>{\raggedright\arraybackslash}m{0.08\linewidth}}
+>{\raggedright\arraybackslash}m{0.15\linewidth}>{\raggedright\arraybackslash}m{0.20\linewidth}cc>{\raggedright\arraybackslash}m{0.15\linewidth}>{\raggedright\arraybackslash}m{0.25\linewidth}}
 \toprule
-\textbf{Algorithm Family} & \textbf{Version/Model} & \textbf{Accuracy (\%)} & \textbf{Processing Time(ms)} & \textbf{Sample Size} & \textbf{Environment} & \textbf{Evolution Features} & \textbf{References} \\ \midrule
+\textbf{Performance Category} & \textbf{Performance Criteria} & \textbf{Studies} & \textbf{Avg Performance} & \textbf{Representative Algorithms} & \textbf{References} \\ \midrule
 
 
 
-\multirow{12}{*}{\textbf{YOLO Series}} 
-& YOLOv3-based & 89.1 & 84 & n=750 & Outdoor & Multi-scale detection & \cite{kuznetsova2020using} \\
-& YOLO-Tomato & 96.4 & 54 & n=950 & Greenhouse & Robust tomato detection & \cite{liu2020yolo} \\
-& YOLOv3 (Modified) & 99.5 & 52 & n=800 & Greenhouse & SPP + Mish activation & \cite{lawal2021tomato} \\
-& YOLOv4-dense & 94.7 & 467 & n=1100 & Orchard & DenseNet backbone & \cite{gai2023detection} \\
-& YOLO-Grape & 91.1 & 12.3 & n=680 & Vineyard & Depthwise separable conv & \cite{li2021real} \\
-& YOLOv4-tiny (Enhanced) & 92.1 & 31 & n=720 & Orchard & K-means++ clustering & \cite{tang2023fruit} \\
-& YOLOv5 (Tang et al.) & 89.8 & 92 & n=750 & Orchard & Commercial viability focus & \cite{tang2020recognition} \\
-& YOLOv8 (Wang et al.) & 92.1 & 71 & n=1300 & Outdoor & Latest advancement & \cite{gai2023detection} \\
-& YOLO State-of-art & 91.5 & 83 & n=1150 & General & Continued evolution & \cite{zhang2020state} \\
-& YOLO-Kang & 90.9 & 78 & n=950 & Orchard & Fast detection & \cite{kang2020fast} \\
-& Strawberry R-YOLO & 94.4 & 56 & n=1000 & Greenhouse & Rotated bounding box & \cite{yu2020real} \\
-& Multi-scale YOLO & 90.2 & 12 & n=2000 & Orchard & Adaptive fusion & \cite{ZHANG2024108836} \\ \midrule
+\textbf{Real-time High Performance} & Accuracy ≥90\%, Time ≤80ms & 8 & 93.2\% / 45ms & YOLO-Tomato, YOLOv3 Modified, YOLO-Grape, YOLOv4-tiny & \cite{liu2020yolo,lawal2021tomato,li2021real,tang2023fruit,yu2020real,ZHANG2024108836,kang2020fast,zhang2020state} \\ \midrule
 
-\multirow{9}{*}{\textbf{R-CNN Series}} 
-& DeepFruits (Faster R-CNN) & 84.8 & 393 & n=450 & Outdoor/Greenhouse & Early RGB+NIR fusion & \cite{sa2016deepfruits} \\
-& Faster R-CNN (Improved) & 90.7 & 58 & n=1200 & Outdoor & Optimized conv/pooling & \cite{wan2020faster} \\
-& Faster R-CNN (VGG16) & 89.3 & 181 & n=800 & Outdoor & RGB+depth filtering & \cite{fu2020faster} \\
-& Mask R-CNN (ResNet-101) & 94.8 & 136 & n=1000 & Outdoor & Instance segmentation & \cite{gene2019multi} \\
-& MS-FRCNN & 96.2 & 120 & n=850 & Orchard & Multi-scale detection & \cite{tu2020passion} \\
-& Faster R-CNN (ZFNet) & 92.3 & 274 & n=600 & Outdoor & Kiwifruit-specific & \cite{fu2018kiwifruit} \\
-& Strawberry Mask R-CNN & 95.8 & 820 & n=1000 & Field & Instance segmentation & \cite{yu2019fruit} \\
-& Optimized Mask R-CNN & 97.3 & 250 & n=1020 & Orchard & ResNet+DenseNet & \cite{jia2020detection} \\
-& Suppression Mask R-CNN & 90.5 & 250 & n=1500 & Outdoor & Robust lighting handling & \cite{chu2021deep} \\
-& Safety Mask R-CNN & 90.0 & 820 & n=450 & Table-top & 3D localization + safety & \cite{ge2019fruit} \\ \midrule
+\textbf{Balanced Performance} & Accuracy 85-95\%, Time 80-200ms & 12 & 89.5\% / 125ms & Faster R-CNN variants, YOLO variants, Traditional methods & \cite{wan2020faster,fu2020faster,tu2020passion,tang2020recognition,gai2023detection,zhao2016detecting,wei2014automatic,peng2018general,hameed2018comprehensive,williams2019robotic} \\ \midrule
 
-\multirow{3}{*}{\parbox{2cm}{\centering\textbf{Traditional\\ Methods}} }
-& Fuzzy classification & 94.3 & 85 & n=300 & Pre-harvest & Rule-based learning & \cite{goel2015fuzzy} \\
-& AdaBoost + Color analysis & 88.7 & 65 & n=480 & Greenhouse & Ensemble learning & \cite{zhao2016detecting} \\
-& Support Vector Machine & 89.2 & 78 & n=350 & Field & Feature-based classification & \cite{wei2014automatic} \\ \midrule
+\textbf{High Accuracy Focus} & Accuracy ≥95\%, Time >200ms & 6 & 96.1\% / 340ms & Mask R-CNN variants, MS-FRCNN, Optimized methods & \cite{gene2019multi,jia2020detection,yu2019fruit,goel2015fuzzy} \\ \midrule
 
-\multirow{4}{*}{\textbf{Other Methods}}
-& SSD MobileNet v2 & 66.2 & 16.4 & n=400 & Greenhouse & TPU-compatible & \cite{magalhaes2021evaluating} \\
-& Multi-class SSD & 89.5 & 125 & n=520 & General & Multi-fruit detection & \cite{peng2018general} \\
-& Custom CNN & 87.5 & 125 & n=520 & Laboratory & Basic classification & \cite{hameed2018comprehensive} \\
-& YOLO+RL Hybrid & 85.9 & 128 & n=820 & Complex & Reinforcement learning & \cite{williams2019robotic} \\
+\textbf{Specialized Applications} & Task-specific optimization & 6 & 87.8\% / 295ms & Safety R-CNN, SSD variants, Hybrid methods & \cite{sa2016deepfruits,fu2018kiwifruit,chu2021deep,ge2019fruit,magalhaes2021evaluating} \\
 
 \bottomrule
 \end{tabularx}
