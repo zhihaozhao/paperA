@@ -352,7 +352,7 @@ We systematically searched databases including Scopus, Web of Science (WoS), and
 \caption{Algorithm Performance Comparison: Precision, Processing Speed, Version Evolution, and Environmental Validation}
 \label{tab:algorithm_comparison} 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{p{0.09\textwidth}p{0.11\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.10\textwidth}p{0.08\textwidth}p{0.11\textwidth}p{0.22\textwidth}}
+\begin{tabularx}{\textwidth}{l X c c c c X X}
 \toprule
 \textbf{Algorithm Family} & \textbf{Version/Model} & \textbf{Accuracy (\%)} & \textbf{Processing Time (ms)} & \textbf{Sample Size} & \textbf{Environment} & \textbf{Evolution Features} & \textbf{References} \\ \midrule
 
@@ -394,7 +394,7 @@ We systematically searched databases including Scopus, Web of Science (WoS), and
 & Support Vector Machine & 89.2 & 78 & n=350 & Field & Feature-based classification & \cite{wei2014automatic} \\
 
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table*}
 
 Subsequent screening applied predefined inclusion and exclusion criteria to refine the selection. Inclusion criteria encompassed:
@@ -440,10 +440,8 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \caption{Comprehensive Multi-Sensor Fusion Architectures and Multi-Modality Data Integration for Precision Orchard Applications (N=35 Studies, 2015-2024)} 
 \label{tab:dataset}
 \renewcommand{\arraystretch}{1.2}
-%\begin{tabular}{p{0.02\textwidth}p{0.02\textwidth}p{0.10\textwidth}p{0.04\textwidth}p{0.07\textwidth}p{0.16\textwidth}p{0.18\textwidth}p{0.12\textwidth}p{0.10\textwidth}}
-\begin{tabular}{p{0.04\textwidth}p{0.04\textwidth}p{0.14\textwidth}p{0.06\textwidth}p{0.08\textwidth}p{0.18\textwidth}p{0.24\textwidth}p{0.14\textwidth}}
+\begin{tabularx}{\textwidth}{c c X c c X X X}
 \hline
-%\textbf{Ref.} & \textbf{Year} & \textbf{Sensor Fusion} & \textbf{Fruit} & \textbf{Orchard} & \textbf{Multi-Modality Synergy} & \textbf{Key Advantages} & \textbf{Limitations} & \textbf{Application} \\ 
 \textbf{Ref.} & \textbf{Year} & \textbf{Sensor Fusion} & \textbf{Fruit} & \textbf{Orchard} & \textbf{Multi-Modality Synergy} & \textbf{Strengths} & \textbf{Limitations} \\ 
 \hline
 \cite{wang2016localisation} & 2016 & Binocular CCD + Laser rangefinder & Litchi & Unstructured & Visual features (RGB) + spatial calibration (laser) & High adaptability to illumination variations and occlusion (94\% matching rate for partial occlusion) & Processing time (3213 ms) \\ 
@@ -474,7 +472,7 @@ Consequently, fruit-picking robots rely on multi-sensor fusion (as illustrated i
 \cite{chen2024mlp} & 2024 & Azure Kinect (RGB+depth+ NIR) & Tomato & Greenhouse & MLP-based fusion encoder (RGB+depth+NIR); YOLO-DNA framework & mAP@0.5=98.13\%; 37.12 Frame Per Second (FPS); robust to illumination variations & MLP computation slower on GPU; needs more data for generalization  \\
 \hline
 %\cite{sadeghian2025reliability} & 2025 & LiDAR+6×cameras & - & Autonomous driving (fruit-picking extension) & BEV space fusion; STFA for temporal consistency; CW-MCA with reliability scores & mAP=70.6\%; robust to sensor malfunctions (LiDAR FOV limitation/50\% drop) & Designed for driving, needs adaptation to orchard dynamics & 3D object detection for mobile picking robots \\ \hline
-\end{tabular}
+\end{tabularx}
 \end{table*}
 
 Among multi-sensor approaches, 3D stereo vision systems are essential by using dual cameras to estimate depth via triangulation, effectively mimicking human binocular vision. Early efforts include Wang et al.~\cite{wang2016localisation}, who developed a binocular stereo vision system for litchi localization, incorporating wavelet transforms and clustering methods to obtain high accuracy under natural lighting. Similarly, Si et al.~\cite{si2015location} advanced apple detection by enabling their stereo vision platform to recognize and localize multiple fruits simultaneously in variable environments. Luo et al.~\cite{luo2016vision} further demonstrated a grape-harvesting stereo system capable of quickly detecting cutting points and estimating yields with high efficiency.
@@ -839,14 +837,14 @@ Kang et al.~\cite{kang2020real}  combined Mobile-DasNet with PointNet for apple 
 \caption{Summary of Fruit Detection Approaches by Core Performance Metrics (2015-2024)}
 \label{tab:performance-metrics}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}p{0.11\textwidth}p{0.16\textwidth}p{0.32\textwidth}p{0.23\textwidth}p{0.10\textwidth}@{}}
+\begin{tabularx}{\textwidth}{l X X X c}
 \toprule
 \textbf{Metrics} & \textbf{Key Focus} & \textbf{Strengths} & \textbf{Limitations} & \textbf{References} \\ \midrule
 \textbf{Reliability} & Handling illumination, occlusion, and overlap via color, 3D contour, and shape; improving ripeness recognition & - Color-based ripeness: 94.29\% accuracy for tomatoes using hue-saturation metrics \cite{goel2015fuzzy}. Contour analysis: Relative error <6\% (e.g., 5.27\%) for occluded citrus edges \cite{lu2015detecting}. Ripeness evaluation: >94\% accuracy (e.g., 94.41\% precision) for binary/multi-stage classification \cite{liu2019mature}. 3D depth: 82\% detection rate for occluded apples \cite{nguyen2016detection} & - Color methods sensitive to lighting variations \cite{zhao2016detecting}. Contour detection struggles with dense occlusions \cite{lu2015detecting}. Limited ripeness generalization across environments \cite{goel2015fuzzy} & \cite{nguyen2016detection}, \cite{lu2015detecting}, \cite{mendes2016vine}, \cite{goel2015fuzzy}, \cite{zhao2016detecting}, \cite{pourdarbani2020automatic}, \cite{zhang2018deep}, \cite{longsheng2015kiwifruit}, \cite{liu2019mature} \\ \midrule
 \textbf{Precision} & Precise cut-point detection (stem/peduncle), distinguishing similar plants (trunk/mast), non-destructive picking & - Pick-point detection: Localization error <2 cm for non-destructive grasping \cite{lehnert2016sweet}. Stem/peduncle localization: Recall rates >90\% to minimize damage \cite{mendes2016vine}. Overall precision: AUC=0.71 for peduncle detection in peppers \cite{sa2017peduncle}. Cut-point success: 81.66\% rate for grapes \cite{luo2018vision} & - Reduced accuracy due to stem occlusion in dense canopies \cite{sa2017peduncle}. Challenges distinguishing similar varieties without 3D sensors \cite{lin2020fruit}. High precision demands advanced hardware \cite{kusumam20173d} & \cite{kusumam20173d}, \cite{lehnert2016sweet}, \cite{bac2017performance}, \cite{mendes2016vine}, \cite{sa2017peduncle}, \cite{luo2018vision}, \cite{perez2018pattern}, \cite{liu2019mature}, \cite{pourdarbani2020automatic}, \cite{lin2020fruit}, \cite{CHEN2024111082} \\ \midrule
 \textbf{Rapidity} & Real-time operation, fast picking/counting, scalable yield estimation & - Pick time: Average <7 s/fruit (e.g., 6.5 s) for high-throughput apple harvesting \cite{kang2020real}. Yield estimation: Predictive 
 $R^2$ >0.75 (e.g., 0.77) for crop forecasting \cite{underwood2016mapping}. Real-time counting: <0.01 s/fruit (implying >100 FPS) with error <2\% \cite{altaheri2019date}. Field trials: >90\% end-to-end success \cite{birrell2020field} & - Trade-off between speed and accuracy for small/distant fruits \cite{kang2020real}. High computational needs limit real-time deployment on low-end hardware \cite{altaheri2019date}. Dynamic factors (e.g., motion) increase errors in counting \cite{underwood2016mapping} & \cite{underwood2016mapping}, \cite{lin2019guava}, \cite{kang2019fruit}, \cite{kang2020real}, \cite{altaheri2019date}, \cite{birrell2020field} \\ \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table*}
 \fi
 
@@ -1133,7 +1131,7 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \renewcommand{\arraystretch}{1.2}
 \caption{Enhanced Motion Control Algorithm Performance Analysis for Fruit Harvesting (2015-2024): Statistical summary of 16 key studies showing algorithm family performance characteristics, advantages, limitations, and optimal deployment scenarios for evidence-based selection in autonomous agricultural systems.}
 \label{tab:motion_control_enhanced}
-\begin{tabular}{p{0.14\textwidth}p{0.07\textwidth}p{0.11\textwidth}p{0.14\textwidth}p{0.17\textwidth}p{0.11\textwidth}p{0.19\textwidth}}
+\begin{tabularx}{\textwidth}{l c c c X X X}
 \toprule
 \textbf{Algorithm Family} & \textbf{Studies} & \textbf{Success Rate} & \textbf{Cycle Time} & \textbf{Key Advantages} & \textbf{Limitations} & \textbf{Best Applications} \\
 \midrule
@@ -1147,7 +1145,7 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \midrule
 \textbf{Hybrid/Adaptive} & 1 & 75.0\% & 7.5s & Balanced performance, adaptive to conditions & Implementation complexity, parameter tuning & Mixed environments, variable crops \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table*}
 
 \begin{table*}[htbp]
@@ -1156,7 +1154,7 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \renewcommand{\arraystretch}{1.2}
 \caption{Motion Control Key Performance Indicators and Research Trends (2015-2024)}
 \label{tab:motion_control_kpis}
-\begin{tabular}{p{0.18\textwidth}p{0.17\textwidth}p{0.20\textwidth}p{0.37\textwidth}}
+\begin{tabularx}{\textwidth}{l c X X}
 \toprule
 \textbf{Performance Metric} & \textbf{Best Achievement} & \textbf{Study Reference} & \textbf{Technical Significance} \\
 \midrule
@@ -1170,7 +1168,7 @@ The studies summarized in Table \ref{tab:motion-control-based} highlight various
 \midrule
 \textbf{Precision Control} & <10mm positioning error & Ling et al. (2019) & Dual-arm coordination with binocular vision for tomatoes \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table*}
 \fi
 The systematic statistical analysis presented in Table~\ref{tab:motion_control_enhanced} delivers extensive performance benchmarking across different algorithmic families, revealing significant performance differentiation that guides optimal technology selection for autonomous fruit harvesting applications. The quantitative evidence demonstrates that Deep Reinforcement Learning approaches achieve superior operational characteristics with 90.4\% success rates and 5.2-second cycle times, representing substantial improvements over classical methodologies that typically achieve 70.8\% success rates with 9.7-second cycle times. Complementing this analysis, Table~\ref{tab:motion_control_kpis} systematically documents key performance breakthroughs that illuminate the technological advancement trajectory toward commercial viability in autonomous agricultural systems. These achievements include remarkable processing efficiency improvements with planning times reduced to 29ms for optimal algorithms, success rate achievements reaching 92\% in challenging real-world deployment scenarios, and validated performance across diverse environmental conditions spanning controlled greenhouse settings to unstructured commercial orchards. Together, these comprehensive performance benchmarks provide critical insights for system designers and agricultural practitioners seeking to evaluate trade-offs between algorithmic complexity, computational requirements, and operational performance in practical fruit-picking applications.
