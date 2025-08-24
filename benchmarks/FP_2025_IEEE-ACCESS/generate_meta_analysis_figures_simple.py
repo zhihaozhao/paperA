@@ -71,9 +71,9 @@ def create_chapter4_vision_analysis():
     ax3.set_title('(c) Real-time Processing Capability Analysis')
     ax3.grid(True, alpha=0.3)
     
-    # 设置坐标轴范围：y轴从70%开始，x轴到5000为止
+    # 设置坐标轴范围：y轴从70%开始，x轴适应数据分布(0-120ms)
     ax3.set_ylim(70, 95)
-    ax3.set_xlim(0, 5000)
+    ax3.set_xlim(40, 120)
     
     # 添加理想区域标注
     ax3.axhline(y=90, color='darkgreen', linestyle='--', alpha=0.7, linewidth=2, label='Target Accuracy')
