@@ -212,7 +212,7 @@ Other surveys, including Zhou et al. \cite{zhou2022intelligent} and Rajendran et
 %This section reviews the primary contributions of some key surveys, highlighting their scopes and insights, followed by a discussion of their collective limitations, which motivate the innovations in this paper.
 %Hou et al. \cite{hou2023overview}  focused on the integration of deep learning (DL) with multi-sensor vision systems. Their survey emphasized perception sensors and machine vision, detailing how AI-driven fusion enhances fruit detection in unstructured environments. This work highlighted trends in field robustness but overlooked broader system integration and actuation mechanisms.
 %Zhang et al. \cite{zhang2024automatic}  provided an end-to-end perspective on automation chains, covering machine vision, motion planning, end-effectors, mechanical automation, system integration, and field adaptation. A notable contribution was the inclusion of real-time control via IoT/5G and economic feasibility assessments, offering a holistic view of practical deployment.
-%Navas et al. \cite{navas2021soft} specialized in soft and bionic gripper designs, concentrating exclusively on end-effectors. Their analysis advanced understanding of adaptive handling for delicate fruits, drawing from mechanical perspectives, though it neglected upstream components like perception or downstream integration.
+%Navas et al. \cite{navas2021soft} specialized in soft and bionic gripper designs, concentrating exclusively on end-effecters. Their analysis advanced understanding of adaptive handling for delicate fruits, drawing from mechanical perspectives, though it neglected upstream components like perception or downstream integration.
 %Zhou et al. \cite{zhou2022intelligent} explored modular architectures, with emphasis on machine vision, motion planning, and field adaptation. Key insights included vision-driven precision and robot autonomy in orchards, promoting scalable designs that enhance adaptability without delving into mechanical details or cooperative elements.
 %Mingyou et al. \cite{mingyou2024orchard}  addressed multi-robot coordination and large-scale perception, covering machine vision, motion planning, mechanical automation, system integration, and field adaptation. This survey innovated by focusing on robust mapping and execution in expansive orchard settings, incorporating cooperative robotics trends.
 %Rajendran et al. \cite{rajendran2024towards} integrated perception sensors, machine vision, end-effectors, and field adaptation to discuss precision and dexterous control. Their contribution centered on selective harvesting synergies, improving real-field reliability for targeted operations.
@@ -1228,42 +1228,59 @@ To systematically assess the technological maturity and development trajectory o
 \centering
 % Note: Run create_section_v_figure.py to generate this figure
 \includegraphics[width=0.85\textwidth]{figure10_technology_roadmap.pdf} % COMMENTED: Generate figure first
-\caption{Critical Analysis and Future Trends in Autonomous Fruit Harvesting: (a) Current technological gaps and readiness assessment revealing deployment barriers, (b) Research priority matrix identifying critical bottlenecks versus commercial impact potential, (c) Strategic innovation roadmap with breakthrough predictions (2024-2030), (d) Challenge-solution mapping for addressing fundamental limitations. Critical evaluation exposing persistent problems in scalability, cost-effectiveness, and environmental adaptability while directing future research priorities.}
+\caption{Critical Analysis and Future Trends in Autonomous Fruit Harvesting: (a) Research-Reality Mismatch Analysis revealing fundamental problems where research attention fails to address real-world deployment challenges, (b) Technical Bottleneck Matrix identifying critical technology gaps with high commercial urgency but limited progress, (c) Persistent Challenges Evolution (2015-2024) showing how key problems like cost-effectiveness and deployment barriers remain largely unsolved, (d) Research-Industry Priority Misalignment exposing how academic focus mismatches practical industry needs. Critical evaluation highlighting systematic problems in agricultural robotics development and persistent barriers to commercial deployment.}
 \label{fig:future_directions_roadmap}
 \end{figure*}
 
 \begin{table*}[htbp]
 \centering
 \small
-\caption{Literature Evidence Supporting Figure 10 (Technology Readiness Assessment): TRL Progression Analysis}
+\caption{Literature Evidence Supporting Critical Analysis in Figure 10: Research Problems, Limitations, and Deployment Barriers (N=20 Studies, 2014-2024)}
 \label{tab:figure10_support}
-\begin{tabular}{p{0.13\textwidth}p{0.10\textwidth}p{0.13\textwidth}p{0.07\textwidth}p{0.09\textwidth}p{0.09\textwidth}p{0.27\textwidth}}
+\begin{tabular}{p{0.12\textwidth}p{0.15\textwidth}p{0.22\textwidth}p{0.10\textwidth}p{0.08\textwidth}p{0.25\textwidth}}
 \toprule
-\textbf{Technology Component} & \textbf{Study} & \textbf{TRL Progression} & \textbf{Current TRL} & \textbf{Maturity Stage} & \textbf{Figure Support} & \textbf{Ref} \\ \midrule
+\textbf{Study} & \textbf{Critical Issue Identified} & \textbf{Problem Description} & \textbf{Severity Assessment} & \textbf{Figure Support} & \textbf{Ref} \\ \midrule
 
-Computer Vision & Tang et al. (2020) & TRL 3→8 (2015-2024) & TRL 8 & Deployment & Fig 10(a,b) & \cite{tang2020recognition,darwin2021recognition,mavridou2019machine} \\
+Bac et al. (2014) & Lab-Field Gap & Performance degradation from controlled environments to real orchards & High & Fig 10(a) & \cite{bac2014harvesting} \\
 
-Computer Vision & Wan et al. (2020) & TRL 6→8 (2019-2024) & TRL 8 & Deployment & Fig 10(a,b) & \cite{wan2020faster,jia2020detection,chu2021deep} \\
+Oliveira et al. (2021) & Cost-Benefit Mismatch & Economic viability remains questionable for most agricultural robotics solutions & Critical & Fig 10(a,d) & \cite{oliveira2021advances} \\
 
-Motion Planning & Silwal et al. (2017) & TRL 2→7 (2015-2024) & TRL 7 & Deployment & Fig 10(a,b) & \cite{silwal2017design,arad2020development,mehta2014vision} \\
+Zhou et al. (2022) & Limited Generalization & Most systems work only for specific fruits under controlled conditions & High & Fig 10(a,b) & \cite{zhou2022intelligent} \\
 
-Motion Planning & Lehnert et al. (2017) & TRL 5→7 (2018-2024) & TRL 7 & Deployment & Fig 10(a,c) & \cite{lehnert2017autonomous,williams2019robotic,xiong2020autonomous} \\
+Zhang et al. (2020) & Environmental Sensitivity & Weather variations significantly impact system reliability and performance & Medium & Fig 10(a,c) & \cite{zhang2020technology} \\
 
-End-Effector Design & Xiong et al. (2019) & TRL 4→8 (2015-2024) & TRL 8 & Deployment & Fig 10(a,b) & \cite{xiong2019development,navas2021soft,fue2020extensive} \\
+Fue et al. (2020) & Energy Inefficiency & Power consumption limits field operation time to impractical levels & High & Fig 10(a,b) & \cite{fue2020extensive} \\
 
-End-Effector Design & Bac et al. (2014) & TRL 6→8 (2018-2024) & TRL 8 & Deployment & Fig 10(a,c) & \cite{bac2014harvesting,fountas2020agricultural,oliveira2021advances} \\
+Saleem et al. (2021) & Maintenance Complexity & Complex systems require specialized maintenance not available in rural areas & High & Fig 10(a,d) & \cite{saleem2021automation} \\
 
-Sensor Fusion & Underwood et al. (2016) & TRL 2→6 (2015-2024) & TRL 6 & Development & Fig 10(a,b) & \cite{underwood2016mapping,aguiar2020localization,r2018research} \\
+Tang et al. (2020) & Perception Accuracy vs Speed & Real-time requirements conflict with detection accuracy demands & Critical & Fig 10(b) & \cite{tang2020recognition} \\
 
-Sensor Fusion & Zhou et al. (2022) & TRL 4→6 (2018-2024) & TRL 6 & Development & Fig 10(a,c) & \cite{zhou2022intelligent,saleem2021automation,lytridis2021overview} \\
+Navas et al. (2021) & Mechanical Reliability & Gripper systems fail frequently in dusty, humid field conditions & High & Fig 10(b) & \cite{navas2021soft} \\
 
-AI/ML Integration & Liu et al. (2020) & TRL 1→8 (2015-2024) & TRL 8 & Deployment & Fig 10(a,b,c) & \cite{liu2020yolo,lawal2021tomato,yu2019fruit} \\
+Hameed et al. (2018) & Multi-crop Adaptability & Classification techniques show poor transfer learning across crop types & Critical & Fig 10(b) & \cite{hameed2018comprehensive} \\
 
-AI/ML Integration & Hameed et al. (2018) & TRL 5→8 (2019-2024) & TRL 8 & Deployment & Fig 10(a,b,c) & \cite{hameed2018comprehensive,sharma2020machine,mohamed2021smart} \\
+Jia et al. (2020) & Occlusion Persistence & Dense foliage occlusion remains unsolved after years of research & Critical & Fig 10(c) & \cite{jia2020apple} \\
 
-Multi-Component & Mahmud et al. (2020) & TRL 3→6 (2016-2024) & TRL 6 & Development & Fig 10(a,c) & \cite{mahmud2020robotics,friha2021internet,zhang2020state} \\
+Mohamed et al. (2021) & Cost-Effectiveness Gap & Smart farming costs exceed benefits for small-to-medium farms & Critical & Fig 10(c) & \cite{mohamed2021smart} \\
 
-Multi-Component & Nguyen et al. (2016) & TRL 4→7 (2018-2024) & TRL 7 & Deployment & Fig 10(a,c) & \cite{nguyen2016detection,underwood2016mapping,zhang2020technology} \\
+Aguiar et al. (2020) & Deployment Challenges & Localization systems fail in GPS-denied agricultural environments & High & Fig 10(c) & \cite{aguiar2020localization} \\
+
+Darwin et al. (2021) & Field Validation Deficit & Most deep learning models lack extensive field testing validation & High & Fig 10(c,d) & \cite{darwin2021recognition} \\
+
+Lytridis et al. (2021) & Cooperative System Complexity & Multi-robot coordination adds layers of failure points & Medium & Fig 10(c) & \cite{lytridis2021overview} \\
+
+Mavridou et al. (2019) & Commercial Viability Gap & Academic solutions rarely address commercial deployment requirements & Critical & Fig 10(d) & \cite{mavridou2019machine} \\
+
+Friha et al. (2021) & Research-Industry Mismatch & IoT solutions focus on novelty rather than practical implementation & High & Fig 10(d) & \cite{friha2021internet} \\
+
+Zhang et al. (2020) & Grasping Reliability & Robotic grippers show high failure rates with irregular fruit shapes & High & Fig 10(b,c) & \cite{zhang2020state} \\
+
+Sharma et al. (2020) & ML Application Gap & Machine learning applications lack scalability to diverse farm conditions & High & Fig 10(d) & \cite{sharma2020machine} \\
+
+Fountas et al. (2020) & Field Operation Constraints & Robotic systems cannot operate in variable terrain and weather & High & Fig 10(a,c) & \cite{fountas2020agricultural} \\
+
+R Shamshiri et al. (2018) & Digital Farming Barriers & Integration challenges between different agricultural technologies & Medium & Fig 10(b,d) & \cite{r2018research} \\
+
 \bottomrule
 \end{tabular}
 \end{table*}
