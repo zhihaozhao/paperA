@@ -251,7 +251,7 @@ This caching system reduces dataset generation time from minutes to seconds for 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure2_physics-guided.pdf}
+\includegraphics[width=\columnwidth]{figures/figure-2.pdf}%2_physics-guided.pdf}
 \caption{Physics-Guided Sim2Real Framework 3D Visualization. The framework integrates physics modeling (multipath, human interaction, environment), synthetic \gls{csi} generation, and \gls{stea} transfer learning protocols. The 3D representation illustrates the complete pipeline from physics principles to practical deployment, enabling 82.1\% F1 performance at 20\% label efficiency.}
 \label{fig:physics_3d_framework}
 \end{figure}
@@ -339,7 +339,7 @@ We evaluate model reliability through:
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure4_experimental_overview.pdf}
+\includegraphics[width=\columnwidth]{figures/figure-4.pdf}
 \caption{Experimental protocols overview: Synthetic Robustness Validation (SRD, 540 configurations; first use in full), \gls{cdae} (\gls{loso}/\gls{loro}), and \gls{stea} label-efficiency evaluation.}
 \label{fig:protocols}
 \end{figure}
@@ -401,7 +401,7 @@ The \gls{cdae} protocol evaluation reveals exceptional cross-domain consistency 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure5_cross-domain.pdf}
+\includegraphics[width=\columnwidth]{figures/figure-5.pdf}%_cross-domain.pdf}
 \caption{Cross-domain generalization performance across \gls{loso} and \gls{loro}. Subplots: (top-left) main LOSO/LORO comparison with error bars; (top-right) cross-domain gap $|\text{LOSO}-\text{LORO}|$ (lower is better); (bottom-left) stability (CV, log-scale); (bottom-right) significance (−log$_{10}$(p)). The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
 \label{fig:cross_domain}
 \end{figure}
@@ -422,7 +422,7 @@ The comprehensive analysis across all seven visualization panels validates that 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure7_pca_analysis.pdf}
+\includegraphics[width=\columnwidth]{figures/figure6_pca_analysis.pdf}
 \caption{Comprehensive seven-panel PCA analysis organized in a clear 3×2 layout for optimal visualization and interpretation. \textbf{Left Column (Primary Analyses):} Top - Main PCA biplot with embedded legend, feature loading vectors, and confidence ellipses showing Enhanced model's superior LOSO-LORO consistency; Middle - Cross-protocol consistency analysis revealing Enhanced model's minimal LOSO-LORO distance (0.08) versus CNN (0.84), BiLSTM (0.23), and Conformer-lite (4.56); Bottom - PCA feature loadings matrix providing heatmap visualization of feature contributions to the first five principal components. \textbf{Right Column (Statistical Decomposition):} Top - Explained variance analysis with cumulative curve showing PC1 (20.1\%) and PC2 (8.2\%) contributions; Upper-middle - Inter-model separation distance heatmap quantifying feature space clustering; Lower-middle - 3D feature space visualization confirming clustering patterns across three principal components; Bottom - Feature contributions analysis highlighting relative importance to top two principal components, demonstrating Enhanced model's balanced temporal-spatial feature utilization. The systematic layout enables comprehensive understanding of Enhanced model's superior cross-domain generalization capabilities.}
 \label{fig:pca_analysis}
 \end{figure}
@@ -433,7 +433,7 @@ The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure6_label_efficiency.pdf}
+\includegraphics[width=\columnwidth]{figures/figure-7.pdf}%6_label_efficiency.pdf}
 \caption{Sim2Real label efficiency of the Enhanced model. Subplots: (left) label ratio vs. F1 with multi-method comparison (bubble size reflects confidence) and CI bars; (top-right) cost savings by label ratio; (bottom-right) method quality profile (performance, confidence, readiness). Only 20\% labeled real data achieves 82.1\% macro F1 (80\% labeling cost reduction).}
 \label{fig:label_efficiency}
 \end{figure}
@@ -463,6 +463,7 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \label{tab:model_performance}
 \end{table}
 
+%<<<<<<< Updated upstream
 \subsection{D5/D6 Experiments: Progressive and Extended Evaluations}
 
 \textbf{Overview:} We further validate robustness with two extended protocols. \textbf{D5} conducts progressive training/evaluation under harder synthetic conditions across multiple seeds. \textbf{D6} extends evaluations to additional GPU runs to confirm stability. Figure~\ref{fig:d5d6_results} summarizes macro F1 across models; Table~\ref{tab:d5d6} reports macro F1 (mean$\pm$std) and Brier.
@@ -479,7 +480,9 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 
 \textbf{Key observations:} (1) Enhanced and Conformer-lite achieve near-ceiling performance on D5, while CNN remains competitive and BiLSTM underperforms under hard settings. (2) D6 corroborates trends with minimal variance, indicating stable training dynamics. (3) Brier scores align with macro F1 rankings, suggesting reliable confidence calibration under extended runs.
 
-The Enhanced model demonstrates superior overall performance across all evaluation dimensions. Notably, its exceptional consistency ($\text{CV}<0.2\%$) across both cross-domain protocols indicates robust feature learning that generalizes effectively across subjects and environments. This consistency, combined with the breakthrough label efficiency, positions the Enhanced model as the optimal choice for practical \gls{wifi} \gls{csi} \gls{har} deployment.
+%=======
+%>>>>>>> Stashed changes
+%The Enhanced model demonstrates superior overall performance across all evaluation dimensions. Notably, its exceptional consistency ($\text{CV}<0.2\%$) across both cross-domain protocols indicates robust feature learning that generalizes effectively across subjects and environments. This consistency, combined with the breakthrough label efficiency, positions the Enhanced model as the optimal choice for practical \gls{wifi} \gls{csi} \gls{har} deployment.
 
 \subsection{Trustworthiness Evaluation}
 
