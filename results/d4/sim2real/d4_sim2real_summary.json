@@ -1,0 +1,12 @@
+{ 
+  "experiment_type": "D4_SIM2REAL", 
+  "start_time": "2025/08/18 ÷‹“ª 11:24:24.70", 
+  "configuration": { 
+    "models": "enhanced cnn bilstm conformer_lite", 
+    "seeds": "0 1 2 3 4", 
+    "label_ratios": "0.01 0.05 0.10 0.15 0.20 0.50 1.00", 
+    "transfer_methods": "zero_shot linear_probe fine_tune temp_scale", 
+    "benchmark_path": "benchmarks\WiFi-CSI-Sensing-Benchmark-main", 
+    "d2_models_path": "E:\paperA\paperA\checkpoints" 
+  }, 
+  "results": [ 
