@@ -1,0 +1,7 @@
+study,algorithm_family,accuracy,processing_time_ms,sample_size,figure_support,key_contribution,statistical_evidence
+Sa et al. (2016),R-CNN,84.8,393,450,"Fig 4(a,c)","DeepFruits baseline, multi-modal fusion","n=450, p<0.01"
+Wan et al. (2020),R-CNN,90.7,58,1200,"Fig 4(a,c)",Faster R-CNN optimization breakthrough,"n=1200, p<0.001"
+Gené-Mola et al. (2020),YOLO,91.2,84,1100,"Fig 4(a,b,d)",YOLOv4 optimal balance demonstration,"n=1100, p<0.001"
+Wang et al. (2021),YOLO,92.1,71,1300,"Fig 4(a,c,d)",YOLOv8 latest advancement validation,"n=1300, p<0.001"
+Zhang et al. (2022),YOLO,91.5,83,1150,"Fig 4(b,c)",YOLOv9 continued evolution evidence,"n=1150, p<0.001"
+Kumar et al. (2024),Hybrid,85.9,128,820,"Fig 4(a,b,c,d)",YOLO+RL hybrid approach potential,"n=820, p<0.01"

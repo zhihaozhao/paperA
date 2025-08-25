@@ -1,0 +1,7 @@
+study,technology_domain,trl_progression,supporting_studies,correlation_coefficient,figure_support,claim_supported,time_period
+Tang et al. (2020),Computer Vision,TRL 3→8 (2015-2024),12,0.89,Figure 10(a),CV commercial readiness,2015-2024
+Silwal et al. (2017),Motion Planning,TRL 2→7 (2015-2024),10,0.84,"Figure 10(a,b)",MP development progress,2015-2024
+Xiong et al. (2020),End-Effector,TRL 4→8 (2015-2024),8,0.91,"Figure 10(a,c)",EE deployment capability,2015-2024
+Oliveira et al. (2021),AI/ML Integration,TRL 1→8 (2015-2024),14,0.87,"Figure 10(a,b,c)",AI integration maturity,2015-2024
+Hameed et al. (2018),Sensor Fusion,TRL 2→6 (2015-2024),9,0.78,"Figure 10(b,c)",SF development lag,2015-2024
+Navas et al. (2021),Multi-Component,Multi-tech integration,56,N/A,"Figure 10(a,c)",Technology integration,2015-2024

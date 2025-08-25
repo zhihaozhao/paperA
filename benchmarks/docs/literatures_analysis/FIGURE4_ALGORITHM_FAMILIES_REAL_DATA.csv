@@ -1,0 +1,5 @@
+algorithm_family,studies_count,accuracy_mean,accuracy_std,processing_speed_mean,processing_speed_std,processing_speed_unit,active_period,development_trend,characteristics
+YOLO,16,90.9,8.3,84,45,ms,2019-2024,Increasing,"Real-time capability, balanced performance, dominant post-2019"
+R-CNN,7,90.7,2.4,226,89,ms,2016-2021,Decreasing,"Precision-focused, higher latency, mature technology"
+Hybrid,17,87.1,9.1,Variable,Variable,Variable,2015-2024,Increasing,"Adaptive approaches, environment-specific optimization"
+Traditional,16,82.3,12.7,245,156,ms,2015-2020,Stable,"Feature-based methods, baseline performance"

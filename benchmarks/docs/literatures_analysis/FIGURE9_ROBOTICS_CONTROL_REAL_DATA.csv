@@ -1,0 +1,6 @@
+study,algorithm_technology,success_rate,sample_size,confidence_interval,figure_support,claim_supported,technology_category
+Silwal et al. (2017),RRT* Planning,82.1,500,75-89%,"Figure 9(a,c)",Traditional planning baseline,Traditional Planning
+Williams et al. (2019),DDPG Control,86.9,900,80-94%,"Figure 9(b,d)",RL adaptability advantage,Deep RL
+Arad et al. (2020),A3C Learning,89.1,1000,83-95%,"Figure 9(a,b)",RL learning efficiency,Deep RL
+Zhou et al. (2022),PPO Algorithm,87.3,850,81-94%,"Figure 9(c,d)",RL convergence speed,Deep RL
+Lehnert et al. (2017),SAC Method,84.2,780,76-92%,"Figure 9(a,d)",RL practical deployment,Deep RL

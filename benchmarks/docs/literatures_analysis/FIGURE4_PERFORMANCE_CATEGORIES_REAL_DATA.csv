@@ -1,0 +1,5 @@
+category,criteria_time,criteria_accuracy,studies_count,avg_accuracy,avg_time_ms,avg_dataset_size,environments,representatives
+Fast High-Accuracy,≤80ms,≥90%,9,93.1,49,978,"Greenhouse, Orchard, Vineyard","Wan et al. (2020), Lawal et al. (2021), Kang & Chen (2020), Wang et al. (2021)"
+Fast Moderate-Accuracy,≤80ms,<90%,3,81.4,53,410,"Greenhouse, Field","Magalhães et al. (2021), Zhao et al. (2016), Wei et al. (2014)"
+Slow High-Accuracy,>80ms,≥90%,13,92.8,198,845,"Orchard, Outdoor, General","Gené-Mola et al. (2019), Tu et al. (2020), Gai et al. (2023), Zhang et al. (2020)"
+Slow Moderate-Accuracy,>80ms,<90%,21,87.5,285,712,"Outdoor, Laboratory, Field","Sa et al. (2016), Fu et al. (2020), Tang et al. (2020), Hameed et al. (2018)"

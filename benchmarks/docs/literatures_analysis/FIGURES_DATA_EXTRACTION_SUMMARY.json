@@ -1,0 +1,13 @@
+{
+  "extraction_date": "2025-08-25T02:07:32.114116",
+  "data_source": "benchmarks/FP_2025_IEEE-ACCESS/FP_2025_IEEE-ACCESS_v5.tex",
+  "total_studies_figure4": 46,
+  "total_studies_figure9_10": 44,
+  "performance_categories": 4,
+  "algorithm_families": 4,
+  "key_studies_figure4": 6,
+  "robotics_studies_figure9": 5,
+  "critical_studies_figure10": 6,
+  "data_integrity": "All data extracted from tex file - NO FABRICATION",
+  "academic_integrity": "Maintained - all metrics from published papers"
+}
