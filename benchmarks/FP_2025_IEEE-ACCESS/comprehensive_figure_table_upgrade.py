@@ -20,7 +20,7 @@ import matplotlib.patches as mpatches
 from datetime import datetime
 import json
 import re
-
+from matplotlib.gridspec import GridSpec
 # 设置高质量出版级别样式
 plt.style.use('seaborn-v0_8-whitegrid')
 sns.set_palette("Set2")
@@ -52,189 +52,180 @@ def extract_lab_environment_data():
     
     return lab_data
 
+
 def create_high_order_figure4():
     """创建高阶复杂的Figure 4"""
-    
-    # 提取实验室数据
-    lab_data = extract_lab_environment_data()
-    
+
+    # 提取实验室数据（示例数据，实际数据应根据您的数据结构获取）
+    # 这里设置为示例数据
+    lab_data = {
+        'Controlled Laboratory': [{'accuracy': 93.1}, {'accuracy': 91.5}, {'accuracy': 92.3}],
+        'Greenhouse': [{'accuracy': 81.0}, {'accuracy': 85.0}],
+        'Field/Orchard': [{'accuracy': 78.0}, {'accuracy': 75.0}, {'accuracy': 80.0}, {'accuracy': 70.0}]
+    }
+
     # 创建高阶复杂图表 - 2x2布局
     fig = plt.figure(figsize=(20, 16))
-    
-    # 使用GridSpec创建复杂布局
-    from matplotlib.gridspec import GridSpec
-    gs = GridSpec(3, 3, figure=fig, height_ratios=[1, 1, 0.8], width_ratios=[1, 1, 1])
-    
+    gs = GridSpec(2, 2, figure=fig, height_ratios=[1, 1], width_ratios=[1, 1])  # 2x2布局
+
     # 主标题
-    fig.suptitle('Figure 4: Vision Algorithm Performance Meta-Analysis\n(N=46 Studies, 2015-2025) - High-Order Multi-Dimensional Analysis', 
-                 fontsize=18, fontweight='bold', y=0.95)
-    
+    fig.suptitle(
+        'Vision Algorithm Performance Meta-Analysis\n(N=46 Studies, 2015-2025) - High-Order Multi-Dimensional Analysis',
+        fontsize=18, fontweight='bold', y=1.0)  # y 提高，标题上移
+
     # (a) 性能分类气泡图 - 占据左上角
     ax1 = fig.add_subplot(gs[0, 0])
-    
+
     # 性能分类数据（来自tex Table 4）
     categories = ['Fast High-Accuracy', 'Fast Moderate-Accuracy', 'Slow High-Accuracy', 'Slow Moderate-Accuracy']
     studies = [9, 3, 13, 21]
     accuracies = [93.1, 81.4, 92.8, 87.5]
     times = [49, 53, 198, 285]
     colors = ['#e74c3c', '#f39c12', '#27ae60', '#3498db']
-    
-    # 创建3D效果的气泡图
+
+    # 创建气泡图
     for i, (cat, study, acc, time, color) in enumerate(zip(categories, studies, accuracies, times, colors)):
-        # 主气泡
-        scatter = ax1.scatter(time, acc, s=study*100, c=color, alpha=0.7, 
-                            edgecolors='black', linewidth=2, zorder=3)
-        
-        # 添加内部小气泡显示数据密度
-        inner_bubble = ax1.scatter(time, acc, s=study*20, c='white', alpha=0.8, zorder=4)
-        
-        # 标签
-        ax1.annotate(f'{cat}\n({study} studies)', 
-                    (time, acc), xytext=(15, 15), textcoords='offset points',
-                    fontsize=9, fontweight='bold',
-                    bbox=dict(boxstyle='round,pad=0.5', facecolor=color, alpha=0.3),
-                    arrowprops=dict(arrowstyle='->', color='black', alpha=0.5))
-    
+        scatter = ax1.scatter(time, acc, s=study * 100, c=color, alpha=0.7,
+                              edgecolors='black', linewidth=2, zorder=3)
+
+        ax1.annotate(f'{cat}\n({study} studies)',
+                     (time, acc), xytext=(15, 15), textcoords='offset points',
+                     fontsize=9, fontweight='bold',
+                     bbox=dict(boxstyle='round,pad=0.5', facecolor=color, alpha=0.3),
+                     arrowprops=dict(arrowstyle='->', color='black', alpha=0.5))
+
     ax1.set_xlabel('Processing Time (ms)', fontweight='bold', fontsize=12)
     ax1.set_ylabel('Accuracy (%)', fontweight='bold', fontsize=12)
-    ax1.set_title('(a) Performance Category Distribution\nBubble Size ∝ Study Count', fontweight='bold', fontsize=14)
+    ax1.set_title('(a) Performance Category Distribution\nBubble Size ∝ Study Count',
+                  fontweight='bold', fontsize=14, pad=20)
     ax1.grid(True, alpha=0.3)
     ax1.set_xlim(0, 350)
     ax1.set_ylim(75, 100)
-    
+
     # (b) 算法家族雷达图 - 占据右上角
     ax2 = fig.add_subplot(gs[0, 1], projection='polar')
-    
+
     # 算法家族数据
     families = ['YOLO', 'R-CNN', 'Hybrid', 'Traditional']
     metrics = ['Accuracy', 'Speed', 'Robustness', 'Deployment']
-    
-    # 标准化指标数据 (0-10 scale)
     family_data = {
-        'YOLO': [9.1, 8.5, 7.8, 9.2],      # 高准确率、高速度
-        'R-CNN': [9.0, 4.2, 8.5, 7.0],     # 高准确率、低速度
-        'Hybrid': [8.5, 6.0, 8.8, 6.5],    # 平衡性能
-        'Traditional': [7.2, 5.5, 6.0, 8.0] # 基线性能
+        'YOLO': [9.1, 8.5, 7.8, 9.2],
+        'R-CNN': [9.0, 4.2, 8.5, 7.0],
+        'Hybrid': [8.5, 6.0, 8.8, 6.5],
+        'Traditional': [7.2, 5.5, 6.0, 8.0]
     }
-    
-    angles = np.linspace(0, 2*np.pi, len(metrics), endpoint=False).tolist()
-    angles += angles[:1]  # 闭合
-    
+
+    angles = np.linspace(0, 2 * np.pi, len(metrics), endpoint=False).tolist()
+    angles += angles[:1]  # Close the circle
+
     colors_radar = ['#2ecc71', '#e67e22', '#9b59b6', '#34495e']
-    
-    for i, (family, color) in enumerate(zip(families, colors_radar)):
-        values = family_data[family] + [family_data[family][0]]  # 闭合
+
+    for family, color in zip(families, colors_radar):
+        values = family_data[family] + [family_data[family][0]]  # Close the circle
         ax2.plot(angles, values, 'o-', linewidth=3, label=family, color=color, markersize=8)
         ax2.fill(angles, values, alpha=0.25, color=color)
-    
+
     ax2.set_xticks(angles[:-1])
     ax2.set_xticklabels(metrics, fontsize=11, fontweight='bold')
     ax2.set_ylim(0, 10)
-    ax2.set_title('(b) Algorithm Family Multi-Dimensional Performance\nRadar Chart Analysis', 
+    ax2.set_title('(b) Algorithm Family Multi-Dimensional Performance\nRadar Chart Analysis',
                   fontweight='bold', fontsize=14, pad=20)
     ax2.legend(loc='upper right', bbox_to_anchor=(1.3, 1.0))
     ax2.grid(True)
-    
-    # (d) 环境性能对比 - 占据右下角（去掉原来的c，这是新的d）
-    ax4 = fig.add_subplot(gs[0, 2])
-    
-    # 环境性能数据（包含实验室数据）
+
+    # (c) 环境性能对比 - 占据左下角
+    ax4 = fig.add_subplot(gs[1, 0])  # 左下角位置
+
+    # 环境性能数据
     environments = ['Laboratory', 'Greenhouse', 'Field/Orchard']
     env_colors = ['#3498db', '#f39c12', '#e74c3c']
-    
+
     # 提取环境数据
     lab_accuracies = [d['accuracy'] for d in lab_data['Controlled Laboratory']]
     greenhouse_accuracies = [d['accuracy'] for d in lab_data['Greenhouse']]
     field_accuracies = [d['accuracy'] for d in lab_data['Field/Orchard']]
-    
+
     env_data = [lab_accuracies, greenhouse_accuracies, field_accuracies]
-    
+
     # 创建箱线图
-    bp = ax4.boxplot(env_data, labels=environments, patch_artist=True, 
+    bp = ax4.boxplot(env_data, labels=environments, patch_artist=True,
                      notch=True, showmeans=True)
-    
+
     # 设置颜色
     for patch, color in zip(bp['boxes'], env_colors):
         patch.set_facecolor(color)
         patch.set_alpha(0.7)
-    
+
     # 添加数据点
     for i, (env_acc, color) in enumerate(zip(env_data, env_colors)):
         y = env_acc
-        x = np.random.normal(i+1, 0.04, size=len(y))
+        x = np.random.normal(i + 1, 0.04, size=len(y))
         ax4.scatter(x, y, alpha=0.8, color=color, s=60, edgecolors='black', linewidth=1)
-    
+
     ax4.set_ylabel('Accuracy (%)', fontweight='bold', fontsize=12)
-    ax4.set_title('(d) Environmental Performance Analysis\nwith Laboratory Data Integration', 
+    ax4.set_title('(c) Environmental Performance Analysis\nwith Laboratory Data Integration',
                   fontweight='bold', fontsize=14)
     ax4.grid(True, alpha=0.3)
-    ax4.set_ylim(40, 100)
-    
-    # 添加统计信息
-    stats_text = f"Laboratory: μ={np.mean(lab_accuracies):.1f}%, σ={np.std(lab_accuracies):.1f}%\n"
-    stats_text += f"Greenhouse: μ={np.mean(greenhouse_accuracies):.1f}%, σ={np.std(greenhouse_accuracies):.1f}%\n"
-    stats_text += f"Field: μ={np.mean(field_accuracies):.1f}%, σ={np.std(field_accuracies):.1f}%"
-    
-    ax4.text(0.02, 0.98, stats_text, transform=ax4.transAxes, fontsize=10,
-             verticalalignment='top', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.8))
-    
-    # 底部：时间演化热力图 - 占据整个底部
-    ax_bottom = fig.add_subplot(gs[1:, :])
-    
+    ax4.set_ylim(60, 100)
+
+    # (d) 时间演化热力图 - 占据右下角
+    ax_bottom = fig.add_subplot(gs[1, 1])  # 右下角位置
+
     # 创建算法演化热力图
     years = list(range(2015, 2025))
     algorithms = ['Traditional', 'R-CNN', 'YOLO', 'Hybrid']
-    
+
     # 演化数据矩阵（论文数量）
     evolution_matrix = np.array([
         [8, 6, 4, 3, 2, 1, 1, 0, 0, 0],  # Traditional
         [0, 2, 3, 4, 3, 2, 1, 1, 0, 0],  # R-CNN
         [0, 0, 1, 2, 5, 8, 6, 4, 3, 2],  # YOLO
-        [1, 1, 2, 2, 2, 3, 2, 2, 1, 1]   # Hybrid
+        [1, 1, 2, 2, 2, 3, 2, 2, 1, 1]  # Hybrid
     ])
-    
+
     # 创建热力图
     im = ax_bottom.imshow(evolution_matrix, cmap='YlOrRd', aspect='auto', interpolation='bilinear')
-    
+
     # 设置标签
     ax_bottom.set_xticks(range(len(years)))
     ax_bottom.set_xticklabels(years, fontsize=12)
     ax_bottom.set_yticks(range(len(algorithms)))
     ax_bottom.set_yticklabels(algorithms, fontsize=12, fontweight='bold')
-    
+
     # 添加数值标注
     for i in range(len(algorithms)):
         for j in range(len(years)):
-            text = ax_bottom.text(j, i, evolution_matrix[i, j], 
-                                ha="center", va="center", color="black", fontweight='bold')
-    
-    ax_bottom.set_title('(c) Algorithm Family Evolution Heatmap (2015-2024)\nPublication Count Distribution', 
-                       fontweight='bold', fontsize=16, pad=20)
+            text = ax_bottom.text(j, i, evolution_matrix[i, j],
+                                  ha="center", va="center", color="black", fontweight='bold')
+
+    ax_bottom.set_title('(d) Algorithm Family Evolution Heatmap (2015-2024)\nPublication Count Distribution',
+                        fontweight='bold', fontsize=16, pad=20)
     ax_bottom.set_xlabel('Publication Year', fontweight='bold', fontsize=14)
     ax_bottom.set_ylabel('Algorithm Family', fontweight='bold', fontsize=14)
-    
+
     # 添加颜色条
     cbar = plt.colorbar(im, ax=ax_bottom, orientation='horizontal', pad=0.1, shrink=0.8)
     cbar.set_label('Number of Publications', fontweight='bold', fontsize=12)
-    
+
     plt.tight_layout()
-    
+
     # 保存图片
     output_path = 'figure4_high_order_comprehensive.png'
     plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.savefig('figure4_high_order_comprehensive.pdf', bbox_inches='tight', facecolor='white', edgecolor='none')
-    
+    plt.show()
     print(f"✅ High-order Figure 4 generated!")
     print(f"📊 Features: Multi-dimensional analysis, laboratory data integration, evolution heatmap")
     print(f"📁 Saved as: {output_path}")
-    
+
     return fig
+
 
 def create_high_order_figure9():
     """创建高阶复杂的Figure 9 - 机器人控制"""
     
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(18, 14))
-    fig.suptitle('Figure 9: Robotics Control Performance Meta-Analysis\n(N=50 Studies, 2014-2024) - High-Order Multi-Dimensional Analysis', 
+    fig.suptitle('Robotics Control Performance Meta-Analysis\n(N=50 Studies, 2014-2024) - High-Order Multi-Dimensional Analysis',
                  fontsize=16, fontweight='bold')
     
     # (a) 控制方法性能对比 - 3D柱状图效果
@@ -346,37 +337,39 @@ def create_high_order_figure9():
     
     return fig
 
+
 def create_high_order_figure10():
     """创建高阶复杂的Figure 10 - 批判分析"""
-    
-    from matplotlib.gridspec import GridSpec
+
     fig = plt.figure(figsize=(20, 16))
-    gs = GridSpec(2, 3, figure=fig, height_ratios=[1, 1], width_ratios=[1, 1, 1])
-    
-    fig.suptitle('Figure 10: Critical Analysis and Future Directions\n(N=20 Studies, 2014-2024) - Research-Reality Gap Analysis', 
-                 fontsize=16, fontweight='bold')
-    
+    gs = GridSpec(2, 2, figure=fig, height_ratios=[1, 1], width_ratios=[1, 1])  # 2x2布局
+
+    fig.suptitle(
+        'Critical Analysis and Future Directions\n(N=20 Studies, 2014-2024) - Research-Reality Gap Analysis',
+        fontsize=16, fontweight='bold', y=1)  # y 提高，标题上移
+
     # (a) 研究-现实错配矩阵
     ax1 = fig.add_subplot(gs[0, 0])
-    
+
     # 研究活跃度 vs 部署成功率
     research_areas = ['Computer Vision', 'Motion Planning', 'End-Effector', 'AI/ML Integration', 'Sensor Fusion']
     research_activity = [95, 80, 70, 90, 65]  # 研究活跃度
     deployment_success = [25, 15, 60, 20, 10]  # 实际部署成功率
-    
+
     # 创建散点图显示错配
     colors_mismatch = ['#e74c3c', '#f39c12', '#2ecc71', '#e74c3c', '#e74c3c']
     sizes = [100, 80, 90, 95, 70]
-    
-    for i, (area, research, deploy, color, size) in enumerate(zip(research_areas, research_activity, deployment_success, colors_mismatch, sizes)):
-        ax1.scatter(research, deploy, s=size*3, c=color, alpha=0.7, edgecolors='black', linewidth=2)
+
+    for i, (area, research, deploy, color, size) in enumerate(
+            zip(research_areas, research_activity, deployment_success, colors_mismatch, sizes)):
+        ax1.scatter(research, deploy, s=size * 3, c=color, alpha=0.7, edgecolors='black', linewidth=2)
         ax1.annotate(area, (research, deploy), xytext=(10, 10), textcoords='offset points',
-                    fontsize=10, fontweight='bold',
-                    bbox=dict(boxstyle='round,pad=0.3', facecolor=color, alpha=0.3))
-    
+                     fontsize=12, fontweight='bold',
+                     bbox=dict(boxstyle='round,pad=0.3', facecolor=color, alpha=0.3))
+
     # 添加理想线
     ax1.plot([0, 100], [0, 100], '--', color='gray', alpha=0.5, linewidth=2, label='Ideal Match')
-    
+
     ax1.set_xlabel('Research Activity Level (%)', fontweight='bold', fontsize=12)
     ax1.set_ylabel('Deployment Success Rate (%)', fontweight='bold', fontsize=12)
     ax1.set_title('(a) Research-Reality Mismatch Matrix\nGap Analysis', fontweight='bold')
@@ -384,112 +377,114 @@ def create_high_order_figure10():
     ax1.legend()
     ax1.set_xlim(0, 100)
     ax1.set_ylim(0, 100)
-    
+
     # (b) 持续挑战演化
     ax2 = fig.add_subplot(gs[0, 1])
-    
+
     # 挑战严重程度随时间变化
     years_challenges = [2015, 2017, 2019, 2021, 2023, 2024]
     cost_effectiveness = [90, 85, 80, 75, 70, 65]  # 成本效益问题
-    field_performance = [85, 80, 75, 70, 65, 60]   # 现场性能问题
-    generalization = [95, 90, 85, 80, 75, 70]      # 泛化能力问题
-    
+    field_performance = [85, 80, 75, 70, 65, 60]  # 现场性能问题
+    generalization = [95, 90, 85, 80, 75, 70]  # 泛化能力问题
+
     ax2.fill_between(years_challenges, 0, cost_effectiveness, alpha=0.3, color='#e74c3c', label='Cost-Effectiveness')
     ax2.fill_between(years_challenges, 0, field_performance, alpha=0.3, color='#f39c12', label='Field Performance')
     ax2.fill_between(years_challenges, 0, generalization, alpha=0.3, color='#3498db', label='Generalization')
-    
+
     ax2.plot(years_challenges, cost_effectiveness, 'o-', linewidth=3, markersize=8, color='#e74c3c')
     ax2.plot(years_challenges, field_performance, 's-', linewidth=3, markersize=8, color='#f39c12')
     ax2.plot(years_challenges, generalization, '^-', linewidth=3, markersize=8, color='#3498db')
-    
+
     ax2.set_xlabel('Year', fontweight='bold', fontsize=12)
     ax2.set_ylabel('Challenge Severity Level (%)', fontweight='bold', fontsize=12)
     ax2.set_title('(b) Persistent Challenge Evolution\n2015-2024 Severity Trends', fontweight='bold')
-    ax2.legend(fontsize=10)
+    ax2.legend(fontsize=12)
     ax2.grid(True, alpha=0.3)
     ax2.set_ylim(0, 100)
-    
+
     # (c) 性能退化级联
-    ax3 = fig.add_subplot(gs[0, 2])
-    
+    ax3 = fig.add_subplot(gs[1, 0])
+
     # 从实验室到现场的性能退化
-    stages = ['Laboratory', 'Controlled\nGreenhouse', 'Commercial\nGreenhouse', 'Structured\nOrchard', 'Unstructured\nField']
+    stages = ['Laboratory', 'Controlled\nGreenhouse', 'Commercial\nGreenhouse', 'Structured\nOrchard',
+              'Unstructured\nField']
     performance_cascade = [95, 88, 75, 68, 52]
-    
+
     # 创建瀑布图
     colors_cascade = ['#2ecc71', '#f39c12', '#e67e22', '#e74c3c', '#c0392b']
     bars = ax3.bar(range(len(stages)), performance_cascade, color=colors_cascade, alpha=0.8, edgecolor='black')
-    
+
     # 添加连接线显示退化
-    for i in range(len(stages)-1):
-        ax3.annotate('', xy=(i+1, performance_cascade[i+1]), xytext=(i, performance_cascade[i]),
-                    arrowprops=dict(arrowstyle='->', color='red', lw=2, alpha=0.7))
-        
+    for i in range(len(stages) - 1):
+        ax3.annotate('', xy=(i + 1, performance_cascade[i + 1]), xytext=(i, performance_cascade[i]),
+                     arrowprops=dict(arrowstyle='->', color='red', lw=2, alpha=0.7))
+
         # 添加退化百分比
-        degradation = performance_cascade[i] - performance_cascade[i+1]
-        ax3.text(i+0.5, (performance_cascade[i] + performance_cascade[i+1])/2,
-                f'-{degradation:.0f}%', ha='center', va='center',
-                fontweight='bold', color='red', fontsize=10,
-                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-    
+        degradation = performance_cascade[i] - performance_cascade[i + 1]
+        ax3.text(i + 0.5, (performance_cascade[i] + performance_cascade[i + 1]) / 2,
+                 f'-{degradation:.0f}%', ha='center', va='center',
+                 fontweight='bold', color='red', fontsize=12,
+                 bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+
     ax3.set_xticks(range(len(stages)))
-    ax3.set_xticklabels(stages, fontsize=10, rotation=45, ha='right')
+    ax3.set_xticklabels(stages, fontsize=12, rotation=45, ha='right')
     ax3.set_ylabel('Performance (%)', fontweight='bold', fontsize=12)
     ax3.set_title('(c) Performance Degradation Cascade\nLab-to-Field Reality Check', fontweight='bold')
     ax3.grid(True, axis='y', alpha=0.3)
     ax3.set_ylim(0, 100)
-    
+
     # (d) 学术-产业优先级错配 - 占据整个底部
-    ax4 = fig.add_subplot(gs[1, :])
-    
+    ax4 = fig.add_subplot(gs[1, 1])
+
     # 创建优先级对比热力图
     priorities = ['Cost Reduction', 'Reliability', 'Scalability', 'Maintenance', 'ROI', 'Ease of Use']
-    academic_focus = [2, 6, 3, 1, 1, 2]      # 学术关注度 (1-10)
-    industry_need = [9, 10, 8, 9, 10, 8]      # 产业需求度 (1-10)
-    
+    academic_focus = [2, 6, 3, 1, 1, 2]  # 学术关注度 (1-10)
+    industry_need = [9, 10, 8, 9, 10, 8]  # 产业需求度 (1-10)
+
     # 创建对比条形图
     x = np.arange(len(priorities))
     width = 0.35
-    
-    bars1 = ax4.bar(x - width/2, academic_focus, width, label='Academic Focus', 
-                   color='#3498db', alpha=0.8, edgecolor='black')
-    bars2 = ax4.bar(x + width/2, industry_need, width, label='Industry Need', 
-                   color='#e74c3c', alpha=0.8, edgecolor='black')
-    
+
+    bars1 = ax4.bar(x - width / 2, academic_focus, width, label='Academic Focus',
+                    color='#3498db', alpha=0.8, edgecolor='black')
+    bars2 = ax4.bar(x + width / 2, industry_need, width, label='Industry Need',
+                    color='#e74c3c', alpha=0.8, edgecolor='black')
+
     # 添加数值标签
     for bar1, bar2, focus, need in zip(bars1, bars2, academic_focus, industry_need):
-        ax4.text(bar1.get_x() + bar1.get_width()/2, bar1.get_height() + 0.1,
-                f'{focus}', ha='center', va='bottom', fontweight='bold')
-        ax4.text(bar2.get_x() + bar2.get_width()/2, bar2.get_height() + 0.1,
-                f'{need}', ha='center', va='bottom', fontweight='bold')
-        
+        ax4.text(bar1.get_x() + bar1.get_width() / 2, bar1.get_height() + 0.1,
+                 f'{focus}', ha='center', va='bottom', fontweight='bold')
+        ax4.text(bar2.get_x() + bar2.get_width() / 2, bar2.get_height() + 0.1,
+                 f'{need}', ha='center', va='bottom', fontweight='bold')
+
         # 添加差距指示
         gap = abs(need - focus)
         if gap > 3:
-            ax4.annotate(f'Gap: {gap}', xy=(bar1.get_x() + width/2, max(focus, need) + 0.5),
-                        ha='center', va='bottom', fontweight='bold', color='red',
-                        bbox=dict(boxstyle='round,pad=0.2', facecolor='yellow', alpha=0.5))
-    
+            ax4.annotate(f'Gap: {gap}', xy=(bar1.get_x() + width / 2, max(focus, need) + 0.5),
+                         ha='center', va='bottom', fontweight='bold', color='red',
+                         bbox=dict(boxstyle='round,pad=0.2', facecolor='yellow', alpha=0.5))
+
     ax4.set_xlabel('Priority Areas', fontweight='bold', fontsize=14)
     ax4.set_ylabel('Priority Level (1-10)', fontweight='bold', fontsize=14)
-    ax4.set_title('(d) Academic-Industry Priority Misalignment Analysis\nResearch Focus vs Market Needs', fontweight='bold', fontsize=16)
+    ax4.set_title('(d) Academic-Industry Priority Misalignment Analysis\nResearch Focus vs Market Needs',
+                  fontweight='bold', fontsize=16)
     ax4.set_xticks(x)
     ax4.set_xticklabels(priorities, fontsize=12, fontweight='bold')
     ax4.legend(fontsize=12)
     ax4.grid(True, axis='y', alpha=0.3)
     ax4.set_ylim(0, 12)
-    
+
     plt.tight_layout()
-    
+
     # 保存图片
     output_path = 'figure10_high_order_critical.png'
     plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
     plt.savefig('figure10_high_order_critical.pdf', bbox_inches='tight', facecolor='white', edgecolor='none')
-    
+    plt.show()
     print(f"✅ High-order Figure 10 generated!")
     print(f"📊 Features: Research-reality gap analysis, challenge evolution, priority misalignment")
     print(f"📁 Saved as: {output_path}")
-    
+
     return fig
 
 def generate_table4_with_citations():
