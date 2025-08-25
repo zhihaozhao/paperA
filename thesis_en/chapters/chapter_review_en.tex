@@ -1,0 +1,26 @@
+% Review Chapter (English)
+\chapter{WiFi CSI Human Activity Recognition: A Structured Review of Data, Methods, and Evaluation}
+\label{chap:review}
+
+This chapter aligns with the overall goals of the dissertation and, together with \chapref{chap:experiments}, establishes a systematic "Data–Methods–Evaluation" framework:
+(1) Data layer: public datasets, synthetic data, cross-domain splits, and unified metadata;
+(2) Methods layer: RSSI/CSI signal modeling, time–frequency transformation, deep models, and physics-guided constraints;
+(3) Evaluation layer: unified task definitions, metrics, and protocols targeting generalization and trustworthiness.
+
+\section{Data Layer: Unified Description of Public and Synthetic Sources}
+We summarize acquisition conditions, antenna/subcarrier configurations, activity sets, and annotation quality of public HAR/DFHAR datasets; we also describe synthetic data generation and domain mapping strategies, aligned with the experimental pipeline, emphasizing cross-domain splits (LOSO/LORO) and a unified metadata schema.
+
+\section{Methods Layer: From Signals to Representations and Models}
+We review physics-based modeling of RSSI/CSI, preprocessing (denoising, subcarrier selection), time–frequency transforms (STFT/CWT), image-based representations, and deep architectures (CNN/LSTM/Transformer). We link these to the experimental model configurations, highlighting the role of physics priors and regularization for generalization.
+
+\section{Evaluation Layer: Unified Tasks, Metrics, and Protocols}
+We define recognition, segmentation, and sequence modeling tasks; unify Top-1/Top-5 accuracy, F1, macro/micro averaging, ECE/calibration; propose cross-subject/scene/device protocols; and provide reproducibility checklists and script entry points to support one-click replication through the \texttt{reproducibility} directory.
+
+\section{DFHAR Validation and Open Resources}
+To close the loop between review and experiments, we leverage the open repository \url{https://github.com/zhihaozhao/DFHAR} as a reproduction reference, including: (1) data organization and scripts for preprocessing/evaluation; (2) unified metrics consistent with this chapter (Top-1/F1/ECE); (3) figure generation scripts for boxplots, heatmaps, and bubble charts; and (4) versioned releases and DOI links. For reuse, we include a script checklist and run instructions in the appendix and provide DOI/Release links in the main repository.
+
+\section{Gaps Across Studies and a Roadmap}
+From representative works (2015–2024), we identify gaps: (1) limited robustness and out-of-domain generalization; (2) difficulty of edge deployment under high-compute/low-power constraints; (3) fragmented benchmarks and reproducibility resources; (4) insufficient coordination with security, privacy, and ethics. We propose short-, mid-, and long-term roadmaps tied to the system implementation in the experiments chapter.
+
+\section{Summary}
+Together with the experiments chapter, this review forms a closed loop from problem to methods, system, and evaluation: the review provides standards and benchmarks, while the experiments realize and validate them, enabling mutual verification and reinforcement.

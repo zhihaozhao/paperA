@@ -1,0 +1,25 @@
+\chapter{Summary of Results and Reproducibility Checklist}
+
+\section{Main Results Overview}
+\begin{table}[h!]
+\centering
+\caption{Key Experimental Results (placeholder)}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Protocol} & \textbf{Model} & \textbf{Top-1(\%)} & \textbf{ECE} \\
+\hline
+D2 & Enhanced & 92.1 & 0.032 \\
+CDAE & Enhanced & 85.6 & 0.047 \\
+STEA(20\% labels) & Enhanced & 90.3 & 0.041 \\
+\hline
+\end{tabular}
+\label{tab:main_results_overview}
+\end{table}
+
+\section{Reproducibility Checklist}
+The following entry points are provided in the main repository for one-click reproduction:
+\begin{itemize}
+    \item Synthetic robustness (D2): \\\texttt{python scripts/run\_d2\_suite.py}
+    \item Cross-domain adaptation (CDAE): \\\texttt{python scripts/run\_cdae\_suite.py}
+    \item Sim2Real label efficiency (STEA): \\\texttt{python scripts/run\_stea\_suite.py}
+\end{itemize}

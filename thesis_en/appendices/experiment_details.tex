@@ -1,0 +1,54 @@
+\chapter{Experimental Settings and Protocols}
+
+\section{Environment and Hardware}
+
+\subsection{计算环境}
+\begin{itemize}
+    \item \textbf{本地CPU环境}: Windows 10, Python 3.10.16, PyTorch 2.6.0+cpu
+    \item \textbf{远程GPU环境}: CUDA-enabled GPU, PyTorch 2.6.0+cuda
+    \item \textbf{内存配置}: 32GB RAM, 多进程数据加载优化
+    \item \textbf{存储}: SSD缓存系统，支持多级数据缓存
+\end{itemize}
+
+\subsection{数据生成参数}
+\begin{table}[h!]
+\centering
+\caption{Physics-Guided Synthetic Data Generation Parameters}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Category} & \textbf{Parameter} & \textbf{Range} & \textbf{Default} \\
+\hline
+\multirow{4}{*}{环境参数}
+& 空间相关性系数 ($\rho$) & 0.1-0.9 & 0.5 \\
+& 环境突发率 & 0.05-0.3 & 0.2 \\
+& 增益漂移标准差 & 0.1-1.0 & 0.6 \\
+& 类别重叠度 & 0.3-0.9 & 0.8 \\
+\hline
+\multirow{3}{*}{数据参数}
+& 样本数量 & 1000-50000 & 20000 \\
+& 时间维度 (T) & 64-256 & 128 \\
+& 频率维度 (F) & 30-64 & 52 \\
+\hline
+\multirow{2}{*}{难度参数}
+& 标签噪声概率 & 0.05-0.2 & 0.1 \\
+& 类别数量 & 4-12 & 8 \\
+\hline
+\end{tabular}
+\label{tab:data_gen_params}
+\end{table}
+
+\section{实验协议详细说明}
+
+\subsection{In-Domain Capacity-Aligned Validation (原D1)}
+\textbf{目标}: 建立基线性能，验证指标一致性，确保模型容量匹配。
+
+\textbf{配置}:
+\begin{itemize}
+    \item \textbf{模型}: Enhanced, CNN, BiLSTM, Conformer-lite
+    \item \textbf{数据难度}: 中等 (mid)
+    \item \textbf{种子数}: 5个 (0-4)
+    \item \textbf{训练轮数}: 100 epochs
+    \item \textbf{批次大小}: 768
+    \item \textbf{优化器}: Adam, 学习率 0.001
+    \item \textbf{正则化}: L2正则化 (logit\_l2=0.1)
+\end{itemize}
