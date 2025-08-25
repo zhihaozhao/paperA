@@ -1,0 +1,16 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Key configuration for D2}}{12}{table.2.1}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Controllable Parameters for Synthetic Data Generator}}{13}{table.2.2}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Main Software Dependencies and Versions}}{14}{table.2.3}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Main Performance Metrics for D2 (Mean ± Standard Deviation)}}{16}{table.2.4}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces LOSO Protocol Detailed Results}}{17}{table.2.5}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces LORO Protocol Detailed Results}}{17}{table.2.6}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces STEA Protocol: Performance at Different Labeling Proportions}}{17}{table.2.7}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces Analysis of Feature Space Consistency Across Protocols}}{25}{table.2.8}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces Comparison of Calibration Performance for Different Models}}{26}{table.2.9}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {B.1}{\ignorespaces Physics-Guided Synthetic Data Generation Parameters}}{39}{table.B.1}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {C.1}{\ignorespaces Key Experimental Results (placeholder)}}{41}{table.C.1}%

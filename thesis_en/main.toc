@@ -1,0 +1,93 @@
+\contentsline {chapter}{\numberline {1}WiFi CSI Human Activity Recognition: A Structured Review of Data, Methods, and Evaluation}{6}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Data Layer: Unified Description of Public and Synthetic Sources}{6}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Methods Layer: From Signals to Representations and Models}{6}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Evaluation Layer: Unified Tasks, Metrics, and Protocols}{7}{section.1.3}%
+\contentsline {section}{\numberline {1.4}DFHAR Validation and Open Resources}{7}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Gaps Across Studies and a Roadmap}{7}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Summary}{7}{section.1.6}%
+\contentsline {chapter}{\numberline {2}Experiments on Physics-Guided Synthetic Data Generation for WiFi CSI HAR}{8}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Overview}{8}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Background and Motivation}{8}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Objectives and Contributions}{9}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Experimental Design and Methodology}{9}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Overall Experimental Framework}{9}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Physics-Guided Synthetic Data Generation}{9}{subsection.2.2.2}%
+\contentsline {subsubsection}{WiFi Signal Propagation Modeling}{9}{section*.4}%
+\contentsline {subsubsection}{Human Interaction Modeling}{10}{section*.5}%
+\contentsline {subsection}{\numberline {2.2.3}Enhanced Model Architecture}{10}{subsection.2.2.3}%
+\contentsline {subsubsection}{Overall Architecture}{10}{section*.6}%
+\contentsline {subsubsection}{SE Attention}{11}{section*.7}%
+\contentsline {section}{\numberline {2.3}Experimental Protocols and Evaluation}{11}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}D2: Robustness Validation of Synthetic Data}{11}{subsection.2.3.1}%
+\contentsline {subsubsection}{Experimental Design}{11}{section*.8}%
+\contentsline {subsubsection}{Key Parameters}{11}{section*.9}%
+\contentsline {subsubsection}{Scripts and Implementation}{11}{section*.10}%
+\contentsline {subsection}{\numberline {2.3.2}CDAE: Cross-Domain Adaptation Evaluation}{11}{subsection.2.3.2}%
+\contentsline {subsubsection}{Design Principles}{11}{section*.11}%
+\contentsline {subsubsection}{Statistical Significance}{12}{section*.12}%
+\contentsline {subsection}{\numberline {2.3.3}STEA: Sim2Real Transfer Efficiency Assessment}{12}{subsection.2.3.3}%
+\contentsline {subsubsection}{Transfer Learning Strategy}{12}{section*.13}%
+\contentsline {section}{\numberline {2.4}Core Algorithms}{12}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Synthetic Data Generation Algorithm}{12}{subsection.2.4.1}%
+\contentsline {subsubsection}{Core Generation Process}{12}{section*.14}%
+\contentsline {subsubsection}{Controllable Parameters}{13}{section*.15}%
+\contentsline {section}{\numberline {2.5}Implementation Process}{13}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Development Environment and Toolchain}{13}{subsection.2.5.1}%
+\contentsline {subsubsection}{Hardware Environment}{13}{section*.16}%
+\contentsline {subsubsection}{Software Dependencies}{14}{section*.17}%
+\contentsline {subsubsection}{Code Organization Structure}{14}{section*.18}%
+\contentsline {subsection}{\numberline {2.5.2}Execution Workflow}{15}{subsection.2.5.2}%
+\contentsline {subsubsection}{D2 Protocol Execution}{15}{section*.19}%
+\contentsline {section}{\numberline {2.6}Detailed Experimental Results and Analysis}{16}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}D2 Protocol: Synthetic Data Validation Results}{16}{subsection.2.6.1}%
+\contentsline {subsubsection}{Main Performance Metrics}{16}{section*.20}%
+\contentsline {subsubsection}{Overlap-Error Causal Analysis}{16}{section*.21}%
+\contentsline {subsection}{\numberline {2.6.2}CDAE Protocol: Cross-Domain Generalization Results}{16}{subsection.2.6.2}%
+\contentsline {subsubsection}{LOSO Protocol Results}{16}{section*.22}%
+\contentsline {subsubsection}{LORO Protocol Results}{17}{section*.23}%
+\contentsline {subsection}{\numberline {2.6.3}STEA Protocol: Label Efficiency Breakthrough}{17}{subsection.2.6.3}%
+\contentsline {section}{\numberline {2.7}Script and Program List}{18}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Core Training Script}{18}{subsection.2.7.1}%
+\contentsline {subsubsection}{Main Training Program}{18}{section*.24}%
+\contentsline {subsection}{\numberline {2.7.2}Evaluation Metrics Calculation}{20}{subsection.2.7.2}%
+\contentsline {subsubsection}{Comprehensive Evaluation Function}{20}{section*.25}%
+\contentsline {section}{\numberline {2.8}Key Technological Innovations}{23}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}Physics-Constrained Synthetic Data Generation}{23}{subsection.2.8.1}%
+\contentsline {subsubsection}{Multipath Propagation Modeling}{23}{section*.26}%
+\contentsline {subsubsection}{Human Scattering Modeling}{23}{section*.27}%
+\contentsline {subsection}{\numberline {2.8.2}SE-Attention Integration in Enhanced Architecture}{24}{subsection.2.8.2}%
+\contentsline {subsubsection}{Mathematical Principles of SE Block}{24}{section*.28}%
+\contentsline {subsubsection}{Temporal Attention}{24}{section*.29}%
+\contentsline {section}{\numberline {2.9}Deep Analysis of Experimental Results}{24}{section.2.9}%
+\contentsline {subsection}{\numberline {2.9.1}Feature Space Analysis}{24}{subsection.2.9.1}%
+\contentsline {subsubsection}{Contribution of Principal Components}{25}{section*.30}%
+\contentsline {subsubsection}{Cross-Protocol Consistency Quantification}{25}{section*.31}%
+\contentsline {subsection}{\numberline {2.9.2}Calibration Analysis and Trustworthiness Assessment}{25}{subsection.2.9.2}%
+\contentsline {subsubsection}{Temperature Scaling Calibration}{25}{section*.32}%
+\contentsline {subsubsection}{Reliability Curve Analysis}{25}{section*.33}%
+\contentsline {section}{\numberline {2.10}Technical Implementation Details}{26}{section.2.10}%
+\contentsline {subsection}{\numberline {2.10.1}Implementation of Synthetic Data Generator}{26}{subsection.2.10.1}%
+\contentsline {subsubsection}{Core Class Design}{26}{section*.34}%
+\contentsline {subsection}{\numberline {2.10.2}Detailed Implementation of Enhanced Model}{30}{subsection.2.10.2}%
+\contentsline {subsubsection}{Complete Model Definition}{30}{section*.35}%
+\contentsline {section}{\numberline {2.11}Experiment Management and Version Control}{34}{section.2.11}%
+\contentsline {subsection}{\numberline {2.11.1}Git Branch Management Strategy}{34}{subsection.2.11.1}%
+\contentsline {subsection}{\numberline {2.11.2}Experiment Record and Reproducibility}{34}{subsection.2.11.2}%
+\contentsline {subsubsection}{Experiment Configuration Management}{34}{section*.36}%
+\contentsline {section}{\numberline {2.12}Visualization and Analysis Tools}{35}{section.2.12}%
+\contentsline {subsection}{\numberline {2.12.1}Comprehensive Performance Analysis Charts}{35}{subsection.2.12.1}%
+\contentsline {section}{\numberline {2.13}Experimental Conclusions and Summary of Contributions}{36}{section.2.13}%
+\contentsline {subsection}{\numberline {2.13.1}Key Experimental Findings}{36}{subsection.2.13.1}%
+\contentsline {subsection}{\numberline {2.13.2}Technical Contributions and Innovations}{36}{subsection.2.13.2}%
+\contentsline {subsection}{\numberline {2.13.3}Practical Application Value}{36}{subsection.2.13.3}%
+\contentsline {section}{\numberline {2.14}Chapter Summary}{37}{section.2.14}%
+\contentsline {chapter}{\numberline {A}Core Code Listings}{38}{appendix.A}%
+\contentsline {chapter}{\numberline {B}Experimental Settings and Protocols}{39}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Environment and Hardware}{39}{section.B.1}%
+\contentsline {subsection}{\numberline {B.1.1}计算环境}{39}{subsection.B.1.1}%
+\contentsline {subsection}{\numberline {B.1.2}数据生成参数}{39}{subsection.B.1.2}%
+\contentsline {section}{\numberline {B.2}实验协议详细说明}{40}{section.B.2}%
+\contentsline {subsection}{\numberline {B.2.1}In-Domain Capacity-Aligned Validation (原D1)}{40}{subsection.B.2.1}%
+\contentsline {chapter}{\numberline {C}Summary of Results and Reproducibility Checklist}{41}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Main Results Overview}{41}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Reproducibility Checklist}{41}{section.C.2}%
