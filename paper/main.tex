@@ -478,6 +478,10 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 
 \textbf{Results at a glance:} Figure~\ref{fig:d5d6_results} uses a slopegraph to contrast model means between D5 and D6 (higher is better). Table~\ref{tab:d5d6} reports macro F1 (mean ± std) and Brier; Enhanced remains best or tied-best across settings, CNN is competitive, Conformer-lite is strong but more protocol-sensitive in earlier sections, and BiLSTM underperforms under stress.
 
+\textbf{Training process (the journey):} Each run begins with a fresh initialization and a shuffled curriculum of the hard synthetic episodes. In the first epochs, models quickly latch onto gross temporal rhythms; as the schedule advances and overlap/noise rise, only architectures with richer channel attention (Enhanced) continue to carve separable manifolds. The cosine annealing gently lowers the step size so late-phase updates refine decision boundaries instead of overreacting to noisy bursts. Early-stopping is the guardrail: we track macro F1 on a held-out slice of the hard regime and stop when improvements stall, yielding comparable checkpoints across seeds.
+
+\textbf{Validation spec (what we guarantee):} We validate on a fixed, unseen hard split drawn under the same parameter ranges but with disjoint seeds, to isolate generalization to \emph{conditions} (noise/overlap/drift) rather than memorization of episodes. Metrics include macro F1 (class-balance fairness) and Brier (probabilistic honesty). A run is accepted when: (i) the mean over seeds exceeds the model's own easy/medium baselines minus 1\%, (ii) the standard deviation remains within 2\% F1, and (iii) Brier tracks F1 (no inflated confidence). D6 replays the acceptance with independent GPU seeds; passing both stages indicates the behavior is architectural, not incidental.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{figures/d5_d6_results_slope.pdf}
