@@ -1,0 +1,224 @@
+\chapter{实验详细设置与协议}
+
+\section{实验环境与硬件配置}
+
+\subsection{计算环境}
+\begin{itemize}
+    \item \textbf{本地CPU环境}: Windows 10, Python 3.10.16, PyTorch 2.6.0+cpu
+    \item \textbf{远程GPU环境}: CUDA-enabled GPU, PyTorch 2.6.0+cuda
+    \item \textbf{内存配置}: 32GB RAM, 多进程数据加载优化
+    \item \textbf{存储}: SSD缓存系统，支持多级数据缓存
+\end{itemize}
+
+\subsection{数据生成参数}
+\begin{table}[h!]
+\centering
+\caption{物理指导合成数据生成参数配置}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{参数类别} & \textbf{参数名称} & \textbf{取值范围} & \textbf{默认值} \\
+\hline
+\multirow{4}{*}{环境参数}
+& 空间相关性系数 ($\rho$) & 0.1-0.9 & 0.5 \\
+& 环境突发率 & 0.05-0.3 & 0.2 \\
+& 增益漂移标准差 & 0.1-1.0 & 0.6 \\
+& 类别重叠度 & 0.3-0.9 & 0.8 \\
+\hline
+\multirow{3}{*}{数据参数}
+& 样本数量 & 1000-50000 & 20000 \\
+& 时间维度 (T) & 64-256 & 128 \\
+& 频率维度 (F) & 30-64 & 52 \\
+\hline
+\multirow{2}{*}{难度参数}
+& 标签噪声概率 & 0.05-0.2 & 0.1 \\
+& 类别数量 & 4-12 & 8 \\
+\hline
+\end{tabular}
+\label{tab:data_gen_params}
+\end{table}
+
+\section{实验协议详细说明}
+
+\subsection{In-Domain Capacity-Aligned Validation (原D1)}
+\textbf{目标}: 建立基线性能，验证指标一致性，确保模型容量匹配。
+
+\textbf{配置}:
+\begin{itemize}
+    \item \textbf{模型}: Enhanced, CNN, BiLSTM, Conformer-lite
+    \item \textbf{数据难度}: 中等 (mid)
+    \item \textbf{种子数}: 5个 (0-4)
+    \item \textbf{训练轮数}: 100 epochs
+    \item \textbf{批次大小}: 768
+    \item \textbf{优化器}: Adam, 学习率 0.001
+    \item \textbf{正则化}: L2正则化 (logit\_l2=0.1)
+\end{itemize}
+
+\textbf{评估指标}:
+\begin{itemize}
+    \item 宏平均F1分数 (macro\_f1)
+    \item 期望校准误差 (ECE)
+    \item 负对数似然 (NLL)
+    \item Brier分数
+    \item 温度缩放校准
+\end{itemize}
+
+\subsection{Synthetic Robustness Validation (SRD, 原D2)}
+\textbf{目标}: 验证合成数据质量，测试模型在不同配置下的鲁棒性。
+
+\textbf{配置}:
+\begin{itemize}
+    \item \textbf{难度级别}: 简单 (easy), 中等 (mid), 困难 (hard)
+    \item \textbf{环境变化}: 空间相关性、突发率、增益漂移
+    \item \textbf{数据质量}: 类别重叠、标签噪声
+    \item \textbf{模型容量}: 参数数量匹配 (±10\%)
+\end{itemize}
+
+\textbf{验证标准}:
+\begin{itemize}
+    \item 每个模型至少3个种子
+    \item 增强模型与CNN参数差异在±10\%内
+    \item 指标有效性验证
+    \item 跨难度一致性检查
+\end{itemize}
+
+\subsection{Cross-Domain Adaptation Evaluation (CDAE)}
+\textbf{目标}: 评估模型在跨域场景下的泛化能力。
+
+\textbf{协议}:
+\begin{itemize}
+    \item \textbf{LOSO (Leave-One-Subject-Out)}: 跨受试者泛化
+    \item \textbf{LORO (Leave-One-Room-Out)}: 跨房间泛化
+    \item \textbf{特征空间分析}: PCA降维，聚类分析
+    \item \textbf{域间隙量化}: 特征空间距离计算
+\end{itemize}
+
+\textbf{评估维度}:
+\begin{itemize}
+    \item 性能一致性
+    \item 特征表示稳定性
+    \item 域适应能力
+    \item 泛化误差分析
+\end{itemize}
+
+\subsection{Sim2Real Transfer Efficiency Assessment (STEA)}
+\textbf{目标}: 量化合成到真实数据的标签效率。
+
+\textbf{配置}:
+\begin{itemize}
+    \item \textbf{标签比例}: 10\%, 20\%, 50\%, 100\%
+    \item \textbf{预训练策略}: 合成数据预训练
+    \item \textbf{微调策略}: 真实数据微调
+    \item \textbf{性能目标}: 10-20\%标签达到90-95\%性能
+\end{itemize}
+
+\textbf{效率指标}:
+\begin{itemize}
+    \item 标签效率比率
+    \item 性能提升曲线
+    \item 收敛速度分析
+    \item 成本效益评估
+\end{itemize}
+
+\section{模型架构详细说明}
+
+\subsection{Enhanced Model}
+\textbf{核心组件}:
+\begin{itemize}
+    \item \textbf{CNN骨干}: 3层卷积，通道数 [32, 64, 128]
+    \item \textbf{SE模块}: 通道注意力机制，压缩比16
+    \item \textbf{时间注意力}: 轻量级自注意力，头数4
+    \item \textbf{分类头}: 全连接层 + Dropout (0.5)
+\end{itemize}
+
+\textbf{参数配置}:
+\begin{itemize}
+    \item 总参数: 640,713
+    \item 可训练参数: 640,713
+    \item 模型大小: ~2.5MB
+    \item 推理速度: ~5ms/batch
+\end{itemize}
+
+\subsection{基线模型}
+\begin{itemize}
+    \item \textbf{CNN}: 标准卷积网络，参数匹配
+    \item \textbf{BiLSTM}: 双向LSTM，隐藏维度128
+    \item \textbf{Conformer-lite}: 轻量级Transformer变体
+\end{itemize}
+
+\section{训练优化策略}
+
+\subsection{数据加载优化}
+\begin{itemize}
+    \item \textbf{多进程加载}: num\_workers=4
+    \item \textbf{预取因子}: prefetch\_factor=2
+    \item \textbf{内存固定}: pin\_memory=True
+    \item \textbf{缓存策略}: 多级缓存 (磁盘+内存)
+\end{itemize}
+
+\subsection{训练加速}
+\begin{itemize}
+    \item \textbf{混合精度}: AMP (Automatic Mixed Precision)
+    \item \textbf{梯度累积}: 有效批次大小控制
+    \item \textbf{早停策略}: patience=8, 监控macro\_f1
+    \item \textbf{学习率调度}: 基于验证性能的自适应调整
+\end{itemize}
+
+\subsection{正则化技术}
+\begin{itemize}
+    \item \textbf{L2正则化}: logit\_l2=0.1
+    \item \textbf{Dropout}: 0.5 (分类头)
+    \item \textbf{数据增强}: 时间域噪声注入
+    \item \textbf{标签平滑}: 提高泛化能力
+\end{itemize}
+
+\section{评估与验证流程}
+
+\subsection{交叉验证}
+\begin{itemize}
+    \item \textbf{分层采样}: 保持类别分布
+    \item \textbf{重复实验}: 5个随机种子
+    \item \textbf{统计显著性}: t检验，p<0.05
+    \item \textbf{置信区间}: 95\%置信区间计算
+\end{itemize}
+
+\subsection{模型校准}
+\begin{itemize}
+    \item \textbf{温度缩放}: 优化NLL
+    \item \textbf{校准评估}: ECE, Brier分数
+    \item \textbf{可靠性曲线}: 置信度vs准确性
+    \item \textbf{不确定性量化}: 预测不确定性估计
+\end{itemize}
+
+\subsection{结果验证}
+\begin{itemize}
+    \item \textbf{指标一致性}: 跨种子稳定性
+    \item \textbf{性能边界}: 理论vs实际性能
+    \item \textbf{异常检测}: 异常高/低性能识别
+    \item \textbf{可重现性}: 完整实验记录
+\end{itemize}
+
+\section{实验自动化与可重现性}
+
+\subsection{实验管理}
+\begin{itemize}
+    \item \textbf{配置管理}: JSON格式实验配置
+    \item \textbf{版本控制}: Git提交哈希记录
+    \item \textbf{日志系统}: 详细训练日志
+    \item \textbf{结果存储}: 结构化JSON输出
+\end{itemize}
+
+\subsection{可重现性保障}
+\begin{itemize}
+    \item \textbf{环境固定}: 依赖版本锁定
+    \item \textbf{随机种子}: 全局随机种子控制
+    \item \textbf{硬件抽象}: 设备无关实现
+    \item \textbf{文档完整}: 实验流程详细记录
+\end{itemize}
+
+\subsection{质量保证}
+\begin{itemize}
+    \item \textbf{单元测试}: 核心功能测试
+    \item \textbf{集成测试}: 端到端流程验证
+    \item \textbf{性能基准}: 标准性能指标
+    \item \textbf{回归测试}: 变更影响评估
+\end{itemize}

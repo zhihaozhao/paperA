@@ -1,0 +1,25 @@
+\chapter{实验结果总表与可复现实验清单}
+
+\section{主要结果总览}
+\begin{table}[h!]
+\centering
+\caption{关键实验结果汇总（示例占位）}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{协议} & \textbf{模型} & \textbf{Top-1(\%)} & \textbf{ECE} \\
+\hline
+D2 & Enhanced & 92.1 & 0.032 \\
+CDAE & Enhanced & 85.6 & 0.047 \\
+STEA(20\%标签) & Enhanced & 90.3 & 0.041 \\
+\hline
+\end{tabular}
+\label{tab:main_results_overview}
+\end{table}
+
+\section{再现实验清单}
+以下脚本入口在主仓库中提供，确保一键复现：
+\begin{itemize}
+    \item 合成数据鲁棒性验证（D2）：\\\texttt{python scripts/run\_d2\_suite.py}
+    \item 跨域适应评估（CDAE）：\\\texttt{python scripts/run\_cdae\_suite.py}
+    \item Sim2Real标签效率（STEA）：\\\texttt{python scripts/run\_stea\_suite.py}
+\end{itemize}
