@@ -29,7 +29,10 @@ def generate_figure4_vision_analysis():
     colors = ['blue', 'green', 'orange', 'red']
     sizes = [100, 80, 120, 150]
     
-    scatter = ax1.scatter(times, accuracies, c=colors, s=sizes, alpha=0.7)
+    # 分别绘制每个类别以便创建图例
+    for i, (cat, time, acc, color, size) in enumerate(zip(categories, times, accuracies, colors, sizes)):
+        ax1.scatter(time, acc, c=color, s=size, alpha=0.7, label=cat)
+    
     ax1.set_xlabel('Processing Time (ms)')
     ax1.set_ylabel('Accuracy (%)')
     ax1.set_title('(a) Algorithm Family Performance Distribution')
@@ -37,10 +40,8 @@ def generate_figure4_vision_analysis():
     ax1.set_xlim(0, 320)
     ax1.set_ylim(80, 95)
     
-    # 添加标签
-    for i, cat in enumerate(categories):
-        ax1.annotate(cat, (times[i], accuracies[i]), xytext=(5, 5), 
-                    textcoords='offset points', fontsize=8)
+    # 图例放在左上角空白区域，避免与数据重叠
+    ax1.legend(loc='upper left', bbox_to_anchor=(0.02, 0.98), fontsize=7)
     
     # 子图(b): 时间演进与突破
     years = [2016, 2020, 2020, 2021, 2022]
@@ -74,7 +75,8 @@ def generate_figure4_vision_analysis():
     ax3.set_ylabel('Detection Accuracy (%)')
     ax3.set_title('(c) Real-time Processing Capability Analysis')
     ax3.grid(True, alpha=0.3)
-    ax3.legend()
+    # 图例放在右下角空白区域
+    ax3.legend(loc='lower right', bbox_to_anchor=(0.98, 0.02), fontsize=8)
     ax3.set_xlim(40, 400)
     ax3.set_ylim(83, 95)
     
@@ -91,7 +93,8 @@ def generate_figure4_vision_analysis():
     
     # 商业化阈值线
     ax4.axhline(y=90, color='red', linestyle='--', linewidth=2, label='Commercial Threshold')
-    ax4.legend()
+    # 图例放在右上角空白区域
+    ax4.legend(loc='upper right', bbox_to_anchor=(0.98, 0.98), fontsize=8)
     
     plt.tight_layout()
     plt.savefig('fig4_vision_meta_analysis.pdf', format='pdf', bbox_inches='tight')
@@ -109,7 +112,10 @@ def generate_figure9_robotics_analysis():
     colors = ['blue', 'green', 'orange', 'red', 'purple']
     sizes = [80, 100, 150, 60, 40]
     
-    scatter = ax1.scatter(cycle_times, success_rates, c=colors, s=sizes, alpha=0.7)
+    # 分别绘制每个算法族以便创建图例
+    for i, (family, time, rate, color, size) in enumerate(zip(families, cycle_times, success_rates, colors, sizes)):
+        ax1.scatter(time, rate, c=color, s=size, alpha=0.7, label=family)
+    
     ax1.set_xlabel('Cycle Time (s)')
     ax1.set_ylabel('Success Rate (%)')
     ax1.set_title('(a) Control System Architecture Performance Integration')
@@ -117,10 +123,8 @@ def generate_figure9_robotics_analysis():
     ax1.set_xlim(0, 12)
     ax1.set_ylim(65, 95)
     
-    # 添加标签
-    for i, family in enumerate(families):
-        ax1.annotate(family, (cycle_times[i], success_rates[i]), xytext=(5, 5), 
-                    textcoords='offset points', fontsize=8)
+    # 图例放在右上角空白区域
+    ax1.legend(loc='upper right', bbox_to_anchor=(0.98, 0.98), fontsize=7)
     
     # 子图(b): 算法族成就对比
     x_pos = np.arange(len(families))
@@ -136,7 +140,8 @@ def generate_figure9_robotics_analysis():
     ax2.set_title('(b) Algorithm Family Achievements Comparison')
     ax2.set_xticks(x_pos)
     ax2.set_xticklabels([f.split('\n')[0] for f in families], rotation=45)
-    ax2.legend()
+    # 图例放在左上角空白区域
+    ax2.legend(loc='upper left', bbox_to_anchor=(0.02, 0.98), fontsize=8)
     ax2.grid(True, alpha=0.3, axis='y')
     
     # 子图(c): 突破时间线与模型演进
@@ -173,7 +178,8 @@ def generate_figure9_robotics_analysis():
     ax4.set_title('(d) Multi-Environmental Performance Analysis')
     ax4.set_xticks(x_pos)
     ax4.set_xticklabels([cat.split('\n')[0] for cat in perf_categories], rotation=45)
-    ax4.legend()
+    # 图例放在右上角空白区域
+    ax4.legend(loc='upper right', bbox_to_anchor=(0.98, 0.98), fontsize=8)
     ax4.grid(True, alpha=0.3, axis='y')
     ax4.set_ylim(70, 95)
     
@@ -206,7 +212,8 @@ def generate_figure10_critical_analysis():
     ax1.set_title('(a) Research-Reality Mismatch Analysis')
     ax1.set_xticks(x_pos)
     ax1.set_xticklabels(tech_components)
-    ax1.legend()
+    # 图例放在左上角空白区域
+    ax1.legend(loc='upper left', bbox_to_anchor=(0.02, 0.98), fontsize=8)
     ax1.grid(True, alpha=0.3, axis='y')
     ax1.set_ylim(0, 9)
     
@@ -233,7 +240,8 @@ def generate_figure10_critical_analysis():
     ax2.set_xlabel('Commercial Urgency')
     ax2.set_ylabel('Research Progress')
     ax2.set_title('(b) Technical Bottleneck Matrix')
-    ax2.legend()
+    # 图例放在左上角空白区域
+    ax2.legend(loc='upper left', bbox_to_anchor=(0.02, 0.98), fontsize=8)
     ax2.grid(True, alpha=0.3)
     ax2.set_xlim(0, 10)
     ax2.set_ylim(0, 10)
@@ -262,7 +270,8 @@ def generate_figure10_critical_analysis():
     ax3.set_xlabel('Timeline (Years)')
     ax3.set_ylabel('Problem Persistence Score')
     ax3.set_title('(c) Persistent Challenges Evolution (2015-2024)')
-    ax3.legend()
+    # 图例放在右上角空白区域
+    ax3.legend(loc='upper right', bbox_to_anchor=(0.98, 0.98), fontsize=7)
     ax3.grid(True, alpha=0.3)
     ax3.set_xlim(2014, 2025)
     ax3.set_ylim(0, 10)
@@ -289,7 +298,8 @@ def generate_figure10_critical_analysis():
     ax4.set_xlabel('Industry Priority Rank')
     ax4.set_ylabel('Research Attention Score')
     ax4.set_title('(d) Research-Industry Priority Misalignment')
-    ax4.legend()
+    # 图例放在左上角空白区域
+    ax4.legend(loc='upper left', bbox_to_anchor=(0.02, 0.98), fontsize=8)
     ax4.grid(True, alpha=0.3)
     ax4.set_xlim(0, 10)
     ax4.set_ylim(0, 10)
