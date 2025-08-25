@@ -1,0 +1,563 @@
+{
+  "metadata": {
+    "export_timestamp": "20250825_072857",
+    "total_relations": 64,
+    "relation_types": {
+      "AUTHORED_BY": 36,
+      "USES_ALGORITHM": 7,
+      "TESTED_IN_ENVIRONMENT": 1,
+      "TARGETS_FRUIT": 5,
+      "ADDRESSES_CHALLENGE": 15
+    }
+  },
+  "relations": [
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0001_Sa",
+      "properties": {
+        "role": "author",
+        "paper_title": "DeepFruits: A Fruit Detection System Using Deep Neural Networks"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0002_Ge",
+      "properties": {
+        "role": "author",
+        "paper_title": "DeepFruits: A Fruit Detection System Using Deep Neural Networks"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0003_ZY",
+      "properties": {
+        "role": "author",
+        "paper_title": "DeepFruits: A Fruit Detection System Using Deep Neural Networks"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0004_Dayoub",
+      "properties": {
+        "role": "author",
+        "paper_title": "DeepFruits: A Fruit Detection System Using Deep Neural Networks"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0005_Upcroft",
+      "properties": {
+        "role": "author",
+        "paper_title": "DeepFruits: A Fruit Detection System Using Deep Neural Networks"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0006_Perez",
+      "properties": {
+        "role": "author",
+        "paper_title": "DeepFruits: A Fruit Detection System Using Deep Neural Networks"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0007_McCool",
+      "properties": {
+        "role": "author",
+        "paper_title": "DeepFruits: A Fruit Detection System Using Deep Neural Networks"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "USES_ALGORITHM",
+      "target_id": "ALGORITHM_0001_Faster_RCNN",
+      "properties": {
+        "application": "primary_method"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "TESTED_IN_ENVIRONMENT",
+      "target_id": "ENVIRONMENT_0001_Rgb_Nir",
+      "properties": {
+        "experiment_type": "primary_testing"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "TARGETS_FRUIT",
+      "target_id": "FRUIT_0001_sweet_pepper",
+      "properties": {
+        "research_focus": "primary_target"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0001_Weather_Conditions",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0002_Generalization",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0008_Bac",
+      "properties": {
+        "role": "author",
+        "paper_title": "Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead"
+      }
+    },
+    {
+      "source_id": "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0009_CW",
+      "properties": {
+        "role": "author",
+        "paper_title": "Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead"
+      }
+    },
+    {
+      "source_id": "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0010_van_Henten",
+      "properties": {
+        "role": "author",
+        "paper_title": "Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead"
+      }
+    },
+    {
+      "source_id": "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0011_EJ",
+      "properties": {
+        "role": "author",
+        "paper_title": "Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead"
+      }
+    },
+    {
+      "source_id": "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0012_Hemming",
+      "properties": {
+        "role": "author",
+        "paper_title": "Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead"
+      }
+    },
+    {
+      "source_id": "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0013_Edan",
+      "properties": {
+        "role": "author",
+        "paper_title": "Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead"
+      }
+    },
+    {
+      "source_id": "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t",
+      "relation_type": "USES_ALGORITHM",
+      "target_id": "ALGORITHM_0002_Traditional_CV",
+      "properties": {
+        "application": "primary_method"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0014_Gongal",
+      "properties": {
+        "role": "author",
+        "paper_title": "Sensors and systems for fruit detection and localization: A review"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0015_Amatya",
+      "properties": {
+        "role": "author",
+        "paper_title": "Sensors and systems for fruit detection and localization: A review"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0016_Karkee",
+      "properties": {
+        "role": "author",
+        "paper_title": "Sensors and systems for fruit detection and localization: A review"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0017_Zhang",
+      "properties": {
+        "role": "author",
+        "paper_title": "Sensors and systems for fruit detection and localization: A review"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0018_Lewis",
+      "properties": {
+        "role": "author",
+        "paper_title": "Sensors and systems for fruit detection and localization: A review"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "USES_ALGORITHM",
+      "target_id": "ALGORITHM_0003_Traditional_CV",
+      "properties": {
+        "application": "primary_method"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "TARGETS_FRUIT",
+      "target_id": "FRUIT_0002_apples",
+      "properties": {
+        "research_focus": "primary_target"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "TARGETS_FRUIT",
+      "target_id": "FRUIT_0003_pears",
+      "properties": {
+        "research_focus": "primary_target"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "TARGETS_FRUIT",
+      "target_id": "FRUIT_0004_and_citrus",
+      "properties": {
+        "research_focus": "primary_target"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0003_Illumination_Variation",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0004_Occlusion",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0019_Yu",
+      "properties": {
+        "role": "author",
+        "paper_title": "Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0020_Zhang",
+      "properties": {
+        "role": "author",
+        "paper_title": "Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0021_KL",
+      "properties": {
+        "role": "author",
+        "paper_title": "Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0022_Yang",
+      "properties": {
+        "role": "author",
+        "paper_title": "Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0023_Zhang",
+      "properties": {
+        "role": "author",
+        "paper_title": "Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0024_DX",
+      "properties": {
+        "role": "author",
+        "paper_title": "Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "USES_ALGORITHM",
+      "target_id": "ALGORITHM_0004_Mask_Rcnn",
+      "properties": {
+        "application": "primary_method"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "USES_ALGORITHM",
+      "target_id": "ALGORITHM_0005_ResNet",
+      "properties": {
+        "application": "primary_method"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "TARGETS_FRUIT",
+      "target_id": "FRUIT_0005_strawberry",
+      "properties": {
+        "research_focus": "primary_target"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0005_Illumination_Variation",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0006_Occlusion",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0007_Generalization",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0008_Weather_Conditions",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0005_Deep_Count_Fruit_Counting_Based_on_Deep_Simulated",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0025_Rahnemoonfar",
+      "properties": {
+        "role": "author",
+        "paper_title": "Deep Count: Fruit Counting Based on Deep Simulated Learning"
+      }
+    },
+    {
+      "source_id": "PAPER_0005_Deep_Count_Fruit_Counting_Based_on_Deep_Simulated",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0026_Sheppard",
+      "properties": {
+        "role": "author",
+        "paper_title": "Deep Count: Fruit Counting Based on Deep Simulated Learning"
+      }
+    },
+    {
+      "source_id": "PAPER_0005_Deep_Count_Fruit_Counting_Based_on_Deep_Simulated",
+      "relation_type": "USES_ALGORITHM",
+      "target_id": "ALGORITHM_0006_ResNet",
+      "properties": {
+        "application": "primary_method"
+      }
+    },
+    {
+      "source_id": "PAPER_0005_Deep_Count_Fruit_Counting_Based_on_Deep_Simulated",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0009_Illumination_Variation",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0005_Deep_Count_Fruit_Counting_Based_on_Deep_Simulated",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0010_Occlusion",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0005_Deep_Count_Fruit_Counting_Based_on_Deep_Simulated",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0011_Weather_Conditions",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0027_Tang",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0028_YC",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0029_Chen",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0030_MY",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0031_Wang",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0032_CL",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0033_Luo",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0034_LF",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0035_Li",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "AUTHORED_BY",
+      "target_id": "AUTHOR_0036_JH",
+      "properties": {
+        "role": "author",
+        "paper_title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "USES_ALGORITHM",
+      "target_id": "ALGORITHM_0007_Traditional_CV",
+      "properties": {
+        "application": "primary_method"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0012_Illumination_Variation",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0013_Occlusion",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0014_Motion_Blur",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    },
+    {
+      "source_id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+      "relation_type": "ADDRESSES_CHALLENGE",
+      "target_id": "CHALLENGE_0015_Real_Time_Processing",
+      "properties": {
+        "approach": "solution_proposed"
+      }
+    }
+  ]
+}

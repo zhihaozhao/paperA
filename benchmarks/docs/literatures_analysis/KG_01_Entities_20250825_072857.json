@@ -1,0 +1,665 @@
+{
+  "metadata": {
+    "export_timestamp": "20250825_072857",
+    "total_entities": 70,
+    "total_relations": 64,
+    "entity_types": {
+      "papers": 6,
+      "authors": 36,
+      "algorithms": 7,
+      "environments": 1,
+      "fruit_types": 5,
+      "challenges": 15,
+      "performance_metrics": 0,
+      "journals": 0,
+      "institutions": 0
+    }
+  },
+  "entities": {
+    "papers": {
+      "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne": {
+        "id": "PAPER_0001_DeepFruits_A_Fruit_Detection_System_Using_Deep_Ne",
+        "type": "Paper",
+        "properties": {
+          "title": "DeepFruits: A Fruit Detection System Using Deep Neural Networks",
+          "publication_year": 2016,
+          "citation_count": 662,
+          "document_type": "Article",
+          "highly_cited": true,
+          "publisher": "sensors",
+          "main_contribution": "",
+          "abstract": "This paper presents a novel approach to fruit detection using deep convolutional neural networks. The aim is to build an accurate, fast and reliable fruit detection system, which is a vital element of an autonomous agricultural robotic platform; it is a key element for fruit yield estimation and automated harvesting. Recent work in deep neural networks has led to the development of a state-of-the-art object detector termed Faster Region-based CNN (Faster R-CNN). We adapt this model, through transfer learning, for the task of fruit detection using imagery obtained from two modalities: colour (RGB) and Near-Infrared (NIR). Early and late fusion methods are explored for combining the multi-modal (RGB and NIR) information. This leads to a novel multi-modal Faster R-CNN model, which achieves state-of-the-art results compared to prior work with the Fl score, which takes into account both precision and recall performances improving from 0.807 to 0.838 for the detection of sweet pepper. In addition to improved accuracy, this approach is also much quicker to deploy for new fruits, as it requires bounding box annotation rather than pixel-level annotation (annotating bounding boxes is approximately an order of magnitude quicker to perform). The model is retrained to perform the detection of seven fruits, with the entire process taking four hours to annotate and train the new model per fruit.",
+          "keywords": "CLASSIFICATION; SCALE"
+        }
+      },
+      "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t": {
+        "id": "PAPER_0002_Harvesting_Robots_for_High_value_Crops_State_of_t",
+        "type": "Paper",
+        "properties": {
+          "title": "Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead",
+          "publication_year": 2014,
+          "citation_count": 388,
+          "document_type": "Review",
+          "highly_cited": true,
+          "publisher": "Journal of field robotics",
+          "main_contribution": "harvesting robots using quantitative measures",
+          "abstract": "This review article analyzes state-of-the-art and future perspectives for harvesting robots in high-value crops. The objectives were to characterize the crop environment relevant for robotic harvesting, to perform a literature review on the state-of-the-art of harvesting robots using quantitative measures, and to reflect on the crop environment and literature review to formulate challenges and directions for future research and development. Harvesting robots were reviewed regarding the crop harvested in a production environment, performance indicators, design process techniques used, hardware design decisions, and algorithm characteristics. On average, localization success was 85%, detachment success was 75%, harvest success was 66%, fruit damage was 5%, peduncle damage was 45%, and cycle time was 33 s. A kiwi harvesting robot achieved the shortest cycle time of 1 s. Moreover, the performance of harvesting robots did not improve in the past three decades, and none of these 50 robots was commercialized. Four future challenges with R&D directions were identified to realize a positive trend in performance and to successfully implement harvesting robots in practice: (1) simplifying the task, (2) enhancing the robot, (3) defining requirements and measuring performance, and (4) considering additional requirements for successful implementation. This review article may provide new directions for future automation projects in high-value crops. C (C) 2014 Wiley Periodicals, Inc.",
+          "keywords": "AGRICULTURAL ROBOT; ECONOMIC-ANALYSIS; AUTONOMOUS ROBOT; COMPUTER VISION; MOBILE ROBOTS; FRUIT; DESIGN; PICKING; SYSTEM; CITRUS"
+        }
+      },
+      "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali": {
+        "id": "PAPER_0003_Sensors_and_systems_for_fruit_detection_and_locali",
+        "type": "Paper",
+        "properties": {
+          "title": "Sensors and systems for fruit detection and localization: A review",
+          "publication_year": 2015,
+          "citation_count": 364,
+          "document_type": "Review",
+          "highly_cited": true,
+          "publisher": "Computers and Electronics in Agriculture",
+          "main_contribution": "machine vision systems for fruit detection and localization",
+          "abstract": "This paper reviews the research and development of machine vision systems for fruit detection and localization for robotic harvesting and/or crop-load estimation of specialty tree crops including apples, pears, and citrus. Variable lighting condition, occlusions, and clustering are some of the important issues needed to be addressed for accurate detection and localization of fruit in orchard environment. To address these issues, various techniques have been investigated using different types of sensors and their combinations as well as with different image processing techniques. This paper summarizes various techniques and their advantages and disadvantages in detecting fruit in plant or tree canopies. The paper also summarizes the sensors and systems developed and used by researchers to localize fruit as well as the potential and limitations of those systems. Finally, major challenges for the successful application of machine vision system for robotic fruit harvesting and crop-load estimation, and potential future directions for research and development are discussed. (C) 2015 Elsevier B.V. All rights reserved.",
+          "keywords": "IMAGE-ANALYSIS; AUTOMATIC RECOGNITION; APPLE FRUITS; GREEN APPLES; COLOR; MACHINE; VISION; SEGMENTATION; FEATURES; NUMBER"
+        }
+      },
+      "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in": {
+        "id": "PAPER_0004_Fruit_detection_for_strawberry_harvesting_robot_in",
+        "type": "Paper",
+        "properties": {
+          "title": "Fruit detection for strawberry harvesting robot in non-structural environment based on Mask-RCNN",
+          "publication_year": 2019,
+          "citation_count": 373,
+          "document_type": "Article",
+          "highly_cited": true,
+          "publisher": "Computers and Electronics in Agriculture",
+          "main_contribution": "vision:fruit detection",
+          "abstract": "Deep learning has demonstrated excellent capabilities for learning image features and is widely used in image object detection. In order to improve the performance of machine vision in fruit detection for a strawberry harvesting robot, Mask Region Convolutional Neural Network (Mask-RCNN) was introduced. Resnet50 was adopted as backbone network, combined with the Feature Pyramid Network (FPN) architecture for feature extraction. The Region Proposal Network (RPN) was trained end-to-end to create region proposals for each feature map. After generating mask images of ripe fruits from Mask R-CNN, a visual localization method for strawberry picking points was performed. Fruit detection results of 100 test images showed that the average detection precision rate was 95.78%, the recall rate was 95.41% and the mean intersection over union (MIoU) rate for instance segmentation was 89.85%. The prediction results of 573 ripe fruit picking points showed that the average error was +/- 1.2 mm. Compared with four traditional methods, the method proposed demonstrates improved universality and robustness in a non-structural environment, particularly for overlapping and hidden fruits, and those under varying illumination.",
+          "keywords": "APPLE DETECTION; RECOGNITION"
+        }
+      },
+      "PAPER_0005_Deep_Count_Fruit_Counting_Based_on_Deep_Simulated": {
+        "id": "PAPER_0005_Deep_Count_Fruit_Counting_Based_on_Deep_Simulated",
+        "type": "Paper",
+        "properties": {
+          "title": "Deep Count: Fruit Counting Based on Deep Simulated Learning",
+          "publication_year": 2017,
+          "citation_count": 332,
+          "document_type": "Article",
+          "highly_cited": true,
+          "publisher": "sensors",
+          "main_contribution": "vision:yield estimation",
+          "abstract": "Recent years have witnessed significant advancement in computer vision research based on deep learning. Success of these tasks largely depends on the availability of a large amount of training samples. Labeling the training samples is an expensive process. In this paper, we present a simulated deep convolutional neural network for yield estimation. Knowing the exact number of fruits, flowers, and trees helps farmers to make better decisions on cultivation practices, plant disease prevention, and the size of harvest labor force. The current practice of yield estimation based on the manual counting of fruits or flowers by workers is a very time consuming and expensive process and it is not practical for big fields. Automatic yield estimation based on robotic agriculture provides a viable solution in this regard. Our network is trained entirely on synthetic data and tested on real data. To capture features on multiple scales, we used a modified version of the Inception-ResNet architecture. Our algorithm counts efficiently even if fruits are under shadow, occluded by foliage, branches, or if there is some degree of overlap amongst fruits. Experimental results show a 91% average test accuracy on real images and 93% on synthetic images.",
+          "keywords": "IMAGES"
+        }
+      },
+      "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba": {
+        "id": "PAPER_0006_Recognition_and_Localization_Methods_for_Vision_Ba",
+        "type": "Paper",
+        "properties": {
+          "title": "Recognition and Localization Methods for Vision-Based Fruit Picking Robots: A Review",
+          "publication_year": 2020,
+          "citation_count": 298,
+          "document_type": "Review",
+          "highly_cited": true,
+          "publisher": "Frontiers in Plant Science",
+          "main_contribution": "vision:localization,target recognition,3D reconstruction, and fault tolerance of complex agricultrual environment",
+          "abstract": "The utilization of machine vision and its associated algorithms improves the efficiency, functionality, intelligence, and remote interactivity of harvesting robots in complex agricultural environments. Machine vision and its associated emerging technology promise huge potential in advanced agricultural applications. However, machine vision and its precise positioning still have many technical difficulties, making it difficult for most harvesting robots to achieve true commercial applications. This article reports the application and research progress of harvesting robots and vision technology in fruit picking. The potential applications of vision and quantitative methods of localization, target recognition, 3D reconstruction, and fault tolerance of complex agricultural environment are focused, and fault-tolerant technology designed for utilization with machine vision and robotic systems are also explored. The two main methods used in fruit recognition and localization are reviewed, including digital image processing technology and deep learning-based algorithms. The future challenges brought about by recognition and localization success rates are identified: target recognition in the presence of illumination changes and occlusion environments; target tracking in dynamic interference-laden environments, 3D target reconstruction, and fault tolerance of the vision system for agricultural robots. In the end, several open research problems specific to recognition and localization applications for fruit harvesting robots are mentioned, and the latest development and future development trends of machine vision are described.",
+          "keywords": "OF-THE-ART; MACHINE VISION; HARVESTING ROBOT; CITRUS-FRUIT; FIELD-EVALUATION; LITCHI CLUSTERS; GRAPE CLUSTERS; END-EFFECTOR; SYSTEM; COLOR"
+        }
+      }
+    },
+    "authors": {
+      "AUTHOR_0001_Sa": {
+        "id": "AUTHOR_0001_Sa",
+        "type": "Author",
+        "properties": {
+          "name": "Sa",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0002_Ge": {
+        "id": "AUTHOR_0002_Ge",
+        "type": "Author",
+        "properties": {
+          "name": "Ge",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0003_ZY": {
+        "id": "AUTHOR_0003_ZY",
+        "type": "Author",
+        "properties": {
+          "name": "ZY",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0004_Dayoub": {
+        "id": "AUTHOR_0004_Dayoub",
+        "type": "Author",
+        "properties": {
+          "name": "Dayoub",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0005_Upcroft": {
+        "id": "AUTHOR_0005_Upcroft",
+        "type": "Author",
+        "properties": {
+          "name": "Upcroft",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0006_Perez": {
+        "id": "AUTHOR_0006_Perez",
+        "type": "Author",
+        "properties": {
+          "name": "Perez",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0007_McCool": {
+        "id": "AUTHOR_0007_McCool",
+        "type": "Author",
+        "properties": {
+          "name": "McCool",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0008_Bac": {
+        "id": "AUTHOR_0008_Bac",
+        "type": "Author",
+        "properties": {
+          "name": "Bac",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0009_CW": {
+        "id": "AUTHOR_0009_CW",
+        "type": "Author",
+        "properties": {
+          "name": "CW",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0010_van_Henten": {
+        "id": "AUTHOR_0010_van_Henten",
+        "type": "Author",
+        "properties": {
+          "name": "van Henten",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0011_EJ": {
+        "id": "AUTHOR_0011_EJ",
+        "type": "Author",
+        "properties": {
+          "name": "EJ",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0012_Hemming": {
+        "id": "AUTHOR_0012_Hemming",
+        "type": "Author",
+        "properties": {
+          "name": "Hemming",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0013_Edan": {
+        "id": "AUTHOR_0013_Edan",
+        "type": "Author",
+        "properties": {
+          "name": "Edan",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0014_Gongal": {
+        "id": "AUTHOR_0014_Gongal",
+        "type": "Author",
+        "properties": {
+          "name": "Gongal",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0015_Amatya": {
+        "id": "AUTHOR_0015_Amatya",
+        "type": "Author",
+        "properties": {
+          "name": "Amatya",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0016_Karkee": {
+        "id": "AUTHOR_0016_Karkee",
+        "type": "Author",
+        "properties": {
+          "name": "Karkee",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0017_Zhang": {
+        "id": "AUTHOR_0017_Zhang",
+        "type": "Author",
+        "properties": {
+          "name": "Zhang",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0018_Lewis": {
+        "id": "AUTHOR_0018_Lewis",
+        "type": "Author",
+        "properties": {
+          "name": "Lewis",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0019_Yu": {
+        "id": "AUTHOR_0019_Yu",
+        "type": "Author",
+        "properties": {
+          "name": "Yu",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0020_Zhang": {
+        "id": "AUTHOR_0020_Zhang",
+        "type": "Author",
+        "properties": {
+          "name": "Zhang",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0021_KL": {
+        "id": "AUTHOR_0021_KL",
+        "type": "Author",
+        "properties": {
+          "name": "KL",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0022_Yang": {
+        "id": "AUTHOR_0022_Yang",
+        "type": "Author",
+        "properties": {
+          "name": "Yang",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0023_Zhang": {
+        "id": "AUTHOR_0023_Zhang",
+        "type": "Author",
+        "properties": {
+          "name": "Zhang",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0024_DX": {
+        "id": "AUTHOR_0024_DX",
+        "type": "Author",
+        "properties": {
+          "name": "DX",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0025_Rahnemoonfar": {
+        "id": "AUTHOR_0025_Rahnemoonfar",
+        "type": "Author",
+        "properties": {
+          "name": "Rahnemoonfar",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0026_Sheppard": {
+        "id": "AUTHOR_0026_Sheppard",
+        "type": "Author",
+        "properties": {
+          "name": "Sheppard",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0027_Tang": {
+        "id": "AUTHOR_0027_Tang",
+        "type": "Author",
+        "properties": {
+          "name": "Tang",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0028_YC": {
+        "id": "AUTHOR_0028_YC",
+        "type": "Author",
+        "properties": {
+          "name": "YC",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0029_Chen": {
+        "id": "AUTHOR_0029_Chen",
+        "type": "Author",
+        "properties": {
+          "name": "Chen",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0030_MY": {
+        "id": "AUTHOR_0030_MY",
+        "type": "Author",
+        "properties": {
+          "name": "MY",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0031_Wang": {
+        "id": "AUTHOR_0031_Wang",
+        "type": "Author",
+        "properties": {
+          "name": "Wang",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0032_CL": {
+        "id": "AUTHOR_0032_CL",
+        "type": "Author",
+        "properties": {
+          "name": "CL",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0033_Luo": {
+        "id": "AUTHOR_0033_Luo",
+        "type": "Author",
+        "properties": {
+          "name": "Luo",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0034_LF": {
+        "id": "AUTHOR_0034_LF",
+        "type": "Author",
+        "properties": {
+          "name": "LF",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0035_Li": {
+        "id": "AUTHOR_0035_Li",
+        "type": "Author",
+        "properties": {
+          "name": "Li",
+          "paper_count": 1
+        }
+      },
+      "AUTHOR_0036_JH": {
+        "id": "AUTHOR_0036_JH",
+        "type": "Author",
+        "properties": {
+          "name": "JH",
+          "paper_count": 1
+        }
+      }
+    },
+    "algorithms": {
+      "ALGORITHM_0001_Faster_RCNN": {
+        "id": "ALGORITHM_0001_Faster_RCNN",
+        "type": "Algorithm",
+        "properties": {
+          "name": "Faster_RCNN",
+          "category": "Deep_Learning",
+          "usage_count": 1
+        }
+      },
+      "ALGORITHM_0002_Traditional_CV": {
+        "id": "ALGORITHM_0002_Traditional_CV",
+        "type": "Algorithm",
+        "properties": {
+          "name": "Traditional_CV",
+          "category": "Classical_Computer_Vision",
+          "usage_count": 1
+        }
+      },
+      "ALGORITHM_0003_Traditional_CV": {
+        "id": "ALGORITHM_0003_Traditional_CV",
+        "type": "Algorithm",
+        "properties": {
+          "name": "Traditional_CV",
+          "category": "Classical_Computer_Vision",
+          "usage_count": 1
+        }
+      },
+      "ALGORITHM_0004_Mask_Rcnn": {
+        "id": "ALGORITHM_0004_Mask_Rcnn",
+        "type": "Algorithm",
+        "properties": {
+          "name": "Mask_Rcnn",
+          "category": "Other",
+          "usage_count": 1
+        }
+      },
+      "ALGORITHM_0005_ResNet": {
+        "id": "ALGORITHM_0005_ResNet",
+        "type": "Algorithm",
+        "properties": {
+          "name": "ResNet",
+          "category": "Deep_Learning",
+          "usage_count": 1
+        }
+      },
+      "ALGORITHM_0006_ResNet": {
+        "id": "ALGORITHM_0006_ResNet",
+        "type": "Algorithm",
+        "properties": {
+          "name": "ResNet",
+          "category": "Deep_Learning",
+          "usage_count": 1
+        }
+      },
+      "ALGORITHM_0007_Traditional_CV": {
+        "id": "ALGORITHM_0007_Traditional_CV",
+        "type": "Algorithm",
+        "properties": {
+          "name": "Traditional_CV",
+          "category": "Classical_Computer_Vision",
+          "usage_count": 1
+        }
+      }
+    },
+    "environments": {
+      "ENVIRONMENT_0001_Rgb_Nir": {
+        "id": "ENVIRONMENT_0001_Rgb_Nir",
+        "type": "Environment",
+        "properties": {
+          "name": "Rgb,Nir",
+          "description": "RGB,NIR",
+          "usage_count": 1
+        }
+      }
+    },
+    "fruit_types": {
+      "FRUIT_0001_sweet_pepper": {
+        "id": "FRUIT_0001_sweet_pepper",
+        "type": "FruitType",
+        "properties": {
+          "name": "sweet pepper",
+          "category": "Other",
+          "research_count": 1
+        }
+      },
+      "FRUIT_0002_apples": {
+        "id": "FRUIT_0002_apples",
+        "type": "FruitType",
+        "properties": {
+          "name": "apples",
+          "category": "Tree_Fruit",
+          "research_count": 1
+        }
+      },
+      "FRUIT_0003_pears": {
+        "id": "FRUIT_0003_pears",
+        "type": "FruitType",
+        "properties": {
+          "name": "pears",
+          "category": "Tree_Fruit",
+          "research_count": 1
+        }
+      },
+      "FRUIT_0004_and_citrus": {
+        "id": "FRUIT_0004_and_citrus",
+        "type": "FruitType",
+        "properties": {
+          "name": "and citrus",
+          "category": "Tree_Fruit",
+          "research_count": 1
+        }
+      },
+      "FRUIT_0005_strawberry": {
+        "id": "FRUIT_0005_strawberry",
+        "type": "FruitType",
+        "properties": {
+          "name": "strawberry",
+          "category": "Ground_Fruit",
+          "research_count": 1
+        }
+      }
+    },
+    "challenges": {
+      "CHALLENGE_0001_Weather_Conditions": {
+        "id": "CHALLENGE_0001_Weather_Conditions",
+        "type": "Challenge",
+        "properties": {
+          "name": "Weather_Conditions",
+          "category": "Environmental_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0002_Generalization": {
+        "id": "CHALLENGE_0002_Generalization",
+        "type": "Challenge",
+        "properties": {
+          "name": "Generalization",
+          "category": "General_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0003_Illumination_Variation": {
+        "id": "CHALLENGE_0003_Illumination_Variation",
+        "type": "Challenge",
+        "properties": {
+          "name": "Illumination_Variation",
+          "category": "Environmental_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0004_Occlusion": {
+        "id": "CHALLENGE_0004_Occlusion",
+        "type": "Challenge",
+        "properties": {
+          "name": "Occlusion",
+          "category": "Visual_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0005_Illumination_Variation": {
+        "id": "CHALLENGE_0005_Illumination_Variation",
+        "type": "Challenge",
+        "properties": {
+          "name": "Illumination_Variation",
+          "category": "Environmental_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0006_Occlusion": {
+        "id": "CHALLENGE_0006_Occlusion",
+        "type": "Challenge",
+        "properties": {
+          "name": "Occlusion",
+          "category": "Visual_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0007_Generalization": {
+        "id": "CHALLENGE_0007_Generalization",
+        "type": "Challenge",
+        "properties": {
+          "name": "Generalization",
+          "category": "General_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0008_Weather_Conditions": {
+        "id": "CHALLENGE_0008_Weather_Conditions",
+        "type": "Challenge",
+        "properties": {
+          "name": "Weather_Conditions",
+          "category": "Environmental_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0009_Illumination_Variation": {
+        "id": "CHALLENGE_0009_Illumination_Variation",
+        "type": "Challenge",
+        "properties": {
+          "name": "Illumination_Variation",
+          "category": "Environmental_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0010_Occlusion": {
+        "id": "CHALLENGE_0010_Occlusion",
+        "type": "Challenge",
+        "properties": {
+          "name": "Occlusion",
+          "category": "Visual_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0011_Weather_Conditions": {
+        "id": "CHALLENGE_0011_Weather_Conditions",
+        "type": "Challenge",
+        "properties": {
+          "name": "Weather_Conditions",
+          "category": "Environmental_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0012_Illumination_Variation": {
+        "id": "CHALLENGE_0012_Illumination_Variation",
+        "type": "Challenge",
+        "properties": {
+          "name": "Illumination_Variation",
+          "category": "Environmental_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0013_Occlusion": {
+        "id": "CHALLENGE_0013_Occlusion",
+        "type": "Challenge",
+        "properties": {
+          "name": "Occlusion",
+          "category": "Visual_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0014_Motion_Blur": {
+        "id": "CHALLENGE_0014_Motion_Blur",
+        "type": "Challenge",
+        "properties": {
+          "name": "Motion_Blur",
+          "category": "General_Challenge",
+          "frequency": 1
+        }
+      },
+      "CHALLENGE_0015_Real_Time_Processing": {
+        "id": "CHALLENGE_0015_Real_Time_Processing",
+        "type": "Challenge",
+        "properties": {
+          "name": "Real_Time_Processing",
+          "category": "Processing_Challenge",
+          "frequency": 1
+        }
+      }
+    },
+    "performance_metrics": {},
+    "journals": {},
+    "institutions": {}
+  }
+}
