@@ -573,30 +573,19 @@ Kumar et al. (2024) & Hybrid & 85.9\% & 128ms & n=820 & Fig 4(a,b,c,d) & YOLO+RL
         height=0.7\textwidth,
         xmin=0, xmax=320,
         ymin=80, ymax=95,
-        legend pos=north west,
-        scatter/classes={
-            fast-high/.style={mark=*,blue},
-            fast-mod/.style={mark=square*,green},
-            slow-high/.style={mark=triangle*,orange},
-            slow-mod/.style={mark=diamond*,red}
-        }
+        legend pos=north west
     ]
     
     % Performance category data points
-    \addplot[scatter,only marks,
-        scatter src=explicit symbolic,
-        scatter/classes={
-            fast-high/.style={mark=*,blue,mark size=4pt},
-            fast-mod/.style={mark=square*,green,mark size=3pt},
-            slow-high/.style={mark=triangle*,orange,mark size=5pt},
-            slow-mod/.style={mark=diamond*,red,mark size=6pt}
-        }]
-    coordinates {
-        (49,93.1) [fast-high]
-        (53,81.4) [fast-mod]
-        (198,92.8) [slow-high]
-        (285,87.5) [slow-mod]
-    };
+    \addplot[only marks,mark=*,color=blue,mark size=4pt] coordinates {(49,93.1)};
+    \addplot[only marks,mark=square*,color=green,mark size=3pt] coordinates {(53,81.4)};
+    \addplot[only marks,mark=triangle*,color=orange,mark size=5pt] coordinates {(198,92.8)};
+    \addplot[only marks,mark=diamond*,color=red,mark size=6pt] coordinates {(285,87.5)};
+    
+    \addlegendentry{Fast High-Accuracy}
+    \addlegendentry{Fast Moderate}
+    \addlegendentry{Slow High-Accuracy}
+    \addlegendentry{Slow Moderate}
     
     % Category labels with study counts
     \node at (axis cs:49,91) {\tiny Fast High-Acc. (9)};
@@ -625,13 +614,13 @@ Kumar et al. (2024) & Hybrid & 85.9\% & 128ms & n=820 & Fig 4(a,b,c,d) & YOLO+RL
     ]
     
     % YOLO studies
-    \addplot[scatter,only marks,mark=*,color=red,mark size=3pt] coordinates {
+    \addplot[only marks,mark=*,color=red,mark size=3pt] coordinates {
         (2021,93.1) (2020,91.2) (2022,91.5)
     };
     \addlegendentry{YOLO-based}
     
     % R-CNN studies  
-    \addplot[scatter,only marks,mark=square*,color=blue,mark size=3pt] coordinates {
+    \addplot[only marks,mark=square*,color=blue,mark size=3pt] coordinates {
         (2020,90.7) (2016,84.8)
     };
     \addlegendentry{R-CNN-based}
@@ -664,7 +653,7 @@ Kumar et al. (2024) & Hybrid & 85.9\% & 128ms & n=820 & Fig 4(a,b,c,d) & YOLO+RL
     ]
     
     % Performance data points
-    \addplot[scatter,only marks,mark=*,color=purple,mark size=3pt] coordinates {
+    \addplot[only marks,mark=*,color=purple,mark size=3pt] coordinates {
         (49,93.1) (58,90.7) (84,91.2) (393,84.8) (83,91.5)
     };
     
@@ -1255,33 +1244,21 @@ Figure~\ref{fig:motion_planning_analysis} presents this analytical framework, wi
         height=0.7\textwidth,
         xmin=0, xmax=12,
         ymin=65, ymax=95,
-        legend pos=north west,
-        scatter/classes={
-            deep-rl/.style={mark=*,blue},
-            vision/.style={mark=square*,green},
-            classical/.style={mark=triangle*,orange},
-            multi/.style={mark=diamond*,red},
-            hybrid/.style={mark=+,purple}
-        }
+        legend pos=north west
     ]
     
-    % Algorithm family data points with error bars
-    \addplot[scatter,only marks,
-        scatter src=explicit symbolic,
-        scatter/classes={
-            deep-rl/.style={mark=*,blue,mark size=3pt},
-            vision/.style={mark=square*,green,mark size=4pt},
-            classical/.style={mark=triangle*,orange,mark size=6pt},
-            multi/.style={mark=diamond*,red,mark size=2pt},
-            hybrid/.style={mark=+,purple,mark size=1pt}
-        }]
-    coordinates {
-        (5.2,90.4) [deep-rl]
-        (7.8,73.1) [vision]
-        (9.7,70.8) [classical]
-        (10.0,70.0) [multi]
-        (7.5,75.0) [hybrid]
-    };
+    % Algorithm family data points
+    \addplot[only marks,mark=*,color=blue,mark size=3pt] coordinates {(5.2,90.4)};
+    \addplot[only marks,mark=square*,color=green,mark size=4pt] coordinates {(7.8,73.1)};
+    \addplot[only marks,mark=triangle*,color=orange,mark size=6pt] coordinates {(9.7,70.8)};
+    \addplot[only marks,mark=diamond*,color=red,mark size=2pt] coordinates {(10.0,70.0)};
+    \addplot[only marks,mark=+,color=purple,mark size=1pt] coordinates {(7.5,75.0)};
+    
+    \addlegendentry{Deep RL}
+    \addlegendentry{Vision-based}
+    \addlegendentry{Classical}
+    \addlegendentry{Multi-robot}
+    \addlegendentry{Hybrid}
     
     % Family labels with study counts
     \node at (axis cs:5.2,88) {\tiny Deep RL (3)};
@@ -1349,7 +1326,7 @@ Figure~\ref{fig:motion_planning_analysis} presents this analytical framework, wi
     ]
     
     % Breakthrough studies timeline
-    \addplot[scatter,only marks,mark=*,color=red,mark size=4pt] coordinates {
+    \addplot[only marks,mark=*,color=red,mark size=4pt] coordinates {
         (2017,82.1) (2019,86.9) (2020,89.1) (2021,90.9) (2023,88.0)
     };
     
@@ -1715,19 +1692,19 @@ To systematically assess the technological maturity and development trajectory o
     ]
     
     % Critical issues (high urgency, low progress)
-    \addplot[scatter,only marks,mark=x,color=red,mark size=4pt] coordinates {
+    \addplot[only marks,mark=x,color=red,mark size=4pt] coordinates {
         (9,3) (8.5,2.5) (8,3.5) (9.5,2) (7.5,4)
     };
     \addlegendentry{Critical Issues}
     
     % High severity issues
-    \addplot[scatter,only marks,mark=square,color=orange,mark size=3pt] coordinates {
+    \addplot[only marks,mark=square,color=orange,mark size=3pt] coordinates {
         (7,5) (6.5,4.5) (8,6) (7.5,5.5) (6,7) (5.5,6.5)
     };
     \addlegendentry{High Severity}
     
     % Medium issues
-    \addplot[scatter,only marks,mark=*,color=green,mark size=2pt] coordinates {
+    \addplot[only marks,mark=*,color=green,mark size=2pt] coordinates {
         (4,8) (3.5,7.5) (5,8.5)
     };
     \addlegendentry{Medium Impact}
@@ -1816,17 +1793,17 @@ To systematically assess the technological maturity and development trajectory o
     ]
     
     % Misalignment data points
-    \addplot[scatter,only marks,mark=*,color=red,mark size=4pt] coordinates {
+    \addplot[only marks,mark=*,color=red,mark size=4pt] coordinates {
         (9,3) (8.5,2) (8,3.5)
     };
     \addlegendentry{High Misalignment}
     
-    \addplot[scatter,only marks,mark=square,color=orange,mark size=3pt] coordinates {
+    \addplot[only marks,mark=square,color=orange,mark size=3pt] coordinates {
         (7,5) (6,4) (5.5,6) (4.5,5.5)
     };
     \addlegendentry{Moderate Misalignment}
     
-    \addplot[scatter,only marks,mark=triangle,color=green,mark size=3pt] coordinates {
+    \addplot[only marks,mark=triangle,color=green,mark size=3pt] coordinates {
         (3,7) (2.5,8) (4,8.5) (3.5,9)
     };
     \addlegendentry{Good Alignment}
