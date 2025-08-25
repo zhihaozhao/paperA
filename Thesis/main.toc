@@ -1,0 +1,32 @@
+\contentsline {chapter}{\numberline {1}WiFi CSI Human Activity Recognition Review: Benchmarking and Quantitative Synthesis of Data, Methods, and Evaluation}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}数据层：公开与合成的统一描述}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}方法层：从信号到表示与模型}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}评测层：统一任务、指标与协议}{6}{section.1.3}%
+\contentsline {section}{\numberline {1.4}DFHAR 实验验证与开源资源}{6}{section.1.4}%
+\contentsline {section}{\numberline {1.5}跨研究差距与路线图}{6}{section.1.5}%
+\contentsline {section}{\numberline {1.6}小结}{6}{section.1.6}%
+\contentsline {chapter}{\numberline {A}实验详细设置与协议}{7}{appendix.A}%
+\contentsline {section}{\numberline {A.1}实验环境与硬件配置}{7}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}计算环境}{7}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}数据生成参数}{7}{subsection.A.1.2}%
+\contentsline {section}{\numberline {A.2}实验协议详细说明}{7}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}In-Domain Capacity-Aligned Validation (原D1)}{7}{subsection.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Synthetic Robustness Validation (SRD, 原D2)}{8}{subsection.A.2.2}%
+\contentsline {subsection}{\numberline {A.2.3}Cross-Domain Adaptation Evaluation (CDAE)}{9}{subsection.A.2.3}%
+\contentsline {subsection}{\numberline {A.2.4}Sim2Real Transfer Efficiency Assessment (STEA)}{9}{subsection.A.2.4}%
+\contentsline {section}{\numberline {A.3}模型架构详细说明}{10}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Enhanced Model}{10}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}基线模型}{10}{subsection.A.3.2}%
+\contentsline {section}{\numberline {A.4}训练优化策略}{10}{section.A.4}%
+\contentsline {subsection}{\numberline {A.4.1}数据加载优化}{10}{subsection.A.4.1}%
+\contentsline {subsection}{\numberline {A.4.2}训练加速}{11}{subsection.A.4.2}%
+\contentsline {subsection}{\numberline {A.4.3}正则化技术}{11}{subsection.A.4.3}%
+\contentsline {section}{\numberline {A.5}评估与验证流程}{11}{section.A.5}%
+\contentsline {subsection}{\numberline {A.5.1}交叉验证}{11}{subsection.A.5.1}%
+\contentsline {subsection}{\numberline {A.5.2}模型校准}{11}{subsection.A.5.2}%
+\contentsline {subsection}{\numberline {A.5.3}结果验证}{12}{subsection.A.5.3}%
+\contentsline {section}{\numberline {A.6}实验自动化与可重现性}{12}{section.A.6}%
+\contentsline {subsection}{\numberline {A.6.1}实验管理}{12}{subsection.A.6.1}%
+\contentsline {subsection}{\numberline {A.6.2}可重现性保障}{12}{subsection.A.6.2}%
+\contentsline {subsection}{\numberline {A.6.3}质量保证}{12}{subsection.A.6.3}%
+\contentsline {chapter}{\numberline {B}实验结果汇总表}{13}{appendix.B}%
