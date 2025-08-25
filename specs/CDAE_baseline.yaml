@@ -1,0 +1,22 @@
+experiment: CDAE_cross_domain
+protocol: [LOSO, LORO]
+models: [enhanced, cnn, bilstm, conformer_lite, pinn_lstm_ms, pinn_mamba]
+seeds: [0,1,2]
+params:
+  F: 52
+  T: 128
+  num_classes: 8
+  epochs: 100
+  batch: 256
+  class_overlap: 0.6
+  env_burst_rate: 0.1
+  gain_drift_std: 0.1
+  sc_corr_rho: 0.5
+pinn:
+  lambda_smooth: 0.01
+  lambda_energy: 0.0
+  windows: [32,64,128]
+mamba:
+  d_model: 192
+  layers: 3
+metrics: [top1, macro_f1, ece, nll, brier]

@@ -1,0 +1,23 @@
+experiment: STEA_sim2real_label_efficiency
+pretrain:
+  source: synthetic
+  epochs: 100
+  batch: 256
+finetune:
+  target: real
+  label_ratios: [0.1, 0.2, 0.5, 1.0]
+  epochs: 80
+  batch: 256
+models: [enhanced, pinn_lstm_ms, pinn_mamba]
+params:
+  F: 52
+  T: 128
+  num_classes: 8
+pinn:
+  lambda_smooth: 0.01
+  lambda_energy: 0.0
+  windows: [32,64,128]
+mamba:
+  d_model: 192
+  layers: 3
+metrics: [top1, macro_f1, ece, nll, brier]
