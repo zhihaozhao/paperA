@@ -464,14 +464,24 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \end{table}
 
 %<<<<<<< Updated upstream
-\subsection{D5/D6 Experiments: Progressive and Extended Evaluations}
+\subsection{D5/D6 Experiments: Progressive Stress-Test and Extended Stability}
 
-\textbf{Overview:} We further validate robustness with two extended protocols. \textbf{D5} conducts progressive training/evaluation under harder synthetic conditions across multiple seeds. \textbf{D6} extends evaluations to additional GPU runs to confirm stability. Figure~\ref{fig:d5d6_results} summarizes macro F1 across models; Table~\ref{tab:d5d6} reports macro F1 (mean$\pm$std) and Brier.
+\textbf{Motivation:} While Sections~\ref{fig:protocols}--\ref{fig:label_efficiency} establish cross-domain generalization and label-efficiency, two open questions remain: (1) How do models behave under progressively harder simulated conditions when trained across multiple random seeds (stress-test)? (2) Are observed trends stable when evaluations are extended with additional GPU runs (repeatability)? \textbf{D5} targets (1) and \textbf{D6} targets (2).
+
+\textbf{Design (D5 Progressive Stress-Test):} We fix the synthetic data generator to the hard regime and progressively stress key nuisance parameters while training 5 random seeds per model. Specifically, we vary: class-overlap in $[0.6,0.8]$, noise standard deviation in $[0.4,0.6]$, and gain-drift standard deviation in $[0.4,0.6]$, while keeping sequence length $T{=}128$ and feature dimension $F{=}52$. Optimizer is Adam with learning rate $10^{-3}$ (cosine decay), batch size 768, early-stopping on macro F1. This emulates realistic, noisy deployments with increased ambiguity and acquisition noise.
+
+\textbf{Design (D6 Extended Stability):} We repeat the best-performing D5 settings for the top models (Enhanced, CNN) and run two additional GPU seeds to test repeatability in a resource-realistic setting. This captures whether gains are robust to implementation-level randomness (cudnn/tensor order) beyond the D5 CPU-level seeds.
+
+\textbf{What they showcase:} D5 reveals \emph{stress robustness}: Enhanced and Conformer-lite sustain near-ceiling macro F1 despite harder overlap/noise/drift, whereas BiLSTM is more sensitive (high variance). D6 evidences \emph{stability}: trends persist with minimal variance across fresh GPU runs, indicating training dynamics are repeatable and not artifacts of specific seeds or backends.
+
+\textbf{How we achieve them / tweaking guidance:} Practitioners can dial difficulty via: (i) class-overlap ($0.6\rightarrow0.8$), (ii) noise std ($0.4\rightarrow0.6$), (iii) gain-drift std ($0.4\rightarrow0.6$). A recommended sweep is 3$\times$3$\times$3 grid over these ranges with 3--5 seeds per model. When compute-limited, keep $T{=}128,F{=}52$, lr $10^{-3}$ with cosine decay, and batch 512--768; adopt early-stopping on macro F1 with patience 10. For reproducibility, fix data-generation seeds separately from training seeds.
+
+\textbf{Results at a glance:} Figure~\ref{fig:d5d6_results} uses a slopegraph to contrast model means between D5 and D6 (higher is better). Table~\ref{tab:d5d6} reports macro F1 (mean ± std) and Brier; Enhanced remains best or tied-best across settings, CNN is competitive, Conformer-lite is strong but more protocol-sensitive in earlier sections, and BiLSTM underperforms under stress.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{figures/d5_d6_results_slope.pdf}
-\caption{D5/D6 macro F1 comparison across models (mean$\pm$std over seeds). D5 (blue) shows progression under harder settings; D6 (orange) confirms stability with additional GPU runs.}
+\caption{D5/D6 macro F1 comparison across models (mean ± std over seeds). D5 (left) stresses harder settings; D6 (right) confirms stability with additional GPU runs.}
 \label{fig:d5d6_results}
 \end{figure}
 
