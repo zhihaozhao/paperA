@@ -1,0 +1,12 @@
+  - Hu et al., “Squeeze-and-Excitation Networks,” CVPR 2018. 引入 SE 模块，通道级自适应重加权，参数低、部署友好。
+- 轻量卷积与深度可分离
+  - Howard et al., “MobileNets,” arXiv 2017; Sandler et al., “MobileNetV2,” CVPR 2018. 以深度可分离卷积降成本，适合边缘部署。
+- 轻量注意力/Conv-Transformer 混合
+  - Mehta and Rastegari, “MobileViT,” WACV 2022. 轻 CNN + 轻 Transformer，展示在边缘设备的高效性。
+  - Wu et al., “CvT: Introducing Convolutions to Vision Transformers,” ICCV 2021. 卷积与注意力结合的有效性。
+- Conformer 系列（卷积+注意力、音频强基线）
+  - Gulati et al., “Conformer: Convolution-augmented Transformer for Speech Recognition,” Interspeech 2020. 经典结构：FFN/2 → MHSA → Conv → FFN/2。
+  - Zhang et al., “DF-Conformer,” ICASSP 2023（及后续轻量化变体）。可参考其轻量配置与训练细节。
+- 时序/传感器序列的多尺度卷积
+  - Bai et al., “TCN,” NeurIPS 2018. 膨胀卷积在时序上的高效性。
+  - Fawaz et al., “InceptionTime,” DMKD 2020. 多尺度 1D 卷积在时序分类中的表现。

@@ -1,0 +1,205 @@
+# Collated Markdown Manifest
+
+
+## daily
+
+- Acceptance_Criteria_Summary.md  
+  - source: docs/Acceptance_Criteria_Summary.md
+- Aug11.25.md  
+  - source: Aug11.25.md
+- Aug12.25_command.md  
+  - source: Aug12.25_command.md
+- Aug12.25_para.md  
+  - source: Aug12.25_para.md
+- aug26.md  
+  - source: docs/daily/aug26.md
+- CDAE_STEA_EXPERIMENT_SUMMARY.md  
+  - source: CDAE_STEA_EXPERIMENT_SUMMARY.md
+- COMPLETE_FIGURE_SUITE_SUMMARY.md  
+  - source: paper/figures/COMPLETE_FIGURE_SUITE_SUMMARY.md
+- D2_Experiment_Summary.md  
+  - source: docs/D2_Experiment_Summary.md
+- D2_Paper_Updates_Summary.md  
+  - source: D2_Paper_Updates_Summary.md
+- D3_D4_ACCEPTANCE_SUMMARY.md  
+  - source: D3_D4_ACCEPTANCE_SUMMARY.md
+- EXPERIMENT_SUMMARY.md  
+  - source: EXPERIMENT_SUMMARY.md
+- FINAL_SECTIONS_SUMMARY.md  
+  - source: paper/FINAL_SECTIONS_SUMMARY.md
+- FOUR_METHODS_SUMMARY.md  
+  - source: paper/figures/FOUR_METHODS_SUMMARY.md
+- Literature_Search_Summary.md  
+  - source: references/Literature_Search_Summary.md
+- PAPER_DRAFT_COMPLETION_SUMMARY.md  
+  - source: PAPER_DRAFT_COMPLETION_SUMMARY.md
+- WiFi_CSI_Benchmark_Integration_Summary.md  
+  - source: docs/WiFi_CSI_Benchmark_Integration_Summary.md
+
+## experiments
+
+- benchmark_quick_start.md  
+  - source: docs/experiments/D1/benchmark_quick_start.md
+- Current_Experiment_Analysis.md  
+  - source: references/Current_Experiment_Analysis.md
+- D2_Experiment_Guide.md  
+  - source: docs/D2_Experiment_Guide.md
+- D3_D4_Experiment_Plans.md  
+  - source: docs/D3_D4_Experiment_Plans.md
+- D5_Experiment_Plan.md  
+  - source: docs/D5_Experiment_Plan.md
+- D6_Experiment_Plan.md  
+  - source: docs/D6_Experiment_Plan.md
+- Experiment_Details.md  
+  - source: docs/Experiment_Details.md
+- Project_Overview_and_Experiments.md  
+  - source: docs/Project_Overview_and_Experiments.md
+- README_PINN.md  
+  - source: docs/experiments/PINN/README_PINN.md
+- sweep_lambda.md  
+  - source: docs/experiments/D2/sweep_lambda.md
+- WiFi_CSI_Sensing_Benchmark_Analysis.md  
+  - source: benchmarks/WiFi_CSI_Sensing_Benchmark_Analysis.md
+- Windows_D3_D4_使用说明.md  
+  - source: docs/experiments/D3_D4/Windows_D3_D4_使用说明.md
+
+## figures
+
+- ADVANCED_FIGURES_REPORT.md  
+  - source: ADVANCED_FIGURES_REPORT.md
+
+## misc
+
+- ALTERNATIVE_DOWNLOAD_METHODS.md  
+  - source: ALTERNATIVE_DOWNLOAD_METHODS.md
+- Baseline_Comparison_Table.md  
+  - source: references/Baseline_Comparison_Table.md
+- Benchmark_Analysis_Request.md  
+  - source: references/Benchmark_Analysis_Request.md
+- Benchmark_Integration_Guide.md  
+  - source: references/Benchmark_Integration_Guide.md
+- CAM_FEASIBILITY_ANALYSIS.md  
+  - source: doc/CAM_FEASIBILITY_ANALYSIS.md
+- COMPLETE_FILE_CONTENTS.md  
+  - source: COMPLETE_FILE_CONTENTS.md
+- D1_CPU_Validation.md  
+  - source: docs/D1_CPU_Validation.md
+- D1_GPU_Alignment.md  
+  - source: docs/D1_GPU_Alignment.md
+- D5_Acceptance_Criteria.md  
+  - source: docs/D5_Acceptance_Criteria.md
+- D6_Acceptance_Criteria.md  
+  - source: docs/D6_Acceptance_Criteria.md
+- Debugging_Tips.md  
+  - source: docs/Debugging_Tips.md
+- DOWNLOAD_METHODS.md  
+  - source: DOWNLOAD_METHODS.md
+- Environment_Access_Guide.md  
+  - source: references/Environment_Access_Guide.md
+- EXECUTE_D2_VALIDATION.md  
+  - source: EXECUTE_D2_VALIDATION.md
+- FILE_CONTENTS_FOR_CREATION.md  
+  - source: FILE_CONTENTS_FOR_CREATION.md
+- FINAL_SETUP_STEPS.md  
+  - source: FINAL_SETUP_STEPS.md
+- FINAL_SYNC_SOLUTION.md  
+  - source: FINAL_SYNC_SOLUTION.md
+- FOUR_PLOTTING_METHODS_FINAL.md  
+  - source: FOUR_PLOTTING_METHODS_FINAL.md
+- Generation_Principles.md  
+  - source: docs/Generation_Principles.md
+- GIT_BRANCH_MANAGEMENT_PLAN.md  
+  - source: doc/GIT_BRANCH_MANAGEMENT_PLAN.md
+- Git_Management_Commands.md  
+  - source: docs/Git_Management_Commands.md
+- GITHUB_PERMISSION_DETAILS.md  
+  - source: GITHUB_PERMISSION_DETAILS.md
+- GITHUB_PERMISSION_FROM_SCREENSHOT.md  
+  - source: GITHUB_PERMISSION_FROM_SCREENSHOT.md
+- GITHUB_PERMISSIONS_GUIDE.md  
+  - source: GITHUB_PERMISSIONS_GUIDE.md
+- IMMEDIATE_SYNC_STEPS.md  
+  - source: IMMEDIATE_SYNC_STEPS.md
+- JSON_VALIDATION_SCRIPTS.md  
+  - source: JSON_VALIDATION_SCRIPTS.md
+- literature_links.md  
+  - source: references/literature_links.md
+- LOCAL_SYNC_GUIDE.md  
+  - source: LOCAL_SYNC_GUIDE.md
+- Optimized_Benchmark_Integration_Plan.md  
+  - source: docs/Optimized_Benchmark_Integration_Plan.md
+- OTHER_COMPUTER_SYNC.md  
+  - source: OTHER_COMPUTER_SYNC.md
+- PROJECT_MANIFEST.md  
+  - source: PROJECT_MANIFEST.md
+- Project_Overview.md  
+  - source: docs/Project_Overview.md
+- PUSH_REPOS_LOCALLY.md  
+  - source: PUSH_REPOS_LOCALLY.md
+- QUICK_LOCAL_SOLUTION.md  
+  - source: QUICK_LOCAL_SOLUTION.md
+- README.md  
+  - source: README.md
+- ref.md  
+  - source: references/ref.md
+- REPOSITORY_MIGRATION_PLAN.md  
+  - source: REPOSITORY_MIGRATION_PLAN.md
+- results__README.md  
+  - source: results/README.md
+- Runbook_D1_D6.md  
+  - source: docs/Runbook_D1_D6.md
+- Selective_Benchmark_Integration_Strategy.md  
+  - source: docs/Selective_Benchmark_Integration_Strategy.md
+- SenseFi_Benchmark_Analysis.md  
+  - source: references/SenseFi_Benchmark_Analysis.md
+- SenseFi_Benchmark_Setup_Guide.md  
+  - source: docs/SenseFi_Benchmark_Setup_Guide.md
+- SIMPLE_LOCAL_SETUP.md  
+  - source: SIMPLE_LOCAL_SETUP.md
+- WiFi_CSI_HAR_Literature_Analysis_2020-2024.md  
+  - source: references/WiFi_CSI_HAR_Literature_Analysis_2020-2024.md
+- Windows_D3_Setup_Guide.md  
+  - source: Windows_D3_Setup_Guide.md
+- WINDOWS_SETUP_GUIDE.md  
+  - source: WINDOWS_SETUP_GUIDE.md
+- Windows_to_Remote_Workspace_Guide.md  
+  - source: references/Windows_to_Remote_Workspace_Guide.md
+
+## paper
+
+- ADVANCED_FIGURES_REPORT.md  
+  - source: paper/figures/ADVANCED_FIGURES_REPORT.md
+- advanced_plots_design.md  
+  - source: paper/figures/advanced_plots_design.md
+- CAM_IMPLEMENTATION_PLAN.md  
+  - source: paper/CAM_IMPLEMENTATION_PLAN.md
+- COMPREHENSIVE_DATA_EXTRACTION_DOCUMENTATION.md  
+  - source: benchmarks/FRUIT_PICKING_PAPER_DOCUMENTATION/docs/COMPREHENSIVE_DATA_EXTRACTION_DOCUMENTATION.md
+- CORE_FIGURES_DESIGN.md  
+  - source: paper/CORE_FIGURES_DESIGN.md
+- DETAILED_PLOTTING_GUIDE.md  
+  - source: paper/figures/DETAILED_PLOTTING_GUIDE.md
+- FIGURE_AUDIT_REPORT.md  
+  - source: paper/FIGURE_AUDIT_REPORT.md
+- FIGURE_DATA_SPECS.md  
+  - source: paper/FIGURE_DATA_SPECS.md
+- FIGURE_INVENTORY.md  
+  - source: paper/figures/FIGURE_INVENTORY.md
+- FIGURE_SPECIFICATIONS.md  
+  - source: paper/figures/FIGURE_SPECIFICATIONS.md
+- MASTER_DOCUMENTATION_INDEX.md  
+  - source: benchmarks/FRUIT_PICKING_PAPER_DOCUMENTATION/MASTER_DOCUMENTATION_INDEX.md
+- MATLAB_FIGURES_AND_PAPER_FINAL.md  
+  - source: MATLAB_FIGURES_AND_PAPER_FINAL.md
+- Optimized_Paper_Framework.md  
+  - source: references/Optimized_Paper_Framework.md
+- PAPER_FIGURES_STRATEGY.md  
+  - source: doc/PAPER_FIGURES_STRATEGY.md
+- PAPER_STATUS_FINAL.md  
+  - source: doc/PAPER_STATUS_FINAL.md
+- PAPER_WRITING_ROADMAP.md  
+  - source: doc/PAPER_WRITING_ROADMAP.md
+- PLOTTING_METHODS_COMPARISON.md  
+  - source: paper/figures/PLOTTING_METHODS_COMPARISON.md
+- README_ADVANCED_FIGURES.md  
+  - source: paper/figures/README_ADVANCED_FIGURES.md
