@@ -17,21 +17,21 @@ This report provides a comprehensive analysis of the literature dataset supporti
 ## Task Distribution Analysis
 
 ### Task 1: Figure 4 - Vision Meta-Analysis
-- **Supporting Papers**: **74 papers** (verified from prisma_data.csv)
+- **Supporting Papers**: **46 papers** (verified from tex Table 4: N=46 Studies, 2015-2025)
 - **Focus**: Visual perception algorithms (YOLO, R-CNN, Hybrid, Traditional)
 - **Key Performance Metrics**: 84.8%-93.1% accuracy, 49-393ms processing time
-- **Algorithm Distribution**: YOLO(35), R-CNN(18), Hybrid(12), Traditional(9)
+- **Algorithm Distribution**: Fast High-Accuracy(9), Fast Moderate(3), Slow High-Accuracy(13), Slow Moderate(21)
 - **Temporal Coverage**: 2015-2024 with strong YOLO surge post-2019
 
 ### Task 2: Figure 9 - Robotics Meta-Analysis  
-- **Supporting Papers**: **77 papers** (verified from prisma_data.csv)
+- **Supporting Papers**: **50 papers** (verified from tex Table 7: N=50 Studies, 2014-2024)
 - **Focus**: Motion control, path planning, robotic manipulation
 - **Key Performance Metrics**: 63%-96.8% success rates, 29ms-26s cycle times
 - **Method Distribution**: Deep RL(25), Geometric(28), Vision-guided(15), Hybrid(9)
 - **Critical Breakthrough**: 2018-2019 Deep RL revolution (75%→90% success rate)
 
 ### Task 3: Figure 10 - Critical Analysis
-- **Supporting Papers**: **24 papers** (verified from prisma_data.csv)
+- **Supporting Papers**: **20 papers** (verified from tex Table 10: N=20 Studies, 2014-2024)
 - **Focus**: Challenges, limitations, research-reality gaps, TRL assessment
 - **Severity Distribution**: Critical(8), High(12), Medium(4)
 - **TRL Analysis**: Computer Vision(3→8), Motion Planning(2→7), AI/ML Integration(1→8)

@@ -1,11 +1,11 @@
 # Figure 4: Vision Meta-Analysis Supporting Data
 **Task**: Visual Algorithm Performance Meta-Analysis (2015-2024)  
 **Label**: `fig:meta_analysis_ieee`  
-**Supporting Papers**: **74 papers** verified from prisma_data.csv + tex cross-reference
+**Supporting Papers**: **46 papers** verified from tex Table 4 (N=46 Studies, 2015-2025)
 
 ## Figure Design Overview
 **Subplots**: 4 panels (a, b, c, d) - **High-order multi-sub-figure display**
-- **(a) Algorithm Family Performance Distribution**: Statistical comparison of YOLO(35) vs R-CNN(18) vs Hybrid(12) vs Traditional(9)
+- **(a) Algorithm Family Performance Distribution**: Performance category comparison: Fast High-Accuracy(9) vs Fast Moderate(3) vs Slow High-Accuracy(13) vs Slow Moderate(21)
 - **(b) Recent Model Achievements & Temporal Evolution**: 2015-2024 breakthrough timeline with performance metrics  
 - **(c) Real-time Processing Capability Analysis**: Speed-accuracy optimization frontier
 - **(d) Environmental Robustness Comparison**: Multi-environment validation (greenhouse/orchard/field)
