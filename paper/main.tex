@@ -397,6 +397,8 @@ We compare four deep learning architectures:
 
 \subsection{CDAE Protocol Results: Cross-Domain Adaptation Excellence}
 
+\textbf{Cause→Effect: Why CDAE and what it reveals.} \emph{Cause:} Real deployments face subject and environment shifts; training on one cohort or room often degrades in another. \emph{Design:} CDAE isolates these axes via LOSO (subject shift) and LORO (environment shift), holding all else constant. \emph{Effect:} If an architecture truly learns domain-agnostic features (not shortcuts), its LOSO and LORO scores converge and remain stable across seeds. This is precisely what Figure~\ref{fig:cross_domain} shows for the Enhanced model.
+
 The \gls{cdae} protocol evaluation reveals exceptional cross-domain consistency in the Enhanced model architecture. Figure~\ref{fig:cross_domain} presents comprehensive results across both \gls{loso} and \gls{loro} evaluation schemes, demonstrating the Enhanced model's unprecedented domain-agnostic performance (83.0±0.1\% macro F1) with remarkable stability ($\text{CV}<0.2\%$).
 
 \begin{figure}[ht]
@@ -429,6 +431,8 @@ The comprehensive analysis across all seven visualization panels validates that 
 
 \subsection{STEA Protocol Results: Sim2Real Transfer Efficiency Breakthrough}
 
+\textbf{Cause→Effect: Why label efficiency matters.} \emph{Cause:} Labeled CSI is expensive; we must trade labels for simulation. \emph{Design:} STEA sweeps label ratios and transfer methods (zero-shot, linear probe, fine-tune, calibration) to attribute gains to the mechanism, not luck. \emph{Effect:} The S-shaped curve in Figure~\ref{fig:label_efficiency} emerges: pretraining lifts the cold-start floor (1\%), fine-tuning unlocks rapid gains (5\%), and beyond 20\% labels the curve flattens, proving diminishing returns and a practical budget.
+
 The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough in Sim2Real transfer efficiency. Figure~\ref{fig:label_efficiency} presents the complete label efficiency characterization, revealing that the Enhanced model achieves 82.1±0.3\% macro F1 performance using only 20\% labeled real data. This represents merely a 1.2\% performance gap compared to full supervision (83.3\%) while reducing labeling costs by 80\%.
 
 \begin{figure}[ht]
@@ -445,6 +449,8 @@ The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough
 \textbf{Cost-Benefit Analysis:} The 20\% label efficiency represents an 80\% reduction in data collection costs while maintaining 98.6\% of full-supervision performance (82.1\% vs 83.3\%). This breakthrough enables practical deployment in resource-constrained scenarios where extensive data collection is prohibitive.
 
 \subsection{Model Performance Comparison}
+
+\textbf{Cause→Effect synthesis.} \emph{Cause:} Integrating channel reweighting (SE) and temporal attention should improve robustness under shifts and noise by suppressing spurious channels and focusing on informative segments. \emph{Effect:} Enhanced reaches identical LOSO/LORO and high label efficiency, while Conformer-lite oscillates across protocols (Table~\ref{tab:model_performance}). This aligns with D5/D6 stress and stability readings.
 
 \begin{table}[ht]
 \centering
@@ -512,6 +518,8 @@ Conformer-lite & 99.2\% \pm 0.2 & 0.0015 \pm 0.0006 & -- & -- \\\
 %The Enhanced model demonstrates superior overall performance across all evaluation dimensions. Notably, its exceptional consistency ($\text{CV}<0.2\%$) across both cross-domain protocols indicates robust feature learning that generalizes effectively across subjects and environments. This consistency, combined with the breakthrough label efficiency, positions the Enhanced model as the optimal choice for practical \gls{wifi} \gls{csi} \gls{har} deployment.
 
 \subsection{Trustworthiness Evaluation}
+
+\textbf{Cause→Effect calibration.} \emph{Cause:} Hard regimes induce overconfidence; without calibration, the same macro F1 can mask unsafe probabilities. \emph{Design:} We report ECE, Brier, and NLL and require consistency with accuracy. \emph{Effect:} Enhanced sustains low ECE with competitive Brier, indicating that probability mass tracks correctness, which is essential for downstream decision thresholds in healthcare/home automation.
 
 \subsubsection{Calibration Analysis}
 
