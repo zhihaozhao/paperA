@@ -190,7 +190,7 @@ def write_latex_table(d5: Dict[str, Dict[str, List[float]]], d6: Dict[str, Dict[
     lines.append("% Auto-generated D5/D6 summary table")
     lines.append("\\begin{table}[t]")
     lines.append("\\centering")
-    lines.append("\\caption{D5/D6 Experimental Results (Macro F1 \\% and Brier Score, mean\\$\\pm\\$std)}")
+    lines.append("\\caption{D5/D6 Experimental Results (Macro F1 \\% and Brier Score, mean ± std)}")
     lines.append("\\label{tab:d5d6}")
     lines.append("\\begin{tabular}{@{}lcccc@{}}")
     lines.append("\\toprule")
