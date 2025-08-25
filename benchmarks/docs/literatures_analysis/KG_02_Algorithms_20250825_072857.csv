@@ -1,0 +1,8 @@
+id,type,name,category,usage_count
+ALGORITHM_0001_Faster_RCNN,Algorithm,Faster_RCNN,Deep_Learning,1
+ALGORITHM_0002_Traditional_CV,Algorithm,Traditional_CV,Classical_Computer_Vision,1
+ALGORITHM_0003_Traditional_CV,Algorithm,Traditional_CV,Classical_Computer_Vision,1
+ALGORITHM_0004_Mask_Rcnn,Algorithm,Mask_Rcnn,Other,1
+ALGORITHM_0005_ResNet,Algorithm,ResNet,Deep_Learning,1
+ALGORITHM_0006_ResNet,Algorithm,ResNet,Deep_Learning,1
+ALGORITHM_0007_Traditional_CV,Algorithm,Traditional_CV,Classical_Computer_Vision,1
