@@ -1,0 +1,477 @@
+[
+  {
+    "title": "Harvesting Robots for High-value Crops: State-of-the-art Review and Challenges Ahead",
+    "year": 2014.0,
+    "authors": "Bac, CW; van Henten, EJ; Hemming, J; Edan, Y",
+    "citation_key": "@article{bac2014harvesting,\n  title={Harvesting robots for high-value crops: State-of-the-art review and challenges ahead},\n  author={Bac, C Wouter and Van Henten, Eldert J and Hemming, Jochen and Edan, Yael},\n  journal={Journal of field robotics},\n  volume={31},\n  number={6},\n  pages={888--911},\n  year={2014},\n  publisher={Wiley Online Library}\n}\n",
+    "algorithms": [],
+    "environment": "Field/Orchard",
+    "fruit_types": "citrus, kiwi",
+    "processing_time_ms": 33000.0
+  },
+  {
+    "title": "Design, integration, and field evaluation of a robotic apple harvester",
+    "year": 2017.0,
+    "authors": "Silwal, A; Davidson, JR; Karkee, M; Mo, CK; Zhang, Q; Lewis, K",
+    "citation_key": "@article{silwal2017design,\n  title={Design, integration, and field evaluation of a robotic apple harvester},\n  author={Silwal, Abhisesh and Davidson, Joseph R and Karkee, Manoj and Mo, Changki and Zhang, Qin and Lewis, Karen},\n  journal={Journal of Field Robotics},\n  volume={34},\n  number={6},\n  pages={1140--1159},\n  year={2017},\n  publisher={Wiley Online Library}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "apple, cherry",
+    "processing_time_ms": 1.5
+  },
+  {
+    "title": "Development of a sweet pepper harvesting robot",
+    "year": 2020.0,
+    "authors": "Arad, B; Balendonck, J; Barth, R; Ben-Shahar, O; Edan, Y; Hellstr?m, T; Hemming, J; Kurtser, P; Ringdahl, O; Tielen, T; van Tuijl, B",
+    "citation_key": "@article{arad2020development,\n  title={Development of a sweet pepper harvesting robot},\n  author={Arad, Boaz and Balendonck, Jos and Barth, Ruud and Ben-Shahar, Ohad and Edan, Yael and Hellstr{\\\"o}m, Thomas and Hemming, Jochen and Kurtser, Polina and Ringdahl, Ola and Tielen, Toon and others},\n  journal={Journal of Field Robotics},\n  volume={37},\n  number={6},\n  pages={1027--1039},\n  year={2020},\n  publisher={Wiley Online Library}\n}",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "pepper",
+    "processing_time_ms": 24.0
+  },
+  {
+    "title": "An autonomous strawberry-harvesting robot: Design, development, integration, and field evaluation",
+    "year": 2020.0,
+    "authors": "Xiong, Y; Ge, YY; Grimstad, L; From, PJ",
+    "citation_key": "@article{xiong2020autonomous,\n  title={An autonomous strawberry-harvesting robot: Design, development, integration, and field evaluation},\n  author={Xiong, Ya and Ge, Yuanyue and Grimstad, Lars and From, P{\\aa}l J},\n  journal={Journal of Field Robotics},\n  volume={37},\n  number={2},\n  pages={202--224},\n  year={2020},\n  publisher={Wiley Online Library}\n}",
+    "algorithms": [
+      "Faster R-CNN"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "strawberry",
+    "processing_time_ms": 6.1
+  },
+  {
+    "title": "Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms",
+    "year": 2019.0,
+    "authors": "Williams, HAM; Jones, MH; Nejati, M; Seabright, MJ; Bell, J; Penhall, ND; Barnett, JJ; Duke, MD; Scarfe, AJ; Ahn, HS; Lim, J; MacDonald, BA",
+    "citation_key": "@article{williams2019robotic,\n  title={Robotic kiwifruit harvesting using machine vision, convolutional neural networks, and robotic arms},\n  author={Williams, Henry AM and Jones, Mark H and Nejati, Mahla and Seabright, Matthew J and Bell, Jamie and Penhall, Nicky D and Barnett, Josh J and Duke, Mike D and Scarfe, Alistair J and Ahn, Ho Seok and others},\n  journal={biosystems engineering},\n  volume={181},\n  pages={140--156},\n  year={2019},\n  publisher={Elsevier}\n}",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "kiwi",
+    "processing_time_ms": 5.5
+  },
+  {
+    "title": "Tomato detection based on modified YOLOv3 framework",
+    "year": 2021.0,
+    "authors": "Lawal, MO",
+    "citation_key": "@article{lawal2021tomato,\n  title={Tomato detection based on modified YOLOv3 framework},\n  author={Lawal, Mubashiru Olarewaju},\n  journal={Scientific Reports},\n  volume={11},\n  number={1},\n  pages={1--11},\n  year={2021},\n  publisher={Nature Publishing Group}\n}\n",
+    "algorithms": [
+      "YOLOvyolo",
+      "YOLO",
+      "YOLOv3"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "tomato",
+    "processing_time_ms": 48.0
+  },
+  {
+    "title": "Development and field evaluation of a strawberry harvesting robot with a cable-driven gripper",
+    "year": 2019.0,
+    "authors": "Xiong, Y; Peng, C; Grimstad, L; From, PJ; Isler, V",
+    "citation_key": "@article{xiong2019development,\n  title={Development and field evaluation of a strawberry harvesting robot with a cable-driven gripper},\n  author={Xiong, Ya and Peng, Cheng and Grimstad, Lars and From, P{\\aa}l Johan and Isler, Volkan},\n  journal={Computers and electronics in agriculture},\n  volume={157},\n  pages={392--402},\n  year={2019},\n  publisher={Elsevier}\n}",
+    "algorithms": [
+      "Traditional"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "strawberry",
+    "processing_time_ms": 7500.0
+  },
+  {
+    "title": "Autonomous Sweet Pepper Harvesting for Protected Cropping Systems",
+    "year": 2017.0,
+    "authors": "Lehnert, C; English, A; McCool, C; Tow, AW; Perez, T",
+    "citation_key": "@article{lehnert2017autonomous,\n  title={Autonomous sweet pepper harvesting for protected cropping systems},\n  author={Lehnert, Christopher and English, Andrew and McCool, Christopher and Tow, Adam W and Perez, Tristan},\n  journal={IEEE Robotics and Automation Letters},\n  volume={2},\n  number={2},\n  pages={872--879},\n  year={2017},\n  publisher={IEEE}\n}",
+    "algorithms": [],
+    "environment": "Greenhouse",
+    "fruit_types": "pepper",
+    "success_rate": 46.0
+  },
+  {
+    "title": "Faster R-CNN-based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting",
+    "year": 2020.0,
+    "authors": "Fu, LS; Majeed, Y; Zhang, X; Karkee, M; Zhang, Q",
+    "citation_key": "@article{fu2020faster,\n  title={Faster R--CNN--based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting},\n  author={Fu, Longsheng and Majeed, Yaqoob and Zhang, Xin and Karkee, Manoj and Zhang, Qin},\n  journal={Biosystems Engineering},\n  volume={197},\n  pages={245--256},\n  year={2020},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "VGG",
+      "Traditional",
+      "Faster R-CNN"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "apple",
+    "processing_time_ms": 181.0
+  },
+  {
+    "title": "Using YOLOv3 Algorithm with Pre- and Post-Processing for Apple Detection in Fruit-Harvesting Robot",
+    "year": 2020.0,
+    "authors": "Kuznetsova, A; Maleva, T; Soloviev, V",
+    "citation_key": "@article{kuznetsova2020using,\n  title={Using YOLOv3 algorithm with pre-and post-processing for apple detection in fruit-harvesting robot},\n  author={Kuznetsova, Anna and Maleva, Tatiana and Soloviev, Vladimir},\n  journal={Agronomy},\n  volume={10},\n  number={7},\n  pages={1016},\n  year={2020},\n  publisher={MDPI}\n}\n",
+    "algorithms": [
+      "YOLO",
+      "YOLOv3"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "apple, citrus",
+    "processing_time_ms": 19.0
+  },
+  {
+    "title": "Fruit detection, segmentation and 3D visualisation of environments in apple orchards",
+    "year": 2020.0,
+    "authors": "Kang, HW; Chen, C",
+    "citation_key": "@article{kang2020fruit,\n  title={Fruit detection, segmentation and 3D visualisation of environments in apple orchards},\n  author={Kang, Hanwen and Chen, Chao},\n  journal={Computers and Electronics in Agriculture},\n  volume={171},\n  pages={105302},\n  year={2020},\n  publisher={Elsevier}\n}",
+    "algorithms": [
+      "RESNET"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "apple, pear",
+    "processing_time_ms": 55.0
+  },
+  {
+    "title": "Detection of red and bicoloured apples on tree with an RGB-D camera",
+    "year": 2016.0,
+    "authors": "Nguyen, TT; Vandevoorde, K; Wouters, N; Kayacan, E; De Baerdemaeker, JG; Saeys, W",
+    "citation_key": "@article{nguyen2016detection,\n  title={Detection of red and bicoloured apples on tree with an RGB-D camera},\n  author={Nguyen, Tien Thanh and Vandevoorde, Koenraad and Wouters, Niels and Kayacan, Erdal and De Baerdemaeker, Josse G and Saeys, Wouter},\n  journal={Biosystems Engineering},\n  volume={146},\n  pages={33--44},\n  year={2016},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "apple",
+    "processing_time_ms": 1.0
+  },
+  {
+    "title": "Guava Detection and Pose Estimation Using a Low-Cost RGB-D Sensor in the Field",
+    "year": 2019.0,
+    "authors": "Lin, GC; Tang, YC; Zou, XJ; Xiong, JT; Li, JH",
+    "citation_key": "@article{lin2019guava,\n  title={Guava detection and pose estimation using a low-cost RGB-D sensor in the field},\n  author={Lin, Guichao and Tang, Yunchao and Zou, Xiangjun and Xiong, Juntao and Li, Jinhui},\n  journal={Sensors},\n  volume={19},\n  number={2},\n  pages={428},\n  year={2019},\n  publisher={MDPI}\n}",
+    "algorithms": [
+      "Traditional"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "citrus",
+    "processing_time_ms": 565.0
+  },
+  {
+    "title": "Detection of Fruit-Bearing Branches and Localization of Litchi Clusters for Vision-Based Harvesting Robots",
+    "year": 2020.0,
+    "authors": "Li, JH; Tang, YC; Zou, XJ; Lin, GC; Wang, HJ",
+    "citation_key": "@article{li2020detection,\n  title={Detection of fruit-bearing branches and localization of litchi clusters for vision-based harvesting robots},\n  author={Li, Jinhui and Tang, Yunchao and Zou, Xiangjun and Lin, Guichao and Wang, Hongjun},\n  journal={IEEE Access},\n  volume={8},\n  pages={117746--117758},\n  year={2020},\n  publisher={IEEE}\n}\n",
+    "algorithms": [
+      "Traditional"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "General",
+    "processing_time_ms": 464.0
+  },
+  {
+    "title": "Design and test of robotic harvesting system for cherry tomato",
+    "year": 2018.0,
+    "authors": "Feng, QC; Zou, W; Fan, PF; Zhang, CF; Wang, X",
+    "citation_key": "@article{mohamed2021smart,\n  title={Smart farming for improving agricultural management},\n  author={Mohamed, Elsayed Said and Belal, AA and Abd-Elmabod, Sameh Kotb and El-Shirbeny, Mohammed A and Gad, A and Zahran, Mohamed B},\n  journal={The Egyptian Journal of Remote Sensing and Space Science},\n  volume={24},\n  number={3},\n  pages={971--981},\n  year={2021},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "tomato, cherry",
+    "processing_time_ms": 8000.0
+  },
+  {
+    "title": "Date Fruit Classification for Robotic Harvesting in a Natural Environment Using Deep Learning",
+    "year": 2019.0,
+    "authors": "Altaheri, H; Alsulaiman, M; Muhammad, G",
+    "citation_key": "@article{altaheri2019date,\n  title={Date fruit classification for robotic harvesting in a natural environment using deep learning},\n  author={Altaheri, Hamdi and Alsulaiman, Mansour and Muhammad, Ghulam},\n  journal={IEEE Access},\n  volume={7},\n  pages={117115--117133},\n  year={2019},\n  publisher={IEEE}\n}\n",
+    "algorithms": [],
+    "environment": "Field/Orchard",
+    "fruit_types": "General",
+    "processing_time_ms": 35.9
+  },
+  {
+    "title": "Vision-based extraction of spatial information in grape clusters for harvesting robots",
+    "year": 2016.0,
+    "authors": "Luo, LF; Tang, YC; Zou, XJ; Ye, M; Feng, WX; Li, GQ",
+    "citation_key": "@article{luo2016vision,\n  title={Vision-based extraction of spatial information in grape clusters for harvesting robots},\n  author={Luo, Lufeng and Tang, Yunchao and Zou, Xiangjun and Ye, Min and Feng, Wenxian and Li, Guoqing},\n  journal={Biosystems Engineering},\n  volume={151},\n  pages={90--104},\n  year={2016},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [],
+    "environment": "Field/Orchard",
+    "fruit_types": "grape",
+    "processing_time_ms": 700.0
+  },
+  {
+    "title": "Kiwifruit detection in field images using Faster R-CNN with ZFNet",
+    "year": 2018.0,
+    "authors": "Fu, LS; Feng, YL; Majeed, Y; Zhang, X; Zhang, J; Karkee, M; Zhang, Q",
+    "citation_key": "@article{fu2018kiwifruit,\n  title={Kiwifruit detection in field images using Faster R-CNN with ZFNet},\n  author={Fu, Longsheng and Feng, Yali and Majeed, Yaqoob and Zhang, Xin and Zhang, Jing and Karkee, Manoj and Zhang, Qin},\n  journal={IFAC-PapersOnLine},\n  volume={51},\n  number={17},\n  pages={45--50},\n  year={2018},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "Faster R-CNN"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "kiwi",
+    "processing_time_ms": 5.0
+  },
+  {
+    "title": "Real-Time Fruit Recognition and Grasping Estimation for Robotic Apple Harvesting",
+    "year": 2020.0,
+    "authors": "Kang, HW; Zhou, HY; Wang, X; Chen, C",
+    "citation_key": "@article{kang2020real,\n  title={Real-time fruit recognition and grasping estimation for robotic apple harvesting},\n  author={Kang, Hanwen and Zhou, Hongyu and Wang, Xing and Chen, Chao},\n  journal={Sensors},\n  volume={20},\n  number={19},\n  pages={5670},\n  year={2020},\n  publisher={MDPI}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "apple",
+    "processing_time_ms": 6.5
+  },
+  {
+    "title": "Development of a tomato harvesting robot used in greenhouse",
+    "year": 2017.0,
+    "authors": "Wang, LL; Zhao, B; Fan, JW; Hu, XA; Wei, S; Li, YS; Zhou, QB; Wei, CF",
+    "citation_key": "@article{lili2017development,\n  title={Development of a tomato harvesting robot used in greenhouse},\n  author={Lili, Wang and Bo, Zhao and Jinwei, Fan and Xiaoan, Hu and Shu, Wei and Yashuo, Li and Zhou, Qiangbing and Chongfeng, Wei},\n  journal={International Journal of Agricultural and Biological Engineering},\n  volume={10},\n  number={4},\n  pages={140--149},\n  year={2017}\n}\n",
+    "algorithms": [],
+    "environment": "Greenhouse",
+    "fruit_types": "tomato",
+    "processing_time_ms": 15000.0
+  },
+  {
+    "title": "Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision",
+    "year": 2019.0,
+    "authors": "Ling, X; Zhao, YS; Gong, L; Liu, CL; Wang, T",
+    "citation_key": "@article{ling2019dual,\n  title={Dual-arm cooperation and implementing for robotic harvesting tomato using binocular vision},\n  author={Ling, Xiao and Zhao, Yuanshen and Gong, Liang and Liu, Chengliang and Wang, Tao},\n  journal={Robotics and Autonomous Systems},\n  volume={114},\n  pages={134--143},\n  year={2019},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "tomato",
+    "processing_time_ms": 30000.0
+  },
+  {
+    "title": "Collision-free path planning for a guava-harvesting robot based on recurrent deep reinforcement learning",
+    "year": 2021.0,
+    "authors": "Lin, GC; Zhu, LX; Li, JH; Zou, XJ; Tang, YC",
+    "citation_key": "@article{lin2021collision,\n  title={Collision-free path planning for a guava-harvesting robot based on recurrent deep reinforcement learning},\n  author={Lin, Guichao and Zhu, Lixue and Li, Jinhui and Zou, Xiangjun and Tang, Yunchao},\n  journal={Computers and Electronics in Agriculture},\n  volume={188},\n  pages={106350},\n  year={2021},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "DDPG"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "General",
+    "processing_time_ms": 29.0
+  },
+  {
+    "title": "An automated fruit harvesting robot by using deep learning",
+    "year": 2019.0,
+    "authors": "Onishi, Y; Yoshida, T; Kurita, H; Fukao, T; Arihara, H; Iwai, A",
+    "citation_key": "@article{onishi2019automated,\n  title={An automated fruit harvesting robot by using deep learning},\n  author={Onishi, Yuki and Yoshida, Takeshi and Kurita, Hiroki and Fukao, Takanori and Arihara, Hiromu and Iwai, Ayako},\n  journal={Robomech Journal},\n  volume={6},\n  number={1},\n  pages={1--8},\n  year={2019},\n  publisher={Springer}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "apple",
+    "processing_time_ms": 16000.0
+  },
+  {
+    "title": "Robotic Aubergine Harvesting Using Dual-Arm Manipulation",
+    "year": 2020.0,
+    "authors": "Sep\u00a8\u00b2lveda, D; Fern\u00a8\u00a2ndez, R; Navas, E; Armada, M; Gonz\u00a8\u00a2lez-De-Santos, P",
+    "citation_key": "@article{sepulveda2020robotic,\n  title={Robotic aubergine harvesting using dual-arm manipulation},\n  author={Sep{\\'u}Lveda, Delia and Fern{\\'a}ndez, Roemi and Navas, Eduardo and Armada, Manuel and Gonz{\\'a}lez-De-Santos, Pablo},\n  journal={IEEE Access},\n  volume={8},\n  pages={121889--121904},\n  year={2020},\n  publisher={IEEE}\n}\n",
+    "algorithms": [
+      "Traditional",
+      "PPO"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "General",
+    "processing_time_ms": 26.0
+  },
+  {
+    "title": "Deep learning-based apple detection using a suppression mask R-CNN",
+    "year": 2021.0,
+    "authors": "Chu, PY; Li, ZJ; Lammers, K; Lu, RF; Liu, XM",
+    "citation_key": "@article{chu2021deep,\n  title={Deep learning-based apple detection using a suppression mask R-CNN},\n  author={Chu, Pengyu and Li, Zhaojian and Lammers, Kyle and Lu, Renfu and Liu, Xiaoming},\n  journal={Pattern Recognition Letters},\n  volume={147},\n  pages={206--211},\n  year={2021},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "Mask R-CNN"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "apple",
+    "processing_time_ms": 0.25
+  },
+  {
+    "title": "Evaluating the Single-Shot MultiBox Detector and YOLO Deep Learning Models for the Detection of Tomatoes in a Greenhouse",
+    "year": 2021.0,
+    "authors": "Magalhaes, SA; Castro, L; Moreira, G; dos Santos, FN; Cunha, M; Dias, J; Moreira, AP",
+    "citation_key": "@article{magalhaes2021evaluating,\n  title={Evaluating the single-shot multibox detector and YOLO deep learning models for the detection of tomatoes in a greenhouse},\n  author={Magalh{\\~a}es, Sandro Augusto and Castro, Lu{\\'\\i}s and Moreira, Germano and Dos Santos, Filipe Neves and Cunha, M{\\'a}rio and Dias, Jorge and Moreira, Ant{\\'o}nio Paulo},\n  journal={Sensors},\n  volume={21},\n  number={10},\n  pages={3569},\n  year={2021},\n  publisher={MDPI}\n}\n",
+    "algorithms": [
+      "MOBILENET",
+      "RESNET",
+      "YOLO",
+      "YOLOvyolo",
+      "YOLOv4",
+      "INCEPTION",
+      "SSD"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "tomato",
+    "processing_time_ms": 16.44
+  },
+  {
+    "title": "Development of a Robot for Harvesting Strawberries",
+    "year": 2018.0,
+    "authors": "De Preter, A; Anthonis, J; De Baerdemaeker, J",
+    "citation_key": "@article{de2018development,\n  title={Development of a robot for harvesting strawberries},\n  author={De Preter, Andreas and Anthonis, Jan and De Baerdemaeker, Josse},\n  journal={IFAC-PapersOnLine},\n  volume={51},\n  number={17},\n  pages={14--19},\n  year={2018},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "strawberry, pear",
+    "processing_time_ms": 4.0
+  },
+  {
+    "title": "DESIGN AND FIELD EVALUATION OF A ROBOTIC APPLE HARVESTING SYSTEM WITH A 3D-PRINTED SOFT-ROBOTIC END-EFFECTOR",
+    "year": 2019.0,
+    "authors": "Hohimer, CJ; Wang, H; Bhusal, S; Miller, J; Mo, C; Karkee, M",
+    "citation_key": "@article{hohimer2019design,\n  title={Design and field evaluation of a robotic apple harvesting system with a 3D-printed soft-robotic end-effector},\n  author={Hohimer, Cameron J and Wang, Heng and Bhusal, Santosh and Miller, John and Mo, Changki and Karkee, Manoj},\n  journal={Transactions of the ASABE},\n  volume={62},\n  number={2},\n  pages={405--414},\n  year={2019},\n  publisher={American Society of Agricultural and Biological Engineers}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "apple",
+    "processing_time_ms": 7.3
+  },
+  {
+    "title": "Improvements to and large-scale evaluation of a robotic kiwifruit harvester",
+    "year": 2020.0,
+    "authors": "Williams, H; Ting, C; Nejati, M; Jones, MH; Penhall, N; Lim, J; Seabright, M; Bell, J; Ahn, HS; Scarfe, A; Duke, M; MacDonald, B",
+    "citation_key": "@article{williams2020improvements,\n  title={Improvements to and large-scale evaluation of a robotic kiwifruit harvester},\n  author={Williams, Henry and Ting, Canaan and Nejati, Mahla and Jones, Mark Hedley and Penhall, Nicky and Lim, JongYoon and Seabright, Matthew and Bell, Jamie and Ahn, Ho Seok and Scarfe, Alistair and others},\n  journal={Journal of Field Robotics},\n  volume={37},\n  number={2},\n  pages={187--201},\n  year={2020},\n  publisher={Wiley Online Library}\n}\n",
+    "algorithms": [],
+    "environment": "Laboratory",
+    "fruit_types": "kiwi",
+    "processing_time_ms": 5.5
+  },
+  {
+    "title": "Fruit detection and positioning technology for a Camellia oleifera C. Abel orchard based on improved YOLOv4-tiny model and binocular stereo vision",
+    "year": 2023.0,
+    "authors": NaN,
+    "citation_key": "@article{tang2023fruit,\n  title={Fruit detection and positioning technology for a Camellia oleifera C. Abel orchard based on improved YOLOv4-tiny model and binocular stereo vision},\n  author={Tang, Yunchao and Zhou, Hao and Wang, Hongjun and Zhang, Yunqi},\n  journal={Expert systems with applications},\n  volume={211},\n  pages={118573},\n  year={2023},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "YOLO",
+      "YOLOvyolo",
+      "YOLOv4",
+      "Traditional",
+      "YOLOv5",
+      "YOLOv3"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "General",
+    "processing_time_ms": 31.0
+  },
+  {
+    "title": "Faster R\u00a8CCNN\u00a8Cbased apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting",
+    "year": 2020.0,
+    "authors": NaN,
+    "citation_key": "@article{fu2020faster,\n  title={Faster R--CNN--based apple detection in dense-foliage fruiting-wall trees using RGB and depth features for robotic harvesting},\n  author={Fu, Longsheng and Majeed, Yaqoob and Zhang, Xin and Karkee, Manoj and Zhang, Qin},\n  journal={Biosystems Engineering},\n  volume={197},\n  pages={245--256},\n  year={2020},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "VGG",
+      "Traditional"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "apple",
+    "processing_time_ms": 181.0
+  },
+  {
+    "title": "Fast implementation of real-time fruit detection in apple orchards using deep learning",
+    "year": 2020.0,
+    "authors": NaN,
+    "citation_key": "@article{kang2020fast,\n  title={Fast implementation of real-time fruit detection in apple orchards using deep learning},\n  author={Kang, Hanwen and Chen, Chao},\n  journal={Computers and Electronics in Agriculture},\n  volume={168},\n  pages={105108},\n  year={2020},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "Traditional"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "apple",
+    "processing_time_ms": 28.0
+  },
+  {
+    "title": "Multi-class fruit-on-plant detection for apple in SNAP system using Faster R-CNN",
+    "year": 2020.0,
+    "authors": NaN,
+    "citation_key": "@article{gao2020multi,\n  title={Multi-class fruit-on-plant detection for apple in SNAP system using Faster R-CNN},\n  author={Gao, Fangfang and Fu, Longsheng and Zhang, Xin and Majeed, Yaqoob and Li, Rui and Karkee, Manoj and Zhang, Qin},\n  journal={Computers and Electronics in Agriculture},\n  volume={176},\n  pages={105634},\n  year={2020},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "Faster R-CNN"
+    ],
+    "environment": "Unknown",
+    "fruit_types": "apple",
+    "processing_time_ms": 241.0
+  },
+  {
+    "title": "Automatic Bunch Detection in White Grape Varieties Using YOLOv3, YOLOv4, and YOLOv5 Deep Learning Algorithms",
+    "year": 2022.0,
+    "authors": NaN,
+    "citation_key": "@article{sozzi2022automatic,\n  title={Automatic bunch detection in white grape varieties using YOLOv3, YOLOv4, and YOLOv5 deep learning algorithms},\n  author={Sozzi, Marco and Cantalamessa, Silvia and Cogato, Alessia and Kayad, Ahmed and Marinello, Francesco},\n  journal={Agronomy},\n  volume={12},\n  number={2},\n  pages={319},\n  year={2022},\n  publisher={MDPI}\n}\n",
+    "algorithms": [
+      "YOLOvyou only look once",
+      "YOLOvyolo",
+      "YOLOv4",
+      "YOLOv5",
+      "YOLOv3"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "grape",
+    "processing_time_ms": 5.0
+  },
+  {
+    "title": "Fruit detection and segmentation for apple harvesting using visual sensor in orchards",
+    "year": 2019.0,
+    "authors": NaN,
+    "citation_key": "@article{kang2019fruit,\n  title={Fruit detection and segmentation for apple harvesting using visual sensor in orchards},\n  author={Kang, Hanwen and Chen, Chao},\n  journal={Sensors},\n  volume={19},\n  number={20},\n  pages={4599},\n  year={2019},\n  publisher={MDPI}\n}\n",
+    "algorithms": [
+      "RESNET"
+    ],
+    "environment": "Field/Orchard",
+    "fruit_types": "apple",
+    "processing_time_ms": 32.0
+  },
+  {
+    "title": "Fast Recognition Method for Tomatoes under Complex Environments Based on Improved YOLO; [\u00bb\u00f9\u00d3\u00da\u00b8\u00c4\u00bd\u00f8\u00d0\u00cdYOLO\u00b5\u00c4\u00b8\u00b4\u00d4\u00d3\u00bb\u00b7\u00be\u00b3\u00cf\u00c2\u00b7\u00ac\u00c7\u00d1\u00b9\u00fb\u00ca\u00b5\u00bf\u00ec\u00cb\u00d9\u00ca\u00b6\u00b1\u00f0\u00b7\u00bd\u00b7\u00a8]",
+    "year": 2020.0,
+    "authors": NaN,
+    "citation_key": "@article{\u00c1\u00f5\u00b7\u00bc2020\u00bb\u00f9\u00d3\u00da\u00b8\u00c4\u00bd\u00f8\u00d0\u00cd,\n  title={\u00bb\u00f9\u00d3\u00da\u00b8\u00c4\u00bd\u00f8\u00d0\u00cd YOLO \u00b5\u00c4\u00b8\u00b4\u00d4\u00d3\u00bb\u00b7\u00be\u00b3\u00cf\u00c2\u00b7\u00ac\u00c7\u00d1\u00b9\u00fb\u00ca\u00b5\u00bf\u00ec\u00cb\u00d9\u00ca\u00b6\u00b1\u00f0\u00b7\u00bd\u00b7\u00a8},\n  author={\u00c1\u00f5\u00b7\u00bc and \u00c1\u00f5\u00d3\u00f1\u00c0\u00a4 and \u00c1\u00d6\u00c9\u00ad and \u00b9\u00f9\u00ce\u00c4\u00d6\u00d2 and \u00d0\u00ec\u00b7\u00b2 and \u00d5\u00c5\u00b0\u00d7},\n  journal={\u00c5\u00a9\u00d2\u00b5\u00bb\u00fa\u00d0\u00b5\u00d1\u00a7\u00b1\u00a8},\n  volume={51},\n  number={6},\n  pages={229--237},\n  year={2020}\n}\n",
+    "algorithms": [
+      "YOLOvyolo",
+      "YOLOv2",
+      "YOLO",
+      "YOLOv3"
+    ],
+    "environment": "Greenhouse",
+    "fruit_types": "tomato",
+    "processing_time_ms": 7.719
+  },
+  {
+    "title": "Design and simulation of an integrated end-effector for picking kiwifruit by robot",
+    "year": 2020.0,
+    "authors": NaN,
+    "citation_key": "@article{mu2020design,\n  title={Design and simulation of an integrated end-effector for picking kiwifruit by robot},\n  author={Mu, Longtao and Cui, Gongpei and Liu, Yadong and Cui, Yongjie and Fu, Longsheng and Gejima, Yoshinori},\n  journal={Information Processing in Agriculture},\n  volume={7},\n  number={1},\n  pages={58--71},\n  year={2020},\n  publisher={Elsevier}\n}\n",
+    "algorithms": [
+      "Traditional"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "kiwi",
+    "processing_time_ms": 5.0
+  },
+  {
+    "title": "Image recognition method of multi-cluster kiwifruit in field based on convolutional neural networks",
+    "year": 2018.0,
+    "authors": NaN,
+    "citation_key": "@article{fu2018image,\n  title={Image recognition method of multi-cluster kiwifruit in field based on convolutional neural networks},\n  author={Fu, Longsheng and Feng, Yali and Elkamil, Tola and Liu, Zhihao and Li, Rui and Cui, Yongjie},\n  journal={Transactions of the Chinese Society of Agricultural Engineering},\n  volume={34},\n  number={2},\n  pages={205--211},\n  year={2018},\n  publisher={Editorial Office of Transactions of the Chinese Society of Agricultural~\u00a1\u00ad}\n}\n",
+    "algorithms": [
+      "R-CNN",
+      "PPO"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "kiwi",
+    "processing_time_ms": 2.0
+  },
+  {
+    "title": "General improved SSD model for picking object recognition of multiple fruits in natural environment; [\u00d7\u00d4\u00c8\u00bb\u00bb\u00b7\u00be\u00b3\u00cf\u00c2\u00b6\u00e0\u00c0\u00e0\u00cb\u00ae\u00b9\u00fb\u00b2\u00c9\u00d5\u00aa\u00c4\u00bf\u00b1\u00ea\u00ca\u00b6\u00b1\u00f0\u00b5\u00c4\u00cd\u00a8\u00d3\u00c3\u00b8\u00c4\u00bd\u00f8SSD\u00c4\u00a3\u00d0\u00cd]",
+    "year": 2018.0,
+    "authors": NaN,
+    "citation_key": "@article{peng2018general,\n  title={General improved SSD model for picking object recognition of multiple fruits in natural environment.},\n  author={Peng, HongXing and Huang, Bo and Shao, YuanYuan and Li, ZeSen and Zhang, ChaoWu and Chen, Yan and Xiong, JunTao and others},\n  journal={Transactions of the Chinese Society of Agricultural Engineering},\n  volume={34},\n  number={16},\n  pages={155--162},\n  year={2018},\n  publisher={Chinese Society of Agricultural Engineering}\n}\n",
+    "algorithms": [
+      "SSD",
+      "SAC",
+      "RESNET",
+      "VGG"
+    ],
+    "environment": "Laboratory",
+    "fruit_types": "apple, citrus",
+    "processing_time_ms": 0.14
+  },
+  {
+    "title": "Development and experiment of end-effector for kiwifruit harvesting robot",
+    "year": 2015.0,
+    "authors": NaN,
+    "citation_key": "@article{longsheng2015development,\n  title={Development and experiment of end-effector for kiwifruit harvesting robot},\n  author={Longsheng, Fu and Fanian, Zhang and Yoshinori, Gejima and Zhen, Li and Bin, Wang and Yongjie, Cui},\n  journal={Nongye Jixie Xuebao/transactions of the Chinese Society of Agricultural Machinery},\n  volume={46},\n  number={3},\n  year={2015}\n}\n",
+    "algorithms": [],
+    "environment": "Unknown",
+    "fruit_types": "kiwi",
+    "processing_time_ms": 22.0
+  }
+]

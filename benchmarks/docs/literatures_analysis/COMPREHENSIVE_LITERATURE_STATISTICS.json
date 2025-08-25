@@ -1,0 +1,206 @@
+{
+  "dataset_overview": {
+    "total_papers": 5014,
+    "relevant_papers": 159,
+    "papers_with_performance_data": 40,
+    "time_range": "2014.0-2023.0",
+    "analysis_date": "2025-08-25T02:29:28.842448"
+  },
+  "algorithm_distribution": {
+    "total_algorithms_detected": 21,
+    "algorithm_counts": {
+      "Faster R-CNN": 11,
+      "Traditional": 35,
+      "Mask R-CNN": 3,
+      "RESNET": 11,
+      "INCEPTION": 3,
+      "YOLOvyolo": 10,
+      "YOLO": 10,
+      "YOLOv3": 8,
+      "DENSENET": 4,
+      "PPO": 34,
+      "VGG": 3,
+      "YOLOv4": 5,
+      "R-CNN": 3,
+      "DDPG": 1,
+      "MOBILENET": 4,
+      "SSD": 3,
+      "SAC": 3,
+      "ALEXNET": 1,
+      "YOLOv5": 2,
+      "YOLOvyou only look once": 1,
+      "YOLOv2": 1
+    },
+    "algorithm_families": {
+      "YOLO": {
+        "algorithms": [
+          "YOLOvyolo",
+          "YOLO",
+          "YOLOv3",
+          "YOLOv4",
+          "YOLOv5",
+          "YOLOvyou only look once",
+          "YOLOv2"
+        ],
+        "total_papers": 37
+      },
+      "R-CNN": {
+        "algorithms": [
+          "Faster R-CNN",
+          "Mask R-CNN",
+          "R-CNN"
+        ],
+        "total_papers": 17
+      },
+      "Deep RL": {
+        "algorithms": [
+          "PPO",
+          "DDPG",
+          "SAC"
+        ],
+        "total_papers": 38
+      },
+      "Traditional": {
+        "algorithms": [
+          "Traditional"
+        ],
+        "total_papers": 35
+      },
+      "Other DL": {
+        "algorithms": [
+          "RESNET",
+          "VGG",
+          "MOBILENET",
+          "SSD"
+        ],
+        "total_papers": 21
+      }
+    }
+  },
+  "environment_distribution": {
+    "Laboratory": 67,
+    "Field/Orchard": 58,
+    "Unknown": 25,
+    "Greenhouse": 9
+  },
+  "fruit_distribution": {
+    "General": 51,
+    "apple": 25,
+    "tomato": 13,
+    "pepper": 12,
+    "citrus": 12,
+    "grape": 10,
+    "kiwi": 7,
+    "strawberry": 5,
+    "apple, citrus": 3,
+    "apple, pear": 3
+  },
+  "temporal_trends": {
+    "year_counts": {
+      "2014.0": 8,
+      "2015.0": 10,
+      "2016.0": 22,
+      "2017.0": 14,
+      "2018.0": 14,
+      "2019.0": 25,
+      "2020.0": 44,
+      "2021.0": 18,
+      "2022.0": 2,
+      "2023.0": 2
+    },
+    "yearly_algorithm_trends": {
+      "2016.0": {
+        "Faster R-CNN": 1,
+        "Traditional": 4,
+        "PPO": 2
+      },
+      "2015.0": {
+        "Traditional": 4
+      },
+      "2019.0": {
+        "Mask R-CNN": 1,
+        "RESNET": 2,
+        "Traditional": 5,
+        "PPO": 6,
+        "MOBILENET": 1,
+        "DENSENET": 1,
+        "INCEPTION": 1,
+        "ALEXNET": 1,
+        "Faster R-CNN": 1
+      },
+      "2017.0": {
+        "RESNET": 1,
+        "INCEPTION": 1,
+        "PPO": 2,
+        "SAC": 2,
+        "Traditional": 3
+      },
+      "2020.0": {
+        "Faster R-CNN": 7,
+        "YOLOvyolo": 4,
+        "YOLO": 5,
+        "YOLOv3": 4,
+        "DENSENET": 2,
+        "RESNET": 4,
+        "PPO": 16,
+        "VGG": 2,
+        "Traditional": 10,
+        "R-CNN": 1,
+        "MOBILENET": 2,
+        "Mask R-CNN": 1,
+        "YOLOv2": 1
+      },
+      "2021.0": {
+        "YOLOvyolo": 3,
+        "YOLO": 3,
+        "YOLOv3": 1,
+        "PPO": 2,
+        "DDPG": 1,
+        "Mask R-CNN": 1,
+        "MOBILENET": 1,
+        "RESNET": 3,
+        "YOLOv4": 2,
+        "INCEPTION": 1,
+        "SSD": 2,
+        "Faster R-CNN": 1,
+        "R-CNN": 1,
+        "Traditional": 1
+      },
+      "2023.0": {
+        "DENSENET": 1,
+        "YOLO": 2,
+        "YOLOvyolo": 2,
+        "YOLOv4": 2,
+        "YOLOv3": 2,
+        "Traditional": 1,
+        "YOLOv5": 1
+      },
+      "2018.0": {
+        "Traditional": 4,
+        "PPO": 4,
+        "Faster R-CNN": 1,
+        "R-CNN": 1,
+        "SSD": 1,
+        "SAC": 1,
+        "RESNET": 1,
+        "VGG": 1
+      },
+      "2014.0": {
+        "Traditional": 3,
+        "PPO": 2
+      },
+      "2022.0": {
+        "YOLOvyou only look once": 1,
+        "YOLOvyolo": 1,
+        "YOLOv4": 1,
+        "YOLOv5": 1,
+        "YOLOv3": 1
+      }
+    }
+  },
+  "performance_summary": {
+    "papers_with_accuracy": 0,
+    "papers_with_timing": 39,
+    "papers_with_success_rate": 1
+  }
+}
