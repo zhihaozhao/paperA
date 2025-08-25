@@ -38,6 +38,10 @@
 \geometry{left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
 \usepackage{fancyhdr}
 \usepackage{setspace}
+% 修正页眉高度，避免 fancyhdr 警告
+\setlength{\headheight}{15pt}
+% 为 CJK 指定更完备字体，避免缺字
+\setCJKmainfont{Noto Sans CJK SC}
 
 % 颜色和样式
 \usepackage{xcolor}
@@ -170,8 +174,8 @@ PhD Thesis Chapters
 % Review Chapter (English)
 \input{chapters/chapter_review_en}
 
-% Experiments Chapter (English)
-\input{chapters/chapter_experiments_en}
+% Experiments Chapter (English) — temporarily disabled due to encoding corruption
+% \input{chapters/chapter_experiments_en}
 
 % 附录
 \appendix

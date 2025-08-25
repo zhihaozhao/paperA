@@ -1,0 +1,36 @@
+% 自动生成或手动维护的结果汇总表
+\chapter{实验结果汇总表}
+
+% 示例：总体性能对比
+\begin{table}[h]
+\centering
+\caption{代表性数据集总体性能对比（准确率\%）}
+\label{tab:overall_performance}
+\begin{tabular}{lccc}
+\toprule
+方法 & 数据集A & 数据集B & 数据集C \\
+\midrule
+Baseline-CNN & 90.1 & 86.7 & 84.3 \\
+SE-ResNet & 92.5 & 88.9 & 86.1 \\
+Ours (Physics-Guided) & 94.3 & 91.0 & 89.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 示例：跨域评估（LOSO/LORO）
+\begin{table}[h]
+\centering
+\caption{跨域评估（LOSO/LORO）结果（准确率\%）}
+\label{tab:cross_domain}
+\begin{tabular}{lcc}
+\toprule
+方法 & LOSO & LORO \\
+\midrule
+Baseline-CNN & 78.4 & 73.2 \\
+SE-ResNet & 81.6 & 76.9 \\
+Ours (Physics-Guided) & 85.8 & 81.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 注：以上数值为占位示例，请在最终版中替换为真实结果。
