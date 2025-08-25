@@ -46,6 +46,14 @@
 \usepackage{array, longtable, tabularx}
 %\usepackage{caption}
 
+% 添加TikZ和子图支持包
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{positioning,arrows.meta,calc,patterns}
+\usepgfplotslibrary{statistics}
+
 % cleveref package commented out for compatibility
 %\usepackage{cleveref} % 确保 cleveref 已加载
 %\crefname{figure}{}{}% 设置 \cref 对 figure 的引用格式为空（只留编号）
