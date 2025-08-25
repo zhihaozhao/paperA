@@ -14,11 +14,16 @@
 
 ### Performance Category Classification (Real Experimental Data)
 #### **Fast High-Accuracy Category** (9 studies, 93.1% avg accuracy, 49ms avg time)
-1. **Wan et al. (2020)** - Faster R-CNN: **90.7% accuracy, 58ms**, n=1200, p<0.001
-2. **Lawal et al. (2021)** - Modified YOLO: **93.1% accuracy, 49ms**, n=978 (tomato)
-3. **Kang & Chen (2020)** - YOLO: **90.9% accuracy, 78ms**, n=950 (apple, real-time)
-4. **Wang et al. (2021)** - YOLOv8: **92.1% accuracy, 71ms**, n=1300 (latest advancement)
-5. **Zhang et al. (2022)** - YOLOv9: **91.5% accuracy, 83ms**, n=1150 (evolution)
+**Complete listing with bibtex citations:**
+1. **Wan et al. (2020)** \cite{wan2020faster} - Faster R-CNN: **90.7% accuracy, 58ms**, n=1200
+2. **Liu et al. (2020)** \cite{liu2020yolo} - YOLO-Tomato: **excellent real-time performance**
+3. **Lawal et al. (2021)** \cite{lawal2021tomato} - Modified YOLOv4: **93.1% accuracy, 49ms**, n=978  
+4. **Li et al. (2021)** \cite{li2021real} - Real-time kiwifruit detection in orchard
+5. **Tang et al. (2023)** \cite{tang2023fruit} - Fruit detection for Camellia oleifera orchard
+6. **Kang & Chen (2020)** \cite{kang2020fast} - Fast YOLO: **90.9% accuracy, 78ms**, n=950
+7. **Yu et al. (2020)** \cite{yu2020real} - Real-time fruit detection using deep learning
+8. **Zhang et al. (2024)** \cite{ZHANG2024108836} - Advanced YOLO-based agricultural detection
+9. **Bresilla et al. (2019)** \cite{bresilla2019single} - Single-shot CNN for real-time fruit detection
 
 #### **Slow High-Accuracy Category** (13 studies, 92.8% avg accuracy, 198ms avg time)  
 1. **Sa et al. (2016)** - R-CNN DeepFruits: **84.8% accuracy, 393ms**, n=450 (baseline)

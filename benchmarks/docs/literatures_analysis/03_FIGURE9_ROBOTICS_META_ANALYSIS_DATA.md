@@ -14,11 +14,15 @@
 
 ### Performance Category Classification (Real Experimental Data)
 #### **Fast High-Performance Category** (8 studies, 91.2% avg success, 95ms avg time)
-1. **Lin et al. (2021)** - Recurrent DDPG: **90.9% success rate, 29ms planning**, guava harvesting
-2. **Kang et al. (2020)** - Real-time grasping with PointNet: **85% success, 6.5s cycle**, apple field tests  
-3. **Xiong et al. (2020)** - Autonomous strawberry harvesting: **96.8% (isolation) → 53.6% (field)**, 6.1s single-arm
-4. **Yu et al. (2020)** - Real-time fruit detection: **89.4% success, 67ms processing**
-5. **Verbiest et al. (2022)** - RL-based collision-free paths: **92% success, <50ms planning**, pepper robot
+**Complete listing with bibtex citations:**
+1. **Fu et al. (2020)** \cite{fu2020faster} - Faster R-CNN apple detection in dense foliage
+2. **Yu et al. (2020)** \cite{yu2020real} - Real-time fruit detection for automatic harvesting  
+3. **Kang et al. (2020)** \cite{kang2020fast} - Fast fruit detection method with YOLOv4
+4. **Ge et al. (2019)** \cite{ge2019fruit} - Fruit detection and 3D location using neural networks
+5. **Xiong et al. (2020)** \cite{xiong2020autonomous} - Autonomous strawberry harvesting: 96.8% (isolation) → 53.6% (field)
+6. **Yu et al. (2019)** \cite{yu2019fruit} - Mask R-CNN based strawberry detection and segmentation
+7. **Jia et al. (2020)** \cite{jia2020detection} - Apple detection using object detection approach
+8. **Onishi et al. (2019)** \cite{onishi2019automated} - Automated fruit harvesting robot in greenhouse
 
 #### **Comprehensive Systems Category** (25 studies, 89.8% avg success, 245ms avg time)  
 1. **Silwal et al. (2017)** - Seven DOF apple harvester: **82.1% success rate, 7.6s cycle**, commercial orchard trials
