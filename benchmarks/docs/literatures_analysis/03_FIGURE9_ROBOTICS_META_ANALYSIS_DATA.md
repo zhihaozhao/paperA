@@ -1,7 +1,7 @@
 # Figure 9: Robotics Meta-Analysis Supporting Data
 **Task**: Robot Motion Control Performance Meta-Analysis (2015-2024)  
 **Label**: `fig:motion_planning_analysis`  
-**Supporting Papers**: **77 papers** verified from prisma_data.csv + tex cross-reference
+**Supporting Papers**: **50 papers** verified from tex Table 7 (N=50 Studies, 2014-2024)
 
 ## Figure Design Overview
 **Subplots**: 4 panels (a, b, c, d) - **Multi-sub-figure display from top journal reviewer's perspective**

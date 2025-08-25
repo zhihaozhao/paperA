@@ -1,7 +1,7 @@
 # Figure 10: Critical Analysis Supporting Data
 **Task**: Critical Trend Analysis and Future Directions (2014-2024)  
 **Label**: `fig:future_directions_roadmap`  
-**Supporting Papers**: **24 papers** verified from prisma_data.csv + tex cross-reference
+**Supporting Papers**: **20 papers** verified from tex Table 10 (N=20 Studies, 2014-2024)
 
 ## Figure Design Overview
 **Subplots**: 4 panels (a, b, c, d) - **Critical perspective analysis from top journal reviewer's eye**

@@ -2,7 +2,7 @@
 **Task**: Comprehensive Vision Algorithm Performance Table  
 **Merged Tables**: Table 4 + Table 5 (vision) + Table 6 + Table 11
 **Label**: `tab:comprehensive_vision_analysis`  
-**Supporting Papers**: **74 papers** verified from prisma_data.csv + tex cross-reference
+**Supporting Papers**: **46 papers** verified from tex Table 4 (N=46 Studies, 2015-2025)
 
 ## Table Design Overview
 **Structure**: Performance classification matrix with 4 main categories

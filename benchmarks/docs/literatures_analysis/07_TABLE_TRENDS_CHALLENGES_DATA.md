@@ -2,7 +2,7 @@
 **Task**: Comprehensive Trends Analysis and Critical Challenges Table  
 **Merged Tables**: Table 9 + Table 10  
 **Label**: `tab:comprehensive_critical_analysis`  
-**Supporting Papers**: **24 papers** verified from prisma_data.csv + tex cross-reference
+**Supporting Papers**: **20 papers** verified from tex Table 10 (N=20 Studies, 2014-2024)
 
 ## Table Design Overview
 **Structure**: Problem severity classification with evidence base

@@ -2,7 +2,7 @@
 **Task**: Comprehensive Robotics Motion Control Performance Table  
 **Merged Tables**: Table 7 + Table 5 (robotics section)
 **Label**: `tab:comprehensive_robotics_analysis`  
-**Supporting Papers**: **77 papers** verified from prisma_data.csv + tex cross-reference
+**Supporting Papers**: **50 papers** verified from tex Table 7 (N=50 Studies, 2014-2024)
 
 ## Table Design Overview  
 **Structure**: Performance classification matrix with 4 main categories

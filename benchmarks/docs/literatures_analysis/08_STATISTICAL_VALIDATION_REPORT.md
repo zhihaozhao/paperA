@@ -14,7 +14,7 @@
 ## Figure-by-Figure Validation
 
 ### Figure 4: Vision Meta-Analysis Statistical Evidence
-- **Supporting Papers**: 74 verified studies
+- **Supporting Papers**: 46 verified studies (tex Table 4: N=46 Studies, 2015-2025)
 - **Sample Size Validation**: n=450 to n=1300 per study
 - **Performance Range**: 84.8%-93.1% accuracy (verified from published results)
 - **Processing Time Range**: 49-393ms (measured experimental data)
@@ -26,7 +26,7 @@
 - R-CNN precision advantage: t-test t=4.23, p<0.01 (12 R-CNN studies 2016-2023)
 
 ### Figure 9: Robotics Meta-Analysis Statistical Evidence  
-- **Supporting Papers**: 77 verified studies
+- **Supporting Papers**: 50 verified studies (tex Table 7: N=50 Studies, 2014-2024)
 - **Success Rate Validation**: 63%-96.8% (experimental results)
 - **Cycle Time Range**: 29ms-26s (measured performance data)
 - **Environmental Testing**: Lab, greenhouse, orchard, field conditions
@@ -37,7 +37,7 @@
 - Performance breakthrough: 2018-2019 jump from ~75% to ~90% success rate
 
 ### Figure 10: Critical Analysis Statistical Evidence
-- **Supporting Papers**: 24 verified studies  
+- **Supporting Papers**: 20 verified studies (tex Table 10: N=20 Studies, 2014-2024)  
 - **Problem Classification**: Critical(8), High(12), Medium(4)
 - **TRL Correlation Analysis**: r=0.78 to r=0.91, p<0.001
 - **Longitudinal Tracking**: 2014-2024 continuous problem documentation
@@ -50,19 +50,19 @@
 ## Table Validation Summary
 
 ### Vision Algorithms Table (Merged 4 tables)
-- **Data Points**: 74 papers with quantitative performance metrics
+- **Data Points**: 46 papers with quantitative performance metrics (N=46 Studies, 2015-2025)
 - **Performance Categories**: 4 validated classifications based on speed/accuracy
 - **Top Performers Verified**: Lawal(93.1%, 49ms), Wang(92.1%, 71ms), Gené-Mola(91.2%, 84ms)
 - **Statistical Rigor**: Sample sizes and confidence intervals preserved
 
 ### Robotics Control Table (Merged 2 tables)  
-- **Data Points**: 77 papers with motion control metrics
+- **Data Points**: 50 papers with motion control metrics (N=50 Studies, 2014-2024)
 - **Performance Categories**: 4 validated classifications based on success/time
 - **Critical Findings**: Lab-field degradation (96.8%→53.6%), real-time planning (29ms)
 - **Validation Methods**: Commercial orchard trials, field deployment studies
 
 ### Trends & Challenges Table (Merged 2 tables)
-- **Evidence Base**: 24 independent critical analysis studies
+- **Evidence Base**: 20 independent critical analysis studies (N=20 Studies, 2014-2024)
 - **Problem Persistence**: 8 critical issues tracked over 5+ years
 - **TRL Assessment**: 5 technology components with correlation analysis
 - **Temporal Validation**: 2014-2024 longitudinal problem documentation
@@ -86,10 +86,10 @@
 ## Quality Assurance Metrics
 
 ### Data Completeness
-- **Figure 4**: 74/74 required papers validated (100%)
-- **Figure 9**: 77/77 required papers validated (100%)  
-- **Figure 10**: 24/24 required papers validated (100%)
-- **Total Coverage**: 175 unique studies, zero duplications in counts
+- **Figure 4**: 46/46 required papers validated (100%)
+- **Figure 9**: 50/50 required papers validated (100%)  
+- **Figure 10**: 20/20 required papers validated (100%)
+- **Total Coverage**: 116 unique studies (46+50+20), zero duplications in counts
 
 ### Temporal Coverage Quality
 - **Years Covered**: 2014-2024 (11 years continuous)
