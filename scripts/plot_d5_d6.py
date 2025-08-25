@@ -144,27 +144,26 @@ def render_slopegraph(d5: Dict[str, Dict[str, List[float]]], d6: Dict[str, Dict[
     d5_means = {m: mean_std(d5.get(m, {}).get("macro_f1", []))[0] for m in models}
     d6_means = {m: mean_std(d6.get(m, {}).get("macro_f1", []))[0] for m in models}
 
-    # Normalize colors across models
-    cmap = plt.get_cmap('tab10')
-    color_map = {m: cmap(i % 10) for i, m in enumerate(models)}
+    # Minimal, monochrome style
+    color_map = {m: "#333333" for m in models}
 
-    fig, ax = plt.subplots(figsize=(7.0, 3.0))
+    fig, ax = plt.subplots(figsize=(6.5, 2.6))
     x_positions = [0, 1]
     ax.set_xlim(-0.2, 1.2)
     ax.set_xticks(x_positions)
     ax.set_xticklabels(["D5", "D6"]) 
-    ax.set_ylabel("Macro F1")
+    ax.set_ylabel("Macro F1", labelpad=2)
     ax.set_ylim(0.6, 1.01)
-    ax.grid(axis='y', linestyle=':', alpha=0.3)
+    ax.grid(axis='y', linestyle=':', alpha=0.25)
 
     # Draw lines for each model
     for m in models:
         y1 = d5_means.get(m, float('nan'))
         y2 = d6_means.get(m, float('nan'))
         if y1 == y1 and y2 == y2:  # both not NaN
-            ax.plot(x_positions, [y1, y2], marker='o', color=color_map[m], linewidth=2.0, markersize=5, alpha=0.9, label=m.replace('_','-'))
-            # Annotate subtly near the right side
-            ax.text(1.02, y2, m.replace('_','-'), va='center', fontsize=8, color=color_map[m])
+            ax.plot(x_positions, [y1, y2], marker='o', color=color_map[m], linewidth=1.8, markersize=4.5, alpha=0.9)
+            # Right-side label
+            ax.text(1.02, y2, m.replace('_','-'), va='center', fontsize=8, color="#111")
 
     # Lighter legend since labels are annotated on the right
     # ax.legend(frameon=False, ncol=2, fontsize=8)
