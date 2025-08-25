@@ -23,6 +23,7 @@ import math
 from dataclasses import dataclass
 
 from src.metrics import aggregate_classification_metrics
+from src.pinn_losses import PINNWrapperLoss  # NEW: PINN loss wrapper
 
 try:
     import scipy.optimize as scopt  # 可选
@@ -339,7 +340,12 @@ def parse_args():
     # Output
     parser.add_argument("--out_json", type=str, default="results/out.json", help="Path to output JSON")
     parser.add_argument("--log_dir", type=str, default="", help="Optional directory to store log files. If empty, logs/ under out_json directory is used.")
-
+    # NEW: PINN options
+    parser.add_argument("--pinn_lambda_smooth", type=float, default=0.0, help="Weight for temporal smoothness penalty")
+    parser.add_argument("--pinn_lambda_energy", type=float, default=0.0, help="Weight for energy penalty")
+    parser.add_argument("--pinn_ms_windows", type=str, default="32,64,128", help="Comma-separated window sizes for multi-scale LSTM")
+    parser.add_argument("--pinn_mamba_dmodel", type=int, default=192, help="Hidden dim for Mamba-like model")
+    parser.add_argument("--pinn_mamba_layers", type=int, default=3, help="Number of Mamba-like blocks")
     return parser.parse_args()
 # -------------------------
 # 主程序
@@ -408,10 +414,11 @@ def main():
         model = build_model(args.model, args.F, args.num_classes, T=args.T)
         model = model.to(device)
         logger.info(f"Model: {args.model} with {sum(p.numel() for p in model.parameters())} params")
-
-        # Optimizer and criterion (adjust to your exact setup, e.g., with logit_l2)
-        optimizer = torch.optim.Adam(model.parameters(), lr=0.001)  # Example
-        criterion = nn.CrossEntropyLoss()
+        # Optimizer and criterion
+        optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+        # Use PINN wrapper loss if any PINN lambda > 0, otherwise CE
+        use_pinn = (args.pinn_lambda_smooth > 0.0) or (args.pinn_lambda_energy > 0.0)
+        criterion = PINNWrapperLoss(lambda_smooth=args.pinn_lambda_smooth, lambda_energy=args.pinn_lambda_energy) if use_pinn else nn.CrossEntropyLoss()
 
         ### UPDATED: Create checkpoints directory if it doesn't exist (fixes RuntimeError) ###
         os.makedirs(args.ckpt_dir, exist_ok=True)  # Ensures 'checkpoints/' exists before saving
@@ -425,32 +432,27 @@ def main():
         for epoch in range(args.epochs):
             model.train()
             train_loss = 0
-            reg_loss_total = 0  # New: Track regularization loss
+            reg_loss_total = 0
             for xb, yb in train_loader:
                 xb, yb = xb.to(device), yb.to(device)
                 optimizer.zero_grad()
-                if use_amp:
-                    with autocast('cuda'):
-                        outputs = model(xb)
-                        logits = outputs[0] if isinstance(outputs, tuple) else outputs
-                        loss = criterion(logits, yb)
-                        if args.logit_l2 > 0:
-                            reg_loss = args.logit_l2 * torch.mean(torch.norm(logits, p=2, dim=1))
-                            loss = loss + reg_loss
-                            reg_loss_total += float(reg_loss.detach().item())
-                    scaler.scale(loss).backward()
-                    scaler.step(optimizer)
-                    scaler.update()
+                outputs = model(xb)
+                logits = outputs[0] if isinstance(outputs, tuple) else outputs
+                if use_pinn and isinstance(criterion, PINNWrapperLoss):
+                    # If model can expose intermediate sequence features, pass them; fallback to using input as proxy
+                    seq_feats = None
+                    if logits.dim() == 2 and xb.dim() == 3:
+                        # proxy: original sequence as feature signal for smoothness penalty
+                        seq_feats = xb
+                    loss = criterion(logits, yb, seq_feats=seq_feats)
                 else:
-                    outputs = model(xb)  # Get full output
-                    logits = outputs[0] if isinstance(outputs, tuple) else outputs
-                    loss = criterion(logits, yb)
-                    if args.logit_l2 > 0:  # Assuming --logit_l2 is the param for lambda
-                        reg_loss = args.logit_l2 * torch.mean(torch.norm(logits, p=2, dim=1))
-                        loss += reg_loss
-                        reg_loss_total += reg_loss.item()  # Accumulate for averaging
-                    loss.backward()
-                    optimizer.step()
+                    loss = nn.CrossEntropyLoss()(logits, yb)
+                if args.logit_l2 > 0:
+                    reg_loss = args.logit_l2 * torch.mean(torch.norm(logits, p=2, dim=1))
+                    loss = loss + reg_loss
+                    reg_loss_total += float(reg_loss.detach().item())
+                loss.backward()
+                optimizer.step()
                 train_loss += loss.item()
             avg_train_loss = train_loss / len(train_loader)
             avg_reg_loss = reg_loss_total / len(train_loader) if args.logit_l2 > 0 else 0  # Average reg loss
