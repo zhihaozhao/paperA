@@ -107,7 +107,7 @@ def create_pca_4row_layout():
         data_df[f'PC{i+1}'] = pca_result[:, i]
     
     # Create figure: 4 rows × 2 columns layout (with nested grid for row3 right)
-    fig = plt.figure(figsize=(16.0, 14.0))
+    fig = plt.figure(figsize=(32.0, 14.0))
     gs = gridspec.GridSpec(4, 2, height_ratios=[1.1, 0.9, 1.8, 1.0], hspace=0.56, wspace=0.12)
     
     # Row1: Main PCA Feature Space spans 2 columns
@@ -206,7 +206,9 @@ def create_pca_4row_layout():
     ax3.set_yticks(range(len(models)))
     ax3.set_xticklabels(models, rotation=45, ha='right', fontsize=8)
     ax3.set_yticklabels(models, fontsize=8)
-    ax3.set_title('(d) Model Separation Distances', fontweight='bold', fontsize=11, pad=10)
+    ax3.set_title('(d) Model Separation Distances', fontweight='bold', fontsize=14, pad=12)
+    ax3.set_xlabel('Model', fontsize=12, fontweight='bold')
+    ax3.set_ylabel('Model', fontsize=12, fontweight='bold')
     
     for i in range(len(models)):
         for j in range(len(models)):
@@ -214,7 +216,7 @@ def create_pca_4row_layout():
                     ha='center', va='center', color='white', fontweight='bold', fontsize=7)
     
     cbar = plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.02)
-    cbar.set_label('Distance', fontsize=9)
+    cbar.set_label('Distance', fontsize=12)
     
     # 4. Cross-Protocol Consistency (Row 2 Left)
     protocol_consistency = {}
@@ -258,10 +260,10 @@ def create_pca_4row_layout():
         ax5.scatter(model_data['PC1'], model_data['PC2'], model_data['PC3'],
                    c=color, marker=marker, s=35, alpha=0.6, label=model)
     
-    ax5.set_xlabel('PC1', fontweight='bold', fontsize=10, labelpad=8)
-    ax5.set_ylabel('PC2', fontweight='bold', fontsize=10, labelpad=8)  
-    ax5.set_zlabel('PC3', fontweight='bold', fontsize=10, labelpad=8)
-    ax5.set_title('(e) 3D Feature Space', fontweight='bold', fontsize=11, pad=12)
+    ax5.set_xlabel('PC1', fontweight='bold', fontsize=12, labelpad=10)
+    ax5.set_ylabel('PC2', fontweight='bold', fontsize=12, labelpad=10)  
+    ax5.set_zlabel('PC3', fontweight='bold', fontsize=12, labelpad=10)
+    ax5.set_title('(e) 3D Feature Space', fontweight='bold', fontsize=14, pad=12)
     # Expand 3D plot visual area to match column width and enlarge proportionally
     try:
         ax5.set_box_aspect((1.3, 1.0, 0.8))
@@ -272,7 +274,7 @@ def create_pca_4row_layout():
     except Exception:
         pass
     ax5.margins(x=0.04, y=0.04, z=0.04)
-    ax5.legend(fontsize=8, loc='center left', bbox_to_anchor=(-0.15, 0.5), framealpha=0.8)
+    ax5.legend(fontsize=12, loc='center left', bbox_to_anchor=(-0.15, 0.5), framealpha=0.8)
     
     # 6. PCA Feature Loadings Matrix (Row 4 Left)
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
