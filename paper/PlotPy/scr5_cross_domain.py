@@ -124,7 +124,7 @@ def create_hierarchical_clustering_heatmap():
     )
     
     # Create figure with requested 3x2 grid
-    fig = plt.figure(figsize=(12.8, 11.2))
+    fig = plt.figure(figsize=(19.2, 16.8))
     gs = gridspec.GridSpec(3, 2, height_ratios=[1.35, 1.05, 1.1], hspace=0.82, wspace=0.36)
     
     # Row1: Heatmap spans both columns
