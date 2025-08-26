@@ -414,7 +414,7 @@ The \gls{cdae} protocol evaluation reveals exceptional cross-domain consistency 
 \label{fig:cross_domain}
 \end{figure}
 
-
+\noindent\textit{Comparative context (CDAE):} SenseFi~\cite{yang2023sensefi} establishes a broad in-domain baseline across 11 deep models and 4 datasets, yet reports sizable variability across protocols. Recent temporal-attention families—Conformer~\cite{gulati2020conformer}, TimeSformer~\cite{bertasius2021timesformer}, TFT~\cite{lim2021tft}, Informer~\cite{zhou2021informer}—improve long-range modeling but in our cross-domain \gls{cdae} setting still exhibit protocol sensitivity noted by environment shifts, echoing domain-generalization studies in WiFi (AirFi~\cite{airfi2022}, FewSense~\cite{fewsense2022}, ReWiS~\cite{rewis2022}). Our \gls{cnn}+\gls{se}+temporal attention yields LOSO≈LORO with markedly lower variance, indicating domain-agnostic features under the same evaluation.
 
 \textbf{\gls{loso} Protocol Results:} The Enhanced model achieves 83.0±0.1\% macro F1, demonstrating superior subject-independent generalization. While the \gls{cnn} baseline achieves slightly higher mean performance (84.2±2.5\%), it exhibits significantly higher variability, indicating reduced robustness across different subjects. The \gls{bilstm} baseline reaches 80.3±2.2\% F1, showing reasonable performance but with higher variance than the Enhanced model. The Conformer-lite architecture shows instability with high variability ($\text{CV}=95.7\%$), suggesting poor adaptation to the subject-independent scenario.
 
@@ -447,6 +447,8 @@ The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough
 \caption{Sim2Real label efficiency of the Enhanced model. Subplots: (left) label ratio vs. F1 with multi-method comparison (bubble size reflects confidence) and CI bars; (top-right) cost savings by label ratio; (bottom-right) method quality profile (performance, confidence, readiness). Only 20\% labeled real data achieves 82.1\% macro F1 (80\% labeling cost reduction).}
 \label{fig:label_efficiency}
 \end{figure}
+
+\noindent\textit{Comparative context (STEA):} While SenseFi~\cite{yang2023sensefi} benchmarks assume abundant labeled data, our \gls{stea} results quantify the minimal real labels to reach a practical operating point, complementing efficiency-oriented works（e.g., model/lightweight pipelines~\cite{efficientfi2022}）. Attention-based time-series/video models~\cite{li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer} emphasize representational capacity; our findings highlight the economic side—synthetic pretraining plus modest fine-tuning achieves near-ceiling F1 at 20\% labels.
 
 \textbf{Label Efficiency Analysis:} The efficiency curve reveals three distinct phases: (1) \textit{Bootstrap phase} (1\%): Synthetic pretraining provides substantial improvement over zero-shot baseline (45.5\% vs 15.4\% F1), (2) \textit{Rapid improvement phase} (5\%): Performance jumps to 78.0±1.6\% F1, approaching practical deployment threshold, (3) \textit{Convergence phase} ($\geq 20\%$): Performance stabilizes at 82.1±0.3\% F1, achieving target efficiency.
 
@@ -500,6 +502,8 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \caption{\gls{psta}/\gls{esta} macro F1 comparison across models (mean \textpm{} std over seeds). \gls{psta} (left) stresses harder settings; \gls{esta} (right) confirms stability with additional GPU runs.}
 \label{fig:d5d6_results}
 \end{figure}
+
+\noindent\textit{Comparative context (PSTA/ESTA):} Prior sequence models such as Conformer~\cite{gulati2020conformer} and TimeSformer/TFT/Informer~\cite{bertasius2021timesformer,lim2021tft,zhou2021informer} focus on temporal attention for accuracy but seldom isolate overlap/noise/drift as disentangled stressors. Our \gls{psta} decouples these nuisance factors and shows the Enhanced model preserves accuracy with lower variance than baselines; \gls{esta} replays with fresh seeds/hardware to confirm that gains are architectural, not incidental—complementary to WiFi domain-generalization efforts~\cite{airfi2022,fewsense2022,rewis2022}.
 
 % D5/D6 summary table (inline)
 \begin{table}[t]
