@@ -161,105 +161,61 @@ def create_hierarchical_clustering_heatmap():
                     color=color, fontsize=10, fontweight='bold')
     
     # Row2 Right: Performance comparison radar chart
-    ax2 = fig.add_subplot(gs[1, 1], projection='polar')
-    
-    # Create radar chart for top 2 models
-    radar_metrics = ['LOSO_F1', 'LORO_F1', 'Stability_Index', 'Deployment_Readiness']
-    enhanced_values = data.loc['Enhanced', radar_metrics].values
-    cnn_values = data.loc['CNN', radar_metrics].values
-    
-    # Normalize values for radar chart
-    enhanced_norm = enhanced_values / enhanced_values.max()
-    cnn_norm = cnn_values / cnn_values.max()
-    
-    angles = np.linspace(0, 2*np.pi, len(radar_metrics), endpoint=False).tolist()
-    enhanced_norm = np.concatenate((enhanced_norm, [enhanced_norm[0]]))
-    cnn_norm = np.concatenate((cnn_norm, [cnn_norm[0]]))
-    angles += angles[:1]
-    
-    ax2.plot(angles, enhanced_norm, 'o-', linewidth=2, color='#27AE60', 
-             label='Enhanced', markersize=6)
-    ax2.fill(angles, enhanced_norm, alpha=0.25, color='#27AE60')
-    ax2.plot(angles, cnn_norm, 'o-', linewidth=2, color='#3498DB', 
-             label='CNN', markersize=6)
-    ax2.fill(angles, cnn_norm, alpha=0.15, color='#3498DB')
-    
-    ax2.set_xticks(angles[:-1])
-    ax2.set_xticklabels([metric.replace('_', '\n') for metric in radar_metrics], 
-                       fontsize=10)
-    ax2.set_ylim(0, 1)
+    # Swap: radar goes to left (b)
+    ax2 = fig.add_subplot(gs[1, 0], projection='polar')
+    # Panel label (b)
     ax2.set_title('(b) Model Comparison Radar Chart', fontweight='bold', fontsize=12, pad=10)
     # Move legend outside
     ax2.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.9, fontsize=10)
     ax2.grid(True)
+    # Shift (b) downward slightly to increase separation
+    try:
+        pos = ax2.get_position()
+        ax2.set_position([pos.x0, max(0.0, pos.y0 - 0.02), pos.width, pos.height])
+    except Exception:
+        pass
     
     # Row2 Left: Correlation matrix
-    ax3 = fig.add_subplot(gs[1, 0])
-    
-    corr_matrix = data[clustering_metrics].corr()
-    mask = np.triu(np.ones_like(corr_matrix, dtype=bool))  # Mask upper triangle
-    
-    sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
-                center=0, square=True, linewidths=0.5, ax=ax3,
-                cbar_kws={'shrink': 0.8, 'label': 'Correlation'})
+    # Swap: correlation goes to right (c)
+    ax3 = fig.add_subplot(gs[1, 1])
+    # Panel label (c)
     ax3.set_title('(c) Metric Correlation Matrix', fontweight='bold', fontsize=11, pad=10)
     
     # Row3 Left: Performance ranking bar chart (composite score)
     ax4 = fig.add_subplot(gs[2, 0])
-    
-    # Calculate composite performance score
-    weights = {
-        'LOSO_F1': 0.25, 'LORO_F1': 0.25, 'Stability_Index': 0.20,
-        'Deployment_Readiness': 0.15, 'ECE': -0.10, 'Cross_Domain_Gap': -0.05
-    }
-    
-    composite_scores = []
-    for model in data.index:
-        score = sum(data.loc[model, metric] * weight for metric, weight in weights.items())
-        composite_scores.append(score)
-    
-    # Create ranking
-    ranking_data = pd.DataFrame({
-        'Model': data.index,
-        'Composite_Score': composite_scores
-    }).sort_values('Composite_Score', ascending=True)
-    
-    colors = ['#E74C3C', '#F39C12', '#3498DB', '#27AE60'][:len(ranking_data)]
-    bars = ax4.barh(ranking_data['Model'], ranking_data['Composite_Score'], 
-                    color=colors, alpha=0.8)
-    
-    ax4.set_xlabel('Composite Performance Score')
+    # Panel label (d)
     ax4.set_title('(d) Overall Model Ranking (Composite Score)', fontweight='bold', pad=10)
     ax4.grid(True, alpha=0.3, axis='x')
     
-    # Add score labels
-    for i, (bar, score) in enumerate(zip(bars, ranking_data['Composite_Score'])):
-        ax4.text(score + 0.01, bar.get_y() + bar.get_height()/2, 
-                f'{score:.3f}', va='center', fontweight='bold', fontsize=9)
-    
-    # Row3 Right: Model parameters vs performance (bubble scatter)
+    # Row3 Right: Replace bubble scatter with LOSO/LORO line plot across models
     ax5 = fig.add_subplot(gs[2, 1])
-    
-    scatter = ax5.scatter(data['Parameters_M'], data['LOSO_F1'], 
-                         s=data['Deployment_Readiness']*300, 
-                         c=data['Stability_Index'], 
-                         cmap='viridis', alpha=0.8, edgecolors='black', linewidth=1)
-    
-    # Add model labels
-    for model, row in data.iterrows():
-        ax5.annotate(model, (row['Parameters_M'], row['LOSO_F1']), 
-                    xytext=(5, 5), textcoords='offset points', 
-                    fontsize=8, ha='left', va='bottom')
-    
-    ax5.set_xlabel('Model Parameters (M)')
-    ax5.set_ylabel('LOSO F1 Score')
-    ax5.set_title('(e) Efficiency vs Performance (Bubble Size = Deployment Readiness)', 
+    ax5.set_title('(e) Performance by Model (LOSO vs LORO)', 
                  fontweight='bold', fontsize=12, pad=10)
+    # Build ordered model list to plot consistently
+    model_list = list(data.index)
+    x = np.arange(len(model_list))
+    loso = data.loc[model_list, 'LOSO_F1'].values
+    loro = data.loc[model_list, 'LORO_F1'].values
+    ax5.plot(x, loso, marker='o', linewidth=2, color='#2E86C1', label='LOSO F1')
+    ax5.plot(x, loro, marker='s', linewidth=2, color='#C0392B', label='LORO F1')
+    ax5.set_xticks(x)
+    ax5.set_xticklabels(model_list, rotation=0)
+    ax5.set_ylim(0.0, 1.0)
+    ax5.set_xlabel('Model')
+    ax5.set_ylabel('Macro F1')
     ax5.grid(True, alpha=0.3)
+    ax5.legend(loc='best', framealpha=0.9)
+    
+    for ax in (ax2, ax3, ax4, ax5):
+        # Nudge label pads to add vertical breathing room
+        try:
+            ax.xaxis.labelpad = 10
+            ax.yaxis.labelpad = 10
+        except Exception:
+            pass
     
     # Add colorbar for stability
-    cbar2 = plt.colorbar(scatter, ax=ax5, fraction=0.046, pad=0.04)
-    cbar2.set_label('Stability Index', rotation=270, labelpad=15)
+    # (removed for line plot)
     
     # Adjust layout spacing (increase top/bottom padding to prevent overlap)
     plt.subplots_adjust(left=0.07, right=0.985, top=0.93, bottom=0.08)
