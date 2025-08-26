@@ -174,12 +174,40 @@ def create_hierarchical_clustering_heatmap():
         ax2.set_position([pos.x0, max(0.0, pos.y0 - 0.02), pos.width, pos.height])
     except Exception:
         pass
+    # Draw radar polygons for two representative models
+    radar_metrics = ['LOSO_F1', 'LORO_F1', 'Stability_Index', 'Deployment_Readiness']
+    angles = np.linspace(0, 2*np.pi, len(radar_metrics), endpoint=False).tolist()
+    angles += angles[:1]
+    def to_radar_values(model_name):
+        vals = data.loc[model_name, radar_metrics].values.astype(float)
+        max_per_metric = np.maximum(vals, 1e-9)
+        # Normalize by max across the two selected models to keep within [0,1]
+        return vals
+    # Compute max across selected models per metric for normalization
+    selected = data.loc[['Enhanced', 'CNN'], radar_metrics]
+    max_vec = selected.max(axis=0).replace(0, 1.0).values
+    def norm(vals):
+        return (vals / max_vec).tolist() + [(vals / max_vec)[0]]
+    enhanced_vals = norm(data.loc['Enhanced', radar_metrics].values.astype(float))
+    cnn_vals = norm(data.loc['CNN', radar_metrics].values.astype(float))
+    ax2.plot(angles, enhanced_vals, 'o-', linewidth=2, color='#27AE60', label='Enhanced', markersize=5)
+    ax2.fill(angles, enhanced_vals, alpha=0.25, color='#27AE60')
+    ax2.plot(angles, cnn_vals, 'o-', linewidth=2, color='#3498DB', label='CNN', markersize=5)
+    ax2.fill(angles, cnn_vals, alpha=0.15, color='#3498DB')
+    ax2.set_xticks(angles[:-1])
+    ax2.set_xticklabels([m.replace('_', '\n') for m in radar_metrics], fontsize=10)
+    ax2.set_ylim(0, 1.05)
     
     # Row2 Left: Correlation matrix
     # Swap: correlation goes to right (c)
     ax3 = fig.add_subplot(gs[1, 1])
     # Panel label (c)
     ax3.set_title('(c) Metric Correlation Matrix', fontweight='bold', fontsize=11, pad=10)
+    corr_matrix = data[clustering_metrics].corr()
+    mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
+    sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
+                center=0, square=True, linewidths=0.5, ax=ax3,
+                cbar_kws={'shrink': 0.85, 'label': 'Correlation'})
     
     # Row3 Left: Performance ranking bar chart (composite score)
     ax4 = fig.add_subplot(gs[2, 0])

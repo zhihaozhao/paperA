@@ -108,7 +108,7 @@ def create_pca_4row_layout():
     
     # Create figure: 4 rows × 2 columns layout (with nested grid for row3 right)
     fig = plt.figure(figsize=(14.0, 12.5))
-    gs = gridspec.GridSpec(4, 2, height_ratios=[1.2, 1.0, 1.2, 1.1], hspace=0.58, wspace=0.32)
+    gs = gridspec.GridSpec(4, 2, height_ratios=[1.2, 1.0, 1.25, 1.1], hspace=0.54, wspace=0.28)
     
     # Row1: Main PCA Feature Space spans 2 columns
     ax1 = fig.add_subplot(gs[0, :])
@@ -213,7 +213,7 @@ def create_pca_4row_layout():
             ax3.text(j, i, f'{distance_matrix[i, j]:.1f}',
                     ha='center', va='center', color='white', fontweight='bold', fontsize=7)
     
-    cbar = plt.colorbar(im, ax=ax3, fraction=0.08, pad=0.12, orientation='horizontal')
+    cbar = plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.02)
     cbar.set_label('Distance', fontsize=9)
     
     # 4. Cross-Protocol Consistency (Row 2 Left)
@@ -262,16 +262,16 @@ def create_pca_4row_layout():
     ax5.set_ylabel('PC2', fontweight='bold', fontsize=10, labelpad=8)  
     ax5.set_zlabel('PC3', fontweight='bold', fontsize=10, labelpad=8)
     ax5.set_title('(e) 3D Feature Space', fontweight='bold', fontsize=11, pad=12)
-    # Expand 3D plot visual area to match column width perception
+    # Expand 3D plot visual area to match column width and enlarge proportionally
     try:
-        ax5.set_box_aspect((1.2, 1.0, 0.7))
+        ax5.set_box_aspect((1.3, 1.0, 0.8))
     except Exception:
         pass
     try:
         ax5.set_proj_type('ortho')
     except Exception:
         pass
-    ax5.margins(x=0.05, y=0.05, z=0.05)
+    ax5.margins(x=0.04, y=0.04, z=0.04)
     ax5.legend(fontsize=8, loc='upper left', bbox_to_anchor=(0.0, 1.10), framealpha=0.8)
     
     # 6. PCA Feature Loadings Matrix (Row 4 Left)
