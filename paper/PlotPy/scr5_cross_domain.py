@@ -125,7 +125,7 @@ def create_hierarchical_clustering_heatmap():
     
     # Create figure with requested 3x2 grid
     fig = plt.figure(figsize=(12.8, 11.2))
-    gs = gridspec.GridSpec(3, 2, height_ratios=[1.35, 1.05, 1.1], hspace=0.72, wspace=0.36)
+    gs = gridspec.GridSpec(3, 2, height_ratios=[1.35, 1.05, 1.1], hspace=0.82, wspace=0.36)
     
     # Row1: Heatmap spans both columns
     ax1 = fig.add_subplot(gs[0, :])
@@ -171,7 +171,7 @@ def create_hierarchical_clustering_heatmap():
     # Shift (b) downward slightly to increase separation
     try:
         pos = ax2.get_position()
-        ax2.set_position([pos.x0, max(0.0, pos.y0 - 0.02), pos.width, pos.height])
+        ax2.set_position([pos.x0, max(0.0, pos.y0 - 0.05), pos.width, pos.height])
     except Exception:
         pass
     # Draw radar polygons for two representative models
@@ -208,12 +208,36 @@ def create_hierarchical_clustering_heatmap():
     sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
                 center=0, square=True, linewidths=0.5, ax=ax3,
                 cbar_kws={'shrink': 0.85, 'label': 'Correlation'})
+    # Rotate x tick labels to avoid overlap
+    ax3.set_xticklabels(ax3.get_xticklabels(), rotation=45, ha='right')
     
     # Row3 Left: Performance ranking bar chart (composite score)
     ax4 = fig.add_subplot(gs[2, 0])
     # Panel label (d)
     ax4.set_title('(d) Overall Model Ranking (Composite Score)', fontweight='bold', pad=10)
+    # Compute composite ranking (restore)
+    weights = {
+        'LOSO_F1': 0.25, 'LORO_F1': 0.25, 'Stability_Index': 0.20,
+        'Deployment_Readiness': 0.15, 'ECE': -0.10, 'Cross_Domain_Gap': -0.05
+    }
+    composite_scores = []
+    for model in data.index:
+        score = sum(float(data.loc[model, metric]) * weight for metric, weight in weights.items())
+        composite_scores.append(score)
+    ranking_data = pd.DataFrame({'Model': data.index, 'Composite_Score': composite_scores})\
+                    .sort_values('Composite_Score', ascending=True)
+    colors = ['#E74C3C', '#F39C12', '#3498DB', '#27AE60'][:len(ranking_data)]
+    bars = ax4.barh(ranking_data['Model'], ranking_data['Composite_Score'], color=colors, alpha=0.85)
+    ax4.set_xlabel('Composite Performance Score')
     ax4.grid(True, alpha=0.3, axis='x')
+    for bar, score in zip(bars, ranking_data['Composite_Score']):
+        ax4.text(score + 0.005, bar.get_y() + bar.get_height()/2, f'{score:.3f}', va='center', fontsize=9)
+    # Nudge (d) downward slightly to avoid overlap with (c) labels
+    try:
+        pos4 = ax4.get_position()
+        ax4.set_position([pos4.x0, max(0.0, pos4.y0 - 0.03), pos4.width, pos4.height])
+    except Exception:
+        pass
     
     # Row3 Right: Replace bubble scatter with LOSO/LORO line plot across models
     ax5 = fig.add_subplot(gs[2, 1])
@@ -227,12 +251,18 @@ def create_hierarchical_clustering_heatmap():
     ax5.plot(x, loso, marker='o', linewidth=2, color='#2E86C1', label='LOSO F1')
     ax5.plot(x, loro, marker='s', linewidth=2, color='#C0392B', label='LORO F1')
     ax5.set_xticks(x)
-    ax5.set_xticklabels(model_list, rotation=0)
+    ax5.set_xticklabels(model_list, rotation=45, ha='right')
     ax5.set_ylim(0.0, 1.0)
     ax5.set_xlabel('Model')
     ax5.set_ylabel('Macro F1')
     ax5.grid(True, alpha=0.3)
     ax5.legend(loc='best', framealpha=0.9)
+    # Nudge (e) downward slightly to avoid overlap with (c) labels
+    try:
+        pos5 = ax5.get_position()
+        ax5.set_position([pos5.x0, max(0.0, pos5.y0 - 0.03), pos5.width, pos5.height])
+    except Exception:
+        pass
     
     for ax in (ax2, ax3, ax4, ax5):
         # Nudge label pads to add vertical breathing room
