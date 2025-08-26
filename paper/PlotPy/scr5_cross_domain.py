@@ -124,8 +124,8 @@ def create_hierarchical_clustering_heatmap():
     )
     
     # Create figure with requested 3x2 grid
-    fig = plt.figure(figsize=(12.5, 10.0))
-    gs = gridspec.GridSpec(3, 2, height_ratios=[1.15, 1.0, 1.0], hspace=0.48, wspace=0.34)
+    fig = plt.figure(figsize=(12.8, 11.2))
+    gs = gridspec.GridSpec(3, 2, height_ratios=[1.35, 1.05, 1.1], hspace=0.72, wspace=0.36)
     
     # Row1: Heatmap spans both columns
     ax1 = fig.add_subplot(gs[0, :])
@@ -141,15 +141,12 @@ def create_hierarchical_clustering_heatmap():
     # Create heatmap
     im = ax1.imshow(ordered_data.values, cmap='RdYlBu_r', aspect='auto')
     
-    # Panel label (a)
-    ax1.text(0.01, 0.98, '(a)', transform=ax1.transAxes, ha='left', va='top', fontsize=14, fontweight='bold', color='black')
-    
     # Set labels
     ax1.set_xticks(range(len(ordered_data.columns)))
     ax1.set_xticklabels(ordered_data.columns, rotation=45, ha='right')
     ax1.set_yticks(range(len(ordered_data.index)))
     ax1.set_yticklabels(ordered_data.index)
-    ax1.set_title('Performance Metrics Heatmap (Hierarchically Clustered)', fontweight='bold')
+    ax1.set_title('(a) Performance Metrics Heatmap (Hierarchically Clustered)', fontweight='bold', pad=12)
     
     # Add colorbar
     cbar = plt.colorbar(im, ax=ax1, fraction=0.035, pad=0.02)
@@ -165,8 +162,6 @@ def create_hierarchical_clustering_heatmap():
     
     # Row2 Right: Performance comparison radar chart
     ax2 = fig.add_subplot(gs[1, 1], projection='polar')
-    # Panel label (b)
-    ax2.text(0.02, 0.98, '(b)', transform=ax2.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Create radar chart for top 2 models
     radar_metrics = ['LOSO_F1', 'LORO_F1', 'Stability_Index', 'Deployment_Readiness']
@@ -193,15 +188,13 @@ def create_hierarchical_clustering_heatmap():
     ax2.set_xticklabels([metric.replace('_', '\n') for metric in radar_metrics], 
                        fontsize=10)
     ax2.set_ylim(0, 1)
-    ax2.set_title('Model Comparison Radar Chart', fontweight='bold', fontsize=12)
+    ax2.set_title('(b) Model Comparison Radar Chart', fontweight='bold', fontsize=12, pad=10)
     # Move legend outside
     ax2.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.9, fontsize=10)
     ax2.grid(True)
     
     # Row2 Left: Correlation matrix
     ax3 = fig.add_subplot(gs[1, 0])
-    # Panel label (c)
-    ax3.text(0.01, 0.98, '(c)', transform=ax3.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     corr_matrix = data[clustering_metrics].corr()
     mask = np.triu(np.ones_like(corr_matrix, dtype=bool))  # Mask upper triangle
@@ -209,12 +202,10 @@ def create_hierarchical_clustering_heatmap():
     sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
                 center=0, square=True, linewidths=0.5, ax=ax3,
                 cbar_kws={'shrink': 0.8, 'label': 'Correlation'})
-    ax3.set_title('Metric Correlation Matrix', fontweight='bold', fontsize=11)
+    ax3.set_title('(c) Metric Correlation Matrix', fontweight='bold', fontsize=11, pad=10)
     
     # Row3 Left: Performance ranking bar chart (composite score)
     ax4 = fig.add_subplot(gs[2, 0])
-    # Panel label (d)
-    ax4.text(0.01, 0.98, '(d)', transform=ax4.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Calculate composite performance score
     weights = {
@@ -238,7 +229,7 @@ def create_hierarchical_clustering_heatmap():
                     color=colors, alpha=0.8)
     
     ax4.set_xlabel('Composite Performance Score')
-    ax4.set_title('Overall Model Ranking (Composite Score)', fontweight='bold')
+    ax4.set_title('(d) Overall Model Ranking (Composite Score)', fontweight='bold', pad=10)
     ax4.grid(True, alpha=0.3, axis='x')
     
     # Add score labels
@@ -248,8 +239,6 @@ def create_hierarchical_clustering_heatmap():
     
     # Row3 Right: Model parameters vs performance (bubble scatter)
     ax5 = fig.add_subplot(gs[2, 1])
-    # Panel label (e)
-    ax5.text(0.01, 0.98, '(e)', transform=ax5.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     scatter = ax5.scatter(data['Parameters_M'], data['LOSO_F1'], 
                          s=data['Deployment_Readiness']*300, 
@@ -264,16 +253,16 @@ def create_hierarchical_clustering_heatmap():
     
     ax5.set_xlabel('Model Parameters (M)')
     ax5.set_ylabel('LOSO F1 Score')
-    ax5.set_title('Efficiency vs Performance\n(Bubble Size = Deployment Readiness)', 
-                 fontweight='bold', fontsize=12)
+    ax5.set_title('(e) Efficiency vs Performance (Bubble Size = Deployment Readiness)', 
+                 fontweight='bold', fontsize=12, pad=10)
     ax5.grid(True, alpha=0.3)
     
     # Add colorbar for stability
     cbar2 = plt.colorbar(scatter, ax=ax5, fraction=0.046, pad=0.04)
     cbar2.set_label('Stability Index', rotation=270, labelpad=15)
     
-    # Adjust layout spacing
-    plt.subplots_adjust(left=0.07, right=0.98, top=0.93, bottom=0.08)
+    # Adjust layout spacing (increase top/bottom padding to prevent overlap)
+    plt.subplots_adjust(left=0.07, right=0.985, top=0.93, bottom=0.08)
     
     return fig, data
 
