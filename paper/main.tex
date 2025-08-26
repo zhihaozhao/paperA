@@ -430,30 +430,9 @@ The STEA protocol evaluation demonstrates a paradigm-shifting breakthrough in Si
 
 \subsection{Model Performance Comparison}
 
-\textbf{Cause→Effect synthesis.} \emph{Cause:} Integrating channel reweighting (SE) and temporal attention should improve robustness under shifts and noise by suppressing spurious channels and focusing on informative segments. \emph{Effect:} Enhanced reaches identical LOSO/LORO and high label efficiency, while Conformer-lite oscillates across protocols (Table~\ref{tab:model_performance}). This aligns with PSTA/ESTA stress and stability readings.
+\textbf{Cause→Effect synthesis.} \emph{Cause:} Integrating channel reweighting (SE) and temporal attention should improve robustness under shifts and noise by suppressing spurious channels and focusing on informative segments. \emph{Effect:} Enhanced reaches identical LOSO/LORO and high label efficiency, while Conformer-lite oscillates across protocols. This aligns with PSTA/ESTA stress and stability readings.
 
-% Literature comparison table (verified, NR for not reported)
-\begin{table*}[t]
-\centering
-\caption{Literature comparison: parameters and reported results (NR = not reported). Only values explicitly given in the cited sources are included.}
-\label{tab:experiments_comparison}
-\scriptsize
-\begin{tabular}{@{}llccccccc@{}}
-\toprule
-Model (with citation) & Params (M) & FLOPs/Throughput & Input len/stride & Attention type & Dataset & Metric & Source \\
-\midrule
-SenseFi benchmark~\cite{yang2023sensefi} & NR & NR & NR & NR & UT-HAR; NTU-Fi-HAR; NTU-Fi-HumanID; Widar & NR & \cite{yang2023sensefi} \\
-Conformer~\cite{gulati2020conformer} & NR & NR & NR & Conv-augmented self-attention & LibriSpeech (ASR) & NR & \cite{gulati2020conformer} \\
-TEA~\cite{li2020tea} & NR & NR & NR & Temporal excitation and aggregation & NR & NR & \cite{li2020tea} \\
-TimeSformer~\cite{bertasius2021timesformer} & NR & NR & NR & Factorized space-time self-attention & NR & NR & \cite{bertasius2021timesformer} \\
-TFT~\cite{lim2021tft} & NR & NR & NR & Temporal fusion attention with gating & NR & NR & \cite{lim2021tft} \\
-Informer~\cite{zhou2021informer} & NR & NR & NR & ProbSparse self-attention & NR & NR & \cite{zhou2021informer} \\
-ReWiS~\cite{rewis2022} & NR & NR & NR & NR & NR & NR & \cite{rewis2022} \\
-FewSense~\cite{fewsense2022} & NR & NR & NR & NR & SignFi; Widar; Wiar & NR & \cite{fewsense2022} \\
-AirFi~\cite{airfi2022} & NR & NR & NR & NR & NR & NR & \cite{airfi2022} \\
-\bottomrule
-\end{tabular}
-\end{table*}
+% (Dropped literature comparison table due to lack of reported parameters in WiFi-CSI literature.)
 
 \begin{table}[ht]
 \centering
