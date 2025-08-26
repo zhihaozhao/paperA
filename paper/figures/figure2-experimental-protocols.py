@@ -440,6 +440,10 @@ if __name__ == "__main__":
                    facecolor='white', edgecolor='none')
         print(f"✅ Saved: {filename}")
 
+    # Normalized canonical name for paper inclusion
+    fig1.savefig('figure2_experimental_protocols.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    print("✅ Saved: figure2_experimental_protocols.pdf")
+    
     # Export double-column friendly PDF as figure4_experimental_overview.pdf (approx 7.2x4.5 inches)
     try:
         orig_size = fig1.get_size_inches()

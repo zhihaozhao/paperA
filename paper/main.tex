@@ -339,7 +339,7 @@ We evaluate model reliability through:
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure-4.pdf}
+\includegraphics[width=\columnwidth]{figures/figure2_experimental_protocols.pdf}
 \caption{Experimental protocols overview: Synthetic Robustness Validation (SRD, 540 configurations; first use in full), \gls{cdae} (\gls{loso}/\gls{loro}), and \gls{stea} label-efficiency evaluation.}
 \label{fig:protocols}
 \end{figure}
@@ -403,7 +403,7 @@ The \gls{cdae} protocol evaluation reveals exceptional cross-domain consistency 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure-5.pdf}%_cross-domain.pdf}
+\includegraphics[width=\columnwidth]{figures/figure5_cross_domain.pdf}%_cross-domain.pdf}
 \caption{Cross-domain generalization performance across \gls{loso} and \gls{loro}. Subplots: (top-left) main LOSO/LORO comparison with error bars; (top-right) cross-domain gap $|\text{LOSO}-\text{LORO}|$ (lower is better); (bottom-left) stability (CV, log-scale); (bottom-right) significance (−log$_{10}$(p)). The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
 \label{fig:cross_domain}
 \end{figure}
@@ -437,16 +437,16 @@ The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/figure-7.pdf}%6_label_efficiency.pdf}
+\includegraphics[width=\columnwidth]{figures/figure7_label_efficiency.pdf}%6_label_efficiency.pdf}
 \caption{Sim2Real label efficiency of the Enhanced model. Subplots: (left) label ratio vs. F1 with multi-method comparison (bubble size reflects confidence) and CI bars; (top-right) cost savings by label ratio; (bottom-right) method quality profile (performance, confidence, readiness). Only 20\% labeled real data achieves 82.1\% macro F1 (80\% labeling cost reduction).}
 \label{fig:label_efficiency}
 \end{figure}
 
 \textbf{Label Efficiency Analysis:} The efficiency curve reveals three distinct phases: (1) \textit{Bootstrap phase} (1\%): Synthetic pretraining provides substantial improvement over zero-shot baseline (45.5\% vs 15.4\% F1), (2) \textit{Rapid improvement phase} (5\%): Performance jumps to 78.0±1.6\% F1, approaching practical deployment threshold, (3) \textit{Convergence phase} ($\geq 20\%$): Performance stabilizes at 82.1±0.3\% F1, achieving target efficiency.
 
-\textbf{Transfer Method Comparison:} Fine-tuning significantly outperforms alternative transfer approaches. At 20\% label ratio, fine-tuning achieves 82.1\% F1 compared to linear probing (21.8\%) and zero-shot (15.1\%). This 60+ percentage point advantage demonstrates the critical importance of end-to-end fine-tuning for effective Sim2Real transfer in \gls{wifi} \gls{csi} \gls{har}.
+\textbf{Transfer Method Comparison:} Fine-tuning significantly outperforms alternative transfer approaches. At 20\% label ratio, fine-tuning achieves 82.1\% F1 compared to linear probing (21.8%) and zero-shot (15.1%). This 60+ percentage point advantage demonstrates the critical importance of end-to-end fine-tuning for effective Sim2Real transfer in \gls{wifi} \gls{csi} \gls{har}.
 
-\textbf{Cost-Benefit Analysis:} The 20\% label efficiency represents an 80\% reduction in data collection costs while maintaining 98.6\% of full-supervision performance (82.1\% vs 83.3\%). This breakthrough enables practical deployment in resource-constrained scenarios where extensive data collection is prohibitive.
+\textbf{Cost-Benefit Analysis:} The 20\% label efficiency represents an 80\% reduction in data collection costs while maintaining 98.6\% of full-supervision performance (82.1\% vs 83.3%). This breakthrough enables practical deployment in resource-constrained scenarios where extensive data collection is prohibitive.
 
 \subsection{Model Performance Comparison}
 
@@ -490,7 +490,7 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/d5_d6_results_slope.pdf}
+\includegraphics[width=\columnwidth]{figures/figureD56_slope.pdf}
 \caption{D5/D6 macro F1 comparison across models (mean ± std over seeds). D5 (left) stresses harder settings; D6 (right) confirms stability with additional GPU runs.}
 \label{fig:d5d6_results}
 \end{figure}
@@ -597,7 +597,7 @@ The \gls{stea} protocol breakthrough enables revolutionary cost-reduction approa
 
 \textbf{Rapid Deployment Timeline:} The 20\% labeling requirement translates to deployment timeline reduction from 6-12 months to 1-3 months, accelerating time-to-value for \gls{iot} sensing projects and reducing project risk.
 
-\textbf{Iterative Improvement Strategy:} The \gls{stea} efficiency curve enables iterative deployment where organizations start with minimal labeling (5-10\%) for initial deployment and gradually increase labeling to optimize performance, reducing initial investment risk while enabling continuous improvement.
+\textbf{Iterative Improvement Strategy:} The \gls{stea} efficiency curve enables iterative deployment where organizations start with minimal labeling (5-10%) for initial deployment and gradually increase labeling to optimize performance, reducing initial investment risk while enabling continuous improvement.
 
 \subsection{Economic Impact and Market Accessibility}
 
