@@ -16,17 +16,18 @@ import warnings
 warnings.filterwarnings('ignore')
 from pathlib import Path
 from matplotlib import gridspec
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-# Configure for IEEE IoTJ standards with optimized fonts
+# Configure for IEEE IoTJ standards with unified fonts
 plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman', 'DejaVu Serif'],
-    'font.size': 10,
-    'axes.labelsize': 11,
-    'axes.titlesize': 12,
-    'xtick.labelsize': 9,
-    'ytick.labelsize': 9,
-    'legend.fontsize': 8,
+    'font.size': 12,
+    'axes.labelsize': 12,
+    'axes.titlesize': 14,
+    'xtick.labelsize': 12,
+    'ytick.labelsize': 12,
+    'legend.fontsize': 12,
     'figure.titlesize': 14,
     'figure.dpi': 300,
     'savefig.dpi': 300,
@@ -107,8 +108,8 @@ def create_pca_4row_layout():
         data_df[f'PC{i+1}'] = pca_result[:, i]
     
     # Create figure: 4 rows × 2 columns layout (with nested grid for row3 right)
-    fig = plt.figure(figsize=(32.0, 14.0))
-    gs = gridspec.GridSpec(4, 2, height_ratios=[1.1, 0.9, 1.8, 1.0], hspace=0.56, wspace=0.12)
+    fig = plt.figure(figsize=(16.0, 14.0))
+    gs = gridspec.GridSpec(4, 2, height_ratios=[1.2, 1.0, 1.2, 1.1], hspace=0.56, wspace=0.18)
     
     # Row1: Main PCA Feature Space spans 2 columns
     ax1 = fig.add_subplot(gs[0, :])
@@ -162,7 +163,7 @@ def create_pca_4row_layout():
     ax1.set_ylabel(f'Second Principal Component ({pca.explained_variance_ratio_[1]:.1%} variance)', 
                    fontweight='bold', fontsize=12, labelpad=10)
     ax1.set_title('(a) PCA Feature Space Analysis: Model Clustering and Protocol Separation', 
-                 fontweight='bold', fontsize=13, pad=15)
+                 fontweight='bold', fontsize=14, pad=15)
     ax1.grid(True, alpha=0.3)
     ax1.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.85)
     
@@ -176,12 +177,12 @@ def create_pca_4row_layout():
     ax2_twin.plot(range(1, len(explained_var) + 1), cumulative_var * 100, 
                  'ro-', linewidth=2, markersize=4)
     
-    ax2.set_xlabel('Principal Component', fontweight='bold', fontsize=10, labelpad=8)
-    ax2.set_ylabel('Explained Variance Ratio', color='blue', fontweight='bold', fontsize=10, labelpad=8)
-    ax2_twin.set_ylabel('Cumulative Variance (%)', color='red', fontweight='bold', fontsize=10, labelpad=8)
-    ax2.set_title('(c) PCA Explained Variance', fontweight='bold', fontsize=11, pad=12)
-    ax2.tick_params(axis='y', labelcolor='blue', labelsize=8)
-    ax2_twin.tick_params(axis='y', labelcolor='red', labelsize=8)
+    ax2.set_xlabel('Principal Component', fontweight='bold', fontsize=12, labelpad=8)
+    ax2.set_ylabel('Explained Variance Ratio', color='blue', fontweight='bold', fontsize=12, labelpad=8)
+    ax2_twin.set_ylabel('Cumulative Variance (%)', color='red', fontweight='bold', fontsize=12, labelpad=8)
+    ax2.set_title('(c) PCA Explained Variance', fontweight='bold', fontsize=14, pad=12)
+    ax2.tick_params(axis='y', labelcolor='blue', labelsize=12)
+    ax2_twin.tick_params(axis='y', labelcolor='red', labelsize=12)
     ax2.grid(True, alpha=0.3)
     
     for bar, var in zip(bars, explained_var):
@@ -204,8 +205,8 @@ def create_pca_4row_layout():
     im = ax3.imshow(distance_matrix, cmap='viridis')
     ax3.set_xticks(range(len(models)))
     ax3.set_yticks(range(len(models)))
-    ax3.set_xticklabels(models, rotation=45, ha='right', fontsize=8)
-    ax3.set_yticklabels(models, fontsize=8)
+    ax3.set_xticklabels(models, rotation=45, ha='right', fontsize=12)
+    ax3.set_yticklabels(models, fontsize=12)
     ax3.set_title('(d) Model Separation Distances', fontweight='bold', fontsize=14, pad=12)
     ax3.set_xlabel('Model', fontsize=12, fontweight='bold')
     ax3.set_ylabel('Model', fontsize=12, fontweight='bold')
@@ -215,7 +216,10 @@ def create_pca_4row_layout():
             ax3.text(j, i, f'{distance_matrix[i, j]:.1f}',
                     ha='center', va='center', color='white', fontweight='bold', fontsize=7)
     
-    cbar = plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.02)
+    # Use a separate colorbar axes so the main axes width is not reduced
+    divider = make_axes_locatable(ax3)
+    cax = divider.append_axes('right', size='3%', pad=0.05)
+    cbar = plt.colorbar(im, cax=cax)
     cbar.set_label('Distance', fontsize=12)
     
     # 4. Cross-Protocol Consistency (Row 2 Left)
@@ -238,9 +242,9 @@ def create_pca_4row_layout():
     colors = [data_df[data_df['Model'] == model].iloc[0]['Color'] for model in models_sorted]
     
     bars = ax4.bar(models_sorted, scores, color=colors, alpha=0.8, edgecolor='black')
-    ax4.set_ylabel('LOSO-LORO Distance (Lower = More Consistent)', fontweight='bold', fontsize=11, labelpad=10)
-    ax4.set_xlabel('Model', fontweight='bold', fontsize=11, labelpad=8)
-    ax4.set_title('(b) Cross-Protocol Consistency Analysis', fontweight='bold', fontsize=12, pad=12)
+    ax4.set_ylabel('LOSO-LORO Distance (Lower = More Consistent)', fontweight='bold', fontsize=12, labelpad=10)
+    ax4.set_xlabel('Model', fontweight='bold', fontsize=12, labelpad=8)
+    ax4.set_title('(b) Cross-Protocol Consistency Analysis', fontweight='bold', fontsize=14, pad=12)
     ax4.grid(True, alpha=0.3, axis='y')
     
     for bar, score in zip(bars, scores):
@@ -290,9 +294,9 @@ def create_pca_4row_layout():
     sns.heatmap(loadings_df, annot=True, fmt='.2f', cmap='RdBu_r', center=0,
                 square=False, linewidths=0.5, ax=ax6, 
                 annot_kws={'size': 7}, cbar_kws={'label': 'Loading Weight'})
-    ax6.set_title('(f) PCA Feature Loadings Matrix', fontweight='bold', fontsize=12, pad=12)
-    ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=10, labelpad=8)
-    ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=10, labelpad=8)
+    ax6.set_title('(f) PCA Feature Loadings Matrix', fontweight='bold', fontsize=14, pad=12)
+    ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=12, labelpad=8)
+    ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=12, labelpad=8)
     
     # 7. Feature Contributions (Row 4 Right)
     pc1_contributions = np.abs(loadings_df['PC1']).sort_values(ascending=True)
@@ -307,13 +311,13 @@ def create_pca_4row_layout():
     
     ax7.set_yticks(y_pos)
     ax7.set_yticklabels(pc1_contributions.index, fontsize=9)
-    ax7.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=10, labelpad=8)
-    ax7.set_title('(g) Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=12, pad=12)
-    ax7.legend(fontsize=9, loc='lower right', framealpha=0.8)
+    ax7.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=12, labelpad=8)
+    ax7.set_title('(g) Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=14, pad=12)
+    ax7.legend(fontsize=12, loc='lower right', framealpha=0.8)
     ax7.grid(True, alpha=0.3, axis='x')
     
     # Spacing for 4-row layout
-    plt.subplots_adjust(left=0.07, bottom=0.07, right=0.97, top=0.95)
+    plt.subplots_adjust(left=0.06, bottom=0.07, right=0.98, top=0.95)
     
     return fig, data_df, pca
 
