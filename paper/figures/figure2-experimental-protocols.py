@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Figure 2: Experimental Evaluation Protocols
-D2, CDAE, and STEA Protocol Visualization
+D2, CDAE, STEA, and PSTA/ESTA Protocol Visualization
 IEEE IoTJ Paper - WiFi CSI HAR
 """
 
@@ -246,7 +246,16 @@ def create_comprehensive_protocols():
     create_flow_arrow(ax, (3.5, 5), (7, 4), color='darkred', curve=0.2)
     create_flow_arrow(ax, (8, 5), (8, 4), color='darkred')
     create_flow_arrow(ax, (12.5, 5), (9, 4), color='darkred', curve=-0.2)
-    
+
+    # PSTA/ESTA stress and stability annotations
+    psta_box = Rectangle((2.0, 3.5), 4.0, 0.8, facecolor='#FFF3CD', edgecolor='darkorange', linewidth=1.5)
+    ax.add_patch(psta_box)
+    ax.text(4.0, 3.9, 'PSTA: Progressive Stress-Test', ha='center', va='center', fontsize=10, fontweight='bold', color='darkorange')
+
+    esta_box = Rectangle((10.0, 3.5), 4.0, 0.8, facecolor='#D6EAF8', edgecolor='darkblue', linewidth=1.5)
+    ax.add_patch(esta_box)
+    ax.text(12.0, 3.9, 'ESTA: Extended Stability', ha='center', va='center', fontsize=10, fontweight='bold', color='darkblue')
+
     # Final result box
     create_protocol_box(ax, (6, 2.5), 4, 1.2, 'Breakthrough Results', 
                        """✓ First systematic Sim2Real study in WiFi CSI HAR
@@ -419,7 +428,7 @@ def export_protocols_data():
 
 if __name__ == "__main__":
     print("📋 Generating Figure 2: Experimental Protocols...")
-    print("🔬 D2, CDAE, and STEA Protocol Visualization")
+    print("🔬 D2, CDAE, STEA, and PSTA/ESTA Protocol Visualization")
     
     # Generate comprehensive protocols diagram
     fig1, ax1 = create_comprehensive_protocols()

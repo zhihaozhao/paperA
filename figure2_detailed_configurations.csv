@@ -1,13 +1,13 @@
 Protocol,Parameter,Value
-D2,Models,4
-D2,Seeds,5
-D2,Noise_Levels,3
-D2,Overlap_Conditions,3
-D2,Difficulty_Levels,3
-D2,Time_Steps,3
-D2,Feature_Dims,3
-D2,Burst_Rates,3
-D2,Total_Configs,540
+Synthetic Robustness,Models,4
+Synthetic Robustness,Seeds,5
+Synthetic Robustness,Noise_Levels,3
+Synthetic Robustness,Overlap_Conditions,3
+Synthetic Robustness,Difficulty_Levels,3
+Synthetic Robustness,Time_Steps,3
+Synthetic Robustness,Feature_Dims,3
+Synthetic Robustness,Burst_Rates,3
+Synthetic Robustness,Total_Configs,540
 CDAE,Models,4
 CDAE,Protocols,2
 CDAE,Seeds,5
