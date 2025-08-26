@@ -278,7 +278,7 @@ def create_pca_4row_layout():
     except Exception:
         pass
     ax5.margins(x=0.04, y=0.04, z=0.04)
-    ax5.legend(fontsize=12, loc='center left', bbox_to_anchor=(-0.15, 0.5), framealpha=0.8)
+    ax5.legend(fontsize=12, loc='center left', bbox_to_anchor=(-0.22, 0.5), framealpha=0.8)
     
     # 6. PCA Feature Loadings Matrix (Row 4 Left)
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 

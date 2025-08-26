@@ -66,19 +66,21 @@ def create_fig():
         y2 = y_positions[i+1]
         arrow(ax, left_x + w/2, y1, left_x + w/2, y2)
 
-    # Right dashed model box (rough model diagram); extend downward and cover modules
-    dashed_x, dashed_y, dashed_w, dashed_h = 7.2, 0.9, 4.4, 4.6
+    # Right dashed model box (rough model diagram); extend to accommodate taller blocks
+    dashed_x, dashed_y, dashed_w, dashed_h = 7.2, 0.6, 4.6, 5.2
     dashed = Rectangle((dashed_x, dashed_y), dashed_w, dashed_h, fill=False, linestyle='--', linewidth=2.0, edgecolor='black')
     ax.add_patch(dashed)
     ax.text(dashed_x + dashed_w/2, dashed_y + dashed_h + 0.12, 'Enhanced Model (Rough Diagram)',
             ha='center', va='bottom', fontsize=12, fontweight='bold')
 
     # Contents inside dashed model box (rough blocks)
-    bx_x, bx_y, bx_w, bx_h = dashed_x + 0.3, dashed_y + dashed_h - 0.95, 3.8, 0.85
+    bx_x, bx_w = dashed_x + 0.3, 3.9
+    bx_h = 1.20
+    bx_y = dashed_y + dashed_h - (bx_h + 0.15)
     box(ax, bx_x, bx_y, bx_w, bx_h, 'Conv Blocks\n(3×3)\nC=[32,64,128]\nStride=[1,2,2]', '#FDEBD0')
-    box(ax, bx_x, bx_y - 1.10, bx_w, bx_h, 'SE Block\n(Reduction Ratio r=16)', '#FADBD8')
-    box(ax, bx_x, bx_y - 2.20, bx_w, bx_h, 'BiLSTM\n(Hidden=128 per\ndirection)', '#D5F5E3')
-    box(ax, bx_x, bx_y - 3.30, bx_w, bx_h, 'Temporal Attention\n(Heads=4)', '#E8DAEF')
+    box(ax, bx_x, bx_y - (bx_h + 0.25), bx_w, bx_h, 'SE Block\n(Reduction Ratio r=16)', '#FADBD8')
+    box(ax, bx_x, bx_y - 2*(bx_h + 0.25), bx_w, bx_h, 'BiLSTM\n(Hidden=128 per\ndirection)', '#D5F5E3')
+    box(ax, bx_x, bx_y - 3*(bx_h + 0.25), bx_w, bx_h, 'Temporal Attention\n(Heads=4)', '#E8DAEF')
 
     # Arrow from Enhanced Model (left column) to dashed model box
     enhanced_y = y_positions[-1]
