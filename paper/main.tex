@@ -411,7 +411,7 @@ The comprehensive analysis across all seven visualization panels validates that 
 
 \textbf{Cause→Effect: Why label efficiency matters.} \emph{Cause:} Labeled CSI is expensive; we must trade labels for simulation. \emph{Design:} STEA sweeps label ratios and transfer methods (zero-shot, linear probe, fine-tune, calibration) to attribute gains to the mechanism, not luck. \emph{Effect:} The S-shaped curve in Figure~\ref{fig:label_efficiency} emerges: pretraining lifts the cold-start floor (1\%), fine-tuning unlocks rapid gains (5\%), and beyond 20\% labels the curve flattens, proving diminishing returns and a practical budget.
 
-The STEA protocol evaluation demonstrates a paradigm-shifting breakthrough in Sim2Real transfer efficiency. Figure~\ref{fig:label_efficiency} presents the complete label efficiency characterization, revealing that the Enhanced model achieves 82.1±0.3\% macro F1 performance using only 20\% labeled real data. This represents merely a 1.2\% performance gap compared to full supervision (83.3%) while reducing labeling costs by 80%.
+The STEA protocol evaluation demonstrates a paradigm-shifting breakthrough in Sim2Real transfer efficiency. Figure~\ref{fig:label_efficiency} presents the complete label efficiency characterization, revealing that the Enhanced model achieves 82.1±0.3\% macro F1 performance using only 20\% labeled real data. This represents merely a 1.2\% performance gap compared to full supervision (83.3\%) while reducing labeling costs by 80\%.
 
 \begin{figure}[ht]
 \centering
@@ -468,7 +468,7 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 
 \textbf{Training process (the journey):} Each run begins with a fresh initialization and a shuffled curriculum of the hard synthetic episodes. In the first epochs, models quickly latch onto gross temporal rhythms; as the schedule advances and overlap/noise rise, only architectures with richer channel attention (Enhanced) continue to carve separable manifolds. The cosine annealing gently lowers the step size so late-phase updates refine decision boundaries instead of overreacting to noisy bursts. Early-stopping is the guardrail: we track macro F1 on a held-out slice of the hard regime and stop when improvements stall, yielding comparable checkpoints across seeds.
 
-\textbf{Validation spec (what we guarantee):} We validate on a fixed, unseen hard split drawn under the same parameter ranges but with disjoint seeds, to isolate generalization to \emph{conditions} (noise/overlap/drift) rather than memorization of episodes. Metrics include macro F1 (class-balance fairness) and Brier (probabilistic honesty). A run is accepted when: (i) the mean over seeds exceeds the model's own easy/medium baselines minus 1%, (ii) the standard deviation remains within 2% F1, and (iii) Brier tracks F1 (no inflated confidence). D6 replays the acceptance with independent GPU seeds; passing both stages indicates the behavior is architectural, not incidental.
+\textbf{Validation spec (what we guarantee):} We validate on a fixed, unseen hard split drawn under the same parameter ranges but with disjoint seeds, to isolate generalization to \emph{conditions} (noise/overlap/drift) rather than memorization of episodes. Metrics include macro F1 (class-balance fairness) and Brier (probabilistic honesty). A run is accepted when: (i) the mean over seeds exceeds the model's own easy/medium baselines minus 1\%, (ii) the standard deviation remains within 2\% F1, and (iii) Brier tracks F1 (no inflated confidence). D6 replays the acceptance with independent GPU seeds; passing both stages indicates the behavior is architectural, not incidental.
 
 \begin{figure}[ht]
 \centering
@@ -562,7 +562,7 @@ Our comprehensive CDAE and STEA protocol evaluation reveals paradigm-shifting br
 
 The CDAE protocol results enable transformative deployment strategies:
 
-\textbf{Train-Once-Deploy-Everywhere Strategy:} The Enhanced model's perfect cross-domain consistency enables a universal deployment approach where a single model maintains consistent performance across different subjects and environments without requiring site-specific or user-specific calibration. This capability reduces deployment complexity and maintenance overhead by an estimated 70-80%.
+\textbf{Train-Once-Deploy-Everywhere Strategy:} The Enhanced model's perfect cross-domain consistency enables a universal deployment approach where a single model maintains consistent performance across different subjects and environments without requiring site-specific or user-specific calibration. This capability reduces deployment complexity and maintenance overhead by an estimated 70-80\%.
 
 \textbf{Reduced Field Testing Requirements:} Traditional WiFi CSI HAR deployment requires extensive field testing across different subjects and environments. The CDAE results suggest that testing in one subject-environment combination can reliably predict performance in others, dramatically reducing deployment validation costs and timelines.
 
@@ -578,13 +578,13 @@ The STEA protocol breakthrough enables revolutionary cost-reduction approaches:
 
 \textbf{Rapid Deployment Timeline:} The 20\% labeling requirement translates to deployment timeline reduction from 6-12 months to 1-3 months, accelerating time-to-value for IoT sensing projects and reducing project risk.
 
-\textbf{Iterative Improvement Strategy:} The STEA efficiency curve enables iterative deployment where organizations start with minimal labeling (5-10%) for initial deployment and gradually increase labeling to optimize performance, reducing initial investment risk while enabling continuous improvement.
+\textbf{Iterative Improvement Strategy:} The STEA efficiency curve enables iterative deployment where organizations start with minimal labeling (5-10\%) for initial deployment and gradually increase labeling to optimize performance, reducing initial investment risk while enabling continuous improvement.
 
 \subsection{Economic Impact and Market Accessibility}
 
 \subsubsection{Quantified Cost-Benefit Analysis}
 
-\textbf{Direct Cost Reductions:} STEA demonstrates 80% labeling cost reduction plus CDAE eliminates multi-site adaptation costs (50-70% additional savings), resulting in total deployment cost reduction of 85-90% compared to traditional supervised learning approaches.
+\textbf{Direct Cost Reductions:} STEA demonstrates 80\% labeling cost reduction plus CDAE eliminates multi-site adaptation costs (50-70\% additional savings), resulting in total deployment cost reduction of 85-90\% compared to traditional supervised learning approaches.
 
 \textbf{Market Expansion:} The combined cost reductions expand the addressable market to include SMEs, developing markets, and edge computing applications previously constrained by high deployment costs.
 
@@ -616,7 +616,7 @@ This paper presents the first systematic study of physics-guided synthetic data 
 
 Key contributions include: (1) a novel physics-guided CSI data generator incorporating signal propagation physics, (2) systematic Sim2Real evaluation on benchmark datasets, (3) demonstration of significant sample efficiency improvements, (4) trustworthy evaluation protocols with calibration analysis, and (5) an enhanced model architecture with attention mechanisms.
 
-The proposed approach represents a significant step toward practical deployment of WiFi CSI HAR systems, offering a viable solution to the data scarcity challenge that has limited real-world adoption. By reducing real data requirements by 80% while achieving 82.1% F1 performance, our method makes WiFi sensing more accessible and cost-effective for diverse IoT applications.
+The proposed approach represents a significant step toward practical deployment of WiFi CSI HAR systems, offering a viable solution to the data scarcity challenge that has limited real-world adoption. By reducing real data requirements by 80\% while achieving 82.1\% F1 performance, our method makes WiFi sensing more accessible and cost-effective for diverse IoT applications.
 
 Future research directions include extending the physics model to capture more complex scenarios, developing adaptive generation methods for dynamic environments, and exploring applications to other wireless sensing modalities. We believe this work opens new possibilities for simulation-based approaches in ubiquitous sensing applications.
 
