@@ -4,7 +4,7 @@ Figure 2: Experimental Evaluation Protocols
 D2, CDAE, STEA, and PSTA/ESTA Protocol Visualization
 IEEE IoTJ Paper - WiFi CSI HAR
 """
-
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
@@ -12,7 +12,6 @@ from matplotlib.patches import FancyBboxPatch, ConnectionPatch, Rectangle, Circl
 import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
-from pathlib import Path
 
 # Set publication-ready style (fallback safe)
 try:
@@ -28,12 +27,12 @@ plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman'],
     'font.size': 12,
-    'axes.labelsize': 13,
-    'axes.titlesize': 15,
-    'xtick.labelsize': 11,
-    'ytick.labelsize': 11,
-    'legend.fontsize': 11,
-    'figure.titlesize': 16,
+    'axes.labelsize': 12,
+    'axes.titlesize': 14,
+    'xtick.labelsize': 12,
+    'ytick.labelsize': 12,
+    'legend.fontsize': 12,
+    'figure.titlesize': 14,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
@@ -60,9 +59,9 @@ def create_protocol_box(ax, xy, width, height, title, content, color, title_colo
     )
     ax.add_patch(box)
     
-    # Title box
+    # Title box (taller to accommodate 14pt)
     title_box = FancyBboxPatch(
-        xy, width, 0.4,
+        xy, width, 0.5,
         boxstyle="round,pad=0.01",
         facecolor='#DDE7FF',
         edgecolor='black',
@@ -71,16 +70,16 @@ def create_protocol_box(ax, xy, width, height, title, content, color, title_colo
     )
     ax.add_patch(title_box)
     
-    # Title text
-    ax.text(xy[0] + width/2, xy[1] + 0.2, title, 
+    # Title text (14pt)
+    ax.text(xy[0] + width/2, xy[1] + 0.25, title, 
            ha='center', va='center', 
-           fontsize=10, fontweight='bold', color=title_color, wrap=True)
+           fontsize=14, fontweight='bold', color=title_color, wrap=True)
     
-    # Content text
-    ax.text(xy[0] + width/2, xy[1] + height/2 - 0.1, content, 
+    # Content text (12pt)
+    ax.text(xy[0] + width/2, xy[1] + height/2 - 0.05, content, 
            ha='center', va='center', 
-           fontsize=9, color='black', wrap=True,
-           bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9))
+           fontsize=12, color='black', wrap=True,
+           bbox=dict(boxstyle='round,pad=0.28', facecolor='white', alpha=0.9))
     
     return box
 
@@ -97,12 +96,12 @@ def create_flow_arrow(ax, start, end, label='', color='blue', curve=0):
                               mutation_scale=20, fc=color, ec=color, linewidth=2)
     ax.add_patch(arrow)
     
-    # Add label if provided
+    # Add label if provided (12pt)
     if label:
         mid_x = (start[0] + end[0]) / 2
         mid_y = (start[1] + end[1]) / 2 + curve * 0.5
         ax.text(mid_x, mid_y, label, ha='center', va='center',
-               fontsize=7, fontweight='bold', color=color,
+               fontsize=12, fontweight='bold', color=color,
                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', alpha=0.9))
     
     return arrow
@@ -111,11 +110,11 @@ def create_comprehensive_protocols():
     """
     Create comprehensive experimental protocols diagram
     """
-    fig, ax = plt.subplots(figsize=(16, 12))
+    fig, ax = plt.subplots(figsize=(17.5, 12))
     
     # Title
-    ax.text(8, 11.5, 'Comprehensive Experimental Evaluation Protocols', 
-           ha='center', va='center', fontsize=16, fontweight='bold')
+    ax.text(8.5, 11.5, 'Comprehensive Experimental Evaluation Protocols', 
+           ha='center', va='center', fontsize=14, fontweight='bold')
     
     # Protocol colors
     protocol_colors = {
@@ -125,8 +124,8 @@ def create_comprehensive_protocols():
     }
     
     # === Synthetic Robustness Validation (Left Column) ===
-    ax.text(3, 10.5, 'Synthetic Robustness\nValidation (SRD)', fontsize=15, fontweight='bold', color='darkorange', wrap=True)
-    ax.text(3, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=11, color='darkorange', style='italic')
+    ax.text(3.2, 10.5, 'Synthetic Robustness\nValidation (SRD)', fontsize=14, fontweight='bold', color='darkorange', wrap=True)
+    ax.text(3.2, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=12, color='darkorange', style='italic')
     
     d2_content = """Objective: Validate synthetic data quality
     • 540 configurations tested
@@ -135,26 +134,23 @@ def create_comprehensive_protocols():
     • Difficulty: {easy, medium, hard}
     • Models: 4 architectures × 5 seeds"""
     
-    create_protocol_box(ax, (0.5, 8.5), 5, 1.8, 'Synthetic Robustness: 540 Configs', 
+    create_protocol_box(ax, (0.5, 8.5), 6.0, 2.0, 'Synthetic Robustness: 540 Configs', 
                        d2_content, protocol_colors['d2'])
     
     # D2 Flow diagram
     d2_boxes = [
-        {'pos': (0.8, 7.5), 'size': (1.2, 0.6), 'label': 'Synthetic\nGeneration', 'color': '#FFCC99'},
-        {'pos': (2.2, 7.5), 'size': (1.2, 0.6), 'label': 'Noise\nInjection', 'color': '#FFB366'},
-        {'pos': (3.6, 7.5), 'size': (1.2, 0.6), 'label': 'Multi-Model\nTesting', 'color': '#FF9933'}
+        {'pos': (0.8, 7.5), 'size': (1.6, 0.8), 'label': 'Synthetic\nGeneration', 'color': '#FFCC99'},
+        {'pos': (2.6, 7.5), 'size': (1.6, 0.8), 'label': 'Noise\nInjection', 'color': '#FFB366'},
+        {'pos': (4.4, 7.5), 'size': (1.6, 0.8), 'label': 'Multi-Model\nTesting', 'color': '#FF9933'}
     ]
     
     for i, box_info in enumerate(d2_boxes):
-        FancyBboxPatch(box_info['pos'], box_info['size'][0], box_info['size'][1],
-                      boxstyle="round,pad=0.01", facecolor=box_info['color'],
-                      edgecolor='black', linewidth=1)
         ax.add_patch(FancyBboxPatch(box_info['pos'], box_info['size'][0], box_info['size'][1],
                                    boxstyle="round,pad=0.01", facecolor=box_info['color'],
                                    edgecolor='black', linewidth=1))
         ax.text(box_info['pos'][0] + box_info['size'][0]/2, 
                box_info['pos'][1] + box_info['size'][1]/2,
-               box_info['label'], ha='center', va='center', fontsize=8, fontweight='bold')
+               box_info['label'], ha='center', va='center', fontsize=12, fontweight='bold')
         
         if i < len(d2_boxes) - 1:
             create_flow_arrow(ax, 
@@ -163,8 +159,8 @@ def create_comprehensive_protocols():
                             color='darkorange')
     
     # === CDAE Protocol (Middle Column) ===
-    ax.text(8, 10.5, 'CDAE Protocol', fontsize=14, fontweight='bold', color='darkgreen')
-    ax.text(8, 10.2, 'Cross-Domain Adaptation Evaluation', fontsize=11, color='darkgreen', style='italic')
+    ax.text(8.8, 10.5, 'CDAE Protocol', fontsize=14, fontweight='bold', color='darkgreen')
+    ax.text(8.8, 10.2, 'Cross-Domain Adaptation Evaluation', fontsize=12, color='darkgreen', style='italic')
     
     cdae_content = """Objective: Cross-domain generalization
     • LOSO: Leave-One-Subject-Out
@@ -173,31 +169,31 @@ def create_comprehensive_protocols():
     • 4 models × 2 protocols × 5 seeds
     • Target: Domain-agnostic performance"""
     
-    create_protocol_box(ax, (5.5, 8.5), 5, 1.8, 'CDAE: Cross-Domain Excellence', 
+    create_protocol_box(ax, (5.5, 8.5), 6.0, 2.0, 'CDAE: Cross-Domain Excellence', 
                        cdae_content, protocol_colors['cdae'])
     
     # CDAE Visual representation
     # LOSO representation
-    ax.text(6.5, 7.8, 'LOSO Evaluation', fontsize=10, fontweight='bold', color='darkgreen')
+    ax.text(6.8, 7.9, 'LOSO Evaluation', fontsize=12, fontweight='bold', color='darkgreen')
     subjects = ['S1', 'S2', 'S3', 'S4', 'Test']
     for i, subj in enumerate(subjects):
         color = '#FF6B6B' if subj == 'Test' else '#4ECDC4'
-        circle = Circle((6.2 + i*0.4, 7.4), 0.15, facecolor=color, edgecolor='black', linewidth=1)
+        circle = Circle((6.2 + i*0.5, 7.4), 0.24, facecolor=color, edgecolor='black', linewidth=1)
         ax.add_patch(circle)
-        ax.text(6.2 + i*0.4, 7.4, subj, ha='center', va='center', fontsize=7, fontweight='bold')
+        ax.text(6.2 + i*0.5, 7.4, subj, ha='center', va='center', fontsize=12, fontweight='bold')
     
     # LORO representation
-    ax.text(8.5, 7.8, 'LORO Evaluation', fontsize=10, fontweight='bold', color='darkgreen')
+    ax.text(9.4, 7.9, 'LORO Evaluation', fontsize=12, fontweight='bold', color='darkgreen')
     rooms = ['R1', 'R2', 'R3', 'Test']
     for i, room in enumerate(rooms):
         color = '#FF6B6B' if room == 'Test' else '#95E1D3'
-        rect = Rectangle((8.2 + i*0.4, 7.25), 0.3, 0.3, facecolor=color, edgecolor='black', linewidth=1)
+        rect = Rectangle((8.2 + i*0.55, 7.25), 0.45, 0.45, facecolor=color, edgecolor='black', linewidth=1)
         ax.add_patch(rect)
-        ax.text(8.35 + i*0.4, 7.4, room, ha='center', va='center', fontsize=7, fontweight='bold')
+        ax.text(8.425 + i*0.55, 7.475, room, ha='center', va='center', fontsize=12, fontweight='bold')
     
     # === STEA Protocol (Right Column) ===
-    ax.text(13, 10.5, 'STEA Protocol', fontsize=14, fontweight='bold', color='darkblue')
-    ax.text(13, 10.2, 'Sim2Real Transfer Efficiency Assessment', fontsize=11, color='darkblue', style='italic')
+    ax.text(13.8, 10.5, 'STEA Protocol', fontsize=14, fontweight='bold', color='darkblue')
+    ax.text(13.8, 10.2, 'Sim2Real Transfer Efficiency Assessment', fontsize=12, color='darkblue', style='italic')
     
     stea_content = """Objective: Label efficiency quantification
     • Transfer methods: 4 approaches
@@ -206,66 +202,63 @@ def create_comprehensive_protocols():
     • Target: Minimal real data requirement
     • Result: 82.1% F1 @ 20% labels"""
     
-    create_protocol_box(ax, (10.5, 8.5), 5, 1.8, 'STEA: Transfer Efficiency', 
+    create_protocol_box(ax, (10.5, 8.5), 6.0, 2.0, 'STEA: Transfer Efficiency', 
                        stea_content, protocol_colors['stea'])
     
     # STEA Transfer methods visualization
     transfer_methods = [
-        {'name': 'Zero-shot', 'pos': (11, 7.5), 'color': '#FF9999'},
-        {'name': 'Linear Probe', 'pos': (12, 7.5), 'color': '#FFCC99'},
-        {'name': 'Fine-tune', 'pos': (13.5, 7.5), 'color': '#99FF99'},
-        {'name': 'Temp Scaling', 'pos': (14.8, 7.5), 'color': '#99CCFF'}
+        {'name': 'Zero-shot', 'pos': (11.2, 7.5), 'color': '#FF9999'},
+        {'name': 'Linear Probe', 'pos': (12.6, 7.5), 'color': '#FFCC99'},
+        {'name': 'Fine-tune', 'pos': (14.2, 7.5), 'color': '#99FF99'},
+        {'name': 'Temp Scaling', 'pos': (15.6, 7.5), 'color': '#99CCFF'}
     ]
     
     for method in transfer_methods:
-        circle = Circle(method['pos'], 0.2, facecolor=method['color'], edgecolor='black', linewidth=1)
+        circle = Circle(method['pos'], 0.24, facecolor=method['color'], edgecolor='black', linewidth=1)
         ax.add_patch(circle)
         ax.text(method['pos'][0], method['pos'][1], method['name'][:4], 
-               ha='center', va='center', fontsize=6, fontweight='bold')
+               ha='center', va='center', fontsize=12, fontweight='bold')
     
     # Label efficiency arrow
-    ax.annotate('', xy=(14.5, 6.8), xytext=(11.5, 6.8),
+    ax.annotate('', xy=(14.8, 6.8), xytext=(11.6, 6.8),
                arrowprops=dict(arrowstyle='<->', lw=2, color='darkblue'))
-    ax.text(13, 6.5, 'Label Efficiency: 1% -> 100%', ha='center', fontsize=9, 
+    ax.text(13.2, 6.5, 'Label Efficiency: 1% -> 100%', ha='center', fontsize=12, 
            fontweight='bold', color='darkblue')
     
     # === Integration Flow ===
-    ax.text(8, 6, 'Protocol Integration and Results', fontsize=14, fontweight='bold', color='darkred')
+    ax.text(8.8, 6, 'Protocol Integration and Results', fontsize=14, fontweight='bold', color='darkred')
     
     # Integration boxes
     integration_boxes = [
-        {'pos': (2, 5), 'size': (3, 0.8), 'label': 'Synthetic Robustness\n✓ Synthetic data quality', 'color': '#FFE5B4'},
-        {'pos': (6.5, 5), 'size': (3, 0.8), 'label': 'CDAE Generalization\n✓ 83.0±0.1% Cross-domain', 'color': '#C8E6C9'},
-        {'pos': (11, 5), 'size': (3, 0.8), 'label': 'STEA Efficiency\n✓ 82.1% @ 20% labels', 'color': '#E1F5FE'}
+        {'pos': (2, 5), 'size': (3.6, 0.9), 'label': 'Synthetic Robustness\n✓ Synthetic data quality', 'color': '#FFE5B4'},
+        {'pos': (6.5, 5), 'size': (3.6, 0.9), 'label': 'CDAE Generalization\n✓ 83.0±0.1% Cross-domain', 'color': '#C8E6C9'},
+        {'pos': (11, 5), 'size': (3.6, 0.9), 'label': 'STEA Efficiency\n✓ 82.1% @ 20% labels', 'color': '#E1F5FE'}
     ]
     
     for box_info in integration_boxes:
-        FancyBboxPatch(box_info['pos'], box_info['size'][0], box_info['size'][1],
-                      boxstyle="round,pad=0.02", facecolor=box_info['color'],
-                      edgecolor='darkred', linewidth=2)
         ax.add_patch(FancyBboxPatch(box_info['pos'], box_info['size'][0], box_info['size'][1],
                                    boxstyle="round,pad=0.02", facecolor=box_info['color'],
                                    edgecolor='darkred', linewidth=2))
         ax.text(box_info['pos'][0] + box_info['size'][0]/2, 
                box_info['pos'][1] + box_info['size'][1]/2,
-               box_info['label'], ha='center', va='center', fontsize=9, fontweight='bold')
+               box_info['label'], ha='center', va='center', fontsize=12, fontweight='bold')
     
     # Convergence arrows
-    create_flow_arrow(ax, (3.5, 5), (7, 4), color='darkred', curve=0.2)
-    create_flow_arrow(ax, (8, 5), (8, 4), color='darkred')
-    create_flow_arrow(ax, (12.5, 5), (9, 4), color='darkred', curve=-0.2)
+    create_flow_arrow(ax, (3.8, 5.45), (7.0, 4.1), color='darkred', curve=0.2)
+    create_flow_arrow(ax, (8.3, 5.45), (8.8, 4.1), color='darkred')
+    create_flow_arrow(ax, (12.8, 5.45), (9.6, 4.1), color='darkred', curve=-0.2)
 
     # PSTA/ESTA stress and stability annotations
-    psta_box = Rectangle((2.0, 3.5), 4.0, 0.8, facecolor='#FFF3CD', edgecolor='darkorange', linewidth=1.5)
+    psta_box = Rectangle((2.0, 3.5), 4.4, 0.9, facecolor='#FFF3CD', edgecolor='darkorange', linewidth=1.5)
     ax.add_patch(psta_box)
-    ax.text(4.0, 3.9, 'PSTA: Progressive Stress-Test', ha='center', va='center', fontsize=10, fontweight='bold', color='darkorange')
+    ax.text(4.2, 3.95, 'PSTA: Progressive Stress-Test', ha='center', va='center', fontsize=12, fontweight='bold', color='darkorange')
 
-    esta_box = Rectangle((10.0, 3.5), 4.0, 0.8, facecolor='#D6EAF8', edgecolor='darkblue', linewidth=1.5)
+    esta_box = Rectangle((10.0, 3.5), 4.4, 0.9, facecolor='#D6EAF8', edgecolor='darkblue', linewidth=1.5)
     ax.add_patch(esta_box)
-    ax.text(12.0, 3.9, 'ESTA: Extended Stability', ha='center', va='center', fontsize=10, fontweight='bold', color='darkblue')
+    ax.text(12.2, 3.95, 'ESTA: Extended Stability', ha='center', va='center', fontsize=12, fontweight='bold', color='darkblue')
 
     # Final result box
-    create_protocol_box(ax, (6, 2.5), 4, 1.2, 'Breakthrough Results', 
+    create_protocol_box(ax, (6, 2.5), 5.2, 1.4, 'Breakthrough Results', 
                        """✓ First systematic Sim2Real study in WiFi CSI HAR
     ✓ 83.0±0.1% F1 perfect cross-domain consistency
     ✓ 82.1% F1 using only 20% labeled real data
@@ -274,7 +267,7 @@ def create_comprehensive_protocols():
                        '#FFD700', title_color='black')
     
     # === Statistical Significance Section ===
-    ax.text(2, 1.8, 'Statistical Validation', fontsize=12, fontweight='bold', color='purple')
+    ax.text(2, 1.9, 'Statistical Validation', fontsize=14, fontweight='bold', color='purple')
     
     stats_content = [
         "• Significance testing: p-values computed",
@@ -285,10 +278,10 @@ def create_comprehensive_protocols():
     ]
     
     for i, stat in enumerate(stats_content):
-        ax.text(0.5, 1.4 - i*0.15, stat, fontsize=8, color='purple')
+        ax.text(0.6, 1.55 - i*0.22, stat, fontsize=12, color='purple')
     
     # === Performance Metrics Table ===
-    ax.text(12, 1.8, 'Key Performance Summary', fontsize=13, fontweight='bold', color='darkblue')
+    ax.text(12.2, 1.9, 'Key Performance Summary', fontsize=14, fontweight='bold', color='darkblue')
     
     metrics = [
         ["Protocol", "Key Metric", "Achievement"],
@@ -301,17 +294,17 @@ def create_comprehensive_protocols():
         for j, cell in enumerate(row):
             weight = 'bold' if i == 0 else 'normal'
             color = 'darkblue' if i == 0 else 'black'
-            ax.text(11 + j*1.5, 1.4 - i*0.15, cell, fontsize=8, 
+            ax.text(11.2 + j*1.8, 1.55 - i*0.22, cell, fontsize=12, 
                    fontweight=weight, color=color)
     
     # Set axis properties
-    ax.set_xlim(0, 16)
+    ax.set_xlim(0, 18)
     ax.set_ylim(2, 12)
     ax.set_aspect('equal')
     ax.axis('off')
     
-    # Add subtle background grid
-    for i in range(1, 16):
+    # Subtle background grid (unchanged spacing)
+    for i in range(1, 18):
         ax.axvline(x=i, color='lightgray', alpha=0.2, linewidth=0.5)
     for i in range(2, 12):
         ax.axhline(y=i, color='lightgray', alpha=0.2, linewidth=0.5)
@@ -327,16 +320,16 @@ def create_protocol_flowchart():
     fig, ax = plt.subplots(figsize=(14, 8))
     
     ax.text(7, 7.5, 'Experimental Protocol Flowchart', 
-           ha='center', va='center', fontsize=16, fontweight='bold')
+           ha='center', va='center', fontsize=14, fontweight='bold')
     
     # Define flowchart stages
     stages = [
-        {'pos': (1, 6), 'size': (2.5, 0.8), 'label': 'Physics-Guided\nSynthetic Generation', 'color': '#FFE5B4'},
-        {'pos': (5, 6.5), 'size': (2, 0.6), 'label': 'Synthetic Robustness\nValidation', 'color': '#FFD700'},
-        {'pos': (5, 5.5), 'size': (2, 0.6), 'label': 'Enhanced Model\nTraining', 'color': '#FFC0CB'},
-        {'pos': (9, 6.5), 'size': (2, 0.6), 'label': 'CDAE Protocol\nCross-Domain', 'color': '#C8E6C9'},
-        {'pos': (9, 5.5), 'size': (2, 0.6), 'label': 'STEA Protocol\nTransfer Efficiency', 'color': '#E1F5FE'},
-        {'pos': (12.5, 6), 'size': (2, 0.8), 'label': 'Trustworthy\nEvaluation', 'color': '#E6E6FA'}
+        {'pos': (1, 6), 'size': (3.2, 0.9), 'label': 'Physics-Guided\nSynthetic Generation', 'color': '#FFE5B4'},
+        {'pos': (5, 6.5), 'size': (2.8, 0.8), 'label': 'Synthetic Robustness\nValidation', 'color': '#FFD700'},
+        {'pos': (5, 5.5), 'size': (2.8, 0.8), 'label': 'Enhanced Model\nTraining', 'color': '#FFC0CB'},
+        {'pos': (9, 6.5), 'size': (2.8, 0.8), 'label': 'CDAE Protocol\nCross-Domain', 'color': '#C8E6C9'},
+        {'pos': (9, 5.5), 'size': (2.8, 0.8), 'label': 'STEA Protocol\nTransfer Efficiency', 'color': '#E1F5FE'},
+        {'pos': (12.5, 6), 'size': (3.0, 0.9), 'label': 'Trustworthy\nEvaluation', 'color': '#E6E6FA'}
     ]
     
     # Create boxes
@@ -354,16 +347,16 @@ def create_protocol_flowchart():
         ax.text(stage['pos'][0] + stage['size'][0]/2, 
                stage['pos'][1] + stage['size'][1]/2,
                stage['label'], ha='center', va='center',
-               fontsize=10, fontweight='bold')
+               fontsize=12, fontweight='bold')
     
     # Add arrows between stages
     arrows = [
-        ((3.5, 6.4), (5, 6.8)),      # Generation to SRV
-        ((3.5, 6.4), (5, 5.8)),      # Generation to Training
-        ((7, 6.8), (9, 6.8)),        # SRV to CDAE
-        ((7, 5.8), (9, 5.8)),        # Training to STEA  
-        ((11, 6.8), (12.5, 6.5)),    # CDAE to Evaluation
-        ((11, 5.8), (12.5, 6.3))     # STEA to Evaluation
+        ((4.2, 6.6), (5.0, 6.9)),      # Generation to SRV
+        ((4.2, 6.6), (5.0, 5.9)),      # Generation to Training
+        ((7.8, 6.9), (9.0, 6.9)),      # SRV to CDAE
+        ((7.8, 5.9), (9.0, 5.9)),      # Training to STEA  
+        ((11.8, 6.9), (12.5, 6.6)),    # CDAE to Evaluation
+        ((11.8, 5.9), (12.5, 6.4))     # STEA to Evaluation
     ]
     
     for start, end in arrows:
@@ -373,7 +366,7 @@ def create_protocol_flowchart():
     ax.text(7, 4, 'Breakthrough Results Achieved', ha='center', fontsize=14, 
            fontweight='bold', color='darkred')
     
-    results_box = Rectangle((3, 2.5), 8, 1.2, facecolor='#FFE4E1', 
+    results_box = Rectangle((3, 2.5), 8.5, 1.4, facecolor='#FFE4E1', 
                            edgecolor='darkred', linewidth=2)
     ax.add_patch(results_box)
     
@@ -382,7 +375,7 @@ def create_protocol_flowchart():
     • Unprecedented Cost Reduction: 80% labeling cost savings
     • Statistical Significance: Rigorous p-value testing and confidence intervals"""
     
-    ax.text(7, 3.1, results_text, ha='center', va='center', fontsize=10,
+    ax.text(7.25, 3.2, results_text, ha='center', va='center', fontsize=12,
            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.9))
     
     ax.set_xlim(0, 15)
@@ -443,27 +436,21 @@ if __name__ == "__main__":
     FIGS = REPO / "paper" / "figures"
     FIGS.mkdir(parents=True, exist_ok=True)
 
-    # Generate comprehensive protocols diagram for canonical (larger font) export
+    # Generate comprehensive protocols diagram for canonical export
     fig_full, ax_full = create_comprehensive_protocols()
-    scale_fonts(fig_full, 1.15)
     fig_full.savefig(FIGS / 'fig4_experimental_protocols.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
     print("✅ Saved: fig4_experimental_protocols.pdf")
 
     # Generate simplified flowchart
     fig_flow, ax_flow = create_protocol_flowchart()
-    scale_fonts(fig_flow, 1.05)
     fig_flow.savefig(FIGS / 'fig4_protocol_flowchart.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
     print("✅ Saved: fig4_protocol_flowchart.pdf")
 
-    # Overview (compact) export: regenerate and downscale fonts to avoid overlap
+    # Overview (compact) export (keep same fonts as requested)
     fig_over, ax_over = create_comprehensive_protocols()
-    fig_over.set_size_inches(7.2, 4.5)
-    scale_fonts(fig_over, 0.80)
+    fig_over.set_size_inches(7.8, 5.2)
     fig_over.savefig(FIGS / 'fig4_experimental_overview.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none', pad_inches=0.06)
     print("✅ Saved: figure4_experimental_overview.pdf (double-column)")
-
-    # Export data
-    export_protocols_data()
 
     # Display plots
     plt.show()
