@@ -1,0 +1,7 @@
+model: multiscale_lstm_lite_attn
+hidden_dims: [64, 64]
+scales: [1, 2, 4]
+attention: lite
+se: true
+pinn: {enabled: false, lambda: 0.0}
+train: {epochs: 50, batch_size: 64, lr: 1e-3, seeds: [0,1,2,3,4]}
