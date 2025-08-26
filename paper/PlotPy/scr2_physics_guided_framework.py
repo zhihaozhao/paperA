@@ -34,7 +34,7 @@ def arrow(ax, x1, y1, x2, y2, color='black'):
 def create_fig():
     fig, ax = plt.subplots(figsize=(10.5, 6.0))
     ax.set_xlim(0, 12)
-    ax.set_ylim(0, 6.5)
+    ax.set_ylim(-0.8, 7.8)
     ax.axis('off')
 
     ax.set_title('Physics-Guided Sim2Real Framework (2D)', fontweight='bold', color='black', pad=24)
@@ -44,7 +44,7 @@ def create_fig():
     w = 3.2
     h = 1.0
     spacing = 0.35
-    base_y = 0.7
+    base_y = 0.7 - (h + spacing)
     labels = [
         'Data Acquisition\n(Raw CSI\nStreams)',
         'Preprocessing\n(Sync, Denoise,\nNormalization)',
