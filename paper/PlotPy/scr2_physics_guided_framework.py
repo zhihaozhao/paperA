@@ -37,7 +37,7 @@ def create_fig():
     ax.set_ylim(0, 6.5)
     ax.axis('off')
 
-    ax.set_title('Physics-Guided Sim2Real Framework (2D)', fontweight='bold', color='black')
+    ax.set_title('Physics-Guided Sim2Real Framework (2D)', fontweight='bold', color='black', pad=24)
 
     # Left column: complete process modules (bottom to top) with larger spacing
     left_x = 0.6
@@ -70,15 +70,15 @@ def create_fig():
     dashed_x, dashed_y, dashed_w, dashed_h = 7.2, 0.9, 4.4, 4.6
     dashed = Rectangle((dashed_x, dashed_y), dashed_w, dashed_h, fill=False, linestyle='--', linewidth=2.0, edgecolor='black')
     ax.add_patch(dashed)
-    ax.text(dashed_x + dashed_w/2, dashed_y + dashed_h + 0.25, 'Enhanced Model (Rough Diagram)',
+    ax.text(dashed_x + dashed_w/2, dashed_y + dashed_h + 0.12, 'Enhanced Model (Rough Diagram)',
             ha='center', va='bottom', fontsize=12, fontweight='bold')
 
     # Contents inside dashed model box (rough blocks)
-    bx_x, bx_y, bx_w, bx_h = dashed_x + 0.3, dashed_y + dashed_h - 1.2, 3.8, 0.72
-    box(ax, bx_x, bx_y, bx_w, bx_h, 'Conv Blocks\n(3×3, C=[32,64,128], Stride=[1,2,2])', '#FDEBD0')
-    box(ax, bx_x, bx_y - 1.0, bx_w, bx_h, 'SE Block\n(Reduction Ratio r=16)', '#FADBD8')
-    box(ax, bx_x, bx_y - 2.0, bx_w, bx_h, 'BiLSTM\n(Hidden=128 per\ndirection)', '#D5F5E3')
-    box(ax, bx_x, bx_y - 3.0, bx_w, bx_h, 'Temporal Attention\n(Heads=4)', '#E8DAEF')
+    bx_x, bx_y, bx_w, bx_h = dashed_x + 0.3, dashed_y + dashed_h - 0.95, 3.8, 0.85
+    box(ax, bx_x, bx_y, bx_w, bx_h, 'Conv Blocks\n(3×3)\nC=[32,64,128]\nStride=[1,2,2]', '#FDEBD0')
+    box(ax, bx_x, bx_y - 1.10, bx_w, bx_h, 'SE Block\n(Reduction Ratio r=16)', '#FADBD8')
+    box(ax, bx_x, bx_y - 2.20, bx_w, bx_h, 'BiLSTM\n(Hidden=128 per\ndirection)', '#D5F5E3')
+    box(ax, bx_x, bx_y - 3.30, bx_w, bx_h, 'Temporal Attention\n(Heads=4)', '#E8DAEF')
 
     # Arrow from Enhanced Model (left column) to dashed model box
     enhanced_y = y_positions[-1]
