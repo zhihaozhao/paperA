@@ -81,15 +81,16 @@ def create_fig():
         if i < 3:
             arrow(ax, x + w, top_y + h/2, col_x(i+1), top_y + h/2, elbow=False)
 
-    # Bottom row: modules 4..7
-    for i in range(4, 8):
-        x = col_x(i - 4)
-        box(ax, x, bottom_y, w, h, labels[i], colors[i])
-        if i < 7:
-            arrow(ax, x + w, bottom_y + h/2, col_x(i - 3), bottom_y + h/2, elbow=False)
+    # Bottom row: modules 4..7 placed from right to left
+    for k, j in enumerate(range(4, 8)):
+        x = col_x(3 - k)
+        box(ax, x, bottom_y, w, h, labels[j], colors[j])
+        if j < 7:
+            # Arrow from current box's left edge to next left neighbor's right edge
+            arrow(ax, x, bottom_y + h/2, col_x(3 - (k + 1)) + w, bottom_y + h/2, elbow=False)
 
-    # Transition arrow from top row last box to bottom row first box (L-shaped)
-    arrow(ax, col_x(3) + w, top_y + h/2, col_x(0), bottom_y + h/2, elbow=True)
+    # Transition arrow from top row last box to bottom row first box: vertical drop at rightmost col
+    arrow(ax, col_x(3) + w/2, top_y, col_x(3) + w/2, bottom_y + h, elbow=False)
 
     # Notes panel below
     ax.text(left + 2*(w + gap_x), 1.1,
