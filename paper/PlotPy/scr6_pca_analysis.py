@@ -15,6 +15,7 @@ from matplotlib.patches import Ellipse
 import warnings
 warnings.filterwarnings('ignore')
 from pathlib import Path
+from matplotlib import gridspec
 
 # Configure for IEEE IoTJ standards with optimized fonts
 plt.rcParams.update({
@@ -86,8 +87,13 @@ def simulate_feature_space_data():
     
     return pd.DataFrame(data_records), full_features
 
-def create_pca_3x2_layout():
-    """Create 3 rows × 2 columns layout: Column 1 (3 plots), Column 2 (4 plots)"""
+def create_pca_4row_layout():
+    """Create 4-row, 2-column layout per spec:
+    Row1: PCA feature space spans 2 columns
+    Row2: Left cross-protocol consistency, Right PCA explained variance
+    Row3: Right column split vertically: Top model separation distances, Bottom 3D feature space
+    Row4: Left PCA feature loadings matrix, Right feature contributions
+    """
     data_df, features = simulate_feature_space_data()
     
     # Perform PCA
@@ -100,44 +106,33 @@ def create_pca_3x2_layout():
     for i in range(min(pca_result.shape[1], 3)):
         data_df[f'PC{i+1}'] = pca_result[:, i]
     
-    # Create figure: 3 rows × 2 columns layout
-    fig = plt.figure(figsize=(16, 12))
+    # Create figure: 4 rows × 2 columns layout (with nested grid for row3 right)
+    fig = plt.figure(figsize=(14.0, 12.5))
+    gs = gridspec.GridSpec(4, 2, height_ratios=[1.2, 1.0, 1.0, 1.1], hspace=0.58, wspace=0.35)
     
-    # Column 1 (Left): 3 plots stacked vertically
-    # Row 1, Col 1: Main PCA Feature Space Analysis
-    ax1 = plt.subplot2grid((6, 4), (0, 0), colspan=2, rowspan=2)
-    # Panel label (a)
+    # Row1: Main PCA Feature Space spans 2 columns
+    ax1 = fig.add_subplot(gs[0, :])
     ax1.text(0.01, 0.98, '(a)', transform=ax1.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
-    # Row 2, Col 1: Cross-Protocol Consistency Analysis  
-    ax4 = plt.subplot2grid((6, 4), (2, 0), colspan=2, rowspan=2)
-    # Panel label (b)
+    # Row2: Left cross-protocol consistency; Right explained variance
+    ax4 = fig.add_subplot(gs[1, 0])
     ax4.text(0.01, 0.98, '(b)', transform=ax4.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
+    ax2 = fig.add_subplot(gs[1, 1])
+    ax2.text(0.01, 0.98, '(c)', transform=ax2.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
-    # Row 3, Col 1: PCA Feature Loadings Matrix
-    ax6 = plt.subplot2grid((6, 4), (4, 0), colspan=2, rowspan=2)
-    # Panel label (c)
-    ax6.text(0.01, 0.98, '(c)', transform=ax6.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
+    # Row3: Right column split vertically (top model separation, bottom 3D)
+    ax3_blank_left = fig.add_subplot(gs[2, 0])
+    ax3_blank_left.axis('off')
+    sub_gs_r3 = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=gs[2, 1], height_ratios=[1.0, 1.0], hspace=0.28)
+    ax3 = fig.add_subplot(sub_gs_r3[0, 0])
+    ax3.text(0.01, 0.98, '(d)', transform=ax3.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
+    ax5 = fig.add_subplot(sub_gs_r3[1, 0], projection='3d')
+    ax5.text2D(0.01, 0.98, '(e)', transform=ax5.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
-    # Column 2 (Right): 4 plots in 2×2 arrangement
-    # Row 1 top, Col 2: PCA Explained Variance
-    ax2 = plt.subplot2grid((6, 4), (0, 2), colspan=2, rowspan=1)
-    # Panel label (d)
-    ax2.text(0.01, 0.98, '(d)', transform=ax2.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
-    
-    # Row 1 bottom, Col 2: Model Separation Distances  
-    ax3 = plt.subplot2grid((6, 4), (1, 2), colspan=2, rowspan=1)
-    # Panel label (e)
-    ax3.text(0.01, 0.98, '(e)', transform=ax3.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
-    
-    # Row 2, Col 2: 3D Feature Space
-    ax5 = plt.subplot2grid((6, 4), (2, 2), colspan=2, rowspan=2, projection='3d')
-    # Panel label (f)
-    ax5.text2D(0.01, 0.98, '(f)', transform=ax5.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
-    
-    # Row 3, Col 2: Feature Contributions to Top 2 PCs
-    ax7 = plt.subplot2grid((6, 4), (4, 2), colspan=2, rowspan=2)
-    # Panel label (g)
+    # Row4: Left loadings heatmap; Right feature contributions
+    ax6 = fig.add_subplot(gs[3, 0])
+    ax6.text(0.01, 0.98, '(f)', transform=ax6.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
+    ax7 = fig.add_subplot(gs[3, 1])
     ax7.text(0.01, 0.98, '(g)', transform=ax7.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     models = data_df['Model'].unique()
@@ -181,7 +176,7 @@ def create_pca_3x2_layout():
     ax1.grid(True, alpha=0.3)
     ax1.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.85)
     
-    # 2. Explained Variance (Column 2, Row 1 top)
+    # 2. Explained Variance (Row 2 Right)
     explained_var = pca.explained_variance_ratio_
     cumulative_var = np.cumsum(explained_var)
     
@@ -203,7 +198,7 @@ def create_pca_3x2_layout():
         ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01,
                 f'{var:.1%}', ha='center', va='bottom', fontsize=8)
     
-    # 3. Model Separation (Column 2, Row 1 bottom)
+    # 3. Model Separation (Row 3 Right Top)
     model_centers = {}
     for model in models:
         model_data = data_df[data_df['Model'] == model]
@@ -230,7 +225,7 @@ def create_pca_3x2_layout():
     
     plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
     
-    # 4. Cross-Protocol Consistency (Column 1, Row 2)
+    # 4. Cross-Protocol Consistency (Row 2 Left)
     protocol_consistency = {}
     for model in models:
         model_data = data_df[data_df['Model'] == model]
@@ -263,7 +258,7 @@ def create_pca_3x2_layout():
     bars[enhanced_idx].set_linewidth(3)
     bars[enhanced_idx].set_edgecolor('gold')
     
-    # 5. 3D Feature Space (Column 2, Row 2)
+    # 5. 3D Feature Space (Row 3 Right Bottom)
     for model in models:
         model_data = data_df[data_df['Model'] == model]
         color = model_data.iloc[0]['Color']
@@ -278,7 +273,7 @@ def create_pca_3x2_layout():
     ax5.set_title('3D Feature Space', fontweight='bold', fontsize=11, pad=12)
     ax5.legend(fontsize=8, loc='upper left', bbox_to_anchor=(0.0, 1.10), framealpha=0.8)
     
-    # 6. PCA Feature Loadings Matrix (Column 1, Row 3)
+    # 6. PCA Feature Loadings Matrix (Row 4 Left)
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
                     'Channel_Diversity', 'Signal_Strength', 'Noise_Resilience',
                     'Attention_Weight', 'Memory_State', 'Feature_Interaction', 'Complexity']
@@ -296,7 +291,7 @@ def create_pca_3x2_layout():
     ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=10, labelpad=8)
     ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=10, labelpad=8)
     
-    # 7. Feature Contributions (Column 2, Row 3)
+    # 7. Feature Contributions (Row 4 Right)
     pc1_contributions = np.abs(loadings_df['PC1']).sort_values(ascending=True)
     pc2_contributions = np.abs(loadings_df['PC2']).sort_values(ascending=True)
     
@@ -314,9 +309,8 @@ def create_pca_3x2_layout():
     ax7.legend(fontsize=9, loc='lower right', framealpha=0.8)
     ax7.grid(True, alpha=0.3, axis='x')
     
-    # Optimal spacing for 3×2 layout
-    plt.subplots_adjust(left=0.08, bottom=0.08, right=0.95, top=0.94, 
-                       wspace=0.35, hspace=0.4)
+    # Spacing for 4-row layout
+    plt.subplots_adjust(left=0.07, bottom=0.07, right=0.97, top=0.95)
     
     return fig, data_df, pca
 
@@ -366,14 +360,14 @@ def export_pca_data():
     print("• figure7_explained_variance.csv")
 
 if __name__ == "__main__":
-    print("🔍 Generating Figure 7: 3×2 Layout - Column 1 (3 plots), Column 2 (4 plots)")
+    print("🔍 Generating Figure 6: 4-row Layout per spec")
 
     REPO = Path(__file__).resolve().parents[2]
     FIGS = REPO / "paper" / "figures"
     FIGS.mkdir(parents=True, exist_ok=True)
 
     # Generate PCA analysis
-    fig, data_df, pca = create_pca_3x2_layout()
+    fig, data_df, pca = create_pca_4row_layout()
 
     # Save figures
     fig.savefig(FIGS / 'fig6_pca_analysis.pdf', dpi=300, bbox_inches='tight', 
@@ -387,6 +381,6 @@ if __name__ == "__main__":
     export_pca_data()
 
     print(f"\n📊 Summary: {pca.explained_variance_ratio_[:2].sum():.1%} variance explained")
-    print("🎉 3×2 Layout Complete: Col1(3 plots) + Col2(4 plots)")
+    print("🎉 4-row Layout Complete")
 
     plt.show()
