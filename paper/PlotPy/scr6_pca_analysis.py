@@ -324,10 +324,10 @@ def export_pca_data():
     """Export PCA analysis data"""
     data_df, features = simulate_feature_space_data()
     
-    # Export coordinates
-    data_df[['Model', 'Protocol', 'PC1', 'PC2']].to_csv('fig6_pca_coordinates.csv', index=False)
+    # Export coordinates (restore original path/filename)
+    data_df[['Model', 'Protocol', 'PC1', 'PC2']].to_csv('figure7_pca_coordinates.csv', index=False)
     
-    # Export feature matrix
+    # Export feature matrix (restore original path/filename)
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
                     'Channel_Diversity', 'Signal_Strength', 'Noise_Resilience',
                     'Attention_Weight', 'Memory_State', 'Feature_Interaction', 'Complexity']
@@ -335,9 +335,9 @@ def export_pca_data():
     features_df = pd.DataFrame(features, columns=feature_names)
     features_df['Model'] = data_df['Model'].values
     features_df['Protocol'] = data_df['Protocol'].values
-    features_df.to_csv('fig6_feature_matrix.csv', index=False)
+    features_df.to_csv('figure7_feature_matrix.csv', index=False)
     
-    # Export PCA results
+    # Export PCA results (restore original path/filename)
     scaler = StandardScaler()
     features_scaled = scaler.fit_transform(features)
     pca = PCA(n_components=5)
@@ -349,24 +349,24 @@ def export_pca_data():
     )
     pca_results_df['Model'] = data_df['Model'].values
     pca_results_df['Protocol'] = data_df['Protocol'].values
-    pca_results_df.to_csv('fig6_pca_results.csv', index=False)
+    pca_results_df.to_csv('figure7_pca_results.csv', index=False)
     
-    # Export explained variance
+    # Export explained variance (restore original path/filename)
     variance_df = pd.DataFrame({
         'Component': [f'PC{i+1}' for i in range(len(pca.explained_variance_ratio_))],
         'Explained_Variance_Ratio': pca.explained_variance_ratio_,
         'Cumulative_Variance': np.cumsum(pca.explained_variance_ratio_)
     })
-    variance_df.to_csv('fig6_explained_variance.csv', index=False)
+    variance_df.to_csv('figure7_explained_variance.csv', index=False)
     
     print("\n💾 PCA Data Export Complete:")
-    print("• fig6_pca_coordinates.csv")
-    print("• fig6_feature_matrix.csv") 
-    print("• fig6_pca_results.csv")
-    print("• fig6_explained_variance.csv")
+    print("• figure7_pca_coordinates.csv")
+    print("• figure7_feature_matrix.csv") 
+    print("• figure7_pca_results.csv")
+    print("• figure7_explained_variance.csv")
 
 if __name__ == "__main__":
-    print("🔍 Generating Figure 6: 3×2 Layout - Column 1 (3 plots), Column 2 (4 plots)")
+    print("🔍 Generating Figure 7: 3×2 Layout - Column 1 (3 plots), Column 2 (4 plots)")
 
     REPO = Path(__file__).resolve().parents[2]
     FIGS = REPO / "paper" / "figures"
