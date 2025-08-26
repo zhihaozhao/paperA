@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Plot and summarize D5/D6 experiment results.
+Plot and summarize PSTA/ESTA experiment results.
 
 Inputs (defaults):
-  - D5 JSONs: results_gpu/d5/*.json
-  - D6 JSONs: results_gpu/d6/*.json
+  - PSTA JSONs: results_gpu/d5/*.json
+  - ESTA JSONs: results_gpu/d6/*.json
 
 Outputs (defaults):
   - Figure (PNG/PDF): paper/figures/d5_d6_results.{png,pdf}
@@ -112,8 +112,8 @@ def render_composite(d5: Dict[str, Dict[str, List[float]]], d6: Dict[str, Dict[s
     # Panel A: Grouped bars Macro F1 with legend
     x = (np.arange(len(models)) if np is not None else list(range(len(models))))
     width = 0.35
-    axes[0].bar([xi - width/2 for xi in x], d5_f1, width, yerr=d5_f1_std, label='D5', color='#4C78A8', capsize=3)
-    axes[0].bar([xi + width/2 for xi in x], d6_f1, width, yerr=d6_f1_std, label='D6', color='#F58518', capsize=3)
+    axes[0].bar([xi - width/2 for xi in x], d5_f1, width, yerr=d5_f1_std, label='PSTA', color='#4C78A8', capsize=3)
+    axes[0].bar([xi + width/2 for xi in x], d6_f1, width, yerr=d6_f1_std, label='ESTA', color='#F58518', capsize=3)
     axes[0].set_xticks(x)
     axes[0].set_xticklabels([m.replace('_','-') for m in models], rotation=20, ha='right')
     axes[0].set_ylabel('Macro F1')
@@ -123,8 +123,8 @@ def render_composite(d5: Dict[str, Dict[str, List[float]]], d6: Dict[str, Dict[s
     axes[0].legend(frameon=False, loc='lower right')
 
     # Panel C: Brier with legend
-    axes[1].bar([xi - width/2 for xi in x], d5_br, width, yerr=d5_br_std, label='D5', color='#9ecae1', capsize=3)
-    axes[1].bar([xi + width/2 for xi in x], d6_br, width, yerr=d6_br_std, label='D6', color='#fdd0a2', capsize=3)
+    axes[1].bar([xi - width/2 for xi in x], d5_br, width, yerr=d5_br_std, label='PSTA', color='#9ecae1', capsize=3)
+    axes[1].bar([xi + width/2 for xi in x], d6_br, width, yerr=d6_br_std, label='ESTA', color='#fdd0a2', capsize=3)
     axes[1].set_xticks(x)
     axes[1].set_xticklabels([m.replace('_','-') for m in models], rotation=20, ha='right')
     axes[1].set_ylabel('Brier')
@@ -153,8 +153,8 @@ def main() -> None:
 
     # CSV summaries
     args.out_d5_csv.parent.mkdir(parents=True, exist_ok=True)
-    write_csv(d5, args.out_d5_csv, "D5")
-    write_csv(d6, args.out_d6_csv, "D6")
+    write_csv(d5, args.out_d5_csv, "PSTA")
+    write_csv(d6, args.out_d6_csv, "ESTA")
 
     # Composite figure (two panels)
     comp = args.out_fig_prefix.with_name('d5_d6_composite')
