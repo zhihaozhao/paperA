@@ -107,8 +107,8 @@ def create_pca_4row_layout():
         data_df[f'PC{i+1}'] = pca_result[:, i]
     
     # Create figure: 4 rows × 2 columns layout (with nested grid for row3 right)
-    fig = plt.figure(figsize=(14.0, 12.5))
-    gs = gridspec.GridSpec(4, 2, height_ratios=[1.2, 1.0, 1.25, 1.1], hspace=0.54, wspace=0.28)
+    fig = plt.figure(figsize=(16.0, 14.0))
+    gs = gridspec.GridSpec(4, 2, height_ratios=[1.1, 0.9, 1.8, 1.0], hspace=0.56, wspace=0.12)
     
     # Row1: Main PCA Feature Space spans 2 columns
     ax1 = fig.add_subplot(gs[0, :])
@@ -272,7 +272,7 @@ def create_pca_4row_layout():
     except Exception:
         pass
     ax5.margins(x=0.04, y=0.04, z=0.04)
-    ax5.legend(fontsize=8, loc='upper left', bbox_to_anchor=(0.0, 1.10), framealpha=0.8)
+    ax5.legend(fontsize=8, loc='center left', bbox_to_anchor=(-0.15, 0.5), framealpha=0.8)
     
     # 6. PCA Feature Loadings Matrix (Row 4 Left)
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
