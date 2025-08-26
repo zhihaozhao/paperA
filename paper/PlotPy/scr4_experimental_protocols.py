@@ -40,6 +40,13 @@ plt.rcParams.update({
     'savefig.pad_inches': 0.1
 })
 
+def scale_fonts(fig: plt.Figure, factor: float) -> None:
+    for text in fig.findobj(match=lambda x: isinstance(x, plt.Text)):
+        try:
+            text.set_fontsize(text.get_fontsize() * factor)
+        except Exception:
+            pass
+
 def create_protocol_box(ax, xy, width, height, title, content, color, title_color='black'):
     """Create a protocol description box"""
     # Main box
@@ -436,37 +443,24 @@ if __name__ == "__main__":
     FIGS = REPO / "paper" / "figures"
     FIGS.mkdir(parents=True, exist_ok=True)
 
-    # Generate comprehensive protocols diagram
-    fig1, ax1 = create_comprehensive_protocols()
-
-    # Generate simplified flowchart
-    fig2, ax2 = create_protocol_flowchart()
-
-    # Save figures
-    output_files = [
-        (FIGS / 'fig4_experimental_overview.pdf', fig1),
-        (FIGS / 'fig4_protocol_flowchart.pdf', fig2)
-    ]
-    for filename, fig in output_files:
-        fig.savefig(filename, dpi=300, bbox_inches='tight', 
-                   facecolor='white', edgecolor='none')
-        print(f"✅ Saved: {filename}")
-
-    # Canonical paper include
-    fig1.savefig(FIGS / 'fig4_experimental_protocols.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    # Generate comprehensive protocols diagram for canonical (larger font) export
+    fig_full, ax_full = create_comprehensive_protocols()
+    scale_fonts(fig_full, 1.15)
+    fig_full.savefig(FIGS / 'fig4_experimental_protocols.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
     print("✅ Saved: fig4_experimental_protocols.pdf")
 
-    # Export double-column friendly PDF as figure4_experimental_overview.pdf (approx 7.2x4.5 inches)
-    try:
-        orig_size = fig1.get_size_inches()
-        fig1.set_size_inches(7.2, 4.5)
-        fig1.savefig(FIGS / 'fig4_experimental_overview.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
-        print("✅ Saved: figure4_experimental_overview.pdf (double-column)")
-    finally:
-        try:
-            fig1.set_size_inches(orig_size)
-        except Exception:
-            pass
+    # Generate simplified flowchart
+    fig_flow, ax_flow = create_protocol_flowchart()
+    scale_fonts(fig_flow, 1.05)
+    fig_flow.savefig(FIGS / 'fig4_protocol_flowchart.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    print("✅ Saved: fig4_protocol_flowchart.pdf")
+
+    # Overview (compact) export: regenerate and downscale fonts to avoid overlap
+    fig_over, ax_over = create_comprehensive_protocols()
+    fig_over.set_size_inches(7.2, 4.5)
+    scale_fonts(fig_over, 0.80)
+    fig_over.savefig(FIGS / 'fig4_experimental_overview.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none', pad_inches=0.06)
+    print("✅ Saved: figure4_experimental_overview.pdf (double-column)")
 
     # Export data
     export_protocols_data()
