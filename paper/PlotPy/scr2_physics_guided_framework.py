@@ -6,6 +6,7 @@ Saves: paper/figures/fig2_physics_guided_framework.pdf
 from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, ConnectionPatch
+import matplotlib.patheffects as pe
 
 plt.rcParams.update({
     'font.family': 'serif',
@@ -19,7 +20,9 @@ plt.rcParams.update({
 
 def box(ax, x, y, w, h, label, fc):
     rect = FancyBboxPatch((x, y), w, h, boxstyle='round,pad=0.03', facecolor=fc,
-                          edgecolor='black', linewidth=1.5, alpha=0.9)
+                          edgecolor='black', linewidth=1.5, alpha=0.95)
+    shadow = pe.SimplePatchShadow(offset=(2, -2), alpha=0.25, shadow_rgbFace='k')
+    rect.set_path_effects([shadow, pe.Normal()])
     ax.add_patch(rect)
     ax.text(x + w/2, y + h/2, label, ha='center', va='center', fontsize=11, color='black', wrap=True)
 
@@ -31,12 +34,12 @@ def arrow(ax, x1, y1, x2, y2, color='black'):
 
 
 def create_fig():
-    fig, ax = plt.subplots(figsize=(8.5, 5.2))
+    fig, ax = plt.subplots(figsize=(8.8, 5.6))
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 6)
     ax.axis('off')
 
-    ax.set_title('Physics-Guided Sim2Real Framework', fontweight='bold')
+    ax.set_title('Physics-Guided Sim2Real Framework', fontweight='bold', color='black')
 
     box(ax, 0.6, 4.2, 2.6, 1.0, 'Physics Modeling\n(Multipath, Human, Environment)', '#D4EDDA')
     box(ax, 3.7, 4.2, 2.6, 1.0, 'Synthetic CSI Generator\n(Parameterized, Caching)', '#FFF3CD')
