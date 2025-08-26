@@ -470,19 +470,19 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \end{table}
 
 %<<<<<<< Updated upstream
-\subsection{D5/D6 Experiments: Progressive Stress-Test and Extended Stability}
+\subsection{PSTA/ESTA Experiments: Progressive Stress-Test and Extended Stability}
 
-\textbf{Motivation:} While Sections~\ref{fig:protocols}--\ref{fig:label_efficiency} establish cross-domain generalization and label-efficiency, two open questions remain: (1) How do models behave under progressively harder simulated conditions when trained across multiple random seeds (stress-test)? (2) Are observed trends stable when evaluations are extended with additional GPU runs (repeatability)? \textbf{D5} targets (1) and \textbf{D6} targets (2).
+\textbf{Motivation:} While Sections~\ref{fig:protocols}--\ref{fig:label_efficiency} establish cross-domain generalization and label-efficiency, two open questions remain: (1) How do models behave under progressively harder simulated conditions when trained across multiple random seeds (stress-test)? (2) Are observed trends stable when evaluations are extended with additional GPU runs (repeatability)? \textbf{PSTA (D5)} targets (1) and \textbf{ESTA (D6)} targets (2).
 
-\textbf{Design (D5 Progressive Stress-Test):} We fix the synthetic data generator to the hard regime and progressively stress key nuisance parameters while training 5 random seeds per model. Specifically, we vary: class-overlap in $[0.6,0.8]$, noise standard deviation in $[0.4,0.6]$, and gain-drift standard deviation in $[0.4,0.6]$, while keeping sequence length $T{=}128$ and feature dimension $F{=}52$. Optimizer is Adam with learning rate $10^{-3}$ (cosine decay), batch size 768, early-stopping on macro F1. This emulates realistic, noisy deployments with increased ambiguity and acquisition noise.
+\textbf{Design (PSTA Progressive Stress-Test, D5):} We fix the synthetic data generator to the hard regime and progressively stress key nuisance parameters while training 5 random seeds per model. Specifically, we vary: class-overlap in $[0.6,0.8]$, noise standard deviation in $[0.4,0.6]$, and gain-drift standard deviation in $[0.4,0.6]$, while keeping sequence length $T{=}128$ and feature dimension $F{=}52$. Optimizer is Adam with learning rate $10^{-3}$ (cosine decay), batch size 768, early-stopping on macro F1. This emulates realistic, noisy deployments with increased ambiguity and acquisition noise.
 
-\textbf{Design (D6 Extended Stability):} We repeat the best-performing D5 settings for the top models (Enhanced, CNN) and run two additional GPU seeds to test repeatability in a resource-realistic setting. This captures whether gains are robust to implementation-level randomness (cudnn/tensor order) beyond the D5 CPU-level seeds.
+\textbf{Design (ESTA Extended Stability, D6):} We repeat the best-performing PSTA (D5) settings for the top models (Enhanced, CNN) and run two additional GPU seeds to test repeatability in a resource-realistic setting. This captures whether gains are robust to implementation-level randomness (cudnn/tensor order) beyond the PSTA CPU-level seeds.
 
-\textbf{What they showcase:} D5 reveals \emph{stress robustness}: Enhanced and Conformer-lite sustain near-ceiling macro F1 despite harder overlap/noise/drift, whereas BiLSTM is more sensitive (high variance). D6 evidences \emph{stability}: trends persist with minimal variance across fresh GPU runs, indicating training dynamics are repeatable and not artifacts of specific seeds or backends.
+\textbf{What they showcase:} PSTA (D5) reveals \emph{stress robustness}: Enhanced and Conformer-lite sustain near-ceiling macro F1 despite harder overlap/noise/drift, whereas BiLSTM is more sensitive (high variance). ESTA (D6) evidences \emph{stability}: trends persist with minimal variance across fresh GPU runs, indicating training dynamics are repeatable and not artifacts of specific seeds or backends.
 
 \textbf{How we achieve them / tweaking guidance:} Practitioners can dial difficulty via: (i) class-overlap ($0.6\rightarrow0.8$), (ii) noise std ($0.4\rightarrow0.6$), (iii) gain-drift std ($0.4\rightarrow0.6$). A recommended sweep is 3$\times$3$\times$3 grid over these ranges with 3--5 seeds per model. When compute-limited, keep $T{=}128,F{=}52$, lr $10^{-3}$ with cosine decay, and batch 512--768; adopt early-stopping on macro F1 with patience 10. For reproducibility, fix data-generation seeds separately from training seeds.
 
-\textbf{Results at a glance:} Figure~\ref{fig:d5d6_results} uses a slopegraph to contrast model means between D5 and D6 (higher is better). Table~\ref{tab:d5d6} reports macro F1 (mean ± std) and Brier; Enhanced remains best or tied-best across settings, CNN is competitive, Conformer-lite is strong but more protocol-sensitive in earlier sections, and BiLSTM underperforms under stress.
+\textbf{Results at a glance:} Figure~\ref{fig:d5d6_results} uses a slopegraph to contrast model means between PSTA (D5) and ESTA (D6) (higher is better). Table~\ref{tab:d5d6} reports macro F1 (mean ± std) and Brier; Enhanced remains best or tied-best across settings, CNN is competitive, Conformer-lite is strong but more protocol-sensitive in earlier sections, and BiLSTM underperforms under stress.
 
 \textbf{Training process (the journey):} Each run begins with a fresh initialization and a shuffled curriculum of the hard synthetic episodes. In the first epochs, models quickly latch onto gross temporal rhythms; as the schedule advances and overlap/noise rise, only architectures with richer channel attention (Enhanced) continue to carve separable manifolds. The cosine annealing gently lowers the step size so late-phase updates refine decision boundaries instead of overreacting to noisy bursts. Early-stopping is the guardrail: we track macro F1 on a held-out slice of the hard regime and stop when improvements stall, yielding comparable checkpoints across seeds.
 
@@ -491,14 +491,14 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{figures/figureD56_slope.pdf}
-\caption{D5/D6 macro F1 comparison across models (mean ± std over seeds). D5 (left) stresses harder settings; D6 (right) confirms stability with additional GPU runs.}
+\caption{PSTA/ESTA macro F1 comparison across models (mean ± std over seeds). PSTA (left) stresses harder settings; ESTA (right) confirms stability with additional GPU runs.}
 \label{fig:d5d6_results}
 \end{figure}
 
 % D5/D6 summary table (inline)
 \begin{table}[t]
 \centering
-\caption{D5/D6 Experimental Results (Macro F1 \% and Brier Score, mean ± std)}
+\caption{PSTA/ESTA Experimental Results (Macro F1 \% and Brier Score, mean ± std)}
 \label{tab:d5d6}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
