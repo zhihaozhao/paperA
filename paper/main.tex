@@ -22,6 +22,8 @@
 \newacronym{loro}{LORO}{Leave-One-Room-Out}
 \newacronym{cdae}{CDAE}{Cross-Domain Adaptation Evaluation}
 \newacronym{stea}{STEA}{Sim2Real Transfer Efficiency Assessment}
+\newacronym{psta}{PSTA}{Progressive Stress-Test}
+\newacronym{esta}{ESTA}{Extended Stability}
 \newacronym{cnn}{CNN}{Convolutional Neural Network}
 \newacronym{lstm}{LSTM}{Long Short-Term Memory}
 \newacronym{bilstm}{BiLSTM}{Bidirectional Long Short-Term Memory}
@@ -90,7 +92,7 @@ While existing approaches have explored various techniques including transfer le
 
 \item \textbf{Sim2Real Transfer Learning:} We conduct the first systematic Sim2Real study in \gls{wifi} \gls{csi} \gls{har}, demonstrating effective transfer from synthetic to real domains with comprehensive cross-domain evaluation on benchmark datasets from SenseFi~\cite{yang2023sensefi}.
 
-\item \textbf{Sample-Efficient Learning:} We demonstrate that models pre-trained on synthetic data require only 20\% real data for fine-tuning to achieve 82.1\% macro F1, representing 98.6\% of full-dataset performance (83.3\%) while reducing data collection costs by 80\%.
+\item \textbf{Sample-Efficient Learning:} We demonstrate that models pre-trained on synthetic data require only 20\% real data for fine-tuning to achieve 82.1\% macro F1, representing 98.6\% of full-dataset performance (83.3%) while reducing data collection costs by 80\%.
 
 \item \textbf{Trustworthy Evaluation Protocol:} We introduce comprehensive reliability assessment including model calibration analysis (\gls{ece}), prediction confidence evaluation, and cross-domain robustness testing.
 
@@ -450,7 +452,7 @@ The \gls{stea} protocol evaluation demonstrates a paradigm-shifting breakthrough
 
 \subsection{Model Performance Comparison}
 
-\textbf{Cause→Effect synthesis.} \emph{Cause:} Integrating channel reweighting (SE) and temporal attention should improve robustness under shifts and noise by suppressing spurious channels and focusing on informative segments. \emph{Effect:} Enhanced reaches identical LOSO/LORO and high label efficiency, while Conformer-lite oscillates across protocols (Table~\ref{tab:model_performance}). This aligns with PSTA/ESTA stress and stability readings.
+\textbf{Cause→Effect synthesis.} \emph{Cause:} Integrating channel reweighting (SE) and temporal attention should improve robustness under shifts and noise by suppressing spurious channels and focusing on informative segments. \emph{Effect:} Enhanced reaches identical LOSO/LORO and high label efficiency, while Conformer-lite oscillates across protocols (Table~\ref{tab:model_performance}). This aligns with \gls{psta}/\gls{esta} stress and stability readings.
 
 \begin{table}[ht]
 \centering
@@ -470,9 +472,9 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \end{table}
 
 %<<<<<<< Updated upstream
-\subsection{PSTA/ESTA Experiments: Progressive Stress-Test and Extended Stability}
+\subsection{\gls{psta}/\gls{esta} Experiments: Progressive Stress-Test and Extended Stability}
 
-\textbf{Motivation:} While Sections~\ref{fig:protocols}--\ref{fig:label_efficiency} establish cross-domain generalization and label-efficiency, two open questions remain: (1) How do models behave under progressively harder simulated conditions when trained across multiple random seeds (stress-test)? (2) Are observed trends stable when evaluations are extended with additional GPU runs (repeatability)? \textbf{PSTA} targets (1) and \textbf{ESTA} targets (2).
+\textbf{Motivation:} While Sections~\ref{fig:protocols}--\ref{fig:label_efficiency} establish cross-domain generalization and label-efficiency, two open questions remain: (1) How do models behave under progressively harder simulated conditions when trained across multiple random seeds (stress-test)? (2) Are observed trends stable when evaluations are extended with additional GPU runs (repeatability)? \textbf{\gls{psta}} targets (1) and \textbf{\gls{esta}} targets (2).
 
 \textbf{Design (PSTA Progressive Stress-Test):} We fix the synthetic data generator to the hard regime and progressively stress key nuisance parameters while training 5 random seeds per model. Specifically, we vary: class-overlap in $[0.6,0.8]$, noise standard deviation in $[0.4,0.6]$, and gain-drift standard deviation in $[0.4,0.6]$, while keeping sequence length $T{=}128$ and feature dimension $F{=}52$. Optimizer is Adam with learning rate $10^{-3}$ (cosine decay), batch size 768, early-stopping on macro F1. This emulates realistic, noisy deployments with increased ambiguity and acquisition noise.
 
@@ -491,7 +493,7 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig8_d56_composite.pdf}
-\caption{PSTA/ESTA macro F1 comparison across models (mean ± std over seeds). PSTA (left) stresses harder settings; ESTA (right) confirms stability with additional GPU runs.}
+\caption{\gls{psta}/\gls{esta} macro F1 comparison across models (mean \textpm{} std over seeds). \gls{psta} (left) stresses harder settings; \gls{esta} (right) confirms stability with additional GPU runs.}
 \label{fig:d5d6_results}
 \end{figure}
 
