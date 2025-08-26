@@ -1,0 +1,6 @@
+model: mamba_encoder
+hidden_dim: 128
+layers: 2
+se: true
+attention: lite
+train: {epochs: 50, batch_size: 64, lr: 1e-3, seeds: [0,1,2,3,4]}
