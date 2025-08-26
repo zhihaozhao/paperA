@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Figure 3: Enhanced Model Dataflow (3D-style schematic)
+Figure 3: Enhanced Model Dataflow (2D detailed diagram)
 Saves: paper/figures/fig3_enhanced_model_dataflow.pdf
 """
 from pathlib import Path
@@ -20,9 +20,7 @@ plt.rcParams.update({
 
 def box(ax, x, y, w, h, label, fc):
     rect = FancyBboxPatch((x, y), w, h, boxstyle='round,pad=0.03', facecolor=fc,
-                          edgecolor='black', linewidth=1.5, alpha=0.95)
-    shadow = pe.SimplePatchShadow(offset=(2, -2), alpha=0.25, shadow_rgbFace='k')
-    rect.set_path_effects([shadow, pe.Normal()])
+                          edgecolor='black', linewidth=1.5, alpha=0.98)
     ax.add_patch(rect)
     ax.text(x + w/2, y + h/2, label, ha='center', va='center', fontsize=11, color='black', wrap=True)
 
@@ -34,37 +32,64 @@ def arrow(ax, x1, y1, x2, y2, color='black'):
 
 
 def create_fig():
-    fig, ax = plt.subplots(figsize=(9.2, 5.8))
-    ax.set_xlim(0, 12)
-    ax.set_ylim(0, 6)
+    fig, ax = plt.subplots(figsize=(11.5, 6.0))
+    ax.set_xlim(0, 16)
+    ax.set_ylim(0, 7)
     ax.axis('off')
 
-    ax.set_title('Enhanced Model Dataflow (CNN + SE + Temporal Attention)', fontweight='bold', color='black')
+    ax.set_title('Enhanced Model Architecture (2D): Parameters per Module', fontweight='bold', color='black')
 
-    # Input and preprocessing
-    box(ax, 0.6, 4.2, 2.2, 1.0, 'Input CSI\n(Preprocessed)', '#E8F4FD')
-    arrow(ax, 2.8, 4.7, 3.2, 4.7)
+    y = 4.3
+    h = 1.0
 
-    # CNN feature extraction
-    box(ax, 3.2, 4.2, 2.2, 1.0, 'CNN Feature\nExtraction', '#FDEBD0')
-    arrow(ax, 5.4, 4.7, 5.8, 4.7)
+    # Input block
+    x = 0.6; w = 2.0
+    box(ax, x, y, w, h, 'Input CSI\n(T×C×F)', '#E6F2FF')
+    arrow(ax, x + w, y + h/2, x + w + 0.4, y + h/2)
 
-    # SE channel attention
-    box(ax, 5.8, 4.2, 2.2, 1.0, 'Squeeze-Excitation\nChannel Attention', '#FADBD8')
-    arrow(ax, 8.0, 4.7, 8.4, 4.7)
+    # Conv Block 1
+    x += w + 0.4; w = 2.6
+    box(ax, x, y, w, h, 'Conv1\nKernels=32, Kernel=3×3, Stride=1', '#FDEBD0')
+    ax.text(x + w/2, y - 0.35, 'BN + ReLU + Dropout(0.1)', ha='center', fontsize=9, color='dimgray')
+    arrow(ax, x + w, y + h/2, x + w + 0.4, y + h/2)
 
-    # Temporal attention
-    box(ax, 8.4, 4.2, 2.2, 1.0, 'Temporal\nAttention', '#E8DAEF')
-    arrow(ax, 10.6, 4.7, 11.0, 4.7)
+    # Conv Block 2
+    x += w + 0.4; w = 2.6
+    box(ax, x, y, w, h, 'Conv2\nKernels=64, Kernel=3×3, Stride=2', '#FDEBD0')
+    ax.text(x + w/2, y - 0.35, 'BN + ReLU + Dropout(0.1)', ha='center', fontsize=9, color='dimgray')
+    arrow(ax, x + w, y + h/2, x + w + 0.4, y + h/2)
 
-    # Output / Classifier
-    box(ax, 11.0, 4.2, 1.2, 1.0, 'Classifier', '#D6EAF8')
+    # Conv Block 3
+    x += w + 0.4; w = 2.6
+    box(ax, x, y, w, h, 'Conv3\nKernels=128, Kernel=3×3, Stride=2', '#FDEBD0')
+    ax.text(x + w/2, y - 0.35, 'BN + ReLU + Dropout(0.1)', ha='center', fontsize=9, color='dimgray')
+    arrow(ax, x + w, y + h/2, x + w + 0.4, y + h/2)
 
-    # Side panel: BiLSTM representation
-    box(ax, 3.8, 2.2, 6.0, 0.9, 'Bidirectional LSTM (Context Integration)', '#D5F5E3')
+    # SE Block
+    x += w + 0.4; w = 2.4
+    box(ax, x, y, w, h, 'SE Block\nReduction r=16', '#FADBD8')
+    ax.text(x + w/2, y - 0.35, 'GlobalAvgPool → FC(128→8) → ReLU → FC(8→128) → Sigmoid', ha='center', fontsize=8.7, color='dimgray')
+    arrow(ax, x + w, y + h/2, x + w + 0.4, y + h/2)
 
-    # Legend note (kept inside but dark color)
-    ax.text(1.5, 1.0, 'Legend: Input → CNN → SE → Temporal Attention → Classifier', fontsize=10, color='dimgray')
+    # BiLSTM
+    x += w + 0.4; w = 2.8
+    box(ax, x, y, w, h, 'BiLSTM\nHidden=128 per direction', '#D5F5E3')
+    ax.text(x + w/2, y - 0.35, 'Output dim = 256 (concat)', ha='center', fontsize=9, color='dimgray')
+    arrow(ax, x + w, y + h/2, x + w + 0.4, y + h/2)
+
+    # Temporal Attention
+    x += w + 0.4; w = 2.6
+    box(ax, x, y, w, h, 'Temporal Attention\nHeads=4, d_model=256', '#E8DAEF')
+    ax.text(x + w/2, y - 0.35, 'Scaled Dot-Product, Window=5, Dropout=0.1', ha='center', fontsize=9, color='dimgray')
+    arrow(ax, x + w, y + h/2, x + w + 0.4, y + h/2)
+
+    # Classifier
+    x += w + 0.4; w = 2.0
+    box(ax, x, y, w, h, 'Classifier\nFC(256→H) → Softmax', '#D6EAF8')
+
+    # Notes panel below
+    ax.text(8.0, 1.2, 'Training: AdamW, lr=3e-4, batch=64; Label efficiency experiments (20% labels).\nMetrics: LOSO/LORO Macro-F1, ECE calibration; Stability Index; Deployment Readiness.',
+            ha='center', va='center', fontsize=10, color='black')
 
     return fig
 
