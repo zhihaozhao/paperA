@@ -12,6 +12,7 @@ from matplotlib.patches import FancyBboxPatch, ConnectionPatch, Rectangle, Circl
 import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
+from pathlib import Path
 
 # Set publication-ready style (fallback safe)
 try:
@@ -429,17 +430,22 @@ def export_protocols_data():
 if __name__ == "__main__":
     print("📋 Generating Figure 2: Experimental Protocols...")
     print("🔬 D2, CDAE, STEA, and PSTA/ESTA Protocol Visualization")
-    
+
+    # Resolve output directory to paper/figures
+    REPO = Path(__file__).resolve().parents[2]
+    FIGS = REPO / "paper" / "figures"
+    FIGS.mkdir(parents=True, exist_ok=True)
+
     # Generate comprehensive protocols diagram
     fig1, ax1 = create_comprehensive_protocols()
-    
+
     # Generate simplified flowchart
     fig2, ax2 = create_protocol_flowchart()
-    
+
     # Save figures
     output_files = [
-        ('fig4_experimental_overview.pdf', fig1),
-        ('fig4_protocol_flowchart.pdf', fig2)
+        (FIGS / 'fig4_experimental_overview.pdf', fig1),
+        (FIGS / 'fig4_protocol_flowchart.pdf', fig2)
     ]
     for filename, fig in output_files:
         fig.savefig(filename, dpi=300, bbox_inches='tight', 
@@ -447,27 +453,27 @@ if __name__ == "__main__":
         print(f"✅ Saved: {filename}")
 
     # Canonical paper include
-    fig1.savefig('fig4_experimental_protocols.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    fig1.savefig(FIGS / 'fig4_experimental_protocols.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
     print("✅ Saved: fig4_experimental_protocols.pdf")
-    
+
     # Export double-column friendly PDF as figure4_experimental_overview.pdf (approx 7.2x4.5 inches)
     try:
         orig_size = fig1.get_size_inches()
         fig1.set_size_inches(7.2, 4.5)
-        fig1.savefig('figure4_experimental_overview.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+        fig1.savefig(FIGS / 'fig4_experimental_overview.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
         print("✅ Saved: figure4_experimental_overview.pdf (double-column)")
     finally:
         try:
             fig1.set_size_inches(orig_size)
         except Exception:
             pass
-    
+
     # Export data
     export_protocols_data()
-    
+
     # Display plots
     plt.show()
-    
+
     print("\n🎉 Figure 2 Generation Complete!")
     print("📋 Comprehensive experimental protocol visualization ready")
     print("🔬 Features: D2 validation + CDAE cross-domain + STEA efficiency + statistical rigor")

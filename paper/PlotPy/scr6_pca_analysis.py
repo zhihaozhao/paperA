@@ -14,6 +14,7 @@ from sklearn.preprocessing import StandardScaler
 from matplotlib.patches import Ellipse
 import warnings
 warnings.filterwarnings('ignore')
+from pathlib import Path
 
 # Configure for IEEE IoTJ standards with optimized fonts
 plt.rcParams.update({
@@ -349,22 +350,26 @@ def export_pca_data():
 
 if __name__ == "__main__":
     print("🔍 Generating Figure 7: 3×2 Layout - Column 1 (3 plots), Column 2 (4 plots)")
-    
+
+    REPO = Path(__file__).resolve().parents[2]
+    FIGS = REPO / "paper" / "figures"
+    FIGS.mkdir(parents=True, exist_ok=True)
+
     # Generate PCA analysis
     fig, data_df, pca = create_pca_3x2_layout()
-    
+
     # Save figures
-    fig.savefig('figure7_pca_analysis.pdf', dpi=300, bbox_inches='tight', 
+    fig.savefig(FIGS / 'fig6_pca_analysis.pdf', dpi=300, bbox_inches='tight', 
                facecolor='white', edgecolor='none')
-    fig.savefig('figure7_pca_analysis.png', dpi=300, bbox_inches='tight', 
+    fig.savefig(FIGS / 'fig6_pca_analysis.png', dpi=300, bbox_inches='tight', 
                facecolor='white', edgecolor='none')
-    print("✅ Saved: figure7_pca_analysis.pdf")
-    print("✅ Saved: figure7_pca_analysis.png")
-    
+    print("✅ Saved: fig6_pca_analysis.pdf")
+    print("✅ Saved: fig6_pca_analysis.png")
+
     # Export data
     export_pca_data()
-    
+
     print(f"\n📊 Summary: {pca.explained_variance_ratio_[:2].sum():.1%} variance explained")
     print("🎉 3×2 Layout Complete: Col1(3 plots) + Col2(4 plots)")
-    
+
     plt.show()

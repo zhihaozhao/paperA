@@ -12,6 +12,7 @@ from matplotlib.patches import FancyBboxPatch, ConnectionPatch, Rectangle
 import seaborn as sns
 import warnings
 warnings.filterwarnings('ignore')
+from pathlib import Path
 
 # Set publication-ready style
 # plt.style.use('seaborn-v0_8-paper')  # Commented out for compatibility
@@ -345,39 +346,36 @@ def export_architecture_data():
 if __name__ == "__main__":
     print("🏗️ Generating Figure 1: System Architecture Overview...")
     print("📊 Physics-Guided Synthetic WiFi CSI Framework")
-    
+
+    REPO = Path(__file__).resolve().parents[2]
+    FIGS = REPO / "paper" / "figures"
+    FIGS.mkdir(parents=True, exist_ok=True)
+
     # Generate main architecture diagram
     fig1, ax1 = create_system_architecture()
-    
+
     # Generate detailed data flow
     fig2, ax2 = create_detailed_data_flow()
-    
+
     # Save figures
     output_files = [
-        ('figure1_system_architecture.pdf', fig1),
-        ('figure1_system_architecture.png', fig1),
-        ('figure1_detailed_dataflow.pdf', fig2),
-        ('figure1_detailed_dataflow.png', fig2)
+        (FIGS / 'fig1_system_architecture.pdf', fig1),
+        (FIGS / 'fig1_system_architecture.png', fig1),
+        (FIGS / 'fig1_detailed_dataflow.pdf', fig2),
+        (FIGS / 'fig1_detailed_dataflow.png', fig2)
     ]
-    
+
     for filename, fig in output_files:
         fig.savefig(filename, dpi=300, bbox_inches='tight', 
                    facecolor='white', edgecolor='none')
         print(f"✅ Saved: {filename}")
-    
-    # Also save with canonical paper filename
-    try:
-        fig1.savefig('figure1_system overview.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
-        print('✅ Saved: figure1_system overview.pdf')
-    except Exception:
-        pass
 
     # Export data
     export_architecture_data()
-    
+
     # Display plots
     plt.show()
-    
+
     print("\n🎉 Figure 1 Generation Complete!")
     print("🏗️ System architecture and data flow diagrams ready")
     print("📊 Features: Complete framework overview + detailed processing pipeline")

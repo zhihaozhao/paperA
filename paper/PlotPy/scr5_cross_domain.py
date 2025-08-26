@@ -14,6 +14,7 @@ from scipy.cluster import hierarchy
 from sklearn.preprocessing import StandardScaler
 import warnings
 warnings.filterwarnings('ignore')
+from pathlib import Path
 
 # Set publication-ready style (fallback safe)
 try:
@@ -381,21 +382,25 @@ def export_heatmap_data():
 if __name__ == "__main__":
     print("🔥 Generating Advanced Performance Heatmap - New Figure 5...")
     print("📊 Multi-dimensional performance analysis with clustering")
-    
+
+    REPO = Path(__file__).resolve().parents[2]
+    FIGS = REPO / "paper" / "figures"
+    FIGS.mkdir(parents=True, exist_ok=True)
+
     # Generate main heatmap
     fig1, performance_data = create_hierarchical_clustering_heatmap()
-    
+
     # Generate statistical significance heatmap
     fig2, sig_matrix = create_statistical_significance_heatmap()
-    
+
     # Save figures (canonical paper name + originals)
     output_files = [
-        ('figure3_enhanced_3D.pdf', fig1),
-        ('figure5_performance_heatmap.pdf', fig1),
-        ('figure5_statistical_significance.pdf', fig2),
-        ('figure5_statistical_significance.png', fig2)
+        (FIGS / 'figure3_enhanced_3D.pdf', fig1),
+        (FIGS / 'figure5_performance_heatmap.pdf', fig1),
+        (FIGS / 'figure5_statistical_significance.pdf', fig2),
+        (FIGS / 'figure5_statistical_significance.png', fig2)
     ]
-    
+
     for filename, fig in output_files:
         fig.savefig(filename, dpi=300, bbox_inches='tight', 
                    facecolor='white', edgecolor='none')
@@ -403,23 +408,23 @@ if __name__ == "__main__":
 
     # Normalized canonical name for cross-domain figure in paper
     try:
-        fig1.savefig('fig5_cross_domain.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+        fig1.savefig(FIGS / 'fig5_cross_domain.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
         print("✅ Saved: fig5_cross_domain.pdf")
     except Exception as e:
         print('[warn] failed to save fig5_cross_domain.pdf:', e)
-    
+
     # Export data
     export_heatmap_data()
-    
+
     # Display summary statistics
     print("\n📊 Performance Analysis Summary:")
     print("=" * 50)
     print(performance_data[['LOSO_F1', 'LORO_F1', 'Cross_Domain_Gap', 
                            'Stability_Index', 'Deployment_Readiness']].round(3))
-    
+
     # Display plots
     plt.show()
-    
+
     print("\n🎉 Advanced Heatmap Generation Complete!")
     print("🔥 New comprehensive performance visualization")
     print("📊 Features: Hierarchical clustering + correlation analysis + statistical significance")
