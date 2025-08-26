@@ -1,25 +1,25 @@
-Parameter,Protocol,Value
-Models,Synthetic Robustness,4
-Seeds,Synthetic Robustness,5
-Noise_Levels,Synthetic Robustness,3
-Overlap_Conditions,Synthetic Robustness,3
-Difficulty_Levels,Synthetic Robustness,3
-Time_Steps,Synthetic Robustness,3
-Feature_Dims,Synthetic Robustness,3
-Burst_Rates,Synthetic Robustness,3
-Total_Configs,Synthetic Robustness,540
-Models,CDAE,4
-Protocols,CDAE,2
-Seeds,CDAE,5
-Subjects,CDAE,Multiple
-Rooms,CDAE,Multiple
-Cross_Validation,CDAE,5-fold
-Statistical_Tests,CDAE,p-values
-Total_Configs,CDAE,40
-Transfer_Methods,STEA,4
-Label_Ratios,STEA,7
-Seeds,STEA,5
-Baselines,STEA,Zero-shot
-Metrics,STEA,F1/ECE/Brier
-Efficiency_Phases,STEA,3
-Total_Configs,STEA,56
+Protocol,Parameter,Value
+Synthetic Robustness,Models,4
+Synthetic Robustness,Seeds,5
+Synthetic Robustness,Noise_Levels,3
+Synthetic Robustness,Overlap_Conditions,3
+Synthetic Robustness,Difficulty_Levels,3
+Synthetic Robustness,Time_Steps,3
+Synthetic Robustness,Feature_Dims,3
+Synthetic Robustness,Burst_Rates,3
+Synthetic Robustness,Total_Configs,540
+CDAE,Models,4
+CDAE,Protocols,2
+CDAE,Seeds,5
+CDAE,Subjects,Multiple
+CDAE,Rooms,Multiple
+CDAE,Cross_Validation,5-fold
+CDAE,Statistical_Tests,p-values
+CDAE,Total_Configs,40
+STEA,Transfer_Methods,4
+STEA,Label_Ratios,7
+STEA,Seeds,5
+STEA,Baselines,Zero-shot
+STEA,Metrics,F1/ECE/Brier
+STEA,Efficiency_Phases,3
+STEA,Total_Configs,56
