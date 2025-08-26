@@ -26,17 +26,17 @@ except Exception:
     except Exception:
         pass
 
-# Configure for IEEE IoTJ standards
+# Configure for IEEE IoTJ standards (unified sizes)
 plt.rcParams.update({
     'font.family': 'serif',
     'font.serif': ['Times New Roman'],
-    'font.size': 13,
-    'axes.labelsize': 14,
-    'axes.titlesize': 16,
+    'font.size': 12,
+    'axes.labelsize': 12,
+    'axes.titlesize': 14,
     'xtick.labelsize': 12,
     'ytick.labelsize': 12,
     'legend.fontsize': 12,
-    'figure.titlesize': 17,
+    'figure.titlesize': 14,
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
@@ -164,9 +164,9 @@ def create_hierarchical_clustering_heatmap():
     # Swap: radar goes to left (b)
     ax2 = fig.add_subplot(gs[1, 0], projection='polar')
     # Panel label (b)
-    ax2.set_title('(b) Model Comparison Radar Chart', fontweight='bold', fontsize=12, pad=10)
+    ax2.set_title('(b) Model Comparison Radar Chart', fontweight='bold', fontsize=14, pad=10)
     # Move legend outside
-    ax2.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.9, fontsize=10)
+    ax2.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.9, fontsize=12)
     ax2.grid(True)
     # Shift (b) downward slightly to increase separation
     try:
@@ -202,7 +202,7 @@ def create_hierarchical_clustering_heatmap():
     # Swap: correlation goes to right (c)
     ax3 = fig.add_subplot(gs[1, 1])
     # Panel label (c)
-    ax3.set_title('(c) Metric Correlation Matrix', fontweight='bold', fontsize=11, pad=10)
+    ax3.set_title('(c) Metric Correlation Matrix', fontweight='bold', fontsize=14, pad=10)
     corr_matrix = data[clustering_metrics].corr()
     mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
     sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
@@ -214,7 +214,7 @@ def create_hierarchical_clustering_heatmap():
     # Row3 Left: Performance ranking bar chart (composite score)
     ax4 = fig.add_subplot(gs[2, 0])
     # Panel label (d)
-    ax4.set_title('(d) Overall Model Ranking (Composite Score)', fontweight='bold', pad=10)
+    ax4.set_title('(d) Overall Model Ranking (Composite Score)', fontweight='bold', fontsize=14, pad=10)
     # Compute composite ranking (restore)
     weights = {
         'LOSO_F1': 0.25, 'LORO_F1': 0.25, 'Stability_Index': 0.20,
@@ -242,7 +242,7 @@ def create_hierarchical_clustering_heatmap():
     # Row3 Right: Replace bubble scatter with LOSO/LORO line plot across models
     ax5 = fig.add_subplot(gs[2, 1])
     ax5.set_title('(e) Performance by Model (LOSO vs LORO)', 
-                 fontweight='bold', fontsize=12, pad=10)
+                 fontweight='bold', fontsize=14, pad=10)
     # Build ordered model list to plot consistently
     model_list = list(data.index)
     x = np.arange(len(model_list))
@@ -276,7 +276,26 @@ def create_hierarchical_clustering_heatmap():
     # (removed for line plot)
     
     # Adjust layout spacing (increase top/bottom padding to prevent overlap)
-    plt.subplots_adjust(left=0.07, right=0.985, top=0.93, bottom=0.08)
+    plt.subplots_adjust(left=0.06, right=0.99, top=0.93, bottom=0.08)
+
+    # Explicitly enlarge (b) and (c) by 1.5x in width and height after layout
+    def scale_axes(ax, w_scale=1.5, h_scale=1.5):
+        p = ax.get_position()
+        cx = p.x0 + p.width / 2
+        cy = p.y0 + p.height / 2
+        new_w = min(0.92, p.width * w_scale)
+        new_h = min(0.80, p.height * h_scale)
+        new_x0 = max(0.02, cx - new_w / 2)
+        new_y0 = max(0.06, cy - new_h / 2)
+        # Clip to figure bounds
+        if new_x0 + new_w > 0.98:
+            new_x0 = 0.98 - new_w
+        if new_y0 + new_h > 0.95:
+            new_y0 = 0.95 - new_h
+        ax.set_position([new_x0, new_y0, new_w, new_h])
+
+    scale_axes(ax2, 1.5, 1.5)
+    scale_axes(ax3, 1.5, 1.5)
     
     return fig, data
 
