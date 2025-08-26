@@ -39,7 +39,10 @@ plt.rcParams.update({
     'figure.dpi': 300,
     'savefig.dpi': 300,
     'savefig.bbox': 'tight',
-    'savefig.pad_inches': 0.12
+    'savefig.pad_inches': 0.12,
+    'text.color': 'black',
+    'axes.labelcolor': 'black',
+    'axes.edgecolor': 'black'
 })
 
 def create_comprehensive_performance_data():
@@ -154,6 +157,9 @@ def create_hierarchical_clustering_heatmap():
     # Create heatmap
     im = ax1.imshow(ordered_data.values, cmap='RdYlBu_r', aspect='auto')
     
+    # Panel label (a)
+    ax1.text(0.01, 0.98, '(a)', transform=ax1.transAxes, ha='left', va='top', fontsize=14, fontweight='bold', color='black')
+    
     # Set labels
     ax1.set_xticks(range(len(ordered_data.columns)))
     ax1.set_xticklabels(ordered_data.columns, rotation=45, ha='right')
@@ -176,6 +182,8 @@ def create_hierarchical_clustering_heatmap():
     
     # Performance comparison radar chart
     ax2 = plt.subplot2grid((3, 4), (0, 3), projection='polar')
+    # Panel label (b)
+    ax2.text(0.02, 0.98, '(b)', transform=ax2.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Create radar chart for top 2 models
     radar_metrics = ['LOSO_F1', 'LORO_F1', 'Stability_Index', 'Deployment_Readiness']
@@ -203,11 +211,14 @@ def create_hierarchical_clustering_heatmap():
                        fontsize=10)
     ax2.set_ylim(0, 1)
     ax2.set_title('Model Comparison\nRadar Chart', fontweight='bold', fontsize=12)
-    ax2.legend(loc='upper left', bbox_to_anchor=(0, 1.02), framealpha=0.9)
+    # Move legend outside
+    ax2.legend(loc='upper left', bbox_to_anchor=(0.0, 1.25), framealpha=0.9, fontsize=10)
     ax2.grid(True)
     
     # Correlation matrix
     ax3 = plt.subplot2grid((3, 4), (1, 3))
+    # Panel label (c)
+    ax3.text(0.01, 0.98, '(c)', transform=ax3.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     corr_matrix = data[clustering_metrics].corr()
     mask = np.triu(np.ones_like(corr_matrix, dtype=bool))  # Mask upper triangle
@@ -219,6 +230,8 @@ def create_hierarchical_clustering_heatmap():
     
     # Performance ranking bar chart
     ax4 = plt.subplot2grid((3, 4), (2, 0), colspan=2)
+    # Panel label (d)
+    ax4.text(0.01, 0.98, '(d)', transform=ax4.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Calculate composite performance score
     weights = {
@@ -252,6 +265,8 @@ def create_hierarchical_clustering_heatmap():
     
     # Model efficiency scatter plot
     ax5 = plt.subplot2grid((3, 4), (2, 2), colspan=2)
+    # Panel label (e)
+    ax5.text(0.01, 0.98, '(e)', transform=ax5.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     scatter = ax5.scatter(data['Parameters_M'], data['LOSO_F1'], 
                          s=data['Deployment_Readiness']*300, 
@@ -274,7 +289,8 @@ def create_hierarchical_clustering_heatmap():
     cbar2 = plt.colorbar(scatter, ax=ax5, fraction=0.046, pad=0.04)
     cbar2.set_label('Stability Index', rotation=270, labelpad=15)
     
-    plt.subplots_adjust(hspace=0.35, wspace=0.30)
+    # Adjust layout to fit external legends
+    plt.subplots_adjust(hspace=0.45, wspace=0.35, right=0.95)
     # Export compact figure5.pdf (double-column friendly width)
     try:
         orig_size = fig.get_size_inches()
@@ -404,6 +420,8 @@ if __name__ == "__main__":
     for filename, fig in output_files:
         fig.savefig(filename, dpi=300, bbox_inches='tight', 
                    facecolor='white', edgecolor='none')
+        # Ensure dark text for saved figs
+        fig.patch.set_facecolor('white')
         print(f"✅ Saved: {filename}")
 
     # Normalized canonical name for cross-domain figure in paper

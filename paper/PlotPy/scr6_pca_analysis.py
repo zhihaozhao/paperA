@@ -29,7 +29,10 @@ plt.rcParams.update({
     'figure.titlesize': 14,
     'figure.dpi': 300,
     'savefig.dpi': 300,
-    'text.usetex': False
+    'text.usetex': False,
+    'text.color': 'black',
+    'axes.labelcolor': 'black',
+    'axes.edgecolor': 'black'
 })
 
 def simulate_feature_space_data():
@@ -103,25 +106,39 @@ def create_pca_3x2_layout():
     # Column 1 (Left): 3 plots stacked vertically
     # Row 1, Col 1: Main PCA Feature Space Analysis
     ax1 = plt.subplot2grid((6, 4), (0, 0), colspan=2, rowspan=2)
+    # Panel label (a)
+    ax1.text(0.01, 0.98, '(a)', transform=ax1.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Row 2, Col 1: Cross-Protocol Consistency Analysis  
     ax4 = plt.subplot2grid((6, 4), (2, 0), colspan=2, rowspan=2)
+    # Panel label (b)
+    ax4.text(0.01, 0.98, '(b)', transform=ax4.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Row 3, Col 1: PCA Feature Loadings Matrix
     ax6 = plt.subplot2grid((6, 4), (4, 0), colspan=2, rowspan=2)
+    # Panel label (c)
+    ax6.text(0.01, 0.98, '(c)', transform=ax6.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Column 2 (Right): 4 plots in 2×2 arrangement
     # Row 1 top, Col 2: PCA Explained Variance
     ax2 = plt.subplot2grid((6, 4), (0, 2), colspan=2, rowspan=1)
+    # Panel label (d)
+    ax2.text(0.01, 0.98, '(d)', transform=ax2.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Row 1 bottom, Col 2: Model Separation Distances  
     ax3 = plt.subplot2grid((6, 4), (1, 2), colspan=2, rowspan=1)
+    # Panel label (e)
+    ax3.text(0.01, 0.98, '(e)', transform=ax3.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Row 2, Col 2: 3D Feature Space
     ax5 = plt.subplot2grid((6, 4), (2, 2), colspan=2, rowspan=2, projection='3d')
+    # Panel label (f)
+    ax5.text2D(0.01, 0.98, '(f)', transform=ax5.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Row 3, Col 2: Feature Contributions to Top 2 PCs
     ax7 = plt.subplot2grid((6, 4), (4, 2), colspan=2, rowspan=2)
+    # Panel label (g)
+    ax7.text(0.01, 0.98, '(g)', transform=ax7.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     models = data_df['Model'].unique()
     
@@ -162,7 +179,7 @@ def create_pca_3x2_layout():
     ax1.set_title('PCA Feature Space Analysis: Model Clustering and Protocol Separation', 
                  fontweight='bold', fontsize=13, pad=15)
     ax1.grid(True, alpha=0.3)
-    ax1.legend(loc='upper left', fontsize=9, framealpha=0.8)
+    ax1.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.85)
     
     # 2. Explained Variance (Column 2, Row 1 top)
     explained_var = pca.explained_variance_ratio_
@@ -259,7 +276,7 @@ def create_pca_3x2_layout():
     ax5.set_ylabel('PC2', fontweight='bold', fontsize=10, labelpad=8)  
     ax5.set_zlabel('PC3', fontweight='bold', fontsize=10, labelpad=8)
     ax5.set_title('3D Feature Space', fontweight='bold', fontsize=11, pad=12)
-    ax5.legend(fontsize=8, loc='upper left', framealpha=0.8)
+    ax5.legend(fontsize=8, loc='upper left', bbox_to_anchor=(0.0, 1.10), framealpha=0.8)
     
     # 6. PCA Feature Loadings Matrix (Column 1, Row 3)
     feature_names = ['Temporal_Pattern', 'Frequency_Response', 'Spatial_Correlation', 
