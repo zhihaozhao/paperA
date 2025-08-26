@@ -403,10 +403,10 @@ if __name__ == "__main__":
 
     # Normalized canonical name for cross-domain figure in paper
     try:
-        fig1.savefig('figure5_cross_domain.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
-        print("✅ Saved: figure5_cross_domain.pdf")
+        fig1.savefig('fig5_cross_domain.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+        print("✅ Saved: fig5_cross_domain.pdf")
     except Exception as e:
-        print('[warn] failed to save figure5_cross_domain.pdf:', e)
+        print('[warn] failed to save fig5_cross_domain.pdf:', e)
     
     # Export data
     export_heatmap_data()

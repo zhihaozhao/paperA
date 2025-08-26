@@ -438,20 +438,17 @@ if __name__ == "__main__":
     
     # Save figures
     output_files = [
-        ('figure4_experimental_overview.pdf', fig1),
-        ('figure2_experimental_protocols.png', fig1),
-        ('figure2_protocol_flowchart.pdf', fig2),
-        ('figure2_protocol_flowchart.png', fig2)
+        ('fig4_experimental_overview.pdf', fig1),
+        ('fig4_protocol_flowchart.pdf', fig2)
     ]
-    
     for filename, fig in output_files:
         fig.savefig(filename, dpi=300, bbox_inches='tight', 
                    facecolor='white', edgecolor='none')
         print(f"✅ Saved: {filename}")
 
-    # Normalized canonical name for paper inclusion
-    fig1.savefig('figure2_experimental_protocols.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
-    print("✅ Saved: figure2_experimental_protocols.pdf")
+    # Canonical paper include
+    fig1.savefig('fig4_experimental_protocols.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    print("✅ Saved: fig4_experimental_protocols.pdf")
     
     # Export double-column friendly PDF as figure4_experimental_overview.pdf (approx 7.2x4.5 inches)
     try:
