@@ -411,27 +411,23 @@ if __name__ == "__main__":
 
     # Save figures (canonical paper name + originals)
     output_files = [
-        (FIGS / 'figure3_enhanced_3D.pdf', fig1),
-        (FIGS / 'figure5_performance_heatmap.pdf', fig1),
-        (FIGS / 'figure5_statistical_significance.pdf', fig2),
-        (FIGS / 'figure5_statistical_significance.png', fig2)
+        (FIGS / 'fig5_cross_domain.pdf', fig1),
+        (FIGS / 'fig5_statistical_significance.pdf', fig2),
+        (FIGS / 'fig5_statistical_significance.png', fig2)
     ]
 
     for filename, fig in output_files:
         fig.savefig(filename, dpi=300, bbox_inches='tight', 
                    facecolor='white', edgecolor='none')
-        # Ensure dark text for saved figs
-        fig.patch.set_facecolor('white')
         print(f"✅ Saved: {filename}")
 
-    # Normalized canonical name for cross-domain figure in paper
+    # Ensure canonical name saved
     try:
         fig1.savefig(FIGS / 'fig5_cross_domain.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
-        print("✅ Saved: fig5_cross_domain.pdf")
     except Exception as e:
         print('[warn] failed to save fig5_cross_domain.pdf:', e)
 
-    # Export data
+    # Export data into paper/figures for cleanliness
     export_heatmap_data()
 
     # Display summary statistics

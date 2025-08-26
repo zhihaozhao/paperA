@@ -66,19 +66,19 @@ While existing approaches have explored various techniques including transfer le
 
 \item \textbf{Sample-Efficient Learning:} We demonstrate that models pre-trained on synthetic data require only 20\% real data for fine-tuning to achieve 82.1\% macro F1, representing 98.6\% of full-dataset performance (83.3%) while reducing data collection costs by 80\%.
 
-\item \textbf{Trustworthy Evaluation Protocol:} We introduce comprehensive reliability assessment including model calibration analysis (\gls{ece}), prediction confidence evaluation, and cross-domain robustness testing.
+\item \textbf{Trustworthy Evaluation Protocol:} We introduce comprehensive reliability assessment including model calibration analysis (ECE), prediction confidence evaluation, and cross-domain robustness testing.
 
-\item \textbf{Enhanced Model Architecture:} We propose an enhanced deep learning architecture incorporating \gls{se} modules and temporal attention mechanisms, achieving superior performance on both synthetic and real data.
+\item \textbf{Enhanced Model Architecture:} We propose an enhanced deep learning architecture incorporating SE modules and temporal attention mechanisms, achieving superior performance on both synthetic and real data.
 \end{enumerate}
 
-\textbf{Comprehensive Experimental Validation:} We validate our approach through three systematic evaluation protocols: (1) \textit{Synthetic Robustness Validation}: 540 configurations across noise, class overlap, and difficulty conditions, (2) \textit{\gls{cdae}}: 40 configurations validating \gls{loso}/\gls{loro} generalization, and (3) \textit{\gls{stea}}: 56 configurations quantifying Sim2Real label efficiency. Results demonstrate breakthrough performance including 83.0±0.1\% F1 cross-domain consistency and 82.1\% F1 achievement using only 20\% labeled real data.
+\textbf{Comprehensive Experimental Validation:} We validate our approach through three systematic evaluation protocols: (1) \textit{Synthetic Robustness Validation}: 540 configurations across noise, class overlap, and difficulty conditions, (2) \textit{CDAE}: 40 configurations validating LOSO/LORO generalization, and (3) \textit{STEA}: 56 configurations quantifying Sim2Real label efficiency. Results demonstrate breakthrough performance including 83.0±0.1\% F1 cross-domain consistency and 82.1\% F1 achievement using only 20\% labeled real data.
 
 The remainder of this paper is organized as follows: Section II reviews related work in WiFi CSI HAR and synthetic data generation. Section III presents our physics-guided synthetic data generation framework. Section IV describes the enhanced model architecture and trustworthy evaluation protocols. Section V presents comprehensive experimental results. Section VI discusses implications and limitations, and Section VII concludes the paper.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig1_system_architecture.pdf}
-\caption{(a) Physics-guided synthetic \gls{csi} generation and Sim2Real pipeline overview. Modules: physics modeling (multipath, human interaction, environment), parameterized synthesis, Enhanced model (\gls{cnn}+\gls{se}+temporal attention), and trustworthy evaluation. No quantitative metrics are plotted; this schematic defines the processing flow used in all experiments.}
+\caption{(a) Physics-guided synthetic CSI generation and Sim2Real pipeline overview. Modules: physics modeling (multipath, human interaction, environment), parameterized synthesis, Enhanced model (CNN+SE+temporal attention), and trustworthy evaluation. No quantitative metrics are plotted; this schematic defines the processing flow used in all experiments.}
 \label{fig:system_overview}
 \end{figure}
 
@@ -91,11 +91,11 @@ The remainder of this paper is organized as follows: Section II reviews related 
 
 WiFi CSI-based HAR has evolved significantly with the advancement of deep learning architectures and systematic evaluation frameworks. Early works focused on feature engineering approaches~\cite{csi_basics2016}, extracting handcrafted features from CSI amplitude and phase information. The field has since transitioned to end-to-end deep learning approaches with increasingly sophisticated architectures.
 
-\textbf{Deep Learning Architecture Evolution:} \glspl{cnn} were among the first deep learning approaches applied to WiFi CSI HAR, demonstrating effectiveness in spatial feature extraction~\cite{clnet2021}. Subsequently, recurrent architectures including \glspl{lstm} and \glspl{bilstm} variants showed superior performance in modeling temporal dependencies in CSI sequences~\cite{rewis2022}. Recent advances have explored attention mechanisms and Transformer-style temporal models for capturing long-range dependencies~\cite{gulati2020conformer,li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer}, while hybrid approaches combining \gls{cnn} and \gls{rnn} components have shown promising results.
+\textbf{Deep Learning Architecture Evolution:} CNNs were among the first deep learning approaches applied to WiFi CSI HAR, demonstrating effectiveness in spatial feature extraction~\cite{clnet2021}. Subsequently, recurrent architectures including LSTMs and BiLSTM variants showed superior performance in modeling temporal dependencies in CSI sequences~\cite{rewis2022}. Recent advances have explored attention mechanisms and Transformer-style temporal models for capturing long-range dependencies~\cite{gulati2020conformer,li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer}, while hybrid approaches combining CNN and RNN components have shown promising results.
 
 \textbf{Benchmarking and Gaps:} SenseFi~\cite{yang2023sensefi} systematically compared 11 deep learning models across 4 public datasets, establishing a valuable empirical baseline. Yet, as we discuss in the Introduction, gaps remain around data scarcity, cross-domain generalization, and evaluation reliability (calibration, stability), motivating our physics-guided synthesis and trustworthy protocol design.
 
-\textbf{Attention Mechanisms in CSI Sensing:} The integration of attention mechanisms into WiFi CSI HAR has gained significant traction. Self-attention mechanisms enable models to focus on relevant temporal segments within CSI sequences, while channel attention (similar to our \gls{se} modules) allows selective emphasis on informative frequency components. Recent works have demonstrated that attention-based architectures can achieve superior performance compared to traditional \gls{cnn} and \gls{rnn} approaches, particularly in noisy environments and cross-domain scenarios.
+\textbf{Attention Mechanisms in CSI Sensing:} The integration of attention mechanisms into WiFi CSI HAR has gained significant traction. Self-attention mechanisms enable models to focus on relevant temporal segments within CSI sequences, while channel attention (similar to our SE modules) allows selective emphasis on informative frequency components. Recent works have demonstrated that attention-based architectures can achieve superior performance compared to traditional CNN and RNN approaches, particularly in noisy environments and cross-domain scenarios.
 
 \textbf{SenseFi Benchmark and Systematic Evaluation:} Yang et al.~\cite{yang2023sensefi} established SenseFi as the first comprehensive benchmark for deep learning-based WiFi human sensing, systematically evaluating 11 models across 4 public datasets. Their study revealed significant performance variations across different models and datasets, highlighting the critical importance of cross-domain generalization. While SenseFi provides valuable insights into model performance on real data, it assumes abundant labeled training data availability, which remains a significant limitation in practical deployments.
 
@@ -105,9 +105,9 @@ Cross-domain generalization represents one of the most critical challenges in pr
 
 \textbf{Domain Adaptation Techniques:} Traditional domain adaptation methods have been explored for WiFi CSI HAR, including statistical moment matching, adversarial training, and feature alignment approaches. Wang et al.~\cite{fewsense2022} proposed FewSense for few-shot cross-domain learning, demonstrating improved generalization with limited target domain data. Zhang et al.~\cite{airfi2022} introduced AirFi for domain generalization through meta-learning approaches.
 
-\textbf{Subject-Independent Methods:} \gls{loso} evaluation has become the standard protocol for assessing subject-independent generalization. Recent works have explored personalization techniques, adaptive learning, and subject-agnostic feature learning to improve \gls{loso} performance. However, achieving consistent performance across diverse subject populations remains challenging.
+\textbf{Subject-Independent Methods:} LOSO evaluation has become the standard protocol for assessing subject-independent generalization. Recent works have explored personalization techniques, adaptive learning, and subject-agnostic feature learning to improve LOSO performance. However, achieving consistent performance across diverse subject populations remains challenging.
 
-\textbf{Environment-Independent Methods:} \gls{loro} evaluation addresses environment-independent generalization, which is crucial for deploying CSI systems across different physical spaces. Environmental domain adaptation techniques include signal normalization, environmental feature disentanglement, and physics-informed domain adaptation.
+\textbf{Environment-Independent Methods:} LORO evaluation addresses environment-independent generalization, which is crucial for deploying CSI systems across different physical spaces. Environmental domain adaptation techniques include signal normalization, environmental feature disentanglement, and physics-informed domain adaptation.
 
 \subsection{Synthetic Data Generation for Sensing Applications}
 
@@ -115,7 +115,7 @@ Synthetic data generation has emerged as a promising approach to address data sc
 
 \textbf{Physics-Based Simulation:} Traditional wireless simulation approaches rely on ray-tracing methods and electromagnetic field modeling~\cite{ray_tracing_wireless2000}. These methods provide high physical accuracy but are computationally expensive and require detailed environmental models. Recent advances in fast electromagnetic simulation and GPU acceleration have improved computational feasibility.
 
-\textbf{Generative Model Approaches:} Deep generative models including \glspl{gan}, \glspl{vae}, and diffusion models have been explored for sensor data synthesis. However, these approaches often lack physical grounding and may generate unrealistic data that does not transfer effectively to real-world scenarios.
+\textbf{Generative Model Approaches:} Deep generative models including GANs, VAEs, and diffusion models have been explored for sensor data synthesis. However, these approaches often lack physical grounding and may generate unrealistic data that does not transfer effectively to real-world scenarios.
 
 \textbf{Physics-Informed Neural Networks:} Recent advances in physics-informed machine learning~\cite{pinn_karniadakis2021} have shown promise in incorporating physical constraints into neural networks. However, their application to WiFi CSI data generation remains largely unexplored, particularly for complex indoor propagation scenarios with human activity.
 
@@ -283,7 +283,7 @@ where $\mathbf{c}$ represents the context vector obtained through attention-weig
 
 The Enhanced model architecture design is guided by three key principles: (1) \textbf{Multi-scale Feature Learning}: CNN layers extract hierarchical spatial features at different abstraction levels, (2) \textbf{Channel-wise Attention}: SE modules enable selective emphasis on informative feature channels, and (3) \textbf{Temporal Dependency Modeling}: The attention mechanism captures long-range temporal relationships critical for activity recognition.
 
-\textbf{\gls{cnn}-\gls{se} Integration:} The integration of SE modules after CNN feature extraction enables the model to learn channel-wise feature importance adaptively. This is particularly effective for WiFi CSI data where different frequency subcarriers may have varying importance for different activities.
+\textbf{CNN-SE Integration:} The integration of SE modules after CNN feature extraction enables the model to learn channel-wise feature importance adaptively. This is particularly effective for WiFi CSI data where different frequency subcarriers may have varying importance for different activities.
 
 \textbf{Temporal Attention Benefits:} The temporal attention mechanism addresses limitations of traditional RNN approaches by enabling direct modeling of long-range dependencies without the vanishing gradient problem. This capability is crucial for recognizing activities with extended temporal patterns.
 
