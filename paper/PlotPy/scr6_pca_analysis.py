@@ -108,17 +108,14 @@ def create_pca_4row_layout():
     
     # Create figure: 4 rows × 2 columns layout (with nested grid for row3 right)
     fig = plt.figure(figsize=(14.0, 12.5))
-    gs = gridspec.GridSpec(4, 2, height_ratios=[1.2, 1.0, 1.0, 1.1], hspace=0.58, wspace=0.35)
+    gs = gridspec.GridSpec(4, 2, height_ratios=[1.2, 1.0, 1.2, 1.1], hspace=0.58, wspace=0.32)
     
     # Row1: Main PCA Feature Space spans 2 columns
     ax1 = fig.add_subplot(gs[0, :])
-    ax1.text(0.01, 0.98, '(a)', transform=ax1.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Row2: Left cross-protocol consistency; Right explained variance
     ax4 = fig.add_subplot(gs[1, 0])
-    ax4.text(0.01, 0.98, '(b)', transform=ax4.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     ax2 = fig.add_subplot(gs[1, 1])
-    ax2.text(0.01, 0.98, '(c)', transform=ax2.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     # Row3: Two equal-sized subplots
     ax3 = fig.add_subplot(gs[2, 0])
@@ -164,7 +161,7 @@ def create_pca_4row_layout():
                    fontweight='bold', fontsize=12, labelpad=10)
     ax1.set_ylabel(f'Second Principal Component ({pca.explained_variance_ratio_[1]:.1%} variance)', 
                    fontweight='bold', fontsize=12, labelpad=10)
-    ax1.set_title('PCA Feature Space Analysis: Model Clustering and Protocol Separation', 
+    ax1.set_title('(a) PCA Feature Space Analysis: Model Clustering and Protocol Separation', 
                  fontweight='bold', fontsize=13, pad=15)
     ax1.grid(True, alpha=0.3)
     ax1.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.85)
@@ -182,7 +179,7 @@ def create_pca_4row_layout():
     ax2.set_xlabel('Principal Component', fontweight='bold', fontsize=10, labelpad=8)
     ax2.set_ylabel('Explained Variance Ratio', color='blue', fontweight='bold', fontsize=10, labelpad=8)
     ax2_twin.set_ylabel('Cumulative Variance (%)', color='red', fontweight='bold', fontsize=10, labelpad=8)
-    ax2.set_title('PCA Explained Variance', fontweight='bold', fontsize=11, pad=12)
+    ax2.set_title('(c) PCA Explained Variance', fontweight='bold', fontsize=11, pad=12)
     ax2.tick_params(axis='y', labelcolor='blue', labelsize=8)
     ax2_twin.tick_params(axis='y', labelcolor='red', labelsize=8)
     ax2.grid(True, alpha=0.3)
@@ -216,7 +213,8 @@ def create_pca_4row_layout():
             ax3.text(j, i, f'{distance_matrix[i, j]:.1f}',
                     ha='center', va='center', color='white', fontweight='bold', fontsize=7)
     
-    plt.colorbar(im, ax=ax3, fraction=0.046, pad=0.04)
+    cbar = plt.colorbar(im, ax=ax3, fraction=0.08, pad=0.12, orientation='horizontal')
+    cbar.set_label('Distance', fontsize=9)
     
     # 4. Cross-Protocol Consistency (Row 2 Left)
     protocol_consistency = {}
@@ -240,7 +238,7 @@ def create_pca_4row_layout():
     bars = ax4.bar(models_sorted, scores, color=colors, alpha=0.8, edgecolor='black')
     ax4.set_ylabel('LOSO-LORO Distance (Lower = More Consistent)', fontweight='bold', fontsize=11, labelpad=10)
     ax4.set_xlabel('Model', fontweight='bold', fontsize=11, labelpad=8)
-    ax4.set_title('Cross-Protocol Consistency Analysis', fontweight='bold', fontsize=12, pad=12)
+    ax4.set_title('(b) Cross-Protocol Consistency Analysis', fontweight='bold', fontsize=12, pad=12)
     ax4.grid(True, alpha=0.3, axis='y')
     
     for bar, score in zip(bars, scores):
@@ -264,6 +262,16 @@ def create_pca_4row_layout():
     ax5.set_ylabel('PC2', fontweight='bold', fontsize=10, labelpad=8)  
     ax5.set_zlabel('PC3', fontweight='bold', fontsize=10, labelpad=8)
     ax5.set_title('(e) 3D Feature Space', fontweight='bold', fontsize=11, pad=12)
+    # Expand 3D plot visual area to match column width perception
+    try:
+        ax5.set_box_aspect((1.2, 1.0, 0.7))
+    except Exception:
+        pass
+    try:
+        ax5.set_proj_type('ortho')
+    except Exception:
+        pass
+    ax5.margins(x=0.05, y=0.05, z=0.05)
     ax5.legend(fontsize=8, loc='upper left', bbox_to_anchor=(0.0, 1.10), framealpha=0.8)
     
     # 6. PCA Feature Loadings Matrix (Row 4 Left)
