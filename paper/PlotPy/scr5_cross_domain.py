@@ -15,6 +15,7 @@ from sklearn.preprocessing import StandardScaler
 import warnings
 warnings.filterwarnings('ignore')
 from pathlib import Path
+from matplotlib import gridspec
 
 # Set publication-ready style (fallback safe)
 try:
@@ -98,7 +99,10 @@ def create_comprehensive_performance_data():
 
 def create_hierarchical_clustering_heatmap():
     """
-    Create a clustered heatmap with hierarchical clustering
+    Create requested fig5 layout:
+    - Row1: Heatmap spans 2 columns
+    - Row2: Left correlation matrix, Right radar chart
+    - Row3: Left composite performance score, Right model parameters vs performance scatter
     """
     # Get data
     data = create_comprehensive_performance_data()
@@ -119,34 +123,14 @@ def create_hierarchical_clustering_heatmap():
         index=cluster_data.index
     )
     
-    # Create figure with multiple subplots
-    fig = plt.figure(figsize=(16, 10))
+    # Create figure with requested 3x2 grid
+    fig = plt.figure(figsize=(12.5, 10.0))
+    gs = gridspec.GridSpec(3, 2, height_ratios=[1.15, 1.0, 1.0], hspace=0.48, wspace=0.34)
     
-    # Main heatmap with clustering
-    ax1 = plt.subplot2grid((3, 4), (0, 0), colspan=3, rowspan=2)
+    # Row1: Heatmap spans both columns
+    ax1 = fig.add_subplot(gs[0, :])
     
-    # Create clustered heatmap (fallback for older seaborn)
-    try:
-        sns.clustermap(
-            cluster_data_scaled,
-            cmap='RdYlBu_r',
-            center=0,
-            linewidths=0.5,
-            cbar_kws={'label': 'Normalized Performance Score'},
-            figsize=(12, 8),
-            annot=True,
-            fmt='.2f'
-        )
-    except Exception:
-        try:
-            sns.clustermap(cluster_data_scaled, cmap='RdYlBu_r', center=0)
-        except Exception:
-            pass
-    
-    plt.close()  # Close the clustermap figure since we're creating our own layout
-    
-    # Create manual heatmap for better control
-    # Perform hierarchical clustering
+    # Perform hierarchical clustering for ordering
     linkage_matrix = linkage(cluster_data_scaled, method='ward')
     dendro = dendrogram(linkage_matrix, labels=cluster_data_scaled.index, no_plot=True)
     
@@ -165,11 +149,10 @@ def create_hierarchical_clustering_heatmap():
     ax1.set_xticklabels(ordered_data.columns, rotation=45, ha='right')
     ax1.set_yticks(range(len(ordered_data.index)))
     ax1.set_yticklabels(ordered_data.index)
-    ax1.set_title('Performance Metrics Heatmap\n(Hierarchically Clustered)', 
-                  fontweight='bold')
+    ax1.set_title('Performance Metrics Heatmap (Hierarchically Clustered)', fontweight='bold')
     
     # Add colorbar
-    cbar = plt.colorbar(im, ax=ax1, fraction=0.046, pad=0.04)
+    cbar = plt.colorbar(im, ax=ax1, fraction=0.035, pad=0.02)
     cbar.set_label('Standardized Score', rotation=270, labelpad=15)
     
     # Add text annotations
@@ -180,8 +163,8 @@ def create_hierarchical_clustering_heatmap():
             ax1.text(j, i, f'{value:.1f}', ha='center', va='center', 
                     color=color, fontsize=10, fontweight='bold')
     
-    # Performance comparison radar chart
-    ax2 = plt.subplot2grid((3, 4), (0, 3), projection='polar')
+    # Row2 Right: Performance comparison radar chart
+    ax2 = fig.add_subplot(gs[1, 1], projection='polar')
     # Panel label (b)
     ax2.text(0.02, 0.98, '(b)', transform=ax2.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
@@ -210,13 +193,13 @@ def create_hierarchical_clustering_heatmap():
     ax2.set_xticklabels([metric.replace('_', '\n') for metric in radar_metrics], 
                        fontsize=10)
     ax2.set_ylim(0, 1)
-    ax2.set_title('Model Comparison\nRadar Chart', fontweight='bold', fontsize=12)
+    ax2.set_title('Model Comparison Radar Chart', fontweight='bold', fontsize=12)
     # Move legend outside
-    ax2.legend(loc='upper left', bbox_to_anchor=(0.0, 1.25), framealpha=0.9, fontsize=10)
+    ax2.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.9, fontsize=10)
     ax2.grid(True)
     
-    # Correlation matrix
-    ax3 = plt.subplot2grid((3, 4), (1, 3))
+    # Row2 Left: Correlation matrix
+    ax3 = fig.add_subplot(gs[1, 0])
     # Panel label (c)
     ax3.text(0.01, 0.98, '(c)', transform=ax3.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
@@ -226,10 +209,10 @@ def create_hierarchical_clustering_heatmap():
     sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
                 center=0, square=True, linewidths=0.5, ax=ax3,
                 cbar_kws={'shrink': 0.8, 'label': 'Correlation'})
-    ax3.set_title('Metric Correlation Matrix', fontweight='bold', fontsize=10)
+    ax3.set_title('Metric Correlation Matrix', fontweight='bold', fontsize=11)
     
-    # Performance ranking bar chart
-    ax4 = plt.subplot2grid((3, 4), (2, 0), colspan=2)
+    # Row3 Left: Performance ranking bar chart (composite score)
+    ax4 = fig.add_subplot(gs[2, 0])
     # Panel label (d)
     ax4.text(0.01, 0.98, '(d)', transform=ax4.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
@@ -255,7 +238,7 @@ def create_hierarchical_clustering_heatmap():
                     color=colors, alpha=0.8)
     
     ax4.set_xlabel('Composite Performance Score')
-    ax4.set_title('Overall Model Ranking', fontweight='bold')
+    ax4.set_title('Overall Model Ranking (Composite Score)', fontweight='bold')
     ax4.grid(True, alpha=0.3, axis='x')
     
     # Add score labels
@@ -263,8 +246,8 @@ def create_hierarchical_clustering_heatmap():
         ax4.text(score + 0.01, bar.get_y() + bar.get_height()/2, 
                 f'{score:.3f}', va='center', fontweight='bold', fontsize=9)
     
-    # Model efficiency scatter plot
-    ax5 = plt.subplot2grid((3, 4), (2, 2), colspan=2)
+    # Row3 Right: Model parameters vs performance (bubble scatter)
+    ax5 = fig.add_subplot(gs[2, 1])
     # Panel label (e)
     ax5.text(0.01, 0.98, '(e)', transform=ax5.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
@@ -289,18 +272,8 @@ def create_hierarchical_clustering_heatmap():
     cbar2 = plt.colorbar(scatter, ax=ax5, fraction=0.046, pad=0.04)
     cbar2.set_label('Stability Index', rotation=270, labelpad=15)
     
-    # Adjust layout to fit external legends
-    plt.subplots_adjust(hspace=0.45, wspace=0.35, right=0.95)
-    # Export compact figure5.pdf (double-column friendly width)
-    try:
-        orig_size = fig.get_size_inches()
-        fig.set_size_inches(7.2, 4.5)
-        fig.savefig('figure5.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
-    finally:
-        try:
-            fig.set_size_inches(orig_size)
-        except Exception:
-            pass
+    # Adjust layout spacing
+    plt.subplots_adjust(left=0.07, right=0.98, top=0.93, bottom=0.08)
     
     return fig, data
 
@@ -409,23 +382,10 @@ if __name__ == "__main__":
     # Generate statistical significance heatmap
     fig2, sig_matrix = create_statistical_significance_heatmap()
 
-    # Save figures (canonical paper name + originals)
-    output_files = [
-        (FIGS / 'fig5_cross_domain.pdf', fig1),
-        (FIGS / 'fig5_statistical_significance.pdf', fig2),
-        (FIGS / 'fig5_statistical_significance.png', fig2)
-    ]
-
-    for filename, fig in output_files:
-        fig.savefig(filename, dpi=300, bbox_inches='tight', 
-                   facecolor='white', edgecolor='none')
-        print(f"✅ Saved: {filename}")
-
-    # Ensure canonical name saved
-    try:
-        fig1.savefig(FIGS / 'fig5_cross_domain.pdf', dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
-    except Exception as e:
-        print('[warn] failed to save fig5_cross_domain.pdf:', e)
+    # Save canonical figure5
+    out = FIGS / 'fig5_cross_domain.pdf'
+    fig1.savefig(out, dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+    print(f"✅ Saved: {out}")
 
     # Export data into paper/figures for cleanliness
     export_heatmap_data()
