@@ -37,14 +37,14 @@ WiFi CSI, Fall Detection, Synthetic Data, Domain Shift, Calibration, Sim2Real
 \end{IEEEkeywords}
 
 \section{Introduction}
-CSI-based sensing promises privacy-preserving fall detection but often overclaims on synthetic data and underperforms across subjects, rooms, and devices. We propose a rigorous, physics-guided evaluation framework rather than yet another complex network. Our contributions:
+CSI-based sensing promises privacy-preserving fall detection but often overclaims on synthetic data and underperforms across subjects, rooms, and devices. We propose a rigorous, physics-guided evaluation framework rather than yet another complex network (Fig.~\ref{fig:system-arch}). Our contributions:
 \begin{itemize}
   \item Physics-controllable synthetic analysis that breaks the ceiling and exposes difficulty-error causality (Fig.~\ref{fig:synth-bars}, \ref{fig:overlap-scatter}).
   \item Strict cross-domain protocols with statistical tests and trust calibration (Tab.~\ref{tab:main-real}, Fig.~\ref{fig:reliability}).
   \item Cost-aware operating points and robust performance in low-FPR regimes (Fig.~\ref{fig:cost-sensitive}).
   \item Sim2Real label-efficiency: with 10--20\% labels we reach $\geq$90--95\% of full supervision (Fig.~\ref{fig:sim2real-curve}).
 \end{itemize}
-We show our Enhanced model with a lightweight confidence prior (logit norm regularization) yields better calibration and robustness than matched-capacity baselines (LSTM/TCN/Tiny-Transformer).
+We show our Enhanced model (Fig.~\ref{fig:model-details}) with a lightweight confidence prior (logit norm regularization) yields better calibration and robustness than matched-capacity baselines (LSTM/TCN/Tiny-Transformer).
 
 \section{Related Work}
 \subsection{CSI-based HAR and fall detection}
@@ -55,8 +55,23 @@ We differ by using controllable physics-inspired factors and linking them to err
 Beyond accuracy, we measure ECE, Brier, and reliability curves.
 
 \section{Method}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig2_flowchart.pdf}
+  \caption{System architecture overview. (a) Complete processing pipeline from WiFi CSI data to fall detection output, highlighting the Enhanced model component. (b) Detailed Enhanced model architecture showing the integration of physics-guided features and confidence prior.}
+  \label{fig:system-arch}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig3_model_details.pdf}
+  \caption{Enhanced model layer-wise details. Each layer shows input/output dimensions and parameter counts. The model integrates temporal encoding, physics-guided features (Doppler, path loss, multipath), and confidence regularization for robust fall detection.}
+  \label{fig:model-details}
+\end{figure}
+
 \subsection{Model family and capacity matching}
-We compare LSTM, TCN, Tiny-Transformer, and \model{} with parameter budgets within $\pm$10\%.
+We compare LSTM, TCN, Tiny-Transformer, and \model{} with parameter budgets within $\pm$10\%. Our Enhanced model (Fig.~\ref{fig:system-arch}, \ref{fig:model-details}) incorporates physics-guided features and confidence regularization while maintaining comparable parameter count.
 \subsection{Confidence prior}
 Given logits $z$, we use $\mathcal{L}=\mathrm{CE}(z,y)+\lambda \cdot \frac{1}{B}\sum_i \|z_i\|_2^2$. We tune $\lambda$ via sweep and report Pareto trade-offs between accuracy and calibration.
 
