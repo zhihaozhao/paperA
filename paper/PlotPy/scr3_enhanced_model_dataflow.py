@@ -22,23 +22,19 @@ def box(ax, x, y, w, h, label, fc):
     rect = FancyBboxPatch((x, y), w, h, boxstyle='round,pad=0.03', facecolor=fc,
                           edgecolor='black', linewidth=1.5, alpha=0.98)
     ax.add_patch(rect)
-    ax.text(x + w/2, y + h/2, label, ha='center', va='center', fontsize=11, color='black', wrap=True)
+    ax.text(x + w/2, y + h/2, label, ha='center', va='center', fontsize=12, color='black', wrap=True)
 
 
 def arrow(ax, x1, y1, x2, y2, color='black', elbow=False):
     if elbow:
-        # Draw an elbowed arrow using 3 segments (— then | then →)
-        knee_x = x1 + (x2 - x1) * 0.5
-        knee_y = y1 + 0.5
-        seg1 = ConnectionPatch((x1, y1), (knee_x, y1), 'data', 'data', arrowstyle='-',
+        # Draw an elbowed arrow using two segments: horizontal then vertical with arrow head
+        # Route via the target x to keep a clean L-shape
+        seg1 = ConnectionPatch((x1, y1), (x2, y1), 'data', 'data', arrowstyle='-',
                                mutation_scale=15, fc=color, ec=color, linewidth=1.8)
-        seg2 = ConnectionPatch((knee_x, y1), (knee_x, knee_y), 'data', 'data', arrowstyle='-',
-                               mutation_scale=15, fc=color, ec=color, linewidth=1.8)
-        seg3 = ConnectionPatch((knee_x, knee_y), (x2, y2), 'data', 'data', arrowstyle='->',
+        seg2 = ConnectionPatch((x2, y1), (x2, y2), 'data', 'data', arrowstyle='->',
                                mutation_scale=15, fc=color, ec=color, linewidth=1.8)
         ax.add_patch(seg1)
         ax.add_patch(seg2)
-        ax.add_patch(seg3)
     else:
         cp = ConnectionPatch((x1, y1), (x2, y2), 'data', 'data', arrowstyle='->',
                              mutation_scale=15, fc=color, ec=color, linewidth=1.8)
@@ -46,64 +42,59 @@ def arrow(ax, x1, y1, x2, y2, color='black', elbow=False):
 
 
 def create_fig():
-    fig, ax = plt.subplots(figsize=(12.5, 6.2))
-    ax.set_xlim(0, 20)
-    ax.set_ylim(0, 7.5)
+    fig, ax = plt.subplots(figsize=(14.5, 6.6))
+    ax.set_xlim(0, 22)
+    ax.set_ylim(0, 8)
     ax.axis('off')
 
     ax.set_title('Enhanced Model Architecture (2D): Parameters per Module', fontweight='bold', color='black')
 
-    y = 4.2
-    h = 1.2
+    # Layout: 2 rows × 4 columns
+    h = 1.3
+    w = 4.4
+    gap_x = 0.8
+    gap_y = 1.4
+    left = 0.8
+    top_y = 6.0
+    bottom_y = top_y - (h + gap_y)
 
-    # Input block
-    x = 0.6; w = 3.0
-    box(ax, x, y, w, h, 'Input CSI\n(T×C×F)', '#E6F2FF')
-    arrow(ax, x + w, y + h/2, x + w + 0.6, y + h/2, elbow=True)
+    def col_x(col_idx):
+        return left + col_idx * (w + gap_x)
 
-    # Conv Block 1
-    x += w + 0.6; w = 3.4
-    box(ax, x, y, w, h, 'Conv1\nKernels=32\nKernel=3×3, Stride=1', '#FDEBD0')
-    ax.text(x + w/2, y - 0.38, 'BN + ReLU + Dropout(0.1)', ha='center', fontsize=9, color='dimgray')
-    arrow(ax, x + w, y + h/2, x + w + 0.6, y + h/2, elbow=True)
+    # Module labels (multi-line) and colors
+    labels = [
+        'Input CSI\n(T×C×F)',
+        'Conv1\nKernels=32\nKernel=3×3, Stride=1',
+        'Conv2\nKernels=64\nKernel=3×3, Stride=2',
+        'Conv3\nKernels=128\nKernel=3×3, Stride=2',
+        'SE Block\nReduction r=16\nGAP→FC(128→8)→ReLU\nFC(8→128)→Sigmoid',
+        'BiLSTM\nHidden=128×2\nOutput=256 (concat)',
+        'Temporal Attention\nHeads=4\nd_model=256, Window=5\nDropout=0.1',
+        'Classifier\nFC(256→H)\nSoftmax'
+    ]
+    colors = ['#E6F2FF', '#FDEBD0', '#FDEBD0', '#FDEBD0', '#FADBD8', '#D5F5E3', '#E8DAEF', '#D6EAF8']
 
-    # Conv Block 2
-    x += w + 0.6; w = 3.4
-    box(ax, x, y, w, h, 'Conv2\nKernels=64\nKernel=3×3, Stride=2', '#FDEBD0')
-    ax.text(x + w/2, y - 0.38, 'BN + ReLU + Dropout(0.1)', ha='center', fontsize=9, color='dimgray')
-    arrow(ax, x + w, y + h/2, x + w + 0.6, y + h/2, elbow=True)
+    # Top row: modules 0..3
+    for i in range(4):
+        x = col_x(i)
+        box(ax, x, top_y, w, h, labels[i], colors[i])
+        if i < 3:
+            arrow(ax, x + w, top_y + h/2, col_x(i+1), top_y + h/2, elbow=False)
 
-    # Conv Block 3
-    x += w + 0.6; w = 3.4
-    box(ax, x, y, w, h, 'Conv3\nKernels=128\nKernel=3×3, Stride=2', '#FDEBD0')
-    ax.text(x + w/2, y - 0.38, 'BN + ReLU + Dropout(0.1)', ha='center', fontsize=9, color='dimgray')
-    arrow(ax, x + w, y + h/2, x + w + 0.6, y + h/2, elbow=True)
+    # Bottom row: modules 4..7
+    for i in range(4, 8):
+        x = col_x(i - 4)
+        box(ax, x, bottom_y, w, h, labels[i], colors[i])
+        if i < 7:
+            arrow(ax, x + w, bottom_y + h/2, col_x(i - 3), bottom_y + h/2, elbow=False)
 
-    # SE Block
-    x += w + 0.6; w = 3.2
-    box(ax, x, y, w, h, 'SE Block\nReduction r=16\nGAP→FC(128→8)→ReLU\nFC(8→128)→Sigmoid', '#FADBD8')
-    ax.text(x + w/2, y - 0.38, 'Channel-wise reweighting', ha='center', fontsize=9, color='dimgray')
-    arrow(ax, x + w, y + h/2, x + w + 0.6, y + h/2, elbow=True)
-
-    # BiLSTM
-    x += w + 0.6; w = 3.4
-    box(ax, x, y, w, h, 'BiLSTM\nHidden=128×2\nOutput=256 (concat)', '#D5F5E3')
-    ax.text(x + w/2, y - 0.38, 'Context integration', ha='center', fontsize=9, color='dimgray')
-    arrow(ax, x + w, y + h/2, x + w + 0.6, y + h/2, elbow=True)
-
-    # Temporal Attention
-    x += w + 0.6; w = 3.4
-    box(ax, x, y, w, h, 'Temporal Attention\nHeads=4\nd_model=256, Window=5\nDropout=0.1', '#E8DAEF')
-    ax.text(x + w/2, y - 0.38, 'Scaled Dot-Product', ha='center', fontsize=9, color='dimgray')
-    arrow(ax, x + w, y + h/2, x + w + 0.6, y + h/2, elbow=True)
-
-    # Classifier
-    x += w + 0.6; w = 3.0
-    box(ax, x, y, w, h, 'Classifier\nFC(256→H)\nSoftmax', '#D6EAF8')
+    # Transition arrow from top row last box to bottom row first box (L-shaped)
+    arrow(ax, col_x(3) + w, top_y + h/2, col_x(0), bottom_y + h/2, elbow=True)
 
     # Notes panel below
-    ax.text(10.0, 1.2, 'Training: AdamW, lr=3e-4, batch=64; Label efficiency experiments (20% labels).\nMetrics: LOSO/LORO Macro-F1, ECE calibration; Stability Index; Deployment Readiness.',
-            ha='center', va='center', fontsize=10, color='black')
+    ax.text(left + 2*(w + gap_x), 1.1,
+            'Training: AdamW, lr=3e-4, batch=64; 20% labels.\nMetrics: LOSO/LORO Macro-F1, ECE calibration; Stability Index; Deployment Readiness.',
+            ha='center', va='center', fontsize=12, color='black')
 
     return fig
 
