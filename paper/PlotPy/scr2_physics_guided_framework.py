@@ -39,43 +39,50 @@ def create_fig():
 
     ax.set_title('Physics-Guided Sim2Real Framework (2D)', fontweight='bold', color='black')
 
-    # Left column: complete process modules (top to bottom)
+    # Left column: complete process modules (bottom to top) with larger spacing
     left_x = 0.6
-    w = 3.0
-    h = 0.9
-    y_positions = [5.1, 4.0, 2.9, 1.8, 0.7]
+    w = 3.2
+    h = 1.0
+    spacing = 0.35
+    base_y = 0.7
     labels = [
-        'Data Acquisition\n(Raw CSI Streams)',
-        'Preprocessing\n(Sync, Denoise, Normalization)',
-        'Physics Modeling\n(Multipath, Human, Environment)',
-        'Parameterized Synthesis\n(Scenario + Channel Control)',
-        'Enhanced Model\n(CNN + SE + Temporal Attention)'
+        'Data Acquisition\n(Raw CSI\nStreams)',
+        'Preprocessing\n(Sync, Denoise,\nNormalization)',
+        'Physics Modeling\n(Multipath, Human,\nEnvironment)',
+        'Parameterized Synthesis\n(Scenario + Channel\nControl)',
+        'Enhanced Model\n(CNN + SE + Temporal\nAttention)'
     ]
     colors = ['#E6F2FF', '#EAF7E6', '#D4EDDA', '#FFF3CD', '#F8D7DA']
-    for y, label, fc in zip(y_positions, labels, colors):
-        box(ax, left_x, y, w, h, label, fc)
+    y_positions = []
+    y_current = base_y
+    for label, fc in zip(labels, colors):
+        box(ax, left_x, y_current, w, h, label, fc)
+        y_positions.append(y_current)
+        y_current += h + spacing
 
-    # Connect left column top-down arrows
+    # Connect bottom-to-top arrows
     for i in range(len(y_positions) - 1):
-        y1 = y_positions[i]
+        y1 = y_positions[i] + h
         y2 = y_positions[i+1]
-        arrow(ax, left_x + w/2, y1, left_x + w/2, y2 + h)
+        arrow(ax, left_x + w/2, y1, left_x + w/2, y2)
 
-    # Right dashed model box (rough model diagram)
-    dashed = Rectangle((7.2, 1.2), 4.0, 3.8, fill=False, linestyle='--', linewidth=2.0, edgecolor='black')
+    # Right dashed model box (rough model diagram); extend downward and cover modules
+    dashed_x, dashed_y, dashed_w, dashed_h = 7.2, 0.9, 4.4, 4.6
+    dashed = Rectangle((dashed_x, dashed_y), dashed_w, dashed_h, fill=False, linestyle='--', linewidth=2.0, edgecolor='black')
     ax.add_patch(dashed)
-    ax.text(9.2, 4.9, 'Enhanced Model (Rough Diagram)', ha='center', va='bottom', fontsize=12, fontweight='bold')
+    ax.text(dashed_x + dashed_w/2, dashed_y + dashed_h + 0.25, 'Enhanced Model (Rough Diagram)',
+            ha='center', va='bottom', fontsize=12, fontweight='bold')
 
     # Contents inside dashed model box (rough blocks)
-    bx_x, bx_y, bx_w, bx_h = 7.5, 3.8, 3.4, 0.7
+    bx_x, bx_y, bx_w, bx_h = dashed_x + 0.3, dashed_y + dashed_h - 1.2, 3.8, 0.72
     box(ax, bx_x, bx_y, bx_w, bx_h, 'Conv Blocks\n(3×3, C=[32,64,128], Stride=[1,2,2])', '#FDEBD0')
-    box(ax, bx_x, bx_y - 0.9, bx_w, bx_h, 'SE Block\n(Reduction Ratio r=16)', '#FADBD8')
-    box(ax, bx_x, bx_y - 1.8, bx_w, bx_h, 'BiLSTM\n(Hidden=128 per direction)', '#D5F5E3')
-    box(ax, bx_x, bx_y - 2.7, bx_w, bx_h, 'Temporal Attention\n(Heads=4)', '#E8DAEF')
+    box(ax, bx_x, bx_y - 1.0, bx_w, bx_h, 'SE Block\n(Reduction Ratio r=16)', '#FADBD8')
+    box(ax, bx_x, bx_y - 2.0, bx_w, bx_h, 'BiLSTM\n(Hidden=128 per\ndirection)', '#D5F5E3')
+    box(ax, bx_x, bx_y - 3.0, bx_w, bx_h, 'Temporal Attention\n(Heads=4)', '#E8DAEF')
 
     # Arrow from Enhanced Model (left column) to dashed model box
     enhanced_y = y_positions[-1]
-    arrow(ax, left_x + w, enhanced_y + h/2, 7.2, 3.1)
+    arrow(ax, left_x + w, enhanced_y + h/2, dashed_x, dashed_y + dashed_h/2)
 
     return fig
 
