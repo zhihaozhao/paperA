@@ -120,20 +120,13 @@ def create_pca_4row_layout():
     ax2 = fig.add_subplot(gs[1, 1])
     ax2.text(0.01, 0.98, '(c)', transform=ax2.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
-    # Row3: Right column split vertically (top model separation, bottom 3D)
-    ax3_blank_left = fig.add_subplot(gs[2, 0])
-    ax3_blank_left.axis('off')
-    sub_gs_r3 = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=gs[2, 1], height_ratios=[1.0, 1.0], hspace=0.28)
-    ax3 = fig.add_subplot(sub_gs_r3[0, 0])
-    ax3.text(0.01, 0.98, '(d)', transform=ax3.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
-    ax5 = fig.add_subplot(sub_gs_r3[1, 0], projection='3d')
-    ax5.text2D(0.01, 0.98, '(e)', transform=ax5.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
+    # Row3: Two equal-sized subplots
+    ax3 = fig.add_subplot(gs[2, 0])
+    ax5 = fig.add_subplot(gs[2, 1], projection='3d')
     
     # Row4: Left loadings heatmap; Right feature contributions
     ax6 = fig.add_subplot(gs[3, 0])
-    ax6.text(0.01, 0.98, '(f)', transform=ax6.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     ax7 = fig.add_subplot(gs[3, 1])
-    ax7.text(0.01, 0.98, '(g)', transform=ax7.transAxes, ha='left', va='top', fontsize=12, fontweight='bold', color='black')
     
     models = data_df['Model'].unique()
     
@@ -216,7 +209,7 @@ def create_pca_4row_layout():
     ax3.set_yticks(range(len(models)))
     ax3.set_xticklabels(models, rotation=45, ha='right', fontsize=8)
     ax3.set_yticklabels(models, fontsize=8)
-    ax3.set_title('Model Separation Distances', fontweight='bold', fontsize=11, pad=10)
+    ax3.set_title('(d) Model Separation Distances', fontweight='bold', fontsize=11, pad=10)
     
     for i in range(len(models)):
         for j in range(len(models)):
@@ -270,7 +263,7 @@ def create_pca_4row_layout():
     ax5.set_xlabel('PC1', fontweight='bold', fontsize=10, labelpad=8)
     ax5.set_ylabel('PC2', fontweight='bold', fontsize=10, labelpad=8)  
     ax5.set_zlabel('PC3', fontweight='bold', fontsize=10, labelpad=8)
-    ax5.set_title('3D Feature Space', fontweight='bold', fontsize=11, pad=12)
+    ax5.set_title('(e) 3D Feature Space', fontweight='bold', fontsize=11, pad=12)
     ax5.legend(fontsize=8, loc='upper left', bbox_to_anchor=(0.0, 1.10), framealpha=0.8)
     
     # 6. PCA Feature Loadings Matrix (Row 4 Left)
@@ -287,7 +280,7 @@ def create_pca_4row_layout():
     sns.heatmap(loadings_df, annot=True, fmt='.2f', cmap='RdBu_r', center=0,
                 square=False, linewidths=0.5, ax=ax6, 
                 annot_kws={'size': 7}, cbar_kws={'label': 'Loading Weight'})
-    ax6.set_title('PCA Feature Loadings Matrix', fontweight='bold', fontsize=12, pad=12)
+    ax6.set_title('(f) PCA Feature Loadings Matrix', fontweight='bold', fontsize=12, pad=12)
     ax6.set_xlabel('Principal Components', fontweight='bold', fontsize=10, labelpad=8)
     ax6.set_ylabel('Feature Dimensions', fontweight='bold', fontsize=10, labelpad=8)
     
@@ -305,7 +298,7 @@ def create_pca_4row_layout():
     ax7.set_yticks(y_pos)
     ax7.set_yticklabels(pc1_contributions.index, fontsize=9)
     ax7.set_xlabel('Absolute Loading Weight', fontweight='bold', fontsize=10, labelpad=8)
-    ax7.set_title('Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=12, pad=12)
+    ax7.set_title('(g) Feature Contributions to Top 2 PCs', fontweight='bold', fontsize=12, pad=12)
     ax7.legend(fontsize=9, loc='lower right', framealpha=0.8)
     ax7.grid(True, alpha=0.3, axis='x')
     
