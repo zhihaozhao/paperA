@@ -165,12 +165,74 @@ def render_slopegraph(d5: Dict[str, Dict[str, List[float]]], d6: Dict[str, Dict[
             # Right-side label
             ax.text(1.02, y2, m.replace('_','-'), va='center', fontsize=8, color="#111")
 
-    # Lighter legend since labels are annotated on the right
-    # ax.legend(frameon=False, ncol=2, fontsize=8)
     fig.tight_layout()
     fig.savefig(out_prefix.with_suffix('.png'), dpi=300)
     fig.savefig(out_prefix.with_suffix('.pdf'))
     plt.close(fig)
+
+
+def render_composite(d5: Dict[str, Dict[str, List[float]]], d6: Dict[str, Dict[str, List[float]]], out_path: Path) -> None:
+    if plt is None:
+        print('[warn] matplotlib not available; skipping composite figure')
+        return
+    models = sorted(set(d5.keys()) | set(d6.keys()))
+
+    def stat(summary: Dict[str, Dict[str, List[float]]], model: str, key: str) -> Tuple[float, float]:
+        return mean_std(summary.get(model, {}).get(key, []))
+
+    d5_f1 = [stat(d5, m, 'macro_f1')[0] for m in models]
+    d5_f1_std = [stat(d5, m, 'macro_f1')[1] for m in models]
+    d6_f1 = [stat(d6, m, 'macro_f1')[0] for m in models]
+    d6_f1_std = [stat(d6, m, 'macro_f1')[1] for m in models]
+
+    d5_br = [stat(d5, m, 'brier')[0] for m in models]
+    d5_br_std = [stat(d5, m, 'brier')[1] for m in models]
+    d6_br = [stat(d6, m, 'brier')[0] for m in models]
+    d6_br_std = [stat(d6, m, 'brier')[1] for m in models]
+
+    # Deltas
+    deltas = [ (d6_f1[i] - d5_f1[i]) if (d6_f1[i] == d6_f1[i] and d5_f1[i] == d5_f1[i]) else float('nan') for i in range(len(models)) ]
+
+    fig, axes = plt.subplots(1, 3, figsize=(10.0, 3.2), gridspec_kw={'width_ratios': [2.2, 1.2, 1.6]})
+
+    # Panel A: Grouped bars Macro F1
+    x = (np.arange(len(models)) if np is not None else list(range(len(models))))
+    width = 0.35
+    axes[0].bar([xi - width/2 for xi in x], d5_f1, width, yerr=d5_f1_std, label='D5', color='#4C78A8', capsize=3)
+    axes[0].bar([xi + width/2 for xi in x], d6_f1, width, yerr=d6_f1_std, label='D6', color='#F58518', capsize=3)
+    axes[0].set_xticks(x)
+    axes[0].set_xticklabels([m.replace('_','-') for m in models], rotation=0)
+    axes[0].set_ylabel('Macro F1')
+    axes[0].set_ylim(0.6, 1.01)
+    axes[0].set_title('A) Macro F1 (mean±std)')
+    axes[0].grid(axis='y', linestyle=':', alpha=0.3)
+    axes[0].legend(frameon=False)
+
+    # Panel B: Delta (D6 - D5)
+    axes[1].bar(x, deltas, color='#666666')
+    for i, v in enumerate(deltas):
+        if v == v:
+            axes[1].text(x[i], v + (0.002 if v >= 0 else -0.006), f"{v*100:.1f}%", ha='center', va='bottom' if v>=0 else 'top', fontsize=8)
+    axes[1].set_xticks(x)
+    axes[1].set_xticklabels([m.replace('_','-') for m in models], rotation=0)
+    axes[1].axhline(0, color='#999', linewidth=1)
+    axes[1].set_title('B) Δ Macro F1 (D6−D5)')
+    axes[1].grid(axis='y', linestyle=':', alpha=0.3)
+
+    # Panel C: Brier (lower better)
+    axes[2].bar([xi - width/2 for xi in x], d5_br, width, yerr=d5_br_std, label='D5', color='#9ecae1', capsize=3)
+    axes[2].bar([xi + width/2 for xi in x], d6_br, width, yerr=d6_br_std, label='D6', color='#fdd0a2', capsize=3)
+    axes[2].set_xticks(x)
+    axes[2].set_xticklabels([m.replace('_','-') for m in models], rotation=0)
+    axes[2].set_ylabel('Brier')
+    axes[2].set_title('C) Brier (mean±std)')
+    axes[2].grid(axis='y', linestyle=':', alpha=0.3)
+
+    fig.tight_layout(w_pad=1.0)
+    fig.savefig(out_path.with_suffix('.pdf'))
+    fig.savefig(out_path.with_suffix('.png'), dpi=300)
+    plt.close(fig)
+
 
 def write_latex_table(d5: Dict[str, Dict[str, List[float]]], d6: Dict[str, Dict[str, List[float]]], out_tex: Path) -> None:
     def fmt_pct(values: List[float]) -> str:
@@ -231,6 +293,9 @@ def main() -> None:
     render_barplot(d5, d6, args.out_fig_prefix)
     # Slopegraph variant
     render_slopegraph(d5, d6, args.out_fig_prefix.with_name(args.out_fig_prefix.name + "_slope"))
+    # Composite variant
+    comp = args.out_fig_prefix.with_name('d5_d6_composite')
+    render_composite(d5, d6, comp)
 
     # LaTeX table
     write_latex_table(d5, d6, args.out_tex)
