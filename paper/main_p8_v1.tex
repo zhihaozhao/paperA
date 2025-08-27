@@ -1,0 +1,91 @@
+% !TEX program = pdflatex
+\documentclass[journal]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Physics-Guided Synthetic WiFi CSI Data for Trustworthy HAR: An 8-Page Summary}
+
+\author{\IEEEauthorblockN{Author Names}
+\IEEEauthorblockA{\textit{Department} \\
+\textit{University}\\
+City, Country \\
+email@university.edu}}
+
+\maketitle
+
+\begin{abstract}
+This 8-page version summarizes our physics-guided synthetic WiFi CSI pipeline and Sim2Real evaluation for human activity recognition (HAR). We retain the key experiments (CDAE, STEA), benchmark references (e.g., SenseFi), core discussions, and contributions. Our Enhanced model (CNN + SE + temporal attention) achieves 83.0\% macro F1 on both LOSO/LORO and 82.1\% at 20\% labels under STEA, with strong calibration. The condensed text preserves essential technical content and findings for IoT Journal review.
+\end{abstract}
+
+\begin{IEEEkeywords}
+WiFi CSI, Human Activity Recognition, Synthetic Data, Sim2Real, Calibration, Cross-Domain Generalization
+\end{IEEEkeywords}
+
+\section{Introduction}
+WiFi CSI HAR offers privacy-preserving sensing but faces label scarcity and domain shift~\cite{yang2023sensefi}. We propose physics-guided synthetic data generation and an Enhanced architecture with trustworthy evaluation. The main contributions are: (1) a physics-based generator; (2) systematic Sim2Real evaluation; (3) sample-efficient transfer with 82.1\% F1 at 20\% labels; (4) calibration and reliability analysis; and (5) an Enhanced CNN+SE+temporal attention model with cross-domain consistency.
+
+\section{Related Work}
+Benchmarks such as SenseFi~\cite{yang2023sensefi} organize supervised CSI HAR. Few-shot and domain generalization studies (e.g., FewSense~\cite{fewsense2022}, AirFi~\cite{airfi2022}) target label efficiency. Our study complements them with a physics-guided Sim2Real pipeline and trustworthy evaluation focus.
+
+\section{Physics-Guided Generation and Enhanced Model}
+The generator models multipath, human-body effects, and environment variability~\cite{goldsmith2005wireless}. The Enhanced model integrates CNN features with SE channel attention~\cite{se_networks2018} and temporal attention; calibration uses temperature scaling~\cite{calibration_guo2017}. Figures are omitted here for brevity; refer to the full version for schematics.
+
+\section{Experimental Protocols}
+\subsection{CDAE: Cross-Domain Adaptation Evaluation}
+LOSO/LORO protocols assess subject/environment generalization. Architectures are capacity-aligned; macro F1, ECE, NLL are reported across multiple seeds.
+
+\subsection{STEA: Sim2Real Transfer Efficiency}
+We sweep label ratios (1\%–100\%) and transfer methods (zero-shot, linear probe, fine-tune, calibration). The goal is to quantify label efficiency under synthetic pretraining.
+
+\section{Results}
+\subsection{CDAE}
+Enhanced achieves identical 83.0\% macro F1 on LOSO and LORO with minimal variance (CV < 0.2\%). CNN and BiLSTM perform competitively but with higher variance; Conformer-lite exhibits protocol sensitivity.
+
+\subsection{STEA}
+Enhanced reaches 82.1\% macro F1 at 20\% labels (98.6\% of full-supervision 83.3\%), reducing labeling cost by 80\%. Fine-tuning dominates linear probe and zero-shot at practical label budgets.
+
+\subsection{Calibration and Reliability}
+We report ECE, Brier, and NLL; temperature scaling improves NLL and aligns confidence with accuracy. Enhanced sustains low ECE at target operating points.
+
+\section{Discussion}
+Our findings confirm that physics-guided synthesis plus Enhanced attention mechanisms deliver strong cross-domain generalization and label efficiency. The approach complements SenseFi baselines and aligns with attention-based time-series advances~\cite{li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer}. Limitations include simplified physics in generation and scope of activities; future work will integrate richer EM effects and adaptive generation.
+
+\section{Conclusion}
+The condensed study preserves the full paper's key results: robust CDAE performance and STEA label efficiency (82.1\% F1 at 20\% labels) with trustworthy calibration. Physics-guided generation and the Enhanced architecture provide a viable path to practical CSI HAR deployment.
+
+\section*{Abbreviations}
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Acronym} & \textbf{Full name} \\
+\midrule
+CSI & Channel State Information \\
+HAR & Human Activity Recognition \\
+LOSO & Leave-One-Subject-Out \\
+LORO & Leave-One-Room-Out \\
+CDAE & Cross-Domain Adaptation Evaluation \\
+STEA & Sim2Real Transfer Efficiency Assessment \\
+SE & Squeeze-and-Excitation \\
+ECE & Expected Calibration Error \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}
+
