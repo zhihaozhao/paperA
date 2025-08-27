@@ -72,6 +72,8 @@ To ensure fair comparison under CDAE/STEA, we align parameter counts within ±10
 \section{Experimental Setup}
 We evaluate in three regimes: (1) synthetic robustness (D6) to stress calibration and accuracy; (2) cross-domain adaptation (CDAE: LOSO/LORO) to test domain-agnostic features; and (3) Sim2Real label efficiency (STEA) to quantify annotation budgets. Models are capacity-aligned to ensure fair comparison. Calibration uses temperature scaling tuned on validation to minimize NLL. All metrics (macro-F1, ECE, NLL, Brier) are extracted from the JSON logs in `results\_gpu`.
 
+For D6, we vary difficulty parameters (class overlap up to 0.8, label noise up to 0.1, env burst up to 0.2) with $T\in\{32,64,128\}$ and $F\in\{30,52,90\}$. For CDAE, we follow LOSO/LORO protocols to isolate subject and environment shift. For STEA, we sweep label ratios $\{1,5,10,15,20,50,100\}\%$ across zero-shot, linear probe, and fine-tuning, applying temperature scaling post-hoc. Implementation strictly follows the repository configuration to guarantee reproducibility.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{plots/d6_calibration_summary.pdf}
