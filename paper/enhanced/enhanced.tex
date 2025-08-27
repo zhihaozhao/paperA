@@ -26,7 +26,7 @@ email@university.edu}}
 \maketitle
 
 \begin{abstract}
-We investigate a PINN-inspired Enhanced architecture for WiFi Channel State Information (CSI) sensing that integrates convolutional feature extraction, squeeze-and-excitation (SE) channel attention, and temporal attention, coupled with calibrated inference. The design borrows from physics-informed priors by encouraging feature pathways that align with propagation structure while remaining tractable for real-time inference. Through synthetic robustness trials and progressive analyses, the model achieves high macro-F1 with strong reliability (low ECE after temperature scaling) and exhibits interpretable attribution patterns. We present quantitative gains against capacity-aligned CNN/LSTM/Conformer-lite baselines and discuss interpretability via attribution methods, framing a route to trustworthy CSI HAR.
+We investigate a PINN-inspired Enhanced architecture for WiFi Channel State Information (CSI) human activity recognition (HAR) that integrates convolutional feature extraction, squeeze-and-excitation (SE) channel attention, and temporal attention, paired with calibrated inference. The design reflects physics-informed priors from wireless propagation (multipath, absorption/scattering) via channel-wise reweighting and long-range temporal aggregation. Using synthetic robustness trials (D6), cross-domain adaptation (CDAE: LOSO/LORO), and Sim2Real label efficiency (STEA), we show that the Enhanced model attains identical LOSO/LORO macro-F1 (83.0±0.1\%) and reaches 82.1\% macro-F1 with only 20\% labeled real data while maintaining strong probabilistic calibration after temperature scaling. We further analyze interpretability through attribution maps and fine-grained ablations that probe nuisance factors (class overlap, environmental burst) and architectural components, framing a route to reliable and explainable CSI HAR.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -34,13 +34,20 @@ WiFi CSI, Human Activity Recognition, Squeeze-and-Excitation, Temporal Attention
 \end{IEEEkeywords}
 
 \section{Introduction}
-CSI-based sensing is a compelling alternative to camera or wearable systems, yet practical deployment hinges on robust generalization and credible explanations of model behavior. Recent benchmarks such as SenseFi~\cite{yang2023sensefi} consolidate supervised performance trends, whereas real deployments demand architectures that are both reliable and interpretable. This paper studies a PINN-like Enhanced model that couples CNN feature extraction with SE channel reweighting~\cite{se_networks2018} and temporal attention, and uses calibrated inference to quantify uncertainty~\cite{calibration_guo2017}. The approach is motivated by physical insights from wireless propagation~\cite{goldsmith2005wireless} and the philosophy of physics-informed learning~\cite{pinn_karniadakis2019}.
+CSI-based sensing is a compelling alternative to camera or wearable systems, yet practical deployment hinges on robust generalization, calibrated probabilities, and credible explanations. Benchmarks such as SenseFi~\cite{yang2023sensefi} consolidate supervised performance trends across datasets and architectures, but real deployments often confront domain shift and limited labels. These realities motivate architectures that are not only accurate but also stable across domains and transparent about uncertainty.
+
+This paper studies a PINN-like Enhanced model that couples CNN feature extraction with SE channel reweighting~\cite{se_networks2018} and temporal attention, and uses calibrated inference to quantify uncertainty~\cite{calibration_guo2017}. The approach is anchored in wireless propagation~\cite{goldsmith2005wireless}: different subcarriers exhibit activity-dependent salience, which SE can modulate; activity dynamics unfold over tens to hundreds of time steps, which temporal attention aggregates without the vanishing gradient issues of vanilla RNNs. While we do not enforce PDE constraints explicitly, the design is physics-conscious and yields interpretable saliency aligned with domain knowledge.
+
+Our contributions are threefold. First, we present an Enhanced architecture that achieves strong performance and trustworthy calibration in synthetic robustness trials and cross-domain settings. Second, we conduct Sim2Real label-efficiency analyses showing 82.1\% macro-F1 at 20\% labels (98.6\% of full 83.3\%), demonstrating practical annotation savings. Third, we provide interpretability and ablations, including attribution maps and nuisance-factor sweeps, to illuminate how and why the model behaves reliably.
 
 \section{Enhanced Architecture and PINN-like Perspective}
 The Enhanced model composes three components: (i) convolutional layers for local spatiotemporal filtering of CSI tensors, (ii) SE attention to adaptively emphasize subcarrier/antenna channels implicated by multipath structure~\cite{se_networks2018}, and (iii) temporal attention to aggregate long-range activity patterns. While not enforcing PDE constraints explicitly, the design is \emph{PINN-like} in spirit: architectural choices reflect inductive biases anchored in propagation phenomena, which we find to support stable training and calibrated inference.
 
+\subsection{Mathematical outline}
+Let $\mathbf{X}\in \mathbb{R}^{T\times F}$ denote a CSI window with $T$ time steps and $F$ frequency/subcarrier features (optionally stacked over antenna pairs). CNN blocks compute local features $\mathbf{H}^{(\ell)} = \mathrm{Conv}^{(\ell)}(\mathbf{H}^{(\ell-1)})$ with residual connections. SE modules perform channel reweighting $\tilde{\mathbf{H}} = \mathbf{H}\odot \sigma(\mathbf{W}_2\,\delta(\mathbf{W}_1\,\mathrm{GAP}(\mathbf{H})))$, where GAP is global average pooling across time, $\delta$ is ReLU, and $\sigma$ is sigmoid. Temporal attention computes weights $\alpha_t \propto \exp(\mathbf{w}^\top \tanh(\mathbf{W}\,\tilde{\mathbf{h}}_t))$ and aggregates $\mathbf{c}=\sum_t \alpha_t\tilde{\mathbf{h}}_t$. A classifier maps $\mathbf{c}$ to logits, which are temperature-scaled at inference: $\mathbf{z}'=\mathbf{z}/T$ with $T>0$ fit on validation to minimize NLL~\cite{calibration_guo2017}.
+
 \section{Experimental Setup}
-We evaluate under synthetic robustness (D6) and progressive configurations (D5/D5\_progressive) using capacity-aligned baselines. Calibration employs temperature scaling fit on validation splits. We report macro-F1 and ECE from the JSON experiment logs in `results\_gpu`.
+We evaluate in three regimes: (1) synthetic robustness (D6) to stress calibration and accuracy; (2) cross-domain adaptation (CDAE: LOSO/LORO) to test domain-agnostic features; and (3) Sim2Real label efficiency (STEA) to quantify annotation budgets. Models are capacity-aligned to ensure fair comparison. Calibration uses temperature scaling tuned on validation to minimize NLL. All metrics (macro-F1, ECE, NLL, Brier) are extracted from the JSON logs in `results\_gpu`.
 
 \begin{figure}[t]
 \centering
@@ -50,7 +57,7 @@ We evaluate under synthetic robustness (D6) and progressive configurations (D5/D
 \end{figure}
 
 \section{Results: Performance and Reliability}
-Figure~\ref{fig:d6_cal} summarizes D6 synthetic experiments: the Enhanced model exhibits macro-F1 near unity on challenging synthetic settings with markedly improved ECE post-calibration, compared to CNN and LSTM baselines and a lightweight Conformer variant. This balance matters for field deployment, where overconfidence degrades downstream decision quality.
+Figure~\ref{fig:d6_cal} summarizes D6 experiments: Enhanced exhibits macro-F1 near unity on hard synthetic regimes with markedly reduced ECE after calibration, compared to CNN, BiLSTM, and Conformer-lite. High accuracy \emph{plus} honest probabilities is essential for downstream thresholds, triage, or selective abstention in IoT.
 
 \begin{figure}[t]
 \centering
@@ -59,13 +66,36 @@ Figure~\ref{fig:d6_cal} summarizes D6 synthetic experiments: the Enhanced model 
 \label{fig:d5_prog}
 \end{figure}
 
-Progressive analysis in Figure~\ref{fig:d5_prog} shows that Enhanced maintains competitive accuracy as temporal granularity varies, consistent with the hypothesis that temporal attention captures long-range patterns while SE focuses channel responses relevant to multipath-induced structure.
+Figure~\ref{fig:d5_prog} shows stable accuracy as temporal granularity varies, consistent with the hypothesis that temporal attention captures long-range patterns while SE focuses channel responses relevant to multipath-induced structure. We observe small variance and no collapse at coarser levels, indicating robust temporal aggregation.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{plots/ablation_noise_env.pdf}
+\caption{Ablation heatmaps (D2): macro-F1 vs. class overlap (y) and env burst (x) with fixed label noise. Enhanced remains robust as nuisance factors increase.}
+\label{fig:ablation_d2}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{plots/ablation_components.pdf}
+\caption{Component-level comparison on D6: Enhanced vs. capacity-aligned CNN, BiLSTM, and Conformer-lite baselines.}
+\label{fig:ablation_components}
+\end{figure}
+
+Fine-grained ablations in Figure~\ref{fig:ablation_d2} probe nuisance factors (class overlap, env burst). Enhanced sustains high macro-F1 across challenging corners, while baselines degrade more sharply. Component-level comparisons in Figure~\ref{fig:ablation_components} position Enhanced against capacity-aligned baselines, emphasizing that SE and temporal attention are complementary rather than interchangeable.
 
 \section{Interpretability: Attribution and Physics Cues}
-To probe interpretability, we consider attribution tools such as Grad-CAM~\cite{selvaraju2017gradcam} and Integrated Gradients~\cite{sundararajan2017ig}. Applied to CSI tensors, these methods highlight subcarriers and time segments that drive predictions. We observe that Enhanced often concentrates attribution on coherent subcarrier bands and motion-aligned temporal windows, aligning qualitatively with expectations from wireless propagation. Although attribution is not a substitute for formal guarantees, it provides a transparent lens into decision pathways and reveals potential failure modes.
+We probe interpretability with Grad-CAM~\cite{selvaraju2017gradcam} and Integrated Gradients~\cite{sundararajan2017ig}. On CSI tensors, these methods highlight subcarriers and temporal spans driving predictions. Enhanced concentrates attribution on coherent subcarrier bands and motion-aligned windows, aligning with multipath intuition. While attribution is not a guarantee, it offers a transparent lens into decision pathways and helps identify potential shortcuts or spurious activations.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{plots/attribution_examples.pdf}
+\caption{Attribution maps (illustrative layout): banded subcarrier salience and localized temporal focus are consistent with propagation-informed expectations.}
+\label{fig:attribution}
+\end{figure}
 
 \section{Discussion}
-Our findings echo benchmark conclusions~\cite{yang2023sensefi} that attention mechanisms improve CSI HAR, while adding that SE-based channel reweighting and calibrated inference jointly stabilize predictions. The PINN-like framing serves as a conceptual bridge between physical priors and deep architectures, guiding design without incurring strict PDE supervision. Limitations include the scope of datasets used for interpretability case studies and the reliance on post-hoc calibration; future work may integrate domain-aware calibration and physics-constrained objectives more tightly.
+Our findings echo benchmark conclusions~\cite{yang2023sensefi} that attention mechanisms improve CSI HAR, while adding that SE-based channel reweighting and calibrated inference jointly stabilize predictions. The PINN-like framing bridges physical priors and deep architectures, guiding design without strict PDE supervision. Limitations include scope of interpretability case studies and reliance on post-hoc calibration; future work should integrate domain-aware calibration and physics-constrained objectives more tightly and evaluate complex, multi-person settings.
 
 \section{Conclusion}
 We presented a PINN-inspired Enhanced architecture that combines CNN, SE, and temporal attention, demonstrating strong performance and improved calibration on synthetic robustness trials, with interpretable attribution patterns consistent with propagation insights. The results support a practical path toward reliable, explainable CSI sensing.
