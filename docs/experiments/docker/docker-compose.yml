@@ -1,0 +1,162 @@
+# Docker Compose configuration for WiFi CSI HAR experiments
+# Version: 1.0
+# Author: Claude 4.1
+
+version: '3.8'
+
+services:
+  # Main experiment runner service
+  experiment-runner:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile_claude4.1
+      args:
+        - PYTHON_VERSION=3.10
+        - CUDA_VERSION=11.8.0
+    image: wifi-csi-har:latest
+    container_name: csi-experiment-runner
+    hostname: experiment-runner
+    runtime: nvidia
+    environment:
+      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
+      - PYTHONUNBUFFERED=1
+      - EXPERIMENT_NAME=${EXPERIMENT_NAME:-exp1_sim2real}
+      - WANDB_API_KEY=${WANDB_API_KEY}
+      - WANDB_PROJECT=wifi-csi-har
+      - TZ=UTC
+    volumes:
+      - ../:/workspace
+      - ../../data:/data
+      - ../../results:/results
+      - ../../checkpoints:/checkpoints
+      - ./logs:/logs
+    ports:
+      - "8888:8888"  # Jupyter Lab
+      - "6006:6006"  # TensorBoard
+      - "5000:5000"  # Flask API (if needed)
+    networks:
+      - csi-network
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import torch; assert torch.cuda.is_available()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    command: tail -f /dev/null  # Keep container running
+
+  # Jupyter Lab service
+  jupyter:
+    image: wifi-csi-har:latest
+    container_name: csi-jupyter
+    runtime: nvidia
+    environment:
+      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - ../:/workspace
+      - ../../data:/data
+      - ../../results:/results
+    ports:
+      - "8889:8888"
+    networks:
+      - csi-network
+    command: >
+      jupyter lab 
+      --ip=0.0.0.0 
+      --port=8888 
+      --no-browser 
+      --allow-root 
+      --NotebookApp.token='' 
+      --NotebookApp.password=''
+
+  # TensorBoard service
+  tensorboard:
+    image: tensorflow/tensorflow:latest-gpu
+    container_name: csi-tensorboard
+    volumes:
+      - ./logs:/logs
+      - ../../results:/results
+    ports:
+      - "6007:6006"
+    networks:
+      - csi-network
+    command: >
+      tensorboard 
+      --logdir=/logs 
+      --host=0.0.0.0 
+      --reload_interval=10
+
+  # Data preprocessing service
+  data-processor:
+    image: wifi-csi-har:latest
+    container_name: csi-data-processor
+    volumes:
+      - ../../data:/data
+      - ../../processed:/processed
+    networks:
+      - csi-network
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python3 /workspace/scripts/preprocess_data_claude4.1.py
+
+  # Model evaluation service
+  evaluator:
+    image: wifi-csi-har:latest
+    container_name: csi-evaluator
+    runtime: nvidia
+    environment:
+      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
+    volumes:
+      - ../:/workspace
+      - ../../checkpoints:/checkpoints
+      - ../../results:/results
+    networks:
+      - csi-network
+    command: python3 /workspace/unified_experiment_runner_claude4.1.py --compare
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:alpine
+    container_name: csi-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - csi-network
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+
+  # PostgreSQL for experiment tracking (optional)
+  postgres:
+    image: postgres:15-alpine
+    container_name: csi-postgres
+    environment:
+      - POSTGRES_DB=experiments
+      - POSTGRES_USER=csi_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secretpassword}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - csi-network
+
+networks:
+  csi-network:
+    driver: bridge
+    name: wifi-csi-network
+
+volumes:
+  redis-data:
+    name: csi-redis-data
+  postgres-data:
+    name: csi-postgres-data
