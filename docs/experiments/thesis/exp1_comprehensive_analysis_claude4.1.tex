@@ -98,7 +98,7 @@ def compute\\_fresnel\\_perturbation(human\\_position, tx\\_pos, rx\\_pos, frequ
     # Perturbation factor based on Fresnel zone occupation
     if perpendicular\_distance < r\_fresnel:
         obstruction\_ratio = 1 - (perpendicular\_distance / r\_fresnel) ** 2
-        amplitude\_factor = 1 - 0.7 * obstruction\_ratio  # 70% max attenuation
+        amplitude\_factor = 1 - 0.7 * obstruction\_ratio  # 70\% max attenuation
         phase\_shift = np.pi * obstruction\_ratio  # Phase shift up to \pi 
         return amplitude\_factor * np.exp(1j * phase\_shift)
     else:
@@ -329,7 +329,7 @@ def augment\_with\_environmental\_variations(csi\_data, augmentation\_config):
     # Human presence variations
     if augmentation\_config.get('crowd\_effects', False):
         num\_people = np.random.randint(0, 5)
-        attenuation\_per\_person = 0.15  # 15% signal attenuation per person
+        attenuation\_per\_person = 0.15  # 15\% signal attenuation per person
         total\_attenuation = 1 - (attenuation\_per\_person * num\_people)
         augmented *= max(0.3, total\_attenuation)  # Minimum 30% signal strength
     
@@ -1428,10 +1428,10 @@ calibration\_metrics = {
         'brier': 0.0923  # Brier Score
     },
     'calibrated\_model': {
-        'ece': 0.0065,  # 40% improvement
-        'mce': 0.0156,  # 33% improvement
-        'nll': 0.423,   # 13% improvement
-        'brier': 0.0812  # 12% improvement
+        'ece': 0.0065,  # 40\% improvement
+        'mce': 0.0156,  # 33\% improvement
+        'nll': 0.423,   # 13\% improvement
+        'brier': 0.0812  # 12\% improvement
     }
 }
 \end{lstlisting}
