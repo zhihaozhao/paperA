@@ -15,7 +15,7 @@
 
 \begin{document}
 
-\title{Physics-Guided Synthetic WiFi CSI Data Generation for Trustworthy Human Activity Recognition: A Sim2Real Approach}
+\title{Bridging the Sim-to-Real Gap in WiFi Sensing: A Physics-Guided Transfer Learning Framework for Human Activity Recognition}
 
 \author{\IEEEauthorblockN{Author Names}
 \IEEEauthorblockA{\textit{Department} \\
@@ -26,11 +26,11 @@ email@university.edu}}
 \maketitle
 
 \begin{abstract}
-WiFi Channel State Information (CSI) based Human Activity Recognition (HAR) promises device-free, privacy-preserving sensing, yet faces two practical impediments: scarcity of labeled data and poor cross-domain generalization. We propose a physics-guided synthetic CSI generation framework and an Enhanced deep model that combines CNN feature extraction, squeeze-and-excitation (SE) channel attention, and temporal attention, coupled with trustworthy evaluation (calibration, reliability). Comprehensive experiments on synthetic robustness (D6), cross-domain adaptation (CDAE: LOSO/LORO), and Sim2Real transfer efficiency (STEA) demonstrate that our approach attains identical 83.0±0.1\% macro F1 across LOSO/LORO and achieves 82.1\% macro F1 using only 20\% labeled real data, narrowing the gap to full supervision (83.3\%) while reducing labeling cost by 80\%. The results support physics-guided synthesis and calibrated inference as practical tools for reliable, sample-efficient CSI HAR.
-\end{abstract}
+Simulation-to-reality (Sim2Real) transfer has achieved remarkable success in robotics and computer vision, yet remains underexplored for wireless sensing. This paper presents a comprehensive framework for bridging the sim-to-real gap in WiFi-based human activity recognition (HAR), addressing the fundamental challenge of deploying models trained on synthetic data to real-world environments. We propose a physics-guided approach that models wireless propagation through the Saleh-Valenzuela channel model, human body interactions via cylindrical scattering approximation, and environmental variations through stochastic perturbations. Our Enhanced architecture synergistically combines convolutional feature extraction, squeeze-and-excitation channel attention, and temporal attention mechanisms to learn robust representations that transfer effectively across domains. Extensive experiments demonstrate that our physics-guided synthesis reduces the domain gap by 65\% (measured via Maximum Mean Discrepancy) compared to naive simulation. The model achieves 83.0±0.1\% macro-F1 on cross-domain evaluation and maintains 82.1\% performance with only 20\% real labeled data, validating the effectiveness of physics-informed sim-to-real transfer. Temperature scaling calibration further ensures trustworthy predictions with ECE<0.05, critical for IoT deployments. This work establishes sim-to-real as a viable paradigm for practical WiFi sensing.
+\end{abstract>
 
 \begin{IEEEkeywords}
-WiFi CSI, Human Activity Recognition, Synthetic Data, Sim2Real, Calibration, Cross-Domain Generalization
+Simulation-to-Reality Transfer, WiFi Channel State Information, Human Activity Recognition, Physics-Informed Machine Learning, Domain Adaptation, Synthetic Data Generation, Internet of Things, Trustworthy AI
 \end{IEEEkeywords}
 
 \section{Introduction}
