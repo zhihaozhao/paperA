@@ -627,7 +627,7 @@ class ProgressiveDomainAdaptation:
             scheduler.step()
             
             # Log progress
-            if epoch % 10 == 0:
+            if epoch \% 10 == 0:
                 print(f"Epoch {epoch}: Activity Loss = {epoch\_losses['activity']:.4f}, "
                       f"Domain Loss = {epoch\_losses['domain']:.4f}, Alpha = {alpha:.3f}")
 \end{lstlisting}
