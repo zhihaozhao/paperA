@@ -1,0 +1,51 @@
+% Minimal test document extracted from exp1_comprehensive_analysis_claude4.1.tex
+% This can be tested on online LaTeX editors like Overleaf
+
+\documentclass[journal]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{url}
+
+\begin{document}
+
+\title{Test Compilation of Enhanced Model Analysis}
+\author{Test Author}
+
+\maketitle
+
+\begin{abstract}
+This is a test document to verify LaTeX compilation.
+\end{abstract}
+
+\section{Introduction}
+This document tests the LaTeX syntax from our comprehensive analysis.
+
+\section{Test Table}
+Table~\ref{tab:test} shows example data with the same structure as our main document.
+
+\begin{table}[h]
+\centering
+\caption{Test Performance Metrics}
+\label{tab:test}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Dataset} & \textbf{Macro F1} & \textbf{Accuracy} & \textbf{ECE} \\
+\midrule
+NTU-Fi HAR & 0.949 & 0.952 & 0.0065 \\
+UT-HAR & 0.923 & 0.928 & 0.0078 \\
+Widar & 0.897 & 0.903 & 0.0089 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Test Equation}
+The CSI model equation from our document:
+\begin{equation}
+H(f,t) = \sum_{i=1}^{N} \alpha_i(t) \cdot e^{-j2\pi f \tau_i(t)} \cdot e^{j\phi_i(t)}
+\end{equation}
+
+\section{Conclusion}
+If this document compiles successfully, the main document should also compile without errors.
+
+\end{document}

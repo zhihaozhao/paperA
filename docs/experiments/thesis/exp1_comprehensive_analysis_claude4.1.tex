@@ -30,12 +30,12 @@ email@institution.edu}
 \maketitle
 
 \begin{abstract}
-This comprehensive analysis presents an in-depth examination of the Enhanced model for simulation-to-reality (Sim2Real) transfer learning in WiFi Channel State Information (CSI) based Human Activity Recognition (HAR). Through systematic evaluation across three critical dimensions—data generation and validation, model architecture and optimization, and zero-shot learning capabilities—we demonstrate the effectiveness of our physics-guided synthetic data generation framework. Based on extensive experiments involving 405 configurations in the D2 protocol, 40 cross-domain evaluations in CDAE, and 56 Sim2Real transfer assessments in STEA, our Enhanced model achieves a macro F1 score of 94.9\% with exceptional calibration (ECE=0.0065 after calibration). The model demonstrates remarkable zero-shot capabilities, achieving 82.1\% F1 with only 20\% labeled real data, representing merely a 1.2\% performance gap compared to full supervision. Through comprehensive ablation studies, we reveal that the multi-scale CNN architecture contributes 8.3\% to overall performance, while squeeze-and-excitation modules add 5.7\%, and temporal attention mechanisms provide 4.2\% improvement. Our physics-guided synthetic data generation, incorporating Fresnel zone theory, multipath propagation models, and Doppler effects, produces data with 0.92 Pearson correlation to real CSI measurements. This work establishes a new paradigm for addressing data scarcity in WiFi sensing through principled Sim2Real transfer, validated on real-world benchmarks including NTU-Fi HAR, UT-HAR, and Widar datasets.
+This comprehensive analysis presents an in-depth examination of the Enhanced model for simulation-to-reality (Sim2Real) transfer learning in WiFi Channel State Information (CSI) based Human Activity Recognition (HAR). Through systematic evaluation across three critical dimensions---data generation and validation, model architecture and optimization, and zero-shot learning capabilities---we demonstrate the effectiveness of our physics-guided synthetic data generation framework. Based on extensive experiments involving 405 configurations in the D2 protocol, 40 cross-domain evaluations in CDAE, and 56 Sim2Real transfer assessments in STEA, our Enhanced model achieves a macro F1 score of 94.9\% with exceptional calibration (ECE=0.0065 after calibration). The model demonstrates remarkable zero-shot capabilities, achieving 82.1\% F1 with only 20\% labeled real data, representing merely a 1.2\% performance gap compared to full supervision. Through comprehensive ablation studies, we reveal that the multi-scale CNN architecture contributes 8.3\% to overall performance, while squeeze-and-excitation modules add 5.7\%, and temporal attention mechanisms provide 4.2\% improvement. Our physics-guided synthetic data generation, incorporating Fresnel zone theory, multipath propagation models, and Doppler effects, produces data with 0.92 Pearson correlation to real CSI measurements. This work establishes a new paradigm for addressing data scarcity in WiFi sensing through principled Sim2Real transfer, validated on real-world benchmarks including NTU-Fi HAR, UT-HAR, and Widar datasets.
 \end{abstract}
 
 \section{Introduction}
 
-The proliferation of WiFi infrastructure has created unprecedented opportunities for device-free human activity recognition, yet the practical deployment of WiFi CSI-based HAR systems remains fundamentally constrained by the scarcity of labeled training data and poor cross-domain generalization. While recent benchmarking efforts, particularly SenseFi \cite{yang2023sensefi}, have systematically evaluated 11 deep learning models across 4 public datasets, establishing standardized protocols and revealing significant architectural variations, these studies operate under the assumption of abundant labeled data availability—a luxury rarely afforded in real-world deployments.
+The proliferation of WiFi infrastructure has created unprecedented opportunities for device-free human activity recognition, yet the practical deployment of WiFi CSI-based HAR systems remains fundamentally constrained by the scarcity of labeled training data and poor cross-domain generalization. While recent benchmarking efforts, particularly SenseFi \cite{yang2023sensefi}, have systematically evaluated 11 deep learning models across 4 public datasets, establishing standardized protocols and revealing significant architectural variations, these studies operate under the assumption of abundant labeled data availability---a luxury rarely afforded in real-world deployments.
 
 This comprehensive analysis addresses this fundamental challenge through a novel Enhanced model designed specifically for Sim2Real transfer learning. Our approach synthesizes insights from three complementary perspectives: (1) physics-guided synthetic data generation that models electromagnetic wave propagation, (2) architectural innovations that enhance feature extraction and temporal modeling, and (3) zero-shot and few-shot learning capabilities that minimize labeling requirements. Through extensive experimentation on real datasets and rigorous evaluation protocols, we demonstrate that carefully designed synthetic data, when combined with appropriate model architectures and transfer learning strategies, can effectively bridge the gap between simulation and reality in WiFi sensing applications.
 
@@ -68,39 +68,39 @@ r_n = \sqrt{\frac{n\lambda d_1 d_2}{d_1 + d_2}}
 where $\lambda$ represents the wavelength (approximately 5.5 cm for 5.4 GHz WiFi), and $d_1$, $d_2$ denote distances from transmitter and receiver to the observation point. Human motion within the first Fresnel zone causes significant CSI perturbations, which our synthetic data generator models through:
 
 \begin{lstlisting}[language=Python, caption=Fresnel Zone Perturbation Model]
-def compute_fresnel_perturbation(human_position, tx_pos, rx_pos, frequency):
+def compute\\_fresnel\\_perturbation(human\\_position, tx\\_pos, rx\\_pos, frequency):
     """
     Compute CSI perturbation based on Fresnel zone theory
     
     Args:
-        human_position: 3D coordinates of human body center
-        tx_pos: Transmitter position
-        rx_pos: Receiver position  
+        human\_position: 3D coordinates of human body center
+        tx\_pos: Transmitter position
+        rx\_pos: Receiver position  
         frequency: WiFi carrier frequency (Hz)
     
     Returns:
         Complex CSI perturbation factor
     """
     wavelength = 3e8 / frequency
-    d1 = np.linalg.norm(human_position - tx_pos)
-    d2 = np.linalg.norm(human_position - rx_pos)
+    d1 = np.linalg.norm(human\_position - tx\_pos)
+    d2 = np.linalg.norm(human\_position - rx\_pos)
     
     # First Fresnel zone radius
-    r_fresnel = np.sqrt(wavelength * d1 * d2 / (d1 + d2))
+    r\_fresnel = np.sqrt(wavelength * d1 * d2 / (d1 + d2))
     
-    # Distance from human to direct path
-    direct_path = rx_pos - tx_pos
-    projection = np.dot(human_position - tx_pos, direct_path) / np.linalg.norm(direct_path)
-    perpendicular_distance = np.linalg.norm(
-        human_position - tx_pos - projection * direct_path / np.linalg.norm(direct_path)
+    \# Distance from human to direct path
+    direct\_path = rx\_pos - tx\_pos
+    projection = np.dot(human\_position - tx\_pos, direct\_path) / np.linalg.norm(direct\_path)
+    perpendicular\_distance = np.linalg.norm(
+        human\_position - tx\_pos - projection * direct\_path / np.linalg.norm(direct\_path)
     )
     
     # Perturbation factor based on Fresnel zone occupation
-    if perpendicular_distance < r_fresnel:
-        obstruction_ratio = 1 - (perpendicular_distance / r_fresnel) ** 2
-        amplitude_factor = 1 - 0.7 * obstruction_ratio  # 70% max attenuation
-        phase_shift = np.pi * obstruction_ratio  # Phase shift up to π
-        return amplitude_factor * np.exp(1j * phase_shift)
+    if perpendicular\_distance < r\_fresnel:
+        obstruction\_ratio = 1 - (perpendicular\_distance / r\_fresnel) ** 2
+        amplitude\_factor = 1 - 0.7 * obstruction\_ratio  # 70% max attenuation
+        phase\_shift = np.pi * obstruction\_ratio  # Phase shift up to \pi 
+        return amplitude\_factor * np.exp(1j * phase\_shift)
     else:
         return 1.0 + 0j  # No perturbation outside Fresnel zone
 \end{lstlisting}
@@ -116,38 +116,38 @@ H_{multipath}(f,t) = \alpha_0 e^{-j2\pi f\tau_0} + \sum_{k=1}^{K} \alpha_k(t) e^
 where the first term represents the line-of-sight (LOS) component, the second summation captures static multipath from environmental reflections, and the third term models dynamic multipath induced by human motion. The implementation incorporates wall reflection coefficients based on material properties:
 
 \begin{lstlisting}[language=Python, caption=Multipath Channel Synthesis]
-def synthesize_multipath_channel(environment_config, human_trajectory, num_subcarriers=114):
+def synthesize\_multipath\_channel(environment\_config, human\_trajectory, num\_subcarriers=114):
     """
     Synthesize multipath channel response with human-induced perturbations
     
     Args:
-        environment_config: Dictionary containing room dimensions and materials
-        human_trajectory: Time series of human positions
-        num_subcarriers: Number of CSI subcarriers
+        environment\_config: Dictionary containing room dimensions and materials
+        human\_trajectory: Time series of human positions
+        num\_subcarriers: Number of CSI subcarriers
     
     Returns:
-        Complex CSI matrix [num_subcarriers x time_steps]
+        Complex CSI matrix [num\_subcarriers x time\_steps]
     """
     # Initialize channel matrix
-    H = np.zeros((num_subcarriers, len(human_trajectory)), dtype=complex)
+    H = np.zeros((num\_subcarriers, len(human\_trajectory)), dtype=complex)
     
     # Static multipath components from walls
-    wall_reflections = compute_wall_reflections(environment_config)
-    for reflection in wall_reflections:
-        path_loss = compute_path_loss(reflection['distance'])
+    wall\_reflections = compute\_wall\_reflections(environment\_config)
+    for reflection in wall\_reflections:
+        path\_loss = compute\_path\_loss(reflection['distance'])
         delay = reflection['distance'] / 3e8
-        for f_idx in range(num_subcarriers):
-            frequency = 5.18e9 + f_idx * 312.5e3  # 802.11ac channel spacing
-            H[f_idx, :] += path_loss * reflection['coefficient'] * \
+        for f\_idx in range(num\_subcarriers):
+            frequency = 5.18e9 + f\_idx * 312.5e3  # 802.11ac channel spacing
+            H[f\_idx, :] += path\_loss * reflection['coefficient'] * \
                           np.exp(-1j * 2 * np.pi * frequency * delay)
     
     # Dynamic multipath from human motion
-    for t, position in enumerate(human_trajectory):
-        human_reflection = compute_human_reflection(position, environment_config)
-        for f_idx in range(num_subcarriers):
-            frequency = 5.18e9 + f_idx * 312.5e3
-            H[f_idx, t] += human_reflection['amplitude'] * \
-                          np.exp(-1j * 2 * np.pi * frequency * human_reflection['delay'])
+    for t, position in enumerate(human\_trajectory):
+        human\_reflection = compute\_human\_reflection(position, environment\_config)
+        for f\_idx in range(num\_subcarriers):
+            frequency = 5.18e9 + f\_idx * 312.5e3
+            H[f\_idx, t] += human\_reflection['amplitude'] * \
+                          np.exp(-1j * 2 * np.pi * frequency * human\_reflection['delay'])
     
     return H
 \end{lstlisting}
@@ -163,22 +163,22 @@ f_d = \frac{2v \cos(\theta)f_c}{c}
 where $v$ represents velocity, $\theta$ denotes the angle between motion direction and signal path, $f_c$ is the carrier frequency, and $c$ is the speed of light. Our implementation models activity-specific velocity profiles:
 
 \begin{lstlisting}[language=Python, caption=Activity-Specific Doppler Modeling]
-def generate_activity_doppler_signature(activity_type, duration, sampling_rate=1000):
+def generate\_activity\_doppler\_signature(activity\_type, duration, sampling\_rate=1000):
     """
     Generate Doppler signature for specific human activities
     
     Args:
-        activity_type: String identifier for activity
+        activity\_type: String identifier for activity
         duration: Activity duration in seconds
-        sampling_rate: CSI sampling rate in Hz
+        sampling\_rate: CSI sampling rate in Hz
     
     Returns:
         Time-varying Doppler shift profile
     """
-    time_steps = int(duration * sampling_rate)
-    doppler_profile = np.zeros(time_steps)
+    time\_steps = int(duration * sampling\_rate)
+    doppler\_profile = np.zeros(time\_steps)
     
-    activity_params = {
+    activity\_params = {
         'walking': {'velocity': 1.4, 'frequency': 2.0, 'variation': 0.2},
         'running': {'velocity': 3.5, 'frequency': 3.5, 'variation': 0.4},
         'sitting': {'velocity': 0.1, 'frequency': 0.5, 'variation': 0.05},
@@ -187,27 +187,27 @@ def generate_activity_doppler_signature(activity_type, duration, sampling_rate=1
         'lying': {'velocity': 0.02, 'frequency': 0.2, 'variation': 0.01}
     }
     
-    params = activity_params.get(activity_type, activity_params['standing'])
+    params = activity\_params.get(activity\_type, activity\_params['standing'])
     
-    if activity_type == 'falling':
+    if activity\_type == 'falling':
         # Special case: accelerating motion during fall
-        fall_duration = 0.5  # seconds
-        fall_samples = int(fall_duration * sampling_rate)
-        for t in range(min(fall_samples, time_steps)):
-            velocity = params['velocity'](t / sampling_rate)
-            doppler_profile[t] = 2 * velocity * 5.4e9 / 3e8  # Maximum Doppler shift
+        fall\_duration = 0.5  # seconds
+        fall\_samples = int(fall\_duration * sampling\_rate)
+        for t in range(min(fall\_samples, time\_steps)):
+            velocity = params['velocity'](t / sampling\_rate)
+            doppler\_profile[t] = 2 * velocity * 5.4e9 / 3e8  # Maximum Doppler shift
     else:
         # Periodic motion for other activities
-        base_velocity = params['velocity']
+        base\_velocity = params['velocity']
         frequency = params['frequency']
         variation = params['variation']
         
-        for t in range(time_steps):
-            time = t / sampling_rate
-            velocity = base_velocity * (1 + variation * np.sin(2 * np.pi * frequency * time))
-            doppler_profile[t] = 2 * velocity * 5.4e9 / 3e8
+        for t in range(time\_steps):
+            time = t / sampling\_rate
+            velocity = base\_velocity * (1 + variation * np.sin(2 * np.pi * frequency * time))
+            doppler\_profile[t] = 2 * velocity * 5.4e9 / 3e8
     
-    return doppler_profile
+    return doppler\_profile
 \end{lstlisting}
 
 \subsection{Synthetic Data Validation Against Real Measurements}
@@ -242,42 +242,42 @@ The high correlation coefficients (>0.90) and low divergence measures demonstrat
 Spectral analysis reveals that synthetic data accurately captures frequency-domain characteristics of real CSI:
 
 \begin{lstlisting}[language=Python, caption=Frequency Domain Validation]
-def validate_frequency_characteristics(synthetic_csi, real_csi):
+def validate\_frequency\_characteristics(synthetic\_csi, real\_csi):
     """
     Compare frequency domain characteristics of synthetic and real CSI
     
     Args:
-        synthetic_csi: Generated CSI data [subcarriers x time]
-        real_csi: Real CSI measurements [subcarriers x time]
+        synthetic\_csi: Generated CSI data [subcarriers x time]
+        real\_csi: Real CSI measurements [subcarriers x time]
     
     Returns:
         Dictionary of frequency domain metrics
     """
     # Compute power spectral density
-    synthetic_psd = np.abs(np.fft.fft2(synthetic_csi)) ** 2
-    real_psd = np.abs(np.fft.fft2(real_csi)) ** 2
+    synthetic\_psd = np.abs(np.fft.fft2(synthetic\_csi)) ** 2
+    real\_psd = np.abs(np.fft.fft2(real\_csi)) ** 2
     
     # Normalize PSDs
-    synthetic_psd_norm = synthetic_psd / np.sum(synthetic_psd)
-    real_psd_norm = real_psd / np.sum(real_psd)
+    synthetic\_psd\_norm = synthetic\_psd / np.sum(synthetic\_psd)
+    real\_psd\_norm = real\_psd / np.sum(real\_psd)
     
     # Compute spectral similarity metrics
     metrics = {
-        'spectral_correlation': np.corrcoef(
-            synthetic_psd_norm.flatten(), 
-            real_psd_norm.flatten()
+        'spectral\_correlation': np.corrcoef(
+            synthetic\_psd\_norm.flatten(), 
+            real\_psd\_norm.flatten()
         )[0, 1],
-        'spectral_centroid_error': np.abs(
-            compute_spectral_centroid(synthetic_psd) - 
-            compute_spectral_centroid(real_psd)
+        'spectral\_centroid\_error': np.abs(
+            compute\_spectral\_centroid(synthetic\_psd) - 
+            compute\_spectral\_centroid(real\_psd)
         ),
-        'spectral_rolloff_error': np.abs(
-            compute_spectral_rolloff(synthetic_psd) - 
-            compute_spectral_rolloff(real_psd)
+        'spectral\_rolloff\_error': np.abs(
+            compute\_spectral\_rolloff(synthetic\_psd) - 
+            compute\_spectral\_rolloff(real\_psd)
         ),
-        'spectral_entropy_ratio': 
-            compute_spectral_entropy(synthetic_psd) / 
-            compute_spectral_entropy(real_psd)
+        'spectral\_entropy\_ratio': 
+            compute\_spectral\_entropy(synthetic\_psd) / 
+            compute\_spectral\_entropy(real\_psd)
     }
     
     return metrics
@@ -292,57 +292,57 @@ Beyond synthetic data generation, we implement sophisticated augmentation techni
 Environmental variations significantly impact CSI measurements. Our augmentation pipeline models these variations:
 
 \begin{lstlisting}[language=Python, caption=Environment-Aware Data Augmentation]
-def augment_with_environmental_variations(csi_data, augmentation_config):
+def augment\_with\_environmental\_variations(csi\_data, augmentation\_config):
     """
     Apply environment-aware augmentations to CSI data
     
     Args:
-        csi_data: Original CSI measurements
-        augmentation_config: Dictionary of augmentation parameters
+        csi\_data: Original CSI measurements
+        augmentation\_config: Dictionary of augmentation parameters
     
     Returns:
         Augmented CSI data
     """
-    augmented = csi_data.copy()
+    augmented = csi\_data.copy()
     
     # Temperature-induced phase drift
-    if augmentation_config.get('temperature_drift', False):
-        temperature_coefficient = 2.3e-6  # rad/degree Celsius
-        temperature_variation = np.random.uniform(-5, 5)  # ±5°C variation
-        phase_drift = temperature_coefficient * temperature_variation * np.arange(csi_data.shape[1])
-        augmented *= np.exp(1j * phase_drift)
+    if augmentation\_config.get('temperature\_drift', False):
+        temperature\_coefficient = 2.3e-6  # rad/degree Celsius
+        temperature\_variation = np.random.uniform(-5, 5)  # \pm 5°C variation
+        phase\_drift = temperature\_coefficient * temperature\_variation * np.arange(csi\_data.shape[1])
+        augmented *= np.exp(1j * phase\_drift)
     
     # Furniture rearrangement effects
-    if augmentation_config.get('furniture_changes', False):
-        num_furniture_pieces = np.random.randint(1, 4)
-        for _ in range(num_furniture_pieces):
+    if augmentation\_config.get('furniture\_changes', False):
+        num\_furniture\_pieces = np.random.randint(1, 4)
+        for \_ in range(num\_furniture\_pieces):
             # Random reflection coefficient and delay
-            reflection_coeff = np.random.uniform(0.1, 0.3)
+            reflection\_coeff = np.random.uniform(0.1, 0.3)
             delay = np.random.uniform(10e-9, 50e-9)  # 10-50 ns delays
             
             # Add synthetic reflection
-            for f_idx in range(augmented.shape[0]):
-                frequency = 5.18e9 + f_idx * 312.5e3
-                augmented[f_idx, :] += reflection_coeff * csi_data[f_idx, :] * \
+            for f\_idx in range(augmented.shape[0]):
+                frequency = 5.18e9 + f\_idx * 312.5e3
+                augmented[f\_idx, :] += reflection\_coeff * csi\_data[f\_idx, :] * \
                                       np.exp(-1j * 2 * np.pi * frequency * delay)
     
     # Human presence variations
-    if augmentation_config.get('crowd_effects', False):
-        num_people = np.random.randint(0, 5)
-        attenuation_per_person = 0.15  # 15% signal attenuation per person
-        total_attenuation = 1 - (attenuation_per_person * num_people)
-        augmented *= max(0.3, total_attenuation)  # Minimum 30% signal strength
+    if augmentation\_config.get('crowd\_effects', False):
+        num\_people = np.random.randint(0, 5)
+        attenuation\_per\_person = 0.15  # 15% signal attenuation per person
+        total\_attenuation = 1 - (attenuation\_per\_person * num\_people)
+        augmented *= max(0.3, total\_attenuation)  # Minimum 30% signal strength
     
     # Device-specific variations
-    if augmentation_config.get('device_variations', False):
+    if augmentation\_config.get('device\_variations', False):
         # Antenna gain variations
-        gain_variation = np.random.uniform(0.9, 1.1)
-        augmented *= gain_variation
+        gain\_variation = np.random.uniform(0.9, 1.1)
+        augmented *= gain\_variation
         
         # Frequency offset
-        freq_offset = np.random.uniform(-10, 10)  # ±10 Hz offset
-        time_axis = np.arange(augmented.shape[1]) / 1000  # Assuming 1kHz sampling
-        augmented *= np.exp(1j * 2 * np.pi * freq_offset * time_axis)
+        freq\_offset = np.random.uniform(-10, 10)  # \pm 10 Hz offset
+        time\_axis = np.arange(augmented.shape[1]) / 1000  # Assuming 1kHz sampling
+        augmented *= np.exp(1j * 2 * np.pi * freq\_offset * time\_axis)
     
     return augmented
 \end{lstlisting}
@@ -363,45 +363,45 @@ class MultiScaleCNNExtractor(nn.Module):
     Multi-scale CNN feature extractor for CSI data
     Processes CSI at multiple temporal and frequency scales
     """
-    def __init__(self, input_channels=3, base_filters=64):
-        super(MultiScaleCNNExtractor, self).__init__()
+    def \_\_init\_\_(self, input\_channels=3, base\_filters=64):
+        super(MultiScaleCNNExtractor, self).\_\_init\_\_()
         
         # Branch 1: Fine-grained features (3x3 kernels)
         self.branch1 = nn.Sequential(
-            nn.Conv2d(input_channels, base_filters, kernel_size=3, padding=1),
-            nn.BatchNorm2d(base_filters),
+            nn.Conv2d(input\_channels, base\_filters, kernel\_size=3, padding=1),
+            nn.BatchNorm2d(base\_filters),
             nn.ReLU(inplace=True),
-            nn.Conv2d(base_filters, base_filters*2, kernel_size=3, padding=1),
-            nn.BatchNorm2d(base_filters*2),
+            nn.Conv2d(base\_filters, base\_filters*2, kernel\_size=3, padding=1),
+            nn.BatchNorm2d(base\_filters*2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2, 2)
         )
         
         # Branch 2: Medium-scale features (5x5 kernels)
         self.branch2 = nn.Sequential(
-            nn.Conv2d(input_channels, base_filters, kernel_size=5, padding=2),
-            nn.BatchNorm2d(base_filters),
+            nn.Conv2d(input\_channels, base\_filters, kernel\_size=5, padding=2),
+            nn.BatchNorm2d(base\_filters),
             nn.ReLU(inplace=True),
-            nn.Conv2d(base_filters, base_filters*2, kernel_size=5, padding=2),
-            nn.BatchNorm2d(base_filters*2),
+            nn.Conv2d(base\_filters, base\_filters*2, kernel\_size=5, padding=2),
+            nn.BatchNorm2d(base\_filters*2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2, 2)
         )
         
         # Branch 3: Coarse-grained features (7x7 kernels)
         self.branch3 = nn.Sequential(
-            nn.Conv2d(input_channels, base_filters, kernel_size=7, padding=3),
-            nn.BatchNorm2d(base_filters),
+            nn.Conv2d(input\_channels, base\_filters, kernel\_size=7, padding=3),
+            nn.BatchNorm2d(base\_filters),
             nn.ReLU(inplace=True),
-            nn.Conv2d(base_filters, base_filters*2, kernel_size=7, padding=3),
-            nn.BatchNorm2d(base_filters*2),
+            nn.Conv2d(base\_filters, base\_filters*2, kernel\_size=7, padding=3),
+            nn.BatchNorm2d(base\_filters*2),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2, 2)
         )
         
         # Feature fusion layer
-        self.fusion = nn.Conv2d(base_filters*6, base_filters*4, kernel_size=1)
-        self.fusion_bn = nn.BatchNorm2d(base_filters*4)
+        self.fusion = nn.Conv2d(base\_filters*6, base\_filters*4, kernel\_size=1)
+        self.fusion\_bn = nn.BatchNorm2d(base\_filters*4)
         
     def forward(self, x):
         # Extract multi-scale features
@@ -410,11 +410,11 @@ class MultiScaleCNNExtractor(nn.Module):
         feat3 = self.branch3(x)
         
         # Concatenate features
-        multi_scale_features = torch.cat([feat1, feat2, feat3], dim=1)
+        multi\_scale\_features = torch.cat([feat1, feat2, feat3], dim=1)
         
         # Fuse features
-        fused = self.fusion(multi_scale_features)
-        fused = self.fusion_bn(fused)
+        fused = self.fusion(multi\_scale\_features)
+        fused = self.fusion\_bn(fused)
         fused = F.relu(fused)
         
         return fused
@@ -430,8 +430,8 @@ class SqueezeExcitation(nn.Module):
     Squeeze-and-Excitation module for channel attention
     Adaptively recalibrates channel-wise feature responses
     """
-    def __init__(self, channels, reduction=16):
-        super(SqueezeExcitation, self).__init__()
+    def \_\_init\_\_(self, channels, reduction=16):
+        super(SqueezeExcitation, self).\_\_init\_\_()
         
         self.squeeze = nn.AdaptiveAvgPool2d(1)
         self.excitation = nn.Sequential(
@@ -442,7 +442,7 @@ class SqueezeExcitation(nn.Module):
         )
         
     def forward(self, x):
-        batch, channels, _, _ = x.size()
+        batch, channels, \_, \_ = x.size()
         
         # Squeeze: Global average pooling
         y = self.squeeze(x).view(batch, channels)
@@ -451,7 +451,7 @@ class SqueezeExcitation(nn.Module):
         y = self.excitation(y).view(batch, channels, 1, 1)
         
         # Scale features
-        return x * y.expand_as(x)
+        return x * y.expand\_as(x)
 \end{lstlisting}
 
 \subsubsection{Temporal Attention Mechanism}
@@ -464,40 +464,40 @@ class TemporalAttention(nn.Module):
     Temporal attention mechanism for sequence modeling
     Captures long-range temporal dependencies in CSI sequences
     """
-    def __init__(self, feature_dim, num_heads=8, dropout=0.1):
-        super(TemporalAttention, self).__init__()
+    def \_\_init\_\_(self, feature\_dim, num\_heads=8, dropout=0.1):
+        super(TemporalAttention, self).\_\_init\_\_()
         
-        self.multi_head_attention = nn.MultiheadAttention(
-            embed_dim=feature_dim,
-            num_heads=num_heads,
+        self.multi\_head\_attention = nn.MultiheadAttention(
+            embed\_dim=feature\_dim,
+            num\_heads=num\_heads,
             dropout=dropout,
-            batch_first=True
+            batch\_first=True
         )
         
-        self.norm1 = nn.LayerNorm(feature_dim)
-        self.norm2 = nn.LayerNorm(feature_dim)
+        self.norm1 = nn.LayerNorm(feature\_dim)
+        self.norm2 = nn.LayerNorm(feature\_dim)
         
-        self.feed_forward = nn.Sequential(
-            nn.Linear(feature_dim, feature_dim * 4),
+        self.feed\_forward = nn.Sequential(
+            nn.Linear(feature\_dim, feature\_dim * 4),
             nn.ReLU(),
             nn.Dropout(dropout),
-            nn.Linear(feature_dim * 4, feature_dim)
+            nn.Linear(feature\_dim * 4, feature\_dim)
         )
         
         self.dropout = nn.Dropout(dropout)
         
     def forward(self, x, mask=None):
         # Self-attention with residual connection
-        attended, attention_weights = self.multi_head_attention(
-            x, x, x, attn_mask=mask
+        attended, attention\_weights = self.multi\_head\_attention(
+            x, x, x, attn\_mask=mask
         )
         x = self.norm1(x + self.dropout(attended))
         
         # Feed-forward with residual connection
-        ff_output = self.feed_forward(x)
-        x = self.norm2(x + self.dropout(ff_output))
+        ff\_output = self.feed\_forward(x)
+        x = self.norm2(x + self.dropout(ff\_output))
         
-        return x, attention_weights
+        return x, attention\_weights
 \end{lstlisting}
 
 \subsection{Domain Adaptation for Sim2Real Transfer}
@@ -514,67 +514,67 @@ class DomainAdversarialNetwork(nn.Module):
     Domain-adversarial network for Sim2Real adaptation
     Learns features invariant to domain shift
     """
-    def __init__(self, feature_extractor, activity_classifier, domain_discriminator):
-        super(DomainAdversarialNetwork, self).__init__()
+    def \_\_init\_\_(self, feature\_extractor, activity\_classifier, domain\_discriminator):
+        super(DomainAdversarialNetwork, self).\_\_init\_\_()
         
-        self.feature_extractor = feature_extractor
-        self.activity_classifier = activity_classifier
-        self.domain_discriminator = domain_discriminator
+        self.feature\_extractor = feature\_extractor
+        self.activity\_classifier = activity\_classifier
+        self.domain\_discriminator = domain\_discriminator
         
         # Gradient reversal layer for adversarial training
-        self.gradient_reversal = GradientReversalLayer()
+        self.gradient\_reversal = GradientReversalLayer()
         
     def forward(self, x, alpha=1.0):
         # Extract features
-        features = self.feature_extractor(x)
+        features = self.feature\_extractor(x)
         
         # Activity classification
-        activity_logits = self.activity_classifier(features)
+        activity\_logits = self.activity\_classifier(features)
         
         # Domain discrimination with gradient reversal
-        reversed_features = self.gradient_reversal(features, alpha)
-        domain_logits = self.domain_discriminator(reversed_features)
+        reversed\_features = self.gradient\_reversal(features, alpha)
+        domain\_logits = self.domain\_discriminator(reversed\_features)
         
-        return activity_logits, domain_logits
+        return activity\_logits, domain\_logits
     
-    def compute_loss(self, source_data, source_labels, target_data, alpha=1.0):
+    def compute\_loss(self, source\_data, source\_labels, target\_data, alpha=1.0):
         """
         Compute combined loss for domain-adversarial training
         
         Args:
-            source_data: Synthetic (source domain) data
-            source_labels: Activity labels for source data
-            target_data: Real (target domain) data
+            source\_data: Synthetic (source domain) data
+            source\_labels: Activity labels for source data
+            target\_data: Real (target domain) data
             alpha: Gradient reversal strength
         
         Returns:
             Total loss and individual components
         """
         # Process source domain
-        source_activity, source_domain = self.forward(source_data, alpha)
+        source\_activity, source\_domain = self.forward(source\_data, alpha)
         
         # Process target domain
-        target_activity, target_domain = self.forward(target_data, alpha)
+        target\_activity, target\_domain = self.forward(target\_data, alpha)
         
         # Activity classification loss (only on source domain with labels)
-        activity_loss = F.cross_entropy(source_activity, source_labels)
+        activity\_loss = F.cross\_entropy(source\_activity, source\_labels)
         
         # Domain discrimination loss
-        source_domain_labels = torch.zeros(source_data.size(0), device=source_data.device)
-        target_domain_labels = torch.ones(target_data.size(0), device=target_data.device)
+        source\_domain\_labels = torch.zeros(source\_data.size(0), device=source\_data.device)
+        target\_domain\_labels = torch.ones(target\_data.size(0), device=target\_data.device)
         
-        domain_loss = F.binary_cross_entropy_with_logits(
-            torch.cat([source_domain, target_domain]),
-            torch.cat([source_domain_labels, target_domain_labels])
+        domain\_loss = F.binary\_cross\_entropy\_with\_logits(
+            torch.cat([source\_domain, target\_domain]),
+            torch.cat([source\_domain\_labels, target\_domain\_labels])
         )
         
         # Total loss
-        total_loss = activity_loss + domain_loss
+        total\_loss = activity\_loss + domain\_loss
         
         return {
-            'total': total_loss,
-            'activity': activity_loss,
-            'domain': domain_loss
+            'total': total\_loss,
+            'activity': activity\_loss,
+            'domain': domain\_loss
         }
 \end{lstlisting}
 
@@ -588,48 +588,48 @@ class ProgressiveDomainAdaptation:
     Progressive domain adaptation for smooth Sim2Real transfer
     Gradually increases adaptation difficulty
     """
-    def __init__(self, model, source_loader, target_loader, num_epochs=100):
+    def \_\_init\_\_(self, model, source\_loader, target\_loader, num\_epochs=100):
         self.model = model
-        self.source_loader = source_loader
-        self.target_loader = target_loader
-        self.num_epochs = num_epochs
+        self.source\_loader = source\_loader
+        self.target\_loader = target\_loader
+        self.num\_epochs = num\_epochs
         
     def adapt(self):
         optimizer = torch.optim.Adam(self.model.parameters(), lr=0.001)
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-            optimizer, T_max=self.num_epochs
+        scheduler = torch.optim.lr\_scheduler.CosineAnnealingLR(
+            optimizer, T\_max=self.num\_epochs
         )
         
-        for epoch in range(self.num_epochs):
+        for epoch in range(self.num\_epochs):
             # Compute adaptation strength (increases over time)
-            p = epoch / self.num_epochs
+            p = epoch / self.num\_epochs
             alpha = 2 / (1 + np.exp(-10 * p)) - 1  # Sigmoid ramp-up
             
-            epoch_losses = {'activity': 0, 'domain': 0}
+            epoch\_losses = {'activity': 0, 'domain': 0}
             
-            for (source_batch, source_labels), (target_batch, _) in zip(
-                self.source_loader, self.target_loader
+            for (source\_batch, source\_labels), (target\_batch, \_) in zip(
+                self.source\_loader, self.target\_loader
             ):
                 # Forward pass
-                losses = self.model.compute_loss(
-                    source_batch, source_labels, target_batch, alpha
+                losses = self.model.compute\_loss(
+                    source\_batch, source\_labels, target\_batch, alpha
                 )
                 
                 # Backward pass
-                optimizer.zero_grad()
+                optimizer.zero\_grad()
                 losses['total'].backward()
                 optimizer.step()
                 
                 # Accumulate losses
-                epoch_losses['activity'] += losses['activity'].item()
-                epoch_losses['domain'] += losses['domain'].item()
+                epoch\_losses['activity'] += losses['activity'].item()
+                epoch\_losses['domain'] += losses['domain'].item()
             
             scheduler.step()
             
             # Log progress
             if epoch % 10 == 0:
-                print(f"Epoch {epoch}: Activity Loss = {epoch_losses['activity']:.4f}, "
-                      f"Domain Loss = {epoch_losses['domain']:.4f}, Alpha = {alpha:.3f}")
+                print(f"Epoch {epoch}: Activity Loss = {epoch\_losses['activity']:.4f}, "
+                      f"Domain Loss = {epoch\_losses['domain']:.4f}, Alpha = {alpha:.3f}")
 \end{lstlisting}
 
 \subsection{Model Training and Optimization}
@@ -646,66 +646,66 @@ class CurriculumLearning:
     Curriculum learning strategy for progressive training
     Starts with easy samples and gradually includes harder ones
     """
-    def __init__(self, dataset, difficulty_metric='entropy'):
+    def \_\_init\_\_(self, dataset, difficulty\_metric='entropy'):
         self.dataset = dataset
-        self.difficulty_metric = difficulty_metric
-        self.difficulties = self._compute_difficulties()
+        self.difficulty\_metric = difficulty\_metric
+        self.difficulties = self.\_compute\_difficulties()
         
-    def _compute_difficulties(self):
+    def \_compute\_difficulties(self):
         """
         Compute difficulty scores for all samples
         """
         difficulties = []
         
         for idx in range(len(self.dataset)):
-            sample, _ = self.dataset[idx]
+            sample, \_ = self.dataset[idx]
             
-            if self.difficulty_metric == 'entropy':
+            if self.difficulty\_metric == 'entropy':
                 # Use spectral entropy as difficulty measure
                 spectrum = np.abs(np.fft.fft2(sample))
-                spectrum_norm = spectrum / np.sum(spectrum)
-                entropy = -np.sum(spectrum_norm * np.log(spectrum_norm + 1e-10))
+                spectrum\_norm = spectrum / np.sum(spectrum)
+                entropy = -np.sum(spectrum\_norm * np.log(spectrum\_norm + 1e-10))
                 difficulties.append(entropy)
                 
-            elif self.difficulty_metric == 'variance':
+            elif self.difficulty\_metric == 'variance':
                 # Use temporal variance as difficulty measure
                 variance = np.var(sample, axis=-1).mean()
                 difficulties.append(variance)
                 
         return np.array(difficulties)
     
-    def get_curriculum_batch(self, epoch, total_epochs, batch_size):
+    def get\_curriculum\_batch(self, epoch, total\_epochs, batch\_size):
         """
         Get batch of samples based on curriculum difficulty
         
         Args:
             epoch: Current epoch
-            total_epochs: Total number of epochs
-            batch_size: Batch size
+            total\_epochs: Total number of epochs
+            batch\_size: Batch size
         
         Returns:
             Indices of samples to include in batch
         """
         # Compute difficulty threshold (increases over time)
-        progress = epoch / total_epochs
-        threshold_percentile = min(100, 30 + 70 * progress)  # Start with easiest 30%
+        progress = epoch / total\_epochs
+        threshold\_percentile = min(100, 30 + 70 * progress)  # Start with easiest 30%
         
         # Get samples below difficulty threshold
-        threshold = np.percentile(self.difficulties, threshold_percentile)
-        eligible_indices = np.where(self.difficulties <= threshold)[0]
+        threshold = np.percentile(self.difficulties, threshold\_percentile)
+        eligible\_indices = np.where(self.difficulties <= threshold)[0]
         
         # Sample batch from eligible samples
-        if len(eligible_indices) >= batch_size:
-            batch_indices = np.random.choice(
-                eligible_indices, batch_size, replace=False
+        if len(eligible\_indices) >= batch\_size:
+            batch\_indices = np.random.choice(
+                eligible\_indices, batch\_size, replace=False
             )
         else:
             # If not enough eligible samples, allow replacement
-            batch_indices = np.random.choice(
-                eligible_indices, batch_size, replace=True
+            batch\_indices = np.random.choice(
+                eligible\_indices, batch\_size, replace=True
             )
         
-        return batch_indices
+        return batch\_indices
 \end{lstlisting}
 
 \subsubsection{Mixed Precision Training}
@@ -713,7 +713,7 @@ class CurriculumLearning:
 To accelerate training while maintaining numerical stability, we employ mixed precision training:
 
 \begin{lstlisting}[language=Python, caption=Mixed Precision Training Setup]
-def setup_mixed_precision_training(model, optimizer):
+def setup\_mixed\_precision\_training(model, optimizer):
     """
     Configure mixed precision training for efficiency
     
@@ -728,20 +728,20 @@ def setup_mixed_precision_training(model, optimizer):
     
     scaler = GradScaler()
     
-    def train_step(data, labels):
-        optimizer.zero_grad()
+    def train\_step(data, labels):
+        optimizer.zero\_grad()
         
         # Forward pass with automatic mixed precision
         with autocast():
             outputs = model(data)
-            loss = F.cross_entropy(outputs, labels)
+            loss = F.cross\_entropy(outputs, labels)
         
         # Backward pass with gradient scaling
         scaler.scale(loss).backward()
         
         # Gradient clipping for stability
-        scaler.unscale_(optimizer)
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        scaler.unscale\_(optimizer)
+        torch.nn.utils.clip\_grad\_norm\_(model.parameters(), max\_norm=1.0)
         
         # Optimizer step with scaled gradients
         scaler.step(optimizer)
@@ -749,7 +749,7 @@ def setup_mixed_precision_training(model, optimizer):
         
         return loss.item()
     
-    return train_step
+    return train\_step
 \end{lstlisting}
 
 \subsection{Ablation Studies and Component Analysis}
@@ -785,61 +785,61 @@ These results, derived from actual experimental runs, demonstrate that domain ad
 We analyzed the model's sensitivity to key hyperparameters:
 
 \begin{lstlisting}[language=Python, caption=Hyperparameter Sensitivity Analysis]
-def analyze_hyperparameter_sensitivity(base_config, param_ranges):
+def analyze\_hyperparameter\_sensitivity(base\_config, param\_ranges):
     """
     Analyze model sensitivity to hyperparameter variations
     
     Args:
-        base_config: Baseline configuration dictionary
-        param_ranges: Dictionary of parameter ranges to test
+        base\_config: Baseline configuration dictionary
+        param\_ranges: Dictionary of parameter ranges to test
     
     Returns:
         Sensitivity analysis results
     """
     results = {}
     
-    for param_name, param_values in param_ranges.items():
-        param_results = []
+    for param\_name, param\_values in param\_ranges.items():
+        param\_results = []
         
-        for value in param_values:
+        for value in param\_values:
             # Update configuration
-            config = base_config.copy()
-            config[param_name] = value
+            config = base\_config.copy()
+            config[param\_name] = value
             
             # Train model with configuration
-            model = create_model(config)
-            metrics = train_and_evaluate(model, config)
+            model = create\_model(config)
+            metrics = train\_and\_evaluate(model, config)
             
-            param_results.append({
+            param\_results.append({
                 'value': value,
-                'f1_score': metrics['macro_f1'],
-                'convergence_epoch': metrics['convergence_epoch']
+                'f1\_score': metrics['macro\_f1'],
+                'convergence\_epoch': metrics['convergence\_epoch']
             })
         
         # Compute sensitivity metrics
-        f1_scores = [r['f1_score'] for r in param_results]
-        results[param_name] = {
-            'range': param_values,
-            'f1_scores': f1_scores,
-            'std_dev': np.std(f1_scores),
-            'max_delta': max(f1_scores) - min(f1_scores),
-            'optimal_value': param_values[np.argmax(f1_scores)]
+        f1\_scores = [r['f1\_score'] for r in param\_results]
+        results[param\_name] = {
+            'range': param\_values,
+            'f1\_scores': f1\_scores,
+            'std\_dev': np.std(f1\_scores),
+            'max\_delta': max(f1\_scores) - min(f1\_scores),
+            'optimal\_value': param\_values[np.argmax(f1\_scores)]
         }
     
     return results
 
 # Example sensitivity analysis
-param_ranges = {
-    'learning_rate': [0.0001, 0.0005, 0.001, 0.005, 0.01],
-    'batch_size': [16, 32, 64, 128, 256],
-    'dropout_rate': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
-    'num_attention_heads': [2, 4, 8, 16],
-    'se_reduction_ratio': [4, 8, 16, 32]
+param\_ranges = {
+    'learning\_rate': [0.0001, 0.0005, 0.001, 0.005, 0.01],
+    'batch\_size': [16, 32, 64, 128, 256],
+    'dropout\_rate': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
+    'num\_attention\_heads': [2, 4, 8, 16],
+    'se\_reduction\_ratio': [4, 8, 16, 32]
 }
 
-sensitivity_results = analyze_hyperparameter_sensitivity(
-    base_config={'learning_rate': 0.001, 'batch_size': 32, ...},
-    param_ranges=param_ranges
+sensitivity\_results = analyze\_hyperparameter\_sensitivity(
+    base\_config={'learning\_rate': 0.001, 'batch\_size': 32, ...},
+    param\_ranges=param\_ranges
 )
 \end{lstlisting}
 
@@ -859,57 +859,57 @@ class ZeroShotTransfer:
     Zero-shot transfer learning for unseen environments
     Leverages physics-guided features for generalization
     """
-    def __init__(self, pretrained_model, physics_encoder):
-        self.pretrained_model = pretrained_model
-        self.physics_encoder = physics_encoder
+    def \_\_init\_\_(self, pretrained\_model, physics\_encoder):
+        self.pretrained\_model = pretrained\_model
+        self.physics\_encoder = physics\_encoder
         
         # Freeze pretrained features
-        for param in self.pretrained_model.parameters():
-            param.requires_grad = False
+        for param in self.pretrained\_model.parameters():
+            param.requires\_grad = False
         
-    def extract_physics_invariant_features(self, csi_data):
+    def extract\_physics\_invariant\_features(self, csi\_data):
         """
         Extract physics-invariant features for zero-shot transfer
         
         Args:
-            csi_data: CSI measurements from target domain
+            csi\_data: CSI measurements from target domain
         
         Returns:
             Physics-invariant feature representation
         """
         # Extract physical parameters
-        fresnel_features = self.physics_encoder.compute_fresnel_features(csi_data)
-        doppler_features = self.physics_encoder.compute_doppler_features(csi_data)
-        multipath_features = self.physics_encoder.compute_multipath_features(csi_data)
+        fresnel\_features = self.physics\_encoder.compute\_fresnel\_features(csi\_data)
+        doppler\_features = self.physics\_encoder.compute\_doppler\_features(csi\_data)
+        multipath\_features = self.physics\_encoder.compute\_multipath\_features(csi\_data)
         
         # Combine physics features
-        physics_features = torch.cat([
-            fresnel_features,
-            doppler_features,
-            multipath_features
+        physics\_features = torch.cat([
+            fresnel\_features,
+            doppler\_features,
+            multipath\_features
         ], dim=-1)
         
         # Normalize to domain-invariant space
-        physics_features = F.normalize(physics_features, p=2, dim=-1)
+        physics\_features = F.normalize(physics\_features, p=2, dim=-1)
         
-        return physics_features
+        return physics\_features
     
-    def predict_zero_shot(self, target_data):
+    def predict\_zero\_shot(self, target\_data):
         """
         Perform zero-shot prediction on target domain data
         
         Args:
-            target_data: Unlabeled data from target domain
+            target\_data: Unlabeled data from target domain
         
         Returns:
             Activity predictions
         """
         # Extract physics-invariant features
-        features = self.extract_physics_invariant_features(target_data)
+        features = self.extract\_physics\_invariant\_features(target\_data)
         
         # Use pretrained classifier
-        with torch.no_grad():
-            logits = self.pretrained_model.classifier(features)
+        with torch.no\_grad():
+            logits = self.pretrained\_model.classifier(features)
             predictions = F.softmax(logits, dim=-1)
         
         return predictions
@@ -925,17 +925,17 @@ class PrototypeZeroShotLearning:
     Prototype-based approach for zero-shot activity recognition
     Learns activity prototypes from synthetic data
     """
-    def __init__(self, feature_extractor, num_activities=6):
-        self.feature_extractor = feature_extractor
-        self.num_activities = num_activities
+    def \_\_init\_\_(self, feature\_extractor, num\_activities=6):
+        self.feature\_extractor = feature\_extractor
+        self.num\_activities = num\_activities
         self.prototypes = None
         
-    def learn_prototypes(self, synthetic_data, labels):
+    def learn\_prototypes(self, synthetic\_data, labels):
         """
         Learn activity prototypes from synthetic data
         
         Args:
-            synthetic_data: Synthetic CSI data
+            synthetic\_data: Synthetic CSI data
             labels: Activity labels
         
         Returns:
@@ -943,51 +943,51 @@ class PrototypeZeroShotLearning:
         """
         self.prototypes = {}
         
-        with torch.no_grad():
-            features = self.feature_extractor(synthetic_data)
+        with torch.no\_grad():
+            features = self.feature\_extractor(synthetic\_data)
             
-            for activity_id in range(self.num_activities):
+            for activity\_id in range(self.num\_activities):
                 # Get features for current activity
-                activity_mask = (labels == activity_id)
-                activity_features = features[activity_mask]
+                activity\_mask = (labels == activity\_id)
+                activity\_features = features[activity\_mask]
                 
                 # Compute prototype as mean of features
-                prototype = activity_features.mean(dim=0)
+                prototype = activity\_features.mean(dim=0)
                 
                 # Store normalized prototype
-                self.prototypes[activity_id] = F.normalize(prototype, p=2, dim=-1)
+                self.prototypes[activity\_id] = F.normalize(prototype, p=2, dim=-1)
         
         return self.prototypes
     
-    def classify_zero_shot(self, target_data, temperature=0.1):
+    def classify\_zero\_shot(self, target\_data, temperature=0.1):
         """
         Classify target data using learned prototypes
         
         Args:
-            target_data: Unlabeled target domain data
+            target\_data: Unlabeled target domain data
             temperature: Temperature for similarity scaling
         
         Returns:
             Predicted activity labels and confidence scores
         """
-        with torch.no_grad():
+        with torch.no\_grad():
             # Extract features from target data
-            features = self.feature_extractor(target_data)
+            features = self.feature\_extractor(target\_data)
             features = F.normalize(features, p=2, dim=-1)
             
             # Compute similarity to prototypes
             similarities = []
-            for activity_id in range(self.num_activities):
-                prototype = self.prototypes[activity_id]
+            for activity\_id in range(self.num\_activities):
+                prototype = self.prototypes[activity\_id]
                 similarity = torch.matmul(features, prototype.unsqueeze(-1)).squeeze(-1)
                 similarities.append(similarity)
             
             # Stack similarities
-            similarity_matrix = torch.stack(similarities, dim=-1)
+            similarity\_matrix = torch.stack(similarities, dim=-1)
             
             # Apply temperature scaling and softmax
-            scaled_similarities = similarity_matrix / temperature
-            probabilities = F.softmax(scaled_similarities, dim=-1)
+            scaled\_similarities = similarity\_matrix / temperature
+            probabilities = F.softmax(scaled\_similarities, dim=-1)
             
             # Get predictions
             predictions = torch.argmax(probabilities, dim=-1)
@@ -1010,89 +1010,89 @@ class MAML:
     Model-Agnostic Meta-Learning for few-shot adaptation
     Enables rapid adaptation with minimal target domain data
     """
-    def __init__(self, model, inner_lr=0.01, outer_lr=0.001):
+    def \_\_init\_\_(self, model, inner\_lr=0.01, outer\_lr=0.001):
         self.model = model
-        self.inner_lr = inner_lr
-        self.outer_lr = outer_lr
-        self.meta_optimizer = torch.optim.Adam(
+        self.inner\_lr = inner\_lr
+        self.outer\_lr = outer\_lr
+        self.meta\_optimizer = torch.optim.Adam(
             self.model.parameters(), 
-            lr=outer_lr
+            lr=outer\_lr
         )
         
-    def inner_loop_update(self, support_data, support_labels):
+    def inner\_loop\_update(self, support\_data, support\_labels):
         """
         Perform inner loop update on support set
         
         Args:
-            support_data: Few-shot support data
-            support_labels: Support set labels
+            support\_data: Few-shot support data
+            support\_labels: Support set labels
         
         Returns:
             Updated model parameters
         """
         # Create a copy of model parameters
-        adapted_params = {}
-        for name, param in self.model.named_parameters():
-            adapted_params[name] = param.clone()
+        adapted\_params = {}
+        for name, param in self.model.named\_parameters():
+            adapted\_params[name] = param.clone()
         
         # Compute loss on support set
-        logits = self.model(support_data)
-        loss = F.cross_entropy(logits, support_labels)
+        logits = self.model(support\_data)
+        loss = F.cross\_entropy(logits, support\_labels)
         
         # Compute gradients
         gradients = torch.autograd.grad(
             loss, 
             self.model.parameters(),
-            create_graph=True
+            create\_graph=True
         )
         
         # Update parameters
-        for (name, param), grad in zip(self.model.named_parameters(), gradients):
-            adapted_params[name] = param - self.inner_lr * grad
+        for (name, param), grad in zip(self.model.named\_parameters(), gradients):
+            adapted\_params[name] = param - self.inner\_lr * grad
         
-        return adapted_params
+        return adapted\_params
     
-    def meta_train_step(self, task_batch):
+    def meta\_train\_step(self, task\_batch):
         """
         Perform one meta-training step
         
         Args:
-            task_batch: Batch of tasks, each with support and query sets
+            task\_batch: Batch of tasks, each with support and query sets
         
         Returns:
             Meta-training loss
         """
-        meta_loss = 0
+        meta\_loss = 0
         
-        for task in task_batch:
-            support_data, support_labels = task['support']
-            query_data, query_labels = task['query']
+        for task in task\_batch:
+            support\_data, support\_labels = task['support']
+            query\_data, query\_labels = task['query']
             
             # Inner loop: adapt to support set
-            adapted_params = self.inner_loop_update(support_data, support_labels)
+            adapted\_params = self.inner\_loop\_update(support\_data, support\_labels)
             
             # Apply adapted parameters
-            original_params = {}
-            for name, param in self.model.named_parameters():
-                original_params[name] = param.data.clone()
-                param.data = adapted_params[name]
+            original\_params = {}
+            for name, param in self.model.named\_parameters():
+                original\_params[name] = param.data.clone()
+                param.data = adapted\_params[name]
             
             # Evaluate on query set
-            query_logits = self.model(query_data)
-            task_loss = F.cross_entropy(query_logits, query_labels)
-            meta_loss += task_loss
+            query\_logits = self.model(query\_data)
+            task\_loss = F.cross\_entropy(query\_logits, query\_labels)
+            meta\_loss += task\_loss
             
             # Restore original parameters
-            for name, param in self.model.named_parameters():
-                param.data = original_params[name]
+            for name, param in self.model.named\_parameters():
+                param.data = original\_params[name]
         
         # Meta-optimization step
-        meta_loss = meta_loss / len(task_batch)
-        self.meta_optimizer.zero_grad()
-        meta_loss.backward()
-        self.meta_optimizer.step()
+        meta\_loss = meta\_loss / len(task\_batch)
+        self.meta\_optimizer.zero\_grad()
+        meta\_loss.backward()
+        self.meta\_optimizer.step()
         
-        return meta_loss.item()
+        return meta\_loss.item()
 \end{lstlisting}
 
 \subsubsection{Progressive Few-Shot Learning}
@@ -1105,91 +1105,91 @@ class ProgressiveFewShotLearning:
     Progressive few-shot learning with increasing sample complexity
     Gradually incorporates more target domain samples
     """
-    def __init__(self, model, source_dataset, target_dataset):
+    def \_\_init\_\_(self, model, source\_dataset, target\_dataset):
         self.model = model
-        self.source_dataset = source_dataset
-        self.target_dataset = target_dataset
+        self.source\_dataset = source\_dataset
+        self.target\_dataset = target\_dataset
         
-    def progressive_adaptation(self, shot_schedule=[1, 5, 10, 20]):
+    def progressive\_adaptation(self, shot\_schedule=[1, 5, 10, 20]):
         """
         Progressively adapt model with increasing shots
         
         Args:
-            shot_schedule: List of shot numbers to use progressively
+            shot\_schedule: List of shot numbers to use progressively
         
         Returns:
             Performance metrics at each stage
         """
         results = []
         
-        for num_shots in shot_schedule:
-            print(f"Adapting with {num_shots}-shot learning...")
+        for num\_shots in shot\_schedule:
+            print(f"Adapting with {num\_shots}-shot learning...")
             
             # Sample few-shot data from target domain
-            few_shot_data, few_shot_labels = self.sample_few_shot(
-                self.target_dataset, 
-                num_shots
+            few\_shot\_data, few\_shot\_labels = self.sample\_few\_shot(
+                self.target\_dataset, 
+                num\_shots
             )
             
             # Fine-tune model
-            adapted_model = self.fine_tune_few_shot(
+            adapted\_model = self.fine\_tune\_few\_shot(
                 self.model.copy(),
-                few_shot_data,
-                few_shot_labels
+                few\_shot\_data,
+                few\_shot\_labels
             )
             
             # Evaluate on target domain
-            metrics = self.evaluate(adapted_model, self.target_dataset)
+            metrics = self.evaluate(adapted\_model, self.target\_dataset)
             
             results.append({
-                'num_shots': num_shots,
+                'num\_shots': num\_shots,
                 'accuracy': metrics['accuracy'],
-                'f1_score': metrics['f1_score'],
-                'adaptation_time': metrics['time']
+                'f1\_score': metrics['f1\_score'],
+                'adaptation\_time': metrics['time']
             })
             
             # Use adapted model as starting point for next stage
-            self.model = adapted_model
+            self.model = adapted\_model
         
         return results
     
-    def sample_few_shot(self, dataset, num_shots):
+    def sample\_few\_shot(self, dataset, num\_shots):
         """
         Sample few-shot examples from dataset
         
         Args:
             dataset: Target domain dataset
-            num_shots: Number of examples per class
+            num\_shots: Number of examples per class
         
         Returns:
             Few-shot data and labels
         """
-        few_shot_data = []
-        few_shot_labels = []
+        few\_shot\_data = []
+        few\_shot\_labels = []
         
-        for class_id in range(self.model.num_classes):
+        for class\_id in range(self.model.num\_classes):
             # Get all samples of current class
-            class_indices = [i for i, (_, label) in enumerate(dataset) 
-                            if label == class_id]
+            class\_indices = [i for i, (\_, label) in enumerate(dataset) 
+                            if label == class\_id]
             
-            # Randomly sample num_shots examples
-            if len(class_indices) >= num_shots:
-                selected = np.random.choice(class_indices, num_shots, replace=False)
+            # Randomly sample num\_shots examples
+            if len(class\_indices) >= num\_shots:
+                selected = np.random.choice(class\_indices, num\_shots, replace=False)
             else:
                 # If not enough samples, use all available
-                selected = class_indices
+                selected = class\_indices
             
             for idx in selected:
                 data, label = dataset[idx]
-                few_shot_data.append(data)
-                few_shot_labels.append(label)
+                few\_shot\_data.append(data)
+                few\_shot\_labels.append(label)
         
-        return torch.stack(few_shot_data), torch.tensor(few_shot_labels)
+        return torch.stack(few\_shot\_data), torch.tensor(few\_shot\_labels)
 \end{lstlisting}
 
 \subsection{Cross-Domain Generalization Analysis}
 
-Our experimental results show exceptional cross-domain consistency, with the Enhanced model achieving 83.0±0.1\% F1 performance across both LOSO and LORO protocols.
+Our experimental results show exceptional cross-domain consistency, with the Enhanced model achieving 83.0\pm 0.1\% F1 performance across both LOSO and LORO protocols.
 
 \subsubsection{Domain Shift Quantification}
 
@@ -1200,56 +1200,56 @@ class DomainShiftAnalyzer:
     """
     Analyze and quantify domain shift between source and target
     """
-    def __init__(self, feature_extractor):
-        self.feature_extractor = feature_extractor
+    def \_\_init\_\_(self, feature\_extractor):
+        self.feature\_extractor = feature\_extractor
         
-    def compute_domain_shift_metrics(self, source_data, target_data):
+    def compute\_domain\_shift\_metrics(self, source\_data, target\_data):
         """
         Compute comprehensive domain shift metrics
         
         Args:
-            source_data: Source domain data (synthetic)
-            target_data: Target domain data (real)
+            source\_data: Source domain data (synthetic)
+            target\_data: Target domain data (real)
         
         Returns:
             Dictionary of domain shift metrics
         """
         # Extract features
-        with torch.no_grad():
-            source_features = self.feature_extractor(source_data)
-            target_features = self.feature_extractor(target_data)
+        with torch.no\_grad():
+            source\_features = self.feature\_extractor(source\_data)
+            target\_features = self.feature\_extractor(target\_data)
         
         metrics = {}
         
         # Maximum Mean Discrepancy (MMD)
-        metrics['mmd'] = self.compute_mmd(source_features, target_features)
+        metrics['mmd'] = self.compute\_mmd(source\_features, target\_features)
         
         # Wasserstein distance
-        metrics['wasserstein'] = self.compute_wasserstein(
-            source_features, 
-            target_features
+        metrics['wasserstein'] = self.compute\_wasserstein(
+            source\_features, 
+            target\_features
         )
         
         # Correlation alignment (CORAL) distance
-        metrics['coral'] = self.compute_coral(source_features, target_features)
+        metrics['coral'] = self.compute\_coral(source\_features, target\_features)
         
         # Feature distribution statistics
-        metrics['mean_shift'] = torch.norm(
-            source_features.mean(0) - target_features.mean(0)
+        metrics['mean\_shift'] = torch.norm(
+            source\_features.mean(0) - target\_features.mean(0)
         ).item()
         
-        metrics['std_ratio'] = (
-            source_features.std(0) / (target_features.std(0) + 1e-6)
+        metrics['std\_ratio'] = (
+            source\_features.std(0) / (target\_features.std(0) + 1e-6)
         ).mean().item()
         
         # Entropy difference
-        source_entropy = self.compute_entropy(source_features)
-        target_entropy = self.compute_entropy(target_features)
-        metrics['entropy_diff'] = abs(source_entropy - target_entropy)
+        source\_entropy = self.compute\_entropy(source\_features)
+        target\_entropy = self.compute\_entropy(target\_features)
+        metrics['entropy\_diff'] = abs(source\_entropy - target\_entropy)
         
         return metrics
     
-    def compute_mmd(self, x, y, kernel='rbf', gamma=1.0):
+    def compute\_mmd(self, x, y, kernel='rbf', gamma=1.0):
         """
         Compute Maximum Mean Discrepancy
         """
@@ -1267,18 +1267,18 @@ class DomainShiftAnalyzer:
         mmd = xx.mean() + yy.mean() - 2*xy.mean()
         return mmd.item()
     
-    def compute_coral(self, source, target):
+    def compute\_coral(self, source, target):
         """
         Compute CORAL (Correlation Alignment) distance
         """
         # Compute covariance matrices
-        source_cov = torch.matmul(source.t(), source) / source.size(0)
-        target_cov = torch.matmul(target.t(), target) / target.size(0)
+        source\_cov = torch.matmul(source.t(), source) / source.size(0)
+        target\_cov = torch.matmul(target.t(), target) / target.size(0)
         
         # Frobenius norm of covariance difference
-        coral_dist = torch.norm(source_cov - target_cov, 'fro') ** 2
+        coral\_dist = torch.norm(source\_cov - target\_cov, 'fro') ** 2
         
-        return coral_dist.item() / (4 * source.size(1) ** 2)
+        return coral\_dist.item() / (4 * source.size(1) ** 2)
 \end{lstlisting}
 
 \subsection{Zero-Shot Performance Analysis}
@@ -1371,26 +1371,26 @@ Cross-Position & 0.933 & 0.824 & 0.109 \\
 The STEA protocol demonstrates effective Sim2Real transfer:
 
 \begin{lstlisting}[language=Python, caption=Sim2Real Transfer Results]
-sim2real_results = {
-    'synthetic_only': {
-        'f1_score': 0.673,
+sim2real\_results = {
+    'synthetic\_only': {
+        'f1\_score': 0.673,
         'accuracy': 0.681,
-        'calibration_error': 0.142
+        'calibration\_error': 0.142
     },
-    'synthetic_plus_5_percent': {
-        'f1_score': 0.754,
+    'synthetic\_plus\_5\_percent': {
+        'f1\_score': 0.754,
         'accuracy': 0.762,
-        'calibration_error': 0.098
+        'calibration\_error': 0.098
     },
-    'synthetic_plus_20_percent': {
-        'f1_score': 0.821,
+    'synthetic\_plus\_20\_percent': {
+        'f1\_score': 0.821,
         'accuracy': 0.827,
-        'calibration_error': 0.065
+        'calibration\_error': 0.065
     },
-    'real_only': {
-        'f1_score': 0.933,
+    'real\_only': {
+        'f1\_score': 0.933,
         'accuracy': 0.936,
-        'calibration_error': 0.047
+        'calibration\_error': 0.047
     }
 }
 \end{lstlisting}
@@ -1420,14 +1420,14 @@ BiLSTM Baseline & 4.8M & 1.8G & 34ms & 298MB \\
 Model calibration is crucial for trustworthy predictions:
 
 \begin{lstlisting}[language=Python, caption=Calibration Analysis Results]
-calibration_metrics = {
-    'raw_model': {
+calibration\_metrics = {
+    'raw\_model': {
         'ece': 0.0108,  # Expected Calibration Error
         'mce': 0.0234,  # Maximum Calibration Error
         'nll': 0.487,   # Negative Log-Likelihood
         'brier': 0.0923  # Brier Score
     },
-    'calibrated_model': {
+    'calibrated\_model': {
         'ece': 0.0065,  # 40% improvement
         'mce': 0.0156,  # 33% improvement
         'nll': 0.423,   # 13% improvement
@@ -1448,7 +1448,7 @@ Our comprehensive analysis reveals several critical insights:
 
 3. **Sim2Real is Viable**: Achieving 82.1\% F1 with only 20\% real data demonstrates practical viability of Sim2Real transfer.
 
-4. **Cross-Domain Consistency**: The remarkably consistent performance across LOSO and LORO protocols (both 83.0±0.1\%) indicates robust feature learning.
+4. **Cross-Domain Consistency**: The remarkably consistent performance across LOSO and LORO protocols (both 83.0\pm 0.1\%) indicates robust feature learning.
 
 \subsection{Limitations and Future Work}
 
@@ -1492,9 +1492,9 @@ This comprehensive analysis of the Enhanced model for Sim2Real transfer learning
 
 2. **The Enhanced architecture** achieves 94.9\% macro F1 score through synergistic combination of multi-scale CNNs (8.3\% contribution), squeeze-excitation attention (5.7\%), and temporal modeling (4.2%).
 
-3. **Zero-shot and few-shot capabilities** enable practical deployment with minimal labeled data, achieving 82.1\% F1 with only 20\% real data—a mere 1.2\% gap from full supervision.
+3. **Zero-shot and few-shot capabilities** enable practical deployment with minimal labeled data, achieving 82.1\% F1 with only 20\% real data---a mere 1.2\% gap from full supervision.
 
-4. **Cross-domain consistency** is exceptional, with identical 83.0±0.1\% performance across LOSO and LORO protocols, demonstrating robust generalization.
+4. **Cross-domain consistency** is exceptional, with identical 83.0\pm 0.1\% performance across LOSO and LORO protocols, demonstrating robust generalization.
 
 5. **Trustworthy predictions** are ensured through excellent calibration (ECE=0.0065), critical for safety-critical applications.
 
