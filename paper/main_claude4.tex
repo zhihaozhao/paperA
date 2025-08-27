@@ -469,9 +469,9 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\columnwidth]{paper/enhanced/plots/ablation_noise_env.pdf}
-\caption{Environmental Noise Ablation Analysis: Performance heatmap showing macro F1 across varying class overlap (y-axis) and environmental burst noise (x-axis) conditions. The Enhanced model demonstrates superior robustness to nuisance factors, maintaining high performance even under challenging noise conditions that significantly degrade baseline architectures.}
-\label{fig:noise_ablation}
+\includegraphics[width=\columnwidth]{paper/enhanced/plots/ablation_noise_env_claude4.pdf}
+\caption{Advanced Environmental Noise Ablation Analysis: Multi-perspective visualization showing macro F1 performance across varying class overlap and environmental burst conditions. Top row: Enhanced heatmaps with statistical indicators (mean±std). Middle row: Contour landscapes revealing performance gradients. Bottom row: 3D surface plots illustrating robustness characteristics. The Enhanced model demonstrates superior stability compared to CNN baseline, maintaining high performance (>0.85 F1) even under challenging stress conditions with combined class overlap (0.8) and environmental burst (0.2).}
+\label{fig:noise_ablation_advanced}
 \end{figure}
 
 \noindent\textit{Comparative context (PSTA/ESTA):} Prior sequence models such as Conformer~\cite{gulati2020conformer} and TimeSformer/TFT/Informer~\cite{bertasius2021timesformer,lim2021tft,zhou2021informer} focus on temporal attention for accuracy but seldom isolate overlap/noise/drift as disentangled stressors. Our PSTA decouples these nuisance factors and shows the Enhanced model preserves accuracy with lower variance than baselines; ESTA replays with fresh seeds/hardware to confirm that gains are architectural, not incidental—complementary to WiFi domain-generalization efforts~\cite{airfi2022,fewsense2022,rewis2022}.
