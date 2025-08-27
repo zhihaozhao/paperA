@@ -108,6 +108,8 @@ core.*
 paper/*.pdf
 !paper/zero/plots/*.pdf
 !paper/enhanced/plots/*.pdf
+!paper/zero/zeroshot.tex
+!paper/zero/zero_refs.bib
 paper/*.aux
 paper/*.log
 paper/*.out
