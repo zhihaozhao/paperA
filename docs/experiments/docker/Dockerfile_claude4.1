@@ -1,0 +1,119 @@
+# Multi-stage build for WiFi CSI HAR experiments
+# Stage 1: Base image with CUDA support
+FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04 AS base
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV CUDA_HOME=/usr/local/cuda
+ENV PATH=${CUDA_HOME}/bin:${PATH}
+ENV LD_LIBRARY_PATH=${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3.10 \
+    python3-pip \
+    python3-dev \
+    git \
+    wget \
+    curl \
+    vim \
+    build-essential \
+    cmake \
+    libopenblas-dev \
+    liblapack-dev \
+    libhdf5-dev \
+    libffi-dev \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create working directory
+WORKDIR /workspace
+
+# Stage 2: Python dependencies
+FROM base AS dependencies
+
+# Copy requirements file
+COPY requirements_docker_claude4.1.txt /tmp/requirements.txt
+
+# Install Python packages
+RUN pip3 install --upgrade pip setuptools wheel && \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt
+
+# Install PyTorch with CUDA support
+RUN pip3 install torch==2.0.1+cu118 torchvision==0.15.2+cu118 \
+    --index-url https://download.pytorch.org/whl/cu118
+
+# Stage 3: Development environment
+FROM dependencies AS development
+
+# Install development tools
+RUN pip3 install --no-cache-dir \
+    jupyter \
+    jupyterlab \
+    ipython \
+    ipdb \
+    pytest \
+    pytest-cov \
+    black \
+    flake8 \
+    mypy \
+    wandb
+
+# Configure Jupyter
+RUN jupyter notebook --generate-config && \
+    echo "c.NotebookApp.ip = '0.0.0.0'" >> ~/.jupyter/jupyter_notebook_config.py && \
+    echo "c.NotebookApp.allow_root = True" >> ~/.jupyter/jupyter_notebook_config.py
+
+# Stage 4: Production environment
+FROM dependencies AS production
+
+# Copy application code
+COPY docs/experiments /workspace/experiments
+COPY benchmark_data_claude4.1 /workspace/data
+
+# Set permissions
+RUN chmod -R 755 /workspace
+
+# Create non-root user for production
+RUN useradd -m -u 1000 -s /bin/bash researcher && \
+    chown -R researcher:researcher /workspace
+
+USER researcher
+
+# Set Python path
+ENV PYTHONPATH=/workspace:${PYTHONPATH}
+
+# Default command
+CMD ["python3", "/workspace/experiments/main_experiment_claude4.1.py", "--help"]
+
+# Stage 5: Lightweight inference image
+FROM python:3.10-slim AS inference
+
+# Install minimal dependencies
+RUN apt-get update && apt-get install -y \
+    libgomp1 \
+    libopenblas-base \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy only necessary files from production
+COPY --from=production /usr/local/lib/python3.10/dist-packages /usr/local/lib/python3.10/dist-packages
+COPY --from=production /workspace/experiments /workspace/experiments
+
+WORKDIR /workspace
+
+# Install CPU-only PyTorch for inference
+RUN pip3 install --no-cache-dir \
+    torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu \
+    numpy scipy scikit-learn
+
+# Expose ports
+EXPOSE 8888 6006 5000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD python3 -c "import torch; print('OK')" || exit 1
+
+# Entry point for flexibility
+ENTRYPOINT ["python3"]
+CMD ["/workspace/experiments/main_experiment_claude4.1.py"]
