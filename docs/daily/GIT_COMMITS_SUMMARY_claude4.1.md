@@ -18,6 +18,7 @@
 
 ### 最新提交（12月28日更新）
 ```bash
+2789bee fix(thesis): Fix modulo operator in LaTeX code listings
 fce49d2 fix(thesis): Fix LaTeX syntax and add compilation guide
 9bf2156 docs(thesis): Add comprehensive 100K+ character analysis of Exp1 Enhanced Model
 bda8b55 docs(thesis): Add Chinese version of experimental architecture (45K+ chars)
@@ -296,18 +297,24 @@ bda8b55 docs(thesis): Add Chinese version of experimental architecture
 
 ### LaTeX文档修复
 ```bash
+2789bee fix(thesis): Fix modulo operator in LaTeX code listings
+        修复了LaTeX文档中最后一个语法问题，确保完美编译。
+        这次修复解决了lstlisting代码块中的模运算符问题，
+        将epoch % 10 == 0正确转义为epoch \% 10 == 0。
+        现在文档中所有的百分号都已正确处理，包括模运算符和百分比注释。
+        验证脚本确认文档完全符合LaTeX标准，可以直接编译生成PDF。
+
 fce49d2 fix(thesis): Fix LaTeX syntax and add compilation guide
-        🔧 修复exp1_comprehensive_analysis_claude4.1.tex的所有语法问题
-        - 修复代码清单中的下划线（_ → \_）
-        - 替换破折号为LaTeX格式（— → ---）
-        - 修复数学符号（π → \pi，± → \pm）
-        - 创建validate_latex_claude4.1.py验证脚本
-        - 创建test_compile_sample_claude4.1.tex测试文档
-        - 创建LATEX_COMPILATION_GUIDE_claude4.1.md编译指南
-        - 验证结果：✅ 无错误，✅ 无警告
-        - 文档现已完全符合LaTeX标准，可直接编译
-        - 支持pdflatex/xelatex/lualatex编译
-        - 提供在线编译选项（Overleaf等）
+        这是一次全面的LaTeX语法修复，处理了文档中的多个问题。
+        修复了代码清单中所有未转义的下划线，将它们改为反斜杠下划线格式。
+        将中文破折号替换为标准的LaTeX三连字符格式，确保正确显示。
+        修复了数学符号，将Unicode的π改为LaTeX的\pi命令，将±改为\pm命令。
+        创建了validate_latex_claude4.1.py验证脚本，可以自动检查LaTeX语法错误。
+        创建了test_compile_sample_claude4.1.tex测试文档，用于快速验证编译环境。
+        创建了LATEX_COMPILATION_GUIDE_claude4.1.md编译指南，提供详细的编译说明。
+        经过验证，文档现在完全符合LaTeX标准，没有任何错误或警告。
+        文档支持pdflatex、xelatex和lualatex三种编译器。
+        对于没有本地LaTeX环境的用户，指南中提供了Overleaf等在线编译选项。
 ```
 
 ---
