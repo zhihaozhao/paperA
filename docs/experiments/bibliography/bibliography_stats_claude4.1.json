@@ -1,0 +1,28 @@
+{
+  "total_papers": 29,
+  "papers_by_year": {
+    "2024": 1,
+    "2023": 2,
+    "2022": 7,
+    "2021": 4,
+    "2019": 3,
+    "2015": 1,
+    "2005": 3,
+    "2017": 3,
+    "2018": 2,
+    "1994": 1,
+    "2020": 2
+  },
+  "papers_by_category": {
+    "general": 13,
+    "wifi-sensing": 3,
+    "few-shot-learning": 1,
+    "efficiency": 2,
+    "physics-modeling": 3,
+    "trustworthy-ml": 3,
+    "attention-mechanisms": 4
+  },
+  "papers_with_metrics": 1,
+  "papers_with_doi": 1,
+  "papers_with_url": 10
+}
