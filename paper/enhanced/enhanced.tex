@@ -52,9 +52,11 @@ The remainder of this paper is organized as follows. Section II reviews related 
 
 \section{Related Work}
 \subsection{WiFi CSI human sensing}
-Early device-free sensing relied on handcrafted features over amplitude/phase dynamics, Doppler signatures, and path length surrogates. With the advent of public datasets and toolchains, deep learning replaced manual features and improved abstraction capacity. SenseFi~\cite{yang2023sensefi} surveyed 11 models on 4 datasets, reporting wide variation across tasks and protocols and emphasizing the need for systematic evaluation. Subsequent studies layered attention over CNN or RNN backbones to better model temporal dependencies, yet challenges persist: domain shift across subjects/environments, ill-calibrated probabilities, and label scarcity at deployment time.
+Early device-free sensing relied on handcrafted features over amplitude/phase dynamics, Doppler signatures, and path length surrogates. With the advent of public datasets and toolchains, deep learning replaced manual features and improved abstraction capacity. SenseFi~\cite{yang2023sensefi} surveyed 11 models on 4 datasets, reporting wide variation across tasks and protocols and emphasizing the need for systematic evaluation. The benchmark revealed that attention-based architectures consistently outperformed pure convolutional or recurrent baselines, particularly in cross-domain scenarios. For instance, the benchmark showed that models with temporal modeling mechanisms achieved 5-15\% higher macro-F1 scores when evaluated on unseen environments compared to static feature extractors. This performance gap motivated our investigation into combining multiple attention mechanisms—both channel-wise (SE) and temporal—to capture the hierarchical structure inherent in CSI data.
 
-Beyond classification accuracy, deployment requires assurances about stability and uncertainty. Models that superficially perform well in-domain can fail catastrophically when room geometry, hardware placement, or subject cohorts change. This has motivated studies on domain adaptation and generalization that either align features across domains or induce invariances via data augmentation. However, when labels are limited or absent in the target domain, traditional supervised alignment is difficult; this motivates physics-guided synthesis to enrich the source distribution with plausible target-like factors and to test models under controlled stressors.
+Subsequent studies layered attention over CNN or RNN backbones to better model temporal dependencies, yet challenges persist: domain shift across subjects/environments, ill-calibrated probabilities, and label scarcity at deployment time. The domain shift problem is particularly acute in CSI sensing because the wireless channel is fundamentally shaped by environmental geometry, material properties, and transceiver placement. A model trained in one room may encounter entirely different multipath profiles when deployed elsewhere, leading to catastrophic performance degradation. Recent work has attempted to address this through domain adaptation techniques borrowed from computer vision, but these approaches typically require at least some labeled data from the target domain—a luxury rarely available in practical deployments.
+
+Beyond classification accuracy, deployment requires assurances about stability and uncertainty. Models that superficially perform well in-domain can fail catastrophically when room geometry, hardware placement, or subject cohorts change. This has motivated studies on domain adaptation and generalization that either align features across domains or induce invariances via data augmentation. However, when labels are limited or absent in the target domain, traditional supervised alignment is difficult; this motivates physics-guided synthesis to enrich the source distribution with plausible target-like factors and to test models under controlled stressors. The physics-guided approach differs fundamentally from purely data-driven augmentation by incorporating domain knowledge about wireless propagation, human body interactions with electromagnetic waves, and environmental factors that modulate CSI patterns.
 
 \subsection{Attention and channel reweighting}
 Temporal attention has emerged as a robust mechanism for long-range sequence modeling in action recognition and time-series forecasting~\cite{li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer}. In parallel, squeeze-and-excitation (SE)~\cite{se_networks2018} demonstrated that channel-wise reweighting can significantly improve representational quality by highlighting informative channels while suppressing noise. In CSI, subcarriers and antenna combinations respond differently to human motion and multipath; SE is therefore a natural fit, enabling adaptive emphasis aligned with propagation structure.
@@ -67,10 +69,47 @@ Simulation-to-reality transfer is established in robotics via domain randomizati
 In WiFi CSI HAR, calibration has received far less attention than accuracy. Yet mismatched confidence undermines downstream thresholds for safety triggers or fall detection. Temperature scaling is a pragmatic solution that preserves the argmax decision while improving probability quality. We therefore report calibration metrics alongside macro-F1, and we analyze how calibration behaves under synthetic stress and cross-domain shift.
 
 \section{Enhanced Architecture and PINN-like Perspective}
-The Enhanced model composes three components: (i) convolutional layers for local spatiotemporal filtering of CSI tensors, (ii) SE attention to adaptively emphasize subcarrier/antenna channels implicated by multipath structure~\cite{se_networks2018}, and (iii) temporal attention to aggregate long-range activity patterns. While not enforcing PDE constraints explicitly, the design is \emph{PINN-like} in spirit: architectural choices reflect inductive biases anchored in propagation phenomena, which we find to support stable training and calibrated inference.
+The Enhanced model composes three components: (i) convolutional layers for local spatiotemporal filtering of CSI tensors, (ii) SE attention to adaptively emphasize subcarrier/antenna channels implicated by multipath structure~\cite{se_networks2018}, and (iii) temporal attention to aggregate long-range activity patterns. While not enforcing PDE constraints explicitly, the design is \emph{PINN-like} in spirit: architectural choices reflect inductive biases anchored in propagation phenomena, which we find to support stable training and calibrated inference. The physics-informed perspective guides our architectural decisions: CSI measurements fundamentally capture the superposition of multipath components modulated by human motion, suggesting that channel-wise and temporal selectivity mechanisms can learn to isolate activity-relevant signal components from environmental noise and hardware artifacts.
 
-\subsection{Mathematical outline}
-Let $\mathbf{X}\in \mathbb{R}^{T\times F}$ denote a CSI window with $T$ time steps and $F$ frequency/subcarrier features (optionally stacked over antenna pairs). CNN blocks compute local features $\mathbf{H}^{(\ell)} = \mathrm{Conv}^{(\ell)}(\mathbf{H}^{(\ell-1)})$ with residual connections. SE modules perform channel reweighting $\tilde{\mathbf{H}} = \mathbf{H}\odot \sigma(\mathbf{W}_2\,\delta(\mathbf{W}_1\,\mathrm{GAP}(\mathbf{H})))$, where GAP is global average pooling across time, $\delta$ is ReLU, and $\sigma$ is sigmoid. Temporal attention computes weights $\alpha_t \propto \exp(\mathbf{w}^\top \tanh(\mathbf{W}\,\tilde{\mathbf{h}}_t))$ and aggregates $\mathbf{c}=\sum_t \alpha_t\tilde{\mathbf{h}}_t$. A classifier maps $\mathbf{c}$ to logits, which are temperature-scaled at inference: $\mathbf{z}'=\mathbf{z}/T$ with $T>0$ fit on validation to minimize NLL~\cite{calibration_guo2017}.
+\subsection{Mathematical Formulation and Architecture Details}
+Let $\mathbf{X}\in \mathbb{R}^{T\times F\times A}$ denote a CSI window with $T$ time steps, $F$ frequency/subcarrier features, and $A$ antenna pairs. The input tensor captures complex-valued channel measurements typically represented as amplitude and phase or real and imaginary components. Our preprocessing pipeline applies normalization to account for automatic gain control variations and phase sanitization to handle random phase offsets from unsynchronized oscillators.
+
+The convolutional backbone consists of three blocks with increasing channel dimensions $(C_1{=}64, C_2{=}128, C_3{=}256)$. Each block follows the pattern:
+\begin{align}
+\mathbf{H}^{(\ell)} &= \mathrm{Conv2D}_{k\times k}(\mathbf{H}^{(\ell-1)}) \\
+\mathbf{H}^{(\ell)} &= \mathrm{BatchNorm}(\mathbf{H}^{(\ell)}) \\
+\mathbf{H}^{(\ell)} &= \mathrm{ReLU}(\mathbf{H}^{(\ell)}) \\
+\mathbf{H}^{(\ell)} &= \mathbf{H}^{(\ell)} + \mathrm{Conv2D}_{1\times 1}(\mathbf{H}^{(\ell-1)})
+\end{align}
+where the final term implements a residual connection with dimensional alignment via $1{\times}1$ convolution when necessary. The kernel size $k{=}3$ for spatial convolutions, with padding to preserve resolution until pooling layers.
+
+The SE module implements adaptive channel recalibration through a squeeze-and-excitation operation:
+\begin{align}
+\mathbf{z}_c &= \mathrm{GAP}(\mathbf{H}_c) = \frac{1}{T \times S} \sum_{t,s} \mathbf{H}_{c,t,s} \\
+\mathbf{s} &= \sigma(\mathbf{W}_2 \cdot \delta(\mathbf{W}_1 \cdot \mathbf{z})) \\
+\tilde{\mathbf{H}}_c &= s_c \cdot \mathbf{H}_c
+\end{align}
+where $\mathbf{z}_c$ represents the global statistics for channel $c$, $\mathbf{W}_1 \in \mathbb{R}^{C/r \times C}$ implements dimensionality reduction with ratio $r{=}16$, $\mathbf{W}_2 \in \mathbb{R}^{C \times C/r}$ projects back to channel dimension, $\delta$ is ReLU activation, and $\sigma$ is sigmoid to produce channel weights in $(0,1)$. This gating mechanism allows the network to dynamically emphasize informative channels while suppressing noise, with the reduction ratio balancing expressiveness against overfitting.
+
+Temporal attention operates on the sequence of feature vectors after spatial pooling:
+\begin{align}
+e_t &= \mathbf{v}^\top \tanh(\mathbf{W}_a \tilde{\mathbf{h}}_t + \mathbf{b}_a) \\
+\alpha_t &= \frac{\exp(e_t)}{\sum_{t'} \exp(e_{t'})} \\
+\mathbf{c} &= \sum_{t=1}^{T} \alpha_t \tilde{\mathbf{h}}_t
+\end{align}
+where $\mathbf{W}_a \in \mathbb{R}^{d_a \times d_h}$, $\mathbf{v} \in \mathbb{R}^{d_a}$ are learned parameters with attention dimension $d_a{=}128$, and $\tilde{\mathbf{h}}_t \in \mathbb{R}^{d_h}$ represents the feature vector at time $t$ after SE modulation. The context vector $\mathbf{c}$ aggregates temporal information weighted by learned importance scores $\alpha_t$.
+
+The final classifier consists of two fully-connected layers with dropout:
+\begin{align}
+\mathbf{z} = \mathbf{W}_{\text{out}} \cdot \mathrm{Dropout}(p) \cdot \mathrm{ReLU}(\mathbf{W}_{\text{hidden}} \cdot \mathbf{c})
+\end{align}
+where $\mathbf{W}_{\text{hidden}} \in \mathbb{R}^{512 \times d_h}$, $\mathbf{W}_{\text{out}} \in \mathbb{R}^{K \times 512}$ for $K$ activity classes, and dropout probability $p{=}0.5$ during training.
+
+For calibrated inference, we apply temperature scaling to the logits:
+\begin{align}
+\mathbf{p} = \mathrm{softmax}(\mathbf{z}/T_{\text{cal}})
+\end{align}
+where $T_{\text{cal}} > 0$ is optimized on a validation set to minimize negative log-likelihood. This post-hoc calibration preserves the argmax decision while improving probability reliability, crucial for threshold-based decisions in safety-critical applications.
 
 From an optimization perspective, the SE branch implements a channel-wise gating mechanism that modulates the gradient flow through feature maps, biasing learning toward subcarriers that carry discriminative motion-induced perturbations. Attention, in turn, concentrates representational capacity on temporally coherent segments, which can reduce overfitting to transient sensor noise. These mechanisms act as soft, learnable constraints that reflect propagation and activity dynamics without imposing hard physics priors.
 
