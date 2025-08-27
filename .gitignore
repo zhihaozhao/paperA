@@ -106,6 +106,8 @@ core.*
 
 # LaTeX generated files
 paper/*.pdf
+!paper/zero/plots/*.pdf
+!paper/enhanced/plots/*.pdf
 paper/*.aux
 paper/*.log
 paper/*.out
