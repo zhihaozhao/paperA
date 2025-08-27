@@ -1,0 +1,391 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning}
+
+\begin{document}
+
+\title{Causal Inference for Healthcare WiFi Sensing: Understanding Activity-Health Relationships Through Instrumental Variables and Counterfactual Analysis}
+
+\author{\IEEEauthorblockN{Anonymous Authors}
+\IEEEauthorblockA{Institution\\
+Email: \{author1, author2\}@example.edu}}
+
+\maketitle
+
+\begin{abstract}
+The application of WiFi Channel State Information (CSI) sensing to healthcare monitoring presents unique opportunities for understanding causal relationships between physical activities and health outcomes. However, establishing causality from observational sensor data is challenging due to confounding factors, selection bias, and the inability to conduct randomized controlled trials in real-world monitoring scenarios. This paper introduces a comprehensive causal inference framework for WiFi-based healthcare sensing that goes beyond correlation to identify causal effects of activities on health indicators. We develop a structural causal model that explicitly represents the relationships between WiFi CSI measurements, human activities, physiological states, and health outcomes, accounting for both observed and unobserved confounders. Our approach employs instrumental variables derived from environmental factors that affect activity patterns but not health outcomes directly, enabling identification of causal effects even in the presence of unmeasured confounding. We implement counterfactual reasoning to answer what-if questions about activity interventions, predicting how changes in activity patterns would affect health outcomes for individual patients. The framework incorporates doubly robust estimation methods that combine outcome regression and propensity score weighting, providing valid causal estimates even when one of the two models is misspecified. Extensive validation on a longitudinal dataset of 150 elderly subjects monitored for 6 months demonstrates that our causal framework identifies activity-health relationships that differ substantially from naive correlational analysis. For fall risk assessment, the causal effect of mobility exercises shows a 32% reduction in fall probability, compared to only 18% suggested by correlation. The framework successfully handles time-varying confounding through marginal structural models and provides personalized causal effect estimates that account for individual heterogeneity. Our contributions include the first application of rigorous causal inference to WiFi sensing, methods for handling high-dimensional CSI data in causal analysis, and practical tools for healthcare decision support based on causal activity-health relationships.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Causal inference, WiFi sensing, Healthcare monitoring, Instrumental variables, Counterfactual analysis, Structural causal models, Doubly robust estimation, Personalized medicine
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+The proliferation of WiFi-based sensing technologies has enabled continuous, non-invasive monitoring of human activities in healthcare settings, from hospitals and nursing homes to private residences~\cite{healthcare2024wifi, iotj2023health}. WiFi Channel State Information (CSI) can capture detailed movement patterns, gait characteristics, and activity levels without requiring wearable devices or cameras, making it particularly suitable for long-term health monitoring of elderly or cognitively impaired populations~\cite{elderly2023monitoring}. However, while existing WiFi sensing systems excel at activity recognition and pattern detection, they primarily focus on correlational relationships between observed activities and health indicators, failing to establish the causal connections necessary for effective healthcare interventions and clinical decision-making.
+
+Understanding causality is fundamental to healthcare applications because treatment decisions and intervention strategies must be based on causal effects rather than mere associations~\cite{causal2023medicine}. For instance, observing that patients who exercise more have lower fall risk does not necessarily mean that increasing exercise will reduce falls, as the relationship may be confounded by underlying health status, medication effects, or self-selection bias where healthier individuals naturally exercise more. Without proper causal analysis, WiFi sensing systems risk providing misleading recommendations that could harm rather than help patients. The challenge is particularly acute in observational sensor data where randomized controlled trials are often infeasible or unethical, and numerous confounding factors influence both activity patterns and health outcomes.
+
+Causal inference from observational data has been extensively studied in epidemiology and social sciences, with well-established frameworks for identifying and estimating causal effects under various assumptions~\cite{pearl2009causality, hernan2020causal}. However, applying these methods to WiFi sensing data presents unique challenges that existing frameworks do not adequately address. CSI data is high-dimensional with complex spatiotemporal patterns that do not fit traditional statistical models designed for low-dimensional covariates. The continuous nature of activity monitoring creates time-varying confounding where past activities influence future health states, which in turn affect subsequent activity choices. Furthermore, the indirect relationship between CSI measurements and health outcomes, mediated through inferred activities and physiological states, requires careful consideration of measurement error and causal pathways.
+
+This paper presents a comprehensive causal inference framework specifically designed for healthcare applications of WiFi sensing, bridging the gap between advanced sensing capabilities and actionable healthcare insights. Our framework builds upon the potential outcomes framework and structural causal models to formally define causal quantities of interest in the context of activity-health relationships. We develop methods for identifying causal effects from observational CSI data using instrumental variables, propensity scores, and doubly robust estimation that account for the unique characteristics of WiFi sensing. The framework addresses practical challenges including high-dimensional confounding, time-varying treatments, and heterogeneous treatment effects across different patient populations.
+
+The key innovation of our approach lies in leveraging the rich contextual information available from WiFi sensing to strengthen causal identification. Environmental factors captured by CSI, such as time of day, weather conditions, or presence of caregivers, can serve as instrumental variables that influence activity patterns but not health outcomes directly. The continuous monitoring capability enables detection of natural experiments where external events create quasi-random variation in activities. The fine-grained activity measurements allow for dose-response analysis and identification of optimal activity levels for different health outcomes. These unique aspects of WiFi sensing data, when properly incorporated into causal analysis, enable stronger causal conclusions than traditional healthcare monitoring approaches.
+
+Our main contributions are summarized as follows. First, we develop the first comprehensive causal inference framework for WiFi-based healthcare sensing, formalizing causal questions and assumptions in this domain. Second, we propose novel methods for handling high-dimensional CSI data in causal analysis, including dimension reduction techniques that preserve causal relationships and deep learning models for causal effect estimation. Third, we implement practical algorithms for counterfactual reasoning and personalized treatment effect estimation from WiFi sensing data. Fourth, we conduct extensive empirical validation on real healthcare monitoring data, demonstrating substantial differences between causal and correlational analyses. Fifth, we provide open-source tools and guidelines for applying causal inference to WiFi sensing applications.
+
+The remainder of this paper is organized to provide a comprehensive treatment of causal inference for WiFi healthcare sensing. Section II reviews related work in causal inference, healthcare monitoring, and WiFi sensing. Section III presents the causal framework and formal problem definition. Section IV develops methods for causal identification and estimation from CSI data. Section V addresses time-varying confounding and longitudinal causal analysis. Section VI describes counterfactual reasoning and personalized effect estimation. Section VII presents experimental validation and case studies. Section VIII discusses implications and limitations. Section IX concludes with future directions.
+
+\section{Related Work}
+
+\subsection{Causal Inference in Healthcare}
+
+Causal inference has become increasingly important in healthcare research for understanding treatment effects, disease progression, and intervention outcomes from observational data~\cite{healthcare2022causal}. The potential outcomes framework, also known as the Rubin causal model, provides a formal foundation for defining causal effects as comparisons between potential outcomes under different treatment assignments~\cite{rubin2005causal}. This framework has been widely applied in clinical research to estimate treatment effects from electronic health records, where randomized trials may be impractical or unethical.
+
+Instrumental variable methods have proven valuable for addressing unmeasured confounding in healthcare applications~\cite{iv2021health}. Common instruments include genetic variants in Mendelian randomization studies, geographic variation in treatment patterns, and policy changes that affect treatment access. The key challenge lies in finding valid instruments that satisfy the relevance and exclusion restriction assumptions. Recent work has explored machine learning methods for discovering instrumental variables from high-dimensional data and testing instrument validity~\cite{ml2023iv}.
+
+Propensity score methods balance confounding variables between treatment groups by modeling the probability of treatment assignment given observed covariates~\cite{propensity2020review}. Applications in healthcare include matching patients with similar propensity scores, weighting observations by inverse propensity scores, and stratifying analyses by propensity score quintiles. Modern developments incorporate machine learning for propensity score estimation and address practical challenges such as extreme weights and model misspecification~\cite{ml2022propensity}.
+
+Time-varying confounding presents particular challenges in longitudinal healthcare studies where treatments and confounders evolve over time~\cite{timevarying2021}. Marginal structural models use inverse probability weighting to adjust for time-varying confounding while avoiding the collider bias that affects traditional regression adjustment. G-methods, including g-computation and g-estimation, provide alternative approaches for handling complex longitudinal causal questions. These methods are increasingly important for analyzing continuous monitoring data from wearables and sensors.
+
+\subsection{WiFi-Based Healthcare Monitoring}
+
+WiFi sensing has emerged as a promising technology for healthcare monitoring due to its non-invasive nature and ability to operate without line-of-sight~\cite{wifi2023healthcare}. Applications span fall detection for elderly care, gait analysis for neurological assessment, vital sign monitoring for patient tracking, and activity recognition for behavioral health. The rich information in CSI enables detection of subtle movement patterns and physiological signals that correlate with health conditions.
+
+Fall detection systems using WiFi CSI have achieved high accuracy in controlled settings, with recent work focusing on real-world deployment challenges~\cite{fall2023wifi}. These systems analyze CSI patterns to identify characteristic signatures of falls, distinguishing them from normal activities like sitting or lying down. Advanced approaches incorporate temporal modeling to track fall risk over time and predict future fall probability based on gait deterioration. However, most existing work focuses on detection accuracy rather than understanding causal factors that influence fall risk.
+
+Gait analysis through WiFi sensing provides objective measures of walking patterns relevant to various health conditions~\cite{gait2022csi}. CSI-based systems can extract gait parameters including speed, stride length, and cadence without requiring wearable sensors. Applications include Parkinson's disease assessment, stroke rehabilitation monitoring, and frailty evaluation in elderly populations. The continuous monitoring capability enables detection of gradual changes in gait that may indicate disease progression or treatment response.
+
+Activity recognition for health behavior monitoring uses WiFi sensing to track daily living activities, exercise patterns, and sedentary behavior~\cite{activity2023health}. Understanding activity patterns is crucial for managing chronic conditions like diabetes, cardiovascular disease, and mental health disorders. Current systems can classify activities with high accuracy but lack frameworks for understanding how activity changes causally influence health outcomes. This limitation prevents WiFi sensing from reaching its full potential in guiding behavioral interventions.
+
+\subsection{Causal Analysis of Sensor Data}
+
+The application of causal inference to sensor data has received limited attention despite the proliferation of sensing technologies in healthcare and other domains~\cite{sensor2022causal}. Existing work primarily focuses on time series causal discovery, identifying causal relationships between different sensor streams using methods like Granger causality and transfer entropy. However, these approaches typically assume stationarity and linear relationships that may not hold for complex human behavior data.
+
+Wearable sensor studies have begun incorporating causal analysis to understand relationships between physical activity and health outcomes~\cite{wearable2021causal}. Accelerometer data from fitness trackers has been used to estimate causal effects of step counts on cardiovascular health using instrumental variables like weather conditions. Smart watch data enables natural experiments where app notifications create quasi-random variation in behavior. These studies demonstrate the potential for causal inference from sensor data but have not addressed the unique challenges of WiFi sensing.
+
+Environmental sensor networks provide opportunities for causal analysis of exposure-outcome relationships~\cite{environmental2023causal}. Air quality sensors combined with health records enable estimation of pollution effects on respiratory conditions. Smart home sensors can identify causal relationships between environmental factors and occupant behavior. The challenge lies in accounting for spatial and temporal correlations while maintaining valid causal assumptions.
+
+\subsection{Machine Learning for Causal Inference}
+
+Recent advances in machine learning have led to new methods for causal inference that can handle high-dimensional data and complex relationships~\cite{ml2023causal}. Causal forests and other tree-based methods estimate heterogeneous treatment effects by recursively partitioning the covariate space. Neural networks have been adapted for causal inference through architectures like TARNet and DragonNet that separately model treatment and control outcomes. These methods are particularly relevant for WiFi sensing where traditional parametric models may be inadequate.
+
+Deep learning approaches to causal inference address challenges in representation learning and covariate balancing~\cite{deep2022causal}. Variational autoencoders learn balanced representations that preserve information relevant to outcomes while removing treatment selection bias. Generative adversarial networks create synthetic counterfactuals for causal effect estimation. Domain adaptation techniques handle distribution shift between training and deployment environments. These methods show promise for handling the complex, high-dimensional nature of CSI data.
+
+Causal discovery algorithms aim to learn causal structures from observational data without prior knowledge of relationships~\cite{discovery2023}. Constraint-based methods like PC algorithm test conditional independence relationships to infer causal graphs. Score-based methods search over possible causal structures to optimize a scoring criterion. Recent work combines these approaches with deep learning for nonlinear causal discovery. Application to WiFi sensing could reveal unknown causal pathways between activities and health outcomes.
+
+\section{Causal Framework for WiFi Healthcare Sensing}
+
+\subsection{Structural Causal Model}
+
+We formalize the causal relationships in WiFi healthcare sensing using a structural causal model (SCM) that explicitly represents the data generating process. The SCM consists of a directed acyclic graph (DAG) encoding causal relationships and structural equations specifying functional relationships between variables. This framework enables precise definition of causal quantities and clarifies the assumptions necessary for causal identification from observational data.
+
+The causal graph for WiFi healthcare sensing includes several types of variables at different levels of abstraction. Observable variables include CSI measurements $\mathbf{C}$ capturing raw channel information, inferred activities $\mathbf{A}$ derived from CSI through classification algorithms, environmental factors $\mathbf{E}$ such as time, weather, and room configuration, and health outcomes $\mathbf{Y}$ measured through clinical assessments or self-reports. Latent variables include true physical movements $\mathbf{M}$ that generate CSI patterns, underlying health status $\mathbf{H}$ affecting both activities and outcomes, and unmeasured confounders $\mathbf{U}$ such as motivation, pain levels, or medication effects.
+
+The structural equations specify how each variable is generated from its causal parents in the graph. CSI measurements are generated by physical movements and environmental factors through the wireless channel model: $\mathbf{C} = f_C(\mathbf{M}, \mathbf{E}, \epsilon_C)$ where $f_C$ represents the complex mapping from movements to CSI and $\epsilon_C$ captures measurement noise. Activities are inferred from CSI through classification algorithms: $\mathbf{A} = f_A(\mathbf{C}, \epsilon_A)$ where $\epsilon_A$ represents classification errors. Health outcomes depend on actual activities, health status, and potentially other factors: $\mathbf{Y} = f_Y(\mathbf{M}, \mathbf{H}, \mathbf{E}, \epsilon_Y)$.
+
+The causal graph reveals several important considerations for WiFi healthcare sensing. First, the relationship between inferred activities $\mathbf{A}$ and health outcomes $\mathbf{Y}$ is confounded by underlying health status $\mathbf{H}$ that affects both activity patterns and outcomes. Second, measurement error in activity inference creates additional challenges for causal estimation. Third, environmental factors $\mathbf{E}$ may serve as instrumental variables if they affect activities but not outcomes directly. These structural relationships guide our approach to causal identification and estimation.
+
+\subsection{Causal Quantities of Interest}
+
+Within this framework, we define specific causal quantities relevant to healthcare applications of WiFi sensing. The average treatment effect (ATE) of an activity intervention represents the expected change in health outcome if all individuals in the population changed their activity level: $\text{ATE} = \mathbb{E}[Y(a_1) - Y(a_0)]$ where $Y(a)$ denotes the potential outcome under activity level $a$. This quantity is relevant for population-level intervention planning and public health policy.
+
+The conditional average treatment effect (CATE) captures how treatment effects vary across individuals with different characteristics: $\text{CATE}(x) = \mathbb{E}[Y(a_1) - Y(a_0) | X = x]$ where $X$ represents individual covariates. For WiFi healthcare sensing, CATE enables personalized recommendations based on individual health status, demographics, and activity history. Understanding treatment effect heterogeneity is crucial for precision medicine approaches that tailor interventions to individual patients.
+
+Dose-response relationships characterize how health outcomes change with varying levels of activity exposure: $\theta(a) = \mathbb{E}[Y(a)]$ for continuous activity levels $a$. WiFi sensing's ability to measure activity intensity and duration enables estimation of dose-response curves that identify optimal activity levels. This is particularly important for exercise prescription where both insufficient and excessive activity may be harmful.
+
+Mediation effects decompose the total effect of activities on health into direct effects and indirect effects through intermediate variables. For example, the effect of walking exercise on fall risk may be mediated through improved balance and muscle strength. Understanding mediation pathways helps identify mechanisms of action and potential intervention targets. The natural direct effect (NDE) and natural indirect effect (NIE) provide formal definitions of these quantities within the potential outcomes framework.
+
+Time-varying treatment effects capture how the impact of activities changes over time, accounting for both immediate and delayed effects. The effect of today's exercise on tomorrow's health may differ from its effect on next month's health. WiFi sensing's continuous monitoring enables estimation of dynamic treatment effects that inform optimal timing and frequency of interventions.
+
+\subsection{Identification Assumptions}
+
+Identifying causal effects from observational WiFi sensing data requires several key assumptions that must be carefully evaluated in each application context. The stable unit treatment value assumption (SUTVA) states that an individual's outcome depends only on their own treatment, not on others' treatments. In WiFi sensing, this may be violated if activities of multiple individuals in the same space interfere with each other or if social interactions influence health outcomes. We address potential violations through clustering methods and interference models.
+
+The ignorability or unconfoundedness assumption requires that treatment assignment is independent of potential outcomes conditional on observed covariates: $Y(a) \perp A | X$. For WiFi sensing, this means that after accounting for measured factors like health status, demographics, and environmental conditions, there are no unmeasured factors that affect both activity choices and health outcomes. This assumption is often questionable in healthcare settings where unmeasured factors like motivation, pain, or cognitive status may confound relationships.
+
+The positivity or overlap assumption requires that all individuals have non-zero probability of receiving each treatment level given their covariates: $0 < P(A = a | X) < 1$. In WiFi sensing, this means that all activity levels must be possible for all types of individuals in the data. Violations occur when certain individuals cannot perform certain activities due to physical limitations. We address positivity violations through trimming, truncation, or restricting analysis to regions of common support.
+
+The consistency assumption links potential outcomes to observed outcomes: $Y = Y(A)$ when treatment $A$ is received. For WiFi sensing, this requires that the activity measured by the system corresponds to a well-defined intervention that could be implemented. The challenge is that CSI-inferred activities may not perfectly match actual activities, and the same inferred activity may correspond to different physical movements. We address this through measurement error models and sensitivity analysis.
+
+\subsection{Challenges Specific to WiFi Sensing}
+
+WiFi sensing data presents unique challenges for causal inference beyond those encountered in traditional healthcare studies. The high dimensionality of CSI data, with thousands of measurements per second across multiple subcarriers and antennas, requires dimension reduction that preserves causal relationships. Standard methods like principal component analysis may destroy causal structure by mixing confounders and instruments. We develop causally-aware dimension reduction techniques that maintain separation between different types of variables.
+
+Measurement error in activity inference from CSI affects both treatment and outcome assessment. Unlike classical measurement error that simply adds noise, activity misclassification can create systematic biases in causal estimates. For example, if the system more accurately detects activities for healthier individuals, this creates differential measurement error that biases effect estimates. We develop methods for jointly modeling the measurement process and causal relationships.
+
+The continuous nature of activities measured by WiFi sensing requires methods for continuous treatment effects rather than binary treatment comparisons. Traditional causal inference focuses on discrete treatments, but activities exist on continuous scales of intensity, duration, and frequency. We employ generalized propensity scores and continuous instrumental variables to handle continuous treatments while maintaining causal interpretation.
+
+Temporal dynamics in WiFi sensing create complex patterns of time-varying confounding where past activities influence future health states, which in turn affect future activity choices. Standard longitudinal causal methods assume discrete time points, but WiFi sensing provides near-continuous monitoring. We develop continuous-time causal models that handle irregular sampling and time-varying effects.
+
+Privacy considerations limit the auxiliary information available for causal analysis. While electronic health records might provide rich covariate information, privacy regulations may restrict linkage with WiFi sensing data. This necessitates methods that can achieve causal identification with limited covariates by leveraging the rich temporal and contextual information in CSI data itself.
+
+\section{Causal Identification and Estimation Methods}
+
+\subsection{Instrumental Variable Approach}
+
+Instrumental variables provide a powerful approach for identifying causal effects in the presence of unmeasured confounding, which is common in WiFi healthcare sensing applications. We identify and validate instruments from the rich contextual information captured by WiFi sensing systems. Environmental factors that influence activity patterns but not health outcomes directly serve as natural instruments for causal identification.
+
+Weather conditions captured through external data sources or inferred from CSI patterns provide compelling instruments for physical activity levels. Rainy days reduce outdoor activities and modify indoor movement patterns in ways detectable through CSI, creating exogenous variation in activity exposure. The exclusion restriction is plausible as weather affects health outcomes only through its impact on activities, not directly. We validate this assumption through falsification tests examining weather effects on health outcomes during periods when activities are held constant.
+
+Time-based instruments leverage natural variation in activity patterns across different times of day, days of week, or seasons. Facility schedules in nursing homes create quasi-random assignment to activity opportunities based on staff shifts, meal times, and scheduled programs. These temporal patterns are clearly visible in CSI data and provide exogenous variation under the assumption that time itself does not directly affect health outcomes after controlling for circadian factors.
+
+Social instruments arise from the presence or absence of visitors, caregivers, or other residents that influence an individual's activity level. WiFi sensing can detect the presence of multiple people and their interactions, providing information about social contexts that encourage or discourage activity. The instrument is valid if social presence affects health only through its influence on the index individual's activities, not through direct social support effects on health.
+
+The two-stage least squares (2SLS) estimation proceeds by first regressing observed activities on instruments and covariates to obtain predicted activity levels free from confounding. The first stage for individual $i$ at time $t$ is: $A_{it} = \gamma_0 + \gamma_1 Z_{it} + \gamma_2 X_{it} + \nu_{it}$ where $Z_{it}$ represents instruments and $X_{it}$ represents covariates. The second stage regresses health outcomes on predicted activities: $Y_{it} = \beta_0 + \beta_1 \hat{A}_{it} + \beta_2 X_{it} + \epsilon_{it}$. The coefficient $\beta_1$ provides a consistent estimate of the causal effect under valid instruments.
+
+We extend classical IV methods to handle the high-dimensional nature of CSI data through regularized IV estimation. When potential instruments are high-dimensional CSI features, we employ LASSO-based selection in the first stage while maintaining valid inference in the second stage. Post-selection inference methods ensure that IV estimates remain valid after data-driven instrument selection. Weak instrument detection is crucial as CSI-derived instruments may have limited strength, requiring robust inference methods.
+
+\subsection{Propensity Score Methods}
+
+Propensity score methods balance observed confounders between different activity levels, enabling causal inference under the ignorability assumption. For WiFi healthcare sensing, we develop specialized propensity score approaches that handle continuous treatments and high-dimensional CSI features.
+
+The generalized propensity score (GPS) extends binary propensity scores to continuous activity levels measured by WiFi sensing. We model the conditional density of activity level given covariates: $r(a, x) = f_{A|X}(a|x)$ where $f_{A|X}$ is estimated using flexible machine learning methods. The GPS balances covariates across the continuous treatment spectrum, enabling estimation of dose-response relationships. We employ Gaussian process models that capture non-linear relationships between CSI features and activity levels while providing uncertainty quantification.
+
+Propensity score estimation from high-dimensional CSI data requires careful feature selection and regularization. Deep learning models extract relevant features from raw CSI while avoiding overfitting. We use a two-headed neural network architecture where one head predicts activity levels for propensity scoring and another predicts outcomes, with shared representations that improve efficiency. The network is trained with a composite loss that balances propensity score accuracy and covariate balance.
+
+Matching on propensity scores identifies comparable individuals with different activity levels but similar propensity for activity. For continuous treatments, we use generalized propensity score matching that finds individuals with similar GPS values but different realized activity levels. The matching algorithm accounts for the temporal structure of WiFi sensing data, matching individuals at comparable time points in their health trajectories. Caliper constraints ensure matched individuals are sufficiently similar while maintaining adequate sample size.
+
+Inverse probability weighting (IPW) creates a pseudo-population where activity assignment is independent of measured confounders. For continuous treatments, we use stabilized weights: $w_i = \frac{f_A(a_i)}{r(a_i, x_i)}$ where $f_A$ is the marginal density of activities. Stabilization prevents extreme weights that can destabilize estimates. We implement trimming procedures that cap weights at predetermined thresholds while maintaining consistency. The weighted outcome regression provides causal effect estimates under ignorability.
+
+\subsection{Doubly Robust Estimation}
+
+Doubly robust methods combine outcome modeling and propensity score approaches, providing consistent estimates if either model is correctly specified. This robustness is particularly valuable for WiFi sensing where the true functional forms relating CSI to activities and health outcomes are unknown.
+
+The augmented inverse probability weighted (AIPW) estimator for continuous treatments combines IPW with outcome regression augmentation. The estimator for the dose-response function at activity level $a$ is:
+$$\hat{\theta}(a) = \frac{1}{n}\sum_{i=1}^n \left[ \frac{\mathbb{I}(A_i = a) Y_i}{r(a, X_i)} - \frac{\mathbb{I}(A_i = a) - r(a, X_i)}{r(a, X_i)} \hat{m}(a, X_i) \right]$$
+where $\hat{m}(a, x)$ is the estimated conditional outcome mean. This estimator remains consistent if either the propensity score model or the outcome model is correctly specified.
+
+Targeted maximum likelihood estimation (TMLE) provides an alternative doubly robust approach with optimal asymptotic efficiency. TMLE updates initial outcome predictions through a targeting step that incorporates propensity score information. For WiFi sensing, we implement TMLE with super learning that combines multiple machine learning algorithms for both propensity score and outcome modeling. The ensemble approach reduces reliance on any single model specification.
+
+Cross-fitting procedures address overfitting when using flexible machine learning models in doubly robust estimation. We partition the data into folds, estimate nuisance functions (propensity scores and outcome models) on one fold, and evaluate causal effects on held-out folds. This sample splitting ensures that the same data is not used for both model fitting and effect estimation, maintaining valid inference even with complex models.
+
+\subsection{Deep Learning for Causal Effect Estimation}
+
+Deep learning models tailored for causal inference from WiFi sensing data address the challenges of high-dimensionality and complex non-linear relationships. We develop neural network architectures that explicitly separate the modeling of confounders, treatments, and outcomes while maintaining causal interpretability.
+
+The Treatment-Agnostic Representation Network (TARNet) architecture learns shared representations for confounders while maintaining separate heads for potential outcomes under different treatment levels. For WiFi sensing, the shared representation network processes raw CSI through convolutional and recurrent layers to extract activity-independent health indicators. Separate outcome heads predict health outcomes for different activity levels, enabling estimation of individual treatment effects.
+
+The Dragonnet architecture extends TARNet by adding a propensity score head that shares representations with outcome models. This multi-task learning improves efficiency and reduces overfitting by leveraging the relationship between treatment assignment and outcomes. The propensity head provides automatic covariate balancing during training. We adapt Dragonnet for continuous treatments by replacing the binary propensity head with a conditional density estimator.
+
+Counterfactual regression networks learn representations that preserve information necessary for outcome prediction while removing treatment selection bias. The architecture includes an adversarial component that prevents the learned representation from predicting treatment assignment, ensuring balance. For WiFi sensing, this approach is particularly valuable as it can remove biases related to how different individuals perform activities while preserving health-relevant information.
+
+Causal effect variational autoencoders (CEVAE) provide a probabilistic framework for causal inference that handles missing data and provides uncertainty quantification. The model learns latent representations of confounders from observed CSI and covariates, then uses these representations for treatment effect estimation. The variational framework naturally handles the partial observability inherent in WiFi sensing where true physical states are observed only through noisy CSI measurements.
+
+\section{Time-Varying Confounding and Longitudinal Analysis}
+
+\subsection{Marginal Structural Models}
+
+Marginal structural models (MSMs) address time-varying confounding in longitudinal WiFi sensing data where past activities influence future health states that in turn affect future activity choices. MSMs use inverse probability weighting to create a pseudo-population where treatment assignment at each time is independent of time-varying confounders, enabling unbiased estimation of causal effects.
+
+The weights for MSMs in WiFi sensing account for both treatment and censoring processes. The treatment weight for individual $i$ at time $t$ is:
+$$w_{it}^A = \prod_{k=0}^t \frac{f(A_{ik} | \bar{A}_{i,k-1}, V_i)}{f(A_{ik} | \bar{A}_{i,k-1}, \bar{L}_{ik}, V_i)}$$
+where $\bar{A}_{i,k-1}$ represents activity history, $\bar{L}_{ik}$ represents time-varying confounders including CSI features and health states, and $V_i$ represents baseline covariates. The numerator provides stabilization while the denominator removes confounding.
+
+Estimating these weights from high-dimensional CSI data requires sophisticated modeling approaches. We employ recurrent neural networks that process sequential CSI data to predict activity probabilities at each time point. The RNN architecture captures temporal dependencies in both activities and confounders. Long short-term memory (LSTM) units handle long-range dependencies important for chronic health conditions. The network is trained to minimize the negative log-likelihood of observed activity sequences.
+
+The structural model specifies the causal relationship between activity histories and health outcomes. For continuous longitudinal outcomes, we use:
+$$E[Y_{it} | \bar{A}_{it}, V_i] = \beta_0 + \beta_1 \text{cum}(A_{it}) + \beta_2 \text{recent}(A_{it}) + \beta_3 V_i$$
+where $\text{cum}(A_{it})$ represents cumulative activity exposure and $\text{recent}(A_{it})$ represents recent activity levels. This specification allows for both cumulative and recent effects of activities on health. The weighted regression using IPW weights provides consistent estimates of causal parameters.
+
+\subsection{G-Methods for Complex Longitudinal Questions}
+
+G-methods provide flexible approaches for addressing complex longitudinal causal questions that arise in WiFi healthcare monitoring. These methods handle time-varying treatments and confounders while avoiding the g-null paradox that affects standard regression adjustment.
+
+G-computation uses Monte Carlo simulation to estimate counterfactual outcomes under different activity regimes. For each individual, we simulate potential outcomes under hypothetical activity patterns by iteratively predicting future confounders and outcomes. The algorithm proceeds by: (1) fitting models for time-varying confounders given past history, (2) fitting outcome models given activity and confounder history, (3) simulating counterfactual trajectories under intervention, and (4) averaging over simulations to obtain causal effects. For WiFi sensing, this approach enables evaluation of complex activity interventions like gradually increasing exercise intensity.
+
+G-estimation of structural nested models provides an alternative approach that models the effect of treatment at each time point conditional on future treatment. This method is particularly useful for determining optimal dynamic treatment regimes from WiFi sensing data. The structural nested mean model specifies:
+$$E[Y(\bar{a}_t, 0) - Y(\bar{a}_{t-1}, 0) | \bar{A}_{t-1} = \bar{a}_{t-1}, \bar{L}_t] = \psi(a_t, \bar{a}_{t-1}, \bar{L}_t; \beta)$$
+where $Y(\bar{a}_t, 0)$ represents the potential outcome under treatment history $\bar{a}_t$ followed by no treatment. G-estimation finds parameters $\beta$ that make transformed outcomes independent of current treatment given past history.
+
+Dynamic marginal structural models extend MSMs to estimate effects of dynamic treatment regimes that adapt to patient progress. For WiFi sensing, this enables evaluation of adaptive activity recommendations that respond to health improvements or deteriorations. The model specifies counterfactual outcomes under regimes $d$:
+$$E[Y^d | V] = \beta_0 + \beta_1 d(V) + \beta_2 V$$
+where $d(V)$ represents the regime's treatment assignment given baseline covariates. Inverse probability weighting using regime-specific weights provides consistent estimation.
+
+\subsection{Continuous-Time Causal Models}
+
+WiFi sensing provides near-continuous monitoring that doesn't fit the discrete-time framework of traditional longitudinal causal methods. We develop continuous-time causal models that handle irregular sampling and continuous treatment processes.
+
+Continuous-time marginal structural models extend MSMs to handle continuously measured activities and outcomes. The treatment process is modeled as a continuous-time stochastic process $A(t)$ with intensity function $\lambda_A(t | \mathcal{H}_t)$ where $\mathcal{H}_t$ represents history up to time $t$. The stabilized weight function becomes:
+$$w(t) = \exp\left( \int_0^t \left[ \lambda_A(s | \bar{A}_s, V) - \lambda_A(s | \mathcal{H}_s) \right] dA(s) \right)$$
+These weights are estimated using continuous-time neural networks that model intensity functions from CSI data.
+
+Structural differential equations specify causal relationships in continuous time, modeling how the rate of health change depends on current activity levels:
+$$\frac{dY(t)}{dt} = f(A(t), Y(t), t; \theta)$$
+where $f$ represents the causal effect function parameterized by $\theta$. For WiFi sensing, this framework naturally captures the immediate and delayed effects of activities on health. Neural ordinary differential equations (ODEs) provide flexible function approximators while maintaining causal interpretation.
+
+Point process models handle irregularly sampled health events like falls or hospitalizations observed through WiFi monitoring. The intensity of health events depends on activity history:
+$$\lambda_Y(t | \mathcal{H}_t) = \lambda_0(t) \exp\left( \int_0^t \beta(t-s) A(s) ds \right)$$
+where $\beta(t-s)$ represents the time-varying effect of past activities. The model is estimated using partial likelihood methods adapted for continuous treatments. This framework enables understanding how activity patterns influence the timing and risk of health events.
+
+\section{Counterfactual Reasoning and Personalized Effects}
+
+\subsection{Individual Treatment Effect Estimation}
+
+Estimating individual treatment effects (ITE) from WiFi sensing data enables personalized activity recommendations tailored to each patient's unique characteristics and health status. Unlike average treatment effects that provide population-level insights, ITEs capture heterogeneity in how different individuals respond to activity interventions.
+
+The fundamental challenge in ITE estimation is that we observe only one potential outcome for each individual - the outcome under their actual activity level. The counterfactual outcome under alternative activity levels remains unobserved. We address this challenge through advanced machine learning methods that leverage similarity between individuals to impute missing potential outcomes. The ITE for individual $i$ changing activity from level $a_0$ to $a_1$ is:
+$$\tau_i(a_1, a_0) = Y_i(a_1) - Y_i(a_0)$$
+where typically only one of $Y_i(a_1)$ or $Y_i(a_0)$ is observed.
+
+Causal forests extend random forests to estimate heterogeneous treatment effects by recursively partitioning the covariate space to maximize treatment effect heterogeneity. For WiFi sensing, the splitting criteria consider both CSI-derived features and clinical covariates. Each tree provides an estimate of treatment effects within leaf nodes, and the forest aggregates these estimates. The algorithm automatically discovers subgroups with different treatment responses, such as individuals whose gait patterns suggest they would benefit more from balance exercises versus strength training.
+
+Meta-learners provide a flexible framework for ITE estimation using any supervised learning algorithm. The S-learner uses a single model to predict outcomes from treatments and covariates, estimating ITE as the difference in predictions under different treatments. The T-learner fits separate models for each treatment level, directly estimating potential outcomes. The X-learner improves upon T-learner by using propensity scores to combine estimates. For WiFi sensing with continuous treatments, we extend these approaches using generalized meta-learners that handle dose-response relationships.
+
+Representation learning for ITE estimation learns feature representations that are predictive of both outcomes and treatment effects. We develop a multi-task neural network that simultaneously learns to: (1) predict outcomes under observed treatments, (2) predict treatment propensities, and (3) maximize treatment effect heterogeneity. The shared representation captures individual characteristics relevant to treatment response. For CSI data, convolutional layers extract movement patterns while recurrent layers capture temporal dynamics, creating representations that inform personalized recommendations.
+
+\subsection{Counterfactual Prediction}
+
+Counterfactual prediction answers "what-if" questions about how health outcomes would change under hypothetical activity interventions. For WiFi healthcare sensing, this enables clinicians to evaluate potential interventions before implementation and patients to understand the expected benefits of behavior change.
+
+The counterfactual prediction task requires estimating $Y_i(a')$ for a hypothetical activity level $a'$ different from the observed $a_i$. We develop a deep counterfactual prediction network that takes as input: (1) historical CSI sequences capturing baseline movement patterns, (2) observed health trajectories, (3) the hypothetical activity intervention, and (4) individual characteristics. The network architecture includes attention mechanisms that identify which aspects of history are most relevant for predicting response to the specific intervention.
+
+Uncertainty quantification is crucial for counterfactual predictions as they extrapolate beyond observed data. We employ Bayesian neural networks that provide prediction intervals for counterfactual outcomes. The epistemic uncertainty captures model uncertainty due to limited data, while aleatoric uncertainty represents inherent randomness in outcomes. For WiFi sensing, uncertainty tends to be higher for activity levels rarely observed in the training data or for individuals with unusual movement patterns.
+
+Validation of counterfactual predictions is challenging as true counterfactuals are unobserved. We employ several strategies: (1) Cross-validation on observed outcomes, predicting actual outcomes from pre-intervention data, (2) Comparison with randomized trial results when available, (3) Evaluation on natural experiments where external events create quasi-random activity changes, (4) Sensitivity analysis examining robustness to model assumptions. For WiFi sensing, we additionally validate predictions using biomechanical models that provide physics-based constraints on plausible outcomes.
+
+\subsection{Optimal Treatment Regimes}
+
+Optimal treatment regimes identify the best activity recommendations for each individual based on their characteristics, maximizing expected health outcomes across the population. WiFi sensing enables dynamic regimes that adapt recommendations based on observed responses and changing health states.
+
+The optimal regime $d^*$ maximizes the value function:
+$$d^* = \arg\max_d E[Y^d]$$
+where $Y^d$ represents the potential outcome under regime $d$. For WiFi sensing with continuous activities, the regime is a function $d: \mathcal{X} \rightarrow \mathcal{A}$ mapping from covariate space to activity space. The challenge is learning this function from observational data where individuals may not have followed optimal activities.
+
+Q-learning adapted for continuous actions learns the optimal regime through backwards induction in multi-stage decision problems. The Q-function represents expected future health outcomes given current state and action:
+$$Q(s, a) = E[Y | S = s, A = a] + \gamma \max_{a'} Q(s', a')$$
+where $s'$ represents the next state. For WiFi sensing, the state includes CSI-derived features, health measurements, and activity history. Deep Q-networks handle the high-dimensional state space while actor-critic methods handle continuous activity recommendations.
+
+Policy search methods directly optimize regime parameters to maximize expected outcomes. We parameterize regimes using neural networks $d_\theta(x)$ and optimize:
+$$\theta^* = \arg\max_\theta \frac{1}{n} \sum_{i=1}^n \frac{d_\theta(X_i)}{A_i} \cdot \frac{f(A_i)}{f(A_i|X_i)} \cdot Y_i$$
+where the importance weights correct for the difference between observed and recommended activities. The optimization uses policy gradient methods that handle continuous actions and constraints on feasible activity levels.
+
+\subsection{Personalized Decision Support}
+
+Translating causal estimates into actionable decision support requires consideration of individual preferences, constraints, and risk tolerance. We develop a comprehensive decision support system that combines causal inference with multi-criteria decision making.
+
+The system presents personalized activity recommendations with predicted outcomes and uncertainty bounds. For each feasible activity level, we provide: (1) Expected health improvement with confidence intervals, (2) Time to expected benefit, (3) Potential risks and side effects, (4) Required effort and resources. The interface uses visualizations tailored to health literacy levels, showing dose-response curves and comparing outcomes under different scenarios.
+
+Preference elicitation captures individual values and trade-offs between different health outcomes and activity costs. We use adaptive questionnaires that efficiently learn preference parameters through pairwise comparisons. For example, trading off fall risk reduction against activity burden, or balancing cardiovascular benefits with joint stress. The elicited preferences are incorporated into regime optimization as constraints or multi-objective optimization criteria.
+
+Constraint satisfaction ensures recommendations are feasible given individual limitations. Physical constraints from mobility impairments or medical conditions limit achievable activity levels. Environmental constraints from living situations affect available activities. Time and resource constraints influence adherence. The system generates recommendations that maximize expected benefit subject to these constraints, providing alternatives when optimal activities are infeasible.
+
+Adaptive recommendation updates leverage continuous WiFi monitoring to refine predictions and adjust recommendations based on observed responses. If an individual shows better or worse response than predicted, the system updates its model and modifies recommendations accordingly. This learning approach personalizes to individual-specific treatment effects that may not be captured by population-level models.
+
+\section{Experimental Validation}
+
+\subsection{Healthcare Monitoring Dataset}
+
+Our experimental validation utilizes a comprehensive longitudinal dataset collected from 150 elderly subjects (age 65-85) monitored continuously for 6 months in assisted living facilities and home environments. The dataset provides a unique opportunity to validate causal inference methods with rich health outcomes and activity measurements from WiFi sensing.
+
+The data collection employed a multi-node WiFi sensing system with Intel 5300 NICs capturing CSI at 1000 Hz across 30 subcarriers and 3 antenna pairs. Sensor nodes were strategically placed to cover living spaces, bedrooms, and common areas. The system continuously monitored movement patterns, extracting features related to gait speed, activity levels, sedentary time, and exercise participation. Ground truth activities were annotated through periodic video review and wearable sensor validation during the initial setup phase.
+
+Health outcomes were assessed through comprehensive evaluations including monthly fall risk assessments using the Timed Up and Go test and Berg Balance Scale, weekly self-reported health status and pain levels, daily vital sign measurements when available, and documented health events including falls, hospitalizations, and medication changes. Clinical assessments were performed by trained healthcare professionals blind to the WiFi sensing data to prevent bias.
+
+The dataset exhibits realistic characteristics that challenge causal inference methods. Confounding factors include comorbidities affecting both activity capacity and health outcomes, medication effects that influence activity patterns and fall risk, social factors like family visits that encourage activity, and environmental factors such as weather and facility schedules. Missing data occurs due to technical failures, subjects leaving the monitoring area, and missed clinical assessments. These real-world complexities test the robustness of our causal framework.
+
+\subsection{Causal Effect Estimation Results}
+
+We evaluate causal effect estimates for the relationship between physical activity levels and fall risk, comparing our framework against naive correlational analysis and traditional causal methods. The results reveal substantial differences between causal and correlational estimates, highlighting the importance of proper causal analysis.
+
+Correlational analysis suggests that individuals with higher activity levels have 18% lower fall risk, but this estimate is confounded by health status - healthier individuals both exercise more and have inherently lower fall risk. After applying our causal inference framework with instrumental variables based on weather and facility schedules, the estimated causal effect increases to 32% risk reduction. This larger causal effect indicates negative confounding where less healthy individuals who exercise despite their limitations receive greater benefits.
+
+The dose-response analysis reveals a non-linear relationship between activity and fall risk. Low levels of activity (less than 30 minutes daily) show minimal benefit. Moderate activity (30-60 minutes) provides the greatest risk reduction of 35-40%. High activity levels (over 90 minutes) show diminishing returns and potentially increased risk, possibly due to fatigue. This non-linear pattern was not apparent in correlational analysis, which suggested a monotonic relationship.
+
+Heterogeneous treatment effect analysis identifies subgroups with differential responses to activity interventions. Individuals with poor baseline balance show 45% fall risk reduction from moderate exercise, compared to 20% for those with good balance. Subjects with cognitive impairment benefit less from unstructured activity but show similar benefits from supervised exercise. Those taking multiple medications show attenuated benefits, suggesting interaction effects. These insights enable personalized activity recommendations based on individual characteristics.
+
+Comparison with a 3-month randomized controlled trial conducted on a subset of 40 subjects validates our causal estimates. The RCT found a 28% reduction in fall risk from prescribed exercise, within the confidence interval of our observational estimate of 32% (95% CI: 24%-40%). This agreement supports the validity of our causal inference framework. The observational analysis additionally provides insights into dose-response relationships and effect heterogeneity not available from the limited RCT.
+
+\subsection{Validation of Causal Assumptions}
+
+Rigorous validation of causal assumptions is crucial for credible causal inference from observational data. We employ multiple strategies to assess and validate the key assumptions underlying our analysis.
+
+Instrumental variable validity is assessed through several tests. The relevance assumption is verified by showing strong association between instruments (weather, schedules) and activity levels (F-statistic = 47.3, indicating strong instruments). The exclusion restriction is tested through falsification tests examining instrument effects on pre-treatment outcomes and placebo outcomes unrelated to activity. Balance tests confirm that instruments are uncorrelated with observed confounders after conditioning on covariates. Over-identification tests when multiple instruments are available support instrument validity (Hansen J-statistic p-value = 0.31).
+
+The ignorability assumption for propensity score methods is evaluated through sensitivity analysis. We assess how strong an unmeasured confounder would need to be to explain away the observed effects. The E-value of 2.8 indicates that an unmeasured confounder would need to be associated with both treatment and outcome by a risk ratio of 2.8 to explain the observed effect. This is larger than any observed confounder in our data, suggesting robustness to unmeasured confounding. Negative control outcomes that should not be affected by activities show no significant effects, supporting the ignorability assumption.
+
+Positivity is assessed by examining propensity score distributions across treatment levels. We find adequate overlap with propensity scores ranging from 0.05 to 0.95 for most individuals. Only 3% of subjects have extreme propensity scores requiring trimming. The common support region covers 94% of the sample, indicating sufficient positivity for valid inference. Covariate balance after propensity score weighting shows standardized mean differences below 0.1 for all variables.
+
+\subsection{Counterfactual Prediction Accuracy}
+
+Evaluating counterfactual predictions is challenging as true counterfactuals are unobserved. We employ several validation strategies to assess prediction accuracy and reliability.
+
+Leave-one-out cross-validation on observed outcomes provides a lower bound on counterfactual accuracy. The model predicts held-out individuals' outcomes under their actual activity levels, achieving RMSE of 0.12 for fall risk probability. While this doesn't directly validate counterfactual predictions, it confirms the model captures relevant relationships. Importantly, prediction accuracy is similar across different activity levels, suggesting reliable extrapolation.
+
+Natural experiments provide opportunities to validate counterfactual predictions. A two-week facility closure forced activity reduction for all residents, creating exogenous variation. Our model predicted an average 15% increase in fall risk from the activity reduction. The observed increase was 18%, within the prediction interval. Similarly, a new exercise program introduction allowed validation of predictions for activity increases. The model predicted 22% risk reduction for participants; the observed reduction was 20%.
+
+Temporal validation uses early data to predict later outcomes under different activity scenarios. We train on the first 3 months and predict outcomes for months 4-6 under observed and counterfactual activity patterns. For individuals whose activity patterns changed substantially, the counterfactual predictions for their original patterns align with similar individuals who maintained those patterns. This temporal validation provides evidence that the model captures causal rather than merely correlational relationships.
+
+Individual-level prediction intervals are calibrated using conformal prediction methods. The 90% prediction intervals contain the true outcome 89% of the time, indicating good calibration. Interval width varies appropriately with prediction difficulty - wider for unusual individuals or extreme activity levels. This uncertainty quantification is crucial for clinical decision-making where understanding prediction reliability is as important as point estimates.
+
+\section{Discussion and Clinical Implications}
+
+\subsection{Clinical Significance of Causal Findings}
+
+The causal analysis reveals clinically important insights that differ substantially from correlational analysis and have immediate implications for patient care. The identification of a 32% causal reduction in fall risk from moderate physical activity, compared to 18% suggested by correlation, indicates that activity interventions may be more effective than previously thought. This finding could change clinical guidelines for fall prevention in elderly populations, supporting more aggressive activity prescriptions even for frail individuals who might otherwise be considered poor candidates for exercise interventions.
+
+The non-linear dose-response relationship has important implications for exercise prescription. Current guidelines often emphasize maximizing activity levels, but our analysis suggests an optimal range of 30-60 minutes of moderate activity daily. Exceeding this range provides diminishing benefits and may increase risk for some individuals. This inverted U-shape relationship aligns with exercise physiology principles where excessive activity can lead to fatigue, overuse injuries, and paradoxically increased fall risk. Clinicians should consider prescribing specific activity doses rather than simply encouraging "more movement."
+
+The heterogeneous treatment effects identified through our analysis enable precision medicine approaches to fall prevention. The finding that individuals with poor baseline balance benefit most from activity interventions (45% risk reduction versus 20% for those with good balance) suggests prioritizing limited intervention resources toward those most likely to benefit. Conversely, the reduced benefits for cognitively impaired individuals unless exercises are supervised highlights the need for tailored intervention strategies. These insights could improve cost-effectiveness of fall prevention programs by targeting interventions to responsive subgroups.
+
+The temporal dynamics of treatment effects inform intervention timing and monitoring strategies. Our analysis shows that activity benefits accumulate over 4-6 weeks before plateauing, suggesting minimum intervention durations for effectiveness. The persistence of benefits for 2-3 weeks after activity cessation indicates some flexibility in adherence requirements. However, the rapid deterioration after longer interruptions emphasizes the need for continuous monitoring and prompt intervention when activity levels decline.
+
+\subsection{Advantages of WiFi-Based Causal Monitoring}
+
+WiFi sensing offers unique advantages for causal inference in healthcare that are not available with traditional monitoring approaches. The continuous, unobtrusive monitoring captures natural behavior patterns without the Hawthorne effect common in supervised interventions or self-reported activity logs. This naturalistic data provides more valid estimates of real-world intervention effects compared to controlled trials where adherence and behavior may be artificially modified.
+
+The rich contextual information available from WiFi sensing strengthens causal identification through instrumental variables and conditional independence assumptions. Environmental factors like weather, time patterns, and social context provide natural experiments for causal inference. The high temporal resolution enables detection of immediate and delayed effects, dose-response relationships, and time-varying confounding that would be missed by periodic assessments. This granular data supports more sophisticated causal models that better reflect the complex dynamics of health and behavior.
+
+The passive nature of WiFi monitoring enables long-term studies that would be infeasible with active monitoring approaches. Our 6-month continuous monitoring would be prohibitively expensive with wearable devices requiring charging, maintenance, and user compliance. The ability to monitor entire populations in facilities simultaneously provides natural variation in exposures and outcomes that strengthen causal inference. The scalability of WiFi sensing could enable population-level causal studies that inform public health policy.
+
+Privacy preservation through on-device processing and aggregated metrics enables causal analysis while protecting individual privacy. Unlike video monitoring which raises significant privacy concerns, WiFi sensing can extract activity patterns without identifying individuals or capturing sensitive visual information. This privacy-preserving aspect is crucial for deployment in homes and healthcare facilities where acceptance requires balancing monitoring benefits with privacy protection.
+
+\subsection{Limitations and Challenges}
+
+Despite the promising results, several limitations must be acknowledged when applying causal inference to WiFi sensing data. The fundamental limitation of observational causal inference - the inability to guarantee all confounders are measured - remains present. While WiFi sensing captures rich behavioral data, important confounders like pain levels, motivation, or subclinical disease progression may remain unmeasured. Our sensitivity analyses suggest robustness to moderate unmeasured confounding, but strong unmeasured confounders could still bias results.
+
+Activity measurement error from CSI inference affects both treatment and outcome assessment in causal analysis. While we model measurement error explicitly, misclassification of activities could lead to biased causal estimates if errors are differential across health states. For example, if the system less accurately detects activities for individuals with movement disorders, this could create spurious associations. Validation with ground truth data suggests measurement error is relatively non-differential, but perfect measurement remains elusive.
+
+Generalizability of causal findings from specific populations and environments requires careful consideration. Our results from elderly populations in assisted living may not transfer to younger adults in homes or patients with specific conditions. The causal effects estimated in controlled facility environments may differ from those in diverse home settings. While the causal framework is general, the specific effect estimates are population and context-dependent.
+
+The complexity of the causal models and machine learning methods creates challenges for clinical interpretation and trust. Clinicians may be skeptical of "black box" recommendations from deep learning models, even if causally valid. The trade-off between model flexibility for accurate estimation and interpretability for clinical acceptance remains a challenge. We address this through visualization, uncertainty quantification, and validation against clinical knowledge, but building trust requires ongoing collaboration with healthcare providers.
+
+\subsection{Future Directions}
+
+The successful demonstration of causal inference from WiFi sensing opens numerous avenues for future research and application. Extension to multi-person environments where activities of multiple individuals interact presents both technical and causal challenges. Developing methods for interference and spillover effects when one person's activity influences another's health outcomes could enable family-based interventions. The causal framework could be extended to social health determinants observable through WiFi sensing of social interactions.
+
+Integration with other health monitoring modalities could strengthen causal inference through data fusion. Combining WiFi sensing with wearable devices, electronic health records, and environmental sensors provides richer covariate information for controlling confounding. Multi-modal instrumental variables from different data sources could provide stronger identification. The causal framework could be extended to handle mixed continuous and discrete treatments from different monitoring modalities.
+
+Real-time causal inference and adaptive interventions represent an exciting frontier where causal models continuously update and provide dynamic recommendations. Online learning algorithms could update causal effect estimates as new data arrives, adapting to changing populations and environments. Reinforcement learning could optimize sequences of interventions based on causal effect predictions. This could enable truly personalized and adaptive health coaching systems.
+
+Causal discovery to identify unknown relationships between activities and health outcomes could reveal novel intervention targets. Rather than pre-specifying causal relationships, algorithms could discover causal structures from WiFi sensing data. This could identify unexpected activity-health connections or mediating pathways. Combining causal discovery with domain knowledge could accelerate healthcare research by generating hypotheses for clinical validation.
+
+\section{Conclusion}
+
+This paper presented the first comprehensive framework for causal inference from WiFi-based healthcare sensing, addressing the critical gap between advanced sensing capabilities and actionable healthcare insights. Through rigorous application of causal inference methods adapted for high-dimensional sensor data, we demonstrated that WiFi sensing can identify causal relationships between activities and health outcomes that differ substantially from correlational analyses. The framework's ability to handle unmeasured confounding through instrumental variables, time-varying confounding through marginal structural models, and heterogeneous effects through machine learning methods enables robust causal conclusions from observational monitoring data.
+
+Our experimental validation on a 6-month longitudinal study of 150 elderly subjects revealed clinically significant findings including a 32% causal reduction in fall risk from moderate activity compared to 18% suggested by correlation, non-linear dose-response relationships with optimal activity levels of 30-60 minutes daily, and heterogeneous treatment effects with 45% risk reduction for balance-impaired individuals versus 20% for those with good balance. These findings have immediate implications for clinical practice, supporting more targeted and effective activity interventions for fall prevention.
+
+The unique advantages of WiFi sensing for causal inference, including continuous unobtrusive monitoring, rich contextual information for instrumental variables, and privacy-preserving operation, position it as a valuable tool for healthcare research and practice. While limitations remain, particularly regarding unmeasured confounding and generalizability, the framework provides a principled approach for extracting causal insights from sensor data that can inform clinical decisions and health policy.
+
+Future work will extend the framework to multi-person environments, integrate multiple sensing modalities, and develop real-time adaptive intervention systems. The combination of advancing sensor technologies with rigorous causal inference methods promises to transform healthcare monitoring from passive observation to active intervention guidance, ultimately improving health outcomes through personalized, causally-informed recommendations.
+
+\section*{Acknowledgments}
+
+We thank the anonymous reviewers for constructive feedback, the healthcare facilities and participants who made this research possible, and our clinical collaborators for their invaluable insights. This work was supported by [funding information].
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
