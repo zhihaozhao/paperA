@@ -40,6 +40,16 @@ This paper studies a PINN-like Enhanced model that couples CNN feature extractio
 
 Our contributions are threefold. First, we present an Enhanced architecture that achieves strong performance and trustworthy calibration in synthetic robustness trials and cross-domain settings. Second, we conduct Sim2Real label-efficiency analyses showing 82.1\% macro-F1 at 20\% labels (98.6\% of full 83.3\%), demonstrating practical annotation savings. Third, we provide interpretability and ablations, including attribution maps and nuisance-factor sweeps, to illuminate how and why the model behaves reliably.
 
+\textbf{Key Contributions}
+\begin{enumerate}
+  \item \textbf{PINN-like Enhanced model:} CNN + SE + temporal attention architecture grounded in propagation-informed inductive biases with calibrated inference.
+  \item \textbf{Trustworthy evaluation:} Accuracy plus calibration (ECE/NLL/Brier) across synthetic and cross-domain regimes, demonstrating reliable probabilities for IoT decision thresholds.
+  \item \textbf{Label efficiency:} Sim2Real STEA shows 82.1\% macro-F1 at 20\% labels, nearing 83.3\% full-supervision with 80\% annotation savings.
+  \item \textbf{Interpretability and ablation:} Attribution maps and nuisance-factor sweeps reveal stable reliance on physically meaningful subcarriers and temporal spans.
+\end{enumerate}
+
+The remainder of this paper is organized as follows. Section II reviews related work in CSI sensing, attention/SE architectures, and calibration. Section III details the Enhanced architecture and PINN-like perspective. Section IV describes experimental protocols for synthetic robustness, CDAE, and STEA. Section V presents quantitative results, ablations, and attribution. Section VI discusses implications and limitations, and Section VII concludes.
+
 \section{Enhanced Architecture and PINN-like Perspective}
 The Enhanced model composes three components: (i) convolutional layers for local spatiotemporal filtering of CSI tensors, (ii) SE attention to adaptively emphasize subcarrier/antenna channels implicated by multipath structure~\cite{se_networks2018}, and (iii) temporal attention to aggregate long-range activity patterns. While not enforcing PDE constraints explicitly, the design is \emph{PINN-like} in spirit: architectural choices reflect inductive biases anchored in propagation phenomena, which we find to support stable training and calibrated inference.
 
