@@ -78,6 +78,10 @@ cache/
 !tables/.gitkeep
 !logs/.gitkeep
 
+# Allow versioning of paper/zero/plots despite generic plots/ ignore
+!/paper/zero/plots/
+!/paper/zero/plots/**
+
 # WiFi-CSI-Sensing-Benchmark (external dependency)
 benchmarks/WiFi-CSI-Sensing-Benchmark-main/
 benchmarks/*/Data/
