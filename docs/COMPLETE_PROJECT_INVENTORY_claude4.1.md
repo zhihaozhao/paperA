@@ -1,8 +1,9 @@
 # 📚 Paper A 项目完整目录清单与使用说明
 
-**生成日期**: 2024年12月27日  
+**更新日期**: 2024年12月28日  
 **项目名称**: WiFi CSI HAR with Physics-Guided Synthetic Data  
-**仓库地址**: https://github.com/zhihaozhao/paperA
+**仓库地址**: https://github.com/zhihaozhao/paperA  
+**文档版本**: v2.0 (包含最新LaTeX文档和Docker基础设施)
 
 ---
 
@@ -29,7 +30,7 @@
 paper/
 ├── main.tex                      # 主论文文件 (8页会议论文)
 ├── main_backup.tex               # 备份版本
-├── refs.bib                      # 参考文献库
+├── refs.bib                      # 参考文献库 (60+篇高质量文献)
 ├── enhanced/                     # 增强版论文
 │   ├── enhanced.tex              # 增强版论文
 │   ├── enhanced_claude4.1opus.tex # Claude扩展版 (58,691字符)
@@ -118,20 +119,42 @@ src/
 
 **用途**: 核心算法实现、模型定义、训练框架
 
-### 5. 📚 **docs/** - 文档目录
+### 5. 📚 **docs/** - 文档目录（12月28日更新）
 ```
 docs/
 ├── experiments/                  # Claude 4.1实验文档
-│   ├── exp1_multiscale_lstm_*/  # Exp1: Physics-LSTM
-│   ├── exp2_mamba_replacement/  # Exp2: Mamba SSM
+│   ├── exp1_enhanced_sim2real/  # Exp1: Enhanced Sim2Real模型
+│   ├── exp2_enhanced_pinn_loss/ # Exp2: Enhanced + PINN损失
+│   ├── exp3_pinn_lstm_causal/   # Exp3: PINN LSTM + 因果注意力
+│   ├── exp4_mamba_efficiency/   # Exp4: Mamba效率模型
+│   ├── thesis/                   # 博士论文章节
+│   │   ├── exp1_comprehensive_analysis_claude4.1.tex # 100K+字符Exp1分析
+│   │   ├── EXPERIMENTAL_ARCHITECTURE_CN_claude4.1.md # 中文架构文档
+│   │   ├── exp[1-4]_*.bib       # 各实验BibTeX参考文献
+│   │   ├── validate_latex_claude4.1.py # LaTeX验证脚本
+│   │   └── LATEX_COMPILATION_GUIDE_claude4.1.md # 编译指南
+│   ├── docker/                   # Docker部署
+│   │   ├── Dockerfile_claude4.1  # Docker镜像定义
+│   │   ├── docker-compose.yml    # 7个服务编排
+│   │   ├── DOCKER_DEPLOYMENT_GUIDE_claude4.1.md # 部署指南
+│   │   └── build_docker.sh       # 构建脚本
 │   ├── evaluation/               # 评估框架
+│   │   ├── benchmark_loader_claude4.1.py # 统一数据加载器
+│   │   └── cdae_stea_evaluation_claude4.1.py # CDAE/STEA评估
 │   ├── new_directions/           # 5个新研究方向
-│   ├── paper_drafts/             # 论文草稿
-│   └── HOW_TO_RUN_claude4.1.md  # 使用指南
+│   │   ├── direction[1-5]_*.md  # 各方向详细文档
+│   │   └── paper_drafts/         # 40K+字符论文草稿
+│   ├── paper_drafts/             # 实验论文草稿
+│   │   ├── exp1_extended_claude4.1.tex # 73K字符
+│   │   └── exp2_extended_claude4.1.tex # 77K字符
+│   ├── unified_experiment_runner_claude4.1.py # 统一实验运行器
+│   ├── STEP_BY_STEP_GUIDE_claude4.1.md # 详细操作指南
+│   └── HOW_TO_RUN_claude4.1.md  # 快速使用指南
 └── daily/                        # 工作日志
-    ├── work_report_*.md          # 工作报告
-    ├── GIT_COMMITS_SUMMARY.md    # Git提交总结
-    └── FILE_STRUCTURE_MAP.md     # 文件结构图
+    ├── work_report_Dec27_claude4.1.md # 12月27日工作报告
+    ├── GIT_COMMITS_SUMMARY_claude4.1.md # Git提交总结(40+commits)
+    ├── VALUABLE_COMMITS_ANALYSIS_claude4.1.md # 价值提交分析
+    └── FILE_STRUCTURE_MAP_claude4.1.md # 文件结构图
 ```
 
 **用途**: 项目文档、实验说明、工作记录
@@ -275,22 +298,30 @@ pdflatex main.tex
 
 ---
 
-## 七、🎯 Claude 4.1 新增内容
+## 七、🎯 Claude 4.1 新增内容（12月28日更新）
 
-### 新模型
-1. **Physics-Informed Multi-Scale LSTM** (`exp1`)
-2. **Mamba State-Space Model** (`exp2`)
+### 新实验模型（4个完整实现）
+1. **Exp1: Enhanced Sim2Real Model** - 增强模型+领域自适应
+2. **Exp2: Enhanced + PINN Loss** - 增强模型+自适应物理损失
+3. **Exp3: PINN LSTM + Causal Attention** - 物理信息LSTM+因果注意力
+4. **Exp4: Mamba Efficiency Model** - 线性复杂度状态空间模型
 
-### 新协议
-1. **CDAE**: Cross-Domain Activity Evaluation
-2. **STEA**: Small-Target Environment Adaptation
+### 新评估协议
+1. **CDAE**: Cross-Domain Activity Evaluation - 跨域活动评估
+2. **STEA**: Small-Target Environment Adaptation - 小目标环境适应
 
-### 新方向
-1. 多模态融合
-2. 联邦学习
-3. 神经架构搜索
-4. 因果推理
-5. 持续学习
+### 新研究方向（5个完整框架）
+1. **多模态融合** - WiFi+视觉+雷达融合（40K字符论文草稿）
+2. **联邦学习** - 隐私保护分布式训练（40K字符论文草稿）
+3. **神经架构搜索** - 自动化模型设计（40K字符论文草稿）
+4. **因果推理** - 可解释性增强（40K字符论文草稿）
+5. **持续学习** - 终身学习框架（40K字符论文草稿）
+
+### 基础设施改进
+1. **Docker容器化** - 7个服务的完整部署方案
+2. **LaTeX文档系统** - 自动验证和编译指南
+3. **统一实验框架** - 一键运行所有实验
+4. **BibTeX文献库** - 60+篇高影响力参考文献
 
 ---
 
@@ -300,6 +331,41 @@ pdflatex main.tex
 2. **GPU内存**: Enhanced模型需要至少8GB显存
 3. **Python版本**: 推荐使用Python 3.8+
 4. **依赖冲突**: 使用虚拟环境避免包冲突
+
+---
+
+## 九、🚀 快速导航（新增文件）
+
+### 最重要的新文件
+| 文件路径 | 描述 | 大小 |
+|---------|------|------|
+| `docs/experiments/thesis/exp1_comprehensive_analysis_claude4.1.tex` | Exp1完整分析（可编译） | 103K字符 |
+| `docs/experiments/unified_experiment_runner_claude4.1.py` | 统一实验运行器 | 611行 |
+| `docs/experiments/docker/docker-compose.yml` | Docker服务编排 | 7个服务 |
+| `docs/experiments/STEP_BY_STEP_GUIDE_claude4.1.md` | 详细操作指南 | 507行 |
+
+### 模型实现文件
+| 实验 | 模型文件 | 行数 |
+|------|---------|------|
+| Exp1 | `exp1_enhanced_sim2real/model_claude4.1.py` | 945行 |
+| Exp2 | `exp2_enhanced_pinn_loss/model_claude4.1.py` | 611行 |
+| Exp3 | `exp3_pinn_lstm_causal/model_claude4.1.py` | 556行 |
+| Exp4 | `exp4_mamba_efficiency/model_claude4.1.py` | 582行 |
+
+### 参考文献文件
+| 实验 | BibTeX文件 | 文献数 |
+|------|-----------|--------|
+| Exp1 | `thesis/exp1_sim2real.bib` | 15篇 |
+| Exp2 | `thesis/exp2_pinn.bib` | 15篇 |
+| Exp3 | `thesis/exp3_causal.bib` | 15篇 |
+| Exp4 | `thesis/exp4_mamba.bib` | 15篇 |
+
+### 工作报告文件
+| 文件 | 内容 | 更新时间 |
+|------|------|----------|
+| `daily/GIT_COMMITS_SUMMARY_claude4.1.md` | 40+提交记录 | 12月28日 |
+| `daily/VALUABLE_COMMITS_ANALYSIS_claude4.1.md` | TOP10价值提交 | 12月27日 |
+| `daily/FILE_STRUCTURE_MAP_claude4.1.md` | 项目结构图 | 12月27日 |
 
 ---
 
