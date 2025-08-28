@@ -124,8 +124,11 @@ def create_comprehensive_protocols():
     }
     
     # === Synthetic Robustness Validation (Left Column) ===
-    ax.text(3.2, 10.5, 'Synthetic Robustness\nValidation (SRD)', fontsize=14, fontweight='bold', color='darkorange', wrap=True)
-    ax.text(3.2, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=12, color='darkorange', style='italic')
+    # ax.text(3.2, 10.5, 'Synthetic Robustness\nValidation (SRD)', fontsize=14, fontweight='bold', color='darkorange', wrap=True)
+    # ax.text(3.2, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=12, color='darkorange', style='italic')
+    ax.text(1.5, 10.7, 'Synthetic Robustness Validation (SRD)', fontsize=14, fontweight='bold', color='darkorange',
+            wrap=True)
+    ax.text(1.5, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=12, color='darkorange', style='italic')
     
     d2_content = """Objective: Validate synthetic data quality
     • 540 configurations tested
@@ -138,12 +141,16 @@ def create_comprehensive_protocols():
                        d2_content, protocol_colors['d2'])
     
     # D2 Flow diagram
+    # d2_boxes = [
+    #     {'pos': (0.8, 7.5), 'size': (1.6, 0.8), 'label': 'Synthetic\nGeneration', 'color': '#FFCC99'},
+    #     {'pos': (2.6, 7.5), 'size': (1.6, 0.8), 'label': 'Noise\nInjection', 'color': '#FFB366'},
+    #     {'pos': (4.4, 7.5), 'size': (1.6, 0.8), 'label': 'Multi-Model\nTesting', 'color': '#FF9933'}
+    # ]
     d2_boxes = [
-        {'pos': (0.8, 7.5), 'size': (1.6, 0.8), 'label': 'Synthetic\nGeneration', 'color': '#FFCC99'},
-        {'pos': (2.6, 7.5), 'size': (1.6, 0.8), 'label': 'Noise\nInjection', 'color': '#FFB366'},
-        {'pos': (4.4, 7.5), 'size': (1.6, 0.8), 'label': 'Multi-Model\nTesting', 'color': '#FF9933'}
+        {'pos': (0.4, 6.8), 'size': (1.6, 0.8), 'label': 'Synthetic\nGeneration', 'color': '#FFCC99'},
+        {'pos': (2.2, 6.8), 'size': (1.6, 0.8), 'label': 'Noise\nInjection', 'color': '#FFB366'},
+        {'pos': (4.0, 6.8), 'size': (1.6, 0.8), 'label': 'Multi-Model\nTesting', 'color': '#FF9933'}
     ]
-    
     for i, box_info in enumerate(d2_boxes):
         ax.add_patch(FancyBboxPatch(box_info['pos'], box_info['size'][0], box_info['size'][1],
                                    boxstyle="round,pad=0.01", facecolor=box_info['color'],
@@ -159,8 +166,8 @@ def create_comprehensive_protocols():
                             color='darkorange')
     
     # === CDAE Protocol (Middle Column) ===
-    ax.text(8.8, 10.5, 'CDAE Protocol', fontsize=14, fontweight='bold', color='darkgreen')
-    ax.text(8.8, 10.2, 'Cross-Domain Adaptation Evaluation', fontsize=12, color='darkgreen', style='italic')
+    ax.text(7, 10.7, 'CDAE Protocol', fontsize=14, fontweight='bold', color='darkgreen')
+    ax.text(7, 10.2, 'Cross-Domain Adaptation Evaluation', fontsize=12, color='darkgreen', style='italic')
     
     cdae_content = """Objective: Cross-domain generalization
     • LOSO: Leave-One-Subject-Out
@@ -187,13 +194,13 @@ def create_comprehensive_protocols():
     rooms = ['R1', 'R2', 'R3', 'Test']
     for i, room in enumerate(rooms):
         color = '#FF6B6B' if room == 'Test' else '#95E1D3'
-        rect = Rectangle((8.2 + i*0.55, 7.25), 0.45, 0.45, facecolor=color, edgecolor='black', linewidth=1)
+        rect = Rectangle((8.5 + i*0.55, 7.25), 0.45, 0.45, facecolor=color, edgecolor='black', linewidth=1)
         ax.add_patch(rect)
-        ax.text(8.425 + i*0.55, 7.475, room, ha='center', va='center', fontsize=12, fontweight='bold')
+        ax.text(8.725 + i*0.55, 7.475, room, ha='center', va='center', fontsize=12, fontweight='bold')
     
     # === STEA Protocol (Right Column) ===
-    ax.text(13.8, 10.5, 'STEA Protocol', fontsize=14, fontweight='bold', color='darkblue')
-    ax.text(13.8, 10.2, 'Sim2Real Transfer Efficiency Assessment', fontsize=12, color='darkblue', style='italic')
+    ax.text(12, 10.7, 'STEA Protocol', fontsize=14, fontweight='bold', color='darkblue')
+    ax.text(12, 10.2, 'Sim2Real Transfer Efficiency Assessment', fontsize=12, color='darkblue', style='italic')
     
     stea_content = """Objective: Label efficiency quantification
     • Transfer methods: 4 approaches

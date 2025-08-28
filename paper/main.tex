@@ -306,12 +306,12 @@ We further evaluate reliability using:
 
 \section{Experimental Evaluation}
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig4_experimental_protocols.pdf}
+\includegraphics[width=\linewidth]{figures/fig4_experimental_protocols.pdf}
 \caption{Experimental protocols overview: Synthetic Robustness Validation (SRD, 540 configurations; first use in full), CDAE (LOSO/LORO), and STEA label-efficiency evaluation.}
 \label{fig:protocols}
-\end{figure}
+\end{figure*}
 
 \subsection{Experimental Setup}
 
@@ -369,12 +369,12 @@ We compare four deep learning architectures:
 
 The CDAE protocol evaluation reveals exceptional cross-domain consistency in the Enhanced model architecture. Figure~\ref{fig:cross_domain} presents comprehensive results across both LOSO and LORO evaluation schemes, demonstrating the Enhanced model's unprecedented domain-agnostic performance (83.0±0.1\% macro F1) with remarkable stability ($\text{CV}<0.2\%$).
 
-\begin{figure}[ht]
+\begin{figure*}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig5_cross_domain.pdf}%_cross-domain.pdf}
+\includegraphics[width=\linewidth]{figures/fig5_cross_domain.pdf}%_cross-domain.pdf}
 \caption{Cross-domain generalization performance across LOSO and LORO. Subplots: (top-left) main LOSO/LORO comparison with error bars; (top-right) cross-domain gap $|\text{LOSO}-\text{LORO}|$ (lower is better); (bottom-left) stability (CV, log-scale); (bottom-right) significance (−log$_{10}$(p)). The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
 \label{fig:cross_domain}
-\end{figure}
+\end{figure*}
 
 \noindent\textit{Comparative context (CDAE):} SenseFi~\cite{yang2023sensefi} establishes a broad in-domain baseline across 11 deep models and 4 datasets, yet reports sizable variability across protocols. Recent temporal-attention families—Conformer~\cite{gulati2020conformer}, TimeSformer~\cite{bertasius2021timesformer}, TFT~\cite{lim2021tft}, Informer~\cite{zhou2021informer}—improve long-range modeling but in our cross-domain CDAE setting still exhibit protocol sensitivity noted by environment shifts, echoing domain-generalization studies in WiFi (AirFi~\cite{airfi2022}, FewSense~\cite{fewsense2022}, ReWiS~\cite{rewis2022}). Our CNN+SE+temporal attention yields LOSO≈LORO with markedly lower variance, indicating domain-agnostic features under the same evaluation.
 
@@ -390,12 +390,12 @@ The right column delivers four complementary statistical analyses: variance expl
 
 The comprehensive analysis across all seven visualization panels validates that the Enhanced model's architectural design—integrating SE attention and temporal mechanisms—produces more robust and generalizable feature representations. This multi-dimensional evidence, including detailed feature loading analysis and quantitative contribution assessments, strongly supports the Enhanced model's superior cross-domain performance observed in the main experimental results.
 
-\begin{figure}[ht]
+\begin{figure*}[ht]
 \centering
-\includegraphics[width=\columnwidth]{figures/fig6_pca_analysis.pdf}
+\includegraphics[width=\linewidth]{figures/fig6_pca_analysis.pdf}
 \caption{Comprehensive seven-panel PCA analysis organized in a clear 3×2 layout for optimal visualization and interpretation. \textbf{Left Column (Primary Analyses):} Top - Main PCA biplot with embedded legend, feature loading vectors, and confidence ellipses showing Enhanced model's superior LOSO-LORO consistency; Middle - Cross-protocol consistency analysis revealing Enhanced model's minimal LOSO-LORO distance (0.08) versus CNN (0.84), BiLSTM (0.23), and Conformer-lite (4.56); Bottom - PCA feature loadings matrix providing heatmap visualization of feature contributions to the first five principal components. \textbf{Right Column (Statistical Decomposition):} Top - Explained variance analysis with cumulative curve showing PC1 (20.1\%) and PC2 (8.2\%) contributions; Upper-middle - Inter-model separation distance heatmap quantifying feature space clustering; Lower-middle - 3D feature space visualization confirming clustering patterns across three principal components; Bottom - Feature contributions analysis highlighting relative importance to top two principal components, demonstrating Enhanced model's balanced temporal-spatial feature utilization. The systematic layout enables comprehensive understanding of Enhanced model's superior cross-domain generalization capabilities.}
 \label{fig:pca_analysis}
-\end{figure}
+\end{figure*}
 
 \subsection{STEA Protocol Results: Sim2Real Transfer Efficiency Breakthrough}
 
@@ -414,9 +414,9 @@ The STEA protocol evaluation demonstrates a paradigm-shifting breakthrough in Si
 
 \textbf{Label Efficiency Analysis:} The efficiency curve reveals three distinct phases: (1) \textit{Bootstrap phase} (1\%): Synthetic pretraining provides substantial improvement over zero-shot baseline (45.5\% vs 15.4\% F1), (2) \textit{Rapid improvement phase} (5\%): Performance jumps to 78.0±1.6\% F1, approaching practical deployment threshold, (3) \textit{Convergence phase} ($\geq 20\%$): Performance stabilizes at 82.1±0.3\% F1, achieving target efficiency.
 
-\textbf{Transfer Method Comparison:} Fine-tuning significantly outperforms alternative transfer approaches. At 20\% label ratio, fine-tuning achieves 82.1\% F1 compared to linear probing (21.8%) and zero-shot (15.1\%). This 60+ percentage point advantage demonstrates the critical importance of end-to-end fine-tuning for effective Sim2Real transfer in WiFi CSI HAR.
+\textbf{Transfer Method Comparison:} Fine-tuning significantly outperforms alternative transfer approaches. At 20\% label ratio, fine-tuning achieves 82.1\% F1 compared to linear probing (21.8\%) and zero-shot (15.1\%). This 60+ percentage point advantage demonstrates the critical importance of end-to-end fine-tuning for effective Sim2Real transfer in WiFi CSI HAR.
 
-\textbf{Cost-Benefit Analysis:} The 20\% label efficiency represents an 80\% reduction in data collection costs while maintaining 98.6\% of full-supervision performance (82.1\% vs 83.3%). This breakthrough enables practical deployment in resource-constrained scenarios where extensive data collection is prohibitive.
+\textbf{Cost-Benefit Analysis:} The 20\% label efficiency represents an 80\% reduction in data collection costs while maintaining 98.6\% of full-supervision performance (82.1\% vs 83.3\%). This breakthrough enables practical deployment in resource-constrained scenarios where extensive data collection is prohibitive.
 
 \subsection{Model Performance Comparison}
 
@@ -427,11 +427,12 @@ The STEA protocol evaluation demonstrates a paradigm-shifting breakthrough in Si
 \begin{table}[ht]
 \centering
 \caption{Comprehensive Model Performance Summary}
-\begin{tabular}{@{}lcccc@{}}
+%\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{p{0.13\linewidth} p{0.15\linewidth} p{0.15\linewidth} p{0.19\linewidth} p{0.17\linewidth}}
 \toprule
 Model & LOSO F1 & LORO F1 & Label Efficiency & Consistency \\
 \midrule
-Enhanced & \textbf{83.0±0.1\%} & \textbf{83.0±0.1\%} & \textbf{82.1\% @ 20\%} & \textbf{$\text{CV}<0.2\%$} \\
+Enhanced & \textbf{83.0±0.1\%} & \textbf{83.0±0.1\%} & \textbf{82.1\%@20\%} & \textbf{$\text{CV}<0.2\%$} \\
 CNN & 84.2±2.5\% & 79.6±9.7\% & N/A & $\text{CV}=3.0\%$ \\
 BiLSTM & 80.3±2.2\% & 78.9±4.4\% & N/A & $\text{CV}=2.7\%$ \\
 Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
@@ -474,7 +475,8 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \centering
 \caption{PSTA/ESTA Experimental Results (Macro F1 \% and Brier Score, mean ± std)}
 \label{tab:d5d6}
-\begin{tabular}{@{}lcccc@{}}
+%\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{p{0.11\linewidth} p{0.18\linewidth} p{0.16\linewidth} p{0.19\linewidth} p{0.16\linewidth}}
 \toprule
 Model & PSTA F1 & PSTA Brier & ESTA F1 & ESTA Brier \\ \midrule
 Enhanced & $98.9\% \pm 1.6$ & $0.0021 \pm 0.0032$ & $99.9\% \pm 0.0$ & $0.0002 \pm 0.0000$ \\ 

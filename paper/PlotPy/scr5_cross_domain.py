@@ -158,13 +158,13 @@ def create_hierarchical_clustering_heatmap():
             value = ordered_data.iloc[i, j]
             color = 'white' if abs(value) > 1 else 'black'
             ax1.text(j, i, f'{value:.1f}', ha='center', va='center', 
-                    color=color, fontsize=10, fontweight='bold')
+                    color=color, fontsize=12, fontweight='bold')
     
-    # Row2 Right: Performance comparison radar chart
+    # Row2 left: Performance comparison radar chart
     # Swap: radar goes to left (b)
     ax2 = fig.add_subplot(gs[1, 0], projection='polar')
     # Panel label (b)
-    ax2.set_title('(b) Model Comparison Radar Chart', fontweight='bold', fontsize=14, pad=10)
+    ax2.set_title('(b) Model Comparison Radar Chart', fontweight='bold', fontsize=14, pad=12)
     # Move legend outside
     ax2.legend(loc='upper left', bbox_to_anchor=(0.0, 1.20), framealpha=0.9, fontsize=12)
     ax2.grid(True)
@@ -195,14 +195,14 @@ def create_hierarchical_clustering_heatmap():
     ax2.plot(angles, cnn_vals, 'o-', linewidth=2, color='#3498DB', label='CNN', markersize=5)
     ax2.fill(angles, cnn_vals, alpha=0.15, color='#3498DB')
     ax2.set_xticks(angles[:-1])
-    ax2.set_xticklabels([m.replace('_', '\n') for m in radar_metrics], fontsize=10)
+    ax2.set_xticklabels([m.replace('_', '\n') for m in radar_metrics], fontsize=12)
     ax2.set_ylim(0, 1.05)
     
-    # Row2 Left: Correlation matrix
+    # Row2 right: Correlation matrix
     # Swap: correlation goes to right (c)
     ax3 = fig.add_subplot(gs[1, 1])
     # Panel label (c)
-    ax3.set_title('(c) Metric Correlation Matrix', fontweight='bold', fontsize=14, pad=10)
+    ax3.set_title('(c) Metric Correlation Matrix', fontweight='bold', fontsize=14, pad=12)
     corr_matrix = data[clustering_metrics].corr()
     mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
     sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
@@ -231,7 +231,7 @@ def create_hierarchical_clustering_heatmap():
     ax4.set_xlabel('Composite Performance Score')
     ax4.grid(True, alpha=0.3, axis='x')
     for bar, score in zip(bars, ranking_data['Composite_Score']):
-        ax4.text(score + 0.005, bar.get_y() + bar.get_height()/2, f'{score:.3f}', va='center', fontsize=9)
+        ax4.text(score + 0.005, bar.get_y() + bar.get_height()/2, f'{score:.3f}', va='center', fontsize=12)
     # Nudge (d) downward slightly to avoid overlap with (c) labels
     try:
         pos4 = ax4.get_position()
