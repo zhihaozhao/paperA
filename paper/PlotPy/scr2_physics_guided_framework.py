@@ -37,7 +37,7 @@ def create_fig():
     ax.set_ylim(-0.8, 7.8)
     ax.axis('off')
 
-    ax.set_title('Physics-Guided Sim2Real Framework (2D)', fontweight='bold', color='black', pad=24)
+    ax.set_title('Physics-Guided Sim2Real Framework', fontweight='bold', color='black', pad=6)
 
     # Left column: complete process modules (bottom to top) with larger spacing
     left_x = 0.6
@@ -67,10 +67,11 @@ def create_fig():
         arrow(ax, left_x + w/2, y1, left_x + w/2, y2)
 
     # Right dashed model box (rough model diagram); extend to accommodate taller blocks
-    dashed_x, dashed_y, dashed_w, dashed_h = 7.2, 0.6, 4.6, 5.2
+    # dashed_x, dashed_y, dashed_w, dashed_h = 7.2, 0.6, 4.6, 5.2
+    dashed_x, dashed_y, dashed_w, dashed_h = 7.2, 0.6, 4.6, 6.0
     dashed = Rectangle((dashed_x, dashed_y), dashed_w, dashed_h, fill=False, linestyle='--', linewidth=2.0, edgecolor='black')
     ax.add_patch(dashed)
-    ax.text(dashed_x + dashed_w/2, dashed_y + dashed_h + 0.12, 'Enhanced Model (Rough Diagram)',
+    ax.text(dashed_x + dashed_w/2, dashed_y + dashed_h + 0.12, 'Enhanced Model ',
             ha='center', va='bottom', fontsize=12, fontweight='bold')
 
     # Contents inside dashed model box (rough blocks)

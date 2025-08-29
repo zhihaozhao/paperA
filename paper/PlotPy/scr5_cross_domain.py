@@ -204,7 +204,7 @@ def create_hierarchical_clustering_heatmap():
     # Panel label (c)
     ax3.set_title('(c) Metric Correlation Matrix', fontweight='bold', fontsize=14, pad=12)
     corr_matrix = data[clustering_metrics].corr()
-    mask = np.triu(np.ones_like(corr_matrix, dtype=bool))
+    mask = np.triu(np.ones_like(corr_matrix, dtype=bool),k=1)
     sns.heatmap(corr_matrix, mask=mask, annot=True, fmt='.2f', cmap='coolwarm',
                 center=0, square=True, linewidths=0.5, ax=ax3,
                 cbar_kws={'shrink': 0.85, 'label': 'Correlation'})

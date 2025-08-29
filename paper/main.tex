@@ -10,7 +10,8 @@
 \usepackage{multirow}
 \usepackage{url}
 % glossary package removed per style update (use explicit first-use expansions)
-
+\usepackage{tcolorbox} % 加载 tcolorbox 宏包
+\usepackage{enumitem}  % 处理枚举的宏包
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -22,18 +23,20 @@
 
 \title{Physics-Guided Synthetic WiFi CSI Data Generation for Trustworthy Human Activity Recognition: A Sim2Real Approach}
 
-\author{\IEEEauthorblockN{Author Names}
-\IEEEauthorblockA{\textit{Department} \\
-\textit{University}\\
-City, Country \\
-email@university.edu}
+\author{\IEEEauthorblockN{Zhihao Zhao\IEEEauthorrefmark{1}\IEEEauthorrefmark{2}, Yabing Chen\IEEEauthorrefmark{2} and Nur Syazreen Ahmad\IEEEauthorrefmark{1} } \\
+\IEEEauthorblockA{\textit{School of Electrical and Electronic Engineering } \\
+\textit{Universiti Sains Malaysia \IEEEauthorrefmark{1}},
+Nibong Tebal, Penang, Malaysia \\
+syazreen@usm.my}\\
+\IEEEauthorblockA{\textit{YanTai Engineering and Technology College \IEEEauthorrefmark{2}},
+YanTai, Shandong, China}
 }
 
 \maketitle
 
 \begin{abstract}
 
-Wireless Fidelity (WiFi) Channel State Information (CSI) based Human Activity Recognition (HAR) has shown promising results, but practical deployment is hindered by the scarcity of labeled real-world data and poor cross-domain generalization. While existing benchmarks like SenseFi systematically evaluate models on real datasets, they require abundant labeled data that is expensive and time-consuming to collect. We propose a novel physics-guided synthetic CSI data generation framework that addresses this fundamental challenge through simulation-to-reality (Sim2Real) transfer learning. Our approach models the underlying WiFi signal propagation physics, incorporating key factors such as multipath effects, environmental variations, and human body interactions to generate realistic synthetic CSI data. We introduce an enhanced deep learning architecture with squeeze-and-excitation modules and temporal attention mechanisms, coupled with trustworthy evaluation protocols including calibration analysis and reliability assessment. Comprehensive experiments including systematic synthetic data validation (D2 protocol: 540 configurations), cross-domain adaptation evaluation (CDAE protocol: 40 configurations), and Sim2Real transfer efficiency assessment (STEA protocol: 56 configurations) demonstrate the effectiveness of our approach across both synthetic and real-world benchmarks. Our method achieves 82.1\% macro F1 performance using only 20\% labeled real data, representing merely a 1.2\% gap compared to full supervision while reducing labeling costs by 80\%. The Enhanced model demonstrates exceptional cross-domain consistency, achieving identical 83.0±0.1\% F1 performance across both leave-one-subject-out (LOSO) and leave-one-room-out (LORO) protocols with remarkable stability ($\text{CV}<0.2\%$). This work represents the first systematic Sim2Real study in WiFi CSI HAR, offering a practical solution to the data scarcity challenge in ubiquitous sensing applications.
+Wireless Fidelity (WiFi) Channel State Information (CSI) based Human Activity Recognition (HAR) has shown promising results, but practical deployment is hindered by the scarcity of labeled real-world data and poor cross-domain generalization. While existing benchmarks like SenseFi systematically evaluate models on real datasets, they require abundant labeled data that is expensive and time-consuming to collect. We propose a novel physics-guided synthetic CSI data generation framework that addresses this fundamental challenge through simulation-to-reality (Sim2Real) transfer learning. Our approach models the underlying WiFi signal propagation physics, incorporating key factors such as multipath effects, environmental variations, and human body interactions to generate realistic synthetic CSI data. We introduce an enhanced deep learning architecture with squeeze-and-excitation (SE) modules and temporal attention mechanisms, coupled with trustworthy evaluation protocols including calibration analysis and reliability assessment. Comprehensive experiments including systematic synthetic robustness validation (SRV protocol: 540 configurations), cross-domain adaptation evaluation (CDAE protocol: 40 configurations), and Sim2Real transfer efficiency assessment (STEA protocol: 56 configurations) demonstrate the effectiveness of our approach across both synthetic and real-world benchmarks. Our method achieves 82.1\% macro F1 performance using only 20\% labeled real data, representing merely a 1.2\% gap compared to full supervision while reducing labeling costs by 80\%. The Enhanced model demonstrates exceptional cross-domain consistency, achieving identical 83.0±0.1\% F1 performance across both leave-one-subject-out (LOSO) and leave-one-room-out (LORO) protocols with remarkable stability ($\text{CV}<0.2\%$). This work represents the first systematic Sim2Real study in WiFi CSI HAR, offering a practical solution to the data scarcity challenge in ubiquitous sensing applications.
 \end{abstract}
 
 
@@ -43,17 +46,18 @@ WiFi CSI, Human Activity Recognition, Synthetic Data Generation, Sim2Real Transf
 
 \section{Introduction}
 
-Recent trends in ubiquitous computing and Internet-of-Things deployment have raised significant concerns about the practical viability of device-free sensing systems, particularly regarding their dependence on extensive labeled datasets and their vulnerability to cross-domain performance degradation. The phenomenon of wireless signal-based human activity recognition has intrigued researchers for decades due to its inherent complexity arising from multipath propagation, environmental sensitivity, and the intricate relationship between human motion dynamics and electromagnetic wave perturbations. This complexity manifests as a fundamental tension between the promise of privacy-preserving, infrastructure-leveraging sensing capabilities and the harsh realities of deployment in diverse, uncontrolled environments where labeled training data is prohibitively expensive to obtain.
+Recent trends in ubiquitous computing and Internet-of-Things (IoT) deployment have raised significant concerns about the practical viability of device-free sensing systems, particularly regarding their dependence on extensive labeled datasets and their vulnerability to cross-domain performance degradation. The phenomenon of wireless signal-based human activity recognition (HAR) has intrigued researchers for decades due to its inherent complexity arising from multipath propagation, environmental sensitivity, and the intricate relationship between human motion dynamics and electromagnetic wave perturbations. This complexity manifests as a fundamental tension between the promise of privacy-preserving, infrastructure-leveraging sensing capabilities and the harsh realities of deployment in diverse, uncontrolled environments where labeled training data is prohibitively expensive to obtain.
 
-The central research question that motivates this investigation concerns whether physics-guided synthetic data generation can bridge the gap between laboratory-controlled WiFi Channel State Information (CSI) human activity recognition systems and their practical deployment in real-world scenarios characterized by data scarcity and domain heterogeneity.
+The central research question that motivates this investigation concerns whether physics-guided synthetic data generation can bridge the gap between laboratory-controlled WiFi Channel State Information (CSI) HAR systems and their practical deployment in real-world scenarios characterized by data scarcity and domain heterogeneity.
 
 Existing benchmarking efforts have made substantial contributions to the field, with SenseFi~\cite{yang2023sensefi} providing the most comprehensive systematic evaluation by comparing 11 deep learning models across 4 public datasets, thereby establishing standardized evaluation protocols and revealing significant performance variations across different architectures and datasets. However, these valuable benchmarking studies operate under the fundamental assumption that abundant labeled real-world training data is readily available, which creates a substantial gap between research achievements and practical deployment scenarios. While prior research has explored various sophisticated approaches including transfer learning methodologies, domain adaptation techniques, and data augmentation strategies, these approaches still fundamentally depend on the availability of sufficient target-domain labeled data, leaving the core challenge of data scarcity largely unaddressed. Furthermore, current evaluation practices predominantly emphasize accuracy metrics while neglecting critical aspects of model reliability, calibration quality, and trustworthiness that are essential for safety-critical applications such as healthcare monitoring and elderly care systems.
 
-Our work addresses these limitations through several novel contributions that advance both the theoretical understanding and practical applicability of WiFi CSI-based human activity recognition. We introduce a physics-guided synthetic data generation framework that models the underlying electromagnetic propagation principles, enabling the creation of realistic synthetic CSI data that captures essential real-world characteristics including multipath effects, environmental variations, and human-signal interactions. We demonstrate the first systematic simulation-to-reality transfer learning study in WiFi CSI HAR, showing that models pre-trained on synthetic data require only 20\% real data for fine-tuning to achieve 82.1\% macro F1 score, representing 98.6\% of full-dataset performance while reducing data collection costs by 80\%. Additionally, we propose an enhanced deep learning architecture incorporating squeeze-and-excitation modules and temporal attention mechanisms that achieves unprecedented cross-domain consistency with identical 83.0±0.1\% F1 performance across both leave-one-subject-out and leave-one-room-out protocols. We acknowledge that our approach has limitations, particularly in handling complex multi-person scenarios and dynamic environmental conditions, and we recognize that the synthetic data generation framework, while physics-guided, may not capture all nuances of real-world signal propagation, necessitating future research into more sophisticated modeling approaches.
+Our work addresses these limitations through several novel contributions that advance both the theoretical understanding and practical applicability of WiFi CSI-based HAR. We introduce a physics-guided synthetic data generation framework that models the underlying electromagnetic propagation principles, enabling the creation of realistic synthetic CSI data that captures essential real-world characteristics including multipath effects, environmental variations, and human-signal interactions. We demonstrate the first systematic simulation-to-reality (Sim2Real) transfer learning study in WiFi CSI HAR, showing that models pre-trained on synthetic data require only 20\% real data for fine-tuning to achieve 82.1\% macro F1 score, representing 98.6\% of full-dataset performance while reducing data collection costs by 80\%. Additionally, we propose an enhanced deep learning architecture incorporating squeeze-and-excitation modules and temporal attention mechanisms that achieves unprecedented cross-domain consistency with identical 83.0±0.1\% F1 performance across both leave-one-subject-out (LOSO) and leave-one-room-out (LORO) protocols. We acknowledge that our approach has limitations, particularly in handling complex multi-person scenarios and dynamic environmental conditions, and we recognize that the synthetic data generation framework, while physics-guided, may not capture all nuances of real-world signal propagation, necessitating future research into more sophisticated modeling approaches.
 
-The remainder of this paper is structured to provide comprehensive coverage of our methodology and findings. Section II reviews related work in WiFi CSI human activity recognition, synthetic data generation approaches, and simulation-to-reality transfer learning techniques, positioning our contributions within the broader research landscape. Section III presents our physics-guided synthetic data generation framework, detailing the underlying propagation models and parameterization strategies that enable realistic CSI simulation. Section IV describes our enhanced model architecture incorporating attention mechanisms and our trustworthy evaluation protocols that assess both accuracy and calibration quality. Section V presents comprehensive experimental results across three systematic evaluation protocols, demonstrating the effectiveness of our approach through rigorous cross-domain and transfer learning assessments. Section VI provides an in-depth discussion of our findings, their implications for the field, and the limitations that guide future research directions, while Section VII concludes the paper with a synthesis of our contributions and their broader impact on ubiquitous sensing applications.
 
-\textbf{Our Approach:} We propose a novel \textit{physics-guided synthetic data generation framework} that addresses the data scarcity challenge through simulation-to-reality (Sim2Real) transfer learning. Our key insight is that WiFi signal propagation follows well-established physical principles, enabling the generation of realistic synthetic CSI data that captures the essential characteristics of real-world scenarios.
+
+%\textbf{Our Approach:} 
+We propose a novel \textit{physics-guided synthetic data generation framework} that addresses the data scarcity challenge through Sim2Real transfer learning. Our key insight is that WiFi signal propagation follows well-established physical principles, enabling the generation of realistic synthetic CSI data that captures the essential characteristics of real-world scenarios.
 
 \textbf{Key Contributions:}
 \begin{enumerate}
@@ -63,32 +67,34 @@ The remainder of this paper is structured to provide comprehensive coverage of o
 
 \item \textbf{Sample-Efficient Learning:} We demonstrate that models pre-trained on synthetic data require only 20\% real data for fine-tuning to achieve 82.1\% macro F1, representing 98.6\% of full-dataset performance (83.3\%) while reducing data collection costs by 80\%.
 
-\item \textbf{Trustworthy Evaluation Protocol:} We introduce comprehensive reliability assessment including model calibration analysis (ECE), prediction confidence evaluation, and cross-domain robustness testing.
+\item \textbf{Trustworthy Evaluation Protocol:} We introduce comprehensive reliability assessment including model calibration analysis ( Expected Calibration Error (ECE) ), prediction confidence evaluation, and cross-domain robustness testing.
 
-\item \textbf{Enhanced Model Architecture:} We propose an enhanced deep learning architecture incorporating SE modules and temporal attention mechanisms, achieving superior performance on both synthetic and real data.
+\item \textbf{Enhanced Model Architecture:} We propose an enhanced deep learning architecture incorporating squeeze-and-excitation (SE) modules and temporal attention mechanisms, achieving superior performance on both synthetic and real data.
 \end{enumerate}
 
-\textbf{Comprehensive Experimental Validation:} We validate our approach through three systematic evaluation protocols: (1) \textit{Synthetic Robustness Validation}: 540 configurations across noise, class overlap, and difficulty conditions, (2) \textit{CDAE}: 40 configurations validating LOSO/LORO generalization, and (3) \textit{STEA}: 56 configurations quantifying Sim2Real label efficiency. Results demonstrate breakthrough performance including 83.0±0.1\% F1 cross-domain consistency and 82.1\% F1 achievement using only 20\% labeled real data.
+\textbf{Comprehensive Experimental Validation:} We validate our approach through three systematic evaluation protocols: (1) \textit{Synthetic Robustness Validation (SRV)}: 540 configurations across noise, class overlap, and difficulty conditions, (2) \textit{CDAE}: 40 configurations validating LOSO/LORO generalization, and (3) \textit{Sim2Real transfer efficiency assessment (STEA)}: 56 configurations quantifying Sim2Real label efficiency. Results demonstrate breakthrough performance including 83.0±0.1\% F1 cross-domain consistency and 82.1\% F1 achievement using only 20\% labeled real data.
 
-The remainder of this paper is organized as follows: Section II reviews related work in WiFi CSI HAR and synthetic data generation. Section III presents our physics-guided synthetic data generation framework. Section IV describes the enhanced model architecture and trustworthy evaluation protocols. Section V presents comprehensive experimental results. Section VI discusses implications and limitations, and Section VII concludes the paper.
+The remainder of this paper is structured to provide comprehensive coverage of our methodology and findings. Section II reviews related work in WiFi CSI HAR, synthetic data generation approaches, and Sim2Real transfer learning techniques, positioning our contributions within the broader research landscape. Section III presents our physics-guided synthetic data generation framework, detailing the underlying propagation models and parameterization strategies that enable realistic CSI simulation. Section IV describes our enhanced model architecture incorporating attention mechanisms and our trustworthy evaluation protocols that assess both accuracy and calibration quality. Section V presents comprehensive experimental results across three systematic evaluation protocols, demonstrating the effectiveness of our approach through rigorous cross-domain and transfer learning assessments. Section VI provides an in-depth discussion of our findings, their implications for the field, and the limitations that guide future research directions, while Section VII concludes the paper with a synthesis of our contributions and their broader impact on ubiquitous sensing applications.
+
+%The remainder of this paper is organized as follows: Section II reviews related work in WiFi CSI HAR and synthetic data generation. Section III presents our physics-guided synthetic data generation framework. Section IV describes the enhanced model architecture and trustworthy evaluation protocols. Section V presents comprehensive experimental results. Section VI discusses implications and limitations, and Section VII concludes the paper.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig1_system_architecture.pdf}
-\caption{(a) Physics-guided synthetic CSI generation and Sim2Real pipeline overview. Modules: physics modeling (multipath, human interaction, environment), parameterized synthesis, Enhanced model (CNN+SE+temporal attention), and trustworthy evaluation. No quantitative metrics are plotted; this schematic defines the processing flow used in all experiments.}
+\caption{ Physics-guided synthetic CSI generation and Sim2Real pipeline overview. Modules: physics modeling (multipath, human interaction, environment), parameterized synthesis, Enhanced model (Convolutional neural network (CNN)+SE+temporal attention), and trustworthy evaluation. No quantitative metrics are plotted; this schematic defines the processing flow used in all experiments.}
 \label{fig:system_overview}
 \end{figure}
 
-\noindent\textit{Figure Notes (Fig.\,\ref{fig:system_overview}):} Data sources consist of: (i) physics-guided synthetic datasets generated by our configurable engine (SRD sweeps); (ii) real benchmarks from SenseFi for cross-domain and Sim2Real validation. The diagram composes pipeline blocks and data pathways only (no results); downstream metrics reported in later figures include macro F1, Brier, ECE, NLL, CV, and significance (p-values).
+\noindent\textit{Figure Notes (Fig.\,\ref{fig:system_overview}):} Data sources consist of: (i) physics-guided synthetic datasets generated by our configurable engine (SRV sweeps); (ii) real benchmarks from SenseFi for cross-domain and Sim2Real validation. The diagram composes pipeline blocks and data pathways only (no results); downstream metrics reported in later figures include macro F1, Brier, ECE, NLL, CV, and significance (p-values).
 
 
 \section{Related Work}
 
-\subsection{WiFi CSI Human Activity Recognition}
+\subsection{WiFi CSI HAR}
 
 WiFi CSI-based HAR has evolved significantly with the advancement of deep learning architectures and systematic evaluation frameworks. Early works focused on feature engineering approaches~\cite{csi_basics2016}, extracting handcrafted features from CSI amplitude and phase information. The field has since transitioned to end-to-end deep learning approaches with increasingly sophisticated architectures.
 
-\textbf{Deep Learning Architecture Evolution:} CNNs were among the first deep learning approaches applied to WiFi CSI HAR, demonstrating effectiveness in spatial feature extraction~\cite{clnet2021}. Subsequently, recurrent architectures including LSTMs and BiLSTM variants showed superior performance in modeling temporal dependencies in CSI sequences~\cite{rewis2022}. Recent advances have explored attention mechanisms and Transformer-style temporal models for capturing long-range dependencies~\cite{gulati2020conformer,li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer}, while hybrid approaches combining CNN and RNN components have shown promising results.
+\textbf{Deep Learning Architecture Evolution:} CNNs were among the first deep learning approaches applied to WiFi CSI HAR, demonstrating effectiveness in spatial feature extraction~\cite{clnet2021}. Subsequently, recurrent architectures including LSTMs and BiLSTM variants showed superior performance in modeling temporal dependencies in CSI sequences~\cite{rewis2022}. Recent advances have explored attention mechanisms and Transformer-style temporal models for capturing long-range dependencies~\cite{gulati2020conformer,li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer}, while hybrid approaches combining CNN and Recurrent Neural Network (RNN) components have shown promising results.
 
 \textbf{Benchmarking and Gaps:} SenseFi~\cite{yang2023sensefi} systematically compared 11 deep learning models across 4 public datasets, establishing a valuable empirical baseline. Yet, as we discuss in the Introduction, gaps remain around data scarcity, cross-domain generalization, and evaluation reliability (calibration, stability), motivating our physics-guided synthesis and trustworthy protocol design.
 
@@ -99,50 +105,65 @@ WiFi CSI-based HAR has evolved significantly with the advancement of deep learni
 \subsection{Cross-Domain Transfer Learning in Wireless Sensing}
 
 Cross-domain generalization represents one of the most critical challenges in practical WiFi CSI HAR deployment. Domain shifts can occur across multiple dimensions including subjects, environments, hardware configurations, and temporal variations.
+%\textbf{Domain Adaptation Techniques:} 
+Traditional domain adaptation methods have been explored for WiFi CSI HAR, including statistical moment matching, adversarial training, and feature alignment approaches. Wang et al.~\cite{fewsense2022} proposed FewSense for few-shot cross-domain learning, demonstrating improved generalization with limited target domain data. Zhang et al.~\cite{airfi2022} introduced AirFi for domain generalization through meta-learning approaches.
 
-\textbf{Domain Adaptation Techniques:} Traditional domain adaptation methods have been explored for WiFi CSI HAR, including statistical moment matching, adversarial training, and feature alignment approaches. Wang et al.~\cite{fewsense2022} proposed FewSense for few-shot cross-domain learning, demonstrating improved generalization with limited target domain data. Zhang et al.~\cite{airfi2022} introduced AirFi for domain generalization through meta-learning approaches.
-
-\textbf{Subject-Independent Methods:} LOSO evaluation has become the standard protocol for assessing subject-independent generalization. Recent works have explored personalization techniques, adaptive learning, and subject-agnostic feature learning to improve LOSO performance. However, achieving consistent performance across diverse subject populations remains challenging.
-
-\textbf{Environment-Independent Methods:} LORO evaluation addresses environment-independent generalization, which is crucial for deploying CSI systems across different physical spaces. Environmental domain adaptation techniques include signal normalization, environmental feature disentanglement, and physics-informed domain adaptation.
+%\textbf{Subject-Independent Methods:} 
+LOSO evaluation as Subject-Independent methods has become the standard protocol for assessing subject-independent generalization. Recent works have explored personalization techniques, adaptive learning, and subject-agnostic feature learning to improve LOSO performance. However, achieving consistent performance across diverse subject populations remains challenging.
+%\textbf{Environment-Independent Methods:} 
+While LORO evaluation as Environment-Independent methods addresses environment-independent generalization, which is crucial for deploying CSI systems across different physical spaces. Environmental domain adaptation techniques include signal normalization, environmental feature disentanglement, and physics-informed domain adaptation.
 
 \subsection{Synthetic Data Generation for Sensing Applications}
 
 Synthetic data generation has emerged as a promising approach to address data scarcity in various sensing applications, though its application to WiFi CSI HAR remains limited.
 
-\textbf{Physics-Based Simulation:} Traditional wireless simulation approaches rely on ray-tracing methods and electromagnetic field modeling~\cite{ray_tracing_wireless2000}. These methods provide high physical accuracy but are computationally expensive and require detailed environmental models. Recent advances in fast electromagnetic simulation and GPU acceleration have improved computational feasibility.
+%\textbf{Physics-Based Simulation:} 
+Traditional wireless simulation approaches rely on ray-tracing methods and electromagnetic field modeling~\cite{ray_tracing_wireless2000} for Physics-Based simulation. These methods provide high physical accuracy but are computationally expensive and require detailed environmental models. Recent advances in fast electromagnetic simulation and GPU acceleration have improved computational feasibility.
 
-\textbf{Generative Model Approaches:} Deep generative models including GANs, VAEs, and diffusion models have been explored for sensor data synthesis. However, these approaches often lack physical grounding and may generate unrealistic data that does not transfer effectively to real-world scenarios.
+%\textbf{Generative Model Approaches:} 
+Deep generative models including Generative Adversarial Networks (GANs), Variational Autoencoders (VAEs), and diffusion models as generative model approaches have been explored for sensor data synthesis. However, these approaches often lack physical grounding and may generate unrealistic data that does not transfer effectively to real-world scenarios.
 
-\textbf{Physics-Informed Neural Networks:} Recent advances in physics-informed machine learning~\cite{pinn_karniadakis2021} have shown promise in incorporating physical constraints into neural networks. However, their application to WiFi CSI data generation remains largely unexplored, particularly for complex indoor propagation scenarios with human activity.
+%\textbf{Physics-Informed Neural Networks:} 
+Recent advances in physics-informed machine learning~\cite{pinn_karniadakis2021} have shown promise in incorporating physical constraints into neural networks. However, their application to WiFi CSI data generation remains largely unexplored, particularly for complex indoor propagation scenarios with human activity.
 
 \subsection{Sim2Real Transfer Learning}
 
-Simulation-to-reality transfer learning has achieved significant success in robotics~\cite{sim2real_robotics2017} and autonomous driving~\cite{sim2real_autonomous2019}, demonstrating the potential of synthetic data for real-world applications.
+Sim2Real transfer learning has achieved significant success in robotics~\cite{sim2real_robotics2017} and autonomous driving~\cite{sim2real_autonomous2019}, demonstrating the potential of synthetic data for real-world applications.
 
-\textbf{Domain Randomization:} Domain randomization techniques improve sim-to-real transfer by training on diverse simulated environments, increasing model robustness to real-world variations. This approach has been successfully applied in computer vision and robotics but requires adaptation for wireless sensing applications.
-
-\textbf{Progressive Transfer Learning:} Recent works have explored progressive transfer strategies where models are gradually adapted from synthetic to real domains through intermediate domains or progressive fine-tuning. These approaches show promise for bridging large domain gaps between simulation and reality.
-
-\textbf{Transfer Learning Efficiency:} Contemporary research increasingly focuses on sample efficiency in transfer learning, seeking to minimize the amount of real-world data required for effective transfer. Few-shot learning, meta-learning, and self-supervised pretraining have emerged as key techniques for improving transfer efficiency.
+%\textbf{Domain Randomization:} 
+Domain randomization techniques improve sim-to-real transfer by training on diverse simulated environments, increasing model robustness to real-world variations. This approach has been successfully applied in computer vision and robotics but requires adaptation for wireless sensing applications.
+%\textbf{Progressive Transfer Learning:} 
+Recent works have explored progressive transfer strategies where models are gradually adapted from synthetic to real domains through intermediate domains or progressive fine-tuning. These approaches show promise for bridging large domain gaps between simulation and reality.
+%\textbf{Transfer Learning Efficiency:} 
+Contemporary research increasingly focuses on sample efficiency in transfer learning, seeking to minimize the amount of real-world data required for effective transfer. Few-shot learning, meta-learning, and self-supervised pretraining have emerged as key techniques for improving transfer efficiency.
 
 \subsection{Trustworthy Machine Learning in IoT}
 
 The deployment of machine learning in safety-critical IoT applications requires comprehensive trustworthiness evaluation beyond standard accuracy metrics.
 
-\textbf{Model Calibration:} Modern deep neural networks often exhibit poor calibration, producing overconfident predictions~\cite{calibration_guo2017}. Calibration techniques including temperature scaling~\cite{temperature_scaling2017}, Platt scaling, and isotonic regression have been developed to improve prediction reliability.
+%\textbf{Model Calibration:} 
+Modern deep neural networks often exhibit poor calibration, producing overconfident predictions~\cite{calibration_guo2017}. Calibration techniques including temperature scaling~\cite{temperature_scaling2017}, Platt scaling, and isotonic regression have been developed to improve prediction reliability.
+%\textbf{Uncertainty Quantification:} 
+Besides the model calibration,uncertainty quantification plays an important role.
+Bayesian approaches, ensemble methods, and Monte Carlo dropout have been explored for uncertainty estimation in deep learning models~\cite{reliability_assessment2019}. These techniques are particularly important for safety-critical applications where understanding prediction confidence is crucial.
 
-\textbf{Uncertainty Quantification:} Bayesian approaches, ensemble methods, and Monte Carlo dropout have been explored for uncertainty estimation in deep learning models~\cite{reliability_assessment2019}. These techniques are particularly important for safety-critical applications where understanding prediction confidence is crucial.
-
-\textbf{Research Positioning:} Our work addresses several critical gaps in the current literature by providing: (1) the first systematic Sim2Real evaluation framework for WiFi CSI HAR, (2) comprehensive cross-domain evaluation through CDAE protocol, (3) quantitative label efficiency assessment via STEA protocol, and (4) integrated trustworthy evaluation including calibration analysis and cross-domain robustness assessment.
+%\textbf{Research Positioning:} 
+Our work addresses several critical gaps in the current literature by providing: (1) the first systematic Sim2Real evaluation framework for WiFi CSI HAR, (2) in-depth cross-domain evaluation through CDAE protocol, (3) quantitative label efficiency assessment via STEA protocol, and (4) integrated trustworthy evaluation including calibration analysis and cross-domain robustness assessment.
 
 \section{Physics-Guided Synthetic CSI Data Generation}
 
 This section presents our physics-guided synthetic CSI data generation framework, which models the underlying WiFi signal propagation physics to create realistic training data for HAR applications. Figure~\ref{fig:physics_3d_framework} provides a concise 2D schematic of the complete Sim2Real pipeline, illustrating the integration of physics modeling, synthetic generation, and transfer learning components.
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig2_physics_guided_framework.pdf}%2_physics-guided.pdf}
+\caption{Physics-Guided Sim2Real Framework. The framework integrates physics modeling (multipath, human interaction, environment), synthetic CSI generation, and STEA transfer learning protocols. This schematic illustrates the complete pipeline from physical principles to practical deployment, enabling 82.1\% F1 performance at 20\% label efficiency.}
+\label{fig:physics_3d_framework}
+\end{figure}
+
 \subsection{WiFi CSI Signal Model}
 
-WiFi CSI represents the channel characteristics between transmitter and receiver antenna pairs across multiple OFDM subcarriers. For a WiFi system with $N_{tx}$ transmit antennas, $N_{rx}$ receive antennas, and $N_{sc}$ subcarriers, the CSI can be represented as a complex matrix:
+WiFi CSI represents the channel characteristics between transmitter and receiver antenna pairs across multiple Orthogonal Frequency-Division Multiplexing (OFDM) subcarriers. For a WiFi system with $N_{tx}$ transmit antennas, $N_{rx}$ receive antennas, and $N_{sc}$ subcarriers, the CSI can be represented as a complex matrix:
 
 \begin{equation}
 \mathbf{H}(f,t) = \mathbf{A}(f,t) \cdot e^{j\boldsymbol{\Phi}(f,t)}
@@ -196,15 +217,24 @@ To ensure robustness across different environments, our generator incorporates:
 
 \subsection{Parameterized Generation Process}
 
-Our synthetic data generation process is controlled by a comprehensive set of parameters:
+Our synthetic data generation process is controlled by a set of parameters on five aspects. First is activity parameters including activity type, duration, movement patterns, number of subjects. Second is environmental parameters with room dimensions, wall materials, furniture layout, device positions. Third is signal parameters concerning on carrier frequency, bandwidth, antenna configuration, transmission power. Fourth is noise parameters like SNR levels, interference patterns, hardware imperfections. Fifth is difficulty parameters claimed by class overlap, label noise, environmental variability
 
-\begin{itemize}
-\item \textbf{Activity Parameters:} Activity type, duration, movement patterns, number of subjects
-\item \textbf{Environmental Parameters:} Room dimensions, wall materials, furniture layout, device positions
-\item \textbf{Signal Parameters:} Carrier frequency, bandwidth, antenna configuration, transmission power
-\item \textbf{Noise Parameters:} SNR levels, interference patterns, hardware imperfections
-\item \textbf{Difficulty Parameters:} Class overlap, label noise, environmental variability
-\end{itemize}
+%\begin{enumerate}[label=\arabic*.]
+%\item \begin{tcolorbox}[colback=white,colframe=black,boxrule=0.5mm]
+%\textbf{Activity Parameters:} Activity type, duration, movement patterns, number of subjects
+%\end{tcolorbox}
+%\item \textbf{Environmental Parameters:} Room dimensions, wall materials, furniture layout, device positions
+%\item \textbf{Signal Parameters:} Carrier frequency, bandwidth, antenna configuration, transmission power
+%\item \textbf{Noise Parameters:} SNR levels, interference patterns, hardware imperfections
+%\item \textbf{Difficulty Parameters:} Class overlap, label noise, environmental variability
+%\\end{enumerate}
+%\begin{itemize}
+%\item \textbf{Activity Parameters:} Activity type, duration, movement patterns, number of subjects
+%\item \textbf{Environmental Parameters:} Room dimensions, wall materials, furniture layout, device positions
+%\item \textbf{Signal Parameters:} Carrier frequency, bandwidth, antenna configuration, transmission power
+%\item \textbf{Noise Parameters:} SNR levels, interference patterns, hardware imperfections
+%\item \textbf{Difficulty Parameters:} Class overlap, label noise, environmental variability
+%\end{itemize}
 
 The generation process can be formulated as:
 
@@ -216,20 +246,12 @@ where $\mathcal{G}(\cdot)$ represents the physics-guided generator function.
 
 \subsection{Multi-Level Caching System}
 
-To enable efficient generation of large-scale synthetic datasets, we implement a multi-level caching system:
-
-\textbf{Disk Caching:} Generated datasets are cached as `.pkl` files with MD5-based unique identifiers, enabling reuse across experiments.
-
-\textbf{Memory Caching:} A memory-resident cache with LRU eviction policy accelerates data loading during training sweeps.
-
+To enable efficient generation of large-scale synthetic datasets, we implement a multi-level caching system structured by disk caching and memory caching. The first generated datasets are cached as `.pkl` files with MD5-based unique identifiers, enabling reuse across experiments, while a memory-resident cache with LRU eviction policy accelerates data loading during training sweeps.
+%\textbf{Disk Caching:} Generated datasets are cached as `.pkl` files with MD5-based unique identifiers, enabling reuse across experiments.
+%\textbf{Memory Caching:} A memory-resident cache with LRU eviction policy accelerates data loading during training sweeps.
 This caching system reduces dataset generation time from minutes to seconds for repeated experiments with identical parameters.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=\columnwidth]{figures/fig2_physics_guided_framework.pdf}%2_physics-guided.pdf}
-\caption{Physics-Guided Sim2Real Framework (2D). The framework integrates physics modeling (multipath, human interaction, environment), synthetic CSI generation, and STEA transfer learning protocols. This schematic illustrates the complete pipeline from physical principles to practical deployment, enabling 82.1\% F1 performance at 20\% label efficiency.}
-\label{fig:physics_3d_framework}
-\end{figure}
+
 
 \subsection{Framework Integration and Validation}
 
@@ -284,7 +306,7 @@ The Enhanced model architecture design is guided by three key principles: (1) \t
 
 \subsection{Trustworthy Evaluation Protocol}
 
-We assess calibration with Expected Calibration Error (ECE)~\cite{calibration_guo2017}:
+We assess calibration with ECE~\cite{calibration_guo2017}:
 
 \begin{equation}
 \text{ECE} = \sum_{m=1}^{M} \frac{|B_m|}{n} |\text{acc}(B_m) - \text{conf}(B_m)|
@@ -292,14 +314,14 @@ We assess calibration with Expected Calibration Error (ECE)~\cite{calibration_gu
 
 where $B_m$ represents the $m$-th confidence bin, $\text{acc}(B_m)$ is the accuracy within the bin, and $\text{conf}(B_m)$ is the average confidence.
 
-We further evaluate reliability using:
+We further evaluate reliability using Brier Score to measures the accuracy of probabilistic predictions and Negative Log-Likelihood to assesses the quality of probability estimates.
 
-\textbf{Brier Score:} Measures the accuracy of probabilistic predictions:
+%\textbf{Brier Score:} Measures the accuracy of probabilistic predictions:
 \begin{equation}
 \text{Brier} = \frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} (p_{i,k} - y_{i,k})^2
 \end{equation}
 
-\textbf{Negative Log-Likelihood:} Assesses the quality of probability estimates:
+%\textbf{Negative Log-Likelihood:} Assesses the quality of probability estimates:
 \begin{equation}
 \text{NLL} = -\frac{1}{N} \sum_{i=1}^{N} \log p_{i,y_i}
 \end{equation}
@@ -309,7 +331,7 @@ We further evaluate reliability using:
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/fig4_experimental_protocols.pdf}
-\caption{Experimental protocols overview: Synthetic Robustness Validation (SRD, 540 configurations; first use in full), CDAE (LOSO/LORO), and STEA label-efficiency evaluation.}
+\caption{Experimental protocols overview: SRD (540 configurations; first use in full), CDAE (LOSO/LORO), and STEA label-efficiency evaluation.}
 \label{fig:protocols}
 \end{figure*}
 
@@ -365,42 +387,76 @@ We compare four deep learning architectures:
 
 \subsection{CDAE Protocol Results: Cross-Domain Adaptation Excellence}
 
-\textbf{Cause→Effect: Why CDAE and what it reveals.} \emph{Cause:} Real deployments face subject and environment shifts; training on one cohort or room often degrades in another. \emph{Design:} CDAE isolates these axes via LOSO (subject shift) and LORO (environment shift), holding all else constant. \emph{Effect:} If an architecture truly learns domain-agnostic features (not shortcuts), its LOSO and LORO scores converge and remain stable across seeds. This is precisely what Figure~\ref{fig:cross_domain} shows for the Enhanced model.
-
-The CDAE protocol evaluation reveals exceptional cross-domain consistency in the Enhanced model architecture. Figure~\ref{fig:cross_domain} presents comprehensive results across both LOSO and LORO evaluation schemes, demonstrating the Enhanced model's unprecedented domain-agnostic performance (83.0±0.1\% macro F1) with remarkable stability ($\text{CV}<0.2\%$).
+%\textbf{Cause→Effect: Why CDAE and what it reveals.} \emph{Cause:} 
+Real deployments face subject and environment shifts; training on one cohort or room often degrades in another. %\emph{Design:} 
+CDAE isolates these axes via LOSO (subject shift) and LORO (environment shift), holding all else constant. %\emph{Effect:} 
+If an architecture truly learns domain-agnostic features (not shortcuts), its LOSO and LORO scores converge and remain stable across seeds. This is precisely what Figure~\ref{fig:cross_domain} shows for the Enhanced model.
+The CDAE protocol evaluation reveals exceptional cross-domain consistency in the Enhanced model architecture. Figure~\ref{fig:cross_domain} presents thorough results across both LOSO and LORO evaluation schemes, demonstrating the Enhanced model's unprecedented domain-agnostic performance (83.0±0.1\% macro F1) with remarkable stability ($\text{CV}<0.2\%$).
 
 \begin{figure*}[ht]
 \centering
 \includegraphics[width=\linewidth]{figures/fig5_cross_domain.pdf}%_cross-domain.pdf}
-\caption{Cross-domain generalization performance across LOSO and LORO. Subplots: (top-left) main LOSO/LORO comparison with error bars; (top-right) cross-domain gap $|\text{LOSO}-\text{LORO}|$ (lower is better); (bottom-left) stability (CV, log-scale); (bottom-right) significance (−log$_{10}$(p)). The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
+\caption{Analysis of model performance across different metrics. 
+(a) Heatmap of standardized performance metrics for various models, showcasing similarities and differences through color intensity. 
+(b) Radar chart comparing the Enhanced model and CNN based on four key metrics: LOSO F1, LORO F1, Stability Index, and Deployment Readiness, highlighting the Enhanced model’s advantages. 
+(c) Correlation matrix displaying pairwise relationships among metrics, with the diagonal indicating self-correlation and the lower triangle showing interactions between different metrics. 
+(d) Bar chart ranking models by composite scores derived from key metrics, indicating overall performance. 
+(e) Line plot comparing LOSO and LORO F1 scores across models, illustrating performance consistency in cross-domain evaluations. The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
+%\caption{Cross-domain generalization performance across LOSO and LORO. Subplots:(a)Performance metrics heatmap score for four models. (b)Model comparison radar chart showcase four aspects strengths by CNN and Enhanced models. (c)Metric Correlation Matrix of seven dimensions, the diagonal is default 1.0. (d)Composite score of over all model ranking bars. (e) Micro F1 of LOSO vc LORO across four models. The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
+%\caption{Cross-domain generalization performance across LOSO and LORO. Subplots: (a) main LOSO/LORO comparison with error bars; (top-right) cross-domain gap $|\text{LOSO}-\text{LORO}|$ (lower is better); (bottom-left) stability (CV, log-scale); (bottom-right) significance (−log$_{10}$(p)). The Enhanced model achieves identical 83.0±0.1\% macro F1 with exceptional stability ($\text{CV}<0.2\%$).}
 \label{fig:cross_domain}
 \end{figure*}
 
-\noindent\textit{Comparative context (CDAE):} SenseFi~\cite{yang2023sensefi} establishes a broad in-domain baseline across 11 deep models and 4 datasets, yet reports sizable variability across protocols. Recent temporal-attention families—Conformer~\cite{gulati2020conformer}, TimeSformer~\cite{bertasius2021timesformer}, TFT~\cite{lim2021tft}, Informer~\cite{zhou2021informer}—improve long-range modeling but in our cross-domain CDAE setting still exhibit protocol sensitivity noted by environment shifts, echoing domain-generalization studies in WiFi (AirFi~\cite{airfi2022}, FewSense~\cite{fewsense2022}, ReWiS~\cite{rewis2022}). Our CNN+SE+temporal attention yields LOSO≈LORO with markedly lower variance, indicating domain-agnostic features under the same evaluation.
+%\noindent\textit{Comparative context (CDAE):} 
+SenseFi~\cite{yang2023sensefi} establishes a broad in-domain baseline across 11 deep models and 4 datasets, yet reports sizable variability across protocols. Recent temporal-attention families—Conformer~\cite{gulati2020conformer}, TimeSformer~\cite{bertasius2021timesformer}, TFT~\cite{lim2021tft}, Informer~\cite{zhou2021informer}—improve long-range modeling but in our cross-domain CDAE setting still exhibit protocol sensitivity noted by environment shifts, echoing domain-generalization studies in WiFi (AirFi~\cite{airfi2022}, FewSense~\cite{fewsense2022}, ReWiS~\cite{rewis2022}). Our CNN+SE+temporal attention yields LOSO≈LORO with markedly lower variance, indicating domain-agnostic features under the same evaluation.
 
-\textbf{LOSO Protocol Results:} The Enhanced model achieves 83.0±0.1\% macro F1, demonstrating superior subject-independent generalization. While the CNN baseline achieves slightly higher mean performance (84.2±2.5\%), it exhibits significantly higher variability, indicating reduced robustness across different subjects. The BiLSTM baseline reaches 80.3±2.2\% F1, showing reasonable performance but with higher variance than the Enhanced model. The Conformer-lite architecture shows instability with high variability ($\text{CV}=95.7\%$), suggesting poor adaptation to the subject-independent scenario.
+%\textbf{LOSO Protocol Results:} 
+Under the LOSO protocol, the Enhanced model achieves 83.0±0.1\% macro F1, demonstrating superior subject-independent generalization. While the CNN baseline achieves slightly higher mean performance (84.2±2.5\%), it exhibits significantly higher variability, indicating reduced robustness across different subjects. The BiLSTM baseline reaches 80.3±2.2\% F1, showing reasonable performance but with higher variance than the Enhanced model. The Conformer-lite architecture shows instability with high variability ($\text{CV}=95.7\%$), suggesting poor adaptation to the subject-independent scenario.
+%\textbf{LORO Protocol Results:} 
+Under the LORO protocol, the Enhanced model maintains identical performance (83.0±0.1\% F1), demonstrating exceptional environment-independent generalization. Notably, the Conformer-lite model shows dramatically improved stability in LORO (84.1±4.0\% F1, $\text{CV}=4.7\%$) compared to LOSO, suggesting architectural sensitivity to evaluation protocol. The CNN and BiLSTM baselines show moderate performance with higher variability.
+%\textbf{Cross-Protocol Consistency:} 
+The Enhanced model's identical performance across LOSO and LORO protocols (83.0\% in both cases) indicates superior domain-agnostic feature learning. This consistency is crucial for practical deployment where models must generalize across both subjects and environments simultaneously.
 
-\textbf{LORO Protocol Results:} Under the LORO protocol, the Enhanced model maintains identical performance (83.0±0.1\% F1), demonstrating exceptional environment-independent generalization. Notably, the Conformer-lite model shows dramatically improved stability in LORO (84.1±4.0\% F1, $\text{CV}=4.7\%$) compared to LOSO, suggesting architectural sensitivity to evaluation protocol. The CNN and BiLSTM baselines show moderate performance with higher variability.
+%\textbf{Comprehensive Seven-Panel Feature Space Analysis:} 
+Figure~\ref{fig:pca_analysis} presents a systematically organized seven-panel analysis designed for optimal readability and interpretation. 
+PCA Feature Space Analysis (a) illustrates the clustering patterns in the PCA biplot, where the Enhanced model demonstrates superior LOSO-LORO consistency with overlapping protocol distributions. The PCA reveals that the first principal component explains 16.6\% of the variance and the second principal component accounts for 11.7\%, effectively differentiating the Enhanced model from CNN and other models across both protocols. 
+Cross-Protocol Consistency Analysis (b) quantifies the Enhanced model's performance with a minimal LOSO-LORO distance of 0.28, significantly outperforming the CNN model with a distance of 3.45. This analysis underscores the consistency of model outputs between the two evaluation protocols. 
+PCA Explained Variance (c) shows a bar graph depicting the explained variance ratios for the first five principal components. The first two components collectively capture 28.3\% of the total variance, highlighting the contribution of specific features in distinguishing model performance. 
+Model Separation Distances (d) quantifies the inter-model distances within the feature space using a heat map where lighter colors represent closer proximity. This visual clearly illustrates the separation among models, indicating that the Enhanced model maintains marked distinctiveness compared to its counterparts.
+3D Feature Space Visualization (e) confirms clustering patterns through three-dimensional projections. The Enhanced model samples form coherent clusters, reinforcing the findings from previous analyses regarding protocol consistency.
+PCA Feature Loadings Matrix (f) provides a heatmap visualization of the contribution of each feature dimension to the first five principal components. It indicates that features associated with Temporal Patterns and Signal Strength play significant roles in the PCA outputs.
+Feature Contributions to Top 2 PCs (g) specifically highlights the relative importance of each feature dimension to the first two principal components. The findings reveal that the Enhanced model's superior performance arises from a balanced utilization of both temporal (PC1: 0.70) and spatial features (PC2: 0.45).
+%The left column features three primary analyses: 
+%The main PCA biplot (a) revealing distinct clustering patterns where the Enhanced model demonstrates superior LOSO-LORO consistency through tightly overlapping protocol distributions, complemented by embedded legend for space efficiency; the cross-protocol consistency analysis (b) quantifying Enhanced model's minimal LOSO-LORO distance (0.08), significantly outperforming CNN (0.84), BiLSTM (0.23), and Conformer-lite (4.56); and the comprehensive PCA feature loadings matrix (d) providing heatmap visualization of how each feature dimension contributes to the first five principal components.
 
-\textbf{Cross-Protocol Consistency:} The Enhanced model's identical performance across LOSO and LORO protocols (83.0\% in both cases) indicates superior domain-agnostic feature learning. This consistency is crucial for practical deployment where models must generalize across both subjects and environments simultaneously.
-
-\textbf{Comprehensive Seven-Panel Feature Space Analysis:} Figure~\ref{fig:pca_analysis} presents a systematically organized seven-panel analysis arranged in a clear 3×2 layout for optimal readability and interpretation. The left column features three primary analyses: the main PCA biplot (top) revealing distinct clustering patterns where the Enhanced model demonstrates superior LOSO-LORO consistency through tightly overlapping protocol distributions, complemented by embedded legend for space efficiency; the cross-protocol consistency analysis (middle) quantifying Enhanced model's minimal LOSO-LORO distance (0.08), significantly outperforming CNN (0.84), BiLSTM (0.23), and Conformer-lite (4.56); and the comprehensive PCA feature loadings matrix (bottom) providing heatmap visualization of how each feature dimension contributes to the first five principal components.
-
-The right column delivers four complementary statistical analyses: variance explained analysis (top) showing that the first two principal components capture 28.3\% of total variance (PC1: 20.1\%, PC2: 8.2\%); model separation distance matrix (upper-middle) quantifying inter-model distances in feature space; 3D feature space visualization (lower-middle) confirming clustering patterns through three-dimensional projections where Enhanced model samples form coherent clusters across both evaluation protocols; and feature contributions analysis (bottom) specifically highlighting the relative importance of each feature dimension to the top two principal components, revealing that Enhanced model's superior performance stems from balanced utilization of temporal (PC1: 0.45) and spatial features (PC2: 0.38).
+%The right column delivers four complementary statistical analyses: variance explained analysis (top) showing that the first two principal components capture 28.3\% of total variance (PC1: 20.1\%, PC2: 8.2\%); model separation distance matrix (upper-middle) quantifying inter-model distances in feature space; 3D feature space visualization (lower-middle) confirming clustering patterns through three-dimensional projections where Enhanced model samples form coherent clusters across both evaluation protocols; and feature contributions analysis (bottom) specifically highlighting the relative importance of each feature dimension to the top two principal components, revealing that Enhanced model's superior performance stems from balanced utilization of temporal (PC1: 0.45) and spatial features (PC2: 0.38).
 
 The comprehensive analysis across all seven visualization panels validates that the Enhanced model's architectural design—integrating SE attention and temporal mechanisms—produces more robust and generalizable feature representations. This multi-dimensional evidence, including detailed feature loading analysis and quantitative contribution assessments, strongly supports the Enhanced model's superior cross-domain performance observed in the main experimental results.
 
 \begin{figure*}[ht]
 \centering
 \includegraphics[width=\linewidth]{figures/fig6_pca_analysis.pdf}
-\caption{Comprehensive seven-panel PCA analysis organized in a clear 3×2 layout for optimal visualization and interpretation. \textbf{Left Column (Primary Analyses):} Top - Main PCA biplot with embedded legend, feature loading vectors, and confidence ellipses showing Enhanced model's superior LOSO-LORO consistency; Middle - Cross-protocol consistency analysis revealing Enhanced model's minimal LOSO-LORO distance (0.08) versus CNN (0.84), BiLSTM (0.23), and Conformer-lite (4.56); Bottom - PCA feature loadings matrix providing heatmap visualization of feature contributions to the first five principal components. \textbf{Right Column (Statistical Decomposition):} Top - Explained variance analysis with cumulative curve showing PC1 (20.1\%) and PC2 (8.2\%) contributions; Upper-middle - Inter-model separation distance heatmap quantifying feature space clustering; Lower-middle - 3D feature space visualization confirming clustering patterns across three principal components; Bottom - Feature contributions analysis highlighting relative importance to top two principal components, demonstrating Enhanced model's balanced temporal-spatial feature utilization. The systematic layout enables comprehensive understanding of Enhanced model's superior cross-domain generalization capabilities.}
+\caption{Comprehensive seven-panel PCA analysis organized for optimal visualization and interpretation. 
+(a) Main PCA biplot illustrating Enhanced model's superior LOSO-LORO consistency with distinct clustering patterns. 
+(b) Cross-protocol consistency analysis showing minimal LOSO-LORO distance of **0.28** for the Enhanced model compared to CNN (3.45), BiLSTM (0.23), and Conformer-lite (4.56). 
+(c) PCA feature loadings matrix heatmap visualizing contributions of each feature to the first five principal components. 
+(d) Explained variance analysis displaying contributions of PC1 (16.6\%) and PC2 (11.7\%) to total variance. 
+(e) Inter-model separation distance heatmap quantifying clustering in feature space. 
+(f) 3D feature space visualization confirming clustering patterns across three principal components. 
+(g) Feature contributions analysis highlighting the importance of temporal (PC1: 0.70) and spatial features (PC2: 0.45) for Enhanced model performance. 
+This systematic layout facilitates a comprehensive understanding of the Enhanced model's cross-domain generalization capabilities.}
+%\caption{Comprehensive seven-panel PCA analysis organized in a clear 1+3×2 layout for optimal visualization and interpretation. \textbf{Left Column (Primary Analyses):} (a)- Main PCA biplot with embedded legend, feature loading vectors, and confidence ellipses showing Enhanced model's superior LOSO-LORO consistency; Middle - Cross-protocol consistency analysis revealing Enhanced model's minimal LOSO-LORO distance (0.08) versus CNN (0.84), BiLSTM (0.23), and Conformer-lite (4.56); Bottom - PCA feature loadings matrix providing heatmap visualization of feature contributions to the first five principal components. \textbf{Right Column (Statistical Decomposition):} Top - Explained variance analysis with cumulative curve showing PC1 (20.1\%) and PC2 (8.2\%) contributions; Upper-middle - Inter-model separation distance heatmap quantifying feature space clustering; Lower-middle - 3D feature space visualization confirming clustering patterns across three principal components; Bottom - Feature contributions analysis highlighting relative importance to top two principal components, demonstrating Enhanced model's balanced temporal-spatial feature utilization. The systematic layout enables comprehensive understanding of Enhanced model's superior cross-domain generalization capabilities.}
 \label{fig:pca_analysis}
 \end{figure*}
 
 \subsection{STEA Protocol Results: Sim2Real Transfer Efficiency Breakthrough}
 
-\textbf{Cause→Effect: Why label efficiency matters.} \emph{Cause:} Labeled CSI is expensive; we must trade labels for simulation. \emph{Design:} STEA sweeps label ratios and transfer methods (zero-shot, linear probe, fine-tune, calibration) to attribute gains to the mechanism, not luck. \emph{Effect:} The S-shaped curve in Figure~\ref{fig:label_efficiency} emerges: pretraining lifts the cold-start floor (1\%), fine-tuning unlocks rapid gains (5\%), and beyond 20\% labels the curve flattens, proving diminishing returns and a practical budget.
-
+%\textbf{Cause→Effect: Why label efficiency matters.} \emph{Cause:} 
+Labeled CSI is expensive so that we must trade labels for simulation. 
+%\emph{Design:} 
+STEA sweeps label ratios and transfer methods (zero-shot, linear probe, fine-tune, calibration) to attribute gains to the mechanism, not luck. 
+%\emph{Effect:} 
+The S-shaped curve in Figure~\ref{fig:label_efficiency} emerges: pretraining lifts the cold-start floor (1\%), fine-tuning unlocks rapid gains (5\%), and beyond 20\% labels the curve flattens, proving diminishing returns and a practical budget.
 The STEA protocol evaluation demonstrates a paradigm-shifting breakthrough in Sim2Real transfer efficiency. Figure~\ref{fig:label_efficiency} presents the complete label efficiency characterization, revealing that the Enhanced model achieves 82.1±0.3\% macro F1 performance using only 20\% labeled real data. This represents merely a 1.2\% performance gap compared to full supervision (83.3\%) while reducing labeling costs by 80\%.
 
 \begin{figure}[ht]
@@ -410,17 +466,22 @@ The STEA protocol evaluation demonstrates a paradigm-shifting breakthrough in Si
 \label{fig:label_efficiency}
 \end{figure}
 
-\noindent\textit{Comparative context (STEA):} While SenseFi~\cite{yang2023sensefi} benchmarks assume abundant labeled data, our STEA results quantify the minimal real labels to reach a practical operating point, complementing efficiency-oriented works（e.g., model/lightweight pipelines~\cite{efficientfi2022}）. Attention-based time-series/video models~\cite{li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer} emphasize representational capacity; our findings highlight the economic side—synthetic pretraining plus modest fine-tuning achieves near-ceiling F1 at 20\% labels.
+%\noindent\textit{Comparative context (STEA):} 
+While SenseFi~\cite{yang2023sensefi} benchmarks assume abundant labeled data, our STEA results quantify the minimal real labels to reach a practical operating point, complementing efficiency-oriented works（e.g., model/lightweight pipelines~\cite{efficientfi2022}）. Attention-based time-series/video models~\cite{li2020tea,bertasius2021timesformer,lim2021tft,zhou2021informer} emphasize representational capacity; our findings highlight the economic side—synthetic pretraining plus modest fine-tuning achieves near-ceiling F1 at 20\% labels.
 
-\textbf{Label Efficiency Analysis:} The efficiency curve reveals three distinct phases: (1) \textit{Bootstrap phase} (1\%): Synthetic pretraining provides substantial improvement over zero-shot baseline (45.5\% vs 15.4\% F1), (2) \textit{Rapid improvement phase} (5\%): Performance jumps to 78.0±1.6\% F1, approaching practical deployment threshold, (3) \textit{Convergence phase} ($\geq 20\%$): Performance stabilizes at 82.1±0.3\% F1, achieving target efficiency.
-
-\textbf{Transfer Method Comparison:} Fine-tuning significantly outperforms alternative transfer approaches. At 20\% label ratio, fine-tuning achieves 82.1\% F1 compared to linear probing (21.8\%) and zero-shot (15.1\%). This 60+ percentage point advantage demonstrates the critical importance of end-to-end fine-tuning for effective Sim2Real transfer in WiFi CSI HAR.
-
-\textbf{Cost-Benefit Analysis:} The 20\% label efficiency represents an 80\% reduction in data collection costs while maintaining 98.6\% of full-supervision performance (82.1\% vs 83.3\%). This breakthrough enables practical deployment in resource-constrained scenarios where extensive data collection is prohibitive.
+%\textbf{Label Efficiency Analysis:}
+The efficiency curve reveals three distinct phases: (1) \textit{Bootstrap phase} (1\%): Synthetic pretraining provides substantial improvement over zero-shot baseline (45.5\% vs 15.4\% F1), (2) \textit{Rapid improvement phase} (5\%): Performance jumps to 78.0±1.6\% F1, approaching practical deployment threshold, (3) \textit{Convergence phase} ($\geq 20\%$): Performance stabilizes at 82.1±0.3\% F1, thereby achieving target efficiency.
+%\textbf{Transfer Method Comparison:} 
+Fine-tuning significantly outperforms alternative transfer approaches. At 20\% label ratio, fine-tuning achieves 82.1\% F1 compared to linear probing (21.8\%) and zero-shot (15.1\%). This 60+ percentage point advantage demonstrates the critical importance of end-to-end fine-tuning for effective Sim2Real transfer in WiFi CSI HAR.
+%\textbf{Cost-Benefit Analysis:} 
+The 20\% label efficiency represents an 80\% reduction in data collection costs while maintaining 98.6\% of full-supervision performance (82.1\% vs 83.3\%). This breakthrough enables practical deployment in resource-constrained scenarios where extensive data collection is prohibitive.
 
 \subsection{Model Performance Comparison}
 
-\textbf{Cause→Effect synthesis.} \emph{Cause:} Integrating channel reweighting (SE) and temporal attention should improve robustness under shifts and noise by suppressing spurious channels and focusing on informative segments. \emph{Effect:} Enhanced reaches identical LOSO/LORO and high label efficiency, while Conformer-lite oscillates across protocols. This aligns with PSTA/ESTA stress and stability readings.
+%\textbf{Cause→Effect synthesis.} \emph{Cause:} 
+Integrating channel reweighting (SE) and temporal attention should improve robustness under shifts and noise by suppressing spurious channels and focusing on informative segments. 
+%\emph{Effect:} 
+Enhanced reaches identical LOSO/LORO and high label efficiency, while Conformer-lite oscillates across protocols. This aligns with progressive stress-test assessment (PSTA)/extended stability-test assessment (ESTA) stress and stability readings.
 
 % (Dropped literature comparison table due to lack of reported parameters in WiFi-CSI literature.)
 
@@ -442,33 +503,47 @@ Conformer-lite & 40.3±38.6\% & 84.1±4.0\% & N/A & $\text{CV}=95.7\%$† \\
 \label{tab:model_performance}
 \end{table}
 
-%<<<<<<< Updated upstream
 \subsection{PSTA/ESTA Experiments: Progressive Stress-Test and Extended Stability}
 
-\textbf{Motivation:} While Sections~\ref{fig:protocols}--\ref{fig:label_efficiency} establish cross-domain generalization and label-efficiency, two open questions remain: (1) How do models behave under progressively harder simulated conditions when trained across multiple random seeds (stress-test)? (2) Are observed trends stable when evaluations are extended with additional GPU runs (repeatability)? \textbf{PSTA} targets (1) and \textbf{ESTA} targets (2).
+%\textbf{Motivation:} 
+While Sections~\ref{fig:protocols}--\ref{fig:label_efficiency} establish cross-domain generalization and label-efficiency, two open questions remain: (1) How do models behave under progressively harder simulated conditions when trained across multiple random seeds (stress-test)? (2) Are observed trends stable when evaluations are extended with additional GPU runs (repeatability)? \textbf{PSTA} targets (1) and \textbf{ESTA} targets (2).
 
-\textbf{Design (PSTA Progressive Stress-Test):} We fix the synthetic data generator to the hard regime and progressively stress key nuisance parameters while training 5 random seeds per model. Specifically, we vary: class-overlap in $[0.6,0.8]$, noise standard deviation in $[0.4,0.6]$, and gain-drift standard deviation in $[0.4,0.6]$, while keeping sequence length $T{=}128$ and feature dimension $F{=}52$. Optimizer is Adam with learning rate $10^{-3}$ (cosine decay), batch size 768, early-stopping on macro F1. This emulates realistic, noisy deployments with increased ambiguity and acquisition noise.
 
-\textbf{Design (ESTA Extended Stability):} We repeat the best-performing PSTA (D5) settings for the top models (Enhanced, CNN) and run two additional GPU seeds to test repeatability in a resource-realistic setting. This captures whether gains are robust to implementation-level randomness (cudnn/tensor order) beyond the PSTA CPU-level seeds.
+The synthetic data generator is fixed to the hard regime, and key nuisance parameters are progressively stressed while training five random seeds per model. Specifically, the following parameters are varied: class-overlap in the range of 0.6 to 0.8, noise standard deviation in the range of 0.4 to 0.6, and gain-drift standard deviation in the range of 0.4 to 0.6. Concurrently, the sequence length is fixed at 128, and the feature dimension is set to 52. The optimizer employed in this study is Adam, with a learning rate of $10^{-3}$ (cosine decay), a batch size of 768, and early-stopping on macro F1. This emulates realistic, noisy deployments with increased ambiguity and acquisition noise.
+The optimal PSTA configurations for the leading models (Enhanced, CNN) are reiterated, and two supplementary GPU seeds are employed to assess the replicability of results in a realistic resource context. This captures whether gains are robust to implementation-level randomness (cudnn/tensor order) beyond the PSTA CPU-level seeds.
+The PSTA model demonstrates a heightened degree of stress robustness, thereby enhancing and extending the Conformer-lite sustain near-ceiling macro F1, despite the presence of challenging factors such as overlap, noise, and drift. In contrast, the BiLSTM model exhibits heightened sensitivity, characterized by high variance.
+The ESTA evidence indicates stability, with trends that demonstrate minimal variance across fresh GPU runs. This finding suggests that the training dynamics are repeatable and not artifacts of specific seeds or backends.
+Practitioners can adjust the difficulty level through the following methods: (i) class-overlap ($0.6 to $0.8), (ii) noise standard deviation ($0.4 to $0.6), and (iii) gain-drift standard deviation ($0.4 to $0.6). It is recommended that a sweep be conducted with a 3-by-3-by-3 grid over these ranges, with 3–5 seeds per model. In instances where computation is the primary constraint, it is imperative to maintain a value of 128 for T, a value of 52 for F, a value of 10⁻³ for lr, the implementation of cosine decay, and a batch size of 512 to 768. Additionally, it is crucial to implement early-stopping on macro F1 with a patience of 10. In order to ensure reproducibility, it is essential to fix data-generation seeds separately from training seeds.
+%We fix the synthetic data generator to the hard regime and progressively stress key nuisance parameters while training 5 random seeds per model. Specifically, we vary: class-overlap in $[0.6,0.8]$, noise standard deviation in $[0.4,0.6]$, and gain-drift standard deviation in $[0.4,0.6]$, while keeping sequence length $T{=}128$ and feature dimension $F{=}52$. Optimizer is Adam with learning rate $10^{-3}$ (cosine decay), batch size 768, early-stopping on macro F1. This emulates realistic, noisy deployments with increased ambiguity and acquisition noise.
+%We repeat the best-performing PSTA settings for the top models (Enhanced, CNN) and run two additional GPU seeds to test repeatability in a resource-realistic setting. This captures whether gains are robust to implementation-level randomness (cudnn/tensor order) beyond the PSTA CPU-level seeds.
+P%STA reveals stress robustness that enhanced and Conformer-lite sustain near-ceiling macro F1 despite harder overlap/noise/drift, whereas BiLSTM is more sensitive (high variance). 
+%ESTA evidences stability that trends persist with minimal variance across fresh GPU runs, indicating training dynamics are repeatable and not artifacts of specific seeds or backends.
+%Practitioners can dial difficulty via: (i) class-overlap ($0.6\rightarrow0.8$), (ii) noise std ($0.4\rightarrow0.6$), (iii) gain-drift std ($0.4\rightarrow0.6$). A recommended sweep is 3$\times$3$\times$3 grid over these ranges with 3--5 seeds per model. When compute-limited, keep $T{=}128,F{=}52$, lr $10^{-3}$ with cosine decay, and batch 512--768; adopt early-stopping on macro F1 with patience 10. For reproducibility, fix data-generation seeds separately from training seeds.
 
-\textbf{What they showcase:} PSTA reveals \emph{stress robustness}: Enhanced and Conformer-lite sustain near-ceiling macro F1 despite harder overlap/noise/drift, whereas BiLSTM is more sensitive (high variance). ESTA evidences \emph{stability}: trends persist with minimal variance across fresh GPU runs, indicating training dynamics are repeatable and not artifacts of specific seeds or backends.
+ 
+As illustrated in Figure~\ref{fig:d5d6_results}, a dual-panel analysis is employed to compare the performance of models under the PSTA and ESTA protocols. Panel (a) provides a visual representation of the macro F1 scores for a range of models, including BILSTM, CNN, Conformer-lite, and the Enhanced model. The Enhanced model demonstrates a mean macro F1 score of 0.989, with a standard deviation of 0.016, suggesting enhanced consistency and robustness in comparison to the CNN's score of 0.985 and the Conformer-lite's 0.992. Panel (b) further underscores the efficacy of the model through a Brier score analysis, wherein the Enhanced model exhibits a conspicuously low Brier mean of 0.0021 in comparison to the other models. This outcome underscores the Enhanced model's precision in generating reliable predictions with minimal uncertainty, thereby reinforcing its efficacy in performance metrics across both protocols. The figure's systematic layout enables direct comparison, facilitating a comprehensive understanding of each model's strengths and weaknesses.
+%Figure~\ref{fig:d5_d6_composite} presents a dual-panel analysis comparing the performance of models under the PSTA and ESTA protocols. Panel (a) illustrates the macro F1 scores for various models, including BILSTM, CNN, Conformer-lite, and the Enhanced model. The Enhanced model achieves a mean macro F1 score of 0.989 with a standard deviation of 0.016, indicating higher consistency and robustness compared to the CNN's score of 0.985 and the Conformer-lite's 0.992. Panel (b) further emphasizes model performance through the Brier score analysis, where the Enhanced model demonstrates a notably low Brier mean of 0.0021 compared to the other models. This showcases the Enhanced model's precision in generating reliable predictions with minimal uncertainty, reinforcing its efficacy in performance metrics across both protocols. The systematic layout of the figure facilitates direct comparison, enabling a comprehensive understanding of each model’s strengths and weaknesses.
+Table~\ref{tab:d5d6} reports macro F1 (mean ± std) and Brier; Enhanced remains best or tied-best across settings, CNN is competitive, Conformer-lite is strong but more protocol-sensitive in earlier sections, and BiLSTM underperforms under stress.
 
-\textbf{How we achieve them / tweaking guidance:} Practitioners can dial difficulty via: (i) class-overlap ($0.6\rightarrow0.8$), (ii) noise std ($0.4\rightarrow0.6$), (iii) gain-drift std ($0.4\rightarrow0.6$). A recommended sweep is 3$\times$3$\times$3 grid over these ranges with 3--5 seeds per model. When compute-limited, keep $T{=}128,F{=}52$, lr $10^{-3}$ with cosine decay, and batch 512--768; adopt early-stopping on macro F1 with patience 10. For reproducibility, fix data-generation seeds separately from training seeds.
+%\textbf{Training process (the journey):} 
+Each iteration of the experiment commences with a comprehensive initialization process, during which the sequence of hard synthetic episodes is thoroughly randomized. In the initial epochs, models rapidly adhere to gross temporal rhythms. However, as the schedule progresses and overlap/noise increases, only architectures with enhanced channel attention (Enhanced) persist in delineating separable manifolds. The cosine annealing method is a process that involves a gradual reduction in step size, thereby ensuring that late-phase updates do not result in excessive reactions to noisy bursts. Instead, these late-phase updates serve to refine the decision boundaries. Early-stopping functions as a safeguard: we monitor macro F1 on a held-out segment of the stringent regime and cease monitoring when enhancements reach an impasse, thereby yielding analogous checkpoints across seeds.
+%Each run begins with a fresh initialization and a shuffled curriculum of the hard synthetic episodes. In the first epochs, models quickly latch onto gross temporal rhythms; as the schedule advances and overlap/noise rise, only architectures with richer channel attention (Enhanced) continue to carve separable manifolds. The cosine annealing gently lowers the step size so late-phase updates refine decision boundaries instead of overreacting to noisy bursts. Early-stopping is the guardrail: we track macro F1 on a held-out slice of the hard regime and stop when improvements stall, yielding comparable checkpoints across seeds.
 
-\textbf{Results at a glance:} Figure~\ref{fig:d5d6_results} uses a slopegraph to contrast model means between PSTA and ESTA (higher is better). Table~\ref{tab:d5d6} reports macro F1 (mean ± std) and Brier; Enhanced remains best or tied-best across settings, CNN is competitive, Conformer-lite is strong but more protocol-sensitive in earlier sections, and BiLSTM underperforms under stress.
-
-\textbf{Training process (the journey):} Each run begins with a fresh initialization and a shuffled curriculum of the hard synthetic episodes. In the first epochs, models quickly latch onto gross temporal rhythms; as the schedule advances and overlap/noise rise, only architectures with richer channel attention (Enhanced) continue to carve separable manifolds. The cosine annealing gently lowers the step size so late-phase updates refine decision boundaries instead of overreacting to noisy bursts. Early-stopping is the guardrail: we track macro F1 on a held-out slice of the hard regime and stop when improvements stall, yielding comparable checkpoints across seeds.
-
-\textbf{Validation spec (what we guarantee):} We validate on a fixed, unseen hard split drawn under the same parameter ranges but with disjoint seeds, to isolate generalization to \emph{conditions} (noise/overlap/drift) rather than memorization of episodes. Metrics include macro F1 (class-balance fairness) and Brier (probabilistic honesty). A run is accepted when: (i) the mean over seeds exceeds the model's own easy/medium baselines minus 1\%, (ii) the standard deviation remains within 2\% F1, and (iii) Brier tracks F1 (no inflated confidence). D6 replays the acceptance with independent GPU seeds; passing both stages indicates the behavior is architectural, not incidental.
+%\textbf{Validation spec (what we guarantee):} 
+The validation process entails the implementation of a fixed, unseen, hard split drawn under the same parameter ranges but with disjoint seeds. This methodological approach is employed to isolate generalization to conditions (noise, overlap, drift) rather than memorization of episodes. The metrics employed encompass macro F1 (class-balance fairness) and Brier (probabilistic honesty). The following conditions must be met for a run to be accepted: The first condition to consider is that the mean over seeds must exceed the model's own easy/medium baselines by 1\%. The second condition is that the standard deviation must remain within 2\% of F1. The third condition is that Brier must track F1, without inflated confidence. The ESTA reproduces the acceptance with independent GPU seeds; the successful completion of both stages indicates that the behavior is architectural, not incidental.
+%We validate on a fixed, unseen hard split drawn under the same parameter ranges but with disjoint seeds, to isolate generalization to \emph{conditions} (noise/overlap/drift) rather than memorization of episodes. Metrics include macro F1 (class-balance fairness) and Brier (probabilistic honesty). A run is accepted when: (i) the mean over seeds exceeds the model's own easy/medium baselines minus 1\%, (ii) the standard deviation remains within 2\% F1, and (iii) Brier tracks F1 (no inflated confidence). ESTA replays the acceptance with independent GPU seeds; passing both stages indicates the behavior is architectural, not incidental.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig8_d56_composite.pdf}
-\caption{PSTA/ESTA macro F1 comparison across models (mean \textpm{} std over seeds). PSTA (left) stresses harder settings; ESTA (right) confirms stability with additional GPU runs.}
+\caption{PSTA/ESTA macro F1 comparison across models (mean \textpm{} std over seeds). PSTA (a) stresses harder settings; ESTA (b) confirms stability with additional GPU runs.}
 \label{fig:d5d6_results}
 \end{figure}
 
-\noindent\textit{Comparative context (PSTA/ESTA):} Prior sequence models such as Conformer~\cite{gulati2020conformer} and TimeSformer/TFT/Informer~\cite{bertasius2021timesformer,lim2021tft,zhou2021informer} focus on temporal attention for accuracy but seldom isolate overlap/noise/drift as disentangled stressors. Our PSTA decouples these nuisance factors and shows the Enhanced model preserves accuracy with lower variance than baselines; ESTA replays with fresh seeds/hardware to confirm that gains are architectural, not incidental—complementary to WiFi domain-generalization efforts~\cite{airfi2022,fewsense2022,rewis2022}.
+%\noindent\textit{Comparative context (PSTA/ESTA):} 
+%Prior sequence models such as Conformer~\cite{gulati2020conformer} and TimeSformer/TFT/Informer~\cite{bertasius2021timesformer,lim2021tft,zhou2021informer} focus on temporal attention for accuracy but seldom isolate overlap/noise/drift as disentangled stressors. Our PSTA decouples these nuisance factors and shows the Enhanced model preserves accuracy with lower variance than baselines; ESTA replays with fresh seeds/hardware to confirm that gains are architectural, not incidental—complementary to WiFi domain-generalization efforts~\cite{airfi2022,fewsense2022,rewis2022}.
+
+Conformer (~\cite{gulati2020conformer} ) and TimeSformer/TFT/Informer (~\cite{bertasius2021timesformer,lim2021tft,zhou2021informer}) are two examples of prior sequence models that prioritize temporal attention to enhance accuracy. However, these models rarely consider overlap, noise, and drift as distinct stressors, potentially limiting their effectiveness in addressing complex real-world problems. The PSTA decouples these nuisance factors and demonstrates that the enhanced model preserves accuracy with lower variance than the baselines. The ESTA replays with fresh seeds and hardware to confirm that gains are architectural, not incidental. This is complementary to WiFi domain-generalization efforts~\cite{airfi2022,fewsense2022,rewis2022}.
 
 % D5/D6 summary table (inline)
 \begin{table}[t]
@@ -487,12 +562,14 @@ Enhanced & $98.9\% \pm 1.6$ & $0.0021 \pm 0.0032$ & $99.9\% \pm 0.0$ & $0.0002 \
 \end{tabular}
 \end{table}
 
-\textbf{Key observations:} (1) Enhanced and Conformer-lite achieve near-ceiling performance on D5, while CNN remains competitive and BiLSTM underperforms under hard settings. (2) D6 corroborates trends with minimal variance, indicating stable training dynamics. (3) Brier scores align with macro F1 rankings, suggesting reliable confidence calibration under extended runs.
+The following observations merit particular attention: (1) Enhanced and Conformer-lite demonstrate near-ceiling performance on PSTA, while CNN maintains competitiveness and BiLSTM exhibits underperformance under hard settings. Secondly, the ESTA corroborates trends with minimal variance, thereby indicating stable training dynamics. Thirdly, the scores obtained by Brier are consistent with the macro F1 rankings, thereby indicating reliable confidence calibration during extended runs.
+%\textbf{Key observations:} (1) Enhanced and Conformer-lite achieve near-ceiling performance on D5, while CNN remains competitive and BiLSTM underperforms under hard settings. (2) D6 corroborates trends with minimal variance, indicating stable training dynamics. (3) Brier scores align with macro F1 rankings, suggesting reliable confidence calibration under extended runs.
 
 
 \subsection{Trustworthiness Evaluation}
 
-\textbf{Cause→Effect calibration.} \emph{Cause:} Hard regimes induce overconfidence; without calibration, the same macro F1 can mask unsafe probabilities. \emph{Design:} We report ECE, Brier, and NLL and require consistency with accuracy. \emph{Effect:} Enhanced sustains low ECE with competitive Brier, indicating that probability mass tracks correctness, which is essential for downstream decision thresholds in healthcare/home automation.
+%\textbf{Cause→Effect calibration.} \emph{Cause:} Hard regimes induce overconfidence; without calibration, the same macro F1 can mask unsafe probabilities. \emph{Design:} We report ECE, Brier, and NLL and require consistency with accuracy. \emph{Effect:} Enhanced sustains low ECE with competitive Brier, indicating that probability mass tracks correctness, which is essential for downstream decision thresholds in healthcare/home automation.
+The calibration of cause-and-effect relationships is a critical step in the analysis. The underlying cause is as follows: In the context of challenging regimes, there is a propensity for overconfidence to emerge. In the absence of calibration, the same macro F1 can effectively obscure the presence of potentially hazardous probabilities. The design is as follows: The present study reports on ECE, Brier, and NLL, emphasizing the necessity of consistency and accuracy in the reporting of these metrics. The following is the effect: The enhanced sustain lowers the error-correction-error (ECE) with a competitive Brier score, indicating that probability mass tracks correctness, which is essential for downstream decision thresholds in healthcare and home automation.
 
 \subsubsection{Calibration Analysis}
 
@@ -512,13 +589,15 @@ Conformer-lite & 0.0386 & 0.195 & 0.521 & Poor \\
 \label{tab:calibration}
 \end{table}
 
-The Enhanced model exhibits excellent calibration with $\text{ECE}=0.0072$, indicating well-aligned confidence and accuracy. This trustworthiness is crucial for safety-critical applications where overconfident misclassifications can have serious consequences.
+The Enhanced model demonstrates exceptional calibration, as evidenced by its ECE equal to 0.0072. This indicates that the confidence and accuracy are well-aligned. This attribute of trustworthiness is of paramount importance in safety-critical applications, where misclassifications resulting from overconfidence can have severe ramifications.
 
 \subsection{Computational Efficiency Analysis}
+The parameter efficiency is as follows: The Enhanced model maintains a competitive parameter count (1.2M parameters) while achieving superior performance, demonstrating efficient architecture design suitable for resource-constrained IoT deployments.
 
-\textbf{Parameter Efficiency:} The Enhanced model maintains competitive parameter count (1.2M parameters) while achieving superior performance, demonstrating efficient architecture design suitable for resource-constrained IoT deployments.
+The following investigation will address the matter of training efficiency. Synthetic pretraining has been demonstrated to accelerate convergence, reducing the time required for real-data training by approximately 60\% compared to training from the beginning.
+%\textbf{Parameter Efficiency:} The Enhanced model maintains competitive parameter count (1.2M parameters) while achieving superior performance, demonstrating efficient architecture design suitable for resource-constrained IoT deployments.
 
-\textbf{Training Efficiency:} Synthetic pretraining accelerates convergence, reducing real-data training time by approximately 60\% compared to training from scratch.
+%\textbf{Training Efficiency:} Synthetic pretraining accelerates convergence, reducing real-data training time by approximately 60\% compared to training from scratch.
 
 \subsection{Key Findings Summary}
 
@@ -538,11 +617,14 @@ These results demonstrate that physics-guided synthetic data generation enables 
 
 \section{Discussion}
 
-This comprehensive investigation addresses the fundamental challenge of data scarcity in WiFi CSI-based human activity recognition through physics-guided synthetic data generation and simulation-to-reality transfer learning. Our research question centered on whether synthetic data generation could bridge the gap between laboratory-controlled systems and practical deployment scenarios characterized by limited labeled data and domain heterogeneity. The methodological approach combined physics-based CSI simulation with an enhanced deep learning architecture incorporating squeeze-and-excitation modules and temporal attention mechanisms, evaluated through systematic protocols including synthetic robustness validation, cross-domain adaptation evaluation, and Sim2Real transfer efficiency assessment. The investigation yielded breakthrough results demonstrating that models pre-trained on synthetic data achieve 82.1\% macro F1 performance using only 20\% labeled real data, representing 98.6\% of full-supervision performance, while maintaining exceptional cross-domain consistency with identical 83.0±0.1\% F1 across both leave-one-subject-out and leave-one-room-out protocols. This discussion examines these findings through five critical lenses: their relationship to existing literature, unexpected discoveries that emerged during evaluation, theoretical implications for wireless sensing architectures, contributions to domain adaptation theory, and acknowledged limitations that guide future research directions.
+This thoroughgoing investigation tracks the fundamental challenge of data scarcity in WiFi CSI-based HAR through physics-guided synthetic data generation and Sim2Real transfer learning. Our research question centered on whether synthetic data generation could bridge the gap between laboratory-controlled systems and practical deployment scenarios characterized by limited labeled data and domain heterogeneity. The methodological approach combined physics-based CSI simulation with an enhanced deep learning architecture incorporating squeeze-and-excitation modules and temporal attention mechanisms, evaluated through systematic protocols including SRV, CDAE, and STEA. The investigation yielded breakthrough results demonstrating that models pre-trained on synthetic data achieve 82.1\% macro F1 performance using only 20\% labeled real data, representing 98.6\% of full-supervision performance, while maintaining exceptional cross-domain consistency with identical 83.0±0.1\% F1 across both LOSO and LORO protocols. This discussion examines these findings through five critical lenses: their relationship to existing literature, unexpected discoveries that emerged during evaluation, theoretical implications for wireless sensing architectures, contributions to domain adaptation theory, and acknowledged limitations that guide future research directions.
 
 \subsection{Relationship to Existing Literature and Consistent Findings}
 
-Our experimental results demonstrate substantial alignment with several key findings from the existing literature while revealing important distinctions that advance the field's understanding of WiFi CSI-based sensing systems. The superior performance of attention-based architectures aligns closely with the comprehensive SenseFi benchmark study~\cite{yang2023sensefi}, which identified attention mechanisms as crucial components for achieving robust performance across diverse CSI datasets and environmental conditions. Our Enhanced model's combination of squeeze-and-excitation channel attention and temporal attention mechanisms corroborates findings from broader deep learning research in time-series analysis and video understanding, where similar architectural patterns have demonstrated effectiveness in Conformer~\cite{gulati2020conformer}, TEA~\cite{li2020tea}, TimeSformer~\cite{bertasius2021timesformer}, TFT~\cite{lim2021tft}, and Informer~\cite{zhou2021informer} architectures. The cross-domain generalization capabilities observed in our CDAE protocol evaluation align with theoretical expectations from domain adaptation literature, confirming that architectures incorporating domain-aligned inductive biases can achieve superior transfer performance. However, our results diverge from conventional wisdom in several important ways that merit deeper examination. Traditional domain adaptation approaches typically exhibit substantial performance degradation when transferring across different subjects and environments, yet our Enhanced model achieves identical performance across LOSO and LORO protocols with remarkably low variance. This exceptional consistency challenges the prevailing assumption that cross-domain WiFi sensing necessarily involves significant performance trade-offs, suggesting that physics-informed architectural design can overcome traditional generalization limitations.
+The experimental results obtained in this study demonstrate a substantial alignment with several key findings from the extant literature while revealing important distinctions that advance the field's understanding of WiFi CSI-based sensing systems. The superior performance of attention-based architectures is closely aligned with the comprehensive SenseFi benchmark study, which identified attention mechanisms as crucial components for achieving robust performance across diverse CSI datasets and environmental conditions ~\cite{yang2023sensefi}.
+The Enhanced model's integration of squeeze-and-excitation channel attention and temporal attention mechanisms aligns with the findings from broader deep learning research in time-series analysis and video understanding. A multitude of architectural patterns have been demonstrated to be effective in various applications. These include Conformer~\cite{gulati2020conformer}, TEA~\cite{li2020tea}, TimeSformer~\cite{bertasius2021timesformer}, TFT~\cite{lim2021tft}, and Informer~\cite{zhou2021informer} architectures. The cross-domain generalization capabilities observed in our CDAE protocol evaluation align with theoretical expectations from domain adaptation literature, confirming that architectures incorporating domain-aligned inductive biases can achieve superior transfer performance. However, the results of our study diverge from conventional wisdom in several important ways that merit deeper examination. 
+Conventional domain adaptation methodologies frequently demonstrate considerable performance deterioration when transferring across disparate subjects and environments. However, our Enhanced model attains equivalent performance across LOSO and LORO protocols with minimal variance. This exceptional consistency calls into question the prevailing assumption that cross-domain WiFi sensing necessarily involves significant performance trade-offs. The findings suggest that physics-informed architectural design can overcome traditional generalization limitations.
+
 
 \subsection{Unexpected Findings and Their Implications}
 
@@ -598,6 +680,9 @@ MD5 & Message Digest 5 \\
 GAN & Generative Adversarial Network \\
 VAE & Variational Autoencoder \\
 RNN & Recurrent Neural Network \\
+PSTA & Progressive Stress-Test Assessment \\
+ESTA & Extended Stability-Test Assessment \\
+SRV & Synthetic Robustness Validation \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -126,7 +126,7 @@ def create_comprehensive_protocols():
     # === Synthetic Robustness Validation (Left Column) ===
     # ax.text(3.2, 10.5, 'Synthetic Robustness\nValidation (SRD)', fontsize=14, fontweight='bold', color='darkorange', wrap=True)
     # ax.text(3.2, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=12, color='darkorange', style='italic')
-    ax.text(1.5, 10.7, 'Synthetic Robustness Validation (SRD)', fontsize=14, fontweight='bold', color='darkorange',
+    ax.text(1.5, 10.7, 'SRV protocol', fontsize=14, fontweight='bold', color='darkorange',
             wrap=True)
     ax.text(1.5, 10.2, 'Noise, Overlap, Difficulty Sweeps', fontsize=12, color='darkorange', style='italic')
     
