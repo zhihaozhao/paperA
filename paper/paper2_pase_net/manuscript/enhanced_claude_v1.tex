@@ -325,15 +325,15 @@ Bootstrap confidence intervals (95\%, $n=1000$) confirm these differences: PASE-
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{plots/fig4_cross_domain_enhanced.pdf}
-\caption{Comprehensive Cross-Domain Performance Analysis: (a) LOSO performance comparison showing PASE-Net's exceptional stability (83.0±0.1\%) across subjects while Conformer exhibits convergence issues (40.3±34.5\%); (b) LORO performance in horizontal bar format highlighting consistent cross-room generalization; (c) Combined LOSO/LORO comparison revealing PASE-Net's unique domain consistency with zero performance gap; (d) Domain gap analysis (LOSO-LORO) demonstrating architectural advantages with PASE-Net showing minimal variation; (e) PASE-Net multi-metric radar chart illustrating balanced performance across robustness dimensions; (f) Statistical summary table with detailed metrics, confidence intervals, and performance gaps. The visualization confirms PASE-Net's superior cross-domain stability through synergistic attention mechanisms.}
+\includegraphics[width=\textwidth]{plots/fig4_cross_domain.pdf}
+\caption{Comprehensive Cross-Domain Performance Analysis: (a) LOSO vs LORO grouped bar chart showing clear performance differences between models, with PASE-Net achieving consistent 83.0\% in both protocols while Conformer shows severe LOSO convergence issues (40.3\%); (b) Box plot distributions revealing performance variance across 5 experimental seeds; (c) Coefficient of variation analysis demonstrating PASE-Net's superior stability (CV<0.2\%); (d) Domain transfer gap visualization highlighting PASE-Net's minimal LOSO-LORO difference; (e) Statistical summary table with mean±std values and performance indicators. The analysis confirms PASE-Net achieves the best domain consistency among all evaluated models.}
 \label{fig:cross_domain}
 \end{figure*}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{plots/fig5_label_efficiency_enhanced.pdf}
-\caption{Comprehensive Label Efficiency Analysis of PASE-Net: (a) Main performance comparison between zero-shot and fine-tuned approaches across label percentages, with error bars showing standard deviation and value labels for clarity; (b) Relative improvement ratio demonstrating up to 585\% performance gains through fine-tuning; (c) Learning curves with confidence regions showing smooth performance progression and convergence characteristics; (d) Performance gap analysis identifying the critical 20\% label threshold where gains plateau; (e) Label efficiency metric (F1/Label\%) revealing optimal cost-benefit at 10-20\% labels with diminishing returns beyond. The analysis validates that PASE-Net achieves 82.1\% macro-F1 with only 20\% labeled data (98.6\% of fully-supervised performance), enabling 80\% reduction in annotation costs for practical deployments.}
+\includegraphics[width=\columnwidth]{plots/fig5_label_efficiency.pdf}
+\caption{Label Efficiency Analysis demonstrating PASE-Net's exceptional data efficiency: (a) Main performance comparison showing zero-shot baseline (15\%) vs fine-tuned performance across label percentages, with the critical 20\% threshold highlighted where 82.1\% F1 is achieved; (b) Absolute performance gains ranging from +16.3\% to +71.2\%; (c) Label utilization efficiency metric showing maximum efficiency at low label percentages; (d) Relative performance analysis confirming 98.6\% of full supervision achieved with only 20\% labels. The results validate significant annotation cost savings (80\%) while maintaining deployment-ready performance above the 80\% threshold.}
 \label{fig:label_efficiency}
 \end{figure}
 
