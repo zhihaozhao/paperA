@@ -44,7 +44,7 @@ def create_system_overview(ax):
         )
         ax.add_patch(rect)
         ax.text(comp['xy'][0], comp['xy'][1], comp['name'], 
-                ha='center', va='center', fontsize=9, weight='bold')
+                ha='center', va='center', fontsize=12, weight='bold')
     
     # Draw arrows
     arrow_props = dict(arrowstyle='->', lw=1.5, color='darkblue')
@@ -72,7 +72,7 @@ def create_system_overview(ax):
         )
         ax.add_patch(rect)
         ax.text(protocol['xy'][0], protocol['xy'][1], protocol['name'], 
-                ha='center', va='center', fontsize=8, weight='bold')
+                ha='center', va='center', fontsize=12, weight='bold')
     
     ax.set_xlim(0, 0.5)
     ax.set_ylim(0, 1)
@@ -112,7 +112,7 @@ def create_model_architecture(ax):
         )
         ax.add_patch(rect)
         ax.text(layer['xy'][0], layer['xy'][1], layer['name'], 
-                ha='center', va='center', fontsize=8, weight='bold')
+                ha='center', va='center', fontsize=12, weight='bold')
     
     # Draw main flow arrows
     main_flow_arrows = [
@@ -142,7 +142,7 @@ def create_model_architecture(ax):
     
     # Add parameter counts
     param_text = "Parameters: 2.3M\nFLOPs: 3.2G\nCapacity-matched"
-    ax.text(0.05, 0.1, param_text, fontsize=8, 
+    ax.text(0.05, 0.1, param_text, fontsize=10,
             bbox=dict(boxstyle="round,pad=0.02", facecolor='lightgray', alpha=0.7))
     
     ax.set_xlim(0, 1)
