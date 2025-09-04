@@ -108,6 +108,9 @@ core.*
 paper/*.pdf
 !paper/zero/plots/*.pdf
 !paper/enhanced/plots/*.pdf
+!paper/paper2_pase_net/manuscript/plots/*.pdf
+!paper/paper2_pase_net/manuscript/*.tex
+!paper/paper2_pase_net/manuscript/*.bib
 !paper/enhanced/enhanced.tex
 !paper/enhanced/enhanced_refs.bib
 !paper/zero/zeroshot.tex
