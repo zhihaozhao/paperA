@@ -338,16 +338,16 @@ Bootstrap confidence intervals (95\%, $n=1000$) confirm these differences: PASE-
 \label{fig:label_efficiency}
 \end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{plots/d5_progressive_enhanced.pdf}
-\caption{Progressive Temporal Analysis: PASE-Net macro-F1 across progressive levels with baseline seed mean as a reference. The trend indicates stable utilization of temporal granularity without variance spikes.}
-\label{fig:progressive_temporal}
-\end{figure}
+%\begin{figure}[t]
+%\centering
+%\includegraphics[width=\columnwidth]{plots/d5_progressive_enhanced.pdf}
+%\caption{Progressive Temporal Analysis: PASE-Net macro-F1 across progressive levels with baseline seed mean as a reference. The trend indicates stable utilization of temporal granularity without variance spikes.}
+%\label{fig:progressive_temporal}
+%\end{figure}
 
 \subsection{Progressive Temporal Analysis}
 
-Figure~\ref{fig:progressive_temporal} demonstrates the PASE-Net model's remarkable stability across varying temporal granularity levels, providing strong empirical support for the hypothesis that temporal attention mechanisms successfully capture long-range activity patterns while SE modules focus on channel responses most relevant to multipath-induced propagation structure.
+Detailed progressive temporal analysis (see Supplementary Figure S1) demonstrates the PASE-Net model's remarkable stability across varying temporal granularity levels, providing strong empirical support for the hypothesis that temporal attention mechanisms successfully capture long-range activity patterns while SE modules focus on channel responses most relevant to multipath-induced propagation structure.
 
 The analysis reveals remarkable stability across different temporal granularities, with macro-F1 remaining within 2\% across a 4× range of temporal resolutions (from 32 to 128 time steps). This stability contrasts sharply with baseline models: CNN shows monotonic improvement with finer granularity (suggesting under-utilization of temporal context), while BiLSTM exhibits a U-shaped curve with degradation at very fine granularities (indicating overfitting to temporal noise).
 
@@ -382,16 +382,16 @@ Figure~\ref{fig:label_efficiency} demonstrates PASE-Net's exceptional Sim2Real t
 \end{table}
 \textit{Note: Efficiency calculated as percentage of fully-supervised performance (83.3\%). Zero-shot: Direct application without real data adaptation. Linear Probe: Frozen features, trained classifier only. Fine-tuning: End-to-end parameter updates with reduced learning rate.}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{plots/ablation_noise_env_claude4.pdf}
-\caption{SRV Nuisance Factor Analysis: PASE-Net maintains >85\% macro-F1 under combined stress conditions (class overlap + environmental burst) while CNN baseline drops below 70\% and BiLSTM to 75\%. The heatmaps show macro-F1 performance versus class overlap (y-axis) and environmental burst rate (x-axis) with fixed label noise. PASE-Net demonstrates superior robustness to multiple simultaneous stress factors through synergistic SE and temporal attention mechanisms.}
-\label{fig:nuisance_factors}
-\end{figure}
+%\begin{figure}[t]
+%\centering
+%\includegraphics[width=\columnwidth]{plots/ablation_noise_env_claude4.pdf}
+%\caption{SRV Nuisance Factor Analysis: PASE-Net maintains >85\% macro-F1 under combined stress conditions (class overlap + environmental burst) while CNN baseline drops below 70\% and BiLSTM to 75\%. The heatmaps show macro-F1 performance versus class overlap (y-axis) and environmental burst rate (x-axis) with fixed label noise. PASE-Net demonstrates superior robustness to multiple simultaneous stress factors through synergistic SE and temporal attention mechanisms.}
+%\label{fig:nuisance_factors}
+%\end{figure}
 
 \subsection{Ablation Studies and Component Analysis}
 
-Figure~\ref{fig:nuisance_factors} presents fine-grained ablations probing the interaction between nuisance factors. The heatmap reveals that PASE-Net maintains >85\% macro-F1 even in the challenging upper-right corner (high class overlap + high environmental burst), while CNN drops below 70\% and BiLSTM to 75\%. The robustness pattern is non-linear: moderate levels of both factors (center of heatmap) cause less degradation than extreme values of either factor alone, suggesting that the model learns to leverage complementary cues when primary features are corrupted.
+Fine-grained ablations probing the interaction between nuisance factors (Supplementary Figure S2) reveal that PASE-Net maintains >85\% macro-F1 even in the challenging upper-right corner (high class overlap + high environmental burst), while CNN drops below 70\% and BiLSTM to 75\%. The robustness pattern is non-linear: moderate levels of both factors (center of heatmap) cause less degradation than extreme values of either factor alone, suggesting that the model learns to leverage complementary cues when primary features are corrupted.
 
 To understand the contribution of individual components, we conduct systematic ablation by progressively removing architectural elements:
 
@@ -403,14 +403,14 @@ To understand the contribution of individual components, we conduct systematic a
 
 \textbf{Impact of calibration:} Temperature scaling improves all models but benefits PASE-Net most. Pre-calibration, PASE-Net shows ECE=0.142; post-calibration ECE=0.031 (78\% reduction). For CNN, the reduction is only 61\%, and for BiLSTM 65\%. This suggests that attention-based models produce more calibratable confidence estimates, possibly because attention weights provide an implicit uncertainty signal that temperature scaling can leverage.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{plots/ablation_components.pdf}
-\caption{PASE-Net Component-Level Performance Analysis: Comprehensive comparison across all evaluation metrics showing PASE-Net's superior precision-recall balance (F1 standard deviation across classes: 0.031 vs 0.058 for CNN) and exceptional performance on rare classes including fall detection (0.71 vs 0.52 recall for CNN). The analysis validates that performance improvements stem from architectural innovations rather than increased model capacity.}
-\label{fig:component_analysis}
-\end{figure}
+%\begin{figure}[t]
+%\centering
+%\includegraphics[width=\columnwidth]{plots/ablation_components.pdf}
+%\caption{PASE-Net Component-Level Performance Analysis: Comprehensive comparison across all evaluation metrics showing PASE-Net's superior precision-recall balance (F1 standard deviation across classes: 0.031 vs 0.058 for CNN) and exceptional performance on rare classes including fall detection (0.71 vs 0.52 recall for CNN). The analysis validates that performance improvements stem from architectural innovations rather than increased model capacity.}
+%\label{fig:component_analysis}
+%\end{figure}
 
-Figure~\ref{fig:component_analysis} provides a comprehensive component-level comparison across all evaluation metrics. Beyond macro-F1, we observe that PASE-Net excels in precision-recall balance (F1 standard deviation across classes: 0.031 vs 0.058 for CNN), suggesting more uniform performance across the activity spectrum. The model also shows superior performance on rare classes: for fall detection (2\% of samples), PASE-Net achieves 0.71 recall vs 0.52 for CNN, critical for safety applications where missing rare events has severe consequences.
+Comprehensive component-level comparison across all evaluation metrics (Supplementary Figure S3) shows that Beyond macro-F1, we observe that PASE-Net excels in precision-recall balance (F1 standard deviation across classes: 0.031 vs 0.058 for CNN), suggesting more uniform performance across the activity spectrum. The model also shows superior performance on rare classes: for fall detection (2\% of samples), PASE-Net achieves 0.71 recall vs 0.52 for CNN, critical for safety applications where missing rare events has severe consequences.
 
 \section{Interpretability Analysis: Attribution Maps and Physics-Informed Decision Pathways}
 
