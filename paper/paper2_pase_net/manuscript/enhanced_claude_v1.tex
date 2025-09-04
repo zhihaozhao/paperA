@@ -1,5 +1,5 @@
 % !TEX program = pdflatex
-\documentclass[journal]{IEEEtran}
+\documentclass[lettersize,journal]{IEEEtran}
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
@@ -15,15 +15,18 @@
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
+\usepackage{array}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{stfloats}
+\usepackage{verbatim}
+\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
 \begin{document}
 
-\title{Physics-Informed PASE-Net Architecture for WiFi CSI Human Activity Recognition: A Unified Attention-Based Approach with Calibrated Inference and Interpretability}
+\title{PASE-Net: Physics-Informed Attention for Mobile WiFi Activity Recognition}
 
-\author{\IEEEauthorblockN{Author Names}
-\IEEEauthorblockA{\textit{Department} \\
-\textit{University}\\
-City, Country \\
-email@university.edu}}
+\author{\IEEEauthorblockN{Anonymous Authors}
+\IEEEauthorblockA{Paper ID: XXX \\
+Details removed for double-blind review}}
 
 \maketitle
 
@@ -49,7 +52,7 @@ Our contributions are multifaceted and address critical gaps in current WiFi sen
 \textbf{Key Contributions}
 \begin{enumerate}
   \item \textbf{Physics-informed unified architecture:} We propose the first advanced physics-informed architecture for WiFi HAR that incorporates propagation priors through architectural design, combining multi-scale CNNs with SE channel attention and temporal attention mechanisms to capture multipath effects, frequency-selective fading, and motion dynamics.
-  \item \textbf{In-depth trustworthy evaluation:} We develop an extensive evaluation framework encompassing synthetic robustness (668 trials across SRV protocol), cross-domain adaptation (Cross-Domain Adaptation Evaluation (CDAE): LOSO/LORO), and sim-to-real transfer efficiency (Sim2Real Transfer Efficiency Assessment (STEA)), demonstrating accuracy plus calibration (ECE/Negative Log-Likelihood (NLL)/Brier) across synthetic and cross-domain regimes with reliable probabilities for IoT decision thresholds.
+  \item \textbf{In-depth trustworthy evaluation:} We develop an extensive evaluation framework encompassing synthetic robustness (668 trials across Synthetic Robustness Validation (SRV) protocol), cross-domain adaptation (Cross-Domain Adaptation Evaluation (CDAE): Leave-One-Subject-Out/Leave-One-Room-Out (LOSO/LORO)), and sim-to-real transfer efficiency (Sim2Real Transfer Efficiency Assessment (STEA)), demonstrating accuracy plus calibration (Expected Calibration Error (ECE)/Negative Log-Likelihood (NLL)/Brier) across synthetic and cross-domain regimes with reliable probabilities for IoT decision thresholds.
   \item \textbf{Superior label efficiency:} Our Sim2Real STEA analysis shows 82.1\% macro-F1 at 20\% labels, nearing 83.3\% full-supervision with 80\% annotation savings, representing transformative cost reduction for practical deployments.
   \item \textbf{Physics-grounded interpretability:} Attribution maps and nuisance-factor sweeps reveal stable reliance on physically meaningful subcarriers and temporal spans, with SE weights correlating with theoretical predictions and temporal attention aligning with biomechanical patterns.
   \item \textbf{Rigorous statistical validation:} We provide comprehensive statistical analysis including significance testing (t-tests, Cohen's d, bootstrap confidence intervals) and causal decomposition of performance improvements, ensuring scientific rigor and reproducibility.
@@ -74,7 +77,7 @@ The transition to deep learning methodologies marked a watershed moment in CSI-b
 
 The benchmark revealed that attention-based architectures consistently outperformed pure convolutional or recurrent baselines, particularly in cross-domain scenarios. For instance, the benchmark showed that models with temporal modeling mechanisms achieved 5-15\% higher macro-F1 scores when evaluated on unseen environments compared to static feature extractors. This performance gap motivated our investigation into combining multiple attention mechanisms—both channel-wise (SE) and temporal—to capture the hierarchical structure inherent in CSI data.
 
-Subsequent studies layered attention over CNN or RNN backbones to better model temporal dependencies, yet challenges persist: domain shift across subjects/environments, ill-calibrated probabilities, and label scarcity at deployment time. The domain shift problem is particularly acute in CSI sensing because the wireless channel is fundamentally shaped by environmental geometry, material properties, and transceiver placement. A model trained in one room may encounter entirely different multipath profiles when deployed elsewhere, leading to catastrophic performance degradation.
+Subsequent studies layered attention over CNN or Recurrent Neural Network (RNN) backbones to better model temporal dependencies, yet challenges persist: domain shift across subjects/environments, ill-calibrated probabilities, and label scarcity at deployment time. The domain shift problem is particularly acute in CSI sensing because the wireless channel is fundamentally shaped by environmental geometry, material properties, and transceiver placement. A model trained in one room may encounter entirely different multipath profiles when deployed elsewhere, leading to catastrophic performance degradation.
 
 Beyond classification accuracy, deployment requires assurances about stability and uncertainty. Models that superficially perform well in-domain can fail catastrophically when room geometry, hardware placement, or subject cohorts change. This has motivated studies on domain adaptation and generalization that either align features across domains or induce invariances via data augmentation. However, when labels are limited or absent in the target domain, traditional supervised alignment is difficult; this motivates physics-guided synthesis to enrich the source distribution with plausible target-like factors and to test models under controlled stressors.
 
@@ -199,7 +202,7 @@ These architectural components act as soft, learnable constraints that reflect b
 
 \subsection{Capacity Alignment and Fair Comparison}
 
-To ensure fair comparison under CDAE/STEA evaluation protocols, we align parameter counts within ±10\% across PASE-Net, CNN, BiLSTM, and Conformer-lite baselines. All models employ identical optimization settings including AdamW optimizer with weight decay $5 \times 10^{-4}$, cosine annealing learning rate schedule, and batch size configurations. We evaluate multiple seeds (typically 5) for each configuration, reporting mean±std for macro-F1 and calibration metrics. This controls for capacity-driven confounds and isolates architectural contributions (SE, attention, calibration).
+To ensure fair comparison under CDAE/STEA evaluation protocols, we align parameter counts within ±10\% across PASE-Net, CNN, Bidirectional Long Short-Term Memory (BiLSTM), and Conformer-lite baselines. All models employ identical optimization settings including AdamW optimizer with weight decay $5 \times 10^{-4}$, cosine annealing learning rate schedule, and batch size configurations. We evaluate multiple seeds (typically 5) for each configuration, reporting mean±std for macro-F1 and calibration metrics. This controls for capacity-driven confounds and isolates architectural contributions (SE, attention, calibration).
 
 \section{Comprehensive Experimental Methodology}
 
@@ -267,19 +270,19 @@ Temperature scaling optimization uses the validation set to find $T^* = \arg\min
 
 All experiments use PyTorch 1.12 with mixed precision training on NVIDIA V100 GPUs. Training employs AdamW optimizer with weight decay $5 \times 10^{-4}$, batch size 128, and initial learning rate $10^{-3}$. Data augmentation includes temporal jittering (±10\% window shift), amplitude scaling (0.8-1.2×), and additive Gaussian noise ($\sigma=0.01$). All random seeds are fixed for reproducibility, and we report means and standard deviations over multiple seeds to quantify stability.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{plots/fig2_physics_modeling_new.pdf}
-\caption{Physics-Informed Synthetic Data Generation Framework: (a) Multipath propagation modeling showing WiFi signal paths, human body scattering, wall reflections, and environmental factors that influence CSI characteristics; (b) Synthetic CSI generation process demonstrating realistic frequency-selective fading, temporal motion patterns, and physics-based signal perturbations; (c) Synthetic Robustness Validation (SRV) results matrix showing PASE-Net's superior performance across 668 experimental trials under varying noise conditions, validating the effectiveness of physics-informed synthetic data for robust model training.}
+\includegraphics[width=\linewidth]{plots/fig2_physics_modeling_new.pdf}
+\caption{Physics-Informed Synthetic Data Generation Framework: (a) Multipath propagation modeling showing WiFi signal paths, human body scattering, wall reflections, and environmental factors that influence CSI characteristics; (b) Synthetic CSI generation process demonstrating realistic frequency-selective fading, temporal motion patterns, and physics-based signal perturbations; (c) SRV results matrix showing PASE-Net's superior performance across 668 experimental trials under varying noise conditions, validating the effectiveness of physics-informed synthetic data for robust model training.}
 \label{fig:physics_modeling}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{plots/fig3_calibration.pdf}
+\includegraphics[width=\linewidth]{plots/fig3_calibration.pdf}
 \caption{PASE-Net Calibration and Reliability Analysis showing 78\% ECE improvement (0.142→0.031) after temperature scaling. PASE-Net consistently outperforms baselines in both accuracy and calibration quality, essential for trustworthy IoT deployment. Detailed analysis with multiple subplots is provided in Supplementary Figure S1.}
 \label{fig:calibration}
-\end{figure}
+\end{figure*}
 
 \section{Comprehensive Results: Performance, Reliability, and Cross-Domain Analysis}
 
@@ -300,7 +303,9 @@ BiLSTM & 80.3±2.0 & 78.9±4.0 & 92.1±2.3 & - & - & 2.4 & 4.1 \\
 Conformer$^*$ & 40.3±34.5$^\dagger$ & 84.1±3.5 & 93.0±1.8 & - & - & 2.5 & 4.3 \\
 \bottomrule
 \end{tabular}
-\textit{Note: $^*$Capacity-matched implementations for fair comparison. $^\dagger$Conformer showed convergence issues in LOSO protocol. LOSO: Leave-One-Subject-Out, LORO: Leave-One-Room-Out, SRV: Synthetic Robustness Validation on synthetic data. ECE: Expected Calibration Error. Bold values indicate best performance. All cross-domain results are on real WiFi-CSI-Sensing-Benchmark dataset.}
+\textit{Note: $^*$Capacity-matched implementations for fair comparison. 
+%LOSO: Leave-One-Subject-Out, LORO: Leave-One-Room-Out, SRV: Synthetic Robustness Validation. ECE: Expected Calibration Error. 
+Bold values indicate best performance.}
 \end{table*}
 
 \subsection{SRV Synthetic Robustness Results}
@@ -327,17 +332,17 @@ Bootstrap confidence intervals (95\%, $n=1000$) confirm these differences: PASE-
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{plots/fig4_cross_domain.pdf}
+\includegraphics[width=\linewidth]{plots/fig4_cross_domain.pdf}
 \caption{Comprehensive Cross-Domain Performance Analysis: (a) LOSO vs LORO grouped bar chart showing clear performance differences between models, with PASE-Net achieving consistent 83.0\% in both protocols while Conformer shows severe LOSO convergence issues (40.3\%); (b) Box plot distributions revealing performance variance across 5 experimental seeds; (c) Coefficient of variation analysis demonstrating PASE-Net's superior stability (CV<0.2\%); (d) Domain transfer gap visualization highlighting PASE-Net's minimal LOSO-LORO difference; (e) Statistical summary table with mean±std values and performance indicators. The analysis confirms PASE-Net achieves the best domain consistency among all evaluated models.}
 \label{fig:cross_domain}
 \end{figure*}
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{plots/fig5_label_efficiency.pdf}
+\includegraphics[width=\linewidth]{plots/fig5_label_efficiency.pdf}
 \caption{Label Efficiency Analysis demonstrating PASE-Net's exceptional data efficiency: (a) Main performance comparison showing zero-shot baseline (15\%) vs fine-tuned performance across label percentages, with the critical 20\% threshold highlighted where 82.1\% F1 is achieved; (b) Absolute performance gains ranging from +16.3\% to +71.2\%; (c) Label utilization efficiency metric showing maximum efficiency at low label percentages; (d) Relative performance analysis confirming 98.6\% of full supervision achieved with only 20\% labels. The results validate significant annotation cost savings (80\%) while maintaining deployment-ready performance above the 80\% threshold.}
 \label{fig:label_efficiency}
-\end{figure}
+\end{figure*}
 
 %\begin{figure}[t]
 %\centering
@@ -367,7 +372,8 @@ Figure~\ref{fig:label_efficiency} demonstrates PASE-Net's exceptional Sim2Real t
 \caption{STEA Protocol: Label Efficiency Analysis Across Transfer Strategies}
 \label{tab:stea_results}
 \small
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}}
+%{@{}lcccc@{}}
 \toprule
 \textbf{Label Ratio} & \textbf{Zero-shot} & \textbf{Linear Probe} & \textbf{Fine-tuning} & \textbf{Efficiency (\%)} \\
 \midrule
@@ -382,7 +388,7 @@ Figure~\ref{fig:label_efficiency} demonstrates PASE-Net's exceptional Sim2Real t
 \end{tabular}
 \end{table}
 \textit{Note: Efficiency calculated as percentage of fully-supervised performance (83.3\%). Zero-shot: Direct application without real data adaptation. Linear Probe: Frozen features, trained classifier only. Fine-tuning: End-to-end parameter updates with reduced learning rate.}
-
+\iffalse
 \begin{table}[t]
 \centering
 \caption{Computational Efficiency Comparison}
@@ -401,7 +407,7 @@ Conformer & 2.5 & 4.3 & 21.3 & 42 & $\times$ \\
 \end{tabular}
 \end{table}
 \textit{Note: Inference time measured on NVIDIA Jetson Nano. Edge Ready indicates feasibility for deployment on resource-constrained devices (<30ms latency, <32MB memory).}
-
+\fi
 %\begin{figure}[t]
 %\centering
 %\includegraphics[width=\columnwidth]{plots/s4_ablation_noise_env.pdf}
@@ -482,12 +488,12 @@ The attribution patterns can be understood through wireless propagation physics.
 
 \textbf{Doppler spreading:} Motion induces frequency shifts proportional to velocity. The model's temporal attention patterns match expected Doppler periodicities for different activities, suggesting it has learned to extract motion kinematics from Doppler signatures.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{plots/fig6_interpretability.pdf}
-\caption{PASE-Net Interpretability and Attribution Analysis: (a) SE channel attention patterns across different activities revealing frequency-selective responses aligned with wireless propagation physics - walking exhibits broad spectrum utilization while sitting concentrates on low frequencies; (b) Temporal attention dynamics demonstrating activity-specific focusing strategies with attention peaks during motion transitions and gait cycles, consistent with biomechanical motion phases; (c) Physics-SE correlation analysis showing strong correlation (r=0.73, p<0.001) between learned SE weights and theoretical SNR predictions, validating physics-grounded learning; (d) Comprehensive interpretability analysis revealing high physics alignment scores across all PASE-Net components, confirming that attention mechanisms discover physically meaningful patterns rather than spurious correlations.}
+\includegraphics[width=\linewidth]{plots/fig6_interpretability.pdf}
+\caption{PASE-Net Interpretability and Attribution Analysis: (a) SE channel attention patterns across different activities revealing frequency-selective responses aligned with wireless propagation physics - walking exhibits broad spectrum utilization while sitting concentrates on low frequencies; (b) Temporal attention dynamics demonstrating activity-specific focusing strategies with attention peaks during motion transitions and gait cycles, consistent with biomechanical motion phases; (c) Physics-SE correlation analysis showing strong correlation (r=0.73, p<0.001) between learned SE weights and theoretical Signal-to-Noise Ratio (SNR) predictions, validating physics-grounded learning; (d) Comprehensive interpretability analysis revealing high physics alignment scores across all PASE-Net components, confirming that attention mechanisms discover physically meaningful patterns rather than spurious correlations.}
 \label{fig:interpretability}
-\end{figure}
+\end{figure*}
 
 Figure~\ref{fig:interpretability} presents a comprehensive analysis of PASE-Net's interpretability through multiple attribution methods. The attribution analysis reveals interesting cross-modal interactions between channel attention and temporal attention mechanisms, suggesting that the PASE-Net model learns to coordinate frequency-domain and time-domain feature selection in a mutually reinforcing manner. Periods of high temporal attention correspond to enhanced channel selectivity, indicating that the model adaptively focuses its representational capacity on the most informative frequency components during the most discriminative temporal segments.
 
@@ -592,7 +598,6 @@ STEA & Sim2Real Transfer Efficiency Assessment \\
 ECE & Expected Calibration Error \\
 NLL & Negative Log-Likelihood \\
 SNR & Signal-to-Noise Ratio \\
-OFDM & Orthogonal Frequency-Division Multiplexing \\
 BiLSTM & Bidirectional Long Short-Term Memory \\
 \bottomrule
 \end{tabular}
