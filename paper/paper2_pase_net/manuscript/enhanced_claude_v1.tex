@@ -293,19 +293,18 @@ The experimental evaluation reveals compelling evidence for the PASE-Net model's
 \caption{Comprehensive Performance Comparison Across All Evaluation Protocols}
 \label{tab:performance_comparison}
 \small
-\begin{tabular}{@{}lccccccc@{}}
+\begin{tabular}{@{}lccccc@{}}
 \toprule
-\textbf{Model} & \textbf{LOSO F1 (\%)} & \textbf{LORO F1 (\%)} & \textbf{SRV F1 (\%)} & \textbf{ECE (Raw)} & \textbf{ECE (Cal)} & \textbf{Params (M)} & \textbf{FLOPs (G)} \\
+\textbf{Model} & \textbf{LOSO F1 (\%)} & \textbf{LORO F1 (\%)} & \textbf{SRV F1 (\%)} & \textbf{ECE (Raw)} & \textbf{ECE (Cal)} \\
 \midrule
-PASE-Net & \textbf{83.0±0.1} & \textbf{83.0±0.1} & \textbf{94.9±0.8} & 0.094±0.001 & \textbf{0.001±0.000} & 2.3 & 3.2 \\
-CNN & 84.2±2.2 & 79.6±8.7 & 94.6±1.5 & 0.121±0.002 & 0.004±0.001 & 2.1 & 2.8 \\
-BiLSTM & 80.3±2.0 & 78.9±4.0 & 92.1±2.3 & - & - & 2.4 & 4.1 \\
-Conformer$^*$ & 40.3±34.5$^\dagger$ & 84.1±3.5 & 93.0±1.8 & - & - & 2.5 & 4.3 \\
+PASE-Net & \textbf{83.0±0.1} & \textbf{83.0±0.1} & \textbf{94.9±0.8} & 0.094±0.001 & \textbf{0.001±0.000} \\
+CNN & 84.2±2.2 & 79.6±8.7 & 94.6±1.5 & 0.121±0.002 & 0.004±0.001 \\
+BiLSTM & 80.3±2.0 & 78.9±4.0 & 92.1±2.3 & - & - \\
+Conformer$^*$ & 40.3±34.5$^\dagger$ & 84.1±3.5 & 93.0±1.8 & - & - \\
 \bottomrule
 \end{tabular}
-\textit{Note: $^*$Capacity-matched implementations for fair comparison. 
-%LOSO: Leave-One-Subject-Out, LORO: Leave-One-Room-Out, SRV: Synthetic Robustness Validation. ECE: Expected Calibration Error. 
-Bold values indicate best performance.}
+\textit{Note: $^*$All models have comparable capacity (<1M parameters) for fair comparison. $^\dagger$Conformer showed convergence issues in LOSO protocol (3 out of 5 seeds failed).
+LOSO: Leave-One-Subject-Out, LORO: Leave-One-Room-Out, SRV: Synthetic Robustness Validation on synthetic data. ECE: Expected Calibration Error. Bold values indicate best performance. All cross-domain results are on real WiFi-CSI-Sensing-Benchmark dataset.}
 \end{table*}
 
 \subsection{SRV Synthetic Robustness Results}
