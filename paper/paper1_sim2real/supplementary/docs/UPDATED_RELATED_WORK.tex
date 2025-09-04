@@ -1,0 +1,75 @@
+% Updated Related Work Section with Latest Literature
+
+\section{Related Work}
+
+\subsection{WiFi CSI Human Activity Recognition}
+
+WiFi CSI-based HAR has evolved significantly with the advancement of deep learning architectures and systematic evaluation frameworks. Early works focused on feature engineering approaches~\cite{csi_basics2016}, extracting handcrafted features from CSI amplitude and phase information. The field has since transitioned to end-to-end deep learning approaches with increasingly sophisticated architectures.
+
+\textbf{Deep Learning Architecture Evolution:} Convolutional Neural Networks (CNNs) were among the first deep learning approaches applied to WiFi CSI HAR, demonstrating effectiveness in spatial feature extraction~\cite{clnet2021}. Subsequently, recurrent architectures including LSTM and BiLSTM variants showed superior performance in modeling temporal dependencies in CSI sequences~\cite{rewis2022}. Recent advances have explored attention mechanisms and Transformer architectures for capturing long-range dependencies~\cite{autofi2022}, while hybrid approaches combining CNN and RNN components have shown promising results.
+
+\textbf{Attention Mechanisms in CSI Sensing:} The integration of attention mechanisms into WiFi CSI HAR has gained significant traction. Self-attention mechanisms enable models to focus on relevant temporal segments within CSI sequences, while channel attention (similar to our SE modules) allows selective emphasis on informative frequency components. Recent works have demonstrated that attention-based architectures can achieve superior performance compared to traditional CNN and RNN approaches, particularly in noisy environments and cross-domain scenarios.
+
+\textbf{SenseFi Benchmark and Systematic Evaluation:} Yang et al.~\cite{yang2023sensefi} established SenseFi as the first comprehensive benchmark for deep learning-based WiFi human sensing, systematically evaluating 11 models across 4 public datasets. Their study revealed significant performance variations across different models and datasets, highlighting the critical importance of cross-domain generalization. While SenseFi provides valuable insights into model performance on real data, it assumes abundant labeled training data availability, which remains a significant limitation in practical deployments.
+
+\textbf{Recent Advances (2023-2024):} Contemporary research has increasingly focused on practical deployment challenges including few-shot learning, domain adaptation, and model efficiency. Transformer-based architectures have been adapted for CSI data with promising results, while self-supervised learning approaches attempt to reduce labeling requirements. However, systematic approaches to address the fundamental data scarcity challenge through synthetic data generation remain largely unexplored.
+
+\subsection{Cross-Domain Transfer Learning in Wireless Sensing}
+
+Cross-domain generalization represents one of the most critical challenges in practical WiFi CSI HAR deployment. Domain shifts can occur across multiple dimensions including subjects, environments, hardware configurations, and temporal variations.
+
+\textbf{Domain Adaptation Techniques:} Traditional domain adaptation methods have been explored for WiFi CSI HAR, including statistical moment matching, adversarial training, and feature alignment approaches. Wang et al.~\cite{fewsense2022} proposed FewSense for few-shot cross-domain learning, demonstrating improved generalization with limited target domain data. Zhang et al.~\cite{airfi2022} introduced AirFi for domain generalization through meta-learning approaches.
+
+\textbf{Subject-Independent Methods:} Leave-One-Subject-Out (LOSO) evaluation has become the standard protocol for assessing subject-independent generalization. Recent works have explored personalization techniques, adaptive learning, and subject-agnostic feature learning to improve LOSO performance. However, achieving consistent performance across diverse subject populations remains challenging.
+
+\textbf{Environment-Independent Methods:} Leave-One-Room-Out (LORO) evaluation addresses environment-independent generalization, which is crucial for deploying CSI systems across different physical spaces. Environmental domain adaptation techniques include signal normalization, environmental feature disentanglement, and physics-informed domain adaptation.
+
+\textbf{Limitations of Current Approaches:} Despite significant progress, existing cross-domain methods still require substantial amounts of data from both source and target domains. Most approaches focus on adapting between real-world domains rather than leveraging synthetic data for improved generalization.
+
+\subsection{Synthetic Data Generation for Sensing Applications}
+
+Synthetic data generation has emerged as a promising approach to address data scarcity in various sensing applications, though its application to WiFi CSI HAR remains limited.
+
+\textbf{Physics-Based Simulation:} Traditional wireless simulation approaches rely on ray-tracing methods and electromagnetic field modeling~\cite{ray_tracing_wireless2000}. These methods provide high physical accuracy but are computationally expensive and require detailed environmental models. Recent advances in fast electromagnetic simulation and GPU acceleration have improved computational feasibility.
+
+\textbf{Generative Model Approaches:} Deep generative models including GANs, VAEs, and diffusion models have been explored for sensor data synthesis. However, these approaches often lack physical grounding and may generate unrealistic data that does not transfer effectively to real-world scenarios. The challenge lies in balancing generative flexibility with physical plausibility.
+
+\textbf{Physics-Informed Neural Networks (PINNs):} Recent advances in physics-informed machine learning~\cite{pinn_karniadakis2021} have shown promise in incorporating physical constraints into neural networks. However, their application to WiFi CSI data generation remains largely unexplored, particularly for complex indoor propagation scenarios with human activity.
+
+\subsection{Sim2Real Transfer Learning}
+
+Simulation-to-reality transfer learning has achieved significant success in robotics~\cite{sim2real_robotics2017} and autonomous driving~\cite{sim2real_autonomous2019}, demonstrating the potential of synthetic data for real-world applications.
+
+\textbf{Domain Randomization:} Domain randomization techniques improve sim-to-real transfer by training on diverse simulated environments, increasing model robustness to real-world variations. This approach has been successfully applied in computer vision and robotics but requires adaptation for wireless sensing applications.
+
+\textbf{Progressive Transfer Learning:} Recent works have explored progressive transfer strategies where models are gradually adapted from synthetic to real domains through intermediate domains or progressive fine-tuning. These approaches show promise for bridging large domain gaps between simulation and reality.
+
+\textbf{Transfer Learning Efficiency:} Contemporary research increasingly focuses on sample efficiency in transfer learning, seeking to minimize the amount of real-world data required for effective transfer. Few-shot learning, meta-learning, and self-supervised pretraining have emerged as key techniques for improving transfer efficiency.
+
+\textbf{Research Gap in Wireless Sensing:} Despite significant progress in other domains, systematic Sim2Real studies in WiFi sensing are lacking. Most existing works focus on real-to-real domain adaptation rather than synthetic-to-real transfer. Our work addresses this gap by providing the first comprehensive Sim2Real evaluation framework for WiFi CSI HAR.
+
+\subsection{Trustworthy Machine Learning in IoT}
+
+The deployment of machine learning in safety-critical IoT applications requires comprehensive trustworthiness evaluation beyond standard accuracy metrics.
+
+\textbf{Model Calibration:} Modern deep neural networks often exhibit poor calibration, producing overconfident predictions~\cite{calibration_guo2017}. Calibration techniques including temperature scaling~\cite{temperature_scaling2017}, Platt scaling, and isotonic regression have been developed to improve prediction reliability. Expected Calibration Error (ECE) has emerged as the standard metric for calibration assessment.
+
+\textbf{Uncertainty Quantification:} Bayesian approaches, ensemble methods, and Monte Carlo dropout have been explored for uncertainty estimation in deep learning models~\cite{reliability_assessment2019}. These techniques are particularly important for safety-critical applications where understanding prediction confidence is crucial.
+
+\textbf{Robustness and Reliability:} IoT deployment environments are inherently noisy and variable, requiring robust models that maintain performance under diverse conditions. Adversarial training, noise injection, and domain-specific augmentation techniques have been developed to improve model robustness.
+
+\textbf{Trustworthy AI in Wireless Sensing:} The application of trustworthy AI principles to wireless sensing has received limited attention despite the safety-critical nature of many applications (e.g., fall detection, health monitoring). Our work addresses this gap by integrating comprehensive trustworthiness evaluation including calibration analysis, cross-domain robustness assessment, and reliability quantification into the WiFi CSI HAR evaluation framework.
+
+\subsection{Research Contributions and Positioning}
+
+Our work addresses several critical gaps in the current literature:
+
+\textbf{Systematic Sim2Real Framework:} We provide the first comprehensive Sim2Real evaluation framework specifically designed for WiFi CSI HAR, addressing the fundamental data scarcity challenge through physics-guided synthetic data generation.
+
+\textbf{Cross-Domain Evaluation Integration:} Unlike existing works that focus on either subject-independent or environment-independent generalization, our CDAE protocol systematically evaluates both dimensions, providing comprehensive cross-domain assessment.
+
+\textbf{Label Efficiency Quantification:} Our STEA protocol provides detailed quantification of label efficiency, identifying optimal operating points for practical deployment scenarios where labeled data is scarce and expensive.
+
+\textbf{Trustworthy Evaluation Framework:} We integrate trustworthiness evaluation including calibration analysis and reliability assessment into the core evaluation framework, addressing the critical need for dependable IoT sensing systems.
+
+\textbf{Enhanced Architecture Innovation:} Our proposed Enhanced model architecture combines CNN feature extraction, SE channel attention, and temporal attention mechanisms in a novel configuration optimized for both synthetic and real WiFi CSI data.

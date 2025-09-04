@@ -1,0 +1,60 @@
+% CDAE和STEA实验的详细展开内容
+% 插入到论文的实验设计部分
+
+\subsubsection{CDAE Protocol: Cross-Domain Adaptation Evaluation Framework}
+
+The Cross-Domain Adaptation Evaluation (CDAE) protocol represents a systematic approach to assess model generalization capabilities across different domain variations commonly encountered in real-world WiFi CSI HAR deployments. This protocol addresses two critical generalization challenges:
+
+\textbf{Subject-Independent Generalization (LOSO):} The Leave-One-Subject-Out evaluation assesses model performance when deployed for new users without prior training data from those individuals. This scenario is fundamental to practical WiFi sensing systems that must recognize activities from previously unseen subjects without requiring personalized calibration.
+
+\textbf{Environment-Independent Generalization (LORO):} The Leave-One-Room-Out evaluation validates model robustness when deployed in new physical environments with different layouts, furniture arrangements, and signal propagation characteristics. This capability is essential for scalable deployment across diverse indoor environments.
+
+\textbf{Statistical Rigor:} Each CDAE configuration employs 5-fold cross-validation with different random seeds, ensuring statistical reliability of generalization assessments. The protocol encompasses 40 total experiments (4 models × 2 protocols × 5 seeds), providing comprehensive coverage of cross-domain performance characteristics.
+
+\textbf{Performance Metrics:} Beyond standard accuracy measures, the CDAE protocol emphasizes consistency metrics including coefficient of variation (CV) analysis and confidence interval assessment, enabling quantitative comparison of model stability across domain variations.
+
+\subsubsection{STEA Protocol: Sim2Real Transfer Efficiency Assessment Framework}
+
+The Sim2Real Transfer Efficiency Assessment (STEA) protocol quantifies the practical value of synthetic pretraining through systematic evaluation of label efficiency under realistic deployment constraints. This protocol directly addresses the fundamental question: \textit{What is the minimum amount of real-world labeled data required to achieve acceptable performance when leveraging synthetic pretraining?}
+
+\textbf{Transfer Method Taxonomy:} The STEA protocol evaluates four distinct transfer learning approaches:
+
+\begin{enumerate}
+\item \textbf{Zero-shot Transfer:} Direct application of synthetic-trained models to real data without adaptation, establishing the baseline transfer capability.
+
+\item \textbf{Linear Probe:} Freezing the feature extraction layers and fine-tuning only the classification head, isolating the impact of domain-specific decision boundaries.
+
+\item \textbf{End-to-End Fine-tuning:} Complete model adaptation with real data, enabling full optimization of both feature extraction and classification components.
+
+\item \textbf{Temperature Scaling:} Post-hoc calibration for improved prediction confidence without architectural modifications.
+\end{enumerate}
+
+\textbf{Label Efficiency Characterization:} The protocol systematically varies real-world label availability from 1\% to 100\%, enabling precise characterization of the label efficiency curve. This granular assessment identifies the optimal operating point balancing performance requirements with labeling costs.
+
+\textbf{Practical Deployment Focus:} Unlike academic benchmarks that assume unlimited labeled data, the STEA protocol specifically targets the 1-20\% label range most relevant to resource-constrained deployment scenarios. This focus aligns with real-world constraints where comprehensive data labeling is prohibitively expensive.
+
+\textbf{Economic Impact Quantification:} Each STEA configuration includes cost-benefit analysis, translating performance metrics into practical deployment economics through labeling cost reduction calculations and deployment feasibility assessments.
+
+\subsubsection{Combined CDAE-STEA Evaluation Framework}
+
+The integration of CDAE and STEA protocols provides comprehensive validation of practical deployment readiness through complementary assessment dimensions:
+
+\textbf{Generalization × Efficiency Matrix:} The combined evaluation creates a two-dimensional assessment space where models must demonstrate both cross-domain robustness (CDAE) and label efficiency (STEA) simultaneously. This dual requirement reflects real-world deployment scenarios where both capabilities are essential.
+
+\textbf{Deployment Readiness Scoring:} Models achieving high performance in both CDAE (≥80\% F1 with CV<5\%) and STEA (≥80\% F1 at ≤20\% labels) qualify for practical deployment consideration. This scoring framework provides quantitative deployment decision support.
+
+\textbf{Risk Assessment:} The protocol combination enables identification of deployment risks through systematic evaluation of performance degradation under both domain shift (CDAE) and label scarcity (STEA) conditions, informing deployment strategies and contingency planning.
+
+\subsection{Experimental Configuration Details}
+
+\textbf{Hardware and Software Environment:}
+\begin{itemize}
+\item Computing Platform: NVIDIA GPU cluster with CUDA acceleration
+\item Software Framework: PyTorch 1.12+ with mixed-precision training support
+\item Evaluation Infrastructure: Distributed computing for parallel seed evaluation
+\item Reproducibility: Fixed random seeds and deterministic operations for result consistency
+\end{itemize}
+
+\textbf{Hyperparameter Optimization:} Both CDAE and STEA protocols employ grid search optimization over model-specific hyperparameter spaces, ensuring fair comparison across architectures. Hyperparameters are optimized on synthetic validation data to avoid target domain overfitting.
+
+\textbf{Statistical Analysis Framework:} All results include confidence interval estimation, significance testing (paired t-tests), and effect size calculation using Cohen's d. Multiple comparison corrections are applied when comparing across multiple models or conditions.
