@@ -276,8 +276,8 @@ All experiments use PyTorch 1.12 with mixed precision training on NVIDIA V100 GP
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{plots/fig4_calibration.pdf}
-\caption{PASE-Net Calibration and Reliability Analysis: (a) Calibration metrics comparison showing PASE-Net's 78\% ECE improvement (0.142→0.031) after temperature scaling; (b) Reliability diagram demonstrating superior calibration alignment with perfect calibration line; (c) Temperature scaling optimization revealing optimal parameter T=1.45; (d) Uncertainty quantification analysis showing well-calibrated confidence distributions. PASE-Net consistently outperforms baselines in both accuracy and calibration quality, essential for trustworthy IoT deployment.}
+\includegraphics[width=\columnwidth]{plots/fig3_calibration.pdf}
+\caption{PASE-Net Calibration and Reliability Analysis showing 78\% ECE improvement (0.142→0.031) after temperature scaling. PASE-Net consistently outperforms baselines in both accuracy and calibration quality, essential for trustworthy IoT deployment. Detailed analysis with multiple subplots is provided in Supplementary Figure S1.}
 \label{fig:calibration}
 \end{figure}
 
@@ -325,21 +325,21 @@ Bootstrap confidence intervals (95\%, $n=1000$) confirm these differences: PASE-
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{plots/fig3_cross_domain.pdf}
-\caption{PASE-Net Cross-Domain Performance Analysis: (a) Leave-One-Subject-Out (LOSO) validation showing PASE-Net's exceptional consistency (83.0±0.1\% macro-F1) with coefficient of variation <0.2\%; (b) Leave-One-Room-Out (LORO) validation demonstrating identical performance to LOSO, indicating true domain-invariant learning; (c) Domain shift robustness analysis across environmental changes, highlighting PASE-Net's superior adaptation capabilities; (d) Statistical performance comparison with rigorous significance testing, bootstrap confidence intervals, and effect size analysis confirming PASE-Net's substantial advantages over baseline architectures.}
+\includegraphics[width=\textwidth]{plots/fig4_cross_domain.pdf}
+\caption{PASE-Net Cross-Domain Performance Analysis showing exceptional consistency with LOSO (83.0±0.1\% macro-F1) and LORO (83.0±0.1\% macro-F1) protocols, demonstrating true domain-invariant learning. Complete analysis with domain shift robustness and statistical comparisons is provided in Supplementary Figure S1.}
 \label{fig:cross_domain}
 \end{figure*}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{plots/fig5_label_efficiency.pdf}
-\caption{PASE-Net Sim2Real Label Efficiency Analysis: (a) Label efficiency curves showing PASE-Net achieves 82.1\% macro-F1 with only 20\% labeled real data (98.6\% of full supervision performance), demonstrating transformative cost reduction; (b) Transfer strategy comparison highlighting synthetic pretraining advantages over conventional approaches; (c) Domain gap analysis illustrating rapid performance recovery through efficient fine-tuning; (d) Cost-benefit analysis quantifying the 80\% annotation cost savings while maintaining near-optimal performance. Results validate PASE-Net's practical deployment viability with minimal labeling requirements.}
+\caption{PASE-Net Sim2Real Label Efficiency Analysis showing 82.1\% macro-F1 with only 20\% labeled real data (98.6\% of full supervision performance), demonstrating 80\% annotation cost savings. Extended analysis with transfer strategies and cost-benefit comparison is provided in Supplementary Figure S2.}
 \label{fig:label_efficiency}
 \end{figure}
 
 %\begin{figure}[t]
 %\centering
-%\includegraphics[width=\columnwidth]{plots/d5_progressive_enhanced.pdf}
+%\includegraphics[width=\columnwidth]{plots/s3_progressive_temporal.pdf}
 %\caption{Progressive Temporal Analysis: PASE-Net macro-F1 across progressive levels with baseline seed mean as a reference. The trend indicates stable utilization of temporal granularity without variance spikes.}
 %\label{fig:progressive_temporal}
 %\end{figure}
@@ -383,7 +383,7 @@ Figure~\ref{fig:label_efficiency} demonstrates PASE-Net's exceptional Sim2Real t
 
 %\begin{figure}[t]
 %\centering
-%\includegraphics[width=\columnwidth]{plots/ablation_noise_env_heatmap.pdf}
+%\includegraphics[width=\columnwidth]{plots/s4_ablation_noise_env.pdf}
 %\caption{SRV Nuisance Factor Analysis: PASE-Net maintains >85\% macro-F1 under combined stress conditions (class overlap + environmental burst) while CNN baseline drops below 70\% and BiLSTM to 75\%. The heatmaps show macro-F1 performance versus class overlap (y-axis) and environmental burst rate (x-axis) with fixed label noise. PASE-Net demonstrates superior robustness to multiple simultaneous stress factors through synergistic SE and temporal attention mechanisms.}
 %\label{fig:nuisance_factors}
 %\end{figure}
@@ -404,7 +404,7 @@ To understand the contribution of individual components, we conduct systematic a
 
 %\begin{figure}[t]
 %\centering
-%\includegraphics[width=\columnwidth]{plots/ablation_components.pdf}
+%\includegraphics[width=\columnwidth]{plots/s5_ablation_components.pdf}
 %\caption{PASE-Net Component-Level Performance Analysis: Comprehensive comparison across all evaluation metrics showing PASE-Net's superior precision-recall balance (F1 standard deviation across classes: 0.031 vs 0.058 for CNN) and exceptional performance on rare classes including fall detection (0.71 vs 0.52 recall for CNN). The analysis validates that performance improvements stem from architectural innovations rather than increased model capacity.}
 %\label{fig:component_analysis}
 %\end{figure}
