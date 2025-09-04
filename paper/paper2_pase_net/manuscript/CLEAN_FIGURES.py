@@ -26,7 +26,7 @@ def clean_paper2_figures():
         "fig6_interpretability.pdf",
         # Commented out but keep for supplementary materials
         "d5_progressive_enhanced.pdf",
-        "ablation_noise_env_claude4.pdf", 
+        "ablation_noise_env_heatmap.pdf", 
         "ablation_components.pdf"
     }
     

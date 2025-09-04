@@ -16,7 +16,7 @@
 | Figure | File | Description |
 |--------|------|-------------|
 | Supp. 1 | `d5_progressive_enhanced.pdf` | Progressive temporal |
-| Supp. 2 | `ablation_noise_env_claude4.pdf` | Nuisance factors |
+| Supp. 2 | `ablation_noise_env_heatmap.pdf` | Nuisance factors |
 | Supp. 3 | `ablation_components.pdf` | Component analysis |
 
 ## Generation Scripts

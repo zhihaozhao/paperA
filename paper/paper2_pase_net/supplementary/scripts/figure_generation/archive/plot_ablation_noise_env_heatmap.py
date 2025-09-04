@@ -3,7 +3,7 @@
 Advanced visualization for ablation study: noise and environment effects
 Only includes models with complete data (enhanced, cnn)
 Uses sophisticated visualization techniques instead of simple bar charts
-Created by Claude 4 agent
+Generates heatmap visualization of performance under different noise conditions
 """
 import json
 import pathlib
@@ -24,7 +24,7 @@ sns.set_palette("husl")
 
 ROOT = pathlib.Path(__file__).resolve().parents[3]
 D2 = ROOT / "results_gpu" / "d2"
-OUT = pathlib.Path(__file__).resolve().parent / "ablation_noise_env_claude4.pdf"
+OUT = pathlib.Path(__file__).resolve().parent / "ablation_noise_env_heatmap.pdf"
 
 # Only use models with complete data
 MODELS = ["enhanced", "cnn"]
