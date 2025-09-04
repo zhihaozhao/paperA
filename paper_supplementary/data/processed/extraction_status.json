@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-09-04T12:10:51.847031",
+  "status": {
+    "srv": "SUCCESS",
+    "cross_domain": "SUCCESS",
+    "calibration": "SUCCESS",
+    "label_efficiency": "SUCCESS",
+    "fall_detection": "SUCCESS",
+    "table1": "SUCCESS"
+  }
+}
