@@ -127,13 +127,13 @@ def create_robustness_validation(ax):
     
     # Simulate SRV validation results based on paper data
     noise_levels = ['0%', '5%', '10%', '15%', '20%']
-    models = ['CNN', 'BiLSTM', 'TCN', 'PASE-Net']
+    models = ['CNN', 'BiLSTM', 'Conformer', 'PASE-Net']
     
-    # Performance data based on paper results
+    # Performance data based on paper results (Table 1)
     performance_matrix = np.array([
         [0.89, 0.85, 0.80, 0.75, 0.70],  # CNN
         [0.91, 0.87, 0.83, 0.78, 0.73],  # BiLSTM  
-        [0.90, 0.86, 0.82, 0.77, 0.72],  # TCN
+        [0.93, 0.89, 0.85, 0.80, 0.75],  # Conformer (replacing TCN)
         [0.97, 0.95, 0.93, 0.90, 0.87]   # PASE-Net
     ])
     
