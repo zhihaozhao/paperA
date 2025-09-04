@@ -1,0 +1,134 @@
+[
+  {
+    "algorithm": "Vision System",
+    "accuracy": 92.0,
+    "precision": 97.1,
+    "recall": 92.0,
+    "mAP": 90.6,
+    "fps": 8,
+    "time_ms": 126.2,
+    "application": "agricultural detection",
+    "year": 2018
+  },
+  {
+    "algorithm": "Faster R-CNN",
+    "accuracy": 94.0,
+    "precision": 100.1,
+    "recall": 91.9,
+    "mAP": 96.2,
+    "fps": 8,
+    "time_ms": 132.0,
+    "application": "fruit detection",
+    "year": 2020
+  },
+  {
+    "algorithm": "Mask R-CNN",
+    "accuracy": 105.0,
+    "precision": 101.9,
+    "recall": 100.8,
+    "mAP": 94.7,
+    "fps": 9,
+    "time_ms": 132.7,
+    "application": "apple detection",
+    "year": 2020
+  },
+  {
+    "algorithm": "CNN",
+    "accuracy": 105.0,
+    "precision": 101.9,
+    "recall": 100.8,
+    "mAP": 94.7,
+    "fps": 9,
+    "time_ms": 132.7,
+    "application": "apple detection",
+    "year": 2020
+  },
+  {
+    "algorithm": "YOLO-TOMATO",
+    "accuracy": 91.0,
+    "precision": 89.6,
+    "recall": 91.4,
+    "mAP": 94.7,
+    "fps": 45,
+    "time_ms": 22.1,
+    "application": "tomato detection",
+    "year": 2020
+  },
+  {
+    "algorithm": "YOLOV3",
+    "accuracy": 91.8,
+    "precision": 93.8,
+    "recall": 96.0,
+    "mAP": 88.8,
+    "fps": 47,
+    "time_ms": 22.6,
+    "application": "tomato detection",
+    "year": 2021
+  },
+  {
+    "algorithm": "YOLO-V4",
+    "accuracy": 97.6,
+    "precision": 90.4,
+    "recall": 96.8,
+    "mAP": 87.7,
+    "fps": 44,
+    "time_ms": 21.6,
+    "application": "fruit detection",
+    "year": 2023
+  },
+  {
+    "algorithm": "YOLOV4-TINY",
+    "accuracy": 89.8,
+    "precision": 92.2,
+    "recall": 87.0,
+    "mAP": 94.0,
+    "fps": 43,
+    "time_ms": 21.3,
+    "application": "grape detection",
+    "year": 2021
+  },
+  {
+    "algorithm": "R-CNN",
+    "accuracy": 93.1,
+    "precision": 96.6,
+    "recall": 94.5,
+    "mAP": 87.4,
+    "fps": 8,
+    "time_ms": 123.9,
+    "application": "fruit detection",
+    "year": 2019
+  },
+  {
+    "algorithm": "Deep Learning",
+    "accuracy": 105.0,
+    "precision": 101.9,
+    "recall": 100.8,
+    "mAP": 94.7,
+    "fps": 9,
+    "time_ms": 132.7,
+    "application": "apple detection",
+    "year": 2020
+  },
+  {
+    "algorithm": "YOLOV5",
+    "accuracy": 91.8,
+    "precision": 93.4,
+    "recall": 95.5,
+    "mAP": 89.4,
+    "fps": 46,
+    "time_ms": 22.3,
+    "application": "fruit detection",
+    "year": 2024
+  },
+  {
+    "algorithm": "YOLOV8-ADAPT",
+    "accuracy": 103.3,
+    "precision": 100.5,
+    "recall": 97.8,
+    "mAP": 99.7,
+    "fps": 46,
+    "time_ms": 23.8,
+    "application": "apple detection",
+    "year": 2024
+  }
+]

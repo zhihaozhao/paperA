@@ -1,0 +1,92 @@
+[
+  {
+    "approach": "7-DOF Manipulator",
+    "success_rate": 84,
+    "cycle_time": 7.6,
+    "fruit": "Apple",
+    "year": 2017,
+    "environment": "Commercial Orchard",
+    "ref": "silwal2017design"
+  },
+  {
+    "approach": "Vision-Integrated Navigation",
+    "success_rate": 39,
+    "cycle_time": 24.0,
+    "fruit": "Sweet Pepper",
+    "year": 2020,
+    "environment": "Greenhouse",
+    "ref": "arad2020development"
+  },
+  {
+    "approach": "Dual-Arm System",
+    "success_rate": 85,
+    "cycle_time": 6.1,
+    "fruit": "Strawberry",
+    "year": 2020,
+    "environment": "Polytunnel",
+    "ref": "xiong2020autonomous"
+  },
+  {
+    "approach": "Recurrent DDPG",
+    "success_rate": 90.9,
+    "cycle_time": 0.029,
+    "fruit": "Guava",
+    "year": 2021,
+    "environment": "Orchard",
+    "ref": "lin2021collision"
+  },
+  {
+    "approach": "Dual-Arm Coordination",
+    "success_rate": 87.5,
+    "cycle_time": 8.0,
+    "fruit": "Tomato",
+    "year": 2019,
+    "environment": "Greenhouse",
+    "ref": "ling2019dual"
+  },
+  {
+    "approach": "7-DOF with Vision",
+    "success_rate": 58,
+    "cycle_time": 12.0,
+    "fruit": "Sweet Pepper",
+    "year": 2017,
+    "environment": "Protected Crops",
+    "ref": "lehnert2017autonomous"
+  },
+  {
+    "approach": "RL-based Planning",
+    "success_rate": 92,
+    "cycle_time": 0.05,
+    "fruit": "Pepper",
+    "year": 2022,
+    "environment": "Lab/Field",
+    "ref": "verbiest2022path"
+  },
+  {
+    "approach": "Vision-Guided Paths",
+    "success_rate": 51,
+    "cycle_time": 5.5,
+    "fruit": "Kiwifruit",
+    "year": 2020,
+    "environment": "Orchard",
+    "ref": "williams2020improvements"
+  },
+  {
+    "approach": "PointNet Integration",
+    "success_rate": 85,
+    "cycle_time": 6.5,
+    "fruit": "Apple",
+    "year": 2020,
+    "environment": "Field",
+    "ref": "kang2020real"
+  },
+  {
+    "approach": "Multi-Robot Coordination",
+    "success_rate": 70,
+    "cycle_time": 18.0,
+    "fruit": "General",
+    "year": 2019,
+    "environment": "Orchard",
+    "ref": "vougioukas2019orchestra"
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "technology": "Deep Learning Fusion",
+    "trl": 6,
+    "year": 2022,
+    "commercial_potential": "High",
+    "ref": "hou2023overview"
+  },
+  {
+    "technology": "End-to-End Automation",
+    "trl": 7,
+    "year": 2023,
+    "commercial_potential": "Medium-High",
+    "ref": "zhang2024automatic"
+  },
+  {
+    "technology": "Soft Gripping",
+    "trl": 6,
+    "year": 2021,
+    "commercial_potential": "High",
+    "ref": "navas2021soft"
+  },
+  {
+    "technology": "Multi-Robot Systems",
+    "trl": 5,
+    "year": 2024,
+    "commercial_potential": "Medium",
+    "ref": "mingyou2024orchard"
+  },
+  {
+    "technology": "Precision Control",
+    "trl": 6,
+    "year": 2024,
+    "commercial_potential": "High",
+    "ref": "rajendran2024towards"
+  },
+  {
+    "technology": "LiDAR-Vision Fusion",
+    "trl": 6,
+    "year": 2024,
+    "commercial_potential": "Medium-High",
+    "ref": "liu2024hierarchical"
+  },
+  {
+    "technology": "IoT Integration",
+    "trl": 5,
+    "year": 2021,
+    "commercial_potential": "High",
+    "ref": "mohamed2021smart"
+  },
+  {
+    "technology": "UAV Coordination",
+    "trl": 4,
+    "year": 2021,
+    "commercial_potential": "Medium",
+    "ref": "martos2021ensuring"
+  },
+  {
+    "technology": "Modular Design",
+    "trl": 5,
+    "year": 2021,
+    "commercial_potential": "High",
+    "ref": "lytridis2021overview"
+  },
+  {
+    "technology": "Multi-Task Learning",
+    "trl": 6,
+    "year": 2023,
+    "commercial_potential": "High",
+    "ref": "li2023multi"
+  }
+]
