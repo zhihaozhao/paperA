@@ -192,7 +192,7 @@ def create_combined_figure():
 
 if __name__ == "__main__":
     fig = create_combined_figure()
-    output_path = "fig2_physics_modeling.pdf"
+    output_path = "fig2_physics_modeling_v2.pdf"
     fig.savefig(output_path, dpi=300, bbox_inches='tight')
     print(f"Saved Figure 2: {output_path}")
     plt.close()
