@@ -44,12 +44,25 @@ if command -v python3 &> /dev/null; then
     python3 -c "
 try:
     import torch
-    print(f'✅ PyTorch: {torch.__version__}')
+    version = torch.__version__
+    print(f'✅ PyTorch: {version}')
+    
+    # Check if it's the expected 1.8 version for JetPack 4.x
+    if version.startswith('1.8'):
+        print('🎯 Correct PyTorch 1.8 for JetPack 4.x')
+    elif version.startswith('1.12'):
+        print('🎯 PyTorch 1.12 for JetPack 5.x')  
+    else:
+        print(f'⚠️  Unexpected PyTorch version: {version}')
+    
     print(f'🔥 CUDA: {torch.cuda.is_available()} - {torch.version.cuda if torch.cuda.is_available() else \"N/A\"}')
+    
+    if torch.cuda.is_available():
+        print(f'🖥️  GPU: {torch.cuda.get_device_name(0)}')
 except ImportError:
     print('❌ PyTorch not installed')
-except:
-    print('⚠️  PyTorch import error')
+except Exception as e:
+    print(f'⚠️  PyTorch import error: {e}')
 "
 else
     echo "❌ Python3 not available"

@@ -89,22 +89,46 @@ case $JETPACK_VERSION in
         pip install torch-1.12.0-cp38-cp38-linux_aarch64.whl
         ;;
     "4.x")
-        # JetPack 4.x - CUDA 10.2
-        wget https://nvidia.box.com/shared/static/9eptse6jyly38kwjgj2n3gf9gqjskmu7.whl -O torch-1.11.0-cp38-cp38-linux_aarch64.whl
-        pip install torch-1.11.0-cp38-cp38-linux_aarch64.whl
+        # JetPack 4.x - CUDA 10.2 - Use existing PyTorch 1.8 if available
+        echo "🎯 JetPack 4.x detected - checking existing PyTorch 1.8..."
+        if python3 -c "import torch; print(torch.__version__)" 2>/dev/null | grep -q "1.8"; then
+            echo "✅ PyTorch 1.8 already installed - keeping existing version"
+            echo "📌 Version: $(python3 -c 'import torch; print(torch.__version__)')"
+        else
+            echo "📦 Installing PyTorch 1.8 for JetPack 4.x..."
+            # PyTorch 1.8.0 wheel for JetPack 4.x
+            wget https://nvidia.box.com/shared/static/cs3xn3td6sfgtene6jdvsxlr366m2dhq.whl -O torch-1.8.0-cp36-cp36m-linux_aarch64.whl
+            pip install torch-1.8.0-cp36-cp36m-linux_aarch64.whl
+        fi
         ;;
 esac
 check_status "PyTorch installation"
 
-# Step 6: Install Torchvision from source
+# Step 6: Install Torchvision for PyTorch 1.8
 echo ""
-echo "🖼️  Step 6: Installing Torchvision from source..."
+echo "🖼️  Step 6: Installing Torchvision for PyTorch 1.8..."
+
+# Install dependencies for torchvision
 sudo apt install -y libjpeg-dev zlib1g-dev libpython3-dev libavcodec-dev libavformat-dev libswscale-dev
-git clone --branch v0.13.0 https://github.com/pytorch/vision torchvision_build
-cd torchvision_build
-python setup.py install
-cd ..
-rm -rf torchvision_build
+
+# Check if torchvision is already installed and compatible
+if python3 -c "import torchvision; print('torchvision version:', torchvision.__version__)" 2>/dev/null; then
+    echo "✅ Torchvision already installed"
+else
+    echo "📦 Installing Torchvision 0.9.0 for PyTorch 1.8..."
+    # Install torchvision 0.9.0 compatible with PyTorch 1.8
+    pip install torchvision==0.9.0 --no-deps
+    
+    # If that fails, try from source
+    if ! python3 -c "import torchvision" 2>/dev/null; then
+        echo "📦 Building torchvision from source..."
+        git clone --branch v0.9.0 https://github.com/pytorch/vision torchvision_build
+        cd torchvision_build
+        python setup.py install
+        cd ..
+        rm -rf torchvision_build
+    fi
+fi
 check_status "Torchvision installation"
 
 # Step 7: Install project dependencies
