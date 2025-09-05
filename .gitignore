@@ -142,3 +142,6 @@ paper/figures/figures_*.json
 paper/figures/*.txt
 paper/figures/*.dat
 # Repos directory contains separated repositories
+node_modules/
+*.log
+*.aux

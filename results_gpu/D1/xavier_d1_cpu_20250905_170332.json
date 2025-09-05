@@ -1,0 +1,66 @@
+{
+  "timestamp": "2025-09-05T17:03:32.189330",
+  "device_info": {
+    "device": "cpu",
+    "torch_version": "1.8.0",
+    "cuda_available": true,
+    "compatibility_mode": "Xavier AGX 32G with PyTorch 1.4+"
+  },
+  "experiment_config": {
+    "F": 52,
+    "T": 128,
+    "K": 8,
+    "description": "D1 InD parameter alignment experiment - Xavier compatible",
+    "expected_params": {
+      "enhanced": 640713,
+      "cnn": 644216,
+      "bilstm": 583688
+    },
+    "alignment_tolerance": "10%",
+    "validation_source": "chat/Aug15.25.md verification command"
+  },
+  "models": {
+    "enhanced": {
+      "model_name": "enhanced",
+      "total_params": 640713,
+      "trainable_params": 640713,
+      "model_size_mb": 2.4441261291503906,
+      "input_shape": [1, 128, 52],
+      "output_shape": [1, 8],
+      "avg_inference_time_ms": 338.90859110006204,
+      "min_inference_time_ms": 286.9665050002368,
+      "max_inference_time_ms": 446.3879740014818,
+      "config": {"F": 52, "T": 128, "K": 8},
+      "device": "cpu",
+      "num_runs": 20
+    },
+    "cnn": {
+      "model_name": "cnn",
+      "total_params": 644216,
+      "trainable_params": 644216,
+      "model_size_mb": 2.457489013671875,
+      "input_shape": [1, 128, 52],
+      "output_shape": [1, 8],
+      "avg_inference_time_ms": 7.13078825001503,
+      "min_inference_time_ms": 5.7312209992232965,
+      "max_inference_time_ms": 8.693427000252996,
+      "config": {"F": 52, "T": 128, "K": 8},
+      "device": "cpu",
+      "num_runs": 20
+    },
+    "bilstm": {
+      "model_name": "bilstm",
+      "total_params": 583688,
+      "trainable_params": 583688,
+      "model_size_mb": 2.226593017578125,
+      "input_shape": [1, 128, 52],
+      "output_shape": [1, 8],
+      "avg_inference_time_ms": 75.4571985498842,
+      "min_inference_time_ms": 71.52710999980627,
+      "max_inference_time_ms": 81.00579600068158,
+      "config": {"F": 52, "T": 128, "K": 8},
+      "device": "cpu",
+      "num_runs": 20
+    }
+  }
+}

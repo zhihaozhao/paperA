@@ -194,3 +194,4 @@ bash scripts/batch_infer_seeds.sh
 - **Windows**: Use `.bat` scripts or PowerShell equivalent commands
 - Main entry point: `src/train_eval.py` with comprehensive CLI arguments
 - py脚本修改后运行，不需要确认，直接yes
+- 你能查看之前init的项目文件结构吗？现在的工作需要理解项目，并查看paper\paper2_pase_net\supplementary\readme，请记忆整个项目内容

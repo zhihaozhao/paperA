@@ -1,0 +1,155 @@
+{
+  "timestamp": "2025-09-05T17:11:32.335033",
+  "device_info": {
+    "device": "cuda",
+    "torch_version": "1.8.0",
+    "cuda_available": true,
+    "cuda_device_name": "Xavier",
+    "cuda_memory_gb": 31.170589447021484,
+    "cuda_capability": [7, 2]
+  },
+  "experiment_config": {
+    "F": 52,
+    "T": 128,
+    "K": 8,
+    "description": "D1 InD parameter alignment - GPU optimized measurement",
+    "expected_params": {
+      "enhanced": 640713,
+      "cnn": 644216,
+      "bilstm": 583688
+    },
+    "batch_sizes_tested": [1, 4, 8],
+    "num_runs_per_batch": 50
+  },
+  "models": {
+    "enhanced": {
+      "model_name": "enhanced",
+      "total_params": 640713,
+      "trainable_params": 640713,
+      "model_size_mb": 2.4441261291503906,
+      "config": {"F": 52, "T": 128, "K": 8},
+      "device": "cuda",
+      "batch_results": {
+        "batch_1": {
+          "batch_size": 1,
+          "input_shape": [1, 128, 52],
+          "output_shape": [1, 8],
+          "avg_total_time_ms": 5.285800260171527,
+          "avg_per_sample_time_ms": 5.285800260171527,
+          "throughput_samples_per_sec": 189.18611199424123,
+          "min_time_ms": 4.905945001155487,
+          "max_time_ms": 8.095612000033725,
+          "num_runs": 50
+        },
+        "batch_4": {
+          "batch_size": 4,
+          "input_shape": [4, 128, 52],
+          "output_shape": [4, 8],
+          "avg_total_time_ms": 7.979828279894718,
+          "avg_per_sample_time_ms": 1.9949570699736796,
+          "throughput_samples_per_sec": 501.2639194352154,
+          "min_time_ms": 7.7989250003156485,
+          "max_time_ms": 11.573132000194164,
+          "num_runs": 50
+        },
+        "batch_8": {
+          "batch_size": 8,
+          "input_shape": [8, 128, 52],
+          "output_shape": [8, 8],
+          "avg_total_time_ms": 13.177026300036232,
+          "avg_per_sample_time_ms": 1.647128287504529,
+          "throughput_samples_per_sec": 607.1172522421089,
+          "min_time_ms": 12.881807000667322,
+          "max_time_ms": 18.001779000769602,
+          "num_runs": 50
+        }
+      }
+    },
+    "cnn": {
+      "model_name": "cnn",
+      "total_params": 644216,
+      "trainable_params": 644216,
+      "model_size_mb": 2.457489013671875,
+      "config": {"F": 52, "T": 128, "K": 8},
+      "device": "cuda",
+      "batch_results": {
+        "batch_1": {
+          "batch_size": 1,
+          "input_shape": [1, 128, 52],
+          "output_shape": [1, 8],
+          "avg_total_time_ms": 0.8986772398566245,
+          "avg_per_sample_time_ms": 0.8986772398566245,
+          "throughput_samples_per_sec": 1112.746551987386,
+          "min_time_ms": 0.8075929999904474,
+          "max_time_ms": 1.3355560004129075,
+          "num_runs": 50
+        },
+        "batch_4": {
+          "batch_size": 4,
+          "input_shape": [4, 128, 52],
+          "output_shape": [4, 8],
+          "avg_total_time_ms": 0.8479708000231767,
+          "avg_per_sample_time_ms": 0.21199270000579418,
+          "throughput_samples_per_sec": 4717.143561889952,
+          "min_time_ms": 0.7774480000080075,
+          "max_time_ms": 1.2269100006960798,
+          "num_runs": 50
+        },
+        "batch_8": {
+          "batch_size": 8,
+          "input_shape": [8, 128, 52],
+          "output_shape": [8, 8],
+          "avg_total_time_ms": 1.1305560001710546,
+          "avg_per_sample_time_ms": 0.14131950002138183,
+          "throughput_samples_per_sec": 7076.164293311954,
+          "min_time_ms": 1.0624220012687147,
+          "max_time_ms": 1.5597910005453741,
+          "num_runs": 50
+        }
+      }
+    },
+    "bilstm": {
+      "model_name": "bilstm",
+      "total_params": 583688,
+      "trainable_params": 583688,
+      "model_size_mb": 2.226593017578125,
+      "config": {"F": 52, "T": 128, "K": 8},
+      "device": "cuda",
+      "batch_results": {
+        "batch_1": {
+          "batch_size": 1,
+          "input_shape": [1, 128, 52],
+          "output_shape": [1, 8],
+          "avg_total_time_ms": 8.967561759891396,
+          "avg_per_sample_time_ms": 8.967561759891396,
+          "throughput_samples_per_sec": 111.51303183353942,
+          "min_time_ms": 8.813696000288473,
+          "max_time_ms": 9.760336000908865,
+          "num_runs": 50
+        },
+        "batch_4": {
+          "batch_size": 4,
+          "input_shape": [4, 128, 52],
+          "output_shape": [4, 8],
+          "avg_total_time_ms": 9.43207813994377,
+          "avg_per_sample_time_ms": 2.3580195349859423,
+          "throughput_samples_per_sec": 424.0846969938108,
+          "min_time_ms": 9.180883000226459,
+          "max_time_ms": 10.466932000781526,
+          "num_runs": 50
+        },
+        "batch_8": {
+          "batch_size": 8,
+          "input_shape": [8, 128, 52],
+          "output_shape": [8, 8],
+          "avg_total_time_ms": 9.39696276011091,
+          "avg_per_sample_time_ms": 1.1746203450138637,
+          "throughput_samples_per_sec": 851.3389064346551,
+          "min_time_ms": 9.146641001279932,
+          "max_time_ms": 10.345966000386397,
+          "num_runs": 50
+        }
+      }
+    }
+  }
+}
