@@ -44,18 +44,56 @@ source ~/xavier_d1_env/bin/activate
 pip install --upgrade pip setuptools wheel
 check_status "Virtual environment creation"
 
-# Step 5: Install PyTorch for Xavier
+# Step 5: Check CUDA and install PyTorch for Xavier
 echo ""
-echo "🔥 Step 5: Installing PyTorch for Xavier..."
-# Check JetPack version
+echo "🔥 Step 5: Checking CUDA and installing PyTorch for Xavier..."
+
+# Check CUDA version and JetPack
+echo "🔍 Detecting CUDA and JetPack version..."
 if [ -f "/etc/nv_tegra_release" ]; then
-    echo "📋 Detected Jetson platform:"
+    echo "📋 Jetson platform detected:"
     cat /etc/nv_tegra_release
+    
+    # Detect JetPack version
+    if grep -q "R35" /etc/nv_tegra_release; then
+        echo "🎯 JetPack 5.x detected (CUDA 11.4+)"
+        JETPACK_VERSION="5.x"
+    elif grep -q "R32" /etc/nv_tegra_release; then
+        echo "🎯 JetPack 4.x detected (CUDA 10.2)"
+        JETPACK_VERSION="4.x"
+    else
+        echo "⚠️  Unknown JetPack version, defaulting to 5.x"
+        JETPACK_VERSION="5.x"
+    fi
+else
+    echo "❌ Not a Jetson platform"
+    exit 1
 fi
 
-# Install PyTorch wheel for Xavier (JetPack 5.0 compatible)
-wget https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl -O torch-1.12.0-cp38-cp38-linux_aarch64.whl
-pip install torch-1.12.0-cp38-cp38-linux_aarch64.whl
+# Check CUDA availability
+if command -v nvcc &> /dev/null; then
+    CUDA_VERSION=$(nvcc --version | grep "release" | sed 's/.*release \([0-9]\+\.[0-9]\+\).*/\1/')
+    echo "✅ NVCC found - CUDA version: $CUDA_VERSION"
+else
+    echo "⚠️  NVCC not found, setting up CUDA path..."
+    export PATH=/usr/local/cuda/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+fi
+
+# Install appropriate PyTorch version
+echo "📦 Installing PyTorch for $JETPACK_VERSION..."
+case $JETPACK_VERSION in
+    "5.x")
+        # JetPack 5.x - CUDA 11.4
+        wget https://nvidia.box.com/shared/static/p57jwntv436lfrd78inwl7iml6p13fzh.whl -O torch-1.12.0-cp38-cp38-linux_aarch64.whl
+        pip install torch-1.12.0-cp38-cp38-linux_aarch64.whl
+        ;;
+    "4.x")
+        # JetPack 4.x - CUDA 10.2
+        wget https://nvidia.box.com/shared/static/9eptse6jyly38kwjgj2n3gf9gqjskmu7.whl -O torch-1.11.0-cp38-cp38-linux_aarch64.whl
+        pip install torch-1.11.0-cp38-cp38-linux_aarch64.whl
+        ;;
+esac
 check_status "PyTorch installation"
 
 # Step 6: Install Torchvision from source
