@@ -20,8 +20,8 @@ import argparse
 
 # Model definitions matching D1 TRUE experimental configuration
 class SqueezeExcite(nn.Module):
-    def __init__(self, channels: int, reduction: int = 16):
-        super().__init__()
+    def __init__(self, channels, reduction=16):
+        super(SqueezeExcite, self).__init__()
         hidden = max(8, channels // reduction)
         self.pool = nn.AdaptiveAvgPool2d(1)
         self.fc = nn.Sequential(
@@ -36,8 +36,8 @@ class SqueezeExcite(nn.Module):
         return x * w
 
 class DepthwiseSeparableConv2d(nn.Module):
-    def __init__(self, in_ch: int, out_ch: int, k: int = 3, s: int = 1, p: int = 1):
-        super().__init__()
+    def __init__(self, in_ch, out_ch, k=3, s=1, p=1):
+        super(DepthwiseSeparableConv2d, self).__init__()
         self.depthwise = nn.Conv2d(in_ch, in_ch, kernel_size=k, stride=s, padding=p, groups=in_ch, bias=False)
         self.pointwise = nn.Conv2d(in_ch, out_ch, kernel_size=1, bias=False)
         self.bn = nn.BatchNorm2d(out_ch)
@@ -50,8 +50,8 @@ class DepthwiseSeparableConv2d(nn.Module):
         return self.act(x)
 
 class TemporalSelfAttention(nn.Module):
-    def __init__(self, channels: int, num_heads: int = 2, attn_dropout: float = 0.0, proj_dropout: float = 0.0):
-        super().__init__()
+    def __init__(self, channels, num_heads=2, attn_dropout=0.0, proj_dropout=0.0):
+        super(TemporalSelfAttention, self).__init__()
         self.num_heads = num_heads
         self.embed_dim = channels
         self.attn = nn.MultiheadAttention(embed_dim=channels, num_heads=num_heads, dropout=attn_dropout, batch_first=False)
@@ -69,8 +69,8 @@ class TemporalSelfAttention(nn.Module):
 
 class EnhancedNet_D1_64K(nn.Module):
     """EnhancedNet configured for D1 experiments with ~64K parameters"""
-    def __init__(self, T: int = 128, F: int = 30, num_classes: int = 8, base_channels: int = 32):
-        super().__init__()
+    def __init__(self, T=128, F=30, num_classes=8, base_channels=32):
+        super(EnhancedNet_D1_64K, self).__init__()
         # Lightweight configuration to achieve ~64K parameters
         self.stem = nn.Sequential(
             nn.Conv2d(1, base_channels, kernel_size=3, stride=(2, 1), padding=1, bias=False),
@@ -105,8 +105,8 @@ class EnhancedNet_D1_64K(nn.Module):
 
 class BiLSTM_D1(nn.Module):
     """BiLSTM configured for D1 experiments with capacity matching"""
-    def __init__(self, input_dim: int = 30, hidden_dim: int = 64, num_layers: int = 2, num_classes: int = 8):
-        super().__init__()
+    def __init__(self, input_dim=30, hidden_dim=64, num_layers=2, num_classes=8):
+        super(BiLSTM_D1, self).__init__()
         # Adjusted for capacity matching with other models
         self.lstm = nn.LSTM(input_dim, hidden_dim, num_layers=num_layers, bidirectional=True, batch_first=True)
         self.fc = nn.Linear(hidden_dim * 2, num_classes)
@@ -118,8 +118,8 @@ class BiLSTM_D1(nn.Module):
 
 class SimpleCNN_D1_64K(nn.Module):
     """SimpleCNN configured for D1 experiments with ~64K parameters"""
-    def __init__(self, T: int = 128, F: int = 30, num_classes: int = 8, c1: int = 16, c2: int = 32, fc_hidden: int = 32):
-        super().__init__()
+    def __init__(self, T=128, F=30, num_classes=8, c1=16, c2=32, fc_hidden=32):
+        super(SimpleCNN_D1_64K, self).__init__()
         # Lightweight CNN to match ~64K parameter target
         self.conv1 = nn.Conv2d(1, c1, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(c1, c2, kernel_size=3, padding=1)
