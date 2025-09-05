@@ -1,0 +1,33 @@
+{
+  "pytorch_version": "1.8.0",
+  "device": "Xavier",
+  "timestamp": "20250905_082854",
+  "input_shape": [
+    1,
+    128,
+    52
+  ],
+  "results": {
+    "PASE-Net": {
+      "parameters_M": 0.439,
+      "inference_mean_ms": 3.57,
+      "inference_std_ms": 0.11,
+      "memory_peak_mb": 2.7,
+      "edge_ready": true
+    },
+    "CNN": {
+      "parameters_M": 0.037,
+      "inference_mean_ms": 1.31,
+      "inference_std_ms": 0.13,
+      "memory_peak_mb": 2.0,
+      "edge_ready": true
+    },
+    "BiLSTM": {
+      "parameters_M": 0.583,
+      "inference_mean_ms": 10.04,
+      "inference_std_ms": 0.86,
+      "memory_peak_mb": 7.0,
+      "edge_ready": true
+    }
+  }
+}
