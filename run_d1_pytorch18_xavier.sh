@@ -61,8 +61,23 @@ json5>=0.9.0          # JSON support
 matplotlib>=3.3.0,<3.6.0  # Optional plotting
 EOF
 
-# Install only what's needed
-pip3 install -r xavier_d1_minimal_requirements.txt --user
+# Try different pip commands to find the working one
+echo "🔍 Finding correct pip command..."
+if command -v pip3 &> /dev/null; then
+    PIP_CMD="pip3"
+elif command -v pip &> /dev/null; then
+    PIP_CMD="pip"
+elif python3 -m pip --version &> /dev/null 2>&1; then
+    PIP_CMD="python3 -m pip"
+else
+    echo "❌ No working pip found"
+    exit 1
+fi
+
+echo "✅ Using pip command: $PIP_CMD"
+
+# Install with user flag to avoid permission issues
+$PIP_CMD install -r xavier_d1_minimal_requirements.txt --user --no-warn-script-location
 check_status "Minimal dependencies installation"
 
 # Step 3: Verify D1 measurement script compatibility
