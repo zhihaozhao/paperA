@@ -188,6 +188,13 @@ def main():
     print(f"📊 Focused measurement for D1 Conformer-lite model")
     print(f"🖥️  Device: {args.device}")
     print(f"⏰ Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"🐍 PyTorch Version: {torch.__version__}")
+    print(f"🎮 CUDA Available: {torch.cuda.is_available()}")
+    if torch.cuda.is_available():
+        print(f"🎮 CUDA Version: {torch.version.cuda}")
+        print(f"🎮 GPU Count: {torch.cuda.device_count()}")
+        for i in range(torch.cuda.device_count()):
+            print(f"🎮 GPU {i}: {torch.cuda.get_device_name(i)}")
     
     # Check device availability
     if args.device == 'cuda' and not torch.cuda.is_available():
@@ -201,7 +208,7 @@ def main():
     print(f"\n📋 Building Conformer-lite Model:")
     try:
         print(f"  Building conformer_lite...")
-        model = build_model(name='conformer_lite', input_dim=args.F, num_classes=args.classes, logit_l2=0.05)
+        model = build_model(name='conformer_lite', F=args.F, num_classes=args.classes, T=args.T)
         print(f"  ✅ Conformer-lite model built successfully")
     except Exception as e:
         print(f"  ❌ Failed to build conformer_lite: {e}")

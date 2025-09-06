@@ -175,7 +175,7 @@ def build_model(name, F, num_classes, T=128):  # T added for CNN
         return SimpleCNN(T=T, F=F, num_classes=num_classes)
 
     elif name == "conformer_lite":
-        return ConformerLite(input_dim=F, d_model=192, num_layers=2, num_heads=4, num_classes=num_classes)
+        return ConformerLite(input_dim=F, d_model=176, num_layers=2, num_heads=4, num_classes=num_classes)
 
     # NEW: PINN models
     elif name == "pinn_lstm_ms":

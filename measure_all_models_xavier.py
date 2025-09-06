@@ -161,6 +161,13 @@ def main():
     print(f"📊 Using real models from src/models.py for consistency")
     print(f"🖥️  Device: {args.device}")
     print(f"⏰ Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"🐍 PyTorch Version: {torch.__version__}")
+    print(f"🎮 CUDA Available: {torch.cuda.is_available()}")
+    if torch.cuda.is_available():
+        print(f"🎮 CUDA Version: {torch.version.cuda}")
+        print(f"🎮 GPU Count: {torch.cuda.device_count()}")
+        for i in range(torch.cuda.device_count()):
+            print(f"🎮 GPU {i}: {torch.cuda.get_device_name(i)}")
     
     # Check device availability
     if args.device == 'cuda' and not torch.cuda.is_available():
@@ -186,9 +193,9 @@ def main():
         try:
             print(f"  Building {config['name']} ({config['description']})...")
             
-            # Use correct signature: build_model(name, input_dim, num_classes, logit_l2=0.05)
-            # input_dim corresponds to F (frequency dimension)
-            model = build_model(name=config['name'], input_dim=args.F, num_classes=args.classes, logit_l2=0.05)
+            # Use correct signature: build_model(name, F, num_classes, T=128)
+            # F corresponds to frequency dimension, T to temporal dimension
+            model = build_model(name=config['name'], F=args.F, num_classes=args.classes, T=args.T)
             
             models[model_key] = model
             param_count = count_parameters(model)

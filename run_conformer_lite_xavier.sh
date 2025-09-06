@@ -22,7 +22,7 @@ which python3
 
 # Check PyTorch and CUDA
 echo "🔥 PyTorch and CUDA Check:"
-python3 -c "import torch; print(f'PyTorch: {torch.__version__}'); print(f'CUDA Available: {torch.cuda.is_available()}'); print(f'CUDA Version: {torch.version.cuda if torch.cuda.is_available() else \"N/A\"}')"
+python3 -c "import torch; print(f'PyTorch: {torch.__version__}'); print(f'CUDA Available: {torch.cuda.is_available()}'); print(f'CUDA Version: {torch.version.cuda if torch.cuda.is_available() else \"N/A\"}'); print(f'JetPack Compatibility: {\"✅\" if torch.__version__.startswith(\"1.8\") else \"⚠️ (Expected 1.8.x)\"}')"
 
 # Check GPU memory
 if command -v nvidia-smi &> /dev/null; then
