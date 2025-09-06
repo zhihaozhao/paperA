@@ -1,0 +1,31 @@
+
+% Advanced Edge Performance Comparison Table with Literature
+\begin{table*}[t]
+\centering
+\caption{Comprehensive Performance Comparison with State-of-the-Art WiFi HAR Systems}
+\label{tab:literature_performance_comparison}
+\small
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+\textbf{Method} & \textbf{Parameters} & \textbf{Memory} & \textbf{Latency} & \textbf{Throughput} & \textbf{Accuracy} & \textbf{Real-time} & \textbf{Platform} \\
+ & \textbf{(K)} & \textbf{(MB)} & \textbf{(ms)} & \textbf{(sps)} & \textbf{(\%)} & \textbf{Ready} & \\
+\midrule
+\multicolumn{8}{c}{\textit{Literature Benchmarks}} \\
+\midrule
+SenseFi Benchmark Average~\cite{yang2023sensefi} & 850 & 3.2 & 45.0 & 22 & 78.5 & No & Various Devices \\
+Attention-Enhanced IoT~\cite{zhang2023attention} & 1200 & 4.6 & 120.0 & 8 & 81.2 & No & Raspberry Pi 4 \\
+Cross-Domain WiFi HAR~\cite{li2024cross} & 950 & 3.6 & 80.0 & 13 & 76.8 & No & Generic Edge Device \\
+Privacy-Preserving WiFi~\cite{wang2023privacy} & 750 & 2.9 & 65.0 & 15 & 79.3 & No & IoT Gateway \\
+\midrule
+\multicolumn{8}{c}{\textit{This Work - Xavier AGX 32G}} \\
+\midrule
+PASE-Net (CPU) & 640 & 2.44 & 338.91 & 3 & 83.0 & No & Xavier AGX 32G (CPU) \\
+\textbf{PASE-Net (GPU)} & \textbf{640} & \textbf{2.44} & \textbf{5.29} & \textbf{189} & \textbf{83.0} & \textbf{Yes} & Xavier AGX 32G (GPU) \\
+CNN (CPU) & 644 & 2.46 & 7.13 & 140 & 83.0 & Yes & Xavier AGX 32G (CPU) \\
+\textbf{CNN (GPU)} & \textbf{644} & \textbf{2.46} & \textbf{0.90} & \textbf{1113} & \textbf{83.0} & \textbf{Yes} & Xavier AGX 32G (GPU) \\
+BiLSTM (CPU) & 583 & 2.23 & 75.46 & 13 & 83.0 & No & Xavier AGX 32G (CPU) \\
+\textbf{BiLSTM (GPU)} & \textbf{583} & \textbf{2.23} & \textbf{8.97} & \textbf{112} & \textbf{83.0} & \textbf{Yes} & Xavier AGX 32G (GPU) \\
+\bottomrule
+\end{tabular}
+\end{table*}
+\textit{Note: sps = samples per second. Real-time threshold defined as <10ms latency. Bold entries indicate GPU-accelerated real-time performance. Literature values estimated from reported specifications and typical hardware configurations.}

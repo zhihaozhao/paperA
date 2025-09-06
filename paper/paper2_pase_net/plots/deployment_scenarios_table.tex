@@ -1,0 +1,20 @@
+
+% Deployment Scenario Requirements Analysis
+\begin{table*}[t]
+\centering
+\caption{Detailed Deployment Scenario Requirements and Recommendations}
+\label{tab:deployment_scenarios}
+\footnotesize
+\begin{tabular}{@{}p{2.5cm}p{2cm}p{1.8cm}p{1.8cm}p{1.5cm}p{2.5cm}p{3cm}@{}}
+\toprule
+\textbf{Scenario} & \textbf{Power Constraints} & \textbf{Latency Requirements} & \textbf{User Concurrency} & \textbf{Accuracy Needs} & \textbf{Recommended Config} & \textbf{Design Rationale} \\
+\midrule
+Smart Home Hub & Wall-powered (flexible) & Real-time preferred (<10ms) & Multiple concurrent (2-8) & High (>80%) & PASE-Net GPU / CNN GPU & Multi-user support with attention-based accuracy \\
+Wearable Device & Battery critical (<5W) & Near real-time acceptable & Single user & Medium (>75%) & CNN CPU / PASE-Net CPU & Battery optimization prioritized over latency \\
+IoT Gateway & Hybrid (10-30W) & Real-time required & High throughput (10+) & High (>82%) & PASE-Net GPU with batch=8 & Maximum throughput with dynamic power management \\
+Mobile Application & Battery aware (5-15W) & Responsive (<50ms) & Single with buffering & Good (>78%) & CNN GPU with batch=4 & Balance of performance and efficiency \\
+Industrial Monitor & Wall-powered & Ultra real-time (<5ms) & Multiple sensors & Critical (>85%) & CNN GPU / PASE-Net GPU & Reliability and ultra-low latency for safety \\
+\bottomrule
+\end{tabular}
+\end{table*}
+\textit{Note: Recommendations based on Xavier AGX 32G performance measurements and typical IoT deployment constraints. Power values represent expected consumption ranges for different operational modes.}
