@@ -1,0 +1,111 @@
+{
+  "timestamp": "2025-09-06T14:43:28.796774",
+  "system_info": {
+    "platform": "Linux-6.1.147-x86_64-with-glibc2.41",
+    "processor": "x86_64",
+    "python_version": "3.13.3",
+    "pytorch_version": "2.8.0+cu128",
+    "device": "cpu",
+    "cuda_available": false,
+    "cuda_version": null
+  },
+  "experiment_config": {
+    "T": 128,
+    "F": 52,
+    "num_classes": 8,
+    "input_shape": [
+      1,
+      128,
+      52
+    ],
+    "description": "D1 all models measurement using real models from src/models.py",
+    "models_tested": [
+      "enhanced",
+      "cnn",
+      "bilstm",
+      "conformer_lite"
+    ]
+  },
+  "results": {
+    "enhanced": {
+      "model": "enhanced",
+      "parameters": 640713,
+      "parameters_K": 640.713,
+      "parameters_M": 0.640713,
+      "inference_mean_ms": 5.3957723651546985,
+      "inference_std_ms": 2.2548747337095905,
+      "inference_min_ms": 4.520041984505951,
+      "inference_max_ms": 26.93661500234157,
+      "memory_peak_mb": 83.015625,
+      "flops_g": 0.8529171456,
+      "edge_ready": true,
+      "device": "cpu",
+      "input_shape": [
+        1,
+        128,
+        52
+      ],
+      "config_type": "D1_true_parameters"
+    },
+    "cnn": {
+      "model": "cnn",
+      "parameters": 644216,
+      "parameters_K": 644.216,
+      "parameters_M": 0.644216,
+      "inference_mean_ms": 0.34174786880612373,
+      "inference_std_ms": 0.01191786271777072,
+      "inference_min_ms": 0.3230939619243145,
+      "inference_max_ms": 0.3958040615543723,
+      "memory_peak_mb": 20.0,
+      "flops_g": 0.8575803392000001,
+      "edge_ready": true,
+      "device": "cpu",
+      "input_shape": [
+        1,
+        128,
+        52
+      ],
+      "config_type": "D1_true_parameters"
+    },
+    "bilstm": {
+      "model": "bilstm",
+      "parameters": 583688,
+      "parameters_K": 583.688,
+      "parameters_M": 0.583688,
+      "inference_mean_ms": 4.703569588018581,
+      "inference_std_ms": 1.4365901752289896,
+      "inference_min_ms": 2.297107013873756,
+      "inference_max_ms": 14.156471006572247,
+      "memory_peak_mb": 32.93359375,
+      "flops_g": 0.7770054656000001,
+      "edge_ready": true,
+      "device": "cpu",
+      "input_shape": [
+        1,
+        128,
+        52
+      ],
+      "config_type": "D1_true_parameters"
+    },
+    "conformer_lite": {
+      "model": "conformer_lite",
+      "parameters": 1448064,
+      "parameters_K": 1448.064,
+      "parameters_M": 1.448064,
+      "inference_mean_ms": 3.9857418066821992,
+      "inference_std_ms": 0.5921718092560223,
+      "inference_min_ms": 3.799914033152163,
+      "inference_max_ms": 9.741805959492922,
+      "memory_peak_mb": 23.22265625,
+      "flops_g": 1.9276627968000002,
+      "edge_ready": true,
+      "device": "cpu",
+      "input_shape": [
+        1,
+        128,
+        52
+      ],
+      "config_type": "D1_true_parameters"
+    }
+  }
+}

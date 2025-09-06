@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-09-06T14:43:35.502003",
+  "system_info": {
+    "platform": "Linux-6.1.147-x86_64-with-glibc2.41",
+    "processor": "x86_64",
+    "python_version": "3.13.3",
+    "pytorch_version": "2.8.0+cu128",
+    "device": "cpu",
+    "cuda_available": false,
+    "cuda_version": null
+  },
+  "experiment_config": {
+    "T": 128,
+    "F": 52,
+    "num_classes": 8,
+    "input_shape": [
+      1,
+      128,
+      52
+    ],
+    "warmup_runs": 50,
+    "measure_runs": 200,
+    "description": "D1 Conformer-lite focused measurement using real model from src/models.py"
+  },
+  "results": {
+    "conformer_lite": {
+      "model": "conformer_lite",
+      "parameters": 1448064,
+      "parameters_K": 1448.064,
+      "parameters_M": 1.448064,
+      "inference_mean_ms": 3.83077863487415,
+      "inference_std_ms": 0.6533465895568609,
+      "inference_min_ms": 3.542665974237025,
+      "inference_max_ms": 9.867326938547194,
+      "inference_median_ms": 3.7086900556460023,
+      "inference_p95_ms": 4.385240958072245,
+      "inference_p99_ms": 8.288813987746835,
+      "memory_peak_mb": 54.58984375,
+      "flops_g": 3.614367744,
+      "edge_ready": true,
+      "device": "cpu",
+      "input_shape": [
+        1,
+        128,
+        52
+      ],
+      "config_type": "D1_conformer_lite_focused"
+    }
+  }
+}

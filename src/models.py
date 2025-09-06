@@ -8,7 +8,12 @@
 
 import torch
 import torch.nn as nn
-from .models_pinn import PINNLSTMMultiScale, PINNMamba  # NEW: PINN models
+try:
+    from .models_pinn import PINNLSTMMultiScale, PINNMamba  # NEW: PINN models
+except ImportError:
+    # Fallback for when models_pinn is not available
+    PINNLSTMMultiScale = None
+    PINNMamba = None
 
 
 class SqueezeExcite(nn.Module):
@@ -170,12 +175,16 @@ def build_model(name, F, num_classes, T=128):  # T added for CNN
         return SimpleCNN(T=T, F=F, num_classes=num_classes)
 
     elif name == "conformer_lite":
-        return ConformerLite(input_dim=F, d_model=192, num_layers=2, num_heads=4, num_classes=num_classes)
+        return ConformerLite(input_dim=F, d_model=176, num_layers=2, num_heads=4, num_classes=num_classes)
 
     # NEW: PINN models
     elif name == "pinn_lstm_ms":
+        if PINNLSTMMultiScale is None:
+            raise ValueError("PINNLSTMMultiScale not available")
         return PINNLSTMMultiScale(input_dim=F, num_classes=num_classes)
     elif name == "pinn_mamba":
+        if PINNMamba is None:
+            raise ValueError("PINNMamba not available")
         return PINNMamba(input_dim=F, num_classes=num_classes)
 
     else:
