@@ -32,7 +32,7 @@ __pycache__/
 # results/
 results_cpu/
 scripts/results
-plots/
+#plots/
 tables/
 # ���㽫��־���� results/logs �£����� results/ �Ѱ������������Ŀ¼��
 logs/
